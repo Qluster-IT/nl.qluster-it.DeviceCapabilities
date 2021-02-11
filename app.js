@@ -167,7 +167,9 @@ class DeviceSetter extends Homey.App {
 				var devices = await api.devices.getDevices();
 				var device = _.find(devices, d=> d.name==query);
 				if(!device) return defer.resolve([]);
-				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key} });
+				//var list = _.filter(, cap=> cap.getable);
+				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key, getable:capability.getable} });
+				list = _.filter(list, cap=> cap.getable);
 				defer.resolve(list);
 			}).bind(this));
             return defer.promise;

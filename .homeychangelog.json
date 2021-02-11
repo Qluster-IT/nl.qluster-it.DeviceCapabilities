@@ -19,5 +19,8 @@
   },
   "0.2.3": {
     "en": "Example explanation added for clarification"
+  },
+  "0.3.0": {
+    "en": "Added source to manifest and shows only getable capabilities for trigger"
   }
 }
