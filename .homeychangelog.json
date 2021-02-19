@@ -22,5 +22,8 @@
   },
   "0.3.0": {
     "en": "Added source to manifest and shows only getable capabilities for trigger"
+  },
+  "1.0.0": {
+    "en": "Added a condition able to set a capability and wait for a specific \"error\""
   }
 }

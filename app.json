@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -81,8 +81,8 @@
           "nl": "Capability luisteraar"
         },
         "titleFormatted": {
-          "en": "Set [[capability]] to [[value]] on [[device]] and continue after capability gives this error: [[error]]",
-          "nl": "Set [[capability]] naar [[value]] op [[device]] en vervolg nadat de capability deze error geeft: [[error]]"
+          "en": "Set [[device]].[[capability]] to [[value]] and continue after error: [[error]]",
+          "nl": "Set [[device]].[[capability]] naar [[value]] en vervolg na error: [[error]]"
         },
         "args": [
           {
