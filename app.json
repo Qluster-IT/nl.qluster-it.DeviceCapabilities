@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -15,10 +15,14 @@
   "category": [
     "tools"
   ],
-  "source": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/",
   "permissions": [
     "homey:manager:api"
   ],
+  "source": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/",
+  "bugs": {
+    "url": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/issues"
+  },
+  "homeyCommunityTopicId": 43287,
   "images": {
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
@@ -64,6 +68,69 @@
             "title": {
               "en": "value",
               "nl": "waarde"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "condition_change_capability_boolean",
+        "title": {
+          "en": "Capability listener",
+          "nl": "Capability luisteraar"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]].[[capability]] to [[value]] and wait for error: [[error]]",
+          "nl": "Set [[device]].[[capability]] naar [[value]] en wacht op error: [[error]]"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "device",
+            "placeholder": {
+              "en": "Device",
+              "nl": "Device"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "capability",
+            "placeholder": {
+              "en": "Enter the exact device name",
+              "nl": "Vul de exacte apparaat naam in"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "value",
+            "placeholder": {
+              "en": "True or False",
+              "nl": "Waar of Onwaar"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "True",
+                  "nl": "Waar"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "False",
+                  "nl": "Onwaar"
+                }
+              }
+            ]
+          },
+          {
+            "name": "error",
+            "type": "text",
+            "title": {
+              "en": "Error",
+              "nl": "Foutmelding"
             }
           }
         ]
