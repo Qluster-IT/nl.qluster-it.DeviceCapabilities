@@ -81,8 +81,8 @@
           "nl": "Capability luisteraar"
         },
         "titleFormatted": {
-          "en": "Set [[device]].[[capability]] to [[value]] and continue after error: [[error]]",
-          "nl": "Set [[device]].[[capability]] naar [[value]] en vervolg na error: [[error]]"
+          "en": "Set [[device]].[[capability]] to [[value]] and wait for error: [[error]]",
+          "nl": "Set [[device]].[[capability]] naar [[value]] en wacht op error: [[error]]"
         },
         "args": [
           {

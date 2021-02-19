@@ -222,12 +222,12 @@ class DeviceSetter extends Homey.App {
 					setTimeout(async ()=> {
 							device.setCapabilityValue(args.capability.id, args.value=='true')
 							.then(()=>{
-								if(new Date().getTime() - startTime < 10*1000) _setTimeout() ;
+								if(new Date().getTime() - startTime < 20*1000) _setTimeout() ;
 								else defer.reject();
 							})
 							.catch((e)=>{
 								if(e.name==args.error) defer.resolve();
-								else if(new Date().getTime() - startTime < 10*1000) _setTimeout() ;
+								else if(new Date().getTime() - startTime < 20*1000) _setTimeout() ;
 								else defer.reject('"'+e+'"');
 							});
 						
