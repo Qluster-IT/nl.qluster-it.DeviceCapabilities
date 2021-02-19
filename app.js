@@ -199,6 +199,85 @@ class DeviceSetter extends Homey.App {
 		}
 
 
+		
+		let condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
+        condition_change_capability_boolean        
+        .registerRunListener(( args, state ) => {
+			console.log('condition_change_capability_boolean.registerRunListener');
+			var defer = new Defer();
+			if(!(args.device && args.device.id && args.capability && args.capability.id)) {
+				defer.reject('Reject');
+				return defer.promise;
+			};
+			this.refreshHomeyAPI().then((async api=>{
+				var device = await api.devices.getDevice({id:args.device.id});
+				if(!device) {
+					defer.reject('Reject');
+					return defer.promise;
+				};
+				
+				var startTime = new Date().getTime();
+				_setTimeout()
+				function _setTimeout() {
+					setTimeout(async ()=> {
+							device.setCapabilityValue(args.capability.id, args.value=='true')
+							.then(()=>{
+								if(new Date().getTime() - startTime < 10*1000) _setTimeout() ;
+								else defer.reject();
+							})
+							.catch((e)=>{
+								if(e.name==args.error) defer.resolve();
+								else if(new Date().getTime() - startTime < 10*1000) _setTimeout() ;
+								else defer.reject('"'+e+'"');
+							});
+						
+					}, 250);
+				}
+
+				// var tracker = device.makeCapabilityInstance(args.capability.id, function (s) {
+				// 	console.log('capability ' +  args.capability.id + ' changed:' + s );
+				// });
+				// defer.finally(x=> {
+				// 	if(tracker && tracker.destroy) tracker.destroy();
+				// });
+
+				//await tracker.setValue(args.value=='true');
+                
+            }).bind(this));
+
+			return defer.promise;
+			//return Promise.resolve(r);
+        })
+        .getArgument('device')
+        .registerAutocompleteListener(( query, args, a, b, c,  ) => {
+            query = query.toLowerCase();
+            var defer = new Defer(10000);
+            this.refreshHomeyAPI().then((async api=>{
+				var devices = await api.devices.getDevices();
+                var list = _.filter(devices, device=>{ return device.name.toLowerCase().indexOf(query)>-1});
+                list = _.orderBy(list, 'name');
+                var array = _.map(list, device=> { return {id:device.id, name:device.name} });
+                defer.resolve(array);
+                
+            }).bind(this));
+            return defer.promise;
+        });
+        condition_change_capability_boolean.getArgument('capability')
+        .registerAutocompleteListener(( query, args) => {
+            var defer = new Defer();
+			this.refreshHomeyAPI().then((async api=>{
+				var devices = await api.devices.getDevices();
+				var device = _.find(devices, d=> d.name==query);
+				if(!device) return defer.resolve([]);
+				//var list = _.filter(, cap=> cap.getable);
+				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key, getable:capability.getable} });
+				list = _.filter(list, cap=> cap.getable);
+				defer.resolve(list);
+			}).bind(this));
+            return defer.promise;
+        }) ;
+
+
 	}
 
 	async updateTracking(refresh) {
