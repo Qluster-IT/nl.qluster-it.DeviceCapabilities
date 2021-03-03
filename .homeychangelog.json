@@ -25,5 +25,8 @@
   },
   "1.0.0": {
     "en": "Added a condition able to set a capability and wait for a specific \"error\""
+  },
+  "1.0.1": {
+    "en": "Improved json"
   }
 }

@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -26,6 +26,13 @@
   "images": {
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "paypal.me/QlusterIT"
+      }
+    }
   },
   "author": {
     "name": "Arie J. Godschalk",
