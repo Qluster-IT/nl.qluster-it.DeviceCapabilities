@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -30,7 +30,7 @@
   "contributing": {
     "donate": {
       "paypal": {
-        "username": "paypal.me/QlusterIT"
+        "username": "QlusterIT"
       }
     }
   },
