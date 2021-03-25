@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -113,21 +113,21 @@
             "name": "value",
             "placeholder": {
               "en": "True or False",
-              "nl": "Waar of Onwaar"
+              "nl": "Ja of Nee"
             },
             "values": [
               {
                 "id": "true",
                 "label": {
                   "en": "True",
-                  "nl": "Waar"
+                  "nl": "Ja"
                 }
               },
               {
                 "id": "false",
                 "label": {
                   "en": "False",
-                  "nl": "Onwaar"
+                  "nl": "Nee"
                 }
               }
             ]
@@ -275,7 +275,7 @@
         "id": "set_capability_zone_boolean",
         "title": {
           "en": "Set true/false capabilities in a zone",
-          "nl": "Zet waar/onwaar capabilities in een ruimte"
+          "nl": "Zet ja/nee capabilities in een ruimte"
         },
         "titleFormatted": {
           "en": "Set [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
@@ -295,21 +295,21 @@
             "name": "value",
             "placeholder": {
               "en": "True or False",
-              "nl": "Waar of Onwaar"
+              "nl": "Ja of Nee"
             },
             "values": [
               {
                 "id": "true",
                 "label": {
                   "en": "True",
-                  "nl": "Waar"
+                  "nl": "Ja"
                 }
               },
               {
                 "id": "false",
                 "label": {
                   "en": "False",
-                  "nl": "Onwaar"
+                  "nl": "Nee"
                 }
               }
             ]
