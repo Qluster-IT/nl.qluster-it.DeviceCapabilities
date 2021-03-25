@@ -63,8 +63,8 @@
             "type": "autocomplete",
             "name": "capability",
             "placeholder": {
-              "en": "Enter the exact device name",
-              "nl": "Vul de exacte apparaat naam in"
+              "en": "Capability",
+              "nl": "Mogelijkheid"
             }
           }
         ],
@@ -104,8 +104,8 @@
             "type": "autocomplete",
             "name": "capability",
             "placeholder": {
-              "en": "Enter the exact device name",
-              "nl": "Vul de exacte apparaat naam in"
+              "en": "Capability",
+              "nl": "Mogelijkheid"
             }
           },
           {

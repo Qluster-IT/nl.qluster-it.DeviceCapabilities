@@ -18,6 +18,7 @@ class DeviceSetter extends Homey.App {
     }
 
 	onInit() {
+		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		this.log('DeviceSetter is running...');
 
 		var capabilityZoneActions = ['set_capability_zone_text', 'set_capability_zone_percentage', 'set_capability_zone_boolean'];//, 'set_capability_zone_anders'];
@@ -108,6 +109,7 @@ class DeviceSetter extends Homey.App {
 						defer.resolve(r);
 					} catch (error) {
 						this.log(error);
+						defer.reject(error);
 					}
 				}).bind(this));
 			  return defer.promise;
@@ -126,7 +128,8 @@ class DeviceSetter extends Homey.App {
 					function fill(obj, spaces) {
 						spaces=spaces||'';
 						arr.push({id:obj.id, name:spaces+obj.name});
-						var subzones = _(zones).filter(z=>z.parent==obj.id);
+						let subzones = _.filter(zones, z=>z.parent==obj.id);
+						subzones = _.orderBy(subzones, 'name');
 						_(subzones).forEach(z=> fill(z, spaces + '.. '));
 					}
 				}).bind(this));
@@ -147,33 +150,9 @@ class DeviceSetter extends Homey.App {
             return Promise.resolve(r);
         })
         .getArgument('device')
-        .registerAutocompleteListener(( query, args, a, b, c,  ) => {
-            query = query.toLowerCase();
-            var defer = new Defer(10000);
-            this.refreshHomeyAPI('trigger_capability_changed').then((async api=>{
-				var devices = await api.devices.getDevices();
-                var list = _.filter(devices, device=>{ return device.name.toLowerCase().indexOf(query)>-1});
-                list = _.orderBy(list, 'name');
-                var array = _.map(list, device=> { return {id:device.id, name:device.name} });
-                defer.resolve(array);
-                
-            }).bind(this));
-            return defer.promise;
-        });
+        .registerAutocompleteListener(this.autocompleteDevice({api:'trigger_capability_changed'}));
         trigger_capability_changedTrigger.getArgument('capability')
-        .registerAutocompleteListener(( query, args) => {
-            var defer = new Defer();
-			this.refreshHomeyAPI('trigger_capability_changed').then((async api=>{
-				var devices = await api.devices.getDevices();
-				var device = _.find(devices, d=> d.name==query);
-				if(!device) return defer.resolve([]);
-				//var list = _.filter(, cap=> cap.getable);
-				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key, getable:capability.getable} });
-				list = _.filter(list, cap=> cap.getable);
-				defer.resolve(list);
-			}).bind(this));
-            return defer.promise;
-        }) ;
+        .registerAutocompleteListener(this.autocompleteCapability({getable:true, api:'trigger_capability_changed'})) ;
         refreshcapabilityChangedTriggers.call(this);
 
         function refreshcapabilityChangedTriggers() {
@@ -195,7 +174,7 @@ class DeviceSetter extends Homey.App {
                     this.updateTracking();
                  });
 
-            }).bind(this))
+            }).bind(this));
 		}
 
 
@@ -249,33 +228,9 @@ class DeviceSetter extends Homey.App {
 			//return Promise.resolve(r);
         })
         .getArgument('device')
-        .registerAutocompleteListener(( query, args, a, b, c,  ) => {
-            query = query.toLowerCase();
-            var defer = new Defer(10000);
-            this.refreshHomeyAPI().then((async api=>{
-				var devices = await api.devices.getDevices();
-                var list = _.filter(devices, device=>{ return device.name.toLowerCase().indexOf(query)>-1});
-                list = _.orderBy(list, 'name');
-                var array = _.map(list, device=> { return {id:device.id, name:device.name} });
-                defer.resolve(array);
-                
-            }).bind(this));
-            return defer.promise;
-        });
+        .registerAutocompleteListener(this.autocompleteDevice({api:'condition_change_capability_boolean'}));
         condition_change_capability_boolean.getArgument('capability')
-        .registerAutocompleteListener(( query, args) => {
-            var defer = new Defer();
-			this.refreshHomeyAPI().then((async api=>{
-				var devices = await api.devices.getDevices();
-				var device = _.find(devices, d=> d.name==query);
-				if(!device) return defer.resolve([]);
-				//var list = _.filter(, cap=> cap.getable);
-				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key, getable:capability.getable} });
-				list = _.filter(list, cap=> cap.getable);
-				defer.resolve(list);
-			}).bind(this));
-            return defer.promise;
-        }) ;
+        .registerAutocompleteListener(this.autocompleteCapability({getable:true, setable:true, api:'condition_change_capability_boolean'})) ;
 
 
 	}
@@ -304,21 +259,38 @@ class DeviceSetter extends Homey.App {
         updateTracking.call(this, true);
     }
 
-	
-    // async waitForSio(times, defer) {
-    //     if(!times) times=0;
-    //     times++;
-    //     if(!defer) defer = new Defer(10000);
-    //     if(Homeyman.Current.Tracking.homeyAPI && Homeyman.Current.Tracking.homeyAPI._sio) defer.resolve(Homeyman.Current.Tracking.homeyAPI._sio);
-    //     else if (times>=5) defer.resolve();
-    //     else setTimeout(()=>{
-    //         Homeyman.Current.waitForSio(times, defer);
-    //     }, 500);
-    //     return defer.promise;
-        
-    // }
-
-	
+	autocompleteDevice({api} = {}) {	
+		return (( query, args, a, b, c,  ) => {
+            query = query.toLowerCase();
+			var queries = query.split(' ');
+            var defer = new Defer(10000);
+            this.refreshHomeyAPI(api).then((async api=>{
+				var devices = await api.devices.getDevices();
+                var list = _.filter(devices, device=> _.every(queries, q => device.name.toLowerCase().indexOf(q)>-1));
+                list = _.orderBy(list, 'name');
+                var array = _.map(list, device=> { return {id:device.id, name:device.name} });
+                defer.resolve(array);
+                
+            }).bind(this));
+            return defer.promise;
+        }).bind(this);
+	}
+	autocompleteCapability({getable, setable, api} = {}) {	
+		return ((query, args)=> {
+			var defer = new Defer();
+			this.refreshHomeyAPI(api).then((async api=>{
+				if(!args || !args.device || !args.device.id) return defer.resolve([]);
+				var device =  await api.devices.getDevice({id:args.device.id});
+				if(!device) return defer.resolve([]);
+				var list = _.map(device.capabilitiesObj, (capability, key)=> { return {id:key, name:key, getable:capability.getable, setable:capability.setable}; } );
+				if(getable===true || getable===false) list = _.filter(list, cap=> cap.getable==getable);
+				if(setable===true || setable===false) list = _.filter(list, cap=> cap.setable==setable);
+				list = _.filter(list, cap=> cap.name.toLowerCase().indexOf(query)>-1);
+				defer.resolve(list);
+			}).bind(this));
+			return defer.promise;	
+		}).bind(this);
+	}
 
     async refreshHomeyAPI(id) {
 		if(!id) {
