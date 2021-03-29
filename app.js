@@ -14,12 +14,40 @@ class DeviceSetter extends Homey.App {
     Tracking = {        
         /** @type {HomeyAPI} homeyAPI; */
         homeyAPI:null,
+        homeyAPIStatic:null,
         devices:{}
     }
 
 	onInit() {
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		this.log('DeviceSetter is running...');
+		this.refreshHomeyAPI().then(async api=>{
+			this.Tracking.homeyAPIStatic = api;
+		});
+
+		// this.refreshHomeyAPI().then((async api=>{
+		// 	var users = await api.users.getUsers();
+		// 	console.log('users');
+		// 	_.each(users, user=> {
+		// 		console.log(user._lastUpdated);
+		// 		//console.log(user);
+		// 	});
+		// 	// var sessions = await api.sessions.getSessions();
+		// 	// console.log('sessions');
+		// 	// _.each(sessions, session=> {
+		// 	// 	console.log(session);
+		// 	// });
+		// }).bind(this));
+
+		// (async ()=>{
+
+		// 	var users = await this.homey.users.getUsers();
+		// 	console.log('users');
+		// 	_.each(users, user=> {
+		// 		console.log(user);
+		// 	});
+		// })();
+		//var logEntries = this.homey.insights.getLLogs();
 
 		var capabilityZoneActions = ['set_capability_zone_text', 'set_capability_zone_percentage', 'set_capability_zone_boolean'];//, 'set_capability_zone_anders'];
 		_.forEach(capabilityZoneActions, (action=> {
@@ -246,8 +274,34 @@ class DeviceSetter extends Homey.App {
         _.each(hm.Tracking.devices, async device=>{
             if(!device.device) device.device = await hm.Tracking.homeyAPI.devices.getDevice({id:device.id});       
 			_.each(device.capabilities, capability=>{             
-				if(!capability.listener) capability.listener = device.device.makeCapabilityInstance(capability.id, function (s) {
+				if(!capability.listener) capability.listener = device.device.makeCapabilityInstance(capability.id, async function (s) {
 					var trigger = hm.Triggers.triggercapabilitychanged;
+					//var _b=b;
+					//var _c=c;
+
+					// var logs = await hm.Tracking.homeyAPIStatic.insights.getLogs();
+					// var users = await hm.Tracking.homeyAPIStatic.users.getUsers({$skipCache: true });
+					// hm.log('users');
+					// for (var userId in users) {
+					// 	const user = users[userId];
+					// 	let freshUser = await hm.Tracking.homeyAPI.users.getUser({id:userId, $skipCache: true})
+					// 	hm.log(user._lastUpdated);
+					// 	var date = new Date(user._lastUpdated);
+					// 	hm.log(new Date().getTime() - date.getTime());						
+					// }
+					// hm.log('this.lastChanged: ', this.lastChanged );
+					// var sessions = await hm.Tracking.homeyAPIStatic.sessions.getSessions();
+					// var sess = [];
+					// for (const sessionsId in sessions) {
+					// 	if (Object.hasOwnProperty.call(sessions, sessionsId)) {
+					// 		const session = sessions[sessionsId];
+					// 		if(!session.lastUsed.startsWith('2021-03-29T')) continue;
+					// 		sess.push(session);
+					// 		hm.log('session.lastUsed: ', session.lastUsed);
+					// 		hm.log(new Date().getTime() - new Date(session.lastUsed).getTime());	
+					// 	}
+					// }
+					
 					trigger.Card.trigger({"value":s.toString()}, {device:{id:device.id}, capability:{id:capability.id}}, function () {
 					});
 				});

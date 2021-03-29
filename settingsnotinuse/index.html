@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="DeviceCapabilitiesApp">
+    <head>
+        <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+        <!-- <script type="text/javascript" src="//cdn.athom.com/athom-api/3.1.14/athom-api.min.js"></script> -->        
+        <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+        <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
+        <script type="text/javascript" src="DeviceCapabilitiesAppController.js"></script>
+    </head>
+
+    <body ng-controller="DeviceCapabilitiesAppController as app">
+        <div >
+            <input type="hidden"  id="mainElement"/>
+            <div class="panel panel-default">
+                <div class="panel-heading">Settings</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="functionName">Function name</label>
+                            <input class="form-control" id="functionName" type="number" ng-model="app.newFunction.name" placeholder="Name"><span class="error">{{app.messages}}</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" ng-disabled="!app.newFunction.name" ng-click="app.addFunction()">Save settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>            
+        </div>
+
+        <script type="text/javascript">        
+            function l(s)  {
+                //document.getElementById('debug').value+='\r\n' + (s!==undefined ? s.toString() : 'undefined');
+            }
+
+            function onHomeyReady(Homey) {
+                Homey.ready();
+                var element = document.getElementById('mainElement');
+                var scope = angular.element(element).scope();
+                scope.$apply(function() {
+                    scope.app.setHomey(Homey, scope, l);
+                });
+            }
+        </script>
+    </body>
+</html>
