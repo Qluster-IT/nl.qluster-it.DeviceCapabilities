@@ -73,6 +73,7 @@ class DeviceSetter extends Homey.App {
 					_.forEach(devicesToSet, d=>{
 						if(d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && d.setCapabilityValue) {
 							promises.push(d.setCapabilityValue(capability, val));
+							//promises.push(d.setCapabilityValue({capabilityId:capability, value:val}));
 						}
 					});
 					var all = Promise.all(promises);
