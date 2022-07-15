@@ -1,0 +1,24 @@
+{
+  "name": "nl.qluster-it.devicecapabilities",
+  "version": "1.0.0",
+  "description": "Set capabilities of device's per zone, for example open or close all curtains in a certain zone, including (or not) the subzones.\r Also listens for capabilities of which there are no triggers from the app developer.\r And a condition able to set a capability and wait for a specific \"error\".",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "athom-api": "^3.7.7",
+    "lodash-core": "^4.17.19"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://QlusterIT@bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities#readme"
+}
