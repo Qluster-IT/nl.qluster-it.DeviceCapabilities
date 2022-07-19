@@ -37,5 +37,8 @@
   },
   "1.1.0": {
     "en": "Improved tokens (including User and Client/App) for watch/listener"
+  },
+  "1.2.0": {
+    "en": "New: Retrieve insight/log from a capability from a device"
   }
 }

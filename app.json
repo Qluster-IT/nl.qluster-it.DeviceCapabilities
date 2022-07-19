@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -417,6 +417,85 @@
                 }
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "action_capability_log",
+        "title": {
+          "en": "Capability log",
+          "nl": "Capability log"
+        },
+        "titleFormatted": {
+          "en": "Retrieve the value from [[device]] for [[capability]] from [[numberof]] minutes ago",
+          "nl": "Ontvang de waarde van [[device]] voor [[capability]] van [[numberof]] minuten geleden"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "device",
+            "placeholder": {
+              "en": "Device",
+              "nl": "Device"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "capability",
+            "placeholder": {
+              "en": "Capability",
+              "nl": "Mogelijkheid"
+            }
+          },
+          {
+            "type": "number",
+            "name": "numberof",
+            "placeholder": {
+              "en": "Minutes ago",
+              "nl": "Minuten geleden"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "user",
+            "type": "string",
+            "title": {
+              "en": "User",
+              "nl": "Gebruiker"
+            }
+          },
+          {
+            "name": "client",
+            "type": "string",
+            "title": {
+              "en": "Client",
+              "nl": "Cliënt"
+            }
+          },
+          {
+            "name": "text",
+            "type": "string",
+            "title": {
+              "en": "Text",
+              "nl": "Tekst"
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer"
+            }
+          },
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Yes/No",
+              "nl": "Ja/Nee"
+            }
           }
         ]
       }

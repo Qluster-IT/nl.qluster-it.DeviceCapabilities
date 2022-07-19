@@ -287,9 +287,61 @@ class DeviceSetter extends Homey.App {
 			.registerAutocompleteListener(this.autocompleteCapability({ getable: true, setable: true, api: 'condition_change_capability_boolean' }));
 
 
+		var action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
+		_.forEach(action_capability_logs, (action => {
+			var set_capability_log = this.homey.flow.getActionCard(action);
+			set_capability_log
+				.on('update', (() => { this.clearHomeyAPI(action); }).bind(this))
+				.registerRunListener((async (args, state) => {
+					try {
+						if (!args || !args.device || !args.capability) return false;
+						
+						// var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
+
+						var api = await this.refreshHomeyAPI();
+						var device = await api.devices.getDevice({ id: args.device.id });
+						var targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
+
+						var tokens = { text: '', number: 0, boolean: false, user: '', client: '' };
+						
+						if (targetInsight) {
+							var insights, lastOne = null;
+							try {
+								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id});//, resolution: 'lastHour' });
+							} catch (error) {
+								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+							}
+							var now = new Date();
+							now.setMinutes(now.getMinutes()-args.numberof);
+							insights.values = _.filter(insights.values, i=> { return new Date(i.t)<now && (i.v!==null || i.v!==undefined); });
+							if (insights && (lastOne = _.last(insights.values))) {
+								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
+								if (lastOne.originName) tokens.client = lastOne.originName;
+								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+		
+								if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
+								else if (typeof (lastOne.v) == typeof (tokens.number)) tokens.number = lastOne.v;
+								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
+		}
+						}
+
+						return tokens;
+					} catch (error) {
+						this.log('set_capability-error:');
+						this.log(error);
+					}
+				}).bind(this));
+
+
+			set_capability_log.getArgument('device')
+				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log' }));
+				set_capability_log.getArgument('capability')
+				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log' }));
+		}).bind(this));
+
 	}
 
-	
+
 	//#region Old Trigger
 	async updateTracking(refresh, trigger) {
 		var hm = this;
@@ -316,11 +368,11 @@ class DeviceSetter extends Homey.App {
 		updateTracking.call(this, true, trigger);
 	}
 
-	
+
 	//#endregion
 
 
-	
+
 	async updateTracking2(refresh, trigger) {
 		var hm = this;
 		if (hm.Tracking2.homeyAPI === true) return;
@@ -333,31 +385,31 @@ class DeviceSetter extends Homey.App {
 			if (!device.device) device.device = await hm.Tracking2.homeyAPI.devices.getDevice({ id: device.id });
 			_.each(device.capabilities, capability => {
 				if (!capability.listener) {
-					var targetInsight = _.find(device.device.insights, x=> { return x.id==capability.id;});
+					var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
 					capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
-						var tokens = {text1:'', number1:0, boolean1:false, user:'', client:''};
-						if(typeof(value)==typeof(tokens.text1)) tokens.text1 = value;
-						else if(typeof(value)==typeof(tokens.number1)) tokens.number1 = value;
-						else if(typeof(value)==typeof(tokens.boolean1)) tokens.boolean1 = value;
-						
-						if(targetInsight) {
+						var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
+						if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
+						else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
+						else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
+
+						if (targetInsight) {
 							var insights, lastOne = null;
 							try {
-								insights =  await hm.Tracking2.homeyAPI.insights.getLogEntries({uri:targetInsight.uri, id:targetInsight.id, resolution:'lastHour'});
+								insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
 							} catch (error) {
-								insights =  await hm.Tracking2.homeyAPI.insights.getLogEntries({uri:targetInsight.uri, id:targetInsight.id});
-							} 
-							if(insights && (lastOne = _.last(insights.values))) {
-								if(lastOne.originUserName) tokens.user = lastOne.originUserName;
-								if(lastOne.originName) tokens.client = lastOne.originName;
-								else if(lastOne.originClientName) tokens.client = lastOne.originClientName;
+								insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+							}
+							if (insights && (lastOne = _.last(insights.values))) {
+								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
+								if (lastOne.originName) tokens.client = lastOne.originName;
+								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
 							}
 							//if(lastOne) tokens
 						}
-						
-						
+
+
 						trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
-					
+
 					});
 				}
 			});
@@ -365,7 +417,7 @@ class DeviceSetter extends Homey.App {
 
 	}
 	refreshTracking2(trigger) {
-		updateTracking2.call(this, true, trigger);
+		this.updateTracking2.call(this, true, trigger);
 	}
 
 
