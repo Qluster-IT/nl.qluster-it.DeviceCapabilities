@@ -26,7 +26,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	onInit() {
-		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
+		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', false);
 		this.log('DeviceSetter is running...');
 		this.refreshHomeyAPI().then(async api => {
 			this.Tracking.homeyAPIStatic = api;
@@ -295,7 +295,7 @@ class DeviceSetter extends Homey.App {
 				.registerRunListener((async (args, state) => {
 					try {
 						if (!args || !args.device || !args.capability) return false;
-						
+
 						// var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
 
 						var api = await this.refreshHomeyAPI();
@@ -303,26 +303,40 @@ class DeviceSetter extends Homey.App {
 						var targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
 
 						var tokens = { text: '', number: 0, boolean: false, user: '', client: '' };
-						
+
 						if (targetInsight) {
 							var insights, lastOne = null;
 							try {
-								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id});//, resolution: 'lastHour' });
+								var resolution = undefined;
+								if (args.numberof <= 60) resolution = 'lastHour';
+								else if (args.numberof <= 60 * 6) resolution = 'last6Hours';
+								else if (args.numberof <= 60 * 24) resolution = 'last24Hours';
+								else if (args.numberof <= 60 * 24 * 3) resolution = 'last3Days';
+								else if (args.numberof <= 60 * 24 * 7) resolution = 'last7Days';
+								else if (args.numberof <= 60 * 24 * 14) resolution = 'last14Days';
+								else if (args.numberof <= 60 * 24 * 31) resolution = 'last31Days';
+								else if (args.numberof <= 60 * 24 * 30 * 3) resolution = 'last3Months';
+								else if (args.numberof <= 60 * 24 * 30 * 6) resolution = 'last6Months';
+								else if (args.numberof <= 60 * 24 * 365 * 2) resolution = 'last2Years';
+								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: resolution });//, resolution: 'lastHour' });
 							} catch (error) {
 								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
 							}
 							var now = new Date();
-							now.setMinutes(now.getMinutes()-args.numberof);
-							insights.values = _.filter(insights.values, i=> { return new Date(i.t)<now && (i.v!==null || i.v!==undefined); });
+							now.setMinutes(now.getMinutes() - args.numberof);
+							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null || i.v !== undefined); });
 							if (insights && (lastOne = _.last(insights.values))) {
 								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
 								if (lastOne.originName) tokens.client = lastOne.originName;
 								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
-		
+
 								if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
-								else if (typeof (lastOne.v) == typeof (tokens.number)) tokens.number = lastOne.v;
+								else if (typeof (lastOne.v) == typeof (tokens.number)) {
+									tokens.number = lastOne.v;
+									if(Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(lastOne.v.toFixed(targetInsight.decimals));
+								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
-		}
+							}
 						}
 
 						return tokens;
@@ -335,8 +349,8 @@ class DeviceSetter extends Homey.App {
 
 			set_capability_log.getArgument('device')
 				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log' }));
-				set_capability_log.getArgument('capability')
-				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log' }));
+			set_capability_log.getArgument('capability')
+				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log', insights: true }));
 		}).bind(this));
 
 	}
@@ -438,7 +452,7 @@ class DeviceSetter extends Homey.App {
 			return defer.promise;
 		}).bind(this);
 	}
-	autocompleteCapability({ getable, setable, api } = {}) {
+	autocompleteCapability({ getable, setable, api, insights } = {}) {
 		return ((query, args) => {
 			var defer = new Defer();
 			this.refreshHomeyAPI(api).then((async api => {
@@ -448,6 +462,7 @@ class DeviceSetter extends Homey.App {
 				var list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable }; });
 				if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 				if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
+				if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });
 				list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
 				defer.resolve(list);
 			}).bind(this));

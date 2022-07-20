@@ -40,5 +40,8 @@
   },
   "1.2.0": {
     "en": "New: Retrieve insight/log from a capability from a device"
+  },
+  "1.2.1": {
+    "en": "Improved results for: Retrieve insight/log from a capability from a device"
   }
 }
