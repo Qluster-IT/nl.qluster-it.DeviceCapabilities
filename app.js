@@ -299,6 +299,15 @@ class DeviceSetter extends Homey.App {
 						// var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
 
 						var api = await this.refreshHomeyAPI();
+						
+						//next is for Testing
+						// var user = await api.users.getUserMe();
+						// var users = await api.users.getUsers();
+						// var sessionMe = await api.sessions.getSessionMe();
+						// var sessions = await api.sessions.getSessions();
+						// var homey = this.homey;
+						//End test
+						
 						var device = await api.devices.getDevice({ id: args.device.id });
 						var targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
 
