@@ -46,8 +46,8 @@ class DeviceSetter extends Homey.App {
 						var devices = this.devices;
 						var zones = this.zones;
 
-						var cls = args.devicetype ? args.devicetype.id : args.capability.id.split('.')[0];
-						var capability = args.devicetype ? args.capability.id : args.capability.id.substr(args.capability.id.indexOf('.') + 1);
+						var cls = args.deviceclass ? args.deviceclass.id : args.capability.id.split('.')[0];
+						var capability = args.deviceclass ? args.capability.id : args.capability.id.substr(args.capability.id.indexOf('.') + 1);
 						var devicesToSet = [];
 						setZone(args.zone.id);
 						var val = args.value;
@@ -88,11 +88,11 @@ class DeviceSetter extends Homey.App {
 						this.log(error);
 					}
 				}).bind(this))
-				.getArgument('devicetype').registerAutocompleteListener((query, args) => {
+				.getArgument('deviceclass').registerAutocompleteListener((query, args) => {
 					this.log('args');
 					this.log(args);
 					var defer = new Defer(10000);
-					this.getDeviceTypes(action, query, args).then((r) => {
+					this.getDeviceclasss(action, query, args).then((r) => {
 						defer.resolve(r);
 					}).catch(err => { defer.reject(err); });
 					return defer.promise;
@@ -100,10 +100,10 @@ class DeviceSetter extends Homey.App {
 			set_capability_zone.getArgument('capability').registerAutocompleteListener((query, args) => {
 				this.log('args');
 				this.log(args);
-				if(!args.devicetype ||args.devicetype==='undefined') return Promise.reject(new Error("First select Device Type."));
+				if(!args.deviceclass ||args.deviceclass==='undefined') return Promise.reject(new Error("First select Device Type."));
 				var defer = new Defer(10000);
 
-				this.getDeviceTypeCapabilities(action, query, args).then((r) => {
+				this.getDeviceclassCapabilities(action, query, args).then((r) => {
 					defer.resolve(r);
 				}).catch(err => { defer.reject(err); });
 				return defer.promise;
@@ -424,19 +424,19 @@ class DeviceSetter extends Homey.App {
 		this.updateTracking2.call(this, true, trigger);
 	}
 
-	async getDeviceTypeCapabilities(action, query, args) {
-		if (!args.devicetype) return [];
-		var all = await this.getDeviceTypesAndCapabilities(action, undefined, query, args.devicetype.id);
+	async getDeviceclassCapabilities(action, query, args) {
+		if (!args.deviceclass) return [];
+		var all = await this.getDeviceclasssAndCapabilities(action, undefined, query, args.deviceclass.id);
 		all = _.filter(all, dt => dt.capabilities.length > 0);
 
 		return all.length == 0 ? [] : _.map(_.sortBy(all[0].capabilities), x => { return { id: x, name: x }; });
 	}
-	async getDeviceTypes(action, query, args) {
-		var all = await this.getDeviceTypesAndCapabilities(action, query, undefined);
+	async getDeviceclasss(action, query, args) {
+		var all = await this.getDeviceclasssAndCapabilities(action, query, undefined);
 		all = _.sortBy(_.filter(all, dt => dt.capabilities.length > 0), 'name');
 		return all.length == 0 ? [] : _.map(all, x => { return { id: x.name, name: x.name }; });// all;//_.map(all, x=> x.id.split('.')[0]);
 	}
-	async getDeviceTypesAndCapabilities(action, queryDeviceType, queryCapability, deviceType) {
+	async getDeviceclasssAndCapabilities(action, queryDeviceclass, queryCapability, deviceclass) {
 		let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
 		var devices = this.devices;
@@ -444,8 +444,8 @@ class DeviceSetter extends Homey.App {
 		var actionType = _.last(action.split('_'));
 
 		_(devices).forEach(d => {
-			if ((!queryDeviceType || queryDeviceType == '' || d.class.indexOf(queryDeviceType.toLowerCase()) > -1) && (!deviceType || d.class == deviceType) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: [] };
-			if (d.virtualClass && (!queryDeviceType || queryDeviceType == '' || d.virtualClass.indexOf(queryDeviceType.toLowerCase()) > -1) && (!deviceType || d.virtualClass == deviceType) && Object.keys(classes).indexOf(d.virtualClass) == -1) classes[d.virtualClass] = { name: d.virtualClass, capabilities: [] };
+			if ((!queryDeviceclass || queryDeviceclass == '' || d.class.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.class == deviceclass) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: [] };
+			if (d.virtualClass && (!queryDeviceclass || queryDeviceclass == '' || d.virtualClass.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.virtualClass == deviceclass) && Object.keys(classes).indexOf(d.virtualClass) == -1) classes[d.virtualClass] = { name: d.virtualClass, capabilities: [] };
 		});
 		_(classes).forEach((cls, key) => {
 			var devs = _(devices).filter(d => d.class == key || d.virtualClass == key);
