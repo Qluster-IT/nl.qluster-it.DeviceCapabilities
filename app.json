@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -55,14 +55,22 @@
           {
             "type": "autocomplete",
             "name": "device",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat"
+            },
             "placeholder": {
               "en": "Device",
-              "nl": "Device"
+              "nl": "Apparaat"
             }
           },
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Mogelijkheid"
@@ -94,14 +102,22 @@
           {
             "type": "autocomplete",
             "name": "device",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat"
+            },
             "placeholder": {
               "en": "Device",
-              "nl": "Device"
+              "nl": "Apparaat"
             }
           },
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Mogelijkheid"
@@ -167,14 +183,22 @@
           {
             "type": "autocomplete",
             "name": "device",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat"
+            },
             "placeholder": {
               "en": "Device",
-              "nl": "Device"
+              "nl": "Apparaat"
             }
           },
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Mogelijkheid"
@@ -230,6 +254,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -247,6 +275,10 @@
           {
             "type": "text",
             "name": "value",
+            "title": {
+              "en": "Text",
+              "nl": "Tekst"
+            },
             "placeholder": {
               "en": "Text",
               "nl": "Tekst"
@@ -308,6 +340,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -317,6 +353,10 @@
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Capability"
@@ -325,6 +365,10 @@
           {
             "type": "number",
             "name": "value",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer"
+            }  ,
             "placeholder": {
               "en": "Number",
               "nl": "Nummer"
@@ -386,6 +430,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -395,6 +443,10 @@
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Capability"
@@ -403,6 +455,10 @@
           {
             "type": "range",
             "name": "value",
+            "title": {
+              "en": "%",
+              "nl": "%"
+            },
             "placeholder": {
               "en": "%",
               "nl": "%"
@@ -470,6 +526,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -479,6 +539,10 @@
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Capability"
@@ -487,6 +551,10 @@
           {
             "type": "dropdown",
             "name": "value",
+            "title": {
+              "en": "True or False",
+              "nl": "Ja of Nee"
+            },
             "placeholder": {
               "en": "True or False",
               "nl": "Ja of Nee"
@@ -564,6 +632,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -573,6 +645,10 @@
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Capability"
@@ -581,6 +657,10 @@
           {
             "type": "checkbox",
             "name": "value",
+            "title": {
+              "en": "Yes/No",
+              "nl": "Ja/Nee"
+            },
             "placeholder": {
               "en": "Yes/No",
               "nl": "Ja/Nee"
@@ -642,6 +722,10 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
+            "title": {
+              "en": "Devicetype",
+              "nl": "Apparaattype"
+            },
             "placeholder": {
               "en": "Devicetype",
               "nl": "Apparaattype"
@@ -651,6 +735,10 @@
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Capability"
@@ -724,14 +812,22 @@
           {
             "type": "autocomplete",
             "name": "device",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat"
+            },
             "placeholder": {
               "en": "Device",
-              "nl": "Device"
+              "nl": "Apparaat"
             }
           },
           {
             "type": "autocomplete",
             "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability"
+            },
             "placeholder": {
               "en": "Capability",
               "nl": "Mogelijkheid"
