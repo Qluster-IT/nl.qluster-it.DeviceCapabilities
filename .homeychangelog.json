@@ -43,5 +43,11 @@
   },
   "1.2.1": {
     "en": "Improved results for: Retrieve insight/log from a capability from a device"
+  },
+  "1.3.1": {
+    "en": "Added Mass Set cards for number, enum and free-from json; also improved mass execution speed"
+  },
+  "1.3.3" : {
+    "en" : "Reduced Memory Usages and Improved Speed in Flow Editor."
   }
 }
