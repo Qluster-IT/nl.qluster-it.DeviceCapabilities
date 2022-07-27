@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -11,6 +11,10 @@
   "description": {
     "en": "Enhance the capabilities of devices",
     "nl": "Verbeter de capabilities van apparaten"
+  },
+  "tags": {
+    "en": ["device", "capabilities", "capability", "user", "client", "operator", "log", "insights", "watch", "listener"],
+    "nl": ["device", "capabilities", "capability", "gebruiker", "client", "operator", "log", "insights", "watch", "listener"]
   },
   "category": [
     "tools"
