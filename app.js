@@ -10,7 +10,8 @@ class DeviceSetter extends Homey.App {
 
 	Triggers = {
 		triggercapabilitychanged: { List: [], Card: null },
-		triggercapabilitychanged2: { List: [], Card: null }
+		triggercapabilitychanged2: { List: [], Card: null },
+		triggerappstarted: { List: [], Card: null }
 	};
 	Tracking = {
 		/** @type {HomeyAPI} homeyAPI; */
@@ -26,7 +27,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	onInit() {
-		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', false);
+		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		this.log('DeviceSetter is running...');
 		this.refreshHomeyAPI().then(async api => {
 			this.Tracking.homeyAPIStatic = api;
@@ -51,7 +52,7 @@ class DeviceSetter extends Homey.App {
 						var devicesToSet = [];
 						setZone(args.zone.id);
 						var val = args.value;
-						if (action.endsWith('_boolean')) val = val === 'true' || val ===true;
+						if (action.endsWith('_boolean')) val = val === 'true' || val === true;
 						if (action.endsWith('_json')) val = JSON.parse(val);// === 'true' || val ===true;
 						var promises = [];
 						var values = null;//capability.values;
@@ -68,7 +69,7 @@ class DeviceSetter extends Homey.App {
 							return true;
 						});
 						all.catch(x => {
-							if(x.message.contains('InvalidEnumValueError') && values && values.length) return defer.reject(x.message +'\r\nPossible values are: ' + (_.map(values, v=>v.id + ' (' + v.title + ')')).join(', '));							
+							if (x.message.contains('InvalidEnumValueError') && values && values.length) return defer.reject(x.message + '\r\nPossible values are: ' + (_.map(values, v => v.id + ' (' + v.title + ')')).join(', '));
 							defer.reject(x);
 							return false;
 						});
@@ -100,7 +101,7 @@ class DeviceSetter extends Homey.App {
 			set_capability_zone.getArgument('capability').registerAutocompleteListener((query, args) => {
 				this.log('args');
 				this.log(args);
-				if(!args.deviceclass ||args.deviceclass==='undefined') return Promise.reject(new Error("First select Device Type."));
+				if (!args.deviceclass || args.deviceclass === 'undefined') return Promise.reject(new Error("First select Device Type."));
 				var defer = new Defer(10000);
 
 				this.getDeviceclassCapabilities(action, query, args).then((r) => {
@@ -213,6 +214,21 @@ class DeviceSetter extends Homey.App {
 				}).bind(this));
 		}
 
+
+
+		let trigger_app_startedTrigger = this.homey.flow.getTriggerCard('trigger_app_started');
+		this.Triggers.triggerappstarted.Card = trigger_app_startedTrigger;
+		trigger_app_startedTrigger
+			.on('update', (() => this.refreshAppStarted() ))
+			.registerRunListener((args, state) => {
+				var r = args.app && args.app.id && state.app && state.app.id && args.app.id === state.app.id;
+				return Promise.resolve(r);
+			})
+			.getArgument('app')
+			.registerAutocompleteListener(this.autocompleteApp({ api: 'trigger_app_started' }));
+			//this.refreshAppStarted.call(this);
+
+		
 
 
 		let condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
@@ -452,7 +468,7 @@ class DeviceSetter extends Homey.App {
 			_(devs).forEach(d => {
 				_(d.capabilities).forEach(c => {
 					if (
-						(!queryCapability || queryCapability == '' || c.toLowerCase().indexOf(queryCapability.toLowerCase()) > -1) && 
+						(!queryCapability || queryCapability == '' || c.toLowerCase().indexOf(queryCapability.toLowerCase()) > -1) &&
 						d.capabilitiesObj[c] && d.capabilitiesObj[c].setable && cls.capabilities.indexOf(c) == -1) {
 						switch (actionType) {
 							case "percentage": if (d.capabilitiesObj[c].type == 'number' && d.capabilitiesObj[c].min == 0 && d.capabilitiesObj[c].max == 1 && d.capabilitiesObj[c].decimals == 2) cls.capabilities.push(c);
@@ -488,13 +504,13 @@ class DeviceSetter extends Homey.App {
 			query = query.toLowerCase();
 			var queries = query.split(' ');
 			var defer = new Defer(10000);
-			
+
 			var devices = this.devices;
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
 			list = _.orderBy(list, 'name');
 			var array = _.map(list, device => { return { id: device.id, name: device.name } });
 			defer.resolve(array);
-			
+
 			return defer.promise;
 		}).bind(this);
 	}
@@ -515,18 +531,35 @@ class DeviceSetter extends Homey.App {
 			return defer.promise;
 		}).bind(this);
 	}
+	autocompleteApp({ api } = {}) {
+		return ((query, args) => {
+			query = query.toLowerCase();
+			var queries = query.split(' ');
+			var defer = new Defer(10000);
+
+			var apps = this.apps;
+			var list = _.filter(apps, app => _.every(queries, q => app.name.toLowerCase().indexOf(q) > -1));
+			list = _.orderBy(list, 'name');
+			var array = _.map(list, app => { return { id: app.id, name: app.name }; });
+			defer.resolve(array);
+
+			return defer.promise;
+		}).bind(this);
+	}
 
 	async refreshHomeyAPI(id) {
-		if(id===undefined && this.homeyAPI) return this.homeyAPI;
+		if (id === undefined && this.homeyAPI) return this.homeyAPI;
 		if (!id) {
-		
-		// if(id!==null && this.homeyAPI) return this.homeyAPI;
-		// if (true || !id) {
+
+			// if(id!==null && this.homeyAPI) return this.homeyAPI;
+			// if (true || !id) {
 			this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey); // Refresh
 			await this.refreshDevices();
 			await this.refreshZones();
-			this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x=> { this.refreshDevices(); } );
-			this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x=> { this.refreshZones(); } );
+			await this.refreshApps();
+			this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
+			this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
+			this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });
 			return this.homeyAPI;
 		}
 		// if (!this.apis) this.apis = {};
@@ -547,6 +580,47 @@ class DeviceSetter extends Homey.App {
 	async refreshZones() {
 		this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
 	}
+
+
+	async refreshApps(app) {
+		var firstrun = !this.apps;
+		this.apps = await this.homeyAPI.apps.getApps({ $skipCache: true });
+		
+		if(firstrun) await this.refreshAppStarted();		
+	}
+
+	async refreshAppStarted() {
+		this.clearHomeyAPI('trigger_app_started');
+		_.each(this.Watchers, watcher=> {
+			if(watcher.intervalRunner) watcher.intervalRunner = clearInterval(watcher.intervalRunner);
+		});
+		this.Watchers = {};
+		
+		this.Triggers.triggerappstarted.Card.getArgumentValues()
+			.then((args => {
+				this.Triggers.triggerappstarted.List = args;
+				var apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
+				_.each(apps, app => this.watchAppState(app.id) );
+
+			}).bind(this));
+	}
+
+	async watchAppState(appName) {
+		if(!this.apps) return;
+		const app = this.apps[appName];
+		if (app) {
+			if (!this.Watchers[appName]) this.Watchers[appName] = {oldState:app.state};
+			if (this.Watchers[appName].intervalRunner) this.Watchers[appName].intervalRunner = clearInterval(this.Watchers[appName].intervalRunner);
+
+			this.Watchers[appName].intervalRunner = setInterval(() => {
+				if (this.Watchers[appName].oldState != app.state) {
+					if(app.state==='running') this.Triggers.triggerappstarted.Card.trigger({appId:app.id, appName:app.name}, {app:{id:app.id}} );
+				}
+				this.Watchers[appName].oldState = app.state;
+			}, 5000);
+		}		
+	}
+
 
 
 }
