@@ -61,5 +61,11 @@
   },
   "1.4.0" : {
     "en" : "Added an App has started card (When)"
+  },
+  "1.4.1" : {
+    "en" : "Added an App has started card (When)"
+  },
+  "1.4.2" : {
+    "en" : "Added condition Is App Running and improved coding for performance"
   }
 }

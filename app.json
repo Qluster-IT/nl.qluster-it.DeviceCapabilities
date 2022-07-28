@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -263,6 +263,31 @@
             "title": {
               "en": "Error",
               "nl": "Foutmelding"
+            }
+          }
+        ]
+      },
+      {
+        "id": "condition_app_running",
+        "title": {
+          "en": "App started",
+          "nl": "App is gestart"
+        },
+        "titleFormatted": {
+          "en": "App [[app]] is !{{|not}} running",
+          "nl": "App [[app]] staat !{{|niet}} aan"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "app",
+            "title": {
+              "en": "App",
+              "nl": "App"
+            },
+            "placeholder": {
+              "en": "App",
+              "nl": "App"
             }
           }
         ]

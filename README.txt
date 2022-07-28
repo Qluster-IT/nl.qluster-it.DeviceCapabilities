@@ -4,7 +4,7 @@ And a condition able to set a capability and wait for a specific "error".
 
 Now also a new actioncard, which retrieves the value from a capability from a device from [numberof] minutes ago (including the User and Client which changed the value).
 
-And an App has started card (When).
+And an App has started card (When) and an App is running card (And).
 
 Example: Set curtain.windowcoverings_set To 0 in Home including subzones (Yes).
 This will close all curtains in the Home and subzones. Setting it to 1 will open all curtains.

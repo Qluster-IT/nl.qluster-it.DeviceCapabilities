@@ -27,6 +27,8 @@ class DeviceSetter extends Homey.App {
 	}
 
 	onInit() {
+		this.Watchers = {};
+
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		this.log('DeviceSetter is running...');
 		this.refreshHomeyAPI().then(async api => {
@@ -225,10 +227,16 @@ class DeviceSetter extends Homey.App {
 				return Promise.resolve(r);
 			})
 			.getArgument('app')
-			.registerAutocompleteListener(this.autocompleteApp({ api: 'trigger_app_started' }));
+			.registerAutocompleteListener(this.autocompleteApp());
 			//this.refreshAppStarted.call(this);
 
 		
+		let condition_app_running = this.homey.flow.getConditionCard('condition_app_running');
+		condition_app_running.registerRunListener(async (args, state) => {
+				if(!args.app || !args.app.id ||!this.apps || !this.apps[args.app.id]) return false;
+				else return this.apps[args.app.id].state==='running';
+			})
+			.getArgument('app').registerAutocompleteListener(this.autocompleteApp());
 
 
 		let condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
@@ -369,7 +377,7 @@ class DeviceSetter extends Homey.App {
 		if (hm.Tracking.homeyAPI === true) return;
 		if (!hm.Tracking.homeyAPI || refresh) {
 			hm.Tracking.homeyAPI = true;
-			hm.Tracking.homeyAPI = await hm.refreshHomeyAPI(null);
+			hm.Tracking.homeyAPI = await hm.refreshHomeyAPI('tracker');
 		}
 		//var devices = null;
 		_.each(hm.Tracking.devices, async device => {
@@ -399,7 +407,7 @@ class DeviceSetter extends Homey.App {
 		if (hm.Tracking2.homeyAPI === true) return;
 		if (!hm.Tracking2.homeyAPI || refresh) {
 			hm.Tracking2.homeyAPI = true;
-			hm.Tracking2.homeyAPI = await hm.refreshHomeyAPI(null);
+			hm.Tracking2.homeyAPI = await hm.refreshHomeyAPI('tracker2');
 		}
 		//var devices = null;
 		_.each(hm.Tracking2.devices, async device => {
@@ -550,24 +558,37 @@ class DeviceSetter extends Homey.App {
 	async refreshHomeyAPI(id) {
 		if (id === undefined && this.homeyAPI) return this.homeyAPI;
 		if (!id) {
+			this.log('refreshHomeyAPI', id);
 
 			// if(id!==null && this.homeyAPI) return this.homeyAPI;
 			// if (true || !id) {
-			this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey); // Refresh
+			this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
+			this.homeyAPI.then(x=>this.homeyAPI=x);
+			await this.homeyAPI;
+			
+			//this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
+			//this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
+			//this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
+			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x));
+			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x));
+			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x));			
+			this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x));
+			this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x));
+			this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x));
+			this.homeyAPI.apps.on('app.create', x => this.refreshApps(x));
+			this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x));
+			this.homeyAPI.apps.on('app.update', x => this.refreshApps(x));
 			await this.refreshDevices();
 			await this.refreshZones();
 			await this.refreshApps();
-			this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
-			this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
-			this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });
 			return this.homeyAPI;
 		}
-		// if (!this.apis) this.apis = {};
-		// if (!this.apis[id]) {
-		// 	this.log('refreshHomeyAPI id:', id);
-		// 	this.apis[id] = await HomeyAPI.forCurrentHomey(this.homey);
-		// }
-		// return this.apis[id];
+		if (!this.apis) this.apis = {};
+		if (!this.apis[id]) {
+			this.log('refreshHomeyAPI id:', id);
+			this.apis[id] = await HomeyAPI.forCurrentHomey(this.homey);
+		}
+		return this.apis[id];
 	}
 	async clearHomeyAPI(id) {
 		if (id && this.apis) delete this.apis[id];
@@ -583,42 +604,51 @@ class DeviceSetter extends Homey.App {
 
 
 	async refreshApps(app) {
+		this.log('refreshApps', app);
+		if(this.apps=='waiting') return;
 		var firstrun = !this.apps;
+		this.apps = 'waiting';
 		this.apps = await this.homeyAPI.apps.getApps({ $skipCache: true });
 		
-		if(firstrun) await this.refreshAppStarted();		
+		//if(firstrun) 
+		await this.refreshAppStarted(firstrun);		
 	}
 
-	async refreshAppStarted() {
-		this.clearHomeyAPI('trigger_app_started');
-		_.each(this.Watchers, watcher=> {
-			if(watcher.intervalRunner) watcher.intervalRunner = clearInterval(watcher.intervalRunner);
-		});
-		this.Watchers = {};
-		
-		this.Triggers.triggerappstarted.Card.getArgumentValues()
-			.then((args => {
-				this.Triggers.triggerappstarted.List = args;
-				var apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
-				_.each(apps, app => this.watchAppState(app.id) );
-
-			}).bind(this));
-	}
-
-	async watchAppState(appName) {
-		if(!this.apps) return;
-		const app = this.apps[appName];
-		if (app) {
-			if (!this.Watchers[appName]) this.Watchers[appName] = {oldState:app.state};
-			if (this.Watchers[appName].intervalRunner) this.Watchers[appName].intervalRunner = clearInterval(this.Watchers[appName].intervalRunner);
-
-			this.Watchers[appName].intervalRunner = setInterval(() => {
-				if (this.Watchers[appName].oldState != app.state) {
-					if(app.state==='running') this.Triggers.triggerappstarted.Card.trigger({appId:app.id, appName:app.name}, {app:{id:app.id}} );
+	async refreshAppStarted(firstRun) {
+		this.log('refreshAppStarted', firstRun);
+		if(!this.WatchersRunner) this.WatchersRunner = setInterval(()=> {
+			_.each(this.Watchers, watcher=> {
+				if (watcher.oldState != watcher.app.state) {
+					watcher.oldState = watcher.app.state;
+					if(watcher.app.state==='running') this.Triggers.triggerappstarted.Card.trigger({appId:watcher.app.id, appName:watcher.app.name}, {app:{id:watcher.app.id}} );
 				}
-				this.Watchers[appName].oldState = app.state;
-			}, 5000);
-		}		
+			});
+		}, 3000);
+		var args = await this.Triggers.triggerappstarted.Card.getArgumentValues();
+		this.Triggers.triggerappstarted.List = args;
+		var apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
+		_.each(apps, app => this.watchAppState(app.id) );
+		_.each(this.Watchers, watcher => {
+			if(!_.find(apps, app=> app.id==watcher.app.id)) delete this.Watchers[watcher.app.id];
+		} );
+		
+		if(firstRun) this.Triggers.triggerappstarted.Card.trigger({appId:this.manifest.id, appName:this.manifest.name}, {app:{id:this.manifest.id}} );
+	}
+
+	async watchAppState(appId) {
+		if(!this.apps || appId===this.manifest.id || !this.apps[appId]) return;
+		const app = this.apps[appId];
+		if(this.Watchers[appId]) {
+			this.Watchers[appId].app = app;
+		} else {
+			if (!this.Watchers[appId]) this.Watchers[appId] = {oldState:app.state, app:app};	
+		}
+		this.watchAppStateUpdate(app);			
+	}
+	async watchAppStateUpdate(app) {
+		app.on(['update', 'delete'], (_app) => {
+			var a = _app;
+		});
 	}
 
 
