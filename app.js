@@ -7,6 +7,9 @@ const _ = require('lodash-core');
 const { Defer } = require('./lib/proto');
 
 class DeviceSetter extends Homey.App {
+	/**@type {DeviceSetter} */
+    static get Current() {return this._current; }
+    static set Current(v) { this._current = v; }
 
 	Triggers = {
 		triggercapabilitychanged: { List: [], Card: null },
@@ -27,7 +30,8 @@ class DeviceSetter extends Homey.App {
 	}
 
 	onInit() {
-		this.Watchers = {};
+		DeviceSetter.Current = this;        
+        this.VirtualDevices = {};
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		this.log('DeviceSetter is running...');
@@ -78,7 +82,12 @@ class DeviceSetter extends Homey.App {
 						return defer.promise;
 
 						function setZone(zoneId) {
-							var devs = _.filter(devices, d => d.zone == zoneId && (d.class == cls || d.virtualClass == cls) && d.capabilities && d.capabilities.indexOf(capability) > -1);
+							var devs = _.filter(devices, d => 
+								d.zone == zoneId && 
+								(!args.brand || !args.brand.id || d.driverUri===args.brand.id) && 
+								(!args.devicetype || !args.devicetype.id || (d.driverUri===args.devicetype.brandUri && d.driverId===args.devicetype.id )) && 
+								(d.class == cls || d.virtualClass == cls) && 
+								d.capabilities && d.capabilities.indexOf(capability) > -1);
 							_.forEach(devs, d => devicesToSet.push(d));
 							if (args.subzones == 'yes') _.forEach(zones, z => {
 								if (z.parent == zoneId) setZone(z.id);
@@ -100,10 +109,18 @@ class DeviceSetter extends Homey.App {
 					}).catch(err => { defer.reject(err); });
 					return defer.promise;
 				});
+			set_capability_zone.getArgument('brand').registerAutocompleteListener(async (query, args) => {
+				if (!args.deviceclass || !args.deviceclass.id) throw new Error("First select Device Class.");
+				return await this.getDeviceclassBrands(action, query, args);
+			});
+
+			set_capability_zone.getArgument('devicetype').registerAutocompleteListener(async (query, args) => {
+				if (!args.deviceclass || !args.deviceclass.id) throw new Error("First select Device Class.");
+				return await this.getDeviceclassDeviceTypes(action, query, args);
+			});
+			
 			set_capability_zone.getArgument('capability').registerAutocompleteListener((query, args) => {
-				this.log('args');
-				this.log(args);
-				if (!args.deviceclass || args.deviceclass === 'undefined') return Promise.reject(new Error("First select Device Type."));
+				if (!args.deviceclass || !args.deviceclass.id) return Promise.reject(new Error("First select Device Class."));
 				var defer = new Defer(10000);
 
 				this.getDeviceclassCapabilities(action, query, args).then((r) => {
@@ -221,21 +238,21 @@ class DeviceSetter extends Homey.App {
 		let trigger_app_startedTrigger = this.homey.flow.getTriggerCard('trigger_app_started');
 		this.Triggers.triggerappstarted.Card = trigger_app_startedTrigger;
 		trigger_app_startedTrigger
-			.on('update', (() => this.refreshAppStarted() ))
+			.on('update', (() => this.refreshAppStarted()))
 			.registerRunListener((args, state) => {
 				var r = args.app && args.app.id && state.app && state.app.id && args.app.id === state.app.id;
 				return Promise.resolve(r);
 			})
 			.getArgument('app')
 			.registerAutocompleteListener(this.autocompleteApp());
-			//this.refreshAppStarted.call(this);
+		//this.refreshAppStarted.call(this);
 
-		
+
 		let condition_app_running = this.homey.flow.getConditionCard('condition_app_running');
 		condition_app_running.registerRunListener(async (args, state) => {
-				if(!args.app || !args.app.id ||!this.apps || !this.apps[args.app.id]) return false;
-				else return this.apps[args.app.id].state==='running';
-			})
+			if (!args.app || !args.app.id || !this.apps || !this.apps[args.app.id]) return false;
+			else return this.apps[args.app.id].state === 'running';
+		})
 			.getArgument('app').registerAutocompleteListener(this.autocompleteApp());
 
 
@@ -448,19 +465,43 @@ class DeviceSetter extends Homey.App {
 		this.updateTracking2.call(this, true, trigger);
 	}
 
-	async getDeviceclassCapabilities(action, query, args) {
-		if (!args.deviceclass) return [];
-		var all = await this.getDeviceclasssAndCapabilities(action, undefined, query, args.deviceclass.id);
-		all = _.filter(all, dt => dt.capabilities.length > 0);
-
-		return all.length == 0 ? [] : _.map(_.sortBy(all[0].capabilities), x => { return { id: x, name: x }; });
-	}
 	async getDeviceclasss(action, query, args) {
-		var all = await this.getDeviceclasssAndCapabilities(action, query, undefined);
-		all = _.sortBy(_.filter(all, dt => dt.capabilities.length > 0), 'name');
+		var all = await this.getDeviceclasssAndCapabilities({action:action, queryDeviceclass:query});
+		all = _.sortBy(_.filter(all, dt => Object.keys(dt.capabilities).length), 'name');
 		return all.length == 0 ? [] : _.map(all, x => { return { id: x.name, name: x.name }; });// all;//_.map(all, x=> x.id.split('.')[0]);
 	}
-	async getDeviceclasssAndCapabilities(action, queryDeviceclass, queryCapability, deviceclass) {
+	async getDeviceclassBrands(action, query, args) {
+		if (!args.deviceclass || !args.deviceclass.id) return [];
+		var all = await this.getDeviceclasssAndCapabilities({action:action, deviceclass: args.deviceclass.id});
+		all = _.filter(all, dt => Object.keys(dt.capabilities).length);
+		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
+		all = _.uniqBy(all, 'id');
+		if(query && query.length>0) all = _.filter(all, cls => cls.name.toLowerCase().indexOf(query.toLowerCase())>-1);
+		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name }; });
+	}
+	async getDeviceclassDeviceTypes(action, query, args) {
+		if (!args.deviceclass || !args.deviceclass.id) return [];
+		var all = await this.getDeviceclasssAndCapabilities({action:action,deviceclass: args.deviceclass.id});
+		all = _.filter(all, dt => Object.keys(dt.capabilities).length);
+		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
+		if (args.brand && args.brand.id) all = _.filter(all, x => x.id === args.brand.id);
+		all = _.flatMap(all, x => { return _.map(x.devicetypes, dt => { var d=_.find(this.drivers, _d=>_d.id==dt.id && _d.uri==x.id); return {id:dt.id, name:d?d.name:dt.name, brandUri:x.id, brandName:x.name}; }); });
+		all = _.uniqBy(all, x=>x.brandUri + ':' + x.id);
+		if(query && query.length>0) all = _.filter(all, dt => dt.name.toLowerCase().indexOf(query.toLowerCase())>-1);
+		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name, description: x.brandName, brandUri:x.brandUri }; });
+	}
+	async getDeviceclassCapabilities(action, query, args) {
+		if (!args.deviceclass || !args.deviceclass.id) return [];
+		var all = await this.getDeviceclasssAndCapabilities({action:action,queryCapability:query, deviceclass:args.deviceclass.id});
+		all = _.filter(all, dt => _.countBy(dt.capabilities,1));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+		all = all[0].capabilities;
+		if(args.brand && args.brand.id) all = _.filter(all, cap => _.find(cap.brands,(b)=>b.id===args.brand.id));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+		if(args.devicetype && args.devicetype.id) all = _.filter(all, cap => _.find(cap.brands,(b)=>_.find(b.devicetypes,(dt)=>dt.id===args.devicetype.id)));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+
+		return all.length == 0 ? [] : _.map(_.sortBy(all, "id"), x => { return { id: x.id, name: x.id }; });
+	}
+
+	async getDeviceclasssAndCapabilities({action, queryDeviceclass, queryCapability, deviceclass}={}) {
 		let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
 		var devices = this.devices;
@@ -468,36 +509,38 @@ class DeviceSetter extends Homey.App {
 		var actionType = _.last(action.split('_'));
 
 		_(devices).forEach(d => {
-			if ((!queryDeviceclass || queryDeviceclass == '' || d.class.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.class == deviceclass) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: [] };
-			if (d.virtualClass && (!queryDeviceclass || queryDeviceclass == '' || d.virtualClass.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.virtualClass == deviceclass) && Object.keys(classes).indexOf(d.virtualClass) == -1) classes[d.virtualClass] = { name: d.virtualClass, capabilities: [] };
+			if ((!queryDeviceclass || queryDeviceclass == '' || d.class.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.class == deviceclass) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: {} };
+			if (d.virtualClass && (!queryDeviceclass || queryDeviceclass == '' || d.virtualClass.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.virtualClass == deviceclass) && Object.keys(classes).indexOf(d.virtualClass) == -1) classes[d.virtualClass] = { name: d.virtualClass, capabilities: {} };
 		});
 		_(classes).forEach((cls, key) => {
-			var devs = _(devices).filter(d => d.class == key || d.virtualClass == key);
+			var devs = _.filter(devices, d => d.class == key || d.virtualClass == key);
 			_(devs).forEach(d => {
 				_(d.capabilities).forEach(c => {
 					if (
+						//cls.capabilities.indexOf(c) == -1 &&
 						(!queryCapability || queryCapability == '' || c.toLowerCase().indexOf(queryCapability.toLowerCase()) > -1) &&
-						d.capabilitiesObj[c] && d.capabilitiesObj[c].setable && cls.capabilities.indexOf(c) == -1) {
+						d.capabilitiesObj[c] && d.capabilitiesObj[c].setable) {
 						switch (actionType) {
-							case "percentage": if (d.capabilitiesObj[c].type == 'number' && d.capabilitiesObj[c].min == 0 && d.capabilitiesObj[c].max == 1 && d.capabilitiesObj[c].decimals == 2) cls.capabilities.push(c);
+							case "percentage": if (d.capabilitiesObj[c].type == 'number' && d.capabilitiesObj[c].min == 0 && d.capabilitiesObj[c].max == 1 && d.capabilitiesObj[c].decimals == 2) this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
 								break;
-							case "number": if (d.capabilitiesObj[c].type == 'number') cls.capabilities.push(c);
+							case "number": if (d.capabilitiesObj[c].type == 'number') this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
 								break;
 							case "text":
-								if (d.capabilitiesObj[c].type == 'string') cls.capabilities.push(c);
+								if (d.capabilitiesObj[c].type == 'string' || d.capabilitiesObj[c].type == 'enum') this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
+
 								break;
 							case "boolean":
-								if (d.capabilitiesObj[c].type == 'boolean') cls.capabilities.push(c);
+								if (d.capabilitiesObj[c].type == 'boolean') this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
 								break;
 							case "json":
-								cls.capabilities.push(c);
+								this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
 								break;
 							default:
-								if (d.capabilitiesObj[c].type == 'string');
+								if (d.capabilitiesObj[c].type == 'string' || d.capabilitiesObj[c].type == 'enum');
 								else if (d.capabilitiesObj[c].type == 'boolean');
 								else if (d.capabilitiesObj[c].type == 'number' && d.capabilitiesObj[c].min == 0 && d.capabilitiesObj[c].max == 1 && d.capabilitiesObj[c].decimals == 2);
 								else if (d.capabilitiesObj[c].type == 'number');
-								else cls.capabilities.push(c);
+								else this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
 								break;
 						}
 					}
@@ -505,6 +548,16 @@ class DeviceSetter extends Homey.App {
 			});
 		});
 		return classes;
+	}
+
+	addDeviceToCapabilities(device, capability, cls) {
+		let driverUri = device.driverUri;
+		let driverUriLast = _.last(device.driverUri.split(':'));
+		if (!cls.capabilities[capability]) cls.capabilities[capability] = { id: capability };
+		if (!cls.capabilities[capability].brands) cls.capabilities[capability].brands = {};
+		if (!cls.capabilities[capability].brands[driverUri]) cls.capabilities[capability].brands[driverUri] = { id: driverUri, name: this.apps[driverUriLast] ? this.apps[driverUriLast].name : driverUri, devicetypes: {} };
+		if (!cls.capabilities[capability].brands[driverUri].devicetypes[device.driverId]) cls.capabilities[capability].brands[driverUri].devicetypes[device.driverId] = { id: device.driverId };
+
 	}
 
 	autocompleteDevice({ api } = {}) {
@@ -563,22 +616,27 @@ class DeviceSetter extends Homey.App {
 			// if(id!==null && this.homeyAPI) return this.homeyAPI;
 			// if (true || !id) {
 			this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
-			this.homeyAPI.then(x=>this.homeyAPI=x);
+			this.homeyAPI.then(x => this.homeyAPI = x);
 			await this.homeyAPI;
-			
+
 			//this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
 			//this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
 			//this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
 			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x));
 			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x));
-			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x));			
+			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x));
 			this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x));
 			this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x));
 			this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x));
 			this.homeyAPI.apps.on('app.create', x => this.refreshApps(x));
 			this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x));
 			this.homeyAPI.apps.on('app.update', x => this.refreshApps(x));
+			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x));
+			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x));
+			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x));
+			
 			await this.refreshDevices();
+			await this.refreshDrivers();
 			await this.refreshZones();
 			await this.refreshApps();
 			return this.homeyAPI;
@@ -596,54 +654,55 @@ class DeviceSetter extends Homey.App {
 	async refreshDevices() {
 		this.log('refreshDevices');
 		this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-
+	}
+	async refreshDrivers() {
+		this.log('refreshDrivers');
+		this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
 	}
 	async refreshZones() {
 		this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
 	}
-
-
 	async refreshApps(app) {
 		this.log('refreshApps', app);
-		if(this.apps=='waiting') return;
+		if (this.apps == 'waiting') return;
 		var firstrun = !this.apps;
 		this.apps = 'waiting';
 		this.apps = await this.homeyAPI.apps.getApps({ $skipCache: true });
-		
+
 		//if(firstrun) 
-		await this.refreshAppStarted(firstrun);		
+		await this.refreshAppStarted(firstrun);
 	}
 
 	async refreshAppStarted(firstRun) {
 		this.log('refreshAppStarted', firstRun);
-		if(!this.WatchersRunner) this.WatchersRunner = setInterval(()=> {
-			_.each(this.Watchers, watcher=> {
+		if (!this.WatchersRunner) this.WatchersRunner = setInterval(() => {
+			_.each(this.Watchers, watcher => {
 				if (watcher.oldState != watcher.app.state) {
 					watcher.oldState = watcher.app.state;
-					if(watcher.app.state==='running') this.Triggers.triggerappstarted.Card.trigger({appId:watcher.app.id, appName:watcher.app.name}, {app:{id:watcher.app.id}} );
+					if (watcher.app.state === 'running') this.Triggers.triggerappstarted.Card.trigger({ appId: watcher.app.id, appName: watcher.app.name }, { app: { id: watcher.app.id } });
 				}
 			});
 		}, 3000);
 		var args = await this.Triggers.triggerappstarted.Card.getArgumentValues();
 		this.Triggers.triggerappstarted.List = args;
 		var apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
-		_.each(apps, app => this.watchAppState(app.id) );
+		_.each(apps, app => this.watchAppState(app.id));
 		_.each(this.Watchers, watcher => {
-			if(!_.find(apps, app=> app.id==watcher.app.id)) delete this.Watchers[watcher.app.id];
-		} );
-		
-		if(firstRun) this.Triggers.triggerappstarted.Card.trigger({appId:this.manifest.id, appName:this.manifest.name}, {app:{id:this.manifest.id}} );
+			if (!_.find(apps, app => app.id == watcher.app.id)) delete this.Watchers[watcher.app.id];
+		});
+
+		if (firstRun) this.Triggers.triggerappstarted.Card.trigger({ appId: this.manifest.id, appName: this.manifest.name }, { app: { id: this.manifest.id } });
 	}
 
 	async watchAppState(appId) {
-		if(!this.apps || appId===this.manifest.id || !this.apps[appId]) return;
+		if (!this.apps || appId === this.manifest.id || !this.apps[appId]) return;
 		const app = this.apps[appId];
-		if(this.Watchers[appId]) {
+		if (this.Watchers[appId]) {
 			this.Watchers[appId].app = app;
 		} else {
-			if (!this.Watchers[appId]) this.Watchers[appId] = {oldState:app.state, app:app};	
+			if (!this.Watchers[appId]) this.Watchers[appId] = { oldState: app.state, app: app };
 		}
-		this.watchAppStateUpdate(app);			
+		this.watchAppStateUpdate(app);
 	}
 	async watchAppStateUpdate(app) {
 		app.on(['update', 'delete'], (_app) => {

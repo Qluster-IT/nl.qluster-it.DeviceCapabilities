@@ -67,5 +67,11 @@
   },
   "1.4.2" : {
     "en" : "Added condition Is App Running and improved coding for performance"
+  },
+  "1.4.5" : {
+    "en" : "Added optional Brand and Device Type to Set [capability] per [zone] cards and improved hints"
+  },
+  "1.5.1" : {
+    "en" : "Added Virtual device with text, number and yes/no capability which you can set through flowcards"
   }
 }
