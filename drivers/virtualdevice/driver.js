@@ -10,7 +10,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     async onInit() {
         this.log('VirtualDeviceDriver onInit');
 
-        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean'];//, 'set_capability_zone_anders'];
+        // var manifest = Homeyman.Current.manifest;
+		// manifest.capabilities.measure_devicecapabilities_number.units = 'TE';
+    
+        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_status'];
         action_virtualdevice_sets.forEach((action => {
 			var set_value = this.homey.flow.getActionCard(action);
 			set_value
@@ -19,13 +22,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						if (!args || !args.device || !args.field) return false;
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityValue("devicecapatilies_text." + args.field.id, args.text);
+                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityValue("devicecapabilities_text." + args.field.id, args.text);
                                 return true;
                             case 'virtualdevice_set_number':
-                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapatilies_number." + args.field.id, args.number);
+                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
                                 return true;
                             case 'virtualdevice_set_boolean':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') args.device.setCapabilityValue("alarm_devicecapatilies_boolean." + args.field.id, args.boolean);
+                                if(args.boolean!==undefined && args.boolean!=='undefined') args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
+                                return true;
+                            case 'virtualdevice_set_status':
+                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityOptions("measure_devicecapabilities_status." + args.field.id, {units:args.text});
+                                    if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_status." + args.field.id, args.number);
+                                
                                 return true;
                         }
                         return null;
@@ -39,13 +47,16 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 var ret = [];
                 switch (action) {
                     case 'virtualdevice_set_text':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('devicecapatilies_text.text'+i)) ret.push({'id':'text'+i, 'name':'Text '+i});
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('devicecapabilities_text.text'+i)) ret.push({'id':'text'+i, 'name':'Text '+i});
                         break;
                     case 'virtualdevice_set_number':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapatilies_number.number'+i)) ret.push({'id':'number'+i, 'name':'Number '+i});
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_number.number'+i)) ret.push({'id':'number'+i, 'name':'Number '+i});
                         break;
                     case 'virtualdevice_set_boolean':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('alarm_devicecapatilies_boolean.boolean'+i)) ret.push({'id':'boolean'+i, 'name':'Yes/No '+i});
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('alarm_devicecapabilities_boolean.boolean'+i)) ret.push({'id':'boolean'+i, 'name':'Yes/No '+i});
+                        break;
+                    case 'virtualdevice_set_status':
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_status.status'+i)) ret.push({'id':'status'+i, 'name':'Status '+i});
                         break;
                                 
                 }
@@ -54,7 +65,32 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             });
 		}).bind(this));
 
+
+        var trigger_virtualdevice_button = ['trigger_virtualdevice_button'];
+        trigger_virtualdevice_button.forEach((action => {
+			var button = this.homey.flow.getDeviceTriggerCard(action);
+            this.trigger_virtualdevice_button = button;
+			button
+				.registerRunListener(async (args, state) => {
+                    try {
+					    return args.field.id==state.field.id;
+					} catch (error) {
+						this.log('set_value:');
+						this.log(error);
+					}
+				});
+            button.getArgument('field').registerAutocompleteListener(( query, args ) => {
+                var ret =[];
+                for(var i=1;i<=10;i++)if(args.device.hasCapability('button.button'+i)) ret.push({'id':'button'+i, 'name':'Button '+i});
+                return Promise.resolve(ret);
+            });
+		}).bind(this));
+
        
+    }
+
+    async triggerButton(device, value, state) {
+        this.trigger_virtualdevice_button.trigger(device, null, state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
@@ -70,7 +106,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
               }
           ];
       }  
-  }
+  };
 // var self = module.exports = class MyDriver  {
 //     init: function(devices_data, call-back) {
 //         Homey.log(devices_data);

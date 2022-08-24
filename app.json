@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.5.1",
+  "version": "1.5.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -203,7 +203,34 @@
             }
           }
         ]
-      }
+      },
+      {
+        "id": "trigger_virtualdevice_button",
+        "title": {
+            "en": "Button pushed",
+            "nl": "Knop ingedrukt"
+        },
+        "titleFormatted": {
+            "en": "Button [[field]] pushed",
+            "nl": "Knop [[field]] ingedrukt"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter":"driver_id=virtualdevice"          
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+                "en": "Button",
+                "nl": "Knop"
+            }
+          }
+          
+        ]
+    }
     ],
     "conditions": [
       {
@@ -1184,11 +1211,55 @@
             }
         }
     ]
-}
+    },
+    {
+    "id": "virtualdevice_set_status",
+    "title": {
+        "en": "Set Status",
+        "nl": "Zet Status"
+    },
+    "titleFormatted": {
+        "en": "Set [[field]] to [[text]], optional with [[number]]",
+        "nl": "Zet [[field]] naar [[text]], optioneel met [[number]]"
+    },
+    "args": [
+      {
+        "name": "device",
+        "type": "device",
+        "filter":"driver_id=virtualdevice"          
+      },
+      {
+        "type": "autocomplete",
+        "name": "field",
+        "placeholder": {
+            "en": "Statusfield",
+            "nl": "Statusveld"
+        }
+      },
+      {
+          "type": "text",
+          "name": "text",
+          "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
+          }
+        }
+        ,
+      {
+          "type": "number",
+          "name": "number",
+          "placeholder": {
+              "en": "Number",
+              "nl": "Nummer"
+          },
+          "required":false
+        }      
+    ]
+    }
     ]
   },
   "capabilities": {
-    "devicecapatilies_text": {
+    "devicecapabilities_text": {
       "type": "string",
       "title": {
         "en": "Text"
@@ -1198,7 +1269,7 @@
       "uiComponent": "sensor",
       "icon": "/assets/icon.svg"
     },
-    "measure_devicecapatilies_number": {
+    "measure_devicecapabilities_number": {
       "type": "number",
       "title": {
         "en": "Number"
@@ -1208,10 +1279,20 @@
       "uiComponent": "sensor",
       "icon": "/assets/icon.svg"      
     },
-    "alarm_devicecapatilies_boolean": {
+    "alarm_devicecapabilities_boolean": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg"
+    },
+    "measure_devicecapabilities_status": {
+      "type": "number",
+      "title": {
+        "en": "Status"
       },
       "getable": true,
       "setable": true,
@@ -1231,7 +1312,7 @@
       },      
       "class": "other",
       "capabilities": [ 
-        "devicecapatilies_text.text1", "measure_devicecapatilies_number.number1", "alarm_devicecapatilies_boolean.boolean1"],
+        "devicecapabilities_text.text1", "measure_devicecapabilities_number.number1", "alarm_devicecapabilities_boolean.boolean1", "button.button1", "measure_devicecapabilities_status.status1"],
       "pair": [
         {
           "id": "list_virtualdevice",
@@ -1269,12 +1350,34 @@
           "max": 10,
           "step": 1,          
           "value" : 1
+          },{
+            "id": "numberOfBooleanFields",
+            "type": "number",
+            "label": {
+              "en": "Number of Yes/No fields",
+              "nl": "Aantal Ja/Nee velden"
+            },          
+            "min": 0,
+            "max": 10,
+            "step": 1,          
+            "value" : 1
+          },{
+            "id": "numberOfStatusFields",
+            "type": "number",
+            "label": {
+              "en": "Number of Status fields",
+              "nl": "Aantal Status velden"
+            },          
+            "min": 0,
+            "max": 10,
+            "step": 1,          
+            "value" : 1
         },{
-          "id": "numberOfBooleanFields",
+          "id": "numberOfButtons",
           "type": "number",
           "label": {
-            "en": "Number of Yes/No fields",
-            "nl": "Aantal Ja/Nee velden"
+            "en": "Number of Buttons",
+            "nl": "Aantal Knoppen"
           },          
           "min": 0,
           "max": 10,

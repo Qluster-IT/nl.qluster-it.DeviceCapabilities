@@ -34,6 +34,8 @@ class DeviceSetter extends Homey.App {
         this.VirtualDevices = {};
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
+		
+
 		this.log('DeviceSetter is running...');
 		this.refreshHomeyAPI().then(async api => {
 			this.Tracking.homeyAPIStatic = api;

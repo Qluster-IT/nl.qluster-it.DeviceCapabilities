@@ -73,5 +73,11 @@
   },
   "1.5.1" : {
     "en" : "Added Virtual device with text, number and yes/no capability which you can set through flowcards"
+  },
+  "1.5.2" : {
+    "en" : "Added button capability to Virtual devices, so you can use it as trigger for a flow"
+  },
+  "1.5.4" : {
+    "en" : "Added flowcard to set text in virtual button icon indicator"
   }
 }
