@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.5.4",
+  "version": "1.9.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -13,8 +13,32 @@
     "nl": "Verbeter de capabilities van apparaten"
   },
   "tags": {
-    "en": ["device", "capabilities", "capability", "user", "client", "operator", "log", "insights", "watch", "listener", "zones"],
-    "nl": ["device", "capabilities", "capability", "gebruiker", "client", "operator", "log", "insights", "watch", "listener", "ruimtes"]
+    "en": [
+      "device",
+      "capabilities",
+      "capability",
+      "user",
+      "client",
+      "operator",
+      "log",
+      "insights",
+      "watch",
+      "listener",
+      "zones"
+    ],
+    "nl": [
+      "device",
+      "capabilities",
+      "capability",
+      "gebruiker",
+      "client",
+      "operator",
+      "log",
+      "insights",
+      "watch",
+      "listener",
+      "ruimtes"
+    ]
   },
   "category": [
     "tools"
@@ -46,7 +70,7 @@
     "triggers": [
       {
         "id": "trigger_capability_changed",
-        "deprecated":true,
+        "deprecated": true,
         "title": {
           "en": "Capability listener",
           "nl": "Capability luisteraar"
@@ -101,7 +125,7 @@
         "titleFormatted": {
           "en": "Listen (watch) from [[device]] for [[capability]]",
           "nl": "Luister (watch) van [[device]] naar [[capability]]"
-        },     
+        },
         "hint": {
           "en": "This card will execute when a certain capability from a device has changed.\r\nFor OnOff and capabilities with Insights, it will also supply as tokens the User and Client how changed the value.",
           "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde mogelijkheid (eigenschap) van een apparaat is gewijzigd.\r\nVoor AanUit en mogelijkheden met Insights zal het ook als tokens de Gebruiker en Client geven die de waarde heeft gewijzigd."
@@ -184,7 +208,7 @@
         "titleFormatted": {
           "en": "App [[app]] started",
           "nl": "App [[app]] is gestart"
-        },     
+        },
         "hint": {
           "en": "This card will execute when a certain App is started.",
           "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde app wordt gestart."
@@ -207,30 +231,39 @@
       {
         "id": "trigger_virtualdevice_button",
         "title": {
-            "en": "Button pushed",
-            "nl": "Knop ingedrukt"
+          "en": "Button pushed",
+          "nl": "Knop ingedrukt"
         },
         "titleFormatted": {
-            "en": "Button [[field]] pushed",
-            "nl": "Knop [[field]] ingedrukt"
+          "en": "Button [[field]] pushed",
+          "nl": "Knop [[field]] ingedrukt"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter":"driver_id=virtualdevice"          
+            "filter": "driver_id=virtualdevice"
           },
           {
             "type": "autocomplete",
             "name": "field",
             "placeholder": {
-                "en": "Button",
-                "nl": "Knop"
+              "en": "Button",
+              "nl": "Knop"
             }
           }
-          
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde"
+            }
+          }
         ]
-    }
+      }
     ],
     "conditions": [
       {
@@ -311,7 +344,7 @@
         "titleFormatted": {
           "en": "App [[app]] is !{{|not}} running",
           "nl": "App [[app]] is !{{|niet}} actief"
-        },        
+        },
         "hint": {
           "en": "Check if a certain App is running or not",
           "nl": "Controleer of een bepaalde app actief is of niet"
@@ -358,12 +391,12 @@
             "placeholder": {
               "en": "Deviceclass",
               "nl": "Apparaatklasse"
-            }            
+            }
           },
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -372,7 +405,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -470,7 +503,7 @@
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -479,7 +512,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -503,11 +536,11 @@
             "title": {
               "en": "Number",
               "nl": "Nummer"
-            }  ,
+            },
             "placeholder": {
               "en": "Number",
               "nl": "Nummer"
-            }            
+            }
           },
           {
             "type": "autocomplete",
@@ -581,7 +614,7 @@
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -590,7 +623,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -669,7 +702,7 @@
       },
       {
         "id": "set_capability_zone_boolean",
-        "deprecated":true,
+        "deprecated": true,
         "title": {
           "en": "Set true/false capabilities in a zone",
           "nl": "Zet ja/nee capabilities in een ruimte"
@@ -698,7 +731,7 @@
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -707,7 +740,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -825,7 +858,7 @@
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -834,7 +867,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -936,7 +969,7 @@
           {
             "type": "autocomplete",
             "name": "brand",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Brand",
               "nl": "optioneel: Merk"
@@ -945,7 +978,7 @@
           {
             "type": "autocomplete",
             "name": "devicetype",
-            "required":false,
+            "required": false,
             "placeholder": {
               "en": "optional: Device Type",
               "nl": "optioneel: Apparaat Type"
@@ -1031,7 +1064,7 @@
           "en": "Retrieve the Value from the Insight Log (and OnOff) from x Minutes ago. Setting it to zero (0) minutes will retrieve the last changed value.\r\nIncludes Tokens for with the User and Client who changed the value.",
           "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd."
         },
-        "highlight":true,
+        "highlight": true,
         "args": [
           {
             "type": "autocomplete",
@@ -1112,150 +1145,269 @@
       {
         "id": "virtualdevice_set_text",
         "title": {
-            "en": "Set Text",
-            "nl": "Zet Tekst"
+          "en": "Set Text",
+          "nl": "Zet Tekst"
         },
         "titleFormatted": {
-            "en": "Set [[field]] to [[text]]",
-            "nl": "Zet [[field]] naar [[text]]"
+          "en": "Set [[field]] to [[text]]",
+          "nl": "Zet [[field]] naar [[text]]"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter":"driver_id=virtualdevice"          
+            "filter": "driver_id=virtualdevice"
           },
           {
             "type": "autocomplete",
             "name": "field",
             "placeholder": {
-                "en": "Textfield",
-                "nl": "Tekstveld"
+              "en": "Textfield",
+              "nl": "Tekstveld"
             }
           },
           {
-              "type": "text",
-              "name": "text",
-              "placeholder": {
-                  "en": "Text",
-                  "nl": "Tekst"
-              }
+            "type": "text",
+            "name": "text",
+            "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
             }
-          
+          }
         ]
-    },
-    {
-      "id": "virtualdevice_set_number",
-      "title": {
+      },
+      {
+        "id": "virtualdevice_set_number",
+        "title": {
           "en": "Set Number",
           "nl": "Zet Nummer"
-      },
-      "titleFormatted": {
+        },
+        "titleFormatted": {
           "en": "Set [[field]] to [[number]]",
           "nl": "Zet [[field]] naar [[number]]"
-      },
-      "args": [
-        {
-          "name": "device",
-          "type": "device",
-          "filter":"driver_id=virtualdevice"          
         },
-        {
-          "type": "autocomplete",
-          "name": "field",
-          "placeholder": {
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
               "en": "Numberfield",
               "nl": "Nummerveld"
-          }
-        },
+            }
+          },
           {
-              "type": "number",
-              "name": "number",
-              "placeholder": {
-                  "en": "Number",
-                  "nl": "Nummer"
-              }
+            "type": "number",
+            "name": "number",
+            "placeholder": {
+              "en": "Number",
+              "nl": "Nummer"
+            }
           }
-      ]
-  },
-  {
-    "id": "virtualdevice_set_boolean",
-    "title": {
-        "en": "Set Yes/No",
-        "nl": "Zet Ja/Nee"
-    },
-    "titleFormatted": {
-        "en": "Set [[field]] to [[boolean]]",
-        "nl": "Zet [[field]] naar [[boolean]]"
-    },
-    "args": [
-      {
-        "name": "device",
-        "type": "device",
-        "filter":"driver_id=virtualdevice"          
+        ]
       },
       {
-        "type": "autocomplete",
-        "name": "field",
-        "placeholder": {
-            "en": "Yes/No field",
-            "nl": "Ja/Nee veld"
-        }
-      },
-        {
+        "id": "virtualdevice_set_boolean",
+        "title": {
+          "en": "Set Yes/No",
+          "nl": "Zet Ja/Nee"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[boolean]]",
+          "nl": "Zet [[field]] naar [[boolean]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Yes/No field",
+              "nl": "Ja/Nee veld"
+            }
+          },
+          {
             "type": "checkbox",
             "name": "boolean",
             "placeholder": {
-                "en": "Yes/No",
-                "nl": "Ja/Nee"
+              "en": "Yes/No",
+              "nl": "Ja/Nee"
             }
-        }
-    ]
-    },
-    {
-    "id": "virtualdevice_set_status",
-    "title": {
-        "en": "Set Status",
-        "nl": "Zet Status"
-    },
-    "titleFormatted": {
-        "en": "Set [[field]] to [[text]], optional with [[number]]",
-        "nl": "Zet [[field]] naar [[text]], optioneel met [[number]]"
-    },
-    "args": [
-      {
-        "name": "device",
-        "type": "device",
-        "filter":"driver_id=virtualdevice"          
+          }
+        ]
       },
       {
-        "type": "autocomplete",
-        "name": "field",
-        "placeholder": {
-            "en": "Statusfield",
-            "nl": "Statusveld"
-        }
-      },
-      {
-          "type": "text",
-          "name": "text",
-          "placeholder": {
+        "id": "virtualdevice_set_status",
+        "title": {
+          "en": "Set Status",
+          "nl": "Zet Status"
+        },
+        "titleFormatted": {
+          "en": "Set Status to [[text]], optional with [[number]]",
+          "nl": "Zet Status naar [[text]], optioneel met [[number]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "text",
+            "name": "text",
+            "placeholder": {
               "en": "Text",
               "nl": "Tekst"
-          }
-        }
-        ,
-      {
-          "type": "number",
-          "name": "number",
-          "placeholder": {
+            }
+          },
+          {
+            "type": "number",
+            "name": "number",
+            "placeholder": {
               "en": "Number",
               "nl": "Nummer"
+            },
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_name",
+        "deprecated":true,
+        "title": {
+          "en": "Set Name",
+          "nl": "Zet Naam"
+        },
+        "titleFormatted": {
+          "en": "Set Name to [[text]]",
+          "nl": "Zet Naam naar [[text]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
           },
-          "required":false
-        }      
-    ]
-    }
+          {
+            "type": "text",
+            "name": "text",
+            "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
+            }
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_warning",
+        "title": {
+          "en": "Set Warning",
+          "nl": "Zet Waarschuwing"
+        },
+        "titleFormatted": {
+          "en": "Set Warning to [[text]]",
+          "nl": "Zet Waarschuwing naar [[text]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "text",
+            "name": "text",
+            "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
+            }
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_unavailable",
+        "title": {
+          "en": "Set Unavailable",
+          "nl": "Zet Niet Beschikbaar"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] Unavailable with message [[text]]",
+          "nl": "Zet [[device]] Niet Beschikbaar met bericht [[text]]"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "device",
+            "title": {
+              "en": "Virtual Device",
+              "nl": "Virtueel Apparaat"
+            },
+            "placeholder": {
+              "en": "Virtual Device",
+              "nl": "Virtueel Apparaat"
+            }
+          },
+          {
+            "type": "text",
+            "name": "text",
+            "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
+            }
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_clear_warning",
+        "title": {
+          "en": "Clear Warning",
+          "nl": "Maak Waarschuwing leeg"
+        },
+        "titleFormatted": {
+          "en": "Clear Warning",
+          "nl": "Maak Waarschuwing leeg"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_available",
+        "title": {
+          "en": "Set Available",
+          "nl": "Maak Beschikbaar"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] Available",
+          "nl": "Maak [[device]] Beschikbaar"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "device",
+            "title": {
+              "en": "Virtual Device",
+              "nl": "Virtueel Apparaat"
+            },
+            "placeholder": {
+              "en": "Virtual Device",
+              "nl": "Virtueel Apparaat"
+            }
+          }
+        ]
+      }
     ]
   },
   "capabilities": {
@@ -1277,7 +1429,8 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
-      "icon": "/assets/icon.svg"      
+      "icon": "/assets/icon.svg",
+      "insights": true
     },
     "alarm_devicecapabilities_boolean": {
       "type": "boolean",
@@ -1287,7 +1440,19 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/icon.svg",
+      "insights": true
+    },
+    "devicecapabilities_boolean": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg",
+      "insights": true
     },
     "measure_devicecapabilities_status": {
       "type": "number",
@@ -1297,10 +1462,11 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
-      "icon": "/assets/icon.svg"
+      "icon": "/assets/icon.svg",
+      "insights": true
     }
   },
-  "drivers" : [
+  "drivers": [
     {
       "id": "virtualdevice",
       "name": {
@@ -1309,10 +1475,15 @@
       "images": {
         "large": "drivers/virtualdevice/assets/images/large.jpg",
         "small": "drivers/virtualdevice/assets/images/small.jpg"
-      },      
+      },
       "class": "other",
-      "capabilities": [ 
-        "devicecapabilities_text.text1", "measure_devicecapabilities_number.number1", "alarm_devicecapabilities_boolean.boolean1", "button.button1", "measure_devicecapabilities_status.status1"],
+      "capabilities": [
+        "devicecapabilities_text.text1",
+        "measure_devicecapabilities_number.number1",
+        "alarm_devicecapabilities_boolean.boolean1",
+        "button",
+        "measure_devicecapabilities_status.status1"
+      ],
       "pair": [
         {
           "id": "list_virtualdevice",
@@ -1328,61 +1499,786 @@
       ],
       "settings": [
         {
-          "id": "numberOfTextFields",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Number of Text fields",
-            "nl": "Aantal Tekst velden"
-          },          
-          "min": 0,
-          "max": 10,
-          "step": 1,          
-          "value" : 1
+            "en": "Status Indicator Field"
+          },
+          "hint": {
+            "en": "Enter al settings for the Status Field which can be selected as Status Indicator."
+          },
+          "children": [
+            {
+              "id": "status1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for the Status Field"
+              },
+              "value": "Status"
+            },
+            {
+              "id": "status1Decimals",
+              "type": "number",
+              "label": {
+                "en": "Decimals"
+              },
+              "hint": {
+                "en": "The number of decimals to show."
+              },
+              "value": 0,
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "status1PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "value": false
+            },
+            {
+              "id": "status1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "values": [
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "Volume Mute"
+                  }
+                }
+              ],
+              "value": "volume_mute"
+            }
+          ]
         },
         {
-          "id": "numberOfNumberFields",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Number of Number fields",
-            "nl": "Aantal Nummer velden"
-          },          
-          "min": 0,
-          "max": 10,
-          "step": 1,          
-          "value" : 1
-          },{
-            "id": "numberOfBooleanFields",
-            "type": "number",
-            "label": {
-              "en": "Number of Yes/No fields",
-              "nl": "Aantal Ja/Nee velden"
-            },          
-            "min": 0,
-            "max": 10,
-            "step": 1,          
-            "value" : 1
-          },{
-            "id": "numberOfStatusFields",
-            "type": "number",
-            "label": {
-              "en": "Number of Status fields",
-              "nl": "Aantal Status velden"
-            },          
-            "min": 0,
-            "max": 10,
-            "step": 1,          
-            "value" : 1
-        },{
-          "id": "numberOfButtons",
-          "type": "number",
+            "en": "Textfield 1"
+          },
+          "hint": {
+            "en": "Enter al settings for textfield 1"
+          },
+          "children": [
+            {
+              "id": "text1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for textfield 1"
+              },
+              "value": "Text 1"
+            }
+          ]
+        },
+        {
+          "type": "group",
           "label": {
-            "en": "Number of Buttons",
-            "nl": "Aantal Knoppen"
-          },          
-          "min": 0,
-          "max": 10,
-          "step": 1,          
-          "value" : 1
+            "en": "Textfield 2"
+          },
+          "hint": {
+            "en": "Enter al settings for textfield 2"
+          },
+          "children": [
+            {
+              "id": "text2Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for textfield 2"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Textfield 3"
+          },
+          "hint": {
+            "en": "Enter al settings for textfield 3"
+          },
+          "children": [
+            {
+              "id": "text3Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for textfield 3"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Textfield 4"
+          },
+          "hint": {
+            "en": "Enter al settings for textfield 4"
+          },
+          "children": [
+            {
+              "id": "text4Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for textfield 4"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Numberfield 1"
+          },
+          "hint": {
+            "en": "Enter al settings for numberfield 1"
+          },
+          "children": [
+            {
+              "id": "number1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for numberfield 1"
+              },
+              "value": "Number 1"
+            },
+            {
+              "id": "number1Units",
+              "type": "text",
+              "label": {
+                "en": "Units"
+              },
+              "hint": {
+                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translaten to Fahrenheit."
+              },
+              "value": ""
+            },
+            {
+              "id": "number1Decimals",
+              "type": "number",
+              "label": {
+                "en": "Decimals"
+              },
+              "hint": {
+                "en": "The number of decimals to show."
+              },
+              "value": 0,
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "number1PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Numberfield 2"
+          },
+          "hint": {
+            "en": "Enter al settings for numberfield 2"
+          },
+          "children": [
+            {
+              "id": "number2Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for numberfield 2"
+              },
+              "value": ""
+            },
+            {
+              "id": "number2Units",
+              "type": "text",
+              "label": {
+                "en": "Units"
+              },
+              "hint": {
+                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translaten to Fahrenheit."
+              },
+              "value": ""
+            },
+            {
+              "id": "number2Decimals",
+              "type": "number",
+              "label": {
+                "en": "Decimals"
+              },
+              "hint": {
+                "en": "The number of decimals to show."
+              },
+              "value": 0,
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "number2PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Numberfield 3"
+          },
+          "hint": {
+            "en": "Enter al settings for numberfield 3"
+          },
+          "children": [
+            {
+              "id": "number3Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for numberfield 3"
+              },
+              "value": ""
+            },
+            {
+              "id": "number3Units",
+              "type": "text",
+              "label": {
+                "en": "Units"
+              },
+              "hint": {
+                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translaten to Fahrenheit."
+              },
+              "value": ""
+            },
+            {
+              "id": "number3Decimals",
+              "type": "number",
+              "label": {
+                "en": "Decimals"
+              },
+              "hint": {
+                "en": "The number of decimals to show."
+              },
+              "value": 0,
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "number3PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Numberfield 4"
+          },
+          "hint": {
+            "en": "Enter al settings for numberfield 4"
+          },
+          "children": [
+            {
+              "id": "number4Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for numberfield 4"
+              },
+              "value": ""
+            },
+            {
+              "id": "number4Units",
+              "type": "text",
+              "label": {
+                "en": "Units"
+              },
+              "hint": {
+                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translaten to Fahrenheit."
+              },
+              "value": ""
+            },
+            {
+              "id": "number4Decimals",
+              "type": "number",
+              "label": {
+                "en": "Decimals"
+              },
+              "hint": {
+                "en": "The number of decimals to show."
+              },
+              "value": 0,
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            {
+              "id": "number4PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log from being automatically generated or filled."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Yes/No field 1"
+          },
+          "hint": {
+            "en": "Enter al settings for Yes/No field 1."
+          },
+          "children": [
+            {
+              "id": "boolean1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Yes/No field 1"
+              },
+              "value": "Yes/No 1"
+            },
+            {
+              "id": "boolean1AsAlarm",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as alarm"
+              },
+              "hint": {
+                "en": "When selected you are able to use this field as the Status Indicator and this will flash like an alarm."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean1PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log (timeline) from being automatically generated or filled."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean1InsightsTitleTrue",
+              "type": "text",
+              "label": {
+                "en": "Insights Title True"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is True."
+              },
+              "value": "True"
+            },
+            {
+              "id": "boolean1InsightsTitleFalse",
+              "type": "text",
+              "label": {
+                "en": "Insights Title False"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is False."
+              },
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Yes/No field 2"
+          },
+          "hint": {
+            "en": "Enter al settings for Yes/No field 2."
+          },
+          "children": [
+            {
+              "id": "boolean2Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Yes/No field 2"
+              },
+              "value": ""
+            },
+            {
+              "id": "boolean2AsAlarm",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as alarm"
+              },
+              "hint": {
+                "en": "When selected you are able to use this field as the Status Indicator and this will flash like an alarm."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean2PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log (timeline) from being automatically generated or filled."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean2InsightsTitleTrue",
+              "type": "text",
+              "label": {
+                "en": "Insights Title True"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is True."
+              },
+              "value": "True"
+            },
+            {
+              "id": "boolean2InsightsTitleFalse",
+              "type": "text",
+              "label": {
+                "en": "Insights Title False"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is False."
+              },
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Yes/No field 3"
+          },
+          "hint": {
+            "en": "Enter al settings for Yes/No field 3."
+          },
+          "children": [
+            {
+              "id": "boolean3Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Yes/No field 3"
+              },
+              "value": ""
+            },
+            {
+              "id": "boolean3AsAlarm",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as alarm"
+              },
+              "hint": {
+                "en": "When selected you are able to use this field as the Status Indicator and this will flash like an alarm."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean3PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log (timeline) from being automatically generated or filled."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean3InsightsTitleTrue",
+              "type": "text",
+              "label": {
+                "en": "Insights Title True"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is True."
+              },
+              "value": "True"
+            },
+            {
+              "id": "boolean3InsightsTitleFalse",
+              "type": "text",
+              "label": {
+                "en": "Insights Title False"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is False."
+              },
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Yes/No field 4"
+          },
+          "hint": {
+            "en": "Enter al settings for Yes/No field 4."
+          },
+          "children": [
+            {
+              "id": "boolean4Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Yes/No field 4"
+              },
+              "value": ""
+            },
+            {
+              "id": "boolean4AsAlarm",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as alarm"
+              },
+              "hint": {
+                "en": "When selected you are able to use this field as the Status Indicator and this will flash like an alarm."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean4PreventInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Prevent Insights"
+              },
+              "hint": {
+                "en": "When selected prevents Insights log (timeline) from being automatically generated or filled."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean4InsightsTitleTrue",
+              "type": "text",
+              "label": {
+                "en": "Insights Title True"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is True."
+              },
+              "value": "True"
+            },
+            {
+              "id": "boolean4InsightsTitleFalse",
+              "type": "text",
+              "label": {
+                "en": "Insights Title False"
+              },
+              "hint": {
+                "en": "Insights Description for when the value is False."
+              },
+              "value": "False"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Button 1"
+          },
+          "hint": {
+            "en": "Enter al settings for Button 1"
+          },
+          "children": [
+            {
+              "id": "button1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Button 1"
+              },
+              "value": "Button 1"
+            },
+            {
+              "id": "button1AsOnOff",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as On/Off"
+              },
+              "hint": {
+                "en": "When selected this is a toggle button."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Button 2"
+          },
+          "hint": {
+            "en": "Enter al settings for Button 2"
+          },
+          "children": [
+            {
+              "id": "button2Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Button 2"
+              },
+              "value": ""
+            },
+            {
+              "id": "button2AsOnOff",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as On/Off"
+              },
+              "hint": {
+                "en": "When selected this is a toggle button."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Button 3"
+          },
+          "hint": {
+            "en": "Enter al settings for Button 3"
+          },
+          "children": [
+            {
+              "id": "button3Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Button 3"
+              },
+              "value": ""
+            },
+            {
+              "id": "button3AsOnOff",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as On/Off"
+              },
+              "hint": {
+                "en": "When selected this is a toggle button."
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Button 4"
+          },
+          "hint": {
+            "en": "Enter al settings for Button 4"
+          },
+          "children": [
+            {
+              "id": "button4Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Button 4"
+              },
+              "value": ""
+            },
+            {
+              "id": "button4AsOnOff",
+              "type": "checkbox",
+              "label": {
+                "en": "Show as On/Off"
+              },
+              "hint": {
+                "en": "When selected this is a toggle button."
+              },
+              "value": false
+            }
+          ]
         }
       ]
     }

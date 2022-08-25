@@ -3,7 +3,9 @@
 //var variableManager = require('../../lib/variablemanagement/variablemanagement.js');
 
 const Homey = require('homey');
-const Homeyman = require('../../app');
+const DeviceSetter = require('../../app');
+const _ = require('lodash-core');
+
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
@@ -19,20 +21,32 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 			set_value
 				.registerRunListener((async (args, state) => {
 					try {
-						if (!args || !args.device || !args.field) return false;
+						if (!args || !args.device) return false;
                         switch (action) {
                             case 'virtualdevice_set_text':
                                 if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityValue("devicecapabilities_text." + args.field.id, args.text);
                                 return true;
                             case 'virtualdevice_set_number':
-                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
+                                if(args.number!==undefined && args.number!=='undefined') {
+                                    if(args.device.hasCapability("measure_devicecapabilities_number." + args.field.id)) args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
+                                    //else if(args.device.hasCapability("measure_devicecapabilities_number." + args.field.id)) args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
+                                }
                                 return true;
                             case 'virtualdevice_set_boolean':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
+                                if(args.boolean!==undefined && args.boolean!=='undefined') {
+                                    if(args.device.hasCapability("alarm_devicecapabilities_boolean." + args.field.id)) args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
+                                    else if(args.device.hasCapability("devicecapabilities_boolean." + args.field.id)) args.device.setCapabilityValue("devicecapabilities_boolean." + args.field.id, args.boolean);
+                                }
+                                //if(args.boolean!==undefined && args.boolean!=='undefined') args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
                                 return true;
                             case 'virtualdevice_set_status':
-                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityOptions("measure_devicecapabilities_status." + args.field.id, {units:args.text});
-                                    if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_status." + args.field.id, args.number);
+                                if(args.text!==undefined && args.text!=='undefined') {
+                                    var opt = args.device.getCapabilityOptions("measure_devicecapabilities_status.status1");
+					                if (!opt) opt = {};
+                                    opt.units = args.text;
+                                    args.device.setCapabilityOptions("measure_devicecapabilities_status.status1", opt);
+                                }
+                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_status.status1", args.number);
                                 
                                 return true;
                         }
@@ -42,26 +56,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						this.log(error);
 					}
 				}).bind(this));
-            set_value.getArgument('field')
-            .registerAutocompleteListener(( query, args ) => {
+            if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean')) set_value.getArgument('field')
+            .registerAutocompleteListener(async( query, args ) => {
                 var ret = [];
+                //var title = await args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title;
                 switch (action) {
                     case 'virtualdevice_set_text':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('devicecapabilities_text.text'+i)) ret.push({'id':'text'+i, 'name':'Text '+i});
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('devicecapabilities_text.text'+i)) ret.push({'id':'text'+i, 'name':args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title || ('Text ' + i), description:('Text ' + i)});
                         break;
                     case 'virtualdevice_set_number':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_number.number'+i)) ret.push({'id':'number'+i, 'name':'Number '+i});
+                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_number.number'+i)) ret.push({'id':'number'+i, 'name':args.device.getCapabilityOptions('measure_devicecapabilities_number.number'+i).title || ('Number ' + i), description:('Number ' + i)});
                         break;
                     case 'virtualdevice_set_boolean':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('alarm_devicecapabilities_boolean.boolean'+i)) ret.push({'id':'boolean'+i, 'name':'Yes/No '+i});
+                        for(var i=1;i<=10;i++){
+                            if(args.device.hasCapability('alarm_devicecapabilities_boolean.boolean'+i)) ret.push({'id':'boolean'+i, 'name':args.device.getCapabilityOptions('alarm_devicecapabilities_boolean.boolean'+i).title || ('Yes/No ' + i), description:('Yes/No ' + i)});
+                            else if(args.device.hasCapability('devicecapabilities_boolean.boolean'+i)) ret.push({'id':'boolean'+i, 'name':args.device.getCapabilityOptions('devicecapabilities_boolean.boolean'+i).title || ('Yes/No ' + i), description:('Yes/No ' + i)});
+                        }
                         break;
-                    case 'virtualdevice_set_status':
-                        for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_status.status'+i)) ret.push({'id':'status'+i, 'name':'Status '+i});
-                        break;
+                    // case 'virtualdevice_set_status':
+                    //     for(var i=1;i<=10;i++)if(args.device.hasCapability('measure_devicecapabilities_status.status'+i)) ret.push({'id':'status'+i, 'name':'Status '+i});
+                    //     break;
                                 
                 }
                 
-              return Promise.resolve(ret);
+              return ret;
             });
 		}).bind(this));
 
@@ -81,27 +99,91 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 				});
             button.getArgument('field').registerAutocompleteListener(( query, args ) => {
                 var ret =[];
-                for(var i=1;i<=10;i++)if(args.device.hasCapability('button.button'+i)) ret.push({'id':'button'+i, 'name':'Button '+i});
+                for(var i=1;i<=10;i++)
+                {
+                    var cap = 'button.button'+i;
+                    if(i===1) {
+                        if(args.device.hasCapability('button')) cap = 'button';
+                        else if(args.device.hasCapability('onoff')) cap = 'onoff';
+                    } else {
+                        if(args.device.hasCapability('button.button'+i)) cap = 'button.button'+i;
+                        else if(args.device.hasCapability('onoff.button'+i)) cap = 'onoff.button'+i;
+                    }
+                    if(args.device.hasCapability(cap)) ret.push({'id':'button'+i, 'name':args.device.getCapabilityOptions(cap).title, description:('Button ' + i)});
+                }
                 return Promise.resolve(ret);
             });
 		}).bind(this));
 
+        // var action_virtualdevice_set_name = ['virtualdevice_set_name'];
+        // action_virtualdevice_set_name.forEach((action => {
+		// 	var actionCard = this.homey.flow.getActionCard(action);
+        //     this.action_virtualdevice_set_name = actionCard;
+		// 	actionCard
+		// 		.registerRunListener(async (args, state) => {
+        //             try {
+        //                 var id = args.device.getData().id;
+		// 			    var device = _.find(DeviceSetter.Current.devices, device=> device.data.id==id);
+        //                 device.name = args.text;
+        //                 DeviceSetter.Current.homeyAPI.devices.updateDevice({id:device.id, device:device});
+		// 			} catch (error) {
+		// 				this.log('set_value:');
+		// 				this.log(error);
+		// 			}
+		// 		});            
+		// }).bind(this));
        
+        	this.homey.flow.getActionCard('virtualdevice_set_warning').registerRunListener(async (args, state) => {
+                try {
+                    args.device.setWarning(args.text);                    
+                } catch (error) {
+                    this.log('action_virtualdevice_set_name:');
+                    this.error(error);
+                }
+            });
+		
+            
+
+            this.homey.flow.getActionCard('virtualdevice_clear_warning').registerRunListener(async (args, state) => {
+                try {
+                    args.device.unsetWarning();                    
+                } catch (error) {
+                    this.log('action_virtualdevice_set_name:');
+                    this.error(error);
+                }
+            });
+		
+            
+
     }
 
     async triggerButton(device, value, state) {
-        this.trigger_virtualdevice_button.trigger(device, null, state);
+        this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
       async onPairListDevices( ) {
-        var count =Object.keys(Homeyman.Current.VirtualDevices).length;
-        var id = count>0 ?'_' + (count + 1) : '';
+        var index = 0;
+        var count = Object.keys(DeviceSetter.Current.VirtualDevices).length;
+        for (const key in DeviceSetter.Current.VirtualDevices) {
+            if (Object.hasOwnProperty.call(DeviceSetter.Current.VirtualDevices, key)) {
+                const element = DeviceSetter.Current.VirtualDevices[key];
+                try {                    
+                    var _id = element.getData().id;
+                    var nr =Number.parseInt(_id.split('_')[1]);
+                    index = Math.max(index,nr);
+                } catch (error) {
+                    //index = Math.max(index,nr);
+                }
+
+            }
+        }
+        var id = '_'+(index+1).toString();//count>0 ?'_' + (count + 1) : '';
         return [
               {
-                  name: 'DeviceCapability device'+id,
+                  name: 'DeviceCapability VD '+id,
                   data: {
-                      id: 'DeviceCapabilityDevice'+id
+                      id: 'DeviceCapabilityVirtualDevice'+id
                   }
               }
           ];

@@ -387,6 +387,30 @@ class DeviceSetter extends Homey.App {
 				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log', insights: true }));
 		}).bind(this));
 
+
+		var virtualdevice_set_available = this.homey.flow.getActionCard('virtualdevice_set_available').registerRunListener(async (args, state) => {
+			try {
+				var device = _.find(this.VirtualDevices, dv=> dv.__id==args.device.id);
+				device.setAvailable();
+				//args.device.setAvailable();
+			} catch (error) {
+				this.log('action_virtualdevice_set_name:');
+				this.error(error);
+			}
+		});
+		virtualdevice_set_available.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
+		
+		var virtualdevice_set_unavailable = this.homey.flow.getActionCard('virtualdevice_set_unavailable').registerRunListener(async (args, state) => {
+			try {
+				var device = _.find(this.VirtualDevices, dv=> dv.__id==args.device.id);
+				device.setUnavailable(args.text);
+			} catch (error) {
+				this.log('action_virtualdevice_set_name:');
+				this.error(error);
+			}
+		});
+		virtualdevice_set_unavailable.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
+
 	}
 
 
@@ -562,7 +586,7 @@ class DeviceSetter extends Homey.App {
 
 	}
 
-	autocompleteDevice({ api } = {}) {
+	autocompleteDevice({ api, app } = {}) {
 		return ((query, args, a, b, c,) => {
 			query = query.toLowerCase();
 			var queries = query.split(' ');
@@ -570,6 +594,7 @@ class DeviceSetter extends Homey.App {
 
 			var devices = this.devices;
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
+			if(app) list = _.filter(list, device => device.driverUri==app);
 			list = _.orderBy(list, 'name');
 			var array = _.map(list, device => { return { id: device.id, name: device.name } });
 			defer.resolve(array);
