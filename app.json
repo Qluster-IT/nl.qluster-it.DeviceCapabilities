@@ -1281,7 +1281,7 @@
       },
       {
         "id": "virtualdevice_set_name",
-        "deprecated":true,
+        "deprecated": true,
         "title": {
           "en": "Set Name",
           "nl": "Zet Naam"
@@ -1464,6 +1464,48 @@
       "uiComponent": "sensor",
       "icon": "/assets/icon.svg",
       "insights": true
+    },
+    
+    "devicecapabilities_text-measure_temperature": {
+      "title": {"en": "Text"},
+      "type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg"
+    },
+    "measure_devicecapabilities_number-measure_temperature": {
+      "title": {"en": "Number"},
+      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_temperature": {
+      "title": {"en": "Yes/No"},
+      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_temperature": {
+      "title": {"en": "Yes/No"},
+      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_temperature": {
+      "title": {"en": "Status"},
+      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+    },
+
+    "devicecapabilities_text-alarm_smoke": {
+      "title": {"en": "Text"},
+      "type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg"
+    },
+    "measure_devicecapabilities_number-alarm_smoke": {
+      "title": {"en": "Number"},
+      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-alarm_smoke": {
+      "title": {"en": "Yes/No"},
+      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+    },
+    "devicecapabilities_boolean-alarm_smoke": {
+      "title": {"en": "Yes/No"},
+      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+    },
+    "measure_devicecapabilities_status-alarm_smoke": {
+      "title": {"en": "Status"},
+      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
     }
   },
   "drivers": [
@@ -1547,20 +1589,22 @@
               "id": "status1Icon",
               "type": "dropdown",
               "label": {
-                "en": "Prevent Insights"
+                "en": "Icon"
               },
               "hint": {
                 "en": "When selected prevents Insights log from being automatically generated or filled."
               },
               "values": [
                 {
-                  "id": "volume_mute",
+                  "id": "",
                   "label": {
-                    "en": "Volume Mute"
+                    "en": "None"
                   }
-                }
+                },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" } }
               ],
-              "value": "volume_mute"
+              "value": ""
             }
           ]
         },
