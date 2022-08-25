@@ -22,31 +22,29 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 				.registerRunListener((async (args, state) => {
 					try {
 						if (!args || !args.device) return false;
+                        let cap = args.device.getStoreValue(args.field.id);
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityValue("devicecapabilities_text." + args.field.id, args.text);
+                                if(args.text!==undefined && args.text!=='undefined') args.device.setCapabilityValue(cap, args.text);
                                 return true;
                             case 'virtualdevice_set_number':
                                 if(args.number!==undefined && args.number!=='undefined') {
-                                    if(args.device.hasCapability("measure_devicecapabilities_number." + args.field.id)) args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
-                                    //else if(args.device.hasCapability("measure_devicecapabilities_number." + args.field.id)) args.device.setCapabilityValue("measure_devicecapabilities_number." + args.field.id, args.number);
+                                    if(args.device.hasCapability(cap)) args.device.setCapabilityValue(cap, args.number);                                   
                                 }
                                 return true;
                             case 'virtualdevice_set_boolean':
                                 if(args.boolean!==undefined && args.boolean!=='undefined') {
-                                    if(args.device.hasCapability("alarm_devicecapabilities_boolean." + args.field.id)) args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
-                                    else if(args.device.hasCapability("devicecapabilities_boolean." + args.field.id)) args.device.setCapabilityValue("devicecapabilities_boolean." + args.field.id, args.boolean);
-                                }
-                                //if(args.boolean!==undefined && args.boolean!=='undefined') args.device.setCapabilityValue("alarm_devicecapabilities_boolean." + args.field.id, args.boolean);
+                                    if(args.device.hasCapability(cap)) args.device.setCapabilityValue(cap, args.boolean);                                    
+                                }                                
                                 return true;
                             case 'virtualdevice_set_status':
                                 if(args.text!==undefined && args.text!=='undefined') {
-                                    var opt = args.device.getCapabilityOptions("measure_devicecapabilities_status.status1");
+                                    var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
                                     opt.units = args.text;
-                                    args.device.setCapabilityOptions("measure_devicecapabilities_status.status1", opt);
+                                    args.device.setCapabilityOptions(cap, opt);
                                 }
-                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue("measure_devicecapabilities_status.status1", args.number);
+                                if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue(cap, args.number);
                                 
                                 return true;
                         }

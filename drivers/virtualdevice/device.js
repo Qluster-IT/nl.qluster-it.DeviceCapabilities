@@ -11,9 +11,8 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.log('Device init');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
-		this.removeCapability('measure_temperature').then(x=> {
-			var a = x;
-		});
+		// this.removeCapability('measure_devicecapabilities_status_measure_temperature.status1');
+		// this.removeCapability('measure_devicecapabilities_status.status1');
 		
 
 
@@ -55,21 +54,24 @@ module.exports = class WatchDevice extends Homey.Device {
 	// 	//this.log(value);
 	//   }
 
-	async loadFromSettings(settings) {
-		var types = ['text', 'number', 'boolean', 'status', 'button'];
+	async loadFromSettings(settings, oldSettings) {
+		var types = ['status', 'text', 'number', 'boolean', 'button'];
 		types.forEach(async (type) => {
 			for (let i = 1; i <= 4; i++) {
-				var cap = 'devicecapabilities_' + type + '.' + type + i;
+				var storeValue =this.getStoreValue(type + i + 'Icon'); 
+				let oldIcon = storeValue && storeValue.length>0 ? '-' + storeValue : '';
+				// (oldSettings[type + i + 'Icon']||'').length>0 ? '-' + oldSettings[type + i + 'Icon'] : '';
+				var cap = 'devicecapabilities_' + type + oldIcon + '.' + type + i;
 				let isAlarm = type == 'boolean' && settings[type + i + 'AsAlarm']===true;
 				let isOnOff = type == 'button' && settings[type + i + 'AsOnOff']===true;
 				switch (type) {
 					case "number": 
 					case "status": 
-						cap = 'measure_devicecapabilities_' + type + '.' + type + i; break;
+						cap = 'measure_devicecapabilities_' + type + oldIcon + '.' + type + i; break;
 					case "boolean":
-						cap = (isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + type + '.' + type + i;
-						if (isAlarm && this.hasCapability('devicecapabilities_' + type + '.' + type + i)) await this.removeCapability('devicecapabilities_' + type + '.' + type + i);
-						if (!isAlarm && this.hasCapability('alarm_devicecapabilities_' + type + '.' + type + i)) await this.removeCapability('alarm_devicecapabilities_' + type + '.' + type + i);
+						cap = (isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + type + oldIcon + '.' + type + i;
+						if (isAlarm && this.hasCapability('devicecapabilities_' + type + oldIcon + '.' + type + i)) await this.removeCapability('devicecapabilities_' + type + oldIcon + '.' + type + i);
+						if (!isAlarm && this.hasCapability('alarm_devicecapabilities_' + type + '.' + type + i)) await this.removeCapability('alarm_devicecapabilities_' + type + oldIcon + '.' + type + i);
 						
 						break;
 					case "button":
@@ -86,10 +88,29 @@ module.exports = class WatchDevice extends Homey.Device {
 						}
 						break;
 				}
+				var oldValue = undefined;
+				if(['text', 'number', 'boolean', 'status'].indexOf(type)>-1) {
+					let icon = (settings[type + i + 'Icon']||'').length>0 ? '-' + settings[type + i + 'Icon'] : '';
+					if(icon!=oldIcon) {
+						oldValue = this.getCapabilityValue(cap);
+						await this.removeCapability(cap);
+						if(icon=='') cap = cap.replace(oldIcon, '');
+						else if(oldIcon=='') cap = cap.replace('.', icon+'.');
+						else cap = cap.replace(oldIcon, icon);
+						this.setStoreValue(type + i + 'Icon', settings[type + i + 'Icon']);
+						
+					}
+					
+				}
+				
 				let name = settings[type + i + 'Name'];
+				if(!name || name.length<=0) this.setStoreValue(type+i, null);
+
 				if (name && name.length > 0) {
+					this.setStoreValue(type+i, cap);
 					if (!this.hasCapability(cap)) {
 						await this.addCapability(cap);
+						if(oldValue!==undefined) this.setCapabilityValue(cap, oldValue);
 						if(type=='button') {
 							try {								
 								this.registerCapabilityListener(cap, ((value, options) => {
@@ -122,7 +143,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
 						};
 						if(settings[type + i + 'Units']) optNew.units= settings[type + i + 'Units'];
-						if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
+						//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
 						if(type=='status') optNew.units= opt.units;
 						this.setCapabilityOptions(cap,optNew);
 					}
@@ -135,7 +156,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
 		
-		this.loadFromSettings(newSettings);
+		this.loadFromSettings(newSettings, oldSettings);
 		// if the settings must not be saved for whatever reason:
 		// throw new Error('Your error message');
 	}
