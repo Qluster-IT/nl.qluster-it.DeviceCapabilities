@@ -7,19 +7,17 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "sensor",
       "icon": "/assets/icon.svg",
       "insights": true,
       "uiQuickAction":true
     },
-    "devicecapabilities_quickaction_boolean_notinuse": {
+    "devicecapabilities_quickaction_boolean": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
+      "setable": true,      
       "icon": "/assets/icon.svg",
       "insights": true,
       "uiQuickAction":true

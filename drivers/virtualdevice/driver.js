@@ -6,6 +6,7 @@ const Homey = require('homey');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 
+const NUMBEROFFIELDS = 10;
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
@@ -45,7 +46,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 else args.device.setCapabilityValue(cap, null);
                                 return true;
                             case 'virtualdevice_set_button':
-                                cap = cap || (i===1 ? 'button' : 'button'+i);
+                                cap = cap || 'button';
                                 if(args.boolean!==undefined && args.boolean!=='undefined') {
                                     if(args.device.hasCapability(cap)) args.device.setCapabilityValue(cap, args.boolean);                                    
                                 }
@@ -71,23 +72,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 					}
 				}).bind(this));
             if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) set_value.getArgument('field')
-            .registerAutocompleteListener(async( query, args ) => {
-                var ret = [];
-                //var title = await args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title;
-                var actiontype = action.split('_')[2];
-                var typeText = action=='text' ? 'Text' : action=='number' ? 'Number' : action=='boolean' ? 'Yes/No' : action=='button' ? 'Button' : 'unknown';
-                var caps = args.device.getCapabilities();
-                for(var i=1;i<=10;i++){
-                    var cap = undefined;
-                    var searchs = ['.'+actiontype+i];
-                    if(actiontype=='button' && i===1)searchs = ['onoff', 'button'];
-                    for(var j=0;j<searchs.length;j++){
-                        if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText+' ' + i), description:(typeText+' ' + i)});
-                    }
-                    
-                }
-              return ret;
-            });
+            .registerAutocompleteListener(this.registerAutocompleteField(action));
 		}).bind(this));
 
 
@@ -104,23 +89,25 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						this.log(error);
 					}
 				});
-            button.getArgument('field').registerAutocompleteListener(( query, args ) => {
-                var ret =[];
-                for(var i=1;i<=10;i++)
-                {
-                    var cap = 'button.button'+i;
-                    if(i===1) {
-                        if(args.device.hasCapability('button')) cap = 'button';
-                        else if(args.device.hasCapability('onoff')) cap = 'onoff';
-                    } else {
-                        if(args.device.hasCapability('button.button'+i)) cap = 'button.button'+i;
-                        else if(args.device.hasCapability('onoff.button'+i)) cap = 'onoff.button'+i;
-                    }
-                    if(args.device.hasCapability(cap)) ret.push({'id':'button'+i, 'name':args.device.getCapabilityOptions(cap).title, description:('Button ' + i)});
-                }
-                return Promise.resolve(ret);
-            });
+            button.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
 		}).bind(this));
+
+        var trigger_virtualdevice_boolean = ['trigger_virtualdevice_boolean'];
+        trigger_virtualdevice_boolean.forEach((action => {
+			var boolean = this.homey.flow.getDeviceTriggerCard(action);
+            this.trigger_virtualdevice_boolean = boolean;
+			boolean
+				.registerRunListener(async (args, state) => {
+                    try {
+					    return args.field.id==state.field.id;
+					} catch (error) {
+						this.log('set_value:');
+						this.log(error);
+					}
+				});
+            boolean.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
+		}).bind(this));
+
 
         // var action_virtualdevice_set_name = ['virtualdevice_set_name'];
         // action_virtualdevice_set_name.forEach((action => {
@@ -164,8 +151,35 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     }
 
+    registerAutocompleteField(action) {
+        return async( query, args ) => {
+            var settings = args.device.getSettings();
+            var ret = [];
+            //var title = await args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title;
+            var actiontype = action.split('_')[2];
+            var typeText = actiontype=='text' ? 'Text' : actiontype=='number' ? 'Number' : actiontype=='boolean' ? 'Yes/No' : actiontype=='button' ? 'Button' : 'unknown';
+            var caps = args.device.getCapabilities();
+            for(var i=1;i<=NUMBEROFFIELDS;i++){
+                var cap = undefined;
+                var searchs = ['.'+actiontype+i];
+                if(actiontype=='button'){
+                    if(settings['button'+i+'Disabled']===true);//searchs = ['devicecapabilities_quickaction_disabled_boolean'] ;
+                    else if(i===1) searchs = ['onoff', 'button'];
+                } 
+                for(var j=0;j<searchs.length;j++){
+                    if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText+' ' + i), description:(typeText+' ' + i)});
+                }
+                
+            }
+          return ret;
+        };
+    }
+
     async triggerFlow(device, value, state) {
         this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
+    }
+    async triggerFlowBoolean(device, value, state) {
+        this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
