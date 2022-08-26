@@ -25,10 +25,10 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		for (let i = 1; i <= 10; i++) {
-					
+			var disabled = this.getButtonDisabled('button'+i);
+			if(disabled) continue;
 			if(i==1) {
-				// var disabled = this.getButtonDisabled('button'+i);
-				// if(disabled) return;
+				
 
 				if(this.hasCapability("button")) this.registerCapabilityListener("button", ((value, options) => {
 					// var disabled = this.getButtonDisabled('button'+i);
@@ -137,8 +137,10 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (!this.hasCapability(cap)) {
 						await this.addCapability(cap);
 						if(oldValue!==undefined) this.setCapabilityValue(cap, oldValue);
-						if(type=='button') {
-							try {								
+						var buttonDisabled = settings[type + i + 'Disabled'];						
+						if(type=='button' && !buttonDisabled) {
+							try {
+								
 								this.registerCapabilityListener(cap, ((value, options) => {
 									this.driver.triggerFlow(this, value, { field: { id: "button" + i } });
 								}).bind(this));
@@ -160,7 +162,8 @@ module.exports = class WatchDevice extends Homey.Device {
 						opt.title != name || opt.preventInsights != settings[type + i + 'PreventInsights'] || 
 						(opt.units != settings[type + i + 'Units'] && type!='status' ) || 
 						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
-						opt.setable != settings[type + i + 'Disabled'] || opt.uiQuickAction != settings[type + i + 'UiQuickAction']
+						//opt.setable != settings[type + i + 'Disabled'] || 
+						opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 					) {
 						var optNew = {
 							title: name, 

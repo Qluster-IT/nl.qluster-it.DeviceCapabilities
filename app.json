@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.63",
+  "version": "1.9.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1515,31 +1515,6 @@
       "icon": "/assets/icon.svg",
       "insights": true
     },
-
-    "alarm_devicecapabilities_quickaction_boolean_notinuse": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "icon": "/assets/icon.svg",
-      "insights": true,
-      "uiQuickAction":true
-    },
-    "devicecapabilities_quickaction_boolean_notinuse": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "icon": "/assets/icon.svg",
-      "insights": true,
-      "uiQuickAction":true
-    },
     "measure_devicecapabilities_status": {
       "type": "number",
       "title": {
@@ -2515,17 +2490,7 @@
               },
               "value": true
             },
-            {
-              "id": "boolean1UiQuickAction",
-              "type": "checkbox",
-              "label": {
-                "en": "Quick Action"
-              },
-              "hint": {
-                "en": "Set this to true when you want to quick-toggle the capability's value from the UI."
-              },
-              "value": false
-            },
+            
             {
               "id": "boolean1PreventInsights",
               "type": "checkbox",
@@ -2881,7 +2846,7 @@
                 "en": "Disable Button"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed."
+                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
               },
               "value": false
             }
@@ -2925,7 +2890,7 @@
                 "en": "Disable Button"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed."
+                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
               },
               "value": false
             }
@@ -2969,7 +2934,7 @@
                 "en": "Disable Button"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed."
+                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
               },
               "value": false
             }
@@ -3013,7 +2978,7 @@
                 "en": "Disable Button"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed."
+                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
               },
               "value": false
             }

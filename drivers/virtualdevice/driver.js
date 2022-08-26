@@ -70,16 +70,21 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						this.log(error);
 					}
 				}).bind(this));
-            if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean')) set_value.getArgument('field')
+            if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) set_value.getArgument('field')
             .registerAutocompleteListener(async( query, args ) => {
                 var ret = [];
                 //var title = await args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title;
                 var actiontype = action.split('_')[2];
-                var typeText = action=='text' ? 'Text' : action=='number' ? 'Number' : action=='boolean' ? 'Yes/No' : 'unknown';
+                var typeText = action=='text' ? 'Text' : action=='number' ? 'Number' : action=='boolean' ? 'Yes/No' : action=='button' ? 'Button' : 'unknown';
                 var caps = args.device.getCapabilities();
                 for(var i=1;i<=10;i++){
                     var cap = undefined;
-                    if((cap =_.find(caps, c=> c.endsWith('.'+actiontype+i)))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (actiontype+' ' + i), description:(actiontype+' ' + i)});
+                    var searchs = ['.'+actiontype+i];
+                    if(actiontype=='button' && i===1)searchs = ['onoff', 'button'];
+                    for(var j=0;j<searchs.length;j++){
+                        if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText+' ' + i), description:(typeText+' ' + i)});
+                    }
+                    
                 }
               return ret;
             });
