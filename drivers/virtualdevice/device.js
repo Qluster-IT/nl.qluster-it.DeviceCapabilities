@@ -33,8 +33,8 @@ module.exports = class WatchDevice extends Homey.Device {
 		
 		var settings = this.getSettings();
 
-		for(var i=0;i<caps.length;i++){
-			var type = null;
+		for(let i=0;i<caps.length;i++){
+			let type = null;
 			if(caps[i].indexOf('.')>-1)
 				type = caps[i].split('.')[1];
 			else if(caps[i]=='onoff' || caps[i]=='button') type = 'button1';
@@ -57,9 +57,13 @@ module.exports = class WatchDevice extends Homey.Device {
 	}
 
 	async loadFromSettings(settings, oldSettings) {
-		var types = ['status', 'text', 'number', 'boolean', 'button'];
-		types.forEach(async (type) => {
-			var button1Reset = false;
+		var types = ['status', 'text', 'number', 'button', 'boolean'];
+		var button1Reset = false;
+		var a = this;
+
+		for (let iTypes = 0; iTypes < types.length; iTypes++) {
+			const type = types[iTypes];
+			
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
 				let oldCap = this.getStoreValue(type + i);
 				var oldValue = undefined;
@@ -82,7 +86,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						cap = 
 							(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
 							type + oldIcon + '.' + type + i;
-							
+
 						if (!oldCap) oldCap = cap;
 						
 						if (isAlarm && oldCap.startsWith('devicecapabilities_')) await this.removeCapability(oldCap);
@@ -96,7 +100,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						break;
 					case "button":
 						if(disabled) {
-							cap = "devicecapabilities_quickaction_disabled"+(hide?"_hide":"")+"_boolean." + type + i;
+							cap = "devicecapabilities_quickaction"+(disabled?"_disabled":"")+(hide?"_hide":"")+"_boolean." + type + i;
 						}
 						
 						if (!oldCap) oldCap = 'button';
@@ -137,8 +141,8 @@ module.exports = class WatchDevice extends Homey.Device {
 
 				if (name && name.length > 0) {
 					this.setStoreValue(type + i, cap);
-					if(type=="button" && button1Reset) {
-						if (this.hasCapability(cap)) this.removeCapability(cap);						
+					if((type=="button" || (type=="boolean" && cap.indexOf('_quickaction_')>-1)) && button1Reset) {
+						if (this.hasCapability(cap)) await this.removeCapability(cap);
 					}
 					if (!this.hasCapability(cap)) {
 						if(type=="button" && i===1) button1Reset = true;
@@ -193,7 +197,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				} else if (this.hasCapability(cap)) await this.removeCapability(cap);
 
 			}
-		});
+		}
 
 	}
 
