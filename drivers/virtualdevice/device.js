@@ -142,9 +142,9 @@ module.exports = class WatchDevice extends Homey.Device {
 							insightsTitleTrue: settings[type + i + 'InsightsTitleTrue'],
 							insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
 						};
-						if(settings[type + i + 'Units']) optNew.units= settings[type + i + 'Units'];
-						//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
 						if(type=='status') optNew.units= opt.units;
+						else if(settings[type + i + 'Units']) optNew.units= settings[type + i + 'Units'];
+						//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
 						this.setCapabilityOptions(cap,optNew);
 					}
 				} else if (this.hasCapability(cap)) await this.removeCapability(cap);
