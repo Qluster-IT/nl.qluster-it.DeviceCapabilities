@@ -1465,47 +1465,229 @@
       "icon": "/assets/icon.svg",
       "insights": true
     },
-    
+
     "devicecapabilities_text-measure_temperature": {
-      "title": {"en": "Text"},
-      "type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg"
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg"
     },
     "measure_devicecapabilities_number-measure_temperature": {
-      "title": {"en": "Number"},
-      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
     },
     "alarm_devicecapabilities_boolean-measure_temperature": {
-      "title": {"en": "Yes/No"},
-      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
     },
     "devicecapabilities_boolean-measure_temperature": {
-      "title": {"en": "Yes/No"},
-      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
     },
     "measure_devicecapabilities_status-measure_temperature": {
-      "title": {"en": "Status"},
-      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_temperature.svg","insights": true
     },
 
     "devicecapabilities_text-alarm_smoke": {
-      "title": {"en": "Text"},
-      "type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg"
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg"
     },
     "measure_devicecapabilities_number-alarm_smoke": {
-      "title": {"en": "Number"},
-      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
     },
     "alarm_devicecapabilities_boolean-alarm_smoke": {
-      "title": {"en": "Yes/No"},
-      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
     },
     "devicecapabilities_boolean-alarm_smoke": {
-      "title": {"en": "Yes/No"},
-      "type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
     },
     "measure_devicecapabilities_status-alarm_smoke": {
-      "title": {"en": "Status"},
-      "type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_smoke.svg","insights": true
+    },
+
+    "devicecapabilities_text-measure_rain": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_rain.svg"
+    },
+    "measure_devicecapabilities_number-measure_rain": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_rain.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_rain": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_rain.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_rain": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_rain.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_rain": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_rain.svg","insights": true
+    },
+
+    "devicecapabilities_text-measure_wind_strength": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_strength.svg"
+    },
+    "measure_devicecapabilities_number-measure_wind_strength": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_strength.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_wind_strength": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_strength.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_wind_strength": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_strength.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_wind_strength": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_strength.svg","insights": true
+    },
+
+    "devicecapabilities_text-circle": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/circle.svg"
+    },
+    "measure_devicecapabilities_number-circle": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/circle.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-circle": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/circle.svg","insights": true
+    },
+    "devicecapabilities_boolean-circle": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/circle.svg","insights": true
+    },
+    "measure_devicecapabilities_status-circle": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/circle.svg","insights": true
+    },    
+
+    "devicecapabilities_text-measure_power": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_power.svg"
+    },
+    "measure_devicecapabilities_number-measure_power": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_power.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_power": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_power.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_power": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_power.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_power": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_power.svg","insights": true
+    },    
+
+    "devicecapabilities_text-measure_wind_angle": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_angle.svg"
+    },
+    "measure_devicecapabilities_number-measure_wind_angle": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_angle.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_wind_angle": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_angle.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_wind_angle": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_angle.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_wind_angle": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_wind_angle.svg","insights": true
+    },    
+
+    "devicecapabilities_text-alarm_water": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_water.svg"
+    },
+    "measure_devicecapabilities_number-alarm_water": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_water.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-alarm_water": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_water.svg","insights": true
+    },
+    "devicecapabilities_boolean-alarm_water": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_water.svg","insights": true
+    },
+    "measure_devicecapabilities_status-alarm_water": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/alarm_water.svg","insights": true
+    },    
+
+    "devicecapabilities_text-measure_humidity": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_humidity.svg"
+    },
+    "measure_devicecapabilities_number-measure_humidity": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_humidity.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_humidity": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_humidity.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_humidity": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_humidity.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_humidity": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_humidity.svg","insights": true
+    },
+
+    "devicecapabilities_text-measure_pressure": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_pressure.svg"
+    },
+    "measure_devicecapabilities_number-measure_pressure": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_pressure.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_pressure": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_pressure.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_pressure": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_pressure.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_pressure": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_pressure.svg","insights": true
+    },
+
+    "devicecapabilities_text-meter_power": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_power.svg"
+    },
+    "measure_devicecapabilities_number-meter_power": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_power.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-meter_power": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_power.svg","insights": true
+    },
+    "devicecapabilities_boolean-meter_power": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_power.svg","insights": true
+    },
+    "measure_devicecapabilities_status-meter_power": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_power.svg","insights": true
+    },
+
+    "devicecapabilities_text-meter_water": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_water.svg"
+    },
+    "measure_devicecapabilities_number-meter_water": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_water.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-meter_water": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_water.svg","insights": true
+    },
+    "devicecapabilities_boolean-meter_water": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_water.svg","insights": true
+    },
+    "measure_devicecapabilities_status-meter_water": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_water.svg","insights": true
+    },
+
+    "devicecapabilities_text-meter_gas": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_gas.svg"
+    },
+    "measure_devicecapabilities_number-meter_gas": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_gas.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-meter_gas": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_gas.svg","insights": true
+    },
+    "devicecapabilities_boolean-meter_gas": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_gas.svg","insights": true
+    },
+    "measure_devicecapabilities_status-meter_gas": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/meter_gas.svg","insights": true
+    },
+
+    "devicecapabilities_text-measure_noise": {
+      "title": {"en": "Text"},"type": "string","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_noise.svg"
+    },
+    "measure_devicecapabilities_number-measure_noise": {
+      "title": {"en": "Number"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_noise.svg","insights": true
+    },
+    "alarm_devicecapabilities_boolean-measure_noise": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_noise.svg","insights": true
+    },
+    "devicecapabilities_boolean-measure_noise": {
+      "title": {"en": "Yes/No"},"type": "boolean","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_noise.svg","insights": true
+    },
+    "measure_devicecapabilities_status-measure_noise": {
+      "title": {"en": "Status"},"type": "number","getable": true,"setable": true,"uiComponent": "sensor","icon": "/assets/icons/measure_noise.svg","insights": true
     }
   },
   "drivers": [
@@ -1561,6 +1743,34 @@
               "value": "Status"
             },
             {
+              "id": "status1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
+            },
+            {
               "id": "status1Decimals",
               "type": "number",
               "label": {
@@ -1584,27 +1794,6 @@
                 "en": "When selected prevents Insights log from being automatically generated or filled."
               },
               "value": false
-            },
-            {
-              "id": "status1Icon",
-              "type": "dropdown",
-              "label": {
-                "en": "Icon"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated or filled."
-              },
-              "values": [
-                {
-                  "id": "",
-                  "label": {
-                    "en": "None"
-                  }
-                },
-                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },
-                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" } }
-              ],
-              "value": ""
             }
           ]
         },
@@ -1627,6 +1816,34 @@
                 "en": "The name for textfield 1"
               },
               "value": "Text 1"
+            },
+            {
+              "id": "text1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
             }
           ]
         },
@@ -1648,6 +1865,34 @@
               "hint": {
                 "en": "The name for textfield 2"
               },
+              "value": ""
+            },
+            {
+              "id": "text2Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             }
           ]
@@ -1671,6 +1916,34 @@
                 "en": "The name for textfield 3"
               },
               "value": ""
+            },
+            {
+              "id": "text3Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
             }
           ]
         },
@@ -1692,6 +1965,34 @@
               "hint": {
                 "en": "The name for textfield 4"
               },
+              "value": ""
+            },
+            {
+              "id": "text4Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             }
           ]
@@ -1715,6 +2016,34 @@
                 "en": "The name for numberfield 1"
               },
               "value": "Number 1"
+            },
+            {
+              "id": "number1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
             },
             {
               "id": "number1Units",
@@ -1772,6 +2101,34 @@
               "hint": {
                 "en": "The name for numberfield 2"
               },
+              "value": ""
+            },
+            {
+              "id": "number2Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
@@ -1833,6 +2190,34 @@
               "value": ""
             },
             {
+              "id": "number3Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
+            },
+            {
               "id": "number3Units",
               "type": "text",
               "label": {
@@ -1888,6 +2273,34 @@
               "hint": {
                 "en": "The name for numberfield 4"
               },
+              "value": ""
+            },
+            {
+              "id": "number4Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
@@ -1947,6 +2360,34 @@
                 "en": "The name for Yes/No field 1"
               },
               "value": "Yes/No 1"
+            },
+            {
+              "id": "boolean1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
             },
             {
               "id": "boolean1AsAlarm",
@@ -2012,6 +2453,34 @@
               "hint": {
                 "en": "The name for Yes/No field 2"
               },
+              "value": ""
+            },
+            {
+              "id": "boolean2Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
@@ -2081,6 +2550,34 @@
               "value": ""
             },
             {
+              "id": "boolean3Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
+            },
+            {
               "id": "boolean3AsAlarm",
               "type": "checkbox",
               "label": {
@@ -2144,6 +2641,34 @@
               "hint": {
                 "en": "The name for Yes/No field 4"
               },
+              "value": ""
+            },
+            {
+              "id": "boolean4Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
@@ -2213,6 +2738,34 @@
               "value": "Button 1"
             },
             {
+              "id": "button1Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
+            },
+            {
               "id": "button1AsOnOff",
               "type": "checkbox",
               "label": {
@@ -2243,6 +2796,34 @@
               "hint": {
                 "en": "The name for Button 2"
               },
+              "value": ""
+            },
+            {
+              "id": "button2Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
@@ -2279,6 +2860,34 @@
               "value": ""
             },
             {
+              "id": "button3Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
+              "value": ""
+            },
+            {
               "id": "button3AsOnOff",
               "type": "checkbox",
               "label": {
@@ -2309,6 +2918,34 @@
               "hint": {
                 "en": "The name for Button 4"
               },
+              "value": ""
+            },
+            {
+              "id": "button4Icon",
+              "type": "dropdown",
+              "label": {
+                "en": "Icon"
+              },
+              "hint": {
+                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+              },
+              "values": [
+                {"id": "","label": {"en": "None"}},
+                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" }, "icon":"/assets/icons/alarm_smoke.svg" },
+                {"id": "alarm_water", "label": { "en": "alarm_water" } },
+                {"id": "circle", "label": { "en": "circle" } },
+                {"id": "measure_humidity", "label": { "en": "measure_humidity" } },
+                {"id": "measure_noise", "label": { "en": "measure_noise" } },
+                {"id": "measure_power", "label": { "en": "measure_power" } },
+                {"id": "measure_rain", "label": { "en": "measure_rain" } },
+                {"id": "measure_temperature", "label": { "en": "measure_temperature" } },                
+                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } },
+                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } },
+                {"id": "measure_pressure", "label": { "en": "measure_pressure" } },
+                {"id": "meter_gas", "label": { "en": "meter_gas" } },
+                {"id": "meter_power", "label": { "en": "meter_power" } },
+                {"id": "meter_water", "label": { "en": "meter_water" } }                
+              ],
               "value": ""
             },
             {
