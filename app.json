@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.5",
+  "version": "1.9.63",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -65,6 +65,28 @@
   "author": {
     "name": "Arie J. Godschalk",
     "email": "arie@qluster-it.nl"
+  },
+  "api": {
+    "getIcons": {
+      "method": "GET",
+      "path": "/"
+    },
+    "getIcon": {
+      "method": "GET",
+      "path": "/:id"
+    },
+    "createIcon": {
+      "method": "POST",
+      "path": "/"
+    },
+    "updateIcon": {
+      "method": "PUT",
+      "path": "/:id"
+    },
+    "deleteIcon": {
+      "method": "DELETE",
+      "path": "/:id"
+    }
   },
   "flow": {
     "triggers": [
@@ -1172,7 +1194,8 @@
             "placeholder": {
               "en": "Text",
               "nl": "Tekst"
-            }
+            },
+            "required": false
           }
         ]
       },
@@ -1206,7 +1229,8 @@
             "placeholder": {
               "en": "Number",
               "nl": "Nummer"
-            }
+            },
+            "required": false
           }
         ]
       },
@@ -1240,7 +1264,43 @@
             "placeholder": {
               "en": "Yes/No",
               "nl": "Ja/Nee"
+            },
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_button",
+        "title": {
+          "en": "Set Button",
+          "nl": "Zet Knop"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[boolean]]",
+          "nl": "Zet [[field]] naar [[boolean]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Button",
+              "nl": "Knop"
             }
+          },
+          {
+            "type": "checkbox",
+            "name": "boolean",
+            "placeholder": {
+              "en": "Yes/No",
+              "nl": "Ja/Nee"
+            },
+            "required": false
           }
         ]
       },
@@ -1266,7 +1326,8 @@
             "placeholder": {
               "en": "Text",
               "nl": "Tekst"
-            }
+            },
+            "required": false
           },
           {
             "type": "number",
@@ -1453,6 +1514,31 @@
       "uiComponent": "sensor",
       "icon": "/assets/icon.svg",
       "insights": true
+    },
+
+    "alarm_devicecapabilities_quickaction_boolean_notinuse": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg",
+      "insights": true,
+      "uiQuickAction":true
+    },
+    "devicecapabilities_quickaction_boolean_notinuse": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icon.svg",
+      "insights": true,
+      "uiQuickAction":true
     },
     "measure_devicecapabilities_status": {
       "type": "number",
@@ -1714,6 +1800,20 @@
           "template": "list_devices",
           "navigation": {
             "next": "add_virtualdevice"
+          },
+          "options": { "singular": true }
+        },
+        {
+          "id": "list_icons",          
+          "navigation": {
+            "next": "done"
+          },
+          "options": { "singular": true }
+        },
+        {
+          "id": "done",          
+          "navigation": {
+            "next": "add_virtualdevice"
           }
         },
         {
@@ -1732,9 +1832,7 @@
             {
               "id": "label3",
               "type": "label",
-              "label": {
-                "en": "Be aware:"
-              },
+              "label": {"en": "Be aware"},
               "value":"Changing the properties Icon, Show as Alarm or Show as On/Off will causes Flow-Tag IDs to be changed and thus may break flows."
             }
           ]
@@ -2418,6 +2516,17 @@
               "value": true
             },
             {
+              "id": "boolean1UiQuickAction",
+              "type": "checkbox",
+              "label": {
+                "en": "Quick Action"
+              },
+              "hint": {
+                "en": "Set this to true when you want to quick-toggle the capability's value from the UI."
+              },
+              "value": false
+            },
+            {
               "id": "boolean1PreventInsights",
               "type": "checkbox",
               "label": {
@@ -2764,6 +2873,17 @@
                 "en": "When selected this is a toggle button."
               },
               "value": false
+            },
+            {
+              "id": "button1Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disable Button"
+              },
+              "hint": {
+                "en": "When selected this button cannot be pushed."
+              },
+              "value": false
             }
           ]
         },
@@ -2795,6 +2915,17 @@
               },
               "hint": {
                 "en": "When selected this is a toggle button."
+              },
+              "value": false
+            },
+            {
+              "id": "button2Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disable Button"
+              },
+              "hint": {
+                "en": "When selected this button cannot be pushed."
               },
               "value": false
             }
@@ -2830,6 +2961,17 @@
                 "en": "When selected this is a toggle button."
               },
               "value": false
+            },
+            {
+              "id": "button3Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disable Button"
+              },
+              "hint": {
+                "en": "When selected this button cannot be pushed."
+              },
+              "value": false
             }
           ]
         },
@@ -2861,6 +3003,17 @@
               },
               "hint": {
                 "en": "When selected this is a toggle button."
+              },
+              "value": false
+            },
+            {
+              "id": "button4Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disable Button"
+              },
+              "hint": {
+                "en": "When selected this button cannot be pushed."
               },
               "value": false
             }

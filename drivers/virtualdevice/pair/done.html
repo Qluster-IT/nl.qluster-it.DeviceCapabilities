@@ -1,0 +1,42 @@
+<div class="hy-view visible" data-id="icons"><style>
+    [v-cloak] {
+        display: none;
+    }
+
+
+    #icons-list {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        background-color:white;
+    }
+    .icon.tile {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        margin: 2.5px;
+    }
+
+    .icon.tile .icon.bg {
+        width: 5em;
+        height: 5em;
+    }
+
+
+</style>
+<script>
+
+    Homey.showLoadingOverlay();
+    Homey.setTitle( Homey.__("pair.icons.title") );
+
+    $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
+
+    Homey.emit('done', null, function (err, result) {
+        Homey.nextView();
+    });
+    
+
+</script>
+
+<div id="all-icons">Done!</div>

@@ -1,0 +1,71 @@
+<script src='../../../assets/vue.min.js'></script>
+<div class="hy-view visible" data-id="icons"><style>
+    [v-cloak] {
+        display: none;
+    }
+
+
+    #icons-list {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        background-color:white;
+    }
+    .icon.tile {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        margin: 2.5px;
+    }
+
+    .icon.tile .icon.bg {
+        width: 5em;
+        height: 5em;
+    }
+
+
+</style>
+<script>
+
+    Homey.showLoadingOverlay();
+    Homey.setTitle( Homey.__("pair.icons.title") );
+
+    $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
+
+    Homey.emit('icons.initialised', null, function (err, result) {
+
+        new Vue({
+            el: '#all-icons',
+            data: {
+                icons: result,
+            },
+            mounted() {
+                Homey.hideLoadingOverlay();
+            },
+            methods: {
+                addClass(iconclass) {
+                    Homey.emit('icons.changed', {'icon': iconclass}, function (err, result) {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                        Homey.nextView();
+                    });
+                }
+            }
+        });
+    });
+
+</script>
+
+<div id="all-icons"><ul id="icons-list">
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/assets/icons/alarm_smoke.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/userdata/icon.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/nl.qluster-it.devicecapabilities/userdata/icon.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/nl.qluster-it.devicecapabilities/assets/icons/alarm_smoke.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/amplifier/standard/right.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/blinds/standard.svg&quot;);"></div></div></div></li>
+    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/button/standard.svg&quot;);"></div></div></div></li>
+    </ul>
+</div>

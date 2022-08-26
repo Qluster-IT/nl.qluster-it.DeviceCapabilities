@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+	<head>
+
+		<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+		<script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
+		<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
+
+		<style type="text/css">
+		input {
+			border-radius: 3px;
+		}
+		#icons {
+			list-style: none;
+			margin-left: 0;
+		}
+		.icon {
+			position: relative;
+			border-bottom: 1px solid #eee;
+			height: 60px;
+		}
+		.icon:last-child {
+			border-bottom: none;
+		}
+			.icon .name {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.icon .play {
+				position: absolute;
+				left: 10px;
+				top: 10px;
+				bottom: 10px;
+				width: 40px;
+				height: 40px;
+				font-size: 40px;
+			}
+			.icon .play:hover {
+				cursor: pointer;
+				color: #333;
+			}
+			.icon .play,
+			.icon .play:active {
+				color: black;
+			}
+			.icon .name {
+				position: absolute;
+				left: 70px;
+				top: 10px;
+				bottom: 10px;
+				font-size: 14px;
+				line-height: 40px;
+				font-weight: 400;
+			}
+			.icon input.name {
+				top: 15px;
+				bottom: 15px;
+				line-height: 20px;
+			}
+			.icon .buttons {
+				position: absolute;
+				right: 10px;
+				top: 16px;
+			}
+				.icon button {
+					float: left;
+					box-sizing: border-box;
+					margin-left: 5px;
+				}
+		</style>
+
+	</head>
+	<body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
+
+		<h2 data-i18n="settings.title_icons"></h2>
+
+		<p ng-show="icons.length < 1">
+			<span data-i18n="settings.no_icons"></span>
+		</p>
+
+		<ul id="icons">
+			<li
+				class="icon"
+				ng-repeat="icon in icons"
+			>
+				<!-- <i class="play fa fa-play-circle" ng-click="playIcon(icon)"></i> -->
+
+				<div ng-show="!icon.updating" class="name" ng-dblclick="icon.updating = true;">{{icon.name}}</div>
+				<input ng-show="icon.updating" class="name" type="text" ng-model="icon.name" ng-enter="updateIcon(icon)" />
+
+				<div class="buttons">
+					<button class="remove" ng-click="deleteIcon(icon)"><i class="fa fa-trash"></i></button>
+				</div>
+
+			</li>
+		</ul>
+
+		<h2 data-i18n="settings.title_upload">Upload a .svg</h2>
+		<input type="file" id="files" name="files[]" multiple />
+
+		<script type="text/javascript">	    
+		angular.module('devicecapabilities', [])
+			.controller("devicecapabilitiesCtrl", [ '$scope', '$rootScope', '$timeout', function($scope, $rootScope, $timeout) {
+				
+				var Homey;
+
+				$scope.icons = [];
+
+				$scope.$on('ready', function($e, Homey_) {
+					Homey = Homey_;
+					$scope.__ = Homey.__;
+					
+					if (window.File && window.FileReader && window.FileList && window.Blob) {
+						document.getElementById('files').addEventListener('change', $scope.onFileSelect, false);
+					} else {
+						Homey.alert( Homey.__('settings.file_api_err'), 'error');
+					}
+					
+					$scope.getIcons();
+					Homey.ready();	
+				});
+				
+				$scope.getIcons = function() {
+					Homey.api('GET', '/', function( err, result ){
+						if( err ) return Homey.alert( err, 'error' );
+						$scope.$apply(function(){
+							$scope.icons = result;
+						});
+					});
+				}
+
+				
+				$scope.updateIcon = function( icon ) {
+
+					icon.updating = false;
+
+					Homey.api('PUT', '/' + icon.id, {
+						name: icon.name
+					}, function(err, result){
+						if( err) return Homey.alert( err.message || err.toString(), 'error' );
+					})
+				}
+
+				$scope.deleteIcon = function( icon ){
+					Homey.confirm( Homey.__('settings.confirm_delete'), 'warning', function( err, yes ){
+						if( !yes ) return;
+						Homey.api('DELETE', '/' + icon.id, function(err, result){
+							if( err) return Homey.alert( err.message || err.toString(), 'error' );
+							$scope.getIcons();
+						})
+					})
+				}
+				
+				$scope.onFileSelect = function(evt) {
+					var files = evt.target.files;
+					for (var i = 0, file; file = files[i]; i++) {
+						if( file.size > 900000 ) {
+							Homey.alert( Homey.__('settings.too_large'), 'error' )
+							continue;
+						}
+						
+						var reader = new FileReader();
+						reader.onload = (function(theFile) {
+							return function(e) {
+
+								var buffer = e.target.result.substr(e.target.result.indexOf(',')+1)
+
+								Homey.api('POST', '/', {
+									type	: theFile.type,
+									name	: theFile.name,
+									buffer	: buffer
+								}, function( err, result ){
+									if( err) return Homey.alert( err.message || err.toString(), 'error' );
+									$scope.getIcons();
+								})
+
+							};
+						})(file);
+						reader.readAsDataURL(file);
+					};
+				}
+
+			}])
+			.directive('ngEnter', function() {
+				return function(scope, element, attrs) {
+					element.bind('keydown keypress', function(event) {
+						if (event.which === 13) {
+							scope.$apply(function() {
+								scope.$eval(attrs.ngEnter || attrs.ngClick, {
+									$event: event
+								});
+							});
+							event.preventDefault();
+						}
+					});
+				};
+			});
+				
+		function onHomeyReady(Homey){
+			var scope = angular.element( document.body ).scope();
+				scope.$emit('ready', Homey);
+		}
+		</script>
+
+	</body>
+</html>

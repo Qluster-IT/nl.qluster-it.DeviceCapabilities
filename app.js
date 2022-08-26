@@ -6,6 +6,23 @@ const _ = require('lodash-core');
 
 const { Defer } = require('./lib/proto');
 
+const { join } = require('path');
+const { readFile, writeFile, unlink, rename } = require('fs');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
+
+const SETTING_PREFIX = 'sound_';
+const TYPES_MAP = {
+	'image/svg': 'svg',	
+	'image/svg+xml': 'svg'
+};
+
+const readFileAsync = promisify(readFile);
+const writeFileAsync = promisify(writeFile);
+const unlinkAsync = promisify(unlink);
+const renameAsync = promisify(rename);
+
+
 class DeviceSetter extends Homey.App {
 	/**@type {DeviceSetter} */
     static get Current() {return this._current; }
@@ -414,6 +431,82 @@ class DeviceSetter extends Homey.App {
 	}
 
 
+	// getIcons() {
+	// 	return this.homey.settings.getKeys()
+	// 		.filter(key => {
+	// 			return key.indexOf(SETTING_PREFIX) === 0;
+	// 		})
+	// 		.map(key => {
+	// 			return this.getIcon({
+	// 				id: key.substring(SETTING_PREFIX.length),
+	// 			});			
+	// 		});
+	// }
+	
+	// getIcon({ id }) {
+	// 	const icon = this.homey.settings.get(`${SETTING_PREFIX}${id}`);
+	// 	if( !icon ) throw new Error('invalid_icon');
+	// 	return icon;
+	// }
+	
+	// async createIcon({ type, name, buffer }) {
+	// 	if( !TYPES_MAP[type] )
+	// 		throw new Error(`invalid_type:${type}`);
+			
+	// 	const buf = new Buffer(buffer, 'base64');
+	// 	if( !Buffer.isBuffer(buf) )
+	// 		throw new Error("invalid_buffer");
+			
+	// 	const id = randomBytes(12).toString('hex');
+	// 	const ext = this.getExtByType(type);
+	// 	//const path = `./tmp/${id}${ext}`;
+	// 	const path = `./userdata/${id}${ext}`;
+	// 	await writeFileAsync(path, buf);
+		
+	// 	await this.homey.settings.set(`${SETTING_PREFIX}${id}`, {
+	// 		id,
+	// 		type,
+	// 		name,
+	// 		path,
+	// 	});
+	// 	return this.getIcon({ id });
+	// }
+	
+	// async updateIcon({ id, name, path }) {
+	// 	const icon = await this.getIcon({ id });
+		
+	// 	if( typeof name === 'string' )
+	// 		icon.name = name;
+			
+	// 	if( typeof path === 'string' )
+	// 		icon.path = path;
+		
+	// 	await this.homey.settings.set(`${SETTING_PREFIX}${id}`, icon);
+		
+	// 	return this.getIcon({ id });
+		
+	// }
+	
+	// async deleteIcon({ id }) {
+	// 	const icon = await this.getIcon({ id });
+	// 	try {
+	// 		await unlinkAsync(icon.path);
+	// 	} catch( err ) {
+	// 		this.error(err);
+	// 	}
+	// 	await this.homey.settings.unset(`${SETTING_PREFIX}${id}`);
+		
+	// }
+	
+	getExtByType(type) {
+	  const typeSimple = TYPES_MAP[type];
+	  if(!typeSimple)
+  		throw new Error('unsupported_type');
+  		
+    return `.${typeSimple}`;		
+	}
+
+
 	//#region Old Trigger
 	async updateTracking(refresh, trigger) {
 		var hm = this;
@@ -649,18 +742,18 @@ class DeviceSetter extends Homey.App {
 			//this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
 			//this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
 			//this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
-			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x));
-			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x));
-			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x));
-			this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x));
-			this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x));
-			this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x));
-			this.homeyAPI.apps.on('app.create', x => this.refreshApps(x));
-			this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x));
-			this.homeyAPI.apps.on('app.update', x => this.refreshApps(x));
-			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x));
-			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x));
-			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x));
+			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
+			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));
+			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x, 'update'));
+			this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x, 'create'));
+			this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x, 'delete'));
+			this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x, 'update'));
+			this.homeyAPI.apps.on('app.create', x => this.refreshApps(x, 'create'));
+			this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x, 'delete'));
+			this.homeyAPI.apps.on('app.update', x => this.refreshApps(x, 'update'));
+			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
+			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
+			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
 			
 			await this.refreshDevices();
 			await this.refreshDrivers();
@@ -678,16 +771,46 @@ class DeviceSetter extends Homey.App {
 	async clearHomeyAPI(id) {
 		if (id && this.apis) delete this.apis[id];
 	}
-	async refreshDevices() {
+	async refreshDevices(device, type) {
 		this.log('refreshDevices');
-		this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
+		//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
+		if(!this.devices || !type) this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
+		switch (type) {
+			case 'create':
+			case 'update':
+				this.devices[device.id] = device;				
+				break;
+			case 'delete':
+				delete this.devices[device.id];
+				break;
+		}
 	}
-	async refreshDrivers() {
+	async refreshDrivers(driver, type) {
 		this.log('refreshDrivers');
-		this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
+		//this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
+		if(!this.drivers || !type) this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
+		switch (type) {
+			case 'create':
+			case 'update':
+				this.drivers[driver.id] = driver;
+				break;
+			case 'delete':
+				delete this.drivers[driver.id];
+				break;
+		}
 	}
-	async refreshZones() {
-		this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
+	async refreshZones(zone, type) {
+		//this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
+		if(!this.zones || !type) this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
+		switch (type) {
+			case 'create':
+			case 'update':
+				this.zones[zone.id] = zone;				
+				break;
+			case 'delete':
+				delete this.zones[zone.id];
+				break;
+		}
 	}
 	async refreshApps(app) {
 		this.log('refreshApps', app);

@@ -86,7 +86,10 @@
   "1.9.3" : {
     "en" : "Added Unactivate, activate (flow cards), warning and unsetwarning cards (device cards)."
   },
-  "1.9.5" : {
+  "1.9.62" : {
     "en" : "Bugfixed"
+  },
+  "1.9.63" : {
+    "en" : "Great speed improvements on backside."
   }
 }
