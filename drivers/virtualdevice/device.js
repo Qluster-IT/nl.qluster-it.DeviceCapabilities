@@ -15,7 +15,13 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		if (process.env.DEBUG === '1')  {
 			//if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');
-			if(this.getClass()!=='camera')this.setClass('camera');
+			if(this.getClass()!=='other') this.setClass('other');
+			var image = await this.homey.images.createImage();
+			await image.setUrl('https://www.computerhope.com/jargon/l/link.jpg');
+			await this.setCameraImage('camera1', 'Camera1', image);
+			var image = await this.homey.images.createImage();
+			await image.setUrl('https://apps-sdk-v3.developer.homey.app/images/logo.png');
+			await this.setCameraImage('camera2', 'Camera2', image);
 		}
 		//await this.removeCapability('devicecapabilities_quickaction_boolean');
 		// if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');

@@ -13408,6 +13408,336 @@
               "value": false
             }
           ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 1"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 1"
+          },
+          "children": [
+            {
+              "id": "camera1Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 1"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera1Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 1"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 2"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 2"
+          },
+          "children": [
+            {
+              "id": "camera2Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 2"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera2Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 2"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 3"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 3"
+          },
+          "children": [
+            {
+              "id": "camera3Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 3"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera3Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 3"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 4"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 4"
+          },
+          "children": [
+            {
+              "id": "camera4Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 4"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera4Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 4"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 5"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 5"
+          },
+          "children": [
+            {
+              "id": "camera5Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 5"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera5Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 5"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 6"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 6"
+          },
+          "children": [
+            {
+              "id": "camera6Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 6"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera6Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 6"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 7"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 7"
+          },
+          "children": [
+            {
+              "id": "camera7Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 7"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera7Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 7"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 8"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 8"
+          },
+          "children": [
+            {
+              "id": "camera8Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 8"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera8Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 8"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 9"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 9"
+          },
+          "children": [
+            {
+              "id": "camera9Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 9"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera9Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 9"
+              },
+              "value": ""
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Camera 10"
+          },
+          "hint": {
+            "en": "Enter al settings for Camera 10"
+          },
+          "children": [
+            {
+              "id": "camera10Name",
+              "type": "text",
+              "label": {
+                "en": "Name"
+              },
+              "hint": {
+                "en": "The name for Camera 10"
+              },
+              "value": ""
+            },
+            {
+              "id": "camera10Url",
+              "type": "text",
+              "label": {
+                "en": "Url"
+              },
+              "hint": {
+                "en": "The URL for Camera 10"
+              },
+              "value": ""
+            }
+          ]
         }
       ]
     }
