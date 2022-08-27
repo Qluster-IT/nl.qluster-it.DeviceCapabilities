@@ -16,7 +16,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         // var manifest = Homeyman.Current.manifest;
 		// manifest.capabilities.measure_devicecapabilities_number.units = 'TE';
     
-        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_status'];
+        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
 			var set_value = this.homey.flow.getActionCard(action);
 			set_value
@@ -53,6 +53,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 else args.device.setCapabilityValue(cap, null);
                                 return true;
                             case 'virtualdevice_set_status':
+                            case 'virtualdevice_set_status_optionalnumber':
                                 cap = cap || 'measure_devicecapabilities_status.status1';
                                 if(args.text!==undefined && args.text!=='undefined') {
                                     var opt = args.device.getCapabilityOptions(cap);
@@ -61,7 +62,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     args.device.setCapabilityOptions(cap, opt);
                                 }
                                 if(args.number!==undefined && args.number!=='undefined') args.device.setCapabilityValue(cap, args.number); 
-                                else args.device.setCapabilityValue(cap, null);
+                                else if(action=="virtualdevice_set_status_optionalnumber") args.device.setCapabilityValue(cap, null);
                                 
                                 return true;
                         }
@@ -163,7 +164,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 var cap = undefined;
                 var searchs = ['.'+actiontype+i];
                 if(actiontype=='button'){
-                    if(settings['button'+i+'Disabled']===true);//searchs = ['devicecapabilities_quickaction_disabled_boolean'] ;
+                    if(settings['button'+i+'ShowAs']==="disabled");
                     else if(i===1) searchs = ['onoff', 'button'];
                 } 
                 for(var j=0;j<searchs.length;j++){
@@ -232,12 +233,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         session.setHandler('list_icons', async (data) => {            
             //return icons;
-            return;
+            return [{id:'5ee96dd1dd18f86cacd6d2f8', location:'/userdata/5ee96dd1dd18f86cacd6d2f8.svg'}];
+
+        });
+
+        session.setHandler('icon_picked', async (data) => {
+            device = devices[0];
+            device.icon = '../../..' + data.icon.location;
+            //session.nextView();
+            return device;
         });
 
         session.setHandler('done', async (data) => {
-            device = devices[0];
-            device.icon = '/icon-default.svg';
+            device = devices[0];            
             //session.nextView();
             return device;
         });

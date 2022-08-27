@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.74",
+  "version": "1.9.76",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1347,8 +1347,35 @@
           "nl": "Zet Status"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]], optional with [[number]]",
-          "nl": "Zet Status naar [[text]], optioneel met [[number]]"
+          "en": "Set Status to [[text]]",
+          "nl": "Zet Status naar [[text]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "text",
+            "name": "text",
+            "placeholder": {
+              "en": "Text",
+              "nl": "Tekst"
+            },
+            "required": false
+          }
+        ]
+      },
+      {
+        "id": "virtualdevice_set_status_optionalnumber",
+        "title": {
+          "en": "Set Status with Number",
+          "nl": "Zet Status met Nummer"
+        },
+        "titleFormatted": {
+          "en": "Set Status to [[text]] with [[number]]",
+          "nl": "Zet Status naar [[text]] met [[number]]"
         },
         "args": [
           {
@@ -1551,6 +1578,29 @@
       "icon": "/assets/icon.svg",
       "insights": true
     },
+    "devicecapabilities_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icon.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icon.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean": {
       "type": "boolean",
       "title": {
@@ -1569,30 +1619,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icon.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icon.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icon.svg",
       "insights": true,
       "uiQuickAction": true
@@ -1621,25 +1647,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean": {
+    "alarm_devicecapabilities_quickaction_hide_boolean": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icon.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean": {
+    "devicecapabilities_quickaction_hide_boolean": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icon.svg",
       "insights": true,
@@ -1699,6 +1725,29 @@
       "icon": "/assets/icons/alarm_smoke.svg",
       "insights": true
     },
+    "devicecapabilities_button-alarm_smoke": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/alarm_smoke.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-alarm_smoke": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/alarm_smoke.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-alarm_smoke": {
       "type": "boolean",
       "title": {
@@ -1717,30 +1766,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/alarm_smoke.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-alarm_smoke": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/alarm_smoke.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-alarm_smoke": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/alarm_smoke.svg",
       "insights": true,
       "uiQuickAction": true
@@ -1769,25 +1794,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-alarm_smoke": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-alarm_smoke": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/alarm_smoke.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-alarm_smoke": {
+    "devicecapabilities_quickaction_hide_boolean-alarm_smoke": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/alarm_smoke.svg",
       "insights": true,
@@ -1847,6 +1872,29 @@
       "icon": "/assets/icons/alarm_water.svg",
       "insights": true
     },
+    "devicecapabilities_button-alarm_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/alarm_water.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-alarm_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/alarm_water.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-alarm_water": {
       "type": "boolean",
       "title": {
@@ -1865,30 +1913,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/alarm_water.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-alarm_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/alarm_water.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-alarm_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/alarm_water.svg",
       "insights": true,
       "uiQuickAction": true
@@ -1917,25 +1941,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-alarm_water": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-alarm_water": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/alarm_water.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-alarm_water": {
+    "devicecapabilities_quickaction_hide_boolean-alarm_water": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/alarm_water.svg",
       "insights": true,
@@ -1995,6 +2019,29 @@
       "icon": "/assets/icons/battery.svg",
       "insights": true
     },
+    "devicecapabilities_button-battery": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/battery.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-battery": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/battery.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-battery": {
       "type": "boolean",
       "title": {
@@ -2013,30 +2060,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/battery.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-battery": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/battery.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-battery": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/battery.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2065,25 +2088,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-battery": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-battery": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/battery.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-battery": {
+    "devicecapabilities_quickaction_hide_boolean-battery": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/battery.svg",
       "insights": true,
@@ -2143,6 +2166,29 @@
       "icon": "/assets/icons/circle.svg",
       "insights": true
     },
+    "devicecapabilities_button-circle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/circle.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-circle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/circle.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-circle": {
       "type": "boolean",
       "title": {
@@ -2161,30 +2207,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/circle.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-circle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/circle.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-circle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/circle.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2213,25 +2235,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-circle": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-circle": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/circle.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-circle": {
+    "devicecapabilities_quickaction_hide_boolean-circle": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/circle.svg",
       "insights": true,
@@ -2246,6 +2268,153 @@
       "setable": true,
       "uiComponent": "sensor",
       "icon": "/assets/icons/circle.svg",
+      "insights": true
+    },
+    "devicecapabilities_text-device_capabilities": {
+      "type": "string",
+      "title": {
+        "en": "Text"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/device_capabilities.svg"
+    },
+    "measure_devicecapabilities_number-device_capabilities": {
+      "type": "number",
+      "title": {
+        "en": "Number"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true
+    },
+    "alarm_devicecapabilities_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true
+    },
+    "devicecapabilities_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true
+    },
+    "devicecapabilities_button-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true
+    },
+    "alarm_devicecapabilities_quickaction_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "alarm_devicecapabilities_quickaction_disabled_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_disabled_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "alarm_devicecapabilities_quickaction_hide_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": null,
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_hide_boolean-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": null,
+      "icon": "/assets/icons/device_capabilities.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "measure_devicecapabilities_status-device_capabilities": {
+      "type": "number",
+      "title": {
+        "en": "Status"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/device_capabilities.svg",
       "insights": true
     },
     "devicecapabilities_text-measure_clouds": {
@@ -2291,6 +2460,29 @@
       "icon": "/assets/icons/measure_clouds.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_clouds": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_clouds.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_clouds": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_clouds.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_clouds": {
       "type": "boolean",
       "title": {
@@ -2309,30 +2501,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_clouds.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_clouds": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_clouds.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_clouds": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_clouds.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2361,25 +2529,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_clouds": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_clouds": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_clouds.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_clouds": {
+    "devicecapabilities_quickaction_hide_boolean-measure_clouds": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_clouds.svg",
       "insights": true,
@@ -2439,6 +2607,29 @@
       "icon": "/assets/icons/measure_humidity.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_humidity": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_humidity.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_humidity": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_humidity.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_humidity": {
       "type": "boolean",
       "title": {
@@ -2457,30 +2648,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_humidity.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_humidity": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_humidity.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_humidity": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_humidity.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2509,25 +2676,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_humidity": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_humidity": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_humidity.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_humidity": {
+    "devicecapabilities_quickaction_hide_boolean-measure_humidity": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_humidity.svg",
       "insights": true,
@@ -2587,6 +2754,29 @@
       "icon": "/assets/icons/measure_luminance.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_luminance": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_luminance.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_luminance": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_luminance.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_luminance": {
       "type": "boolean",
       "title": {
@@ -2605,30 +2795,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_luminance.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_luminance": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_luminance.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_luminance": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_luminance.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2657,25 +2823,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_luminance": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_luminance": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_luminance.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_luminance": {
+    "devicecapabilities_quickaction_hide_boolean-measure_luminance": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_luminance.svg",
       "insights": true,
@@ -2735,6 +2901,29 @@
       "icon": "/assets/icons/measure_noise.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_noise": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_noise.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_noise": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_noise.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_noise": {
       "type": "boolean",
       "title": {
@@ -2753,30 +2942,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_noise.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_noise": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_noise.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_noise": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_noise.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2805,25 +2970,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_noise": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_noise": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_noise.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_noise": {
+    "devicecapabilities_quickaction_hide_boolean-measure_noise": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_noise.svg",
       "insights": true,
@@ -2883,6 +3048,29 @@
       "icon": "/assets/icons/measure_power.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_power.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_power.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_power": {
       "type": "boolean",
       "title": {
@@ -2901,30 +3089,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_power.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_power.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_power.svg",
       "insights": true,
       "uiQuickAction": true
@@ -2953,25 +3117,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_power": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_power": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_power.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_power": {
+    "devicecapabilities_quickaction_hide_boolean-measure_power": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_power.svg",
       "insights": true,
@@ -3031,6 +3195,29 @@
       "icon": "/assets/icons/measure_pressure.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_pressure": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_pressure.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_pressure": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_pressure.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_pressure": {
       "type": "boolean",
       "title": {
@@ -3049,30 +3236,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_pressure.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_pressure": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_pressure.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_pressure": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_pressure.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3101,25 +3264,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_pressure": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_pressure": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_pressure.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_pressure": {
+    "devicecapabilities_quickaction_hide_boolean-measure_pressure": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_pressure.svg",
       "insights": true,
@@ -3179,6 +3342,29 @@
       "icon": "/assets/icons/measure_rain.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_rain.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_rain.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_rain": {
       "type": "boolean",
       "title": {
@@ -3197,30 +3383,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_rain.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_rain.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_rain.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3249,25 +3411,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_rain": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_rain": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_rain.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_rain": {
+    "devicecapabilities_quickaction_hide_boolean-measure_rain": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_rain.svg",
       "insights": true,
@@ -3327,6 +3489,29 @@
       "icon": "/assets/icons/measure_temperature.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_temperature": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_temperature.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_temperature": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_temperature.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_temperature": {
       "type": "boolean",
       "title": {
@@ -3345,30 +3530,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_temperature.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_temperature": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_temperature.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_temperature": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_temperature.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3397,25 +3558,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_temperature": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_temperature": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_temperature.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_temperature": {
+    "devicecapabilities_quickaction_hide_boolean-measure_temperature": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_temperature.svg",
       "insights": true,
@@ -3475,6 +3636,29 @@
       "icon": "/assets/icons/measure_wind_angle.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_wind_angle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_wind_angle.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_wind_angle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_wind_angle.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_wind_angle": {
       "type": "boolean",
       "title": {
@@ -3493,30 +3677,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_wind_angle.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_wind_angle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_wind_angle.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_wind_angle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_wind_angle.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3545,25 +3705,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_wind_angle": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_wind_angle": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_wind_angle.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_wind_angle": {
+    "devicecapabilities_quickaction_hide_boolean-measure_wind_angle": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_wind_angle.svg",
       "insights": true,
@@ -3623,6 +3783,29 @@
       "icon": "/assets/icons/measure_wind_strength.svg",
       "insights": true
     },
+    "devicecapabilities_button-measure_wind_strength": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/measure_wind_strength.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-measure_wind_strength": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/measure_wind_strength.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-measure_wind_strength": {
       "type": "boolean",
       "title": {
@@ -3641,30 +3824,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/measure_wind_strength.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-measure_wind_strength": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/measure_wind_strength.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-measure_wind_strength": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/measure_wind_strength.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3693,25 +3852,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-measure_wind_strength": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-measure_wind_strength": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_wind_strength.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-measure_wind_strength": {
+    "devicecapabilities_quickaction_hide_boolean-measure_wind_strength": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/measure_wind_strength.svg",
       "insights": true,
@@ -3771,6 +3930,29 @@
       "icon": "/assets/icons/meter_gas.svg",
       "insights": true
     },
+    "devicecapabilities_button-meter_gas": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/meter_gas.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-meter_gas": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/meter_gas.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-meter_gas": {
       "type": "boolean",
       "title": {
@@ -3789,30 +3971,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/meter_gas.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-meter_gas": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/meter_gas.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-meter_gas": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/meter_gas.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3841,25 +3999,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-meter_gas": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-meter_gas": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_gas.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-meter_gas": {
+    "devicecapabilities_quickaction_hide_boolean-meter_gas": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_gas.svg",
       "insights": true,
@@ -3919,6 +4077,29 @@
       "icon": "/assets/icons/meter_power.svg",
       "insights": true
     },
+    "devicecapabilities_button-meter_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/meter_power.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-meter_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/meter_power.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-meter_power": {
       "type": "boolean",
       "title": {
@@ -3937,30 +4118,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/meter_power.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-meter_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/meter_power.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-meter_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/meter_power.svg",
       "insights": true,
       "uiQuickAction": true
@@ -3989,25 +4146,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-meter_power": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-meter_power": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_power.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-meter_power": {
+    "devicecapabilities_quickaction_hide_boolean-meter_power": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_power.svg",
       "insights": true,
@@ -4067,6 +4224,29 @@
       "icon": "/assets/icons/meter_water.svg",
       "insights": true
     },
+    "devicecapabilities_button-meter_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/meter_water.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-meter_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/meter_water.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-meter_water": {
       "type": "boolean",
       "title": {
@@ -4085,30 +4265,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/meter_water.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-meter_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/meter_water.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-meter_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/meter_water.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4137,25 +4293,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-meter_water": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-meter_water": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_water.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-meter_water": {
+    "devicecapabilities_quickaction_hide_boolean-meter_water": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_water.svg",
       "insights": true,
@@ -4215,6 +4371,29 @@
       "icon": "/assets/icons/meter_rain.svg",
       "insights": true
     },
+    "devicecapabilities_button-meter_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/meter_rain.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-meter_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/meter_rain.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-meter_rain": {
       "type": "boolean",
       "title": {
@@ -4233,30 +4412,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/meter_rain.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-meter_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/meter_rain.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-meter_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/meter_rain.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4285,25 +4440,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-meter_rain": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-meter_rain": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_rain.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-meter_rain": {
+    "devicecapabilities_quickaction_hide_boolean-meter_rain": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/meter_rain.svg",
       "insights": true,
@@ -4363,6 +4518,29 @@
       "icon": "/assets/icons/music.svg",
       "insights": true
     },
+    "devicecapabilities_button-music": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/music.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-music": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/music.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-music": {
       "type": "boolean",
       "title": {
@@ -4381,30 +4559,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/music.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-music": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/music.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-music": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/music.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4433,25 +4587,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-music": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-music": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/music.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-music": {
+    "devicecapabilities_quickaction_hide_boolean-music": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/music.svg",
       "insights": true,
@@ -4511,6 +4665,29 @@
       "icon": "/assets/icons/onoff.svg",
       "insights": true
     },
+    "devicecapabilities_button-onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/onoff.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/onoff.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-onoff": {
       "type": "boolean",
       "title": {
@@ -4529,30 +4706,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/onoff.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-onoff": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/onoff.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-onoff": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/onoff.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4581,25 +4734,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-onoff": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-onoff": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/onoff.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-onoff": {
+    "devicecapabilities_quickaction_hide_boolean-onoff": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/onoff.svg",
       "insights": true,
@@ -4659,6 +4812,29 @@
       "icon": "/assets/icons/sensor.svg",
       "insights": true
     },
+    "devicecapabilities_button-sensor": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/sensor.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-sensor": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/sensor.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-sensor": {
       "type": "boolean",
       "title": {
@@ -4677,30 +4853,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/sensor.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-sensor": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/sensor.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-sensor": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/sensor.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4729,25 +4881,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-sensor": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-sensor": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/sensor.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-sensor": {
+    "devicecapabilities_quickaction_hide_boolean-sensor": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/sensor.svg",
       "insights": true,
@@ -4807,6 +4959,29 @@
       "icon": "/assets/icons/speaker_next.svg",
       "insights": true
     },
+    "devicecapabilities_button-speaker_next": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/speaker_next.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-speaker_next": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/speaker_next.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-speaker_next": {
       "type": "boolean",
       "title": {
@@ -4825,30 +5000,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/speaker_next.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_next": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/speaker_next.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-speaker_next": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/speaker_next.svg",
       "insights": true,
       "uiQuickAction": true
@@ -4877,25 +5028,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-speaker_next": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_next": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_next.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-speaker_next": {
+    "devicecapabilities_quickaction_hide_boolean-speaker_next": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_next.svg",
       "insights": true,
@@ -4955,6 +5106,29 @@
       "icon": "/assets/icons/speaker_play.svg",
       "insights": true
     },
+    "devicecapabilities_button-speaker_play": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/speaker_play.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-speaker_play": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/speaker_play.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-speaker_play": {
       "type": "boolean",
       "title": {
@@ -4973,30 +5147,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/speaker_play.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_play": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/speaker_play.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-speaker_play": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/speaker_play.svg",
       "insights": true,
       "uiQuickAction": true
@@ -5025,25 +5175,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-speaker_play": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_play": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_play.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-speaker_play": {
+    "devicecapabilities_quickaction_hide_boolean-speaker_play": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_play.svg",
       "insights": true,
@@ -5103,6 +5253,29 @@
       "icon": "/assets/icons/speaker_prev.svg",
       "insights": true
     },
+    "devicecapabilities_button-speaker_prev": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/speaker_prev.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-speaker_prev": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/speaker_prev.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-speaker_prev": {
       "type": "boolean",
       "title": {
@@ -5121,30 +5294,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/speaker_prev.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_prev": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/speaker_prev.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-speaker_prev": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/speaker_prev.svg",
       "insights": true,
       "uiQuickAction": true
@@ -5173,25 +5322,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-speaker_prev": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-speaker_prev": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_prev.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-speaker_prev": {
+    "devicecapabilities_quickaction_hide_boolean-speaker_prev": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/speaker_prev.svg",
       "insights": true,
@@ -5206,6 +5355,153 @@
       "setable": true,
       "uiComponent": "sensor",
       "icon": "/assets/icons/speaker_prev.svg",
+      "insights": true
+    },
+    "devicecapabilities_text-virtual_device": {
+      "type": "string",
+      "title": {
+        "en": "Text"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/virtual_device.svg"
+    },
+    "measure_devicecapabilities_number-virtual_device": {
+      "type": "number",
+      "title": {
+        "en": "Number"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true
+    },
+    "alarm_devicecapabilities_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true
+    },
+    "devicecapabilities_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true
+    },
+    "devicecapabilities_button-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true
+    },
+    "alarm_devicecapabilities_quickaction_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "alarm_devicecapabilities_quickaction_disabled_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_disabled_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "alarm_devicecapabilities_quickaction_hide_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": null,
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "devicecapabilities_quickaction_hide_boolean-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": null,
+      "icon": "/assets/icons/virtual_device.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "measure_devicecapabilities_status-virtual_device": {
+      "type": "number",
+      "title": {
+        "en": "Status"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/virtual_device.svg",
       "insights": true
     },
     "devicecapabilities_text-volume_down": {
@@ -5251,6 +5547,29 @@
       "icon": "/assets/icons/volume_down.svg",
       "insights": true
     },
+    "devicecapabilities_button-volume_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/volume_down.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-volume_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/volume_down.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-volume_down": {
       "type": "boolean",
       "title": {
@@ -5269,30 +5588,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/volume_down.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-volume_down": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/volume_down.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-volume_down": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/volume_down.svg",
       "insights": true,
       "uiQuickAction": true
@@ -5321,25 +5616,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-volume_down": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-volume_down": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_down.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-volume_down": {
+    "devicecapabilities_quickaction_hide_boolean-volume_down": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_down.svg",
       "insights": true,
@@ -5399,6 +5694,29 @@
       "icon": "/assets/icons/volume_mute.svg",
       "insights": true
     },
+    "devicecapabilities_button-volume_mute": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/volume_mute.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-volume_mute": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/volume_mute.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-volume_mute": {
       "type": "boolean",
       "title": {
@@ -5417,30 +5735,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/volume_mute.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-volume_mute": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/volume_mute.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-volume_mute": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/volume_mute.svg",
       "insights": true,
       "uiQuickAction": true
@@ -5469,25 +5763,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-volume_mute": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-volume_mute": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_mute.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-volume_mute": {
+    "devicecapabilities_quickaction_hide_boolean-volume_mute": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_mute.svg",
       "insights": true,
@@ -5547,6 +5841,29 @@
       "icon": "/assets/icons/volume_up.svg",
       "insights": true
     },
+    "devicecapabilities_button-volume_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "icon": "/assets/icons/volume_up.svg",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoff_devicecapabilities_button-volume_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "icon": "/assets/icons/volume_up.svg",
+      "insights": true
+    },
     "alarm_devicecapabilities_quickaction_boolean-volume_up": {
       "type": "boolean",
       "title": {
@@ -5565,30 +5882,6 @@
       },
       "getable": true,
       "setable": true,
-      "icon": "/assets/icons/volume_up.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "alarm_devicecapabilities_quickaction_hide_boolean-volume_up": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
-      "icon": "/assets/icons/volume_up.svg",
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_hide_boolean-volume_up": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": null,
       "icon": "/assets/icons/volume_up.svg",
       "insights": true,
       "uiQuickAction": true
@@ -5617,25 +5910,25 @@
       "insights": true,
       "uiQuickAction": true
     },
-    "alarm_devicecapabilities_quickaction_disabled_hide_boolean-volume_up": {
+    "alarm_devicecapabilities_quickaction_hide_boolean-volume_up": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_up.svg",
       "insights": true,
       "uiQuickAction": true
     },
-    "devicecapabilities_quickaction_disabled_hide_boolean-volume_up": {
+    "devicecapabilities_quickaction_hide_boolean-volume_up": {
       "type": "boolean",
       "title": {
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": null,
       "icon": "/assets/icons/volume_up.svg",
       "insights": true,
@@ -5676,7 +5969,7 @@
           "id": "list_virtualdevice",
           "template": "list_devices",
           "navigation": {
-            "next": "add_virtualdevice"
+            "next": "list_icons"
           },
           "options": {
             "singular": true
@@ -5692,10 +5985,7 @@
           }
         },
         {
-          "id": "done",
-          "navigation": {
-            "next": "add_virtualdevice"
-          }
+          "id": "done"
         },
         {
           "id": "add_virtualdevice",
@@ -5718,7 +6008,7 @@
               "label": {
                 "en": "Be aware"
               },
-              "value": "Changing the properties Icon, Show as Alarm or Show as On/Off will causes Flow-Tag IDs to be changed and thus may break flows."
+              "value": "Changing the properties Icon, Show as Alarm or Show as On/Off will causes Tag IDs to be changed and thus may break flows."
             },
             {
               "id": "label5",
@@ -5757,7 +6047,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -5788,6 +6078,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -5908,6 +6204,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -5985,7 +6287,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -6016,6 +6318,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -6136,6 +6444,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -6188,7 +6502,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -6219,6 +6533,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -6339,6 +6659,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -6391,7 +6717,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -6422,6 +6748,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -6542,6 +6874,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -6594,7 +6932,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -6625,6 +6963,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -6745,6 +7089,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -6797,7 +7147,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -6828,6 +7178,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -6948,6 +7304,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -7000,7 +7362,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -7031,6 +7393,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -7151,6 +7519,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -7203,7 +7577,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -7234,6 +7608,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -7354,6 +7734,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -7406,7 +7792,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -7437,6 +7823,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -7557,6 +7949,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -7609,7 +8007,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -7640,6 +8038,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -7760,6 +8164,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -7812,7 +8222,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -7843,6 +8253,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -7963,6 +8379,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -8015,7 +8437,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -8046,6 +8468,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -8166,6 +8594,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -8254,7 +8688,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -8285,6 +8719,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -8405,6 +8845,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -8493,7 +8939,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -8524,6 +8970,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -8644,6 +9096,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -8732,7 +9190,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -8763,6 +9221,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -8883,6 +9347,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -8971,7 +9441,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -9002,6 +9472,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -9122,6 +9598,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -9210,7 +9692,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -9241,6 +9723,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -9361,6 +9849,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -9449,7 +9943,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -9480,6 +9974,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -9600,6 +10100,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -9688,7 +10194,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -9719,6 +10225,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -9839,6 +10351,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -9927,7 +10445,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -9958,6 +10476,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -10078,6 +10602,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -10166,7 +10696,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -10197,6 +10727,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -10317,6 +10853,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -10405,7 +10947,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -10436,6 +10978,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -10556,6 +11104,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -10663,7 +11217,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -10694,6 +11248,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -10814,6 +11374,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -10921,7 +11487,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -10952,6 +11518,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -11072,6 +11644,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -11179,7 +11757,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -11210,6 +11788,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -11330,6 +11914,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -11437,7 +12027,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -11468,6 +12058,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -11588,6 +12184,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -11695,7 +12297,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -11726,6 +12328,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -11846,6 +12454,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -11953,7 +12567,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -11984,6 +12598,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -12104,6 +12724,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -12211,7 +12837,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -12242,6 +12868,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -12362,6 +12994,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -12469,7 +13107,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -12500,6 +13138,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -12620,6 +13264,12 @@
                   "id": "speaker_prev",
                   "label": {
                     "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
                   }
                 },
                 {
@@ -12727,7 +13377,7 @@
                 "en": "Icon"
               },
               "hint": {
-                "en": "Select an Icon for this capability. Be aware that this causes Flow-Tag IDs to be changed and thus may break flows."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
               "values": [
                 {
@@ -12758,6 +13408,12 @@
                   "id": "circle",
                   "label": {
                     "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
                   }
                 },
                 {
@@ -12881,6 +13537,12 @@
                   }
                 },
                 {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
                   "id": "volume_down",
                   "label": {
                     "en": "volume_down"
@@ -12979,37 +13641,45 @@
               "value": "Button 1"
             },
             {
-              "id": "button1AsOnOff",
-              "type": "checkbox",
+              "id": "button1ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
-            },
-            {
-              "id": "button1Disabled",
-              "type": "checkbox",
-              "label": {
-                "en": "Disable"
-              },
-              "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
-              },
-              "value": false
-            },
-            {
-              "id": "button1Hide",
-              "type": "checkbox",
-              "label": {
-                "en": "Hide"
-              },
-              "hint": {
-                "en": "When selected this button will not be shown anywhere."
-              },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13034,26 +13704,238 @@
               "value": ""
             },
             {
-              "id": "button2AsOnOff",
-              "type": "checkbox",
+              "id": "button2ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button2Disabled",
-              "type": "checkbox",
+              "id": "button2Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13078,26 +13960,238 @@
               "value": ""
             },
             {
-              "id": "button3AsOnOff",
-              "type": "checkbox",
+              "id": "button3ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button3Disabled",
-              "type": "checkbox",
+              "id": "button3Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13122,26 +14216,238 @@
               "value": ""
             },
             {
-              "id": "button4AsOnOff",
-              "type": "checkbox",
+              "id": "button4ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button4Disabled",
-              "type": "checkbox",
+              "id": "button4Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13166,26 +14472,238 @@
               "value": ""
             },
             {
-              "id": "button5AsOnOff",
-              "type": "checkbox",
+              "id": "button5ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button5Disabled",
-              "type": "checkbox",
+              "id": "button5Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13210,26 +14728,238 @@
               "value": ""
             },
             {
-              "id": "button6AsOnOff",
-              "type": "checkbox",
+              "id": "button6ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button6Disabled",
-              "type": "checkbox",
+              "id": "button6Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13254,26 +14984,238 @@
               "value": ""
             },
             {
-              "id": "button7AsOnOff",
-              "type": "checkbox",
+              "id": "button7ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button7Disabled",
-              "type": "checkbox",
+              "id": "button7Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13298,26 +15240,238 @@
               "value": ""
             },
             {
-              "id": "button8AsOnOff",
-              "type": "checkbox",
+              "id": "button8ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button8Disabled",
-              "type": "checkbox",
+              "id": "button8Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13342,26 +15496,238 @@
               "value": ""
             },
             {
-              "id": "button9AsOnOff",
-              "type": "checkbox",
+              "id": "button9ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button9Disabled",
-              "type": "checkbox",
+              "id": "button9Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13386,26 +15752,238 @@
               "value": ""
             },
             {
-              "id": "button10AsOnOff",
-              "type": "checkbox",
+              "id": "button10ShowAs",
+              "type": "dropdown",
               "label": {
-                "en": "Show as On/Off"
+                "en": "Show as"
               },
               "hint": {
-                "en": "When selected this is a toggle button."
+                "en": "Select how the button must be displayed."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "button",
+                  "label": "Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "disabled",
+                  "label": "Non-clickable"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                }
+              ],
+              "value": ""
             },
             {
-              "id": "button10Disabled",
-              "type": "checkbox",
+              "id": "button10Icon",
+              "type": "dropdown",
               "label": {
-                "en": "Disable"
+                "en": "Icon"
               },
               "hint": {
-                "en": "When selected this button cannot be pushed in the UI. Only functions correctly if all buttons are disabled."
+                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
               },
-              "value": false
+              "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": ""
+                  }
+                },
+                {
+                  "id": "alarm_smoke",
+                  "label": {
+                    "en": "alarm_smoke"
+                  }
+                },
+                {
+                  "id": "alarm_water",
+                  "label": {
+                    "en": "alarm_water"
+                  }
+                },
+                {
+                  "id": "battery",
+                  "label": {
+                    "en": "battery"
+                  }
+                },
+                {
+                  "id": "circle",
+                  "label": {
+                    "en": "circle"
+                  }
+                },
+                {
+                  "id": "device_capabilities",
+                  "label": {
+                    "en": "device_capabilities"
+                  }
+                },
+                {
+                  "id": "measure_clouds",
+                  "label": {
+                    "en": "measure_clouds"
+                  }
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": {
+                    "en": "measure_humidity"
+                  }
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": {
+                    "en": "measure_luminance"
+                  }
+                },
+                {
+                  "id": "measure_noise",
+                  "label": {
+                    "en": "measure_noise"
+                  }
+                },
+                {
+                  "id": "measure_power",
+                  "label": {
+                    "en": "measure_power"
+                  }
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": {
+                    "en": "measure_pressure"
+                  }
+                },
+                {
+                  "id": "measure_rain",
+                  "label": {
+                    "en": "measure_rain"
+                  }
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": {
+                    "en": "measure_temperature"
+                  }
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": {
+                    "en": "measure_wind_angle"
+                  }
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": {
+                    "en": "measure_wind_strength"
+                  }
+                },
+                {
+                  "id": "meter_gas",
+                  "label": {
+                    "en": "meter_gas"
+                  }
+                },
+                {
+                  "id": "meter_power",
+                  "label": {
+                    "en": "meter_power"
+                  }
+                },
+                {
+                  "id": "meter_rain",
+                  "label": {
+                    "en": "meter_rain"
+                  }
+                },
+                {
+                  "id": "meter_water",
+                  "label": {
+                    "en": "meter_water"
+                  }
+                },
+                {
+                  "id": "music",
+                  "label": {
+                    "en": "music"
+                  }
+                },
+                {
+                  "id": "onoff",
+                  "label": {
+                    "en": "onoff"
+                  }
+                },
+                {
+                  "id": "sensor",
+                  "label": {
+                    "en": "sensor"
+                  }
+                },
+                {
+                  "id": "speaker_next",
+                  "label": {
+                    "en": "speaker_next"
+                  }
+                },
+                {
+                  "id": "speaker_play",
+                  "label": {
+                    "en": "speaker_play"
+                  }
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": {
+                    "en": "speaker_prev"
+                  }
+                },
+                {
+                  "id": "virtual_device",
+                  "label": {
+                    "en": "virtual_device"
+                  }
+                },
+                {
+                  "id": "volume_down",
+                  "label": {
+                    "en": "volume_down"
+                  }
+                },
+                {
+                  "id": "volume_mute",
+                  "label": {
+                    "en": "volume_mute"
+                  }
+                },
+                {
+                  "id": "volume_up",
+                  "label": {
+                    "en": "volume_up"
+                  }
+                }
+              ],
+              "value": ""
             }
           ]
         },
@@ -13439,6 +16017,20 @@
                 "en": "The URL for Camera 1"
               },
               "value": ""
+            },
+            {
+              "id": "camera1Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 1. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13472,6 +16064,20 @@
                 "en": "The URL for Camera 2"
               },
               "value": ""
+            },
+            {
+              "id": "camera2Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 2. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13505,6 +16111,20 @@
                 "en": "The URL for Camera 3"
               },
               "value": ""
+            },
+            {
+              "id": "camera3Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 3. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13538,6 +16158,20 @@
                 "en": "The URL for Camera 4"
               },
               "value": ""
+            },
+            {
+              "id": "camera4Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 4. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13571,6 +16205,20 @@
                 "en": "The URL for Camera 5"
               },
               "value": ""
+            },
+            {
+              "id": "camera5Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 5. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13604,6 +16252,20 @@
                 "en": "The URL for Camera 6"
               },
               "value": ""
+            },
+            {
+              "id": "camera6Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 6. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13637,6 +16299,20 @@
                 "en": "The URL for Camera 7"
               },
               "value": ""
+            },
+            {
+              "id": "camera7Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 7. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13670,6 +16346,20 @@
                 "en": "The URL for Camera 8"
               },
               "value": ""
+            },
+            {
+              "id": "camera8Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 8. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13703,6 +16393,20 @@
                 "en": "The URL for Camera 9"
               },
               "value": ""
+            },
+            {
+              "id": "camera9Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 9. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         },
@@ -13736,6 +16440,20 @@
                 "en": "The URL for Camera 10"
               },
               "value": ""
+            },
+            {
+              "id": "camera10Interval",
+              "type": "number",
+              "min": 0,
+              "max": 86400,
+              "step": 1,
+              "label": {
+                "en": "Interval in Seconds"
+              },
+              "hint": {
+                "en": "The Interval in seconds to refresh the image for Camera 10. Entering 0 will disable automatic refresh."
+              },
+              "value": 0
             }
           ]
         }

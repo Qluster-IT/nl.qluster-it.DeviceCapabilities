@@ -32,8 +32,15 @@
 
     $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
 
-    Homey.emit('done', null, function (err, result) {
-        Homey.nextView();
+    Homey.emit('done', null, function (err, device) {
+        Homey.createDevice(device, (err, res) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        Homey.done();
+        });
     });
     
 

@@ -10,6 +10,8 @@ const { join } = require('path');
 const { readFile, writeFile, unlink, rename } = require('fs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
+const fs = require('fs');
+
 
 const SETTING_PREFIX = 'sound_';
 const TYPES_MAP = {
@@ -431,72 +433,82 @@ class DeviceSetter extends Homey.App {
 	}
 
 
-	// getIcons() {
-	// 	return this.homey.settings.getKeys()
-	// 		.filter(key => {
-	// 			return key.indexOf(SETTING_PREFIX) === 0;
-	// 		})
-	// 		.map(key => {
-	// 			return this.getIcon({
-	// 				id: key.substring(SETTING_PREFIX.length),
-	// 			});			
-	// 		});
-	// }
+	getIcons() {
+		return this.homey.settings.getKeys()
+			.filter(key => {
+				return key.indexOf(SETTING_PREFIX) === 0;
+			})
+			.map(key => {
+				return this.getIcon({
+					id: key.substring(SETTING_PREFIX.length),
+				});			
+			});
+	}
 	
-	// getIcon({ id }) {
-	// 	const icon = this.homey.settings.get(`${SETTING_PREFIX}${id}`);
-	// 	if( !icon ) throw new Error('invalid_icon');
-	// 	return icon;
-	// }
+	getIcon({ id }) {
+		const icon = this.homey.settings.get(`${SETTING_PREFIX}${id}`);
+		if( !icon ) throw new Error('invalid_icon');
+		return icon;
+	}
 	
-	// async createIcon({ type, name, buffer }) {
-	// 	if( !TYPES_MAP[type] )
-	// 		throw new Error(`invalid_type:${type}`);
+	async createIcon({ type, name, buffer }) {
+		if( !TYPES_MAP[type] )
+			throw new Error(`invalid_type:${type}`);
 			
-	// 	const buf = new Buffer(buffer, 'base64');
-	// 	if( !Buffer.isBuffer(buf) )
-	// 		throw new Error("invalid_buffer");
+		const buf = new Buffer(buffer, 'base64');
+		if( !Buffer.isBuffer(buf) )
+			throw new Error("invalid_buffer");
 			
-	// 	const id = randomBytes(12).toString('hex');
-	// 	const ext = this.getExtByType(type);
-	// 	//const path = `./tmp/${id}${ext}`;
-	// 	const path = `./userdata/${id}${ext}`;
-	// 	await writeFileAsync(path, buf);
+		const id = randomBytes(12).toString('hex');
+		const ext = this.getExtByType(type);
+		//const path = `./tmp/${id}${ext}`;
+		const path = `./userdata/${id}${ext}`;
+
+		// const base64 = buffer.replace("data:image/svg+xml;base64,", '');
+		// fs.writeFile(path, base64, 'base64', (error) => {
+		// 	if (error) {
+		// 	return reject(error);
+		// 	} else {
+		// 	return resolve(true);
+		// 	}
+		// });
+
+		await writeFileAsync(path, buf);
 		
-	// 	await this.homey.settings.set(`${SETTING_PREFIX}${id}`, {
-	// 		id,
-	// 		type,
-	// 		name,
-	// 		path,
-	// 	});
-	// 	return this.getIcon({ id });
-	// }
+		await this.homey.settings.set(`${SETTING_PREFIX}${id}`, {
+			id,
+			type,
+			name,
+			path,
+		});
+		return this.getIcon({ id });
+	}
 	
-	// async updateIcon({ id, name, path }) {
-	// 	const icon = await this.getIcon({ id });
+	async updateIcon({ id, name, path }) {
+		const icon = await this.getIcon({ id });
 		
-	// 	if( typeof name === 'string' )
-	// 		icon.name = name;
+		if( typeof name === 'string' )
+			icon.name = name;
 			
-	// 	if( typeof path === 'string' )
-	// 		icon.path = path;
+		if( typeof path === 'string' )
+			icon.path = path;
 		
-	// 	await this.homey.settings.set(`${SETTING_PREFIX}${id}`, icon);
+		await this.homey.settings.set(`${SETTING_PREFIX}${id}`, icon);
 		
-	// 	return this.getIcon({ id });
+		return this.getIcon({ id });
 		
-	// }
+	}
 	
-	// async deleteIcon({ id }) {
-	// 	const icon = await this.getIcon({ id });
-	// 	try {
-	// 		await unlinkAsync(icon.path);
-	// 	} catch( err ) {
-	// 		this.error(err);
-	// 	}
-	// 	await this.homey.settings.unset(`${SETTING_PREFIX}${id}`);
+	async deleteIcon({ id }) {
+		const icon = await this.getIcon({ id });
+		try {
+			await unlinkAsync(icon.path);
+		} catch( err ) {
+			this.error(err);
+		}
+		await this.homey.settings.unset(`${SETTING_PREFIX}${id}`);
 		
-	// }
+	}
 	
 	getExtByType(type) {
 	  const typeSimple = TYPES_MAP[type];

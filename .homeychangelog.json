@@ -97,5 +97,11 @@
   },
   "1.9.74" : {
     "en" : "Bugfixed"
+  },
+  "1.9.75" : {
+    "en" : "Added camera and many more"
+  },
+  "1.9.76" : {
+    "en" : "Added image upload in settings for icons"
   }
 }
