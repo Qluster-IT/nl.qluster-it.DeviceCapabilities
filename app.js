@@ -845,14 +845,18 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async watchAppState(appId) {
-		if (!this.apps || appId === this.manifest.id || !this.apps[appId]) return;
-		const app = this.apps[appId];
-		if (this.Watchers[appId]) {
-			this.Watchers[appId].app = app;
-		} else {
-			if (!this.Watchers[appId]) this.Watchers[appId] = { oldState: app.state, app: app };
+		try {			
+			if (!this.apps || appId === this.manifest.id || !this.apps[appId]) return;
+			const app = this.apps[appId];
+			if (this.Watchers[appId]) {
+				this.Watchers[appId].app = app;
+			} else {
+				if (!this.Watchers[appId]) this.Watchers[appId] = { oldState: app.state, app: app };
+			}
+			this.watchAppStateUpdate(app);
+		} catch (error) {
+			
 		}
-		this.watchAppStateUpdate(app);
 	}
 	async watchAppStateUpdate(app) {
 		app.on(['update', 'delete'], (_app) => {

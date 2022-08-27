@@ -94,5 +94,8 @@
   },
   "1.9.73" : {
     "en" : "All fields 10 times"
+  },
+  "1.9.74" : {
+    "en" : "Bugfixed"
   }
 }
