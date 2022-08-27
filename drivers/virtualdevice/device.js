@@ -12,6 +12,11 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.log('Device init');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
+
+		if (process.env.DEBUG === '1')  {
+			//if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');
+			if(this.getClass()!=='camera')this.setClass('camera');
+		}
 		//await this.removeCapability('devicecapabilities_quickaction_boolean');
 		// if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');
 
