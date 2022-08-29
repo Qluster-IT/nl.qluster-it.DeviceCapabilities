@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.84",
+  "version": "1.9.9",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1423,6 +1423,41 @@
         ]
       },
       {
+        "id": "virtualdevice_set_expression",
+        "title": {
+          "en": "Set Expression",
+          "nl": "Zet Expression"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[expression]]",
+          "nl": "Zet [[field]] naar [[expression]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Field",
+              "nl": "Veld"
+            }
+          },
+          {
+            "type": "text",
+            "name": "expression",
+            "placeholder": {
+              "en": "Expression",
+              "nl": "Expression"
+            },
+            "required": false
+          }
+        ]
+      },
+      {
         "id": "virtualdevice_set_name",
         "deprecated": true,
         "title": {
@@ -1615,6 +1650,17 @@
       "insights": true,
       "uiQuickAction": true
     },
+    "onoffbuttontab_devicecapabilities_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true
+    },
     "onoff_devicecapabilities_button": {
       "type": "boolean",
       "title": {
@@ -1631,6 +1677,17 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1731,6 +1788,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/alarm_smoke.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-alarm_smoke": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/alarm_smoke.svg"
+    },
     "onoff_devicecapabilities_button-alarm_smoke": {
       "type": "boolean",
       "title": {
@@ -1748,6 +1817,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/alarm_smoke.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-alarm_smoke": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1853,6 +1934,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/alarm_water.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-alarm_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/alarm_water.svg"
+    },
     "onoff_devicecapabilities_button-alarm_water": {
       "type": "boolean",
       "title": {
@@ -1870,6 +1963,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/alarm_water.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-alarm_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1975,6 +2080,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/battery.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-battery": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/battery.svg"
+    },
     "onoff_devicecapabilities_button-battery": {
       "type": "boolean",
       "title": {
@@ -1992,6 +2109,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/battery.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-battery": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2097,6 +2226,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/circle.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-circle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/circle.svg"
+    },
     "onoff_devicecapabilities_button-circle": {
       "type": "boolean",
       "title": {
@@ -2114,6 +2255,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/circle.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-circle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2219,6 +2372,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/device_capabilities.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/device_capabilities.svg"
+    },
     "onoff_devicecapabilities_button-device_capabilities": {
       "type": "boolean",
       "title": {
@@ -2236,6 +2401,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/device_capabilities.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-device_capabilities": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2341,6 +2518,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_clouds.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_clouds": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_clouds.svg"
+    },
     "onoff_devicecapabilities_button-measure_clouds": {
       "type": "boolean",
       "title": {
@@ -2358,6 +2547,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_clouds.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_clouds": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2463,6 +2664,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_humidity.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_humidity": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_humidity.svg"
+    },
     "onoff_devicecapabilities_button-measure_humidity": {
       "type": "boolean",
       "title": {
@@ -2480,6 +2693,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_humidity.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_humidity": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2585,6 +2810,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_luminance.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_luminance": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_luminance.svg"
+    },
     "onoff_devicecapabilities_button-measure_luminance": {
       "type": "boolean",
       "title": {
@@ -2602,6 +2839,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_luminance.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_luminance": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2707,6 +2956,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_noise.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_noise": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_noise.svg"
+    },
     "onoff_devicecapabilities_button-measure_noise": {
       "type": "boolean",
       "title": {
@@ -2724,6 +2985,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_noise.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_noise": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2829,6 +3102,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_power.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_power.svg"
+    },
     "onoff_devicecapabilities_button-measure_power": {
       "type": "boolean",
       "title": {
@@ -2846,6 +3131,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_power.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2951,6 +3248,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_pressure.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_pressure": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_pressure.svg"
+    },
     "onoff_devicecapabilities_button-measure_pressure": {
       "type": "boolean",
       "title": {
@@ -2968,6 +3277,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_pressure.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_pressure": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3073,6 +3394,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_rain.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_rain.svg"
+    },
     "onoff_devicecapabilities_button-measure_rain": {
       "type": "boolean",
       "title": {
@@ -3090,6 +3423,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_rain.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3195,6 +3540,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_temperature.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_temperature": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_temperature.svg"
+    },
     "onoff_devicecapabilities_button-measure_temperature": {
       "type": "boolean",
       "title": {
@@ -3212,6 +3569,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_temperature.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_temperature": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3317,6 +3686,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_wind_angle.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_wind_angle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_wind_angle.svg"
+    },
     "onoff_devicecapabilities_button-measure_wind_angle": {
       "type": "boolean",
       "title": {
@@ -3334,6 +3715,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_wind_angle.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_wind_angle": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3439,6 +3832,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/measure_wind_strength.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-measure_wind_strength": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_wind_strength.svg"
+    },
     "onoff_devicecapabilities_button-measure_wind_strength": {
       "type": "boolean",
       "title": {
@@ -3456,6 +3861,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/measure_wind_strength.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-measure_wind_strength": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3561,6 +3978,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/meter_gas.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-meter_gas": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_gas.svg"
+    },
     "onoff_devicecapabilities_button-meter_gas": {
       "type": "boolean",
       "title": {
@@ -3578,6 +4007,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_gas.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-meter_gas": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3683,6 +4124,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/meter_power.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-meter_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_power.svg"
+    },
     "onoff_devicecapabilities_button-meter_power": {
       "type": "boolean",
       "title": {
@@ -3700,6 +4153,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_power.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-meter_power": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3805,6 +4270,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/meter_water.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-meter_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_water.svg"
+    },
     "onoff_devicecapabilities_button-meter_water": {
       "type": "boolean",
       "title": {
@@ -3822,6 +4299,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_water.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-meter_water": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3927,6 +4416,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/meter_rain.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-meter_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_rain.svg"
+    },
     "onoff_devicecapabilities_button-meter_rain": {
       "type": "boolean",
       "title": {
@@ -3944,6 +4445,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/meter_rain.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-meter_rain": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4049,6 +4562,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/music.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-music": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/music.svg"
+    },
     "onoff_devicecapabilities_button-music": {
       "type": "boolean",
       "title": {
@@ -4066,6 +4591,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/music.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-music": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4171,6 +4708,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/onoff.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/onoff.svg"
+    },
     "onoff_devicecapabilities_button-onoff": {
       "type": "boolean",
       "title": {
@@ -4188,6 +4737,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/onoff.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-onoff": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4293,6 +4854,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/sensor.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-sensor": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/sensor.svg"
+    },
     "onoff_devicecapabilities_button-sensor": {
       "type": "boolean",
       "title": {
@@ -4310,6 +4883,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/sensor.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-sensor": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4415,6 +5000,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/speaker_next.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-speaker_next": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_next.svg"
+    },
     "onoff_devicecapabilities_button-speaker_next": {
       "type": "boolean",
       "title": {
@@ -4432,6 +5029,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_next.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-speaker_next": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4537,6 +5146,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/speaker_play.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-speaker_play": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_play.svg"
+    },
     "onoff_devicecapabilities_button-speaker_play": {
       "type": "boolean",
       "title": {
@@ -4554,6 +5175,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_play.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-speaker_play": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4659,6 +5292,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/speaker_prev.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-speaker_prev": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_prev.svg"
+    },
     "onoff_devicecapabilities_button-speaker_prev": {
       "type": "boolean",
       "title": {
@@ -4676,6 +5321,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/speaker_prev.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-speaker_prev": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4781,6 +5438,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/virtual_device.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/virtual_device.svg"
+    },
     "onoff_devicecapabilities_button-virtual_device": {
       "type": "boolean",
       "title": {
@@ -4798,6 +5467,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/virtual_device.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-virtual_device": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4903,6 +5584,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/volume_down.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-volume_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_down.svg"
+    },
     "onoff_devicecapabilities_button-volume_down": {
       "type": "boolean",
       "title": {
@@ -4920,6 +5613,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_down.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-volume_down": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5025,6 +5730,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/volume_mute.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-volume_mute": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_mute.svg"
+    },
     "onoff_devicecapabilities_button-volume_mute": {
       "type": "boolean",
       "title": {
@@ -5042,6 +5759,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_mute.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-volume_mute": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5147,6 +5876,18 @@
       "uiQuickAction": true,
       "icon": "/assets/icons/volume_up.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-volume_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_up.svg"
+    },
     "onoff_devicecapabilities_button-volume_up": {
       "type": "boolean",
       "title": {
@@ -5164,6 +5905,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/assets/icons/volume_up.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-volume_up": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5269,6 +6022,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_1.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_1": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_1.svg"
+    },
     "onoff_devicecapabilities_button-custom_1": {
       "type": "boolean",
       "title": {
@@ -5286,6 +6051,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_1.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_1": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5391,6 +6168,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_2.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_2": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_2.svg"
+    },
     "onoff_devicecapabilities_button-custom_2": {
       "type": "boolean",
       "title": {
@@ -5408,6 +6197,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_2.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_2": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5513,6 +6314,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_3.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_3": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_3.svg"
+    },
     "onoff_devicecapabilities_button-custom_3": {
       "type": "boolean",
       "title": {
@@ -5530,6 +6343,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_3.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_3": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5635,6 +6460,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_4.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_4": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_4.svg"
+    },
     "onoff_devicecapabilities_button-custom_4": {
       "type": "boolean",
       "title": {
@@ -5652,6 +6489,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_4.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_4": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5757,6 +6606,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_5.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_5": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_5.svg"
+    },
     "onoff_devicecapabilities_button-custom_5": {
       "type": "boolean",
       "title": {
@@ -5774,6 +6635,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_5.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_5": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5879,6 +6752,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_6.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_6": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_6.svg"
+    },
     "onoff_devicecapabilities_button-custom_6": {
       "type": "boolean",
       "title": {
@@ -5896,6 +6781,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_6.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_6": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6001,6 +6898,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_7.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_7": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_7.svg"
+    },
     "onoff_devicecapabilities_button-custom_7": {
       "type": "boolean",
       "title": {
@@ -6018,6 +6927,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_7.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_7": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6123,6 +7044,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_8.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_8": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_8.svg"
+    },
     "onoff_devicecapabilities_button-custom_8": {
       "type": "boolean",
       "title": {
@@ -6140,6 +7073,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_8.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_8": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6245,6 +7190,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_9.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_9": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_9.svg"
+    },
     "onoff_devicecapabilities_button-custom_9": {
       "type": "boolean",
       "title": {
@@ -6262,6 +7219,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_9.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_9": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6367,6 +7336,18 @@
       "uiQuickAction": true,
       "icon": "/userdata/customicons/custom_10.svg"
     },
+    "onoffbuttontab_devicecapabilities_button-custom_10": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_10.svg"
+    },
     "onoff_devicecapabilities_button-custom_10": {
       "type": "boolean",
       "title": {
@@ -6384,6 +7365,18 @@
         "en": "Yes/No"
       },
       "getable": false,
+      "setable": false,
+      "uiComponent": "button",
+      "insights": true,
+      "uiQuickAction": true,
+      "icon": "/userdata/customicons/custom_10.svg"
+    },
+    "onoffbuttontab_devicecapabilities_disabled_button-custom_10": {
+      "type": "boolean",
+      "title": {
+        "en": "Yes/No"
+      },
+      "getable": true,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -16039,6 +17032,22 @@
         {
           "type": "group",
           "label": {
+            "en": "Buttons"
+          },
+          "children": [
+            {
+              "id": "labelButton1",
+              "type": "label",
+              "label": {
+                "en": " "
+              },
+              "value": "Button 1 is special and remains the first, and therefore, the main device button and indicator."
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
             "en": "Button 1"
           },
           "children": [
@@ -16073,7 +17082,7 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
@@ -16140,11 +17149,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -16424,6 +17437,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button2Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -16460,11 +17484,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -16744,6 +17772,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button3Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -16780,11 +17819,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -17064,6 +18107,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button4Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -17100,11 +18154,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -17384,6 +18442,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button5Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -17420,11 +18489,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -17704,6 +18777,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button6Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -17740,11 +18824,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -18024,6 +19112,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button7Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -18060,11 +19159,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -18344,6 +19447,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button8Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -18380,11 +19494,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -18664,6 +19782,17 @@
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
               },
               "value": false
+            },
+            {
+              "id": "button9Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
+              },
+              "value": false
             }
           ]
         },
@@ -18700,11 +19829,15 @@
                 },
                 {
                   "id": "button",
-                  "label": "Button (Default)"
+                  "label": "Push Button (Default)"
                 },
                 {
                   "id": "onoff",
                   "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
                 },
                 {
                   "id": "lock",
@@ -18982,6 +20115,17 @@
               },
               "hint": {
                 "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes."
+              },
+              "value": false
+            },
+            {
+              "id": "button10Checked",
+              "type": "checkbox",
+              "label": {
+                "en": "Checked (Disabled only)"
+              },
+              "hint": {
+                "en": "When selected this button will be light, else dark."
               },
               "value": false
             }

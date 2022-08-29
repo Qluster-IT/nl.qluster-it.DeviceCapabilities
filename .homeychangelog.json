@@ -115,5 +115,14 @@
   },
   "1.9.84" : {
     "en" : "Bugfixed"
+  },
+  "1.9.85" : {
+    "en" : "Buttons are finished"
+  },
+  "1.9.87" : {
+    "en" : "Bugfixed"
+  },
+  "1.9.9" : {
+    "en" : "Added Set Field to Expression card and Javascript Functions to Settings page"
   }
 }

@@ -432,8 +432,9 @@ class DeviceSetter extends Homey.App {
 		});
 		virtualdevice_set_unavailable.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
 
+	
+	
 	}
-
 
 	getDevices() {
 		var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();

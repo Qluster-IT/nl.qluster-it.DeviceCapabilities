@@ -37,7 +37,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		// this.registerCapabilityListener("devicecapabilities_quickaction_boolean", ((value, options) => {
 		// 	// var disabled = this.getButtonDisabled('button'+i);
-		// 	// if(disabled) this.setCapabilityValue("button",!value );
+		// 	// if(disabled) await this.setCapabilityValue("button",!value );
 		// 	// else 
 		// 	this.log(value);
 		// }).bind(this));
@@ -134,38 +134,50 @@ module.exports = class WatchDevice extends Homey.Device {
 			
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
 				let oldCap = this.getStoreValue(type + i);
-				var oldValue = undefined;
+				let oldValue = undefined;
 				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
 
 				//var storeValue = this.getStoreValue(type + i + 'Icon');
 				//let icon = storeValue && storeValue.length > 0 ? '-' + storeValue : '';
 				let icon = (settings[type + i + 'Icon'] || '').length > 0 ? '-' + settings[type + i + 'Icon'] : '';
 				// (oldSettings[type + i + 'Icon']||'').length>0 ? '-' + oldSettings[type + i + 'Icon'] : '';
-				var cap = 'devicecapabilities_' + type + icon + '.' + type + i;
+				let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
 				let disabled = settings[type + i + 'Disabled'] === true;
-				//let hide = settings[type + i + 'Hide'] === true;
+				let checked = settings[type + i + 'Checked']===true;
+						//let hide = settings[type + i + 'Hide'] === true;
+				let pushbutton = false;
+				let isOnOff, hide, lock, garagedoor_closed, windowcoverings_closed, isOnOffButtonTab = false;
+
+
 				switch (type) {
 					case "number":
+						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; 
+						if (!oldCap && i===1) oldCap = "measure_devicecapabilities_number.number1";
+						break;
 					case "status":
-						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; break;
+						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; 
+						if (!oldCap && i===1) oldCap = "measure_devicecapabilities_status.status1";
+						break;
 					case "boolean":
 						let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
-						var quickAction = settings[type + i + 'ShowAs']=='button' || '';
+						let quickAction = settings[type + i + 'ShowAs']==='button';// || settings[type + i + 'ShowAs']=='';
 						cap = 
 							(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
 							type + icon + '.' + type + i;
-						if (!oldCap) oldCap = cap;
+						if (!oldCap && i===1) oldCap = "alarm_devicecapabilities_boolean.boolean1";
 
 						break;
 					case "button":
-						let isOnOff, hide, lock, garagedoor_closed, windowcoverings_closed = false;
 						switch (settings[type + i + 'ShowAs']) {
-							case "onoff": isOnOff = true; break;
+							case "": pushbutton = true;  break;
+							case "button": pushbutton = true;  break;
+							case "onoff": isOnOff = true;  break;
+							case "onoff_buttontab": isOnOffButtonTab = true;  break;
 							//case "disabled": disabled = true; break;
-							case "indicatoronly": isOnOff = true; hide = true; break; //disabled=true; indicatorOnly is for Button1 only.
+							case "indicatoronly": isOnOff = true; hide = true;  break; //disabled=true; indicatorOnly is for Button1 only.
 							case "lock": lock = true; break;
 							case "garagedoor_closed": garagedoor_closed = true; break;
-							case "windowcoverings_closed": windowcoverings_closed = true; break;
+							case "windowcoverings_closed": windowcoverings_closed = true;  break;
 						}
 						
 						if(hide) { //always Button1
@@ -179,7 +191,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								cap = isOnOff ? 'onoff' : lock ? 'locked' : garagedoor_closed ? 'garagedoor_closed' : windowcoverings_closed ? 'windowcoverings_closed' : type;
 							} else {
 								cap =  lock ? ('locked.' + type + i) : garagedoor_closed ? ('garagedoor_closed.' + type + i) : 
-									windowcoverings_closed ? ('windowcoverings_closed.' + type + i) :( (isOnOff ? 'onoff_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));// (type + '.' + type + i);
+									windowcoverings_closed ? ('windowcoverings_closed.' + type + i) :( (isOnOff ? 'onoff_':'')+ (isOnOffButtonTab ? 'onoffbuttontab_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));// (type + '.' + type + i);
 							}
 					}
 						break;						
@@ -200,7 +212,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (!this.hasCapability(cap)) {
 						if(type=="button" && i===1) button1Reset = true;
 						await this.addCapability(cap);
-						if (oldValue !== undefined) this.setCapabilityValue(cap, oldValue);
+						if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
 						if (type == 'button' && !disabled){//} && settings[type + i + 'ShowAs']!='disabled') {
 							try {
 								this.registerCapabilityListener(cap, ((value, options) => {
@@ -217,7 +229,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						}
 					}
 					//var optHas = this.hasCapability(cap);
-					var opt;
+					let opt;
 
 					try {
 						opt = this.getCapabilityOptions(cap);
@@ -228,10 +240,12 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (
 						opt.title != name || opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 						(opt.units != settings[type + i + 'Units'] && type != 'status') ||
-						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
-						opt.uiQuickAction != settings[type + i + 'UiQuickAction']
+						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] 
+						//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
+						//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked )
+
 					) {
-						var optNew = {
+						let optNew = {
 							title: name,
 							preventInsights: settings[type + i + 'PreventInsights'],
 							decimals: settings[type + i + 'Decimals'],
@@ -240,10 +254,16 @@ module.exports = class WatchDevice extends Homey.Device {
 						};
 						if (type == 'status') optNew.units = opt.units;
 						else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
+						
+						//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
+						
 						//if(settings[type + i + 'Disabled']!==undefined) optNew.setable= !settings[type + i + 'Disabled'];
 						//if(settings[type + i + 'UiQuickAction']!==undefined) optNew.uiQuickAction= !settings[type + i + 'UiQuickAction'];
 						//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
 						this.setCapabilityOptions(cap, optNew);
+					}
+					if (type == 'button' && disabled && !pushbutton ) {
+						await this.setCapabilityValue(cap, checked);
 					}
 				} else if (this.hasCapability(cap)) await this.removeCapability(cap);
 
