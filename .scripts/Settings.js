@@ -29,31 +29,71 @@ var icons = '              "values": [ \r\n' +
 '                {"id": "virtual_device", "label": { "en": "virtual_device" } }, \r\n' +
 '                {"id": "volume_down", "label": { "en": "volume_down" } }, \r\n' +
 '                {"id": "volume_mute", "label": { "en": "volume_mute" } }, \r\n' +
-'                {"id": "volume_up", "label": { "en": "volume_up" } } \r\n' +
+'                {"id": "volume_up", "label": { "en": "volume_up" } }, \r\n' +
+'                {"id": "custom_1", "label": { "en": "custom_1" } }, \r\n' +
+'                {"id": "custom_2", "label": { "en": "custom_2" } }, \r\n' +
+'                {"id": "custom_3", "label": { "en": "custom_3" } }, \r\n' +
+'                {"id": "custom_4", "label": { "en": "custom_4" } }, \r\n' +
+'                {"id": "custom_5", "label": { "en": "custom_5" } }, \r\n' +
+'                {"id": "custom_6", "label": { "en": "custom_6" } }, \r\n' +
+'                {"id": "custom_7", "label": { "en": "custom_7" } }, \r\n' +
+'                {"id": "custom_8", "label": { "en": "custom_8" } }, \r\n' +
+'                {"id": "custom_9", "label": { "en": "custom_9" } }, \r\n' +
+'                {"id": "custom_10", "label": { "en": "custom_10" } } \r\n' +
 '              ], \r\n' ;
 
 
 
 
 var str = '"settings": [ \r\n' +
-'{ \r\n' +
+'         { \r\n' +
 '          "type": "group", \r\n' +
 '          "label": {"en": "General"}, \r\n' +
-'          "hint": { \r\n' +
-'            "en": "Enter al settings for the Status Field which can be selected as Status Indicator." \r\n' +
-'          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
-'              "id": "label3", \r\n' +
+'              "id": "label6", \r\n' +
 '              "type": "label", \r\n' +
 '              "label": {"en": "Be aware"}, \r\n' +
-'              "value":"Changing the properties Icon, Show as Alarm or Show as On/Off will causes Tag IDs to be changed and thus may break flows." \r\n' +
+'              "value":"Changing the properties Icon and \'Show as\' will causes Tag IDs to be changed and thus may break flows." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "label5", \r\n' +
 '              "type": "label", \r\n' +
 '              "label": {"en": "Also"}, \r\n' +
 '              "value":"Enabling all fields at once and pressing save, might be hard for your Homey and could take a while." \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "label7", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": "Custom icons"}, \r\n' +
+'              "value":"The 10 custom icons can be set through the App Settings." \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "cls", \r\n' +
+'              "type": "dropdown", \r\n' +
+'              "label": {"en": "Device Class"}, \r\n' +
+'              "hint": {"en": "Changing the Device Class may break flows that depend on the previous specified class flowcards."}, \r\n' +
+'              "values":['+
+'                {"id":"other", "label":"Other (Default)"}, '+
+'                {"id":"amplifier", "label":"Amplifier"}, '+
+'                {"id":"blinds", "label":"Blinds"}, '+
+'                {"id":"button", "label":"Button"}, '+
+'                {"id":"camera", "label":"Camera"}, '+
+'                {"id":"coffeemachine", "label":"Coffee machine"}, '+
+'                {"id":"curtain", "label":"Curtains"}, '+
+'                {"id":"doorbell", "label":"Doorbell"}, '+
+'                {"id":"fan", "label":"Fan"}, '+
+'                {"id":"garagedoor", "label":"Garage door"}, '+
+'                {"id":"heater", "label":"Heater"}, '+
+'                {"id":"homealarm", "label":"Home Security"}, '+
+'                {"id":"kettle", "label":"Kettle"}, '+
+'                {"id":"light", "label":"Light"}, '+
+'                {"id":"lock", "label":"Lock"}, '+
+'                {"id":"remote", "label":"Remote"}, '+
+'                {"id":"sensor", "label":"Sensor"}, '+
+'                {"id":"socket", "label":"Wall Plug"} '+
+'              ], '+
+'              "value":"other" \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n' +
@@ -61,9 +101,6 @@ var str = '"settings": [ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
 '            "en": "Status Indicator Field" \r\n' +
-'          }, \r\n' +
-'          "hint": { \r\n' +
-'            "en": "Enter al settings for the Status Field which can be selected as Status Indicator." \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -125,9 +162,6 @@ for(var i=1;i<=fields;i++) {
 '          "label": { \r\n' +
 '            "en": "Textfield '+i+'" \r\n' +
 '          }, \r\n' +
-'          "hint": { \r\n' +
-'            "en": "Enter al settings for textfield '+i+'" \r\n' +
-'          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "text'+i+'Name", \r\n' +
@@ -162,9 +196,6 @@ for(var i=1;i<=fields;i++) {
 '          "label": { \r\n' +
 '            "en": "Numberfield '+i+'" \r\n' +
 '          }, \r\n' +
-'          "hint": { \r\n' +
-'            "en": "Enter al settings for numberfield '+i+'" \r\n' +
-'          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'Name", \r\n' +
@@ -196,7 +227,7 @@ for(var i=1;i<=fields;i++) {
 '                "en": "Units" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translaten to Fahrenheit." \r\n' +
+'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translated into Fahrenheit." \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -236,9 +267,6 @@ for(var i=1;i<=fields;i++) {
 '          "label": { \r\n' +
 '            "en": "Yes/No field '+i+'" \r\n' +
 '          }, \r\n' +
-'          "hint": { \r\n' +
-'            "en": "Enter al settings for Yes/No field '+i+'." \r\n' +
-'          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'Name", \r\n' +
@@ -252,6 +280,23 @@ for(var i=1;i<=fields;i++) {
 '              "value":'+(i===1 ? '"Yes/No '+i+'"': '""')+' \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
+'              "id": "boolean'+i+'ShowAs", \r\n' +
+'              "type": "dropdown", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Show as" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "Select how the yes/no must be displayed." \r\n' +
+'              }, \r\n' +
+'              "values":['+
+'                {"id":"", "label":" "}, '+
+'                {"id":"sensor", "label":"Sensor (Default)"}, '+
+'                {"id":"alarm", "label":"Alarm"}, '+
+'                {"id":"button", "label":"Button"} '+
+'              ], '+
+'              "value":""  \r\n'+  
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "boolean'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
@@ -262,28 +307,6 @@ for(var i=1;i<=fields;i++) {
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
-'            }, \r\n' +
-'            { \r\n' +
-'              "id": "boolean'+i+'AsAlarm", \r\n' +
-'              "type": "checkbox", \r\n' +
-'              "label": { \r\n' +
-'                "en": "Show as alarm" \r\n' +
-'              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected you are able to use this field as the Status Indicator and this will flash like an alarm." \r\n' +
-'              }, \r\n' +
-'              "value": '+(i===1 ? 'true': 'false')+' \r\n' +
-'            }, \r\n' +
-'            { \r\n' +
-'              "id": "boolean'+i+'UiQuickAction", \r\n' +
-'              "type": "checkbox", \r\n' +
-'              "label": { \r\n' +
-'                "en": "Show as Button" \r\n' +
-'              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "Set this to true when you want to quick-toggle the capability\'s value from the UI." \r\n' +
-'              }, \r\n' +
-'              "value": false \r\n' +
 '            }, \r\n' +
 // '            { \r\n' +
 // '              "id": "boolean'+i+'Disabled", \r\n' +
@@ -340,9 +363,6 @@ for(var i=1;i<=fields;i++) {
   '          "label": { \r\n' +
   '            "en": "Button '+i+'" \r\n' +
   '          }, \r\n' +
-  '          "hint": { \r\n' +
-  '            "en": "Enter al settings for Button '+i+'" \r\n' +
-  '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'Name", \r\n' +
@@ -395,7 +415,7 @@ for(var i=1;i<=fields;i++) {
   '                "en": "Disabled" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected this button will not be clickable." \r\n' +
+  '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
   '            } \r\n';
@@ -405,6 +425,18 @@ for(var i=1;i<=fields;i++) {
   '        }, \r\n';
 }
 
+str+='   { \r\n' +
+'          "type": "group", \r\n' +
+'          "label": {"en": "Cameras"}, \r\n' +
+'          "children": [ \r\n' +
+'            { \r\n' +
+'              "id": "labelCameras1", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": " "}, \r\n' +
+'              "value":"After removing a camera (by clearing the name or url), the app requires a restart to remove the camera-image from the device." \r\n' +
+'            } \r\n' +
+'          ] \r\n' +
+'        }, \r\n';
 
 for(var i=1;i<=fields;i++) {  
   str+='{ \r\n' +
