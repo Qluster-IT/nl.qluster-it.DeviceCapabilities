@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.83",
+  "version": "1.9.84",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1560,7 +1560,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": null,
       "insights": true,
       "uiQuickAction": true
@@ -1609,7 +1609,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -1630,7 +1630,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1724,7 +1724,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -1747,7 +1747,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1846,7 +1846,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -1869,7 +1869,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -1968,7 +1968,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -1991,7 +1991,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2090,7 +2090,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2113,7 +2113,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2212,7 +2212,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2235,7 +2235,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2334,7 +2334,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2357,7 +2357,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2456,7 +2456,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2479,7 +2479,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2578,7 +2578,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2601,7 +2601,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2700,7 +2700,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2723,7 +2723,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2822,7 +2822,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2845,7 +2845,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -2944,7 +2944,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -2967,7 +2967,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3066,7 +3066,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3089,7 +3089,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3188,7 +3188,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3211,7 +3211,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3310,7 +3310,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3333,7 +3333,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3432,7 +3432,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3455,7 +3455,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3554,7 +3554,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3577,7 +3577,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3676,7 +3676,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3699,7 +3699,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3798,7 +3798,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3821,7 +3821,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -3920,7 +3920,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -3943,7 +3943,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4042,7 +4042,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4065,7 +4065,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4164,7 +4164,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4187,7 +4187,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4286,7 +4286,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4309,7 +4309,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4408,7 +4408,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4431,7 +4431,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4530,7 +4530,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4553,7 +4553,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4652,7 +4652,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4675,7 +4675,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4774,7 +4774,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4797,7 +4797,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -4896,7 +4896,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -4919,7 +4919,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5018,7 +5018,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5041,7 +5041,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5140,7 +5140,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5163,7 +5163,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5262,7 +5262,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5285,7 +5285,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5384,7 +5384,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5407,7 +5407,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5506,7 +5506,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5529,7 +5529,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5628,7 +5628,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5651,7 +5651,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5750,7 +5750,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5773,7 +5773,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5872,7 +5872,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -5895,7 +5895,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -5994,7 +5994,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -6017,7 +6017,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6116,7 +6116,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -6139,7 +6139,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6238,7 +6238,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -6261,7 +6261,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
@@ -6360,7 +6360,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": true,
       "uiComponent": "button",
       "insights": true,
@@ -6383,7 +6383,7 @@
       "title": {
         "en": "Yes/No"
       },
-      "getable": true,
+      "getable": false,
       "setable": false,
       "uiComponent": "button",
       "insights": true,
