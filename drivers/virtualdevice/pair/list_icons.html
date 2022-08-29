@@ -12,7 +12,7 @@
         background-color:white;
     }
     .icon.tile {
-        display: flex;
+        display: inline-block;
         height: 100%;
         align-items: center;
         justify-content: center;
@@ -35,20 +35,32 @@
         margin-right: auto;
     }
 
+    #preview-outerframe {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  #preview-innerframe img {
+    width: 125px;
+    height: 125px;
+    padding: 20px;
+  }
 
 </style>
 <script>
 
+    var imgBase64 = '';
+
     Homey.showLoadingOverlay();
-    Homey.setTitle( Homey.__("pair.icons.title") );
+    Homey.setTitle( Homey.__("pair.list_icons.title") );
 
     $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
 
     Homey.emit('list_icons', null, function (err, result) {
-        
-        Homey.setTitle( 'finished' +result.length);
 
-        new Vue({
+      new Vue({
             el: '#icon_list',
             data: {
                 icons: result,
@@ -70,15 +82,62 @@
         });
     });
 
+    $('#save-icon').click(function() {
+    Homey.emit('icon_save', imgBase64)
+      .then(result => {
+        Homey.nextView();
+      })
+      .catch(error => {
+        Homey.alert(error.message, 'error');
+        Homey.done()
+      });
+  });
+
+    
+  function loadIcon(event) {
+    const img = event.target.files[0];
+    const preview = document.getElementById('preview');
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
+          imgBase64 = reader.result;
+          preview.src = imgBase64;
+          if (imgBase64.length > 1048000) return Homey.alert('Image size is too large', 'error');
+          $("#preview-outerframe").show();
+          $('#save-icon').prop('disabled', false);
+          return;
+    };
+  }
+
 </script>
 
-<ul id="icon_list">    
-      <div v-for="(item, index) in icons" :key="index" v-on:click='setIcon(item)' class="icon tile">
-        <label for="icon" class="icon-wrap">
-          <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities' + item.location + ')'}"></span>
-        </label>
+<div>
+    <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you need to upload it here. The icon needs to be in .svg format.</span><br/>
+    <div class="form-group" style="margin-top:10px;">
+        <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+    </div>
+    <div id="preview-outerframe" style="margin-top:10px;">
+      <div id="preview-innerframe">
+        <img id="preview" />
       </div>
-</ul>  
+    </div>
+    <div class="form-group buttons" style="margin-top:10px;">
+      <button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
+    </div>  
+</div>
+
+
+<div style="margin-top:10px;">
+  <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
+
+  <ul id="icon_list">    
+        <div v-for="(item, index) in icons" :key="index" v-on:click='setIcon(item)' class="icon tile">
+          <label for="icon" class="icon-wrap">
+            <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item + '.svg'}"></span>
+          </label>
+        </div>
+  </ul> 
+</div> 
 
 
 <!-- <div id="all-icons"><ul id="icons-list">

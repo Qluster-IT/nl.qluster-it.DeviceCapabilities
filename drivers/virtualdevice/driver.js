@@ -164,8 +164,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 var cap = undefined;
                 var searchs = ['.'+actiontype+i];
                 if(actiontype=='button'){
-                    if(settings['button'+i+'ShowAs']==="disabled");
-                    else if(i===1) searchs = ['onoff', 'button'];
+                    if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed'];
                 } 
                 for(var j=0;j<searchs.length;j++){
                     if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText+' ' + i), description:(typeText+' ' + i)});
@@ -200,14 +199,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             }
         }
-        var id = '_'+(index+1).toString();//count>0 ?'_' + (count + 1) : '';
+        var id = '_'+(index+1).toString();
         return [
               {
-                  name: 'DeviceCapability VD '+id,
+                  name: 'DeviceCapability VD '+(index+1),
                   data: {
                       id: 'DeviceCapabilityVirtualDevice'+id
                   }
-                  //,icon : '/../../../userdata/icon-bak.svg'
               }
           ];
       }
@@ -232,17 +230,56 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
 
         session.setHandler('list_icons', async (data) => {            
-            //return icons;
-            return [{id:'5ee96dd1dd18f86cacd6d2f8', location:'/userdata/5ee96dd1dd18f86cacd6d2f8.svg'}];
+            return ['alarm_smoke', 
+            'alarm_water',
+            'battery', 
+            'circle', 
+            'device_capabilities',
+            'measure_clouds',
+            'measure_humidity',
+            'measure_luminance',
+            'measure_noise', 
+            'measure_power',
+            'measure_pressure',
+            'measure_rain',
+            'measure_temperature',
+            'measure_wind_angle',
+            'measure_wind_strength',
+            'meter_gas', 
+            'meter_power', 
+            'meter_water',
+            'meter_rain',
+            'music',
+            'onoff',
+            'sensor',
+            'speaker_next',
+            'speaker_play',
+            'speaker_prev',
+            'virtual_device',
+            'volume_down',
+            'volume_mute',
+            'volume_up'
+        ];
 
         });
 
         session.setHandler('icon_picked', async (data) => {
             device = devices[0];
-            device.icon = '../../..' + data.icon.location;
-            //session.nextView();
+            var iconPath = "../../../assets/icons/" + data.icon+'.svg';
+            device.data.icon = iconPath;
+            device.icon = iconPath;
             return device;
         });
+        
+        session.setHandler('icon_save', async (data)=> {     
+            device = devices[0];       
+            var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:data, id:device.data.id });              
+            var iconPath = "../../." + icon.path;      
+            device.data.icon = iconPath;
+            device.icon = iconPath;
+            return device;      
+            
+          });
 
         session.setHandler('done', async (data) => {
             device = devices[0];            

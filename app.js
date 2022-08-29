@@ -7,13 +7,13 @@ const _ = require('lodash-core');
 const { Defer } = require('./lib/proto');
 
 const { join } = require('path');
-const { readFile, writeFile, unlink, rename } = require('fs');
+const { readFile, writeFile, unlink, rename, exists, mkdir } = require('fs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const fs = require('fs');
 
 
-const SETTING_PREFIX = 'sound_';
+const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
 	'image/svg': 'svg',	
 	'image/svg+xml': 'svg'
@@ -23,6 +23,8 @@ const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 const unlinkAsync = promisify(unlink);
 const renameAsync = promisify(rename);
+const existsAsync = promisify(exists);
+const mkdirAsync = promisify(mkdir);
 
 
 class DeviceSetter extends Homey.App {
@@ -433,6 +435,27 @@ class DeviceSetter extends Homey.App {
 	}
 
 
+	getDevices() {
+		var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+		var ret = devices.map(vd => {
+			return {
+				id: vd.getData().id,
+				name:vd.getName(),
+				icon: vd.getData().icon,
+			};			
+		});
+		return ret;
+		// ;.getKeys()
+		// 	.filter(key => {
+		// 		return key.indexOf(SETTING_PREFIX) === 0;
+		// 	})
+		// 	.map(key => {
+		// 		return this.getIcon({
+		// 			id: key.substring(SETTING_PREFIX.length),
+		// 		});			
+		// 	});
+	}
+
 	getIcons() {
 		return this.homey.settings.getKeys()
 			.filter(key => {
@@ -444,6 +467,7 @@ class DeviceSetter extends Homey.App {
 				});			
 			});
 	}
+
 	
 	getIcon({ id }) {
 		const icon = this.homey.settings.get(`${SETTING_PREFIX}${id}`);
@@ -451,7 +475,7 @@ class DeviceSetter extends Homey.App {
 		return icon;
 	}
 	
-	async createIcon({ type, name, buffer }) {
+	async createIcon({ type, name, buffer, id }) {
 		if( !TYPES_MAP[type] )
 			throw new Error(`invalid_type:${type}`);
 			
@@ -459,19 +483,12 @@ class DeviceSetter extends Homey.App {
 		if( !Buffer.isBuffer(buf) )
 			throw new Error("invalid_buffer");
 			
-		const id = randomBytes(12).toString('hex');
+		id = id || randomBytes(12).toString('hex');
 		const ext = this.getExtByType(type);
-		//const path = `./tmp/${id}${ext}`;
-		const path = `./userdata/${id}${ext}`;
+		const path = `./userdata/icons/${id}${ext}`;
 
-		// const base64 = buffer.replace("data:image/svg+xml;base64,", '');
-		// fs.writeFile(path, base64, 'base64', (error) => {
-		// 	if (error) {
-		// 	return reject(error);
-		// 	} else {
-		// 	return resolve(true);
-		// 	}
-		// });
+		if(!(await existsAsync('./userdata/icons/'))) await mkdirAsync('./userdata/icons/');
+		
 
 		await writeFileAsync(path, buf);
 		
@@ -483,6 +500,41 @@ class DeviceSetter extends Homey.App {
 		});
 		return this.getIcon({ id });
 	}
+	async createDeviceIcon({ type, name, buffer, id }) {
+		return await this._createIcon({ type, name, buffer, id, subpath: 'virtualdeviceicons' });
+	}
+	async createCustomIcon({ type, name, buffer, id }) {
+		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
+	}
+	async _createIcon({ type, name, buffer, id, subpath }) {
+		if( !TYPES_MAP[type] )
+			throw new Error(`invalid_type:${type}`);
+			
+		const base64 = buffer.replace("data:image/svg+xml;base64,", '');
+		
+		const buf = new Buffer(base64, 'base64');
+		if( !Buffer.isBuffer(buf) )
+			throw new Error("invalid_buffer");
+			
+		id = id;
+		const ext = this.getExtByType(type);
+		const path = `./userdata/${subpath}/${id}${ext}`;
+		
+		if(!(await existsAsync(`./userdata/${subpath}/`))) await mkdirAsync(`./userdata/${subpath}/`);
+
+		await writeFileAsync(path, buf);
+
+		// var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+		// var device = devices.filter(d=>d);
+		
+		return {
+			id,
+			type,
+			name,
+			path,
+		};
+	}
+
 	
 	async updateIcon({ id, name, path }) {
 		const icon = await this.getIcon({ id });

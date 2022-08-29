@@ -2,6 +2,9 @@
 
 const Homey = require('homey');
 module.exports = {
+    async getDevices({ homey, query }) {
+        return await homey.app.getDevices();    
+    },    
     async getIcons({ homey, query }) {
         return await homey.app.getIcons();    
     },
@@ -10,6 +13,12 @@ module.exports = {
     },
     async createIcon({ homey,  body: { type, name, buffer  }}) {
         return await homey.app.createIcon({type,name,buffer});
+    },
+    async createDeviceIcon({ homey,  body: { type, name, buffer, id  }}) {
+        return await homey.app.createDeviceIcon({type,name,buffer, id});
+    },
+    async createCustomIcon({ homey,  body: { type, name, buffer, id  }}) {
+        return await homey.app.createCustomIcon({type,name,buffer, id});
     },
     async updateIcon({ homey,  params: { id }, body: {  name } }) {
         return await homey.app.updateIcon({id,name});

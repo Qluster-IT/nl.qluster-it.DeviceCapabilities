@@ -84,7 +84,7 @@
     "en" : "Testing rebuild of Virtual Device"
   },
   "1.9.3" : {
-    "en" : "Added Unactivate, activate (flow cards), warning and unsetwarning cards (device cards)."
+    "en" : "Added Unactivate, activate (flow cards), warning and unsetwarning cards (device cards)"
   },
   "1.9.62" : {
     "en" : "Bugfixed"
@@ -103,5 +103,17 @@
   },
   "1.9.76" : {
     "en" : "Added image upload in settings for icons"
+  },
+  "1.9.78" : {
+    "en" : "Bugfixed button Show as dropdown and others"
+  },
+  "1.9.79" : {
+    "en" : "Added custom icon to Virtual Devices"
+  },
+  "1.9.81" : {
+    "en" : "Added custom icon to settings for capabilities"
+  },
+  "1.9.83" : {
+    "en" : "Bugfixed"
   }
 }

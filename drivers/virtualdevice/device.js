@@ -59,8 +59,8 @@ module.exports = class WatchDevice extends Homey.Device {
 			
 			
 			if(type.startsWith('button')) {
-				//if(settings[type+'ShowAs']!='disabled') 
-				this.registerCapabilityListener(caps[i], ((value, options) => {this.driver.triggerFlow(this, value, { field: { id: type } });}).bind(this));
+				if(settings[type+'Disabled']!==true) 
+					this.registerCapabilityListener(caps[i], ((value, options) => {this.driver.triggerFlow(this, value, { field: { id: type } });}).bind(this));
 			}
 			if(type.startsWith('boolean')) {
 				//if(settings[type+'UiQuickAction']) 
@@ -87,10 +87,14 @@ module.exports = class WatchDevice extends Homey.Device {
 			} else {
 				if(this.Cameras[ref]) {
 					if(this.Cameras[ref].interval) clearInterval(this.Cameras[ref].interval);
-					if(this.Cameras[ref].image) await this.homey.images.unregisterImage(this.Cameras[ref].image);
 					delete this.Cameras[ref];
-					await this.setCameraImage(ref, null, null);
-				}  
+				}
+				//  {
+				// 	if(this.Cameras[ref].interval) clearInterval(this.Cameras[ref].interval);
+				// 	if(this.Cameras[ref].image) await this.homey.images.unregisterImage(this.Cameras[ref].image);
+				// 	delete this.Cameras[ref];
+				// 	//await this.setCameraImage(ref, null, this.Cameras[ref].image); // error
+				// }  
 			}
 		}
 	}
@@ -117,6 +121,10 @@ module.exports = class WatchDevice extends Homey.Device {
 	}
 
 	async loadFromSettings(settings, oldSettings) {
+
+		let cls = this.getClass();
+		if(cls!=settings.cls) await this.setClass(settings.cls);
+
 		var types = ['status', 'text', 'number', 'button', 'boolean'];
 		var button1Reset = false;
 		var a = this;
@@ -129,107 +137,71 @@ module.exports = class WatchDevice extends Homey.Device {
 				var oldValue = undefined;
 				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
 
-				var storeValue = this.getStoreValue(type + i + 'Icon');
-				let oldIcon = storeValue && storeValue.length > 0 ? '-' + storeValue : '';
+				//var storeValue = this.getStoreValue(type + i + 'Icon');
+				//let icon = storeValue && storeValue.length > 0 ? '-' + storeValue : '';
+				let icon = (settings[type + i + 'Icon'] || '').length > 0 ? '-' + settings[type + i + 'Icon'] : '';
 				// (oldSettings[type + i + 'Icon']||'').length>0 ? '-' + oldSettings[type + i + 'Icon'] : '';
-				var cap = 'devicecapabilities_' + type + oldIcon + '.' + type + i;
-				//let disabled = settings[type + i + 'Disabled'] === true;
+				var cap = 'devicecapabilities_' + type + icon + '.' + type + i;
+				let disabled = settings[type + i + 'Disabled'] === true;
 				//let hide = settings[type + i + 'Hide'] === true;
-				let isAlarm = type == 'boolean' && settings[type + i + 'AsAlarm'] === true;
 				switch (type) {
 					case "number":
 					case "status":
-						cap = 'measure_devicecapabilities_' + type + oldIcon + '.' + type + i; break;
+						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; break;
 					case "boolean":
-						var quickAction = settings[type + i + 'UiQuickAction'] || '';
+						let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
+						var quickAction = settings[type + i + 'ShowAs']=='button' || '';
 						cap = 
 							(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
-							type + oldIcon + '.' + type + i;
-
+							type + icon + '.' + type + i;
 						if (!oldCap) oldCap = cap;
-						
-						if (isAlarm && oldCap.startsWith('devicecapabilities_')) await this.removeCapability(oldCap);
-						if (!isAlarm && oldCap.startsWith('alarm_devicecapabilities_')) await this.removeCapability(oldCap);
-						if (quickAction && oldCap.indexOf('_quickaction_') === -1) await this.removeCapability(oldCap);
-						if (!quickAction && oldCap.indexOf('_quickaction_') > -1) await this.removeCapability(oldCap);
-						// if (disabled && oldCap.indexOf('_disabled_') === -1) await this.removeCapability(oldCap);
-						// if (!disabled && oldCap.indexOf('_disabled_') > -1) await this.removeCapability(oldCap);
-
 
 						break;
 					case "button":
-						let isOnOff, disabled, hide, lock, garagedoor_closed, windowcoverings_closed = false;
+						let isOnOff, hide, lock, garagedoor_closed, windowcoverings_closed = false;
 						switch (settings[type + i + 'ShowAs']) {
 							case "onoff": isOnOff = true; break;
-							case "disabled": disabled = true; break;
-							case "indicatoronly": isOnOff = true; hide = true;disabled=true; break;
+							//case "disabled": disabled = true; break;
+							case "indicatoronly": isOnOff = true; hide = true; break; //disabled=true; indicatorOnly is for Button1 only.
 							case "lock": lock = true; break;
 							case "garagedoor_closed": garagedoor_closed = true; break;
 							case "windowcoverings_closed": windowcoverings_closed = true; break;
 						}
-						//let isOnOff = type == 'button' && settings[type + i + 'AsOnOff'] === true;
-						if(disabled || hide) {
-							cap = "devicecapabilities_quickaction"+(hide?"_hide":(disabled?"_disabled":""))+"_boolean." + type + i;
+						
+						if(hide) { //always Button1
+							cap = "devicecapabilities_hide_button." + type + i;
 						}
 						
-						if (!oldCap) oldCap = 'button';
+						if (!oldCap && i===1) oldCap = 'button';
 
-						// if (disabled && oldCap.indexOf('_disabled_') === -1) await this.removeCapability(oldCap);
-						// if (!disabled && oldCap.indexOf('_disabled_') > -1) await this.removeCapability(oldCap);
-						// if (hide && oldCap.indexOf('_hide_') === -1) await this.removeCapability(oldCap);
-						// if (!hide && oldCap.indexOf('_hide_') > -1) await this.removeCapability(oldCap);
-
-						// if (lock && !oldCap.startsWith('locked')) await this.removeCapability(oldCap);
-						// if (!lock && oldCap.startsWith('locked')) await this.removeCapability(oldCap);
-						// if (garagedoor_closed && !oldCap.startsWith('garagedoor_closed')) await this.removeCapability(oldCap);
-						// if (!garagedoor_closed && oldCap.startsWith('garagedoor_closed')) await this.removeCapability(oldCap);
-						// if (windowcoverings_closed && !oldCap.startsWith('windowcoverings_closed')) await this.removeCapability(oldCap);
-						// if (!windowcoverings_closed && oldCap.startsWith('windowcoverings_closed')) await this.removeCapability(oldCap);
-
-
-						if(!disabled && !hide) {
+						if(!hide) {
 							if (i === 1) {
 								cap = isOnOff ? 'onoff' : lock ? 'locked' : garagedoor_closed ? 'garagedoor_closed' : windowcoverings_closed ? 'windowcoverings_closed' : type;
 							} else {
-								//isOnOff ? ('onoff.' + type + i) : ......
 								cap =  lock ? ('locked.' + type + i) : garagedoor_closed ? ('garagedoor_closed.' + type + i) : 
-									windowcoverings_closed ? ('windowcoverings_closed.' + type + i) :( (isOnOff ? 'onoff_':'') + ("devicecapabilities_button"+oldIcon+"." + type + i));// (type + '.' + type + i);
+									windowcoverings_closed ? ('windowcoverings_closed.' + type + i) :( (isOnOff ? 'onoff_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));// (type + '.' + type + i);
 							}
-							// if (!isOnOff && this.hasCapability(cap)) await this.removeCapability(cap);
-							// if (isOnOff && this.hasCapability(type)) await this.removeCapability(type);
-							if(cap!=oldCap)  await this.removeCapability(oldCap);
-
 					}
-						break;
+						break;						
 				}
-				if (['text', 'number', 'boolean', 'status'].indexOf(type) > -1 ||
-					(type=="button" && (settings["button"+i+"ShowAs"]==="" || settings["button"+i+"ShowAs"]==="button" || settings["button"+i+"ShowAs"]==="onoff"))
-				) {
-					let icon = (settings[type + i + 'Icon'] || '').length > 0 ? '-' + settings[type + i + 'Icon'] : '';
-					if (icon != oldIcon) {
-						if(this.hasCapability(cap)) await this.removeCapability(cap);
-						if (icon == '') cap = cap.replace(oldIcon, '');
-						else if (oldIcon == '') cap = cap.replace('.', icon + '.');
-						else cap = cap.replace(oldIcon, icon);
-						this.setStoreValue(type + i + 'Icon', settings[type + i + 'Icon']);
+				
+				if(cap!=oldCap && oldCap)  await this.removeCapability(oldCap);
 
-					}
-
-				}
+				
 
 				let name = settings[type + i + 'Name'];
 				if (!name || name.length <= 0) this.setStoreValue(type + i, null);
 
 				if (name && name.length > 0) {
-					this.setStoreValue(type + i, cap);
 					if((type=="button" || (type=="boolean" && cap.indexOf('_quickaction_')>-1)) && button1Reset) {
 						if (this.hasCapability(cap)) await this.removeCapability(cap);
 					}
+					this.setStoreValue(type + i, cap);
 					if (!this.hasCapability(cap)) {
 						if(type=="button" && i===1) button1Reset = true;
 						await this.addCapability(cap);
 						if (oldValue !== undefined) this.setCapabilityValue(cap, oldValue);
-						if (type == 'button'){//} && settings[type + i + 'ShowAs']!='disabled') {
+						if (type == 'button' && !disabled){//} && settings[type + i + 'ShowAs']!='disabled') {
 							try {
 								this.registerCapabilityListener(cap, ((value, options) => {
 									this.driver.triggerFlow(this, value, { field: { id: "button" + i } });
@@ -244,7 +216,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							} catch (error) { }
 						}
 					}
-					var optHas = this.hasCapability(cap);
+					//var optHas = this.hasCapability(cap);
 					var opt;
 
 					try {
@@ -289,4 +261,4 @@ module.exports = class WatchDevice extends Homey.Device {
 		// if the settings must not be saved for whatever reason:
 		// throw new Error('Your error message');
 	}
-}
+};

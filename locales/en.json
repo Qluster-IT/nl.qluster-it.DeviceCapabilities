@@ -7,7 +7,21 @@
 		"delete": "Remove",
 		"confirm_delete": "Are you sure you want to remove this icon?",
 		"invalid_type": "Invalid file type! Supported type is .svg",
-		"too_large": "That file is too large. Max size: 900 Kb",
-		"file_api_err": "'The File APIs are not fully supported in this browser.'"
+		"file_api_err": "'The File APIs are not fully supported in this browser.'",
+		
+		"title_virtualdevices": "Your virtual devices",
+		"title_customicons": "Your custom icons",
+		"explain_customicons": "Here you can change the custom icon's that can be used for capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented."
+	},
+	"pair": {
+		"list_icons":{
+			"title":"Device Icon",
+			"loading":"Loading",
+			"custom_device_icon":"If you wish to use a custom icon for your device, you need to upload it here. The icon needs to be in .svg format.",
+			"select_device_icon":"Or select one from the list."
+		},
+		"buttons":{
+			"save_use":"Save & use"
+		}
 	}
 }
