@@ -1,0 +1,161 @@
+var str = '';
+let icons = ['',
+    'alarm_smoke', 
+    'alarm_water',
+    'battery', 
+    'circle', 
+    'device_capabilities',
+    'measure_clouds',
+    'measure_humidity',
+    'measure_luminance',
+    'measure_noise', 
+    'measure_power',
+    'measure_pressure',
+    'measure_rain',
+    'measure_temperature',
+    'measure_wind_angle',
+    'measure_wind_strength',
+    'meter_gas', 
+    'meter_power', 
+    'meter_water',
+    'meter_rain',
+    'music',
+    'onoff',
+    'sensor',
+    'speaker_next',
+    'speaker_play',
+    'speaker_prev',
+    'virtual_device',
+    'volume_down',
+    'volume_mute',
+    'volume_up'
+];
+
+for(var i=0;i<icons.length;i++) {
+  let header = (icons[i]!='' ? '-'+icons[i] : '');
+  let icon = (icons[i]!='' ? 'icons/' + icons[i] : 'icon') + '.svg';
+  str+='"devicecapabilities_text'+header+'": { \r\n'+
+'      "type": "string", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Text" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "icon": "/assets/' + icon + '" \r\n'+
+'    }, \r\n'+
+'    "measure_devicecapabilities_number'+header+'": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n'+
+'    "alarm_devicecapabilities_boolean'+header+'": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Yes/No" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n'+
+'    "devicecapabilities_boolean'+header+'": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Yes/No" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true \r\n'+
+'    },     \r\n';
+
+str+=
+'    "devicecapabilities'+'_button'+header+'": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Yes/No" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "button", \r\n' +
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true, \r\n'+
+'      "uiQuickAction": true \r\n'+
+'    }, \r\n';
+str+=
+'    "onoff_devicecapabilities'+'_button'+header+'": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Yes/No" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "toggle", \r\n' +
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n';
+// var sets1 = ['', '_disabled', '_hide'];
+// for(var j=0;j<sets1.length;j++) {
+//   var val = sets1[j];
+// }
+
+var sets1 = ['', '_disabled', '_hide'];
+for(var j=0;j<sets1.length;j++) {
+  var val = sets1[j];
+    
+  var sets2 = [''];
+  for(var k=0;k<sets2.length;k++) {
+    var val2 = sets2[k];
+      str+=
+      '    "alarm_devicecapabilities_quickaction'+val+val2+'_boolean'+header+'": { \r\n'+
+      '      "type": "boolean", \r\n'+
+      '      "title": { \r\n'+
+      '        "en": "Yes/No" \r\n'+
+      '      }, \r\n'+
+      '      "getable": true, \r\n'+
+      '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
+      (val=='_hide' ? '"uiComponent": null, \r\n' : (val=='' ? '' : '"uiComponent": "toggle", \r\n')) +
+      '      "icon": "/assets/' + icon + '", \r\n'+
+      '      "insights": true, \r\n'+
+      '      "uiQuickAction": true \r\n'+
+      '    }, \r\n'+
+      '    "devicecapabilities_quickaction'+val+val2+'_boolean'+header+'": { \r\n'+
+      '      "type": "boolean", \r\n'+
+      '      "title": { \r\n'+
+      '        "en": "Yes/No" \r\n'+
+      '      }, \r\n'+
+      '      "getable": true, \r\n'+
+      '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
+      (val=='_hide' ? '"uiComponent": null, \r\n' : (val=='' ? '' : '"uiComponent": "toggle", \r\n')) +
+      '      "icon": "/assets/' + icon + '", \r\n'+
+      '      "insights": true, \r\n'+
+      '      "uiQuickAction": true \r\n'+
+      '    },     \r\n';
+  }
+}
+str+=
+'    "measure_devicecapabilities_status'+header+'": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Status" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "icon": "/assets/' + icon + '", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n';
+}
+
+console.log(str);
+
+return null;

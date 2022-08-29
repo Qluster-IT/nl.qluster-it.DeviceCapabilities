@@ -13651,6 +13651,10 @@
               },
               "values": [
                 {
+                  "id": "indicatoronly",
+                  "label": "Indicator Only"
+                },
+                {
                   "id": "",
                   "label": " "
                 },
@@ -13661,10 +13665,6 @@
                 {
                   "id": "onoff",
                   "label": "On/Off"
-                },
-                {
-                  "id": "disabled",
-                  "label": "Non-clickable"
                 },
                 {
                   "id": "lock",
@@ -13680,6 +13680,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button1Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -13726,10 +13737,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -13748,7 +13755,7 @@
               "id": "button2Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -13936,6 +13943,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button2Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -13982,10 +14000,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -14004,7 +14018,7 @@
               "id": "button3Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -14192,6 +14206,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button3Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -14238,10 +14263,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -14260,7 +14281,7 @@
               "id": "button4Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -14448,6 +14469,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button4Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -14494,10 +14526,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -14516,7 +14544,7 @@
               "id": "button5Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -14704,6 +14732,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button5Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -14750,10 +14789,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -14772,7 +14807,7 @@
               "id": "button6Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -14960,6 +14995,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button6Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -15006,10 +15052,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -15028,7 +15070,7 @@
               "id": "button7Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -15216,6 +15258,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button7Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -15262,10 +15315,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -15284,7 +15333,7 @@
               "id": "button8Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -15472,6 +15521,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button8Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -15518,10 +15578,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -15540,7 +15596,7 @@
               "id": "button9Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -15728,6 +15784,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button9Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
@@ -15774,10 +15841,6 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "disabled",
-                  "label": "Non-clickable"
-                },
-                {
                   "id": "lock",
                   "label": "Lock"
                 },
@@ -15796,7 +15859,7 @@
               "id": "button10Icon",
               "type": "dropdown",
               "label": {
-                "en": "Icon"
+                "en": "Icon (only for Button or OnOff)"
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows."
@@ -15984,6 +16047,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button10Disabled",
+              "type": "checkbox",
+              "label": {
+                "en": "Disabled"
+              },
+              "hint": {
+                "en": "When selected this button will not be clickable."
+              },
+              "value": false
             }
           ]
         },
