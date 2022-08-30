@@ -5,7 +5,9 @@ var icons = '              "values": [ \r\n' +
 '                {"id": "alarm_water", "label": { "en": "alarm_water" } }, \r\n' +
 '                {"id": "battery", "label": { "en": "battery" } }, \r\n' +
 '                {"id": "circle", "label": { "en": "circle" } }, \r\n' +
+'                {"id": "curtain-half", "label": { "en": "curtain-half" } }, \r\n' +
 '                {"id": "device_capabilities", "label": { "en": "device_capabilities" } }, \r\n' +
+'                {"id": "game", "label": { "en": "game" } }, \r\n' +
 '                {"id": "measure_clouds", "label": { "en": "measure_clouds" } }, \r\n' +
 '                {"id": "measure_humidity", "label": { "en": "measure_humidity" } }, \r\n' +
 '                {"id": "measure_luminance", "label": { "en": "measure_luminance" } }, \r\n' +
@@ -26,6 +28,7 @@ var icons = '              "values": [ \r\n' +
 '                {"id": "speaker_next", "label": { "en": "speaker_next" } }, \r\n' +
 '                {"id": "speaker_play", "label": { "en": "speaker_play" } }, \r\n' +
 '                {"id": "speaker_prev", "label": { "en": "speaker_prev" } }, \r\n' +
+'                {"id": "tv", "label": { "en": "tv" } }, \r\n' +
 '                {"id": "virtual_device", "label": { "en": "virtual_device" } }, \r\n' +
 '                {"id": "volume_down", "label": { "en": "volume_down" } }, \r\n' +
 '                {"id": "volume_mute", "label": { "en": "volume_mute" } }, \r\n' +
@@ -175,6 +178,24 @@ for(var i=1;i<=fields;i++) {
 '              "value":'+(i===1 ? '"Text '+i+'"': '""')+' \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
+'              "id": "text'+i+'ShowAs", \r\n' +
+'              "type": "dropdown", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Show as" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "Select how the text must be displayed." \r\n' +
+'              }, \r\n' +
+'              "values":['+
+'                {"id":"", "label":" "}, '+
+'                {"id":"sensor", "label":"Sensor (Default)"}, '+
+'                {"id":"speaker_artist", "label":"Artist"}, ' +
+'                {"id":"speaker_album", "label":"Album"}, ' +
+'                {"id":"speaker_track", "label":"Track"} ' +
+'              ], '+
+'              "value":""  \r\n'+
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "text'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
@@ -189,6 +210,21 @@ for(var i=1;i<=fields;i++) {
 '          ] \r\n' +
 '        }, \r\n';
 }
+
+
+str+='   { \r\n' +
+'          "type": "group", \r\n' +
+'          "label": {"en": "Numbers"}, \r\n' +
+'          "children": [ \r\n' +
+'            { \r\n' +
+'              "id": "labelNumber1", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": " "}, \r\n' +
+'              "value":"Number 1 is special. Number 1 Show As is also responsible for additional Flow Cards." \r\n' +
+'            } \r\n' +
+'          ] \r\n' +
+'        }, \r\n';
+
 
 for(var i=1;i<=fields;i++) {  
   str+='{ \r\n' +
@@ -208,6 +244,58 @@ for(var i=1;i<=fields;i++) {
 '              }, \r\n' +
 '              "value":'+(i===1 ? '"Number '+i+'"': '""')+' \r\n' +
 '            }, \r\n' +
+'            { \r\n' +
+'              "id": "number'+i+'ShowAs", \r\n' +
+'              "type": "dropdown", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Show as" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "Select how the number must be displayed." \r\n' +
+'              }, \r\n' +
+'              "values":['+
+'                {"id":"", "label":" "}, '+
+'                {"id":"sensor", "label":"Sensor (Default)"}, '+
+'                {"id":"target_temperature", "label":"Temperature (target)"}, '+
+'                {"id":"measure_temperature", "label":"Temperature (measure)"}, '+
+'                {"id":"dim", "label":"Dim"}, '+
+'                {"id":"light_hue", "label":"Hue"}, '+
+'                {"id":"light_saturation", "label":"Color Saturation"}, '+
+'                {"id":"light_temperature", "label":"Color Temperature"}, '+
+'                {"id":"measure_battery", "label":"Battery"}, '+
+'                {"id":"volume_set", "label":"Set Volume"}, '+
+'                {"id":"windowcoverings_tilt_set", "label":"Window Coverings tilt set"}, '+
+'                {"id":"windowcoverings_set", "label":"Window Coverings Position"}, '+
+'                {"id":"speaker_duration", "label":"Speaker Duration"}, '+
+'                {"id":"speaker_position", "label":"Speaker Position"} ' +
+'              ], '+
+'              "value":""  \r\n';
+str+='       },' +
+  '            { \r\n' +
+  '              "id": "number'+i+'CreateFlowCards", \r\n' +
+  '              "type": "checkbox", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Create Flow Cards" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability." \r\n' +
+  '              }, \r\n' +
+  '              "value": false \r\n';
+  
+// str+='       }, \r\n' +
+// '            { \r\n' +
+// '              "id": "number'+i+'SecondName", \r\n' +
+// '              "type": "text", \r\n' +
+// '              "label": { \r\n' +
+// '                "en": "Name for second number" \r\n' +
+// '              }, \r\n' +
+// '              "hint": { \r\n' +
+// '                "en": "The name for the second numberfield for Number '+i+', like temperature (target) also has a measure field." \r\n' +
+// '              }, \r\n' +
+// '              "value":'+(i===1 ? '"Number '+i+'"': '""')+' \r\n' ;
+
+
+str+='       }, \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
@@ -238,12 +326,40 @@ for(var i=1;i<=fields;i++) {
 '                "en": "Decimals" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The number of decimals to show." \r\n' +
+'                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value." \r\n' +
 '              }, \r\n' +
-'              "value": 0, \r\n' +
-'              "min": 0, \r\n' +
+'              "value": -1, \r\n' +
+'              "min": -1, \r\n' +
 '              "max": 10, \r\n' +
 '              "step": 1 \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "number'+i+'Min", \r\n' +
+'              "type": "number", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Min" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value." \r\n' +
+'              }, \r\n' +
+'              "value": -1 \r\n' +
+// '              "min": 0, \r\n' +
+// '              "max": 10, \r\n' +
+// '              "step": 1 \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "number'+i+'Max", \r\n' +
+'              "type": "number", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Max" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value." \r\n' +
+'              }, \r\n' +
+'              "value": -1 \r\n' +
+// '              "min": 0, \r\n' +
+// '              "max": 10, \r\n' +
+// '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'PreventInsights", \r\n' +
@@ -294,8 +410,20 @@ for(var i=1;i<=fields;i++) {
 '                {"id":"alarm", "label":"Alarm"}, '+
 '                {"id":"button", "label":"Button"} '+
 '              ], '+
-'              "value":""  \r\n'+  
-'            }, \r\n' +
+'              "value":""  \r\n';
+str+='       },' +
+  '            { \r\n' +
+  '              "id": "boolean'+i+'CreateFlowCards", \r\n' +
+  '              "type": "checkbox", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Create Flow Cards" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability." \r\n' +
+  '              }, \r\n' +
+  '              "value": false \r\n';
+  
+str+='       }, \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
@@ -357,6 +485,21 @@ for(var i=1;i<=fields;i++) {
 }
 
 
+
+
+str+='   { \r\n' +
+'          "type": "group", \r\n' +
+'          "label": {"en": "Buttons"}, \r\n' +
+'          "children": [ \r\n' +
+'            { \r\n' +
+'              "id": "labelButton1", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": " "}, \r\n' +
+'              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator." \r\n' +
+'            } \r\n' +
+'          ] \r\n' +
+'        }, \r\n';
+
 for(var i=1;i<=fields;i++) {  
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
@@ -385,15 +528,41 @@ for(var i=1;i<=fields;i++) {
   '                "en": "Select how the button must be displayed." \r\n' +
   '              }, \r\n' +
   '              "values":[';
-  if(i===1) str+= '      {"id":"indicatoronly", "label":"Indicator Only"}, ';
+  if(i===1) str+= '{"id":"indicatoronly", "label":"Indicator Only"}, ';
   str+='           {"id":"", "label":" "}, '+
-  '                {"id":"button", "label":"Button (Default)"}, '+
-  '                {"id":"onoff", "label":"On/Off"}, '+
-  '                {"id":"lock", "label":"Lock"}, '+
+  '                {"id":"button", "label":"Push Button (Default)"}, '+
+  '                {"id":"onoff", "label":"On/Off"}, ';
+  if(i>1) str+= '{"id":"onoff_buttontab", "label":"On/Off (Button Tab)"}, ';
+  str+='           {"id":"locked", "label":"Lock"}, '+
   '                {"id":"garagedoor_closed", "label":"Garagedoor Closed"}, '+
-  '                {"id":"windowcoverings_closed", "label":"Windowcoverings Closed"} '+
+  '                {"id":"windowcoverings_closed", "label":"Windowcoverings Closed"}, '+
+  
+  '                {"id":"speaker_playing", "label":"Speaker Playing"}, '+
+  '                {"id":"speaker_next", "label":"Speaker Next"}, '+
+  '                {"id":"speaker_prev", "label":"Speaker Previous"}, '+
+  '                {"id":"speaker_shuffle", "label":"Speaker Shuffle"}, '+
+  '                {"id":"volume_mute", "label":"Volume muted"}, '+
+  '                {"id":"volume_up", "label":"Volume up"}, '+
+  '                {"id":"volume_down", "label":"Volume down"}, '+
+  '                {"id":"channel_up", "label":"Channel up"}, '+
+  '                {"id":"channel_down", "label":"Channel down"}, '+
+  '                {"id":"windowcoverings_tilt_up", "label":"Window coverings tilt up"}, '+
+  '                {"id":"windowcoverings_tilt_down", "label":"Window coverings tilt down"} ' +
   '              ], '+
   '              "value":""  \r\n';
+  
+str+='       },' +
+  '            { \r\n' +
+  '              "id": "button'+i+'CreateFlowCards", \r\n' +
+  '              "type": "checkbox", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Create Flow Cards *" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next." \r\n' +
+  '              }, \r\n' +
+  '              "value": '+(i===1?'true':'false')+' \r\n';
+  
   if(i>1) str+=
   '            }, \r\n' +
   '            { \r\n' +
@@ -407,7 +576,7 @@ for(var i=1;i<=fields;i++) {
   '              }, \r\n' +
   icons +'       "value": "" \r\n';
 
-  str+='       },' +
+str+='       },' +
   '            { \r\n' +
   '              "id": "button'+i+'Disabled", \r\n' +
   '              "type": "checkbox", \r\n' +
@@ -417,13 +586,92 @@ for(var i=1;i<=fields;i++) {
   '              "hint": { \r\n' +
   '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes." \r\n' +
   '              }, \r\n' +
-  '              "value": false \r\n' +
-  '            } \r\n';
+  '              "value": false \r\n';
+  
+  if(i>1) str+='       },' +
+  '            { \r\n' +
+  '              "id": "button'+i+'Checked", \r\n' +
+  '              "type": "checkbox", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Checked (Disabled only)" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "When selected this button will be light, else dark." \r\n' +
+  '              }, \r\n' +
+  '              "value": false \r\n';
+  
+  str+='            } \r\n';
 
   str+=
   '          ] \r\n' +
   '        }, \r\n';
 }
+
+
+// // 
+// str+='   { \r\n' +
+// '          "type": "group", \r\n' +
+// '          "label": {"en": "Select lists"}, \r\n' +
+// '          "children": [ \r\n' +
+// '            { \r\n' +
+// '              "id": "labelDropdown1", \r\n' +
+// '              "type": "label", \r\n' +
+// '              "label": {"en": " "}, \r\n' +
+// '              "value":"Here you can define Select lists." \r\n' +
+// '            } \r\n' +
+// '          ] \r\n' +
+// '        }, \r\n';
+
+// for(var i=1;i<=fields;i++) {  
+//   str+='{ \r\n' +
+//   '          "type": "group", \r\n' +
+//   '          "label": { \r\n' +
+//   '            "en": "Select list '+i+'" \r\n' +
+//   '          }, \r\n' +
+//   '          "children": [ \r\n' +
+//   '            { \r\n' +
+//   '              "id": "dropdown'+i+'Name", \r\n' +
+//   '              "type": "text", \r\n' +
+//   '              "label": { \r\n' +
+//   '                "en": "Name" \r\n' +
+//   '              }, \r\n' +
+//   '              "hint": { \r\n' +
+//   '                "en": "The name for Select list '+i+'" \r\n' +
+//   '              }, \r\n' +
+//   '              "value":'+(i===1 ? '"Select list '+i+'"': '""')+' \r\n' +
+//   '            }, \r\n' +
+//   '            { \r\n' +
+//   '              "id": "dropdown'+i+'Icon", \r\n' +
+//   '              "type": "dropdown", \r\n' +
+//   '              "label": { \r\n' +
+//   '                "en": "Icon (only for ...)" \r\n' +
+//   '              }, \r\n' +
+//   '              "hint": { \r\n' +
+//   '                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+//   '              }, \r\n' +
+//   icons +'       "value": "" \r\n';
+  
+//   str+='       }, \r\n' +
+//   '            { \r\n' +
+//   '              "id": "dropdown'+i+'Values", \r\n' +
+//   '              "type": "text", \r\n' +
+//   '              "label": { \r\n' +
+//   '                "en": "Values" \r\n' +
+//   '              }, \r\n' +
+//   '              "hint": { \r\n' +
+//   '                "en": "The Possible Values for Button '+i+'" \r\n' +
+//   '              }, \r\n' +
+//   '              "value":'+(i===1 ? '"[\'first\', \'second\', \'third\']"': '""')+' \r\n' +  
+//   '            } \r\n';
+
+//   str+=
+//   '          ] \r\n' +
+//   '        }, \r\n';
+// }
+
+
+
+/// Cameras
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +

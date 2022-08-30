@@ -702,7 +702,7 @@ class DeviceSetter extends Homey.App {
 				_(d.capabilities).forEach(c => {
 					if (
 						//cls.capabilities.indexOf(c) == -1 &&
-						(!queryCapability || queryCapability == '' || c.toLowerCase().indexOf(queryCapability.toLowerCase()) > -1) &&
+						(!queryCapability || queryCapability == '' || c.toLowerCase().indexOf(queryCapability.toLowerCase()) > -1) && d.capabilitiesObj &&
 						d.capabilitiesObj[c] && d.capabilitiesObj[c].setable) {
 						switch (actionType) {
 							case "percentage": if (d.capabilitiesObj[c].type == 'number' && d.capabilitiesObj[c].min == 0 && d.capabilitiesObj[c].max == 1 && d.capabilitiesObj[c].decimals == 2) this.addDeviceToCapabilities(d, c, cls);//cls.capabilities.push(c);
