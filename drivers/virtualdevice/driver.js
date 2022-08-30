@@ -253,39 +253,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     registerAutocompleteField(action) {
         return async( query, args ) => {
-            var settings = args.device.getSettings();
             var ret = [];
-            //var title = await args.device.getCapabilityOptions('devicecapabilities_text.text'+i).title;
             var actiontype = action.split('_')[2];
-            var typeText = actiontype=='text' ? 'Text' : actiontype=='number' ? 'Number' : actiontype=='boolean' ? 'Yes/No' : actiontype=='button' ? 'Button' : 'unknown';
-            var caps = args.device.getCapabilities();
             for(var i=1;i<=NUMBEROFFIELDS;i++){
-                let capsFound;
-                var searchs = ['.'+actiontype+i];
-                if(actiontype=='button'){
-                    if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
-                        'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
+                let cap = args.device.getStoreValue(actiontype + i);
+                if(cap) {
+                    var typeText = actiontype=='text' ? 'Text ' +i : actiontype=='number' ? 'Number ' +i : actiontype=='boolean' ? 'Yes/No ' +i : actiontype=='button' ? 'Button ' +i : 'unknown';
+                    ret.push({'id':actiontype + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
-                if(actiontype=='number'){
-                    if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
-                        'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
-                }
-                for(var j=0;j<searchs.length;j++){
-                    if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
-                        for (let k = 0; k < capsFound.length; k++) {
-                            const _cap = capsFound[k];
-                            
-                            var id = actiontype+i;
-                            let text = (typeText+' ' + i);
-                            if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
-                                id = _cap;
-                                text += " (Second)";
-                            }
-                            ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
-                        }
-                    }
-                }
-                
             }
           return ret;
         };
@@ -299,32 +274,37 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             for (let k = 0; k < types.length; k++) {
                 const actiontype = types[k];
                 for(let i=1;i<=NUMBEROFFIELDS;i++){
-                    let capsFound;                
-                    let searchs = ['.'+actiontype+i];
-                    if(actiontype=='button'){
-                        if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
-                            'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
+                    let cap = args.device.getStoreValue(actiontype + i);
+                    if(cap) {
+                        var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
+                        ret.push({'id':actiontype + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
-                    if(actiontype=='number'){
-                        if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
-                            'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
-                    }
-                    var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
+                    // let capsFound;                
+                    // let searchs = ['.'+actiontype+i];
+                    // if(actiontype=='button'){
+                    //     if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
+                    //         'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
+                    // }
+                    // if(actiontype=='number'){
+                    //     if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
+                    //         'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
+                    // }
+                    // var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
             
-                    for(var j=0;j<searchs.length;j++){
-                        if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
-                            for (let k = 0; k < capsFound.length; k++) {
-                                const _cap = capsFound[k];                                
-                                var id = actiontype+i;
-                                let text = (typeText);//+' ' + i);
-                                if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
-                                    id = _cap;
-                                    text += " (Second)";
-                                }
-                                ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
-                            }
-                        }
-                    }
+                    // for(var j=0;j<searchs.length;j++){
+                    //     if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
+                    //         for (let k = 0; k < capsFound.length; k++) {
+                    //             const _cap = capsFound[k];                                
+                    //             var id = actiontype+i;
+                    //             let text = (typeText);//+' ' + i);
+                    //             if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
+                    //                 id = _cap;
+                    //                 text += " (Second)";
+                    //             }
+                    //             ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
+                    //         }
+                    //     }
+                    // }
                     
                 }
             }

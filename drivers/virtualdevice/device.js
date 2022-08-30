@@ -228,8 +228,10 @@ module.exports = class WatchDevice extends Homey.Device {
 						break;						
 				}
 				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
-				let oldTempValue;
-					
+				
+
+				if (oldCap && cap!=oldCap)  await this.removeCapability(oldCap);
+				
 
 				
 
@@ -345,6 +347,10 @@ module.exports = class WatchDevice extends Homey.Device {
 		for (let _i = 1; _i < i ; _i++) n.push(_i);
 		let capAllreadyFound = _.find(n, _n=> settings[type+_n+"ShowAs"]===settings[type + i + 'ShowAs'] && (otherCap=this.getStoreValue(type+_n)) && otherCap.indexOf(".")===-1);
 		let capTarget;
+		if(settings[type + i + 'ShowAs']==="measure_temperature") {
+			let a = _.find(_.orderBy(n,undefined,'desc'), _n=> settings[type+_n+"ShowAs"]==="target_temperature" && (otherCapTarget=this.getStoreValue(type+_n) ));
+			let b= a;
+		}
 		if(settings[type + i + 'ShowAs']==="measure_temperature" && _.find(_.orderBy(n,undefined,'desc'), _n=> settings[type+_n+"ShowAs"]==="target_temperature" && (otherCapTarget=this.getStoreValue(type+_n) ))) {
 			if(otherCapTarget.indexOf(".")===-1) capTarget = "measure_temperature";
 			else capTarget = "measure_temperature." + otherCapTarget.split(".")[1];
