@@ -124,5 +124,11 @@
   },
   "1.9.9" : {
     "en" : "Added Set Field to Expression card and Javascript Functions to Settings page"
+  },
+  "1.9.91" : {
+    "en" : "Added Number Show as, and More Button Show as options"
+  },
+  "1.9.92" : {
+    "en" : "Added Create Flow Cards options"
   }
 }

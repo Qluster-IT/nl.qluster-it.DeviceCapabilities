@@ -23,10 +23,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 			var set_value = this.homey.flow.getActionCard(action);
 			set_value
 				.registerRunListener((async (args, state) => {
-					try {
-						if (!args || !args.device) return false;
-                        let fieldId = args.field? args.field.id : 'status1';
-                        let cap = args.device.getStoreValue(fieldId);
+                    if (!args || !args.device) return false;
+                    let fieldId = args.field? args.field.id : 'status1';
+                    let cap = args.device.getStoreValue(fieldId);
+                    try {
                         switch (action) {
                             case 'virtualdevice_set_text':
                                 cap = cap || 'devicecapabilities_text.text1';
@@ -34,7 +34,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 else await args.device.setCapabilityValue(cap, null);
                                 return true;
                             case 'virtualdevice_set_number':
-                                cap = cap || 'measure_devicecapabilities_number.number1';
+                                cap = fieldId.indexOf('.')>-1 ? fieldId : (cap || 'measure_devicecapabilities_number.number1');
                                 if(args.number!==undefined && args.number!=='undefined') {
                                     if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, args.number);                                   
                                 }
@@ -70,8 +70,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         }
                         return null;
 					} catch (error) {
-						this.log('set_value:');
-						this.log(error);
+						// this.log('set_value:');
+						// this.log(error);
+                        throw new Error(error.message.replace(cap.split('.')[0]+' ', ''));
 					}
 				}).bind(this));
                 if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) 
@@ -83,7 +84,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
             let fieldId = args.field.id;
             let type = args.field.type;
-            var cap = args.device.getStoreValue(fieldId);
+            let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
+            if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
+            cap = args.device.getStoreValue(fieldId) || cap;
+
             switch (type) {
                 case 'virtualdevice_set_text':
                     cap = cap || 'devicecapabilities_text.text1';
@@ -149,6 +153,21 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 					}
 				});
             boolean.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
+		}).bind(this));
+
+        var trigger_virtualdevice_number = ['trigger_virtualdevice_number'];
+        trigger_virtualdevice_number.forEach((action => {
+			var number = this.homey.flow.getDeviceTriggerCard(action);
+            this.trigger_virtualdevice_number = number;
+			number.registerRunListener(async (args, state) => {
+                    try {
+					    return args.field.id==state.field.id;
+					} catch (error) {
+						this.log('set_value:');
+						this.log(error);
+					}
+				});
+            number.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
 		}).bind(this));
 
 
@@ -241,13 +260,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             var typeText = actiontype=='text' ? 'Text' : actiontype=='number' ? 'Number' : actiontype=='boolean' ? 'Yes/No' : actiontype=='button' ? 'Button' : 'unknown';
             var caps = args.device.getCapabilities();
             for(var i=1;i<=NUMBEROFFIELDS;i++){
-                var cap = undefined;
+                let capsFound;
                 var searchs = ['.'+actiontype+i];
                 if(actiontype=='button'){
-                    if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed'];
-                } 
+                    if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
+                        'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
+                }
+                if(actiontype=='number'){
+                    if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
+                        'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
+                }
                 for(var j=0;j<searchs.length;j++){
-                    if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':actiontype+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText+' ' + i), description:(typeText+' ' + i)});
+                    if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
+                        for (let k = 0; k < capsFound.length; k++) {
+                            const _cap = capsFound[k];
+                            
+                            var id = actiontype+i;
+                            let text = (typeText+' ' + i);
+                            if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
+                                id = _cap;
+                                text += " (Second)";
+                            }
+                            ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
+                        }
+                    }
                 }
                 
             }
@@ -261,17 +297,33 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let caps = args.device.getCapabilities();
             let types = ['status', 'text', 'number', 'boolean', 'button'];
             for (let k = 0; k < types.length; k++) {
-                const type = types[k];
+                const actiontype = types[k];
                 for(let i=1;i<=NUMBEROFFIELDS;i++){
-                    let cap = undefined;
-                    let searchs = ['.'+type+i];
-                    if(type=='button'){
-                        if(i===1) searchs = ['.'+type+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed'];
-                    } 
-                    var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : 'unknown';
+                    let capsFound;                
+                    let searchs = ['.'+actiontype+i];
+                    if(actiontype=='button'){
+                        if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
+                            'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
+                    }
+                    if(actiontype=='number'){
+                        if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
+                            'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
+                    }
+                    var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
             
                     for(var j=0;j<searchs.length;j++){
-                        if((cap =_.find(caps, c=> c.endsWith(searchs[j])))) ret.push({'id':type+i, 'name':args.device.getCapabilityOptions(cap).title || (typeText), description:(typeText), 'type':type});
+                        if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
+                            for (let k = 0; k < capsFound.length; k++) {
+                                const _cap = capsFound[k];                                
+                                var id = actiontype+i;
+                                let text = (typeText);//+' ' + i);
+                                if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
+                                    id = _cap;
+                                    text += " (Second)";
+                                }
+                                ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
+                            }
+                        }
                     }
                     
                 }
@@ -286,6 +338,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     async triggerFlowBoolean(device, value, state) {
         this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
+    }
+    async triggerFlowNumber(device, value, state) {
+        this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called

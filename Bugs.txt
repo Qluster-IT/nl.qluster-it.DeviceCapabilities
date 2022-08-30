@@ -1,1 +1,52 @@
 There is no device.clearCameraImage();
+______________________________________
+
+
+When i enter an empty {
+          "type": "group",
+          "label": {
+            "en": "Select lists"
+          }
+        },
+i get the error during build:
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["text","password","textarea","label"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["number","slider"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["radio","dropdown"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43] should have required property 'values' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["checkbox"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43] should have required property 'children' 
+manifest.drivers['virtualdevice'].settings[43] matched no available schemas, see previous errors
+
+While only one line is what its about appareantly:
+manifest.drivers['virtualdevice'].settings[43] should have required property 'children' 
+______________________________________
+
+
+
+
+______________________________________
+
+
+
+______________________________________
+
+______________________________________
+
+
+
+
+______________________________________
+
+
+
+______________________________________
+
+
+______________________________________
+
+
+______________________________________

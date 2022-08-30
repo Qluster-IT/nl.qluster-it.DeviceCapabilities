@@ -3,6 +3,7 @@
 const Homey = require('homey');
 const Homeyman = require('../../app');
 
+const _ = require('lodash-core');
 const NUMBEROFFIELDS = 10;
 
 module.exports = class WatchDevice extends Homey.Device {
@@ -52,11 +53,8 @@ module.exports = class WatchDevice extends Homey.Device {
 		var settings = this.getSettings();
 
 		for(let i=0;i<caps.length;i++){
-			let type = null;
-			if(caps[i].indexOf('.')>-1)
-				type = caps[i].split('.')[1];
-			else if(caps[i]=='onoff' || caps[i]=='button' || caps[i]=='locked' || caps[i]=='garagedoor_closed' || caps[i]=='windowcoverings_closed') type = 'button1';
-			
+			let type = this.getStoreValue(caps[i]);			
+			if(!type) continue;
 			
 			if(type.startsWith('button')) {
 				if(settings[type+'Disabled']!==true) 
@@ -67,6 +65,11 @@ module.exports = class WatchDevice extends Homey.Device {
 				if(caps[i].indexOf('_quickaction_')>-1) 
 				this.registerCapabilityListener(caps[i], ((value, options) => {this.driver.triggerFlowBoolean(this, value, { field: { id: type } });}).bind(this));
 			}			
+			if(type.startsWith('number')) {
+					this.registerCapabilityListener(caps[i], ((value, options) => {
+						this.driver.triggerFlowNumber(this, value, { field: { id: type } });
+					}).bind(this));
+			}		
 		}
 		await this.setCameras();
 	}
@@ -114,18 +117,15 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	// }
 
-	getButtonDisabled(buttonName) {
-		var settings = this.getSettings();
-		return settings[buttonName + 'Disabled'];
-
-	}
-
-	async loadFromSettings(settings, oldSettings) {
-
+	async loadFromSettings(settings, oldSettings, changedKeys) {
+		
 		let cls = this.getClass();
 		if(cls!=settings.cls) await this.setClass(settings.cls);
+		//let b = JSON.parse(JSON.stringify(settings));
+		//b.number1Max = 15;
+		//this.setSettings({number1Max:15});
 
-		var types = ['status', 'text', 'number', 'button', 'boolean'];
+		var types = ['status', 'text', 'number', 'button', 'boolean'];//, 'dropdown'];
 		var button1Reset = false;
 		var a = this;
 
@@ -134,24 +134,53 @@ module.exports = class WatchDevice extends Homey.Device {
 			
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
 				let oldCap = this.getStoreValue(type + i);
-				let oldValue = undefined;
+				let oldValue;
 				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
-
-				//var storeValue = this.getStoreValue(type + i + 'Icon');
-				//let icon = storeValue && storeValue.length > 0 ? '-' + storeValue : '';
+				
 				let icon = (settings[type + i + 'Icon'] || '').length > 0 ? '-' + settings[type + i + 'Icon'] : '';
-				// (oldSettings[type + i + 'Icon']||'').length>0 ? '-' + oldSettings[type + i + 'Icon'] : '';
-				let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
 				let disabled = settings[type + i + 'Disabled'] === true;
 				let checked = settings[type + i + 'Checked']===true;
-						//let hide = settings[type + i + 'Hide'] === true;
+				
 				let pushbutton = false;
-				let isOnOff, hide, lock, garagedoor_closed, windowcoverings_closed, isOnOffButtonTab = false;
+				let isOnOff, hide, isOnOffButtonTab = false;
 
+				let sensor = false;
+						
 
+				let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
+				let capSet = false;
 				switch (type) {
+					case "text":
+						switch (settings[type + i + 'ShowAs']) {
+							case "": 
+							case "sensor":
+								  break;
+							default:
+								capSet = true;
+								 break;
+						}
+						if(capSet) {
+							let caps = this.getCaps(type,i,settings,oldCap);
+							cap = caps.cap;
+							oldCap = caps.oldCap;
+						}
+						if (!oldCap && i===1) oldCap = "devicecapabilities_text.text1";break;
+					// case "dropdown":
+					// 	if (!oldCap && i===1) oldCap = "devicecapabilities_dropdown.dropdown1";break;
 					case "number":
-						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; 
+						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i;
+						switch (settings[type + i + 'ShowAs']) {
+							case "": sensor = true;   break;
+							case "sensor": sensor = true;  break;
+							default:
+								capSet = true;
+								 break;
+						}
+						if(capSet) {
+							let caps = this.getCaps(type,i,settings,oldCap);
+							cap = caps.cap;
+							oldCap = caps.oldCap;
+						}
 						if (!oldCap && i===1) oldCap = "measure_devicecapabilities_number.number1";
 						break;
 					case "status":
@@ -173,42 +202,49 @@ module.exports = class WatchDevice extends Homey.Device {
 							case "button": pushbutton = true;  break;
 							case "onoff": isOnOff = true;  break;
 							case "onoff_buttontab": isOnOffButtonTab = true;  break;
-							//case "disabled": disabled = true; break;
-							case "indicatoronly": isOnOff = true; hide = true;  break; //disabled=true; indicatorOnly is for Button1 only.
-							case "lock": lock = true; break;
-							case "garagedoor_closed": garagedoor_closed = true; break;
-							case "windowcoverings_closed": windowcoverings_closed = true;  break;
+							case "indicatoronly": isOnOff = true; hide = true;  break; //disabled=true; indicatorOnly is for Button1 only.	
+							default:
+								capSet = true;
+								break;						
 						}
-						
+						if(capSet) {
+							let caps = this.getCaps(type,i,settings,oldCap);
+							cap = caps.cap;
+							oldCap = caps.oldCap;
+						}
 						if(hide) { //always Button1
 							cap = "devicecapabilities_hide_button." + type + i;
 						}
 						
+						if(!hide && !capSet) {
+							if (i === 1) {
+								cap = isOnOff ? 'onoff' : type;
+							} else {
+								cap =  ( (isOnOff ? 'onoff_':'')+ (isOnOffButtonTab ? 'onoffbuttontab_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));
+							}
+						}
 						if (!oldCap && i===1) oldCap = 'button';
 
-						if(!hide) {
-							if (i === 1) {
-								cap = isOnOff ? 'onoff' : lock ? 'locked' : garagedoor_closed ? 'garagedoor_closed' : windowcoverings_closed ? 'windowcoverings_closed' : type;
-							} else {
-								cap =  lock ? ('locked.' + type + i) : garagedoor_closed ? ('garagedoor_closed.' + type + i) : 
-									windowcoverings_closed ? ('windowcoverings_closed.' + type + i) :( (isOnOff ? 'onoff_':'')+ (isOnOffButtonTab ? 'onoffbuttontab_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));// (type + '.' + type + i);
-							}
-					}
 						break;						
 				}
-				
-				if(cap!=oldCap && oldCap)  await this.removeCapability(oldCap);
+				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
+				let oldTempValue;
+					
 
 				
 
 				let name = settings[type + i + 'Name'];
-				if (!name || name.length <= 0) this.setStoreValue(type + i, null);
+				if (!name || name.length <= 0) {
+					this.setStoreValue(type + i, null);
+					this.setStoreValue(cap, null);
+				}
 
 				if (name && name.length > 0) {
 					if((type=="button" || (type=="boolean" && cap.indexOf('_quickaction_')>-1)) && button1Reset) {
 						if (this.hasCapability(cap)) await this.removeCapability(cap);
 					}
 					this.setStoreValue(type + i, cap);
+					this.setStoreValue(cap, type + i);
 					if (!this.hasCapability(cap)) {
 						if(type=="button" && i===1) button1Reset = true;
 						await this.addCapability(cap);
@@ -227,8 +263,12 @@ module.exports = class WatchDevice extends Homey.Device {
 								}).bind(this));
 							} catch (error) { }
 						}
+						if(type=='number' && (!sensor)) {
+								this.registerCapabilityListener(cap, ((value, options) => {
+									this.driver.triggerFlowNumber(this, value, { field: { id: type + i } });
+								}).bind(this));
+						}	
 					}
-					//var optHas = this.hasCapability(cap);
 					let opt;
 
 					try {
@@ -237,10 +277,22 @@ module.exports = class WatchDevice extends Homey.Device {
 						//this.error(error);
 					}
 					if (!opt) opt = {};
+					
+					//var valuesChanged = false;
+					var values = null;
+					// if(type=="dropdown") {
+					// 	if(opt.values!=settings["dropdown"+i+"Values"] || changedKeys.indexOf("dropdown"+i+"Values")>-1)
+					// 	values = this.getDropDownValues(settings["dropdown"+i+"Values"]);
+					// }
+					
 					if (
 						opt.title != name || opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 						(opt.units != settings[type + i + 'Units'] && type != 'status') ||
-						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] 
+						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
+						values ||
+						settings[type + i + 'Decimals'] != oldSettings[type + i + 'Decimals']  ||
+						settings[type + i + 'Min'] != oldSettings[type + i + 'Min']  ||
+						settings[type + i + 'Max'] != oldSettings[type + i + 'Max'] 
 						//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 						//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked )
 
@@ -248,19 +300,32 @@ module.exports = class WatchDevice extends Homey.Device {
 						let optNew = {
 							title: name,
 							preventInsights: settings[type + i + 'PreventInsights'],
-							decimals: settings[type + i + 'Decimals'],
+							//decimals: settings[type + i + 'Decimals'],
 							insightsTitleTrue: settings[type + i + 'InsightsTitleTrue'],
 							insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
 						};
 						if (type == 'status') optNew.units = opt.units;
 						else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
+						if(type == 'dropdown' && values) optNew.valuesasd = values;
+						switch (type) {
+							case "number":
+								if(settings[type + i + 'Decimals']!==-1) optNew.decimals = settings[type + i + 'Decimals'];
+								if(settings[type + i + 'Min']!==-1) optNew.min = settings[type + i + 'Min'];
+								if(settings[type + i + 'Max']!==-1) optNew.max = settings[type + i + 'Max'];
+								
+								break;
 						
+							default:
+								break;
+						}
+						
+						//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
 						//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
 						
 						//if(settings[type + i + 'Disabled']!==undefined) optNew.setable= !settings[type + i + 'Disabled'];
 						//if(settings[type + i + 'UiQuickAction']!==undefined) optNew.uiQuickAction= !settings[type + i + 'UiQuickAction'];
 						//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
-						this.setCapabilityOptions(cap, optNew);
+						await this.setCapabilityOptions(cap, optNew);
 					}
 					if (type == 'button' && disabled && !pushbutton ) {
 						await this.setCapabilityValue(cap, checked);
@@ -274,10 +339,60 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	}
 
+	getCaps(type, i, settings, oldCap) {
+		let otherCap, otherCapTarget;// = this.getStoreValue(type+i)
+		let n = [];
+		for (let _i = 1; _i < i ; _i++) n.push(_i);
+		let capAllreadyFound = _.find(n, _n=> settings[type+_n+"ShowAs"]===settings[type + i + 'ShowAs'] && (otherCap=this.getStoreValue(type+_n)) && otherCap.indexOf(".")===-1);
+		let capTarget;
+		if(settings[type + i + 'ShowAs']==="measure_temperature" && _.find(_.orderBy(n,undefined,'desc'), _n=> settings[type+_n+"ShowAs"]==="target_temperature" && (otherCapTarget=this.getStoreValue(type+_n) ))) {
+			if(otherCapTarget.indexOf(".")===-1) capTarget = "measure_temperature";
+			else capTarget = "measure_temperature." + otherCapTarget.split(".")[1];
+			capAllreadyFound = false;
+		}
+		if(capAllreadyFound && otherCap===oldCap) oldCap = undefined;
+		return { cap: capTarget ? capTarget : settings[type + i + 'ShowAs']+ (capAllreadyFound || settings[type + i + 'CreateFlowCards']===false  ? "." +type + i : ""), oldCap:oldCap };
+	}
+
+	// getDropDownValues(text) {
+	// 	var results = [];
+	// 	let t = text.trimStart();
+	// 	if(t.startsWith('[')) {
+	// 		let r = JSON.parse(text);
+	// 		if(Array.isArray(r)) for (let i = 0; i < r.length; i++) {
+	// 			const element = r[i];
+	// 			let type = typeof(element);
+	// 			if(type=="object") results.push(element);
+	// 			if(type=="string") results.push({id:element, title:element});
+				
+	// 		}
+	// 	} else if(t.startsWith('"')) {			
+	// 		let r = JSON.parse(text);
+	// 		if(r=="string") results.push({id:r, name:r});
+	// 	} else {
+	// 		//let specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/gi; 
+	// 		var seperators = {
+	// 			"," : {"sep":",", "count": (text.match(/\,/g) ||[]).length},
+	// 			";" : {"sep":";", "count": (text.match(/\;/g) ||[]).length}
+	// 		};
+	// 		var sep1 = _.orderBy(seperators,"count",'desc');
+	// 		var sep = _.first(sep1) ? sep1[0].sep : "null";
+	// 		var arr = text.split(sep);
+	// 		for (let i = 0; i < arr.length; i++) {
+	// 			let _r =  arr[i].trimStart();
+	// 			results.push({id:_r, title:_r});
+	// 		}
+
+	// 	}
+
+	// 	return results;
+
+	// }
+
 	
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
 
-		this.loadFromSettings(newSettings, oldSettings);
+		this.loadFromSettings(newSettings, oldSettings, changedKeys);
 		// if the settings must not be saved for whatever reason:
 		// throw new Error('Your error message');
 	}

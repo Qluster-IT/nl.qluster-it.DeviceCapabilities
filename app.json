@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.9",
+  "version": "1.9.92",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -308,12 +308,12 @@
       {
         "id": "trigger_virtualdevice_boolean",
         "title": {
-          "en": "Yes/No pushed",
-          "nl": "Ja/Nee ingedrukt"
+          "en": "Yes/No set",
+          "nl": "Ja/Nee ingesteld"
         },
         "titleFormatted": {
-          "en": "Yes/No [[field]] pushed",
-          "nl": "Ja/Nee [[field]] ingedrukt"
+          "en": "Yes/No [[field]] set",
+          "nl": "Ja/Nee [[field]] ingesteld"
         },
         "args": [
           {
@@ -334,6 +334,42 @@
           {
             "name": "value",
             "type": "boolean",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde"
+            }
+          }
+        ]
+      },
+      {
+        "id": "trigger_virtualdevice_number",
+        "title": {
+          "en": "Number set",
+          "nl": "Nummer ingesteld"
+        },
+        "titleFormatted": {
+          "en": "Number [[field]] set",
+          "nl": "Number [[field]] ingesteld"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Number",
+              "nl": "Nummer"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
             "title": {
               "en": "Value",
               "nl": "Waarde"
@@ -1639,6 +1675,22 @@
       "uiComponent": "sensor",
       "insights": true
     },
+    "devicecapabilities_dropdown": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [
+        {
+          "id": "ID",
+          "title": "Title"
+        }
+      ]
+    },
     "devicecapabilities_button": {
       "type": "boolean",
       "title": {
@@ -1774,6 +1826,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/alarm_smoke.svg"
+    },
+    "devicecapabilities_dropdown-alarm_smoke": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/alarm_smoke.svg"
     },
     "devicecapabilities_button-alarm_smoke": {
@@ -1922,6 +1986,18 @@
       "insights": true,
       "icon": "/assets/icons/alarm_water.svg"
     },
+    "devicecapabilities_dropdown-alarm_water": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/alarm_water.svg"
+    },
     "devicecapabilities_button-alarm_water": {
       "type": "boolean",
       "title": {
@@ -2066,6 +2142,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/battery.svg"
+    },
+    "devicecapabilities_dropdown-battery": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/battery.svg"
     },
     "devicecapabilities_button-battery": {
@@ -2214,6 +2302,18 @@
       "insights": true,
       "icon": "/assets/icons/circle.svg"
     },
+    "devicecapabilities_dropdown-circle": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/circle.svg"
+    },
     "devicecapabilities_button-circle": {
       "type": "boolean",
       "title": {
@@ -2358,6 +2458,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/device_capabilities.svg"
+    },
+    "devicecapabilities_dropdown-device_capabilities": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/device_capabilities.svg"
     },
     "devicecapabilities_button-device_capabilities": {
@@ -2506,6 +2618,18 @@
       "insights": true,
       "icon": "/assets/icons/measure_clouds.svg"
     },
+    "devicecapabilities_dropdown-measure_clouds": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/measure_clouds.svg"
+    },
     "devicecapabilities_button-measure_clouds": {
       "type": "boolean",
       "title": {
@@ -2650,6 +2774,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/measure_humidity.svg"
+    },
+    "devicecapabilities_dropdown-measure_humidity": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/measure_humidity.svg"
     },
     "devicecapabilities_button-measure_humidity": {
@@ -2798,6 +2934,18 @@
       "insights": true,
       "icon": "/assets/icons/measure_luminance.svg"
     },
+    "devicecapabilities_dropdown-measure_luminance": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/measure_luminance.svg"
+    },
     "devicecapabilities_button-measure_luminance": {
       "type": "boolean",
       "title": {
@@ -2942,6 +3090,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/measure_noise.svg"
+    },
+    "devicecapabilities_dropdown-measure_noise": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/measure_noise.svg"
     },
     "devicecapabilities_button-measure_noise": {
@@ -3090,6 +3250,18 @@
       "insights": true,
       "icon": "/assets/icons/measure_power.svg"
     },
+    "devicecapabilities_dropdown-measure_power": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/measure_power.svg"
+    },
     "devicecapabilities_button-measure_power": {
       "type": "boolean",
       "title": {
@@ -3234,6 +3406,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/measure_pressure.svg"
+    },
+    "devicecapabilities_dropdown-measure_pressure": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/measure_pressure.svg"
     },
     "devicecapabilities_button-measure_pressure": {
@@ -3382,6 +3566,18 @@
       "insights": true,
       "icon": "/assets/icons/measure_rain.svg"
     },
+    "devicecapabilities_dropdown-measure_rain": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/measure_rain.svg"
+    },
     "devicecapabilities_button-measure_rain": {
       "type": "boolean",
       "title": {
@@ -3526,6 +3722,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/measure_temperature.svg"
+    },
+    "devicecapabilities_dropdown-measure_temperature": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/measure_temperature.svg"
     },
     "devicecapabilities_button-measure_temperature": {
@@ -3674,6 +3882,18 @@
       "insights": true,
       "icon": "/assets/icons/measure_wind_angle.svg"
     },
+    "devicecapabilities_dropdown-measure_wind_angle": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/measure_wind_angle.svg"
+    },
     "devicecapabilities_button-measure_wind_angle": {
       "type": "boolean",
       "title": {
@@ -3818,6 +4038,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/measure_wind_strength.svg"
+    },
+    "devicecapabilities_dropdown-measure_wind_strength": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/measure_wind_strength.svg"
     },
     "devicecapabilities_button-measure_wind_strength": {
@@ -3966,6 +4198,18 @@
       "insights": true,
       "icon": "/assets/icons/meter_gas.svg"
     },
+    "devicecapabilities_dropdown-meter_gas": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/meter_gas.svg"
+    },
     "devicecapabilities_button-meter_gas": {
       "type": "boolean",
       "title": {
@@ -4110,6 +4354,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/meter_power.svg"
+    },
+    "devicecapabilities_dropdown-meter_power": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/meter_power.svg"
     },
     "devicecapabilities_button-meter_power": {
@@ -4258,6 +4514,18 @@
       "insights": true,
       "icon": "/assets/icons/meter_water.svg"
     },
+    "devicecapabilities_dropdown-meter_water": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/meter_water.svg"
+    },
     "devicecapabilities_button-meter_water": {
       "type": "boolean",
       "title": {
@@ -4402,6 +4670,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/meter_rain.svg"
+    },
+    "devicecapabilities_dropdown-meter_rain": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/meter_rain.svg"
     },
     "devicecapabilities_button-meter_rain": {
@@ -4550,6 +4830,18 @@
       "insights": true,
       "icon": "/assets/icons/music.svg"
     },
+    "devicecapabilities_dropdown-music": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/music.svg"
+    },
     "devicecapabilities_button-music": {
       "type": "boolean",
       "title": {
@@ -4694,6 +4986,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/onoff.svg"
+    },
+    "devicecapabilities_dropdown-onoff": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/onoff.svg"
     },
     "devicecapabilities_button-onoff": {
@@ -4842,6 +5146,18 @@
       "insights": true,
       "icon": "/assets/icons/sensor.svg"
     },
+    "devicecapabilities_dropdown-sensor": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/sensor.svg"
+    },
     "devicecapabilities_button-sensor": {
       "type": "boolean",
       "title": {
@@ -4986,6 +5302,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/speaker_next.svg"
+    },
+    "devicecapabilities_dropdown-speaker_next": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/speaker_next.svg"
     },
     "devicecapabilities_button-speaker_next": {
@@ -5134,6 +5462,18 @@
       "insights": true,
       "icon": "/assets/icons/speaker_play.svg"
     },
+    "devicecapabilities_dropdown-speaker_play": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/speaker_play.svg"
+    },
     "devicecapabilities_button-speaker_play": {
       "type": "boolean",
       "title": {
@@ -5278,6 +5618,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/speaker_prev.svg"
+    },
+    "devicecapabilities_dropdown-speaker_prev": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/speaker_prev.svg"
     },
     "devicecapabilities_button-speaker_prev": {
@@ -5426,6 +5778,18 @@
       "insights": true,
       "icon": "/assets/icons/virtual_device.svg"
     },
+    "devicecapabilities_dropdown-virtual_device": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/virtual_device.svg"
+    },
     "devicecapabilities_button-virtual_device": {
       "type": "boolean",
       "title": {
@@ -5570,6 +5934,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/volume_down.svg"
+    },
+    "devicecapabilities_dropdown-volume_down": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/volume_down.svg"
     },
     "devicecapabilities_button-volume_down": {
@@ -5718,6 +6094,18 @@
       "insights": true,
       "icon": "/assets/icons/volume_mute.svg"
     },
+    "devicecapabilities_dropdown-volume_mute": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/assets/icons/volume_mute.svg"
+    },
     "devicecapabilities_button-volume_mute": {
       "type": "boolean",
       "title": {
@@ -5862,6 +6250,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/assets/icons/volume_up.svg"
+    },
+    "devicecapabilities_dropdown-volume_up": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/assets/icons/volume_up.svg"
     },
     "devicecapabilities_button-volume_up": {
@@ -6010,6 +6410,18 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
     },
+    "devicecapabilities_dropdown-custom_1": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/userdata/customicons/custom_1.svg"
+    },
     "devicecapabilities_button-custom_1": {
       "type": "boolean",
       "title": {
@@ -6154,6 +6566,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/userdata/customicons/custom_2.svg"
+    },
+    "devicecapabilities_dropdown-custom_2": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/userdata/customicons/custom_2.svg"
     },
     "devicecapabilities_button-custom_2": {
@@ -6302,6 +6726,18 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
     },
+    "devicecapabilities_dropdown-custom_3": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/userdata/customicons/custom_3.svg"
+    },
     "devicecapabilities_button-custom_3": {
       "type": "boolean",
       "title": {
@@ -6446,6 +6882,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/userdata/customicons/custom_4.svg"
+    },
+    "devicecapabilities_dropdown-custom_4": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/userdata/customicons/custom_4.svg"
     },
     "devicecapabilities_button-custom_4": {
@@ -6594,6 +7042,18 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
     },
+    "devicecapabilities_dropdown-custom_5": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/userdata/customicons/custom_5.svg"
+    },
     "devicecapabilities_button-custom_5": {
       "type": "boolean",
       "title": {
@@ -6738,6 +7198,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/userdata/customicons/custom_6.svg"
+    },
+    "devicecapabilities_dropdown-custom_6": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/userdata/customicons/custom_6.svg"
     },
     "devicecapabilities_button-custom_6": {
@@ -6886,6 +7358,18 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
     },
+    "devicecapabilities_dropdown-custom_7": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/userdata/customicons/custom_7.svg"
+    },
     "devicecapabilities_button-custom_7": {
       "type": "boolean",
       "title": {
@@ -7030,6 +7514,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/userdata/customicons/custom_8.svg"
+    },
+    "devicecapabilities_dropdown-custom_8": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/userdata/customicons/custom_8.svg"
     },
     "devicecapabilities_button-custom_8": {
@@ -7178,6 +7674,18 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
     },
+    "devicecapabilities_dropdown-custom_9": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
+      "icon": "/userdata/customicons/custom_9.svg"
+    },
     "devicecapabilities_button-custom_9": {
       "type": "boolean",
       "title": {
@@ -7322,6 +7830,18 @@
       "setable": true,
       "uiComponent": "sensor",
       "insights": true,
+      "icon": "/userdata/customicons/custom_10.svg"
+    },
+    "devicecapabilities_dropdown-custom_10": {
+      "type": "enum",
+      "title": {
+        "en": "Select list"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "insights": true,
+      "values": [],
       "icon": "/userdata/customicons/custom_10.svg"
     },
     "devicecapabilities_button-custom_10": {
@@ -7907,6 +8427,39 @@
               "value": "Text 1"
             },
             {
+              "id": "text1ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text1Icon",
               "type": "dropdown",
               "label": {
@@ -8176,6 +8729,39 @@
               "hint": {
                 "en": "The name for textfield 2"
               },
+              "value": ""
+            },
+            {
+              "id": "text2ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
               "value": ""
             },
             {
@@ -8451,6 +9037,39 @@
               "value": ""
             },
             {
+              "id": "text3ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text3Icon",
               "type": "dropdown",
               "label": {
@@ -8720,6 +9339,39 @@
               "hint": {
                 "en": "The name for textfield 4"
               },
+              "value": ""
+            },
+            {
+              "id": "text4ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
               "value": ""
             },
             {
@@ -8995,6 +9647,39 @@
               "value": ""
             },
             {
+              "id": "text5ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text5Icon",
               "type": "dropdown",
               "label": {
@@ -9264,6 +9949,39 @@
               "hint": {
                 "en": "The name for textfield 6"
               },
+              "value": ""
+            },
+            {
+              "id": "text6ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
               "value": ""
             },
             {
@@ -9539,6 +10257,39 @@
               "value": ""
             },
             {
+              "id": "text7ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text7Icon",
               "type": "dropdown",
               "label": {
@@ -9808,6 +10559,39 @@
               "hint": {
                 "en": "The name for textfield 8"
               },
+              "value": ""
+            },
+            {
+              "id": "text8ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
               "value": ""
             },
             {
@@ -10083,6 +10867,39 @@
               "value": ""
             },
             {
+              "id": "text9ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text9Icon",
               "type": "dropdown",
               "label": {
@@ -10355,6 +11172,39 @@
               "value": ""
             },
             {
+              "id": "text10ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the text must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+              ],
+              "value": ""
+            },
+            {
               "id": "text10Icon",
               "type": "dropdown",
               "label": {
@@ -10612,6 +11462,22 @@
         {
           "type": "group",
           "label": {
+            "en": "Numbers"
+          },
+          "children": [
+            {
+              "id": "labelNumber1",
+              "type": "label",
+              "label": {
+                "en": " "
+              },
+              "value": "Number 1 is special. Number 1 Show As is also responsible for additional Flow Cards."
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
             "en": "Numberfield 1"
           },
           "children": [
@@ -10625,6 +11491,86 @@
                 "en": "The name for numberfield 1"
               },
               "value": "Number 1"
+            },
+            {
+              "id": "number1ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number1CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number1Icon",
@@ -10897,12 +11843,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number1Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number1Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number1PreventInsights",
@@ -10933,6 +11901,86 @@
                 "en": "The name for numberfield 2"
               },
               "value": ""
+            },
+            {
+              "id": "number2ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number2CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number2Icon",
@@ -11205,12 +12253,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number2Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number2Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number2PreventInsights",
@@ -11241,6 +12311,86 @@
                 "en": "The name for numberfield 3"
               },
               "value": ""
+            },
+            {
+              "id": "number3ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number3CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number3Icon",
@@ -11513,12 +12663,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number3Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number3Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number3PreventInsights",
@@ -11549,6 +12721,86 @@
                 "en": "The name for numberfield 4"
               },
               "value": ""
+            },
+            {
+              "id": "number4ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number4CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number4Icon",
@@ -11821,12 +13073,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number4Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number4Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number4PreventInsights",
@@ -11857,6 +13131,86 @@
                 "en": "The name for numberfield 5"
               },
               "value": ""
+            },
+            {
+              "id": "number5ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number5CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number5Icon",
@@ -12129,12 +13483,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number5Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number5Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number5PreventInsights",
@@ -12165,6 +13541,86 @@
                 "en": "The name for numberfield 6"
               },
               "value": ""
+            },
+            {
+              "id": "number6ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number6CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number6Icon",
@@ -12437,12 +13893,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number6Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number6Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number6PreventInsights",
@@ -12473,6 +13951,86 @@
                 "en": "The name for numberfield 7"
               },
               "value": ""
+            },
+            {
+              "id": "number7ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number7CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number7Icon",
@@ -12745,12 +14303,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number7Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number7Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number7PreventInsights",
@@ -12781,6 +14361,86 @@
                 "en": "The name for numberfield 8"
               },
               "value": ""
+            },
+            {
+              "id": "number8ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number8CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number8Icon",
@@ -13053,12 +14713,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number8Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number8Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number8PreventInsights",
@@ -13089,6 +14771,86 @@
                 "en": "The name for numberfield 9"
               },
               "value": ""
+            },
+            {
+              "id": "number9ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number9CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number9Icon",
@@ -13361,12 +15123,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number9Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number9Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number9PreventInsights",
@@ -13397,6 +15181,86 @@
                 "en": "The name for numberfield 10"
               },
               "value": ""
+            },
+            {
+              "id": "number10ShowAs",
+              "type": "dropdown",
+              "label": {
+                "en": "Show as"
+              },
+              "hint": {
+                "en": "Select how the number must be displayed."
+              },
+              "values": [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                }
+              ],
+              "value": ""
+            },
+            {
+              "id": "number10CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "number10Icon",
@@ -13669,12 +15533,34 @@
                 "en": "Decimals"
               },
               "hint": {
-                "en": "The number of decimals to show."
+                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value."
               },
-              "value": 0,
-              "min": 0,
+              "value": -1,
+              "min": -1,
               "max": 10,
               "step": 1
+            },
+            {
+              "id": "number10Min",
+              "type": "number",
+              "label": {
+                "en": "Min"
+              },
+              "hint": {
+                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
+            },
+            {
+              "id": "number10Max",
+              "type": "number",
+              "label": {
+                "en": "Max"
+              },
+              "hint": {
+                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value."
+              },
+              "value": -1
             },
             {
               "id": "number10PreventInsights",
@@ -13734,6 +15620,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "boolean1CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "boolean1Icon",
@@ -14070,6 +15967,17 @@
               "value": ""
             },
             {
+              "id": "boolean2CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
+            },
+            {
               "id": "boolean2Icon",
               "type": "dropdown",
               "label": {
@@ -14402,6 +16310,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "boolean3CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "boolean3Icon",
@@ -14738,6 +16657,17 @@
               "value": ""
             },
             {
+              "id": "boolean4CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
+            },
+            {
               "id": "boolean4Icon",
               "type": "dropdown",
               "label": {
@@ -15070,6 +17000,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "boolean5CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "boolean5Icon",
@@ -15406,6 +17347,17 @@
               "value": ""
             },
             {
+              "id": "boolean6CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
+            },
+            {
               "id": "boolean6Icon",
               "type": "dropdown",
               "label": {
@@ -15738,6 +17690,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "boolean7CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "boolean7Icon",
@@ -16074,6 +18037,17 @@
               "value": ""
             },
             {
+              "id": "boolean8CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
+            },
+            {
               "id": "boolean8Icon",
               "type": "dropdown",
               "label": {
@@ -16408,6 +18382,17 @@
               "value": ""
             },
             {
+              "id": "boolean9CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
+            },
+            {
               "id": "boolean9Icon",
               "type": "dropdown",
               "label": {
@@ -16740,6 +18725,17 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "boolean10CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability."
+              },
+              "value": false
             },
             {
               "id": "boolean10Icon",
@@ -17089,7 +19085,7 @@
                   "label": "On/Off"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -17099,9 +19095,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button1CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": true
             },
             {
               "id": "button1Disabled",
@@ -17160,7 +19199,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -17170,9 +19209,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button2CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button2Icon",
@@ -17495,7 +19577,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -17505,9 +19587,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button3CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button3Icon",
@@ -17830,7 +19955,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -17840,9 +19965,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button4CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button4Icon",
@@ -18165,7 +20333,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -18175,9 +20343,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button5CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button5Icon",
@@ -18500,7 +20711,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -18510,9 +20721,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button6CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button6Icon",
@@ -18835,7 +21089,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -18845,9 +21099,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button7CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button7Icon",
@@ -19170,7 +21467,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -19180,9 +21477,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button8CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button8Icon",
@@ -19505,7 +21845,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -19515,9 +21855,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button9CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button9Icon",
@@ -19840,7 +22223,7 @@
                   "label": "On/Off (Button Tab)"
                 },
                 {
-                  "id": "lock",
+                  "id": "locked",
                   "label": "Lock"
                 },
                 {
@@ -19850,9 +22233,52 @@
                 {
                   "id": "windowcoverings_closed",
                   "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "button10CreateFlowCards",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Flow Cards *"
+              },
+              "hint": {
+                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next."
+              },
+              "value": false
             },
             {
               "id": "button10Icon",
