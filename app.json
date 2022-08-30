@@ -19097,12 +19097,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -19211,12 +19223,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -19589,12 +19613,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -19967,12 +20003,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -20345,12 +20393,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -20723,12 +20783,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -21101,12 +21173,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -21479,12 +21563,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -21857,12 +21953,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
@@ -22235,12 +22343,24 @@
                   "label": "Windowcoverings Closed"
                 },
                 {
-                  "id": "volume_mute",
-                  "label": "Volume muted"
-                },
-                {
                   "id": "speaker_playing",
                   "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
                 },
                 {
                   "id": "volume_up",
