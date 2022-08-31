@@ -1,4 +1,7 @@
-TEST
+Welcome to Device capabilities.
+
+If you want to help with translation, please see the .translation folder.
+_________________________________________________________________________
 
 Set capabilities of device's per zone, for example open or close all curtains in a certain zone, including (or not) the subzones, of a certain brand or devicetype.
 Also listens for capabilities of which there are no triggers from the app developer and gives you tokens with the User and Client (App) which activated/changed the capability value.
