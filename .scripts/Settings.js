@@ -42,7 +42,37 @@ var icons = '              "values": [ \r\n' +
 '                {"id": "custom_7", "label": { "en": "custom_7" } }, \r\n' +
 '                {"id": "custom_8", "label": { "en": "custom_8" } }, \r\n' +
 '                {"id": "custom_9", "label": { "en": "custom_9" } }, \r\n' +
-'                {"id": "custom_10", "label": { "en": "custom_10" } } \r\n' +
+'                {"id": "custom_10", "label": { "en": "custom_10" } }, \r\n' +
+'                {"id": "custom_11", "label": { "en": "custom_11" } }, \r\n' +
+'                {"id": "custom_12", "label": { "en": "custom_12" } }, \r\n' +
+'                {"id": "custom_13", "label": { "en": "custom_13" } }, \r\n' +
+'                {"id": "custom_14", "label": { "en": "custom_14" } }, \r\n' +
+'                {"id": "custom_15", "label": { "en": "custom_15" } }, \r\n' +
+'                {"id": "custom_16", "label": { "en": "custom_16" } }, \r\n' +
+'                {"id": "custom_17", "label": { "en": "custom_17" } }, \r\n' +
+'                {"id": "custom_18", "label": { "en": "custom_18" } }, \r\n' +
+'                {"id": "custom_19", "label": { "en": "custom_19" } }, \r\n' +
+'                {"id": "custom_20", "label": { "en": "custom_20" } }, \r\n' +
+'                {"id": "custom_21", "label": { "en": "custom_21" } }, \r\n' +
+'                {"id": "custom_22", "label": { "en": "custom_22" } }, \r\n' +
+'                {"id": "custom_23", "label": { "en": "custom_23" } }, \r\n' +
+'                {"id": "custom_24", "label": { "en": "custom_24" } }, \r\n' +
+'                {"id": "custom_25", "label": { "en": "custom_25" } }, \r\n' +
+'                {"id": "custom_26", "label": { "en": "custom_26" } }, \r\n' +
+'                {"id": "custom_27", "label": { "en": "custom_27" } }, \r\n' +
+'                {"id": "custom_28", "label": { "en": "custom_28" } }, \r\n' +
+'                {"id": "custom_29", "label": { "en": "custom_29" } }, \r\n' +
+'                {"id": "custom_30", "label": { "en": "custom_30" } }, \r\n' +
+'                {"id": "custom_31", "label": { "en": "custom_31" } }, \r\n' +
+'                {"id": "custom_32", "label": { "en": "custom_32" } }, \r\n' +
+'                {"id": "custom_33", "label": { "en": "custom_33" } }, \r\n' +
+'                {"id": "custom_34", "label": { "en": "custom_34" } }, \r\n' +
+'                {"id": "custom_35", "label": { "en": "custom_35" } }, \r\n' +
+'                {"id": "custom_36", "label": { "en": "custom_36" } }, \r\n' +
+'                {"id": "custom_37", "label": { "en": "custom_37" } }, \r\n' +
+'                {"id": "custom_38", "label": { "en": "custom_38" } }, \r\n' +
+'                {"id": "custom_39", "label": { "en": "custom_39" } }, \r\n' +
+'                {"id": "custom_40", "label": { "en": "custom_40" } } \r\n' +
 '              ], \r\n' ;
 
 

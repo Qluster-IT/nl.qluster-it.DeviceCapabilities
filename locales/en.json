@@ -38,7 +38,7 @@
 	"virtualdevicesettings":{
 		"labelGeneral":"Changing the properties Icon, \"Show as\" or \"Create Flow Cards\" will causes Tag IDs to be changed and thus may break flows.",
 		"labelAlso":"Enabling all fields at once and pressing save, might be hard for Homey and could take a while.",
-		"labelCustomIcons":"The 10 custom icons can be set through the App Settings.",
+		"labelCustomIcons":"The custom icons can be set through the App Settings.",
 		"labelCamerasRestart":"After removing a camera (by clearing the name or url), the Device Capabilities App requires a restart to remove the camera-image from the virtual device."
 	},
 	"pair": {

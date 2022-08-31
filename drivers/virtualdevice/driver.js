@@ -14,6 +14,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async onInit() {
         this.log('VirtualDeviceDriver onInit');
+        //return null;
 
 		this.log("Capabilities", Object.keys(this.homey.app.manifest.capabilities).length);
         
@@ -347,7 +348,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             return ['alarm_smoke', 
             'alarm_water',
             'battery', 
-            'circle', 
+            'circle',
+            'game',
             'device_capabilities',
             'measure_clouds',
             'measure_humidity',
@@ -369,6 +371,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             'speaker_next',
             'speaker_play',
             'speaker_prev',
+            'tv',
             'virtual_device',
             'volume_down',
             'volume_mute',

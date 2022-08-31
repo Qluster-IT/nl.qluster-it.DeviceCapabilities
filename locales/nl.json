@@ -35,7 +35,7 @@
 	"virtualdevicesettings":{
 		"labelGeneral":"Het wijzigen van de eigenschappen Pictogram, \"Toon als\" of \"Creëer flowkaarten\" zorgt ervoor dat tag-ID's worden gewijzigd en kan dus flows breken.",
 		"labelAlso":"Alle velden tegelijk inschakelen en op opslaan drukken, kan moeilijk zijn voor Homey en even duren.",
-		"labelCustomIcons":"De 10 aangepaste pictogrammen kunnen worden ingesteld via de app-instellingen.",
+		"labelCustomIcons":"De aanpasbare pictogrammen kunnen worden ingesteld via de app-instellingen.",
 		"labelCamerasRestart":"Na het verwijderen van een camera (door de naam of url te wissen), is het vereist de Apparaat Mogelijkheden App test herstarten om het camerabeeld van dit virtuele apparaat te verwijderen."
 
 	},

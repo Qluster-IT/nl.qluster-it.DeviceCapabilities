@@ -1,3 +1,5 @@
+TEST
+
 Set capabilities of device's per zone, for example open or close all curtains in a certain zone, including (or not) the subzones, of a certain brand or devicetype.
 Also listens for capabilities of which there are no triggers from the app developer and gives you tokens with the User and Client (App) which activated/changed the capability value.
 And a condition able to set a capability and wait for a specific "error".

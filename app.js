@@ -53,6 +53,7 @@ class DeviceSetter extends Homey.App {
 	onInit() {
 		DeviceSetter.Current = this;        
         this.VirtualDevices = {};
+		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
 		

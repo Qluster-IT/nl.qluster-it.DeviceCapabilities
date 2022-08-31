@@ -1,0 +1,16 @@
+"new":""
+
+
+
+app.json
+______________________________________
+In the app.json, search for all "new":"" including the four double quote's.
+Replace the new with the languagecode and place the value behind it.
+
+Make sure that after you are done, there is no more "new" language tags
+
+
+<en>.json
+______________________________________
+In the en.json, replace all texts into the new text and change the name of the file to the languagecode.
+

@@ -50,6 +50,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					await this.setSettings(newSettings);		
 					this.Settings = await this.getSettings();
 					this.setStoreValue('Version', this.homey.app.manifest.version);
+					await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
 				}
 		}
 
@@ -140,7 +141,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		
 		let cls = this.getClass();
 		if(cls!=settings.cls) await this.setClass(settings.cls);
-		if (this.hasCapability('devicecapabilities_starttext')) await this.removeCapability('devicecapabilities_starttext');
+		if (this.hasCapability('devicecapabilities_starttext') && changedKeys && changedKeys.length>0) await this.removeCapability('devicecapabilities_starttext');
 		//let b = JSON.parse(JSON.stringify(settings));
 		//b.number1Max = 15;
 		//this.setSettings({number1Max:15});
