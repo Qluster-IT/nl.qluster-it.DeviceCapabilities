@@ -3,6 +3,23 @@ Welcome to Device capabilities.
 If you want to help with translation, please see the .translation folder.
 _________________________________________________________________________
 
+New: Fully Customisable Virtual Device!
+See the topic for examples.
+
+Create a device and configure it yourself:
+* Textual Status on Device Tile in Mobile App setable through flows.
+* Custom uploadable icons can be set as capability icon.
+* Have the Device Tile function as a Pushbutton (staying light/dark after clicked) but set Dark/Light on the Tile as status from a flow.
+* 10 Numbers, Texts, Yes/No's, Buttons and Cameras can be add_devices.
+* Hide device tile button from the device itself.
+
+And 
+
+A flow to retrieve the User and Client from the Insights from x minutes ago (can be zero for now).
+Example: Retrieve the value from LivingRoom for Temperature from 30 minutes ago.
+
+Or
+
 Set capabilities of device's per zone, for example open or close all curtains in a certain zone, including (or not) the subzones, of a certain brand or devicetype.
 Also listens for capabilities of which there are no triggers from the app developer and gives you tokens with the User and Client (App) which activated/changed the capability value.
 And a condition able to set a capability and wait for a specific "error".
