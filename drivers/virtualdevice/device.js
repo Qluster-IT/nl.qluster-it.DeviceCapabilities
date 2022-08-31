@@ -158,7 +158,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				let oldValue;
 				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
 				
-				let icon = (settings[type + i + 'Icon'] || '').length > 0 ? '-' + settings[type + i + 'Icon'] : '';
+				let icon = (settings[type + i + 'Icon'] || '').trim().length > 0 ? '-' + settings[type + i + 'Icon'] : '';
 				let disabled = settings[type + i + 'Disabled'] === true;
 				let checked = settings[type + i + 'Checked']===true;
 				

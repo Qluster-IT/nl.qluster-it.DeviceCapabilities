@@ -44,6 +44,9 @@
     height: 125px;
     padding: 20px;
   }
+  .category {
+    margin-top:40px;
+  }
 
 </style>
 <script>
@@ -59,7 +62,7 @@
       new Vue({
             el: '#icon_list',
             data: {
-                icons: result,
+                iconCategories: result,
             },
             mounted() {
                 Homey.hideLoadingOverlay();
@@ -126,11 +129,14 @@
 <div style="margin-top:10px;">
   <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
 
-  <ul id="icon_list">    
-        <div v-for="(item, index) in icons" :key="index" v-on:click='setIcon(item)' class="icon tile">
-          <label for="icon" class="icon-wrap">
-            <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item + '.svg'}"></span>
-          </label>
+  <ul id="icon_list">
+        <div v-for="(cat, index) in iconCategories" :key="index" class="category">
+          <h1  class="category-title">{{cat.title}}</h1>
+          <div v-for="(item, index) in cat.icons" :key="index" v-on:click='setIcon(item)' class="icon tile">
+            <label for="icon" class="icon-wrap">
+              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item + '.svg'}"></span>
+            </label>
+          </div>
         </div>
   </ul> 
 </div> 

@@ -253,32 +253,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
                         ret.push({'id':actiontype + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
-                    // let capsFound;                
-                    // let searchs = ['.'+actiontype+i];
-                    // if(actiontype=='button'){
-                    //     if(i===1) searchs = ['.'+actiontype+i, 'onoff', 'button', 'locked', 'garagedoor_closed', 'windowcoverings_closed','volume_mute', 'speaker_playing', 
-                    //         'volume_up', 'volume_down', 'channel_up', 'channel_down', 'windowcoverings_tilt_up', 'windowcoverings_tilt_down'];
-                    // }
-                    // if(actiontype=='number'){
-                    //     if(i===1) searchs = ['.'+actiontype+i, 'target_temperature', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 
-                    //         'measure_battery', 'volume_set', 'windowcoverings_tilt_set', 'windowcoverings_set', 'speaker_duration', 'speaker_position'];
-                    // }
-                    // var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
-            
-                    // for(var j=0;j<searchs.length;j++){
-                    //     if((capsFound =_.filter(caps, c=> c.endsWith(searchs[j]))).length) {
-                    //         for (let k = 0; k < capsFound.length; k++) {
-                    //             const _cap = capsFound[k];                                
-                    //             var id = actiontype+i;
-                    //             let text = (typeText);//+' ' + i);
-                    //             if(actiontype=='number' && _cap.startsWith('measure_temperature.')){
-                    //                 id = _cap;
-                    //                 text += " (Second)";
-                    //             }
-                    //             ret.push({'id':id, 'name':args.device.getCapabilityOptions(_cap).title || text, description:text});
-                    //         }
-                    //     }
-                    // }
                     
                 }
             }
@@ -344,39 +318,169 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             device.icon = '/icon-default.svg';
         });
 
-        session.setHandler('list_icons', async (data) => {            
-            return ['alarm_smoke', 
-            'alarm_water',
-            'battery', 
-            'circle',
-            'game',
-            'device_capabilities',
-            'measure_clouds',
-            'measure_humidity',
-            'measure_luminance',
-            'measure_noise', 
-            'measure_power',
-            'measure_pressure',
-            'measure_rain',
-            'measure_temperature',
-            'measure_wind_angle',
-            'measure_wind_strength',
-            'meter_gas', 
-            'meter_power', 
-            'meter_water',
-            'meter_rain',
-            'music',
-            'onoff',
-            'sensor',
-            'speaker_next',
-            'speaker_play',
-            'speaker_prev',
-            'tv',
-            'virtual_device',
-            'volume_down',
-            'volume_mute',
-            'volume_up'
-        ];
+        session.setHandler('list_icons', async (data) => {
+            return [
+                {
+                    title:'Alarms',
+                    icons:[   
+                        'alarm_smoke', 
+                        'alarm_water',
+                        ]
+                },
+                {
+                    title:'Devices',
+                    icons:[   
+                        'battery',
+                        'circle',
+                        'device_capabilities', 
+                        'game',  
+                        'onoff',
+                        'settings',
+                        'tv',
+                        'virtual_device',
+                        ]
+                },
+                {
+                    title:'Gauges & Meters',
+                    icons:[   
+                        'measure_noise', 
+                        'measure_pressure',
+                        'meter_gas', 
+                        'meter_power',
+                        'sensor'
+                        ]
+                },
+                {
+                title:'Media',
+                icons:[
+                    'music',
+                    'speaker_next',
+                    'speaker_play',
+                    'speaker_prev',
+                    'volume_down',
+                    'volume_mute',
+                    'volume_up'
+                    ]
+                },                
+                {
+                    title:'Buttons',
+                    icons:[
+                        'button',
+                        'devices',
+                        'energy',
+                        'insights',
+                        'home',
+                        'homeyscript',
+                        'search',
+                        'ternary',
+                        'toggle'
+                    ]
+                },                
+                {
+                    title:'Flows',
+                    icons:[
+                        'advanced-flow',
+                        'flow-bold',
+                        'logic',
+                        'tag'
+                    ]
+                },
+                {
+                    title:'Other',
+                    icons:[   
+                        'measure_clouds',
+                        'measure_humidity',
+                        'measure_luminance',
+                        'measure_power',
+                        'measure_rain',
+                        'measure_temperature',
+                        'measure_wind_angle',
+                        'measure_wind_strength',
+                        'heart-outline',
+                        'bell',
+                        'moon-round'
+                        ]
+                },
+                {
+                    title:'Custom',
+                    icons:[
+                        '../../userdata/customicons/custom_1',
+                        '../../userdata/customicons/custom_2',
+                        '../../userdata/customicons/custom_3',
+                        '../../userdata/customicons/custom_4',
+                        '../../userdata/customicons/custom_5',
+                        '../../userdata/customicons/custom_6',
+                        '../../userdata/customicons/custom_7',
+                        '../../userdata/customicons/custom_8',
+                        '../../userdata/customicons/custom_9',
+                        '../../userdata/customicons/custom_10',
+                        '../../userdata/customicons/custom_11',
+                        '../../userdata/customicons/custom_12',
+                        '../../userdata/customicons/custom_13',
+                        '../../userdata/customicons/custom_14',
+                        '../../userdata/customicons/custom_15',
+                        '../../userdata/customicons/custom_16',
+                        '../../userdata/customicons/custom_17',
+                        '../../userdata/customicons/custom_18',
+                        '../../userdata/customicons/custom_19',
+                        '../../userdata/customicons/custom_20',
+                        '../../userdata/customicons/custom_21',
+                        '../../userdata/customicons/custom_22',
+                        '../../userdata/customicons/custom_23',
+                        '../../userdata/customicons/custom_24',
+                        '../../userdata/customicons/custom_25',
+                        '../../userdata/customicons/custom_26',
+                        '../../userdata/customicons/custom_27',
+                        '../../userdata/customicons/custom_28',
+                        '../../userdata/customicons/custom_29',
+                        '../../userdata/customicons/custom_30',
+                        '../../userdata/customicons/custom_31',
+                        '../../userdata/customicons/custom_32',
+                        '../../userdata/customicons/custom_33',
+                        '../../userdata/customicons/custom_34',
+                        '../../userdata/customicons/custom_35',
+                        '../../userdata/customicons/custom_36',
+                        '../../userdata/customicons/custom_37',
+                        '../../userdata/customicons/custom_38',
+                        '../../userdata/customicons/custom_39',
+                        '../../userdata/customicons/custom_40'
+                    ]
+                }
+
+            ];
+
+        //     return ['alarm_smoke', 
+        //     'alarm_water',
+        //     'battery', 
+        //     'circle',
+        //     'game',
+        //     'device_capabilities',
+        //     'measure_clouds',
+        //     'measure_humidity',
+        //     'measure_luminance',
+        //     'measure_noise', 
+        //     'measure_power',
+        //     'measure_pressure',
+        //     'measure_rain',
+        //     'measure_temperature',
+        //     'measure_wind_angle',
+        //     'measure_wind_strength',
+        //     'meter_gas', 
+        //     'meter_power', 
+        //     'meter_water',
+        //     'meter_rain',
+        //     'music',
+        //     'onoff',
+        //     'sensor',
+        //     'speaker_next',
+        //     'speaker_play',
+        //     'speaker_prev',
+        //     'tv',
+        //     'virtual_device',
+        //     'volume_down',
+        //     'volume_mute',
+        //     'volume_up'
+        // ];
 
         });
 
