@@ -34,5 +34,101 @@
   },
   "1.0.4": {
     "en": "Improved flowcards"
+  },
+  "1.1.0": {
+    "en": "Improved tokens (including User and Client/App) for watch/listener"
+  },
+  "1.2.0": {
+    "en": "New: Retrieve insight/log from a capability from a device"
+  },
+  "1.2.1": {
+    "en": "Improved results for: Retrieve insight/log from a capability from a device"
+  },
+  "1.3.1": {
+    "en": "Added Mass Set cards for number, enum and free-from json; also improved mass execution speed"
+  },
+  "1.3.3" : {
+    "en" : "Reduced Memory Usages and Improved Speed in Flow Editor"
+  },
+  "1.3.4" : {
+    "en" : "Bugfixed"
+  },
+  "1.3.5" : {
+    "en" : "Changed newly added Deviceclass to DeviceClass for future development"
+  },
+  "1.3.6" : {
+    "en" : "Improved Store tags"
+  },
+  "1.4.0" : {
+    "en" : "Added an App has started card (When)"
+  },
+  "1.4.1" : {
+    "en" : "Added an App has started card (When)"
+  },
+  "1.4.2" : {
+    "en" : "Added condition Is App Running and improved coding for performance"
+  },
+  "1.4.5" : {
+    "en" : "Added optional Brand and Device Type to Set [capability] per [zone] cards and improved hints"
+  },
+  "1.5.1" : {
+    "en" : "Added Virtual device with text, number and yes/no capability which you can set through flowcards"
+  },
+  "1.5.2" : {
+    "en" : "Added button capability to Virtual devices, so you can use it as trigger for a flow"
+  },
+  "1.5.4" : {
+    "en" : "Added flowcard to set text in virtual button icon indicator"
+  },
+  "1.9.2" : {
+    "en" : "Testing rebuild of Virtual Device"
+  },
+  "1.9.3" : {
+    "en" : "Added Unactivate, activate (flow cards), warning and unsetwarning cards (device cards)"
+  },
+  "1.9.62" : {
+    "en" : "Bugfixed"
+  },
+  "1.9.63" : {
+    "en" : "Great speed improvements on backside."
+  },
+  "1.9.73" : {
+    "en" : "All fields 10 times"
+  },
+  "1.9.74" : {
+    "en" : "Bugfixed"
+  },
+  "1.9.75" : {
+    "en" : "Added camera and many more"
+  },
+  "1.9.76" : {
+    "en" : "Added image upload in settings for icons"
+  },
+  "1.9.78" : {
+    "en" : "Bugfixed button Show as dropdown and others"
+  },
+  "1.9.79" : {
+    "en" : "Added custom icon to Virtual Devices"
+  },
+  "1.9.81" : {
+    "en" : "Added custom icon to settings for capabilities"
+  },
+  "1.9.84" : {
+    "en" : "Bugfixed"
+  },
+  "1.9.85" : {
+    "en" : "Buttons are finished"
+  },
+  "1.9.87" : {
+    "en" : "Bugfixed"
+  },
+  "1.9.9" : {
+    "en" : "Added Set Field to Expression card and Javascript Functions to Settings page"
+  },
+  "1.9.91" : {
+    "en" : "Added Number Show as, and More Button Show as options"
+  },
+  "1.9.989" : {
+    "en" : "Added Customisable Virtual Device"
   }
 }

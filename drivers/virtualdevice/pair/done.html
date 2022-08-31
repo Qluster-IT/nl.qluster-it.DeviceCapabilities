@@ -1,0 +1,47 @@
+<div class="hy-view visible" data-id="icons"><style>
+    [v-cloak] {
+        display: none;
+    }
+
+
+    #icons-list {
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: center;
+        background-color:white;
+    }
+    .icon.tile {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        margin: 2.5px;
+    }
+
+    .icon.tile .icon.bg {
+        width: 5em;
+        height: 5em;
+    }
+
+
+</style>
+<script>
+
+    Homey.showLoadingOverlay();
+    Homey.setTitle( Homey.__("pair.done.title") );
+
+    $('#hy-overlay-loading-message').html( Homey.__("pair.done.creating_device") );
+
+    Homey.emit('done', null, function (err, device) {
+        Homey.createDevice(device, (err, res) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        Homey.done();
+        });
+    });
+</script>
+
+<div id="all-icons"  data-i18n="pair.done.done">Done!</div>

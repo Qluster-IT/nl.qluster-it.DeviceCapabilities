@@ -1,0 +1,688 @@
+<!doctype html>
+<html>
+
+<head>
+
+	<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+	<script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
+	<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
+	<script type="text/javascript" src="smart-table.min.js"></script>
+
+	<style type="text/css">
+		input {
+			border-radius: 3px;
+		}
+
+		#icons {
+			list-style: none;
+			margin-left: 0;
+		}
+
+		.icon {
+			position: relative;
+			border-bottom: 1px solid #eee;
+			height: 60px;
+		}
+
+		.icon:last-child {
+			border-bottom: none;
+		}
+
+		.icon .name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.icon .name {
+			position: absolute;
+			left: 50px;
+			top: 10px;
+			bottom: 10px;
+			font-size: 14px;
+			line-height: 40px;
+			font-weight: 400;
+		}
+
+		.icon input.name {
+			top: 15px;
+			bottom: 15px;
+			line-height: 20px;
+		}
+
+		.icon .buttons {
+			position: absolute;
+			right: 10px;
+			top: 16px;
+		}
+
+		.icon button {
+			float: left;
+			box-sizing: border-box;
+			margin-left: 5px;
+		}
+
+		.icon .image {
+			width: 30px;
+			height: 30px;
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center center;
+			-webkit-mask-repeat: no-repeat;
+			background: #333;
+			position: absolute;
+			top: 16px;
+			left: 10px;
+		}
+
+
+/* 
+
+		#devices {
+			list-style: none;
+			margin-left: 0;
+		}
+
+		.device {
+			position: relative;
+			border-bottom: 1px solid #eee;
+			height: 60px;
+		}
+
+		.device:last-child {
+			border-bottom: none;
+		}
+
+		.device .name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.device .name {
+			position: absolute;
+			left: 50px;
+			top: 10px;
+			bottom: 10px;
+			font-size: 14px;
+			line-height: 40px;
+			font-weight: 400;
+		}
+
+		.device input.name {
+			top: 15px;
+			bottom: 15px;
+			line-height: 20px;
+		}
+
+		.device .buttons {
+			position: absolute;
+			right: 10px;
+			top: 16px;
+		}
+
+		.device button {
+			float: left;
+			box-sizing: border-box;
+			margin-left: 5px;
+		}
+
+		.device .image {
+			width: 30px;
+			height: 30px;
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center center;
+			-webkit-mask-repeat: no-repeat;
+			background: #333;
+			position: absolute;
+			top: 16px;
+			left: 10px;
+		}
+
+		#editdevice {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		} */
+
+
+		
+
+		#customicons {
+			list-style: none;
+			margin-left: 0;
+		}
+
+		.customicon {
+			position: relative;
+			border-bottom: 1px solid #eee;
+			height: 60px;
+		}
+
+		.customicon:last-child {
+			border-bottom: none;
+		}
+
+		.customicon .name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.customicon .name {
+			position: absolute;
+			left: 50px;
+			top: 10px;
+			bottom: 10px;
+			font-size: 14px;
+			line-height: 40px;
+			font-weight: 400;
+		}
+
+		.customicon input.name {
+			top: 15px;
+			bottom: 15px;
+			line-height: 20px;
+		}
+
+		.customicon .buttons {
+			position: absolute;
+			right: 10px;
+			top: 16px;
+		}
+
+		.customicon button {
+			float: left;
+			box-sizing: border-box;
+			margin-left: 5px;
+		}
+
+		.customicon .image {
+			width: 30px;
+			height: 30px;
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center center;
+			-webkit-mask-repeat: no-repeat;
+			background: #333;
+			position: absolute;
+			top: 16px;
+			left: 10px;
+		}
+
+		#editcustomicon {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+		#preview {
+			width: 50px;
+			height: 50px;
+		}
+		.functions-table button {
+			padding-left:5px!important;
+			padding-right:5px!important;
+    		font-size: 12px!important;
+		}
+		
+	</style>
+
+</head>
+
+<body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
+	<div ng-show="!editdeviceicon && !editcustomicon">
+
+		<h1 data-i18n="settings.title_customicons">Your custom icons</h1>
+		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
+
+		<ul id="customicons">
+			<li class="customicon" ng-repeat="customicon in customicons">
+				<div class="image"
+					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon + '.svg?'+ stamp + ')'}">
+				</div>
+				<div class="name">{{customicon}}</div>
+				<div class="buttons">
+					<button class="edit" ng-click="setEditCustomIcon(customicon);"><i
+							class="fa fa-edit"></i></button>
+				</div>
+
+			</li>
+		</ul>
+
+		<h1 data-i18n="settings.functions">Functions</h1>
+        <p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
+        <p data-i18n="settings.functions_be_aware">Be aware that removing functions could corrupt flows that are using that function.</p>
+        <div >
+            <div class="panel panel-default">
+                <div class="panel-heading" data-i18n="settings.add_function_text">To create a function, enter a name, press Add Function, then press edit below.</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="functionName" data-i18n="settings.function_name">Function name</label>
+                            <input class="form-control" id="functionName" type="text" ng-model="newFunction.name" data-i18n="[placeholder]settings.name" placeholder="Name"><span class="error">{{messages}}</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>                        
+                            <button class="btn btn-default" type="button" ng-click="deleteAll()" data-i18n="settings.delete_all">Delete All</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table" style="margin-top:30px;">
+                <thead>
+                    <tr>
+                        <th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3">
+                            <input st-search="name" placeholder="{{__('settings.search_for_name') || 'search for name'}}" class="input-sm form-control" type="search" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="function in displayedCollection" >
+                        <td>{{function.name}}</td>
+                        <td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') || 'Edit'}}</button></td>
+                        <td><button ng-click="removeFunction(function)" data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;" ng-if="editFunctionItem">
+            <input  class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
+            <textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
+            <button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
+        </div>
+
+
+
+		<!-- <h1 data-i18n="settings.title_virtualdevices"></h1>
+
+
+		<ul id="devices">
+			<li class="device" ng-repeat="device in devices">
+				<div class="image"
+					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + ')'}">
+				</div>
+				<div class="name">{{device.name}}</div>
+				<div class="buttons">
+					<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i
+							class="fa fa-edit"></i></button>
+				</div>
+
+			</li>
+		</ul>
+
+		<p ng-show="icons.length < 1">
+			<span data-i18n="settings.no_icons"></span>
+		</p>
+
+		<h1 data-i18n="settings.title_icons"></h1>
+
+		<ul id="icons">
+			<li class="icon" ng-repeat="icon in icons">
+				<div class="image"
+					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + icon.path.substr(1) + ')'}">
+				</div>
+				<div ng-show="!icon.updating" class="name" ng-dblclick="icon.updating = true;">{{icon.name}}</div>
+				<input ng-show="icon.updating" class="name" type="text" ng-model="icon.name"
+					ng-enter="updateIcon(icon)" />
+
+				<div class="buttons">
+					<button class="remove" ng-click="deleteIcon(icon)"><i class="fa fa-trash"></i></button>
+				</div>
+
+			</li>
+		</ul>
+
+		<h1 data-i18n="settings.title_upload">Upload a .svg</h1>
+		<input type="file" id="files" name="files[]" multiple /> -->
+	</div>
+
+	<!-- <div id="editdevice" ng-show="editdeviceicon">
+		<div>
+			<span data-i18n="settings.edit_device_icon">You can change your device icon here. The icon needs to be in
+				.svg format.</span><br />
+			<div class="form-group">
+				<input id="custom-device-icon" type="file" accept=".svg" name="image">
+			</div>
+			<div id="preview-outerframe">
+				<div id="preview-innerframe">
+					<img id="preview" />
+				</div>
+			</div>
+			<div class="form-group buttons">
+				<button id="save-icon" class="button" data-i18n="pair.button.icon.use" ng-disabled="!editdeviceicon.buffer"
+					ng-click="uploadDeviceIcon();">Save & use</button>
+			</div>
+		</div>
+	</div> -->
+
+	<div id="editcustomicon" ng-show="editcustomicon">
+		<div>
+			<span data-i18n="settings.edit_customicon_icon">You can change your capability icon here. The icon needs to be in
+				.svg format.</span><br />
+			<div class="form-group">
+				<input id="custom-icon" type="file" accept=".svg" name="image">
+			</div>
+			<div id="preview-outerframe">
+				<div id="preview-innerframe">
+					<img id="preview" />
+				</div>
+			</div>
+			<div class="form-group buttons">
+				<button id="save-icon" class="button" data-i18n="settings.save" ng-disabled="!editcustomicon.buffer"
+					ng-click="uploadCustomIcon();">Save</button>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<br><br>
+	
+
+	<script type="text/javascript">
+		angular.module('devicecapabilities', ['smart-table'])
+			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+				var Homey;
+				$scope.stamp=Date.now();
+				//Homey.ready();
+				
+				$scope.icons = [];
+				$scope.customicons = [];
+				// $scope.editdeviceicon = null;
+				// $scope.editdeviceiconfile = null;
+				$scope.editcustomicon = null;
+
+				
+				$scope.messages = '';
+        		$scope.selected = {};
+
+				
+				$scope.$on('ready', function ($e, Homey_) {
+					console.log('ready');
+					Homey = Homey_;
+					$scope.__ = Homey.__;
+
+					if (window.File && window.FileReader && window.FileList && window.Blob) {
+						// document.getElementById('files').addEventListener('change', $scope.onFileSelect, false);
+						// document.getElementById('custom-device-icon').addEventListener('change', $scope.onFileSelectDeviceIcon, false);
+						document.getElementById('custom-icon').addEventListener('change', $scope.onFileSelectCustomIcon, false);
+					} else {
+						Homey.alert(Homey.__('settings.file_api_err'), 'error');
+					}
+
+					// $scope.getIcons();
+					// $scope.getDevices();
+					$scope.getCustomIcons();					
+					$scope.getFunctionFromSettings();
+					Homey.ready();
+
+					console.log('ready done');
+				});
+
+
+
+				$scope.getFunctionFromSettings = function() {
+					Homey.get('javascript_functions', (err, newFunctions)=> {                
+						if(!err && !newFunctions) {
+							newFunctions = [];
+						}
+						$scope.$apply(()=> {
+							$scope.functions = newFunctions;
+							$scope.messages = err;
+						});
+					}); 
+				}
+
+				$scope.savefunctions = function() {
+					Homey.set('javascript_functions', $scope.functions);
+					Homey.alert(Homey.__("settings.functions_saved") || 'Functions saved');
+				}
+
+				$scope.addFunction = function() {
+					try {                
+						console.log('addFunction');
+						if ($scope.functions && $scope.functions.filter(function(e) { return e.name == $scope.newFunction.name; }).length > 0) {
+							$scope.messages = Homey.__("settings.function_exists") || "Function already exists.";
+							return;
+						}
+					
+						var func = {
+							name: $scope.newFunction.name,
+							value:undefined,
+							remove: false
+						};
+						$scope.functions.push(func);
+						$scope.storeFunction();
+						$scope.messages = '';
+						$scope.newFunction = {}  ;              
+						console.log('addFunction done');
+					} catch (error) {                           
+						console.log('addFunction error: ' + error);
+						$scope.messages = error;
+						//$scope.messages = JSON.stringify($scope.functions) + '\r\n\r\n' +  JSON.stringify($scope.newFunction) ;
+					}
+				};
+				$scope.deleteAll = function() {
+					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, () => {
+						$scope.$apply(function () {
+							$scope.functions = [];
+							$scope.storeFunction();
+						});
+					})
+				}
+				$scope.removeFunction = function(row) {
+					Homey.confirm(Homey.__("settings.delete_confirm", {functionName:row.name}) || 'Are you sure you wish to delete function '+row.name+'?', null, () => {                
+						var index = $scope.functions.indexOf(row);
+						$scope.$apply(function () {
+							$scope.functions.splice(index, 1);
+							$scope.storeFunction();
+						});
+					})
+				};
+				$scope.editFunction = function(row) {
+					$scope.editFunctionItem = row;
+				};
+				$scope.saveActiveFunction = function(close) {
+					$scope.storeFunction();
+					if(close)$scope.editFunctionItem = null;
+				};
+
+				$scope.storeFunction = function() {
+					Homey.set('javascript_functions', angular.copy($scope.functions));
+				}
+
+
+
+				
+				$scope.setEditCustomIcon = function (custom) {
+					$scope.editcustomicon = { id: custom };
+				}
+				$scope.uploadCustomIcon = function (custom) {
+					// console.log({
+					// 	type: $scope.editcustomicon.type,
+					// 	name: $scope.editcustomicon.name,
+					// 	buffer: $scope.editcustomicon.buffer,
+					// 	id: $scope.editcustomicon.id
+					// });
+					Homey.api('POST', '/createCustomIcon/', {
+						type: $scope.editcustomicon.type,
+						name: $scope.editcustomicon.id,
+						buffer: $scope.editcustomicon.buffer,
+						id: $scope.editcustomicon.id
+					}, function (err, result) {
+						if (err) return Homey.alert(err.message || err.toString(), 'error');
+							$scope.getCustomIcons();
+						$scope.$apply(function () {
+							$scope.editcustomicon = null;
+						});
+					})
+
+				}
+				$scope.onFileSelectCustomIcon = function (event) {
+					//console.log('onFileSelectCustomIcon');
+					const img = event.target.files[0];
+					const preview = document.getElementById('preview');
+					const reader = new FileReader();
+					reader.readAsDataURL(img);
+					reader.onload = () => {
+						imgBase64 = reader.result;
+						preview.src = imgBase64;
+						var buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
+						$scope.$apply(function () {
+							$scope.editcustomicon.type = img.type;
+							$scope.editcustomicon.name = img.name;
+							$scope.editcustomicon.buffer = buffer;
+						});
+						return;
+					};
+				}
+
+
+				$scope.getCustomIcons = function () {
+					var arr = [];
+					for (let i = 1; i <= 40; i++) arr.push('custom_' + i);
+					console.log('$scope.customicons');
+					console.log(arr);
+					$scope.$apply(function () {
+						$scope.stamp = Date.now();
+						$scope.customicons =  arr;
+					});
+					
+				}
+				
+
+				// $scope.setEditDeviceIcon = function (device) {
+				// 	$scope.editdeviceicon = { id: device.id };
+				// }
+				// $scope.uploadDeviceIcon = function (device) {
+				// 	// console.log({
+				// 	// 	type: $scope.editdeviceicon.type,
+				// 	// 	name: $scope.editdeviceicon.name,
+				// 	// 	buffer: $scope.editdeviceicon.buffer,
+				// 	// 	id: $scope.editdeviceicon.id
+				// 	// });
+				// 	Homey.api('POST', '/createDeviceIcon/', {
+				// 		type: $scope.editdeviceicon.type,
+				// 		name: $scope.editdeviceicon.name,
+				// 		buffer: $scope.editdeviceicon.buffer,
+				// 		id: $scope.editdeviceicon.id
+				// 	}, function (err, result) {
+				// 		if (err) return Homey.alert(err.message || err.toString(), 'error');
+				// 		$scope.getDevices();
+				// 		$scope.editdeviceicon = null;
+				// 	})
+
+				// }
+				// $scope.onFileSelectDeviceIcon = function (event) {
+				// 	//console.log('onFileSelectDeviceIcon');
+				// 	const img = event.target.files[0];
+				// 	const preview = document.getElementById('preview');
+				// 	const reader = new FileReader();
+				// 	reader.readAsDataURL(img);
+				// 	reader.onload = () => {
+				// 		imgBase64 = reader.result;
+				// 		preview.src = imgBase64;
+				// 		var buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
+				// 		$scope.$apply(function () {
+				// 			$scope.editdeviceicon.type = img.type;
+				// 			$scope.editdeviceicon.name = img.name;
+				// 			$scope.editdeviceicon.buffer = buffer;
+				// 		});
+				// 		return;
+				// 	};
+				// }
+
+
+				// $scope.getDevices = function () {
+				// 	Homey.api('GET', '/getdevices/', function (err, result) {
+				// 		if (err) return Homey.alert(err, 'error');
+				// 		//console.log(result);
+				// 		$scope.$apply(function () {
+				// 			$scope.devices = result;
+				// 		});
+				// 	});
+				// }
+
+				// $scope.getIcons = function () {
+				// 	Homey.api('GET', '/geticons/', function (err, result) {
+				// 		if (err) return Homey.alert(err, 'error');
+				// 		$scope.$apply(function () {
+				// 			$scope.icons = result;
+				// 		});
+				// 	});
+				// }
+
+
+				// $scope.updateIcon = function (icon) {
+				// 	icon.updating = false;
+
+				// 	Homey.api('PUT', '/updateicon/' + icon.id, {
+				// 		name: icon.name
+				// 	}, function (err, result) {
+				// 		if (err) return Homey.alert(err.message || err.toString(), 'error');
+				// 	})
+				// }
+
+				// $scope.deleteIcon = function (icon) {
+				// 	Homey.confirm(Homey.__('settings.confirm_delete'), 'warning', function (err, yes) {
+				// 		if (!yes) return;
+				// 		Homey.api('DELETE', '/deleteicon/' + icon.id, function (err, result) {
+				// 			if (err) return Homey.alert(err.message || err.toString(), 'error');
+				// 			$scope.getIcons();
+				// 		})
+				// 	})
+				// }
+
+				// $scope.onFileSelect = function (evt) {
+				// 	var files = evt.target.files;
+				// 	for (var i = 0, file; file = files[i]; i++) {
+				// 		var reader = new FileReader();
+				// 		reader.onload = (function (theFile) {
+				// 			return function (e) {
+
+				// 				var buffer = e.target.result.substr(e.target.result.indexOf(',') + 1)
+
+				// 				Homey.api('POST', '/createicon/', {
+				// 					type: theFile.type,
+				// 					name: theFile.name,
+				// 					buffer: buffer
+				// 				}, function (err, result) {
+				// 					if (err) return Homey.alert(err.message || err.toString(), 'error');
+				// 					$scope.getIcons();
+				// 				})
+
+				// 			};
+				// 		})(file);
+				// 		reader.readAsDataURL(file);
+				// 	};
+				// }
+				
+			}])
+			.directive('ngEnter', function () {
+				return function (scope, element, attrs) {
+					element.bind('keydown keypress', function (event) {
+						if (event.which === 13) {
+							scope.$apply(function () {
+								scope.$eval(attrs.ngEnter || attrs.ngClick, {
+									$event: event
+								});
+							});
+							event.preventDefault();
+						}
+					});
+				};
+			});
+
+		function onHomeyReady(Homey) {
+			console.log('onHomeyReady');
+			var scope = angular.element(document.body).scope();
+			scope.$emit('ready', Homey);
+		}
+	</script>
+
+</body>
+
+</html>
