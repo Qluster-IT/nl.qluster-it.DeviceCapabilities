@@ -8,9 +8,14 @@
  * 
  * 
  * app.json is nu 695
- * * devicecapabilities_ naar dc_   :  
+ * * devicecapabilities_ naar dc_   : nope 
  * 
- * 
+ *  658
+
+About device reload after status update for mobile app,
+Is it possible, to combine the two cards ‘Set Unavailable’ and ‘Set Available’?
+So that it makes a device unavailable and available again after 1s or 2s in one go.
+I use these for every status card.
  * 
  */
 

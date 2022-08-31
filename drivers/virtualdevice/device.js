@@ -19,25 +19,9 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		if (process.env.DEBUG === '1')  {
-			//if(this.hasCapability('button.button2'))  await this.removeCapability('button.button2');
-			if(this.hasCapability('onoff.button2'))  await this.removeCapability('onoff.button2');
-			// if(this.hasCapability('locked_devicecapabilities_boolean.boolean10'))  await this.removeCapability('locked_devicecapabilities_boolean.boolean10');
-			// if(this.hasCapability('locked_devicecapabilities_quickaction_boolean.boolean10'))  await this.removeCapability('locked_devicecapabilities_quickaction_boolean.boolean10');
-		
-			// if(!this.hasCapability('locked_devicecapabilities_boolean.boolean10')) await this.addCapability('locked_devicecapabilities_boolean.boolean10');
-			// if(!this.hasCapability('locked_devicecapabilities_quickaction_boolean.boolean10')) await this.addCapability('locked_devicecapabilities_quickaction_boolean.boolean10');			
+			
 		}
-		//await this.removeCapability('devicecapabilities_quickaction_boolean');
-		// if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');
 
-		// await this.setCapabilityOptions('devicecapabilities_quickaction_boolean', {uiComponent:'sensor'});  
-
-		// this.registerCapabilityListener("devicecapabilities_quickaction_boolean", ((value, options) => {
-		// 	// var disabled = this.getButtonDisabled('button'+i);
-		// 	// if(disabled) await this.setCapabilityValue("button",!value );
-		// 	// else 
-		// 	this.log(value);
-		// }).bind(this));
 
 		Homeyman.Current.VirtualDevices[this.getName()] = this;
 		var caps = this.getCapabilities();		
@@ -97,7 +81,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				}).bind(this));
 		}
 		if(fieldId.startsWith('boolean')) {
-			if(cap.indexOf('_quickaction_')>-1) 
+			if(cap.indexOf('_button')>-1) 
 			  this.registerCapabilityListener(cap, ((value, options) => {
 				this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } });
 			}).bind(this));
@@ -200,9 +184,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							cap = caps.cap;
 							oldCap = caps.oldCap;
 						}
-						//if (!oldCap && i===1) oldCap = "devicecapabilities_text.text1";break;
-					// case "dropdown":
-					// 	if (!oldCap && i===1) oldCap = "devicecapabilities_dropdown.dropdown1";break;
+						break;
 					case "number":
 						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i;
 						switch (settings[type + i + 'ShowAs']) {
@@ -216,12 +198,10 @@ module.exports = class WatchDevice extends Homey.Device {
 							let caps = this.getCaps(type,i,settings,oldCap);
 							cap = caps.cap;
 							oldCap = caps.oldCap;
-						}
-						if (!oldCap && i===1) oldCap = "measure_devicecapabilities_number.number1";
+						}						
 						break;
 					case "status":
-						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; 
-						//if (!oldCap && i===1) oldCap = "measure_devicecapabilities_status.status1";
+						cap = 'measure_devicecapabilities_number' + icon + '.' + type + i; 
 						break;
 					case "boolean":
 						let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
@@ -229,8 +209,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						cap = 
 							(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
 							type + icon + '.' + type + i;
-						//if (!oldCap && i===1) oldCap = "alarm_devicecapabilities_boolean.boolean1";
-
+							if(quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
 						break;
 					case "button":
 						switch (settings[type + i + 'ShowAs']) {
@@ -238,7 +217,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							case "button": pushbutton = true;  break;
 							case "onoff": isOnOff = true;  break;
 							case "onoff_buttontab": isOnOffButtonTab = true;  break;
-							case "indicatoronly": isOnOff = true; hide = true;  break;
+							//case "indicatoronly": isOnOff = true; hide = true;  break;
+							case "indicatoronly": isOnOff = false; hide = true;  break;
 							case "onoff_hide":
 							case "pushbutton_indicator":
 								 isOnOff = true; hide = true;  break; 
@@ -267,7 +247,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 						break;						
 				}
-				if (oldCap) oldValue = this.getCapabilityValue(oldCap);
+				if (oldCap) oldValue = this.getCapabilityValue(oldCap) || oldValue;
 				
 
 				if (oldCap && cap!=oldCap)  await this.removeCapability(oldCap);
@@ -282,7 +262,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				}
 
 				if (name && name.length > 0) {
-					if((type=="button" || (type=="boolean" && cap.indexOf('_quickaction_')>-1)) && button1Reset) {
+					if((type=="button" || (type=="boolean" && cap.indexOf('_button')>-1)) && button1Reset) {
 						if (this.hasCapability(cap)) await this.removeCapability(cap);
 					}
 					this.setStoreValue(type + i, cap);
@@ -309,39 +289,51 @@ module.exports = class WatchDevice extends Homey.Device {
 					// 	values = this.getDropDownValues(settings["dropdown"+i+"Values"]);
 					// }
 					
+					let decimals = settings[type + i + 'Decimals'];// decimals = decimals===1?undefined:null;
+					let max = settings[type + i + 'Max'];///max = max===1?undefined:null;
+					let min = settings[type + i + 'Min'];///min = min===1?undefined:null;
+
+
+					
+					
 					if (
 						opt.title != name || opt.preventInsights != settings[type + i + 'PreventInsights'] ||
-						(opt.units != settings[type + i + 'Units'] && type != 'status') ||
-						opt.decimals != settings[type + i + 'Decimals'] || opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
+						(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
+						(opt.decimals != decimals && decimals!==-1) || 
+						opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
 						values ||
-						settings[type + i + 'Decimals'] != oldSettings[type + i + 'Decimals']  ||
-						settings[type + i + 'Min'] != oldSettings[type + i + 'Min']  ||
-						settings[type + i + 'Max'] != oldSettings[type + i + 'Max'] 
+						(decimals != oldSettings[type + i + 'Decimals'] ) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  ||
+						(min != oldSettings[type + i + 'Min'] ) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && min!==-1 && !oldSettings[type + i + 'Min'])  ||
+						(max != oldSettings[type + i + 'Max'] ) //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && max!==-1 && !oldSettings[type + i + 'Max']) 
 						//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 						//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked )
+						
 
 					) {
 						let optNew = {
 							title: name,
 							preventInsights: settings[type + i + 'PreventInsights'],
-							//decimals: settings[type + i + 'Decimals'],
+							//decimals: decimals,
 							insightsTitleTrue: settings[type + i + 'InsightsTitleTrue'],
 							insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
 						};
 						if (type == 'status') optNew.units = opt.units;
 						else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
-						//if(type == 'dropdown' && values) optNew.valuesasd = values;
-						switch (type) {
-							case "number":
-								if(settings[type + i + 'Decimals']!==-1) optNew.decimals = settings[type + i + 'Decimals'];
-								if(settings[type + i + 'Min']!==-1) optNew.min = settings[type + i + 'Min'];
-								if(settings[type + i + 'Max']!==-1) optNew.max = settings[type + i + 'Max'];
-								
-								break;
 						
-							default:
-								break;
-						}
+						if(decimals!==-1) optNew.decimals = decimals;
+						if(min!==-1) optNew.min = min;
+						if(max!==-1) optNew.max = max;								
+
+						//if(type == 'dropdown' && values) optNew.valuesasd = values;
+						// switch (type) {
+						// 	case "number":
+						// 		break;
+						// 	case "status":
+						// 		if(decimals!==-1) optNew.decimals = decimals;
+						// 		break;
+						// 	default:
+						// 		break;
+						// }
 						
 						//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
 						//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;

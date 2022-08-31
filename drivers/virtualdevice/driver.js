@@ -15,9 +15,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     async onInit() {
         this.log('VirtualDeviceDriver onInit');
 
-        // var manifest = Homeyman.Current.manifest;
-		// manifest.capabilities.measure_devicecapabilities_number.units = 'TE';
-    
+		this.log("Capabilities", Object.keys(this.homey.app.manifest.capabilities).length);
+        
         var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
 			var set_value = this.homey.flow.getActionCard(action);
@@ -30,28 +29,23 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         let val;
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                //cap = cap || 'devicecapabilities_text.text1';
                                 if(args.text!==undefined && args.text!=='undefined') val = args.text;
                                 else val = null;
                                 break;
                             case 'virtualdevice_set_number':
-                                //cap = fieldId.indexOf('.')>-1 ? fieldId : cap://(cap || 'measure_devicecapabilities_number.number1');
                                 if(args.number!==undefined && args.number!=='undefined') val = args.number;                                
                                 else val = null;
                                 break;
                             case 'virtualdevice_set_boolean':
-                                //cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
                                 if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
                                 else val = null;
                                 break;
                             case 'virtualdevice_set_button':
-                                //cap = cap || 'button';
                                 if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
                                 else val = null;
                                 break;
                             case 'virtualdevice_set_status':
                             case 'virtualdevice_set_status_optionalnumber':
-                                //cap = cap || 'measure_devicecapabilities_status.status1';
                                 if(args.text!==undefined && args.text!=='undefined') {
                                     var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
@@ -83,25 +77,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
             cap = args.device.getStoreValue(fieldId) || cap;
 
-            // switch (type) {
-            //     case 'virtualdevice_set_text':
-            //         cap = cap || 'devicecapabilities_text.text1';
-            //         break;
-            //     case 'virtualdevice_set_number':
-            //         cap = cap || 'measure_devicecapabilities_number.number1';
-            //         break;
-            //     case 'virtualdevice_set_boolean':
-            //         cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
-            //         break;
-            //     case 'virtualdevice_set_button':
-            //         cap = cap || 'button';
-            //         break;
-            //     case 'virtualdevice_set_status':
-            //     case 'virtualdevice_set_status_optionalnumber':
-            //         cap = cap || 'measure_devicecapabilities_status.status1';
-            //         break;
-            //     }
-            
             try {
                     if(args.expression!==undefined && args.expression!=='undefined') {
                         let result = this.runSandBox(args.expression);

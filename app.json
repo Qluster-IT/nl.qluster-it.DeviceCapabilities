@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.985",
+  "version": "1.9.986",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1766,36 +1766,6 @@
       "uiComponent": "toggle",
       "insights": true
     },
-    "alarm_devicecapabilities_quickaction_boolean": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "devicecapabilities_quickaction_boolean": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true
-    },
-    "measure_devicecapabilities_status": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true
-    },
     "devicecapabilities_text-alarm_smoke": {
       "type": "string",
       "title": {
@@ -1906,39 +1876,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/alarm_smoke.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-alarm_smoke": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/alarm_smoke.svg"
-    },
-    "devicecapabilities_quickaction_boolean-alarm_smoke": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/alarm_smoke.svg"
-    },
-    "measure_devicecapabilities_status-alarm_smoke": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/alarm_smoke.svg"
     },
@@ -2055,39 +1992,6 @@
       "insights": true,
       "icon": "/assets/icons/alarm_water.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-alarm_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/alarm_water.svg"
-    },
-    "devicecapabilities_quickaction_boolean-alarm_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/alarm_water.svg"
-    },
-    "measure_devicecapabilities_status-alarm_water": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/alarm_water.svg"
-    },
     "devicecapabilities_text-battery": {
       "type": "string",
       "title": {
@@ -2198,39 +2102,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/battery.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-battery": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/battery.svg"
-    },
-    "devicecapabilities_quickaction_boolean-battery": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/battery.svg"
-    },
-    "measure_devicecapabilities_status-battery": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/battery.svg"
     },
@@ -2347,39 +2218,6 @@
       "insights": true,
       "icon": "/assets/icons/circle.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-circle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/circle.svg"
-    },
-    "devicecapabilities_quickaction_boolean-circle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/circle.svg"
-    },
-    "measure_devicecapabilities_status-circle": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/circle.svg"
-    },
     "devicecapabilities_text-curtain-half": {
       "type": "string",
       "title": {
@@ -2490,39 +2328,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/curtain-half.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-curtain-half": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/curtain-half.svg"
-    },
-    "devicecapabilities_quickaction_boolean-curtain-half": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/curtain-half.svg"
-    },
-    "measure_devicecapabilities_status-curtain-half": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/curtain-half.svg"
     },
@@ -2639,39 +2444,6 @@
       "insights": true,
       "icon": "/assets/icons/device_capabilities.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-device_capabilities": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/device_capabilities.svg"
-    },
-    "devicecapabilities_quickaction_boolean-device_capabilities": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/device_capabilities.svg"
-    },
-    "measure_devicecapabilities_status-device_capabilities": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/device_capabilities.svg"
-    },
     "devicecapabilities_text-game": {
       "type": "string",
       "title": {
@@ -2782,39 +2554,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/game.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-game": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/game.svg"
-    },
-    "devicecapabilities_quickaction_boolean-game": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/game.svg"
-    },
-    "measure_devicecapabilities_status-game": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/game.svg"
     },
@@ -2931,39 +2670,6 @@
       "insights": true,
       "icon": "/assets/icons/measure_clouds.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-measure_clouds": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_clouds.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_clouds": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_clouds.svg"
-    },
-    "measure_devicecapabilities_status-measure_clouds": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/measure_clouds.svg"
-    },
     "devicecapabilities_text-measure_humidity": {
       "type": "string",
       "title": {
@@ -3074,39 +2780,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/measure_humidity.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-measure_humidity": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_humidity.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_humidity": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_humidity.svg"
-    },
-    "measure_devicecapabilities_status-measure_humidity": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/measure_humidity.svg"
     },
@@ -3223,39 +2896,6 @@
       "insights": true,
       "icon": "/assets/icons/measure_luminance.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-measure_luminance": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_luminance.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_luminance": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_luminance.svg"
-    },
-    "measure_devicecapabilities_status-measure_luminance": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/measure_luminance.svg"
-    },
     "devicecapabilities_text-measure_noise": {
       "type": "string",
       "title": {
@@ -3366,39 +3006,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/measure_noise.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-measure_noise": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_noise.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_noise": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_noise.svg"
-    },
-    "measure_devicecapabilities_status-measure_noise": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/measure_noise.svg"
     },
@@ -3515,39 +3122,6 @@
       "insights": true,
       "icon": "/assets/icons/measure_power.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-measure_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_power.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_power.svg"
-    },
-    "measure_devicecapabilities_status-measure_power": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/measure_power.svg"
-    },
     "devicecapabilities_text-measure_pressure": {
       "type": "string",
       "title": {
@@ -3658,39 +3232,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/measure_pressure.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-measure_pressure": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_pressure.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_pressure": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_pressure.svg"
-    },
-    "measure_devicecapabilities_status-measure_pressure": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/measure_pressure.svg"
     },
@@ -3807,39 +3348,6 @@
       "insights": true,
       "icon": "/assets/icons/measure_rain.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-measure_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_rain.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_rain.svg"
-    },
-    "measure_devicecapabilities_status-measure_rain": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/measure_rain.svg"
-    },
     "devicecapabilities_text-measure_temperature": {
       "type": "string",
       "title": {
@@ -3950,39 +3458,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/measure_temperature.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-measure_temperature": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_temperature.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_temperature": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_temperature.svg"
-    },
-    "measure_devicecapabilities_status-measure_temperature": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/measure_temperature.svg"
     },
@@ -4099,39 +3574,6 @@
       "insights": true,
       "icon": "/assets/icons/measure_wind_angle.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-measure_wind_angle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_wind_angle.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_wind_angle": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_wind_angle.svg"
-    },
-    "measure_devicecapabilities_status-measure_wind_angle": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/measure_wind_angle.svg"
-    },
     "devicecapabilities_text-measure_wind_strength": {
       "type": "string",
       "title": {
@@ -4242,39 +3684,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/measure_wind_strength.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-measure_wind_strength": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_wind_strength.svg"
-    },
-    "devicecapabilities_quickaction_boolean-measure_wind_strength": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/measure_wind_strength.svg"
-    },
-    "measure_devicecapabilities_status-measure_wind_strength": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/measure_wind_strength.svg"
     },
@@ -4391,39 +3800,6 @@
       "insights": true,
       "icon": "/assets/icons/meter_gas.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-meter_gas": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_gas.svg"
-    },
-    "devicecapabilities_quickaction_boolean-meter_gas": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_gas.svg"
-    },
-    "measure_devicecapabilities_status-meter_gas": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/meter_gas.svg"
-    },
     "devicecapabilities_text-meter_power": {
       "type": "string",
       "title": {
@@ -4534,39 +3910,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/meter_power.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-meter_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_power.svg"
-    },
-    "devicecapabilities_quickaction_boolean-meter_power": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_power.svg"
-    },
-    "measure_devicecapabilities_status-meter_power": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/meter_power.svg"
     },
@@ -4683,39 +4026,6 @@
       "insights": true,
       "icon": "/assets/icons/meter_water.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-meter_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_water.svg"
-    },
-    "devicecapabilities_quickaction_boolean-meter_water": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_water.svg"
-    },
-    "measure_devicecapabilities_status-meter_water": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/meter_water.svg"
-    },
     "devicecapabilities_text-meter_rain": {
       "type": "string",
       "title": {
@@ -4826,39 +4136,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/meter_rain.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-meter_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_rain.svg"
-    },
-    "devicecapabilities_quickaction_boolean-meter_rain": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/meter_rain.svg"
-    },
-    "measure_devicecapabilities_status-meter_rain": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/meter_rain.svg"
     },
@@ -4975,39 +4252,6 @@
       "insights": true,
       "icon": "/assets/icons/music.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-music": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/music.svg"
-    },
-    "devicecapabilities_quickaction_boolean-music": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/music.svg"
-    },
-    "measure_devicecapabilities_status-music": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/music.svg"
-    },
     "devicecapabilities_text-onoff": {
       "type": "string",
       "title": {
@@ -5118,39 +4362,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/onoff.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-onoff": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/onoff.svg"
-    },
-    "devicecapabilities_quickaction_boolean-onoff": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/onoff.svg"
-    },
-    "measure_devicecapabilities_status-onoff": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/onoff.svg"
     },
@@ -5267,39 +4478,6 @@
       "insights": true,
       "icon": "/assets/icons/sensor.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-sensor": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/sensor.svg"
-    },
-    "devicecapabilities_quickaction_boolean-sensor": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/sensor.svg"
-    },
-    "measure_devicecapabilities_status-sensor": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/sensor.svg"
-    },
     "devicecapabilities_text-speaker_next": {
       "type": "string",
       "title": {
@@ -5410,39 +4588,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/speaker_next.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-speaker_next": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_next.svg"
-    },
-    "devicecapabilities_quickaction_boolean-speaker_next": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_next.svg"
-    },
-    "measure_devicecapabilities_status-speaker_next": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/speaker_next.svg"
     },
@@ -5559,39 +4704,6 @@
       "insights": true,
       "icon": "/assets/icons/speaker_play.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-speaker_play": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_play.svg"
-    },
-    "devicecapabilities_quickaction_boolean-speaker_play": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_play.svg"
-    },
-    "measure_devicecapabilities_status-speaker_play": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/speaker_play.svg"
-    },
     "devicecapabilities_text-speaker_prev": {
       "type": "string",
       "title": {
@@ -5702,39 +4814,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/speaker_prev.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-speaker_prev": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_prev.svg"
-    },
-    "devicecapabilities_quickaction_boolean-speaker_prev": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/speaker_prev.svg"
-    },
-    "measure_devicecapabilities_status-speaker_prev": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/speaker_prev.svg"
     },
@@ -5851,39 +4930,6 @@
       "insights": true,
       "icon": "/assets/icons/tv.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-tv": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/tv.svg"
-    },
-    "devicecapabilities_quickaction_boolean-tv": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/tv.svg"
-    },
-    "measure_devicecapabilities_status-tv": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/tv.svg"
-    },
     "devicecapabilities_text-virtual_device": {
       "type": "string",
       "title": {
@@ -5994,39 +5040,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/virtual_device.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-virtual_device": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/virtual_device.svg"
-    },
-    "devicecapabilities_quickaction_boolean-virtual_device": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/virtual_device.svg"
-    },
-    "measure_devicecapabilities_status-virtual_device": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/virtual_device.svg"
     },
@@ -6143,39 +5156,6 @@
       "insights": true,
       "icon": "/assets/icons/volume_down.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-volume_down": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_down.svg"
-    },
-    "devicecapabilities_quickaction_boolean-volume_down": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_down.svg"
-    },
-    "measure_devicecapabilities_status-volume_down": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/volume_down.svg"
-    },
     "devicecapabilities_text-volume_mute": {
       "type": "string",
       "title": {
@@ -6286,39 +5266,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/assets/icons/volume_mute.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-volume_mute": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_mute.svg"
-    },
-    "devicecapabilities_quickaction_boolean-volume_mute": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_mute.svg"
-    },
-    "measure_devicecapabilities_status-volume_mute": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/icons/volume_mute.svg"
     },
@@ -6435,39 +5382,6 @@
       "insights": true,
       "icon": "/assets/icons/volume_up.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-volume_up": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_up.svg"
-    },
-    "devicecapabilities_quickaction_boolean-volume_up": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/assets/icons/volume_up.svg"
-    },
-    "measure_devicecapabilities_status-volume_up": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/icons/volume_up.svg"
-    },
     "devicecapabilities_text-custom_1": {
       "type": "string",
       "title": {
@@ -6578,39 +5492,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_1.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-custom_1": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_1.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_1": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_1.svg"
-    },
-    "measure_devicecapabilities_status-custom_1": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
     },
@@ -6727,39 +5608,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-custom_2": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_2.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_2": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_2.svg"
-    },
-    "measure_devicecapabilities_status-custom_2": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_2.svg"
-    },
     "devicecapabilities_text-custom_3": {
       "type": "string",
       "title": {
@@ -6870,39 +5718,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_3.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-custom_3": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_3.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_3": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_3.svg"
-    },
-    "measure_devicecapabilities_status-custom_3": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
     },
@@ -7019,39 +5834,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-custom_4": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_4.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_4": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_4.svg"
-    },
-    "measure_devicecapabilities_status-custom_4": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_4.svg"
-    },
     "devicecapabilities_text-custom_5": {
       "type": "string",
       "title": {
@@ -7162,39 +5944,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_5.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-custom_5": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_5.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_5": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_5.svg"
-    },
-    "measure_devicecapabilities_status-custom_5": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
     },
@@ -7311,39 +6060,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-custom_6": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_6.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_6": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_6.svg"
-    },
-    "measure_devicecapabilities_status-custom_6": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_6.svg"
-    },
     "devicecapabilities_text-custom_7": {
       "type": "string",
       "title": {
@@ -7454,39 +6170,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_7.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-custom_7": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_7.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_7": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_7.svg"
-    },
-    "measure_devicecapabilities_status-custom_7": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
     },
@@ -7603,39 +6286,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-custom_8": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_8.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_8": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_8.svg"
-    },
-    "measure_devicecapabilities_status-custom_8": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_8.svg"
-    },
     "devicecapabilities_text-custom_9": {
       "type": "string",
       "title": {
@@ -7749,39 +6399,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
     },
-    "alarm_devicecapabilities_quickaction_boolean-custom_9": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_9.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_9": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_9.svg"
-    },
-    "measure_devicecapabilities_status-custom_9": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_9.svg"
-    },
     "devicecapabilities_text-custom_10": {
       "type": "string",
       "title": {
@@ -7892,39 +6509,6 @@
       "getable": true,
       "setable": false,
       "uiComponent": "toggle",
-      "insights": true,
-      "icon": "/userdata/customicons/custom_10.svg"
-    },
-    "alarm_devicecapabilities_quickaction_boolean-custom_10": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_10.svg"
-    },
-    "devicecapabilities_quickaction_boolean-custom_10": {
-      "type": "boolean",
-      "title": {
-        "en": "Yes/No"
-      },
-      "getable": true,
-      "setable": true,
-      "insights": true,
-      "uiQuickAction": true,
-      "icon": "/userdata/customicons/custom_10.svg"
-    },
-    "measure_devicecapabilities_status-custom_10": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
     }
