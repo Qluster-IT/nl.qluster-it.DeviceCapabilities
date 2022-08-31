@@ -13,6 +13,10 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.log('Device init');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
+		
+		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', "Goto Device Settings");
+		
+
 
 		if (process.env.DEBUG === '1')  {
 			//if(this.hasCapability('button.button2'))  await this.removeCapability('button.button2');
@@ -21,15 +25,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			// if(this.hasCapability('locked_devicecapabilities_quickaction_boolean.boolean10'))  await this.removeCapability('locked_devicecapabilities_quickaction_boolean.boolean10');
 		
 			// if(!this.hasCapability('locked_devicecapabilities_boolean.boolean10')) await this.addCapability('locked_devicecapabilities_boolean.boolean10');
-			// if(!this.hasCapability('locked_devicecapabilities_quickaction_boolean.boolean10')) await this.addCapability('locked_devicecapabilities_quickaction_boolean.boolean10');
-			
-			// if(this.getClass()!=='other') this.setClass('other');
-			// var image = await this.homey.images.createImage();
-			// await image.setUrl('https://www.computerhope.com/jargon/l/link.jpg');
-			// await this.setCameraImage('camera1', 'Camera1', image);
-			// var image = await this.homey.images.createImage();
-			// await image.setUrl('https://apps-sdk-v3.developer.homey.app/images/logo.png');
-			// await this.setCameraImage('camera2', 'Camera2', image);
+			// if(!this.hasCapability('locked_devicecapabilities_quickaction_boolean.boolean10')) await this.addCapability('locked_devicecapabilities_quickaction_boolean.boolean10');			
 		}
 		//await this.removeCapability('devicecapabilities_quickaction_boolean');
 		// if(!this.hasCapability('devicecapabilities_quickaction_boolean')) await this.addCapability('devicecapabilities_quickaction_boolean');
@@ -43,35 +39,74 @@ module.exports = class WatchDevice extends Homey.Device {
 		// 	this.log(value);
 		// }).bind(this));
 
-
 		Homeyman.Current.VirtualDevices[this.getName()] = this;
+		var caps = this.getCapabilities();		
+		this.Settings = await this.getSettings();
 
+		let versionUpdatedTo = this.getStoreValue('Version') || "0.0.0";
+		if(this.homey.app.manifest.version!=versionUpdatedTo) {
+			let versionArr = this.homey.app.manifest.version.split(".");
+			let versionUpdatedToArr = versionUpdatedTo.split(".");
+			if(
+				parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[1]))
+				) {
+					let newSettings = {
+						"labelGeneral":this.homey.__("virtualdevicesettings.labelGeneral"),
+						"labelAlso":this.homey.__("virtualdevicesettings.labelAlso"),
+						"labelCustomIcons":this.homey.__("virtualdevicesettings.labelCustomIcons"),
+						"labelCamerasRestart":this.homey.__("virtualdevicesettings.labelCamerasRestart")
+						
+					};
+					for (const settingKey in this.Settings	) 
+						if(settingKey.startsWith("label") && Object.keys(newSettings).indexOf(settingKey)===-1) newSettings[settingKey] = "";
 
+					
+					await this.setSettings(newSettings);		
+					this.Settings = await this.getSettings();
+					this.setStoreValue('Version', this.homey.app.manifest.version);
+				}
+		}
 
-		var caps = this.getCapabilities();
 		
-		var settings = this.getSettings();
+
 
 		for(let i=0;i<caps.length;i++){
-			let type = this.getStoreValue(caps[i]);			
-			if(!type) continue;
+			let fieldId = this.getStoreValue(caps[i]);			
+			if(!fieldId) continue;
 			
-			if(type.startsWith('button')) {
-				if(settings[type+'Disabled']!==true) 
-					this.registerCapabilityListener(caps[i], ((value, options) => {this.driver.triggerFlow(this, value, { field: { id: type } });}).bind(this));
-			}
-			if(type.startsWith('boolean')) {
-				//if(settings[type+'UiQuickAction']) 
-				if(caps[i].indexOf('_quickaction_')>-1) 
-				this.registerCapabilityListener(caps[i], ((value, options) => {this.driver.triggerFlowBoolean(this, value, { field: { id: type } });}).bind(this));
-			}			
-			if(type.startsWith('number')) {
-					this.registerCapabilityListener(caps[i], ((value, options) => {
-						this.driver.triggerFlowNumber(this, value, { field: { id: type } });
-					}).bind(this));
-			}		
+			await this.setListener({fieldId, settings:this.Settings, cap:caps[i]});		
 		}
 		await this.setCameras();
+	}
+
+	async setListener({fieldId, cap, settings}) {
+		if(fieldId.startsWith('button')) {
+			if(settings[fieldId+'Disabled']!==true) 
+				this.registerCapabilityListener(cap, (async (value, options) => {
+					if(settings[fieldId+'ShowAs']==="pushbutton_indicator") {
+						let val = this.getStoreValue(fieldId+"Value")===true;
+						await this.setCapabilityValue(cap, val);
+						return setTimeout(async ()=> {
+							await this.setCapabilityValue(cap, val);
+							this.driver.triggerFlow(this, !val, { field: { id: fieldId } });
+						},1);
+					} else this.driver.triggerFlow(this, value, { field: { id: fieldId } });					
+					return true;
+				}).bind(this));
+		}
+		if(fieldId.startsWith('boolean')) {
+			if(cap.indexOf('_quickaction_')>-1) 
+			  this.registerCapabilityListener(cap, ((value, options) => {
+				this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } });
+			}).bind(this));
+		}			
+		if(fieldId.startsWith('number')) {
+				this.registerCapabilityListener(cap, ((value, options) => {
+					this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } });
+				}).bind(this));
+		}	
 	}
 
 
@@ -121,6 +156,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		
 		let cls = this.getClass();
 		if(cls!=settings.cls) await this.setClass(settings.cls);
+		if (this.hasCapability('devicecapabilities_starttext')) await this.removeCapability('devicecapabilities_starttext');
 		//let b = JSON.parse(JSON.stringify(settings));
 		//b.number1Max = 15;
 		//this.setSettings({number1Max:15});
@@ -164,7 +200,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							cap = caps.cap;
 							oldCap = caps.oldCap;
 						}
-						if (!oldCap && i===1) oldCap = "devicecapabilities_text.text1";break;
+						//if (!oldCap && i===1) oldCap = "devicecapabilities_text.text1";break;
 					// case "dropdown":
 					// 	if (!oldCap && i===1) oldCap = "devicecapabilities_dropdown.dropdown1";break;
 					case "number":
@@ -185,15 +221,15 @@ module.exports = class WatchDevice extends Homey.Device {
 						break;
 					case "status":
 						cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i; 
-						if (!oldCap && i===1) oldCap = "measure_devicecapabilities_status.status1";
+						//if (!oldCap && i===1) oldCap = "measure_devicecapabilities_status.status1";
 						break;
 					case "boolean":
 						let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
-						let quickAction = settings[type + i + 'ShowAs']==='button';// || settings[type + i + 'ShowAs']=='';
+						let quickAction = settings[type + i + 'ShowAs']==='onoff';// || settings[type + i + 'ShowAs']=='';
 						cap = 
 							(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
 							type + icon + '.' + type + i;
-						if (!oldCap && i===1) oldCap = "alarm_devicecapabilities_boolean.boolean1";
+						//if (!oldCap && i===1) oldCap = "alarm_devicecapabilities_boolean.boolean1";
 
 						break;
 					case "button":
@@ -202,7 +238,10 @@ module.exports = class WatchDevice extends Homey.Device {
 							case "button": pushbutton = true;  break;
 							case "onoff": isOnOff = true;  break;
 							case "onoff_buttontab": isOnOffButtonTab = true;  break;
-							case "indicatoronly": isOnOff = true; hide = true;  break; //disabled=true; indicatorOnly is for Button1 only.	
+							case "indicatoronly": isOnOff = true; hide = true;  break;
+							case "onoff_hide":
+							case "pushbutton_indicator":
+								 isOnOff = true; hide = true;  break; 
 							default:
 								capSet = true;
 								break;						
@@ -213,7 +252,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							oldCap = caps.oldCap;
 						}
 						if(hide) { //always Button1
-							cap = "devicecapabilities_hide_button." + type + i;
+							if(isOnOff) cap = "devicecapabilities_onoff_hide_button." + type + i;
+							else cap = "devicecapabilities_hide_button." + type + i;
 						}
 						
 						if(!hide && !capSet) {
@@ -223,7 +263,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								cap =  ( (isOnOff ? 'onoff_':'')+ (isOnOffButtonTab ? 'onoffbuttontab_':'') + ("devicecapabilities"+(disabled?"_disabled":"")+"_button"+icon+"." + type + i));
 							}
 						}
-						if (!oldCap && i===1) oldCap = 'button';
+						//if (!oldCap && i===1) oldCap = 'button';
 
 						break;						
 				}
@@ -251,25 +291,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						if(type=="button" && i===1) button1Reset = true;
 						await this.addCapability(cap);
 						if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
-						if (type == 'button' && !disabled){//} && settings[type + i + 'ShowAs']!='disabled') {
-							try {
-								this.registerCapabilityListener(cap, ((value, options) => {
-									this.driver.triggerFlow(this, value, { field: { id: "button" + i } });
-								}).bind(this));
-							} catch (error) { }
-						}
-						if (type == 'boolean' && settings[type + i + 'UiQuickAction']) {
-							try {
-								this.registerCapabilityListener(cap, ((value, options) => {
-									this.driver.triggerFlowBoolean(this, value, { field: { id: "button" + i } });
-								}).bind(this));
-							} catch (error) { }
-						}
-						if(type=='number' && (!sensor)) {
-								this.registerCapabilityListener(cap, ((value, options) => {
-									this.driver.triggerFlowNumber(this, value, { field: { id: type + i } });
-								}).bind(this));
-						}	
+						await this.setListener({fieldId:type+i, settings, cap});
 					}
 					let opt;
 
@@ -308,7 +330,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						};
 						if (type == 'status') optNew.units = opt.units;
 						else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
-						if(type == 'dropdown' && values) optNew.valuesasd = values;
+						//if(type == 'dropdown' && values) optNew.valuesasd = values;
 						switch (type) {
 							case "number":
 								if(settings[type + i + 'Decimals']!==-1) optNew.decimals = settings[type + i + 'Decimals'];
@@ -398,7 +420,8 @@ module.exports = class WatchDevice extends Homey.Device {
 	
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
 
-		this.loadFromSettings(newSettings, oldSettings, changedKeys);
+		await this.loadFromSettings(newSettings, oldSettings, changedKeys);
+		this.Settings = newSettings;
 		// if the settings must not be saved for whatever reason:
 		// throw new Error('Your error message');
 	}

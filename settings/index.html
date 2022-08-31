@@ -218,6 +218,12 @@
 			width: 50px;
 			height: 50px;
 		}
+		.functions-table button {
+			padding-left:5px!important;
+			padding-right:5px!important;
+    		font-size: 12px!important;
+		}
+		
 	</style>
 
 </head>
@@ -225,7 +231,7 @@
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
 	<div ng-show="!editdeviceicon && !editcustomicon">
 
-		<h2 data-i18n="settings.title_customicons">Your custom icons</h2>
+		<h1 data-i18n="settings.title_customicons">Your custom icons</h1>
 		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
 
 		<ul id="customicons">
@@ -242,43 +248,43 @@
 			</li>
 		</ul>
 
-		<h2>Functions</h2>
-        <p>These functions can be used within (javascript) expression.</p>
-        <p>Be aware that removing functions could corrupt flows that are using that function.</p>
+		<h1 data-i18n="settings.functions">Functions</h1>
+        <p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
+        <p data-i18n="settings.functions_be_aware">Be aware that removing functions could corrupt flows that are using that function.</p>
         <div >
             <div class="panel panel-default">
-                <div class="panel-heading">Add function</div>
+                <div class="panel-heading" data-i18n="settings.add_function_text">To create a function, enter a name, press Add Function, then press edit below.</div>
                 <div class="panel-body">
                     <form role="form">
                         <div class="form-group">
-                            <label for="functionName">Function name</label>
-                            <input class="form-control" id="functionName" type="text" ng-model="newFunction.name" placeholder="Name"><span class="error">{{messages}}</span>
+                            <label for="functionName" data-i18n="settings.function_name">Function name</label>
+                            <input class="form-control" id="functionName" type="text" ng-model="newFunction.name" data-i18n="[placeholder]settings.name" placeholder="Name"><span class="error">{{messages}}</span>
                         </div>
                         
                         <div class="form-group">
-                            <button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()">Add function</button>                        
-                            <button class="btn btn-default" type="button" ng-click="deleteAll()">Delete All</button>
+                            <button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>                        
+                            <button class="btn btn-default" type="button" ng-click="deleteAll()" data-i18n="settings.delete_all">Delete All</button>
                         </div>
                     </form>
                 </div>
             </div>
             
-            <table st-safe-src="functions" st-table="displayedCollection" class="table table-striped">
+            <table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table" style="margin-top:30px;">
                 <thead>
                     <tr>
-                        <th st-sort="name" colspan="3">Name</th>
+                        <th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
                     </tr>
                     <tr>
                         <th colspan="3">
-                            <input st-search="name" placeholder="search for name" class="input-sm form-control" type="search" />
+                            <input st-search="name" placeholder="{{__('settings.search_for_name') || 'search for name'}}" class="input-sm form-control" type="search" />
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="function in displayedCollection" >
                         <td>{{function.name}}</td>
-                        <td><button ng-click="editFunction(function)">edit</button></td>
-                        <td><button ng-click="removeFunction(function)">Delete</button></td>
+                        <td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') || 'Edit'}}</button></td>
+                        <td><button ng-click="removeFunction(function)" data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -287,12 +293,12 @@
         <div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;" ng-if="editFunctionItem">
             <input  class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
             <textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
-            <button style="height:40px;" ng-click="saveActiveFunction()">Save</button><button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)">Save & Close</button>
+            <button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
         </div>
 
 
 
-		<!-- <h2 data-i18n="settings.title_virtualdevices"></h2>
+		<!-- <h1 data-i18n="settings.title_virtualdevices"></h1>
 
 
 		<ul id="devices">
@@ -313,7 +319,7 @@
 			<span data-i18n="settings.no_icons"></span>
 		</p>
 
-		<h2 data-i18n="settings.title_icons"></h2>
+		<h1 data-i18n="settings.title_icons"></h1>
 
 		<ul id="icons">
 			<li class="icon" ng-repeat="icon in icons">
@@ -331,7 +337,7 @@
 			</li>
 		</ul>
 
-		<h2 data-i18n="settings.title_upload">Upload a .svg</h2>
+		<h1 data-i18n="settings.title_upload">Upload a .svg</h1>
 		<input type="file" id="files" name="files[]" multiple /> -->
 	</div>
 
@@ -367,8 +373,8 @@
 				</div>
 			</div>
 			<div class="form-group buttons">
-				<button id="save-icon" class="button" data-i18n="pair.button.icon.use" ng-disabled="!editcustomicon.buffer"
-					ng-click="uploadCustomIcon();">Save & use</button>
+				<button id="save-icon" class="button" data-i18n="settings.save" ng-disabled="!editcustomicon.buffer"
+					ng-click="uploadCustomIcon();">Save</button>
 			</div>
 		</div>
 	</div>
@@ -412,7 +418,7 @@
 					$scope.getCustomIcons();					
 					$scope.getFunctionFromSettings();
 					Homey.ready();
-					
+
 					console.log('ready done');
 				});
 
@@ -432,14 +438,14 @@
 
 				$scope.savefunctions = function() {
 					Homey.set('javascript_functions', $scope.functions);
-					Homey.alert('Functions saved');
+					Homey.alert(Homey.__("settings.functions_saved") || 'Functions saved');
 				}
 
 				$scope.addFunction = function() {
 					try {                
 						console.log('addFunction');
 						if ($scope.functions && $scope.functions.filter(function(e) { return e.name == $scope.newFunction.name; }).length > 0) {
-							$scope.messages = "Function already exists.";
+							$scope.messages = Homey.__("settings.function_exists") || "Function already exists.";
 							return;
 						}
 					
@@ -460,7 +466,7 @@
 					}
 				};
 				$scope.deleteAll = function() {
-					Homey.confirm('Are you sure you wish to delete ALL functions?', null, () => {
+					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, () => {
 						$scope.$apply(function () {
 							$scope.functions = [];
 							$scope.storeFunction();
@@ -468,7 +474,7 @@
 					})
 				}
 				$scope.removeFunction = function(row) {
-					Homey.confirm('Are you sure you wish to delete function '+row.name+'?', null, () => {                
+					Homey.confirm(Homey.__("settings.delete_confirm", {functionName:row.name}) || 'Are you sure you wish to delete function '+row.name+'?', null, () => {                
 						var index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);

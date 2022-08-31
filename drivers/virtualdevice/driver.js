@@ -27,51 +27,46 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     let fieldId = args.field? args.field.id : 'status1';
                     let cap = args.device.getStoreValue(fieldId);
                     try {
+                        let val;
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                cap = cap || 'devicecapabilities_text.text1';
-                                if(args.text!==undefined && args.text!=='undefined') await args.device.setCapabilityValue(cap, args.text);
-                                else await args.device.setCapabilityValue(cap, null);
-                                return true;
+                                //cap = cap || 'devicecapabilities_text.text1';
+                                if(args.text!==undefined && args.text!=='undefined') val = args.text;
+                                else val = null;
+                                break;
                             case 'virtualdevice_set_number':
-                                cap = fieldId.indexOf('.')>-1 ? fieldId : (cap || 'measure_devicecapabilities_number.number1');
-                                if(args.number!==undefined && args.number!=='undefined') {
-                                    if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, args.number);                                   
-                                }
-                                else await args.device.setCapabilityValue(cap, null);
-                                return true;
+                                //cap = fieldId.indexOf('.')>-1 ? fieldId : cap://(cap || 'measure_devicecapabilities_number.number1');
+                                if(args.number!==undefined && args.number!=='undefined') val = args.number;                                
+                                else val = null;
+                                break;
                             case 'virtualdevice_set_boolean':
-                                cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
-                                if(args.boolean!==undefined && args.boolean!=='undefined') {
-                                    if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, args.boolean);                                    
-                                }
-                                else await args.device.setCapabilityValue(cap, null);
-                                return true;
+                                //cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
+                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
+                                else val = null;
+                                break;
                             case 'virtualdevice_set_button':
-                                cap = cap || 'button';
-                                if(args.boolean!==undefined && args.boolean!=='undefined') {
-                                    if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, args.boolean);                                    
-                                }
-                                else await args.device.setCapabilityValue(cap, null);
-                                return true;
+                                //cap = cap || 'button';
+                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
+                                else val = null;
+                                break;
                             case 'virtualdevice_set_status':
                             case 'virtualdevice_set_status_optionalnumber':
-                                cap = cap || 'measure_devicecapabilities_status.status1';
+                                //cap = cap || 'measure_devicecapabilities_status.status1';
                                 if(args.text!==undefined && args.text!=='undefined') {
                                     var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
                                     opt.units = args.text;
                                     args.device.setCapabilityOptions(cap, opt);
                                 }
-                                if(args.number!==undefined && args.number!=='undefined') await args.device.setCapabilityValue(cap, args.number); 
-                                else if(action=="virtualdevice_set_status_optionalnumber") await args.device.setCapabilityValue(cap, null);
-                                
-                                return true;
+                                if(args.number!==undefined && args.number!=='undefined') val = args.number;
+                                else if(action=="virtualdevice_set_status_optionalnumber") val = null;
+                                break;
                         }
-                        return null;
+
+                        if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, val);
+                        await args.device.setStoreValue(fieldId+"Value", val);
+                        return true;
 					} catch (error) {
-						// this.log('set_value:');
-						// this.log(error);
                         throw new Error(error.message.replace(cap.split('.')[0]+' ', ''));
 					}
 				}).bind(this));
@@ -88,33 +83,36 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
             cap = args.device.getStoreValue(fieldId) || cap;
 
-            switch (type) {
-                case 'virtualdevice_set_text':
-                    cap = cap || 'devicecapabilities_text.text1';
-                    break;
-                case 'virtualdevice_set_number':
-                    cap = cap || 'measure_devicecapabilities_number.number1';
-                    break;
-                case 'virtualdevice_set_boolean':
-                    cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
-                    break;
-                case 'virtualdevice_set_button':
-                    cap = cap || 'button';
-                    break;
-                case 'virtualdevice_set_status':
-                case 'virtualdevice_set_status_optionalnumber':
-                    cap = cap || 'measure_devicecapabilities_status.status1';
-                    break;
-                }
+            // switch (type) {
+            //     case 'virtualdevice_set_text':
+            //         cap = cap || 'devicecapabilities_text.text1';
+            //         break;
+            //     case 'virtualdevice_set_number':
+            //         cap = cap || 'measure_devicecapabilities_number.number1';
+            //         break;
+            //     case 'virtualdevice_set_boolean':
+            //         cap = cap || 'alarm_devicecapabilities_boolean.boolean1';
+            //         break;
+            //     case 'virtualdevice_set_button':
+            //         cap = cap || 'button';
+            //         break;
+            //     case 'virtualdevice_set_status':
+            //     case 'virtualdevice_set_status_optionalnumber':
+            //         cap = cap || 'measure_devicecapabilities_status.status1';
+            //         break;
+            //     }
             
             try {
                     if(args.expression!==undefined && args.expression!=='undefined') {
                         let result = this.runSandBox(args.expression);
                         await args.device.setCapabilityValue(cap, result);
+                        await args.device.setStoreValue(fieldId+"Value", result);
                     }
-                    else await args.device.setCapabilityValue(cap, null);
-                    return true;
-                    
+                    else {
+                        await args.device.setCapabilityValue(cap, null);
+                        await args.device.setStoreValue(fieldId+"Value", null);
+                    }
+                    return true;                    
             } catch (error) {
                 //this.log('action_virtualdevice_set_name:');
                 //this.error(error);

@@ -27,11 +27,15 @@ ______________________________________
 
 
 
-
+Wat doet uiQuickAction bij booleans?
+Of ik het nu op true of false set, het lijkt geen verschil te maken.
+uiComponent=toggle bepaald of de knop een toggle in Web krijgt.
+uiComponent=button bepaald of het een knop op de button-tab wordt.
+getable bepaald of ik de Mobile-Device-Tile kan indrukken.
 ______________________________________
 
 
-
+Hoe kan ik een setting die ik heb weggehaald (label) verwijderen uit de settings (i.p.v. een lege string waar)?
 ______________________________________
 
 ______________________________________

@@ -1,7 +1,23 @@
-// SetClass kan nog in Virtuel Device
 
-// Yes/No en Buttons als Lock?
-// Type moet dan dropdown wornen.
+/// status update elke keer met device options?
+/**
+ * 
+ * Maybe ‘To start’ and then ‘goto Device Settings’ fits better?
+ * 
+ * 
+ * 
+ * 
+ * app.json is nu 695
+ * * devicecapabilities_ naar dc_   :  
+ * 
+ * 
+ * 
+ */
+
+
+
+
+
 
 
 

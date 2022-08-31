@@ -1,3 +1,59 @@
 {
-    "via":"via"
+    "via":"via",
+    "settings": {
+		"title_icons": "Uw pictogrammen",
+		"title_upload": "Upload een pictogram",
+		"no_icons": "U heeft nog geen pictogrammen!",
+		"delete": "Verwijderen",
+		"confirm_delete": "Weet u zeker dat u dit pictogram wilt verwijderen?",
+		"invalid_type": "Ongeldig bestandstype! Ondersteund type is .svg",
+		"file_api_err": "De bestands-API's worden niet volledig ondersteund in deze browser.",
+		"title_virtualdevices": "Uw virtuele apparaten",
+		"title_customicons": "Uw aangepaste pictogrammen",
+		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor capabilities kunnen worden gebruikt. Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",
+
+
+        
+		"functions":"Functies",
+		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
+		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies flows welke die functie gebruiken, kan breken.",
+		"add_function_text":"Om een ​​functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
+		"add_function":"Functie toevoegen",
+		"function_name":"Functienaam",
+		"delete_all":"Verwijder alles",
+		"name":"Naam",
+		"edit":"Aanpassen",
+		"save":"Opslaan",
+		"save_close":"Opslaan & sluiten",
+		"functions_saved":"Functies opgeslagen.",
+		"function_exists":"Functie bestaat al.",
+		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
+		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
+
+		"search_for_name":"zoek op naam"
+	},
+	"virtualdevicesettings":{
+		"labelGeneral":"Het wijzigen van de eigenschappen Pictogram, \"Toon als\" of \"Creëer flowkaarten\" zorgt ervoor dat tag-ID's worden gewijzigd en kan dus flows breken.",
+		"labelAlso":"Alle velden tegelijk inschakelen en op opslaan drukken, kan moeilijk zijn voor Homey en even duren.",
+		"labelCustomIcons":"De 10 aangepaste pictogrammen kunnen worden ingesteld via de app-instellingen.",
+		"labelCamerasRestart":"Na het verwijderen van een camera (door de naam of url te wissen), is het vereist de Apparaat Mogelijkheden App test herstarten om het camerabeeld van dit virtuele apparaat te verwijderen."
+
+	},
+	"pair": {
+		"list_icons":{
+			"title":"Apparaatpictogram",
+			"loading":"Laden",
+			"custom_device_icon":"Als u een aangepast pictogram voor uw apparaat wilt gebruiken, kunt u dit hier uploaden. Het pictogram moet de indeling .svg hebben.",
+			"select_device_icon":"Of kies er een uit de lijst."
+		},
+
+		"done":{
+			"title":"Een ogenblik alstublieft",
+			"creating_device":"Uw nieuwe virtuele apparaat wordt aangemaakt.",
+			"done":"Gereed!"
+		},
+		"buttons":{
+			"save_use":"Opslaan en gebruiken"
+		}
+	}
 }

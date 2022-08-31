@@ -45,7 +45,20 @@ let icons = ['',
     'custom_10'
 ];
 
-var sets1 = ['_hide'];//];
+str+='"devicecapabilities_starttext": { \r\n'+
+'      "type": "string", \r\n'+
+'      "title": { \r\n'+
+'        "en": "And start creating your own device" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "insights": false, \r\n'+
+'      "icon": "/assets/icons/virtual_device.svg", \r\n'+
+'      "value": "And start creating your own device" \r\n'+
+'    }, \r\n';
+
+var sets1 = ['_hide', '_onoff_hide'];//];
 for(var j=0;j<sets1.length;j++) {
   var val = sets1[j];
   str+= '"devicecapabilities'+val+'_button": { \r\n'+
@@ -55,7 +68,7 @@ for(var j=0;j<sets1.length;j++) {
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_hide'?'false':'true')+', \r\n'+
-  (val=='_hide' ? '"uiComponent": null, \r\n' : (val=='' ? '' : '"uiComponent": "toggle", \r\n')) +
+  (val=='_hide' || val=='_onoff_hide' ? '"uiComponent": null, \r\n' : (val=='' ? '' : '"uiComponent": "toggle", \r\n')) +
   '      "insights": true, \r\n'+
   '      "uiQuickAction": true \r\n'+
   '    },     \r\n';

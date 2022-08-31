@@ -20,9 +20,6 @@
     }
 
     .icon.tile .icon.bg {
-        /* width: 5em;
-        height: 5em;
-        display: block; */
         width: 6.5em;
         height: 4.5em;
         -webkit-mask-size: contain;
@@ -52,11 +49,10 @@
 <script>
 
     var imgBase64 = '';
-
     Homey.showLoadingOverlay();
     Homey.setTitle( Homey.__("pair.list_icons.title") );
 
-    $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
+    $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
 
     Homey.emit('list_icons', null, function (err, result) {
 
@@ -102,7 +98,7 @@
     reader.onload = () => {
           imgBase64 = reader.result;
           preview.src = imgBase64;
-          if (imgBase64.length > 1048000) return Homey.alert('Image size is too large', 'error');
+          if (imgBase64.length > 1048000) return Homey.alert(Homey.__("imagetolarge", "Image size is too large"), 'error');
           $("#preview-outerframe").show();
           $('#save-icon').prop('disabled', false);
           return;
@@ -112,7 +108,7 @@
 </script>
 
 <div>
-    <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you need to upload it here. The icon needs to be in .svg format.</span><br/>
+    <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br/>
     <div class="form-group" style="margin-top:10px;">
         <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
     </div>
@@ -138,15 +134,3 @@
         </div>
   </ul> 
 </div> 
-
-
-<!-- <div id="all-icons"><ul id="icons-list">
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/assets/icons/alarm_smoke.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/userdata/icon.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/nl.qluster-it.devicecapabilities/userdata/5ee96dd1dd18f86cacd6d2f8.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/nl.qluster-it.devicecapabilities/assets/icons/alarm_smoke.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/amplifier/standard/right.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/blinds/standard.svg&quot;);"></div></div></div></li>
-    <li class="icon tile"><div class="content"><div class="icon-wrap"><div class="icon bg " style="-webkit-mask-image: url(&quot;/app/com.swttt.icongroups/assets/icons/categories/button/standard.svg&quot;);"></div></div></div></li>
-    </ul>
-</div> -->

@@ -28,9 +28,9 @@
 <script>
 
     Homey.showLoadingOverlay();
-    Homey.setTitle( Homey.__("pair.icons.title") );
+    Homey.setTitle( Homey.__("pair.done.title") );
 
-    $('#hy-overlay-loading-message').html( Homey.__("pair.icons.loading") );
+    $('#hy-overlay-loading-message').html( Homey.__("pair.done.creating_device") );
 
     Homey.emit('done', null, function (err, device) {
         Homey.createDevice(device, (err, res) => {
@@ -42,8 +42,6 @@
         Homey.done();
         });
     });
-    
-
 </script>
 
-<div id="all-icons">Done!</div>
+<div id="all-icons"  data-i18n="pair.done.done">Done!</div>

@@ -51,31 +51,31 @@ var icons = '              "values": [ \r\n' +
 var str = '"settings": [ \r\n' +
 '         { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "General"}, \r\n' +
+'          "label": {"en": "General", "nl":"Algemeen"}, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
-'              "id": "label6", \r\n' +
+'              "id": "labelGeneral", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Be aware"}, \r\n' +
-'              "value":"Changing the properties Icon and \'Show as\' will causes Tag IDs to be changed and thus may break flows." \r\n' +
+'              "label": {"en": "Be aware", "nl":"Let op"}, \r\n' +
+'              "value":"Changing the properties Icon, \'Show as\' or \'Create Flow Cards\' will causes Tag IDs to be changed and thus may break flows." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "label5", \r\n' +
+'              "id": "labelAlso", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Also"}, \r\n' +
+'              "label": {"en": "Also", "nl":"En verder"}, \r\n' +
 '              "value":"Enabling all fields at once and pressing save, might be hard for your Homey and could take a while." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "label7", \r\n' +
+'              "id": "labelCustomIcons", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Custom icons"}, \r\n' +
+'              "label": {"en": "Custom icons", "nl":"Aangepaste pictogrammen"}, \r\n' +
 '              "value":"The 10 custom icons can be set through the App Settings." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "cls", \r\n' +
 '              "type": "dropdown", \r\n' +
-'              "label": {"en": "Device Class"}, \r\n' +
-'              "hint": {"en": "Changing the Device Class may break flows that depend on the previous specified class flowcards."}, \r\n' +
+'              "label": {"en": "Device Class", "nl":"Apparaatklasse"}, \r\n' +
+'              "hint": {"en": "Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.", "nl":"Het wijzigen van de apparaatklasse kan flows breken die afhankelijk zijn van automatisch gemaakte flowkaarten van de eerder gespecificeerde klasse."}, \r\n' +
 '              "values":['+
 '                {"id":"other", "label":"Other (Default)"}, '+
 '                {"id":"amplifier", "label":"Amplifier"}, '+
@@ -103,28 +103,28 @@ var str = '"settings": [ \r\n' +
 '        { \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Status Indicator Field" \r\n' +
+'            "en": "Status Indicator Field", "nl":"Statusindicatorveld" \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "status1Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name" \r\n' +
+'                "en": "Name", "nl":"Naam" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for the Status Field" \r\n' +
+'                "en": "The name for the Status Field", "nl":"De naam voor het statusveld" \r\n' +
 '              }, \r\n' +
-'              "value": "Status" \r\n' +
+'              "value": "" \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "status1Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon" \r\n' +
+'                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.", "nl":"Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID\'s worden gewijzigd en dus flows kunnen onderbreken." \r\n' +
 '              }, \r\n' +
 icons +
 '              "value": "" \r\n' +
@@ -133,10 +133,10 @@ icons +
 '              "id": "status1Decimals", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Decimals" \r\n' +
+'                "en": "Decimals", "nl":"Decimalen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The number of decimals to show." \r\n' +
+'                "en": "The number of decimals to show.", "nl":"Het aantal decimalen dat moet worden weergegeven." \r\n' +
 '              }, \r\n' +
 '              "value": 0, \r\n' +
 '              "min": 0, \r\n' +
@@ -147,10 +147,10 @@ icons +
 '              "id": "status1PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights" \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated or filled." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -163,28 +163,28 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Textfield '+i+'" \r\n' +
+'            "en": "Textfield '+i+'", "nl":"Tekstveld '+i+'" \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "text'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name" \r\n' +
+'                "en": "Name", "nl":"Naam" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for textfield '+i+'" \r\n' +
+'                "en": "The name for textfield '+i+'", "nl":"De naam voor tekstveld '+i+'" \r\n' +
 '              }, \r\n' +
-'              "value":'+(i===1 ? '"Text '+i+'"': '""')+' \r\n' +
+'              "value":"" \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "text'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as" \r\n' +
+'                "en": "Show as", "nl":"Toon als" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the text must be displayed." \r\n' +
+'                "en": "Select how the text must be displayed.", "nl":"Selecteer hoe de tekst moet worden weergegeven." \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -199,10 +199,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "text'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon" \r\n' +
+'                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -214,13 +214,13 @@ for(var i=1;i<=fields;i++) {
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Numbers"}, \r\n' +
+'          "label": {"en": "Numbers", "nl":"Nummers"}, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelNumber1", \r\n' +
 '              "type": "label", \r\n' +
 '              "label": {"en": " "}, \r\n' +
-'              "value":"Number 1 is special. Number 1 Show As is also responsible for additional Flow Cards." \r\n' +
+'              "value":" " \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n';
@@ -230,28 +230,28 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Numberfield '+i+'" \r\n' +
+'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'" \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name" \r\n' +
+'                "en": "Name", "nl":"Naam" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for numberfield '+i+'" \r\n' +
+'                "en": "The name for numberfield '+i+'", "nl":"De naam voor nummerveld '+i+'" \r\n' +
 '              }, \r\n' +
-'              "value":'+(i===1 ? '"Number '+i+'"': '""')+' \r\n' +
+'              "value":"" \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as" \r\n' +
+'                "en": "Show as", "nl":"Toon als" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the number must be displayed." \r\n' +
+'                "en": "Select how the number must be displayed.", "nl":"Selecteer hoe het nummer moet worden weergegeven." \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -275,35 +275,23 @@ str+='       },' +
   '              "id": "number'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards" \r\n' +
+  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability." \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
-// str+='       }, \r\n' +
-// '            { \r\n' +
-// '              "id": "number'+i+'SecondName", \r\n' +
-// '              "type": "text", \r\n' +
-// '              "label": { \r\n' +
-// '                "en": "Name for second number" \r\n' +
-// '              }, \r\n' +
-// '              "hint": { \r\n' +
-// '                "en": "The name for the second numberfield for Number '+i+', like temperature (target) also has a measure field." \r\n' +
-// '              }, \r\n' +
-// '              "value":'+(i===1 ? '"Number '+i+'"': '""')+' \r\n' ;
-
 
 str+='       }, \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon" \r\n' +
+'                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -312,10 +300,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Units", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Units" \r\n' +
+'                "en": "Units", "nl":"Eenheden" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translated into Fahrenheit." \r\n' +
+'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translated into Fahrenheit.", "nl":"De eenheden die voor het nummer moeten worden gebruikt. Als je Fahrenheit nodig hebt, voer dan °C in en het wordt vertaald in Fahrenheit." \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -323,10 +311,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Decimals", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Decimals" \r\n' +
+'                "en": "Decimals", "nl":"Decimalen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value." \r\n' +
+'                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value.", "nl":"Het aantal decimalen dat moet worden weergegeven. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken." \r\n' +
 '              }, \r\n' +
 '              "value": -1, \r\n' +
 '              "min": -1, \r\n' +
@@ -337,10 +325,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Min", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Min" \r\n' +
+'                "en": "Min", "nl":"Min" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value." \r\n' +
+'                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De minimale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken." \r\n' +
 '              }, \r\n' +
 '              "value": -1 \r\n' +
 // '              "min": 0, \r\n' +
@@ -351,10 +339,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Max", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Max" \r\n' +
+'                "en": "Max", "nl":"Max" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value." \r\n' +
+'                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De maximale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken." \r\n' +
 '              }, \r\n' +
 '              "value": -1 \r\n' +
 // '              "min": 0, \r\n' +
@@ -365,10 +353,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights" \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated or filled." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -381,45 +369,46 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Yes/No field '+i+'" \r\n' +
+'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'" \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name" \r\n' +
+'                "en": "Name", "nl":"Naam" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for Yes/No field '+i+'" \r\n' +
+'                "en": "The name for Yes/No field '+i+'", "nl":"De naam voor Ja/Nee-veld '+i+'" \r\n' +
 '              }, \r\n' +
-'              "value":'+(i===1 ? '"Yes/No '+i+'"': '""')+' \r\n' +
+'              "value":"" \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as" \r\n' +
+'                "en": "Show as", "nl":"Toon als" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the yes/no must be displayed." \r\n' +
+'                "en": "Select how the Yes/No must be displayed.", "nl":"Selecteer hoe de Ja/Nee moet worden weergegeven." \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
 '                {"id":"sensor", "label":"Sensor (Default)"}, '+
 '                {"id":"alarm", "label":"Alarm"}, '+
-'                {"id":"button", "label":"Button"} '+
+'                {"id":"onoff", "label":"On/Off (Button Tab)"} '+
 '              ], '+
 '              "value":""  \r\n';
+
 str+='       },' +
   '            { \r\n' +
   '              "id": "boolean'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards" \r\n' +
+  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability." \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -428,10 +417,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon" \r\n' +
+'                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -451,10 +440,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights" \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log (timeline) from being automatically generated or filled." \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -462,23 +451,23 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'InsightsTitleTrue", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Insights Title True" \r\n' +
+'                "en": "Insights Title True", "nl":"Insights titel Waar" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Insights Description for when the value is True." \r\n' +
+'                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is." \r\n' +
 '              }, \r\n' +
-'              "value": '+(i===1 ? '"True"': '""')+' \r\n' +
+'              "value": "" \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'InsightsTitleFalse", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Insights Title False" \r\n' +
+'                "en": "Insights Title False", "nl":"Insights titel Onwaar" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Insights Description for when the value is False." \r\n' +
+'                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is." \r\n' +
 '              }, \r\n' +
-'              "value": '+(i===1 ? '"False"': '""')+' \r\n' +
+'              "value": "" \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n';
@@ -489,12 +478,12 @@ str+='       }, \r\n' +
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Buttons"}, \r\n' +
+'          "label": {"en": "Buttons", "nl":"Knoppen"}, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelButton1", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": " "}, \r\n' +
+'              "label": {"en": " ", "nl":" "}, \r\n' +
 '              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator." \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
@@ -504,31 +493,33 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Button '+i+'" \r\n' +
+  '            "en": "Button '+i+'", "nl":"Knop '+i+'" \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'Name", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Name" \r\n' +
+  '                "en": "Name", "nl":"Naam" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The name for Button '+i+'" \r\n' +
+  '                "en": "The name for Button '+i+'", "nl":"De naam voor knop '+i+'" \r\n' +
   '              }, \r\n' +
-  '              "value":'+(i===1 ? '"Button '+i+'"': '""')+' \r\n' +
+  '              "value":"" \r\n' +
   '            }, \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'ShowAs", \r\n' +
   '              "type": "dropdown", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Show as" \r\n' +
+  '                "en": "Show as", "nl":"Toon als" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "Select how the button must be displayed." \r\n' +
+  '                "en": "Select how the button must be displayed.", "nl":"Selecteer hoe de knop moet worden weergegeven." \r\n' +
   '              }, \r\n' +
   '              "values":[';
   if(i===1) str+= '{"id":"indicatoronly", "label":"Indicator Only"}, ';
+  if(i===1) str+= '{"id":"pushbutton_indicator", "label":"Pushbutton and separate Indicator"}, ';
+  if(i===1) str+= '{"id":"onoff_hide", "label":"On/Off (Hidden)"}, ';
   str+='           {"id":"", "label":" "}, '+
   '                {"id":"button", "label":"Push Button (Default)"}, '+
   '                {"id":"onoff", "label":"On/Off"}, ';
@@ -556,12 +547,12 @@ str+='       },' +
   '              "id": "button'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards *" \r\n' +
+  '                "en": "Create Flow Cards *", "nl":"Creëer flowkaarten *" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next." \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt. Ook nodig voor sommige knoppen, zoals Afspelen, Vorige en Volgende." \r\n' +
   '              }, \r\n' +
-  '              "value": '+(i===1?'true':'false')+' \r\n';
+  '              "value": false \r\n';
   
   if(i>1) str+=
   '            }, \r\n' +
@@ -569,10 +560,10 @@ str+='       },' +
   '              "id": "button'+i+'Icon", \r\n' +
   '              "type": "dropdown", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Icon (only for Button or OnOff)" \r\n' +
+  '                "en": "Icon (only for Button or On/Off)", "nl":"Pictogram (voor Knop of Aan/Uit)" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows." \r\n' +
+  '                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
   '              }, \r\n' +
   icons +'       "value": "" \r\n';
 
@@ -581,10 +572,10 @@ str+='       },' +
   '              "id": "button'+i+'Disabled", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Disabled" \r\n' +
+  '                "en": "Non-Clickable", "nl":"Niet-klikbaar" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Disabled=yes." \r\n' +
+  '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Non-Clickable.", "nl":"Indien geselecteerd is deze knop niet klikbaar. Vereist een herstart van de app na instellen op Niet-klikbaar" \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -593,16 +584,47 @@ str+='       },' +
   '              "id": "button'+i+'Checked", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Checked (Disabled only)" \r\n' +
+  '                "en": "Checked (Non-Clickable only)", "nl":"Aangevinkt (alleen niet-klikbaar)" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected this button will be light, else dark." \r\n' +
+  '                "en": "When selected this button will be light, else dark.", "nl":"Als deze knop is geselecteerd, is deze licht, anders donker." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
-  str+='            } \r\n';
-
-  str+=
+  str+='       }, \r\n' +
+  '            { \r\n' +
+  '              "id": "button'+i+'PreventInsights", \r\n' +
+  '              "type": "checkbox", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+  '              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+  '              }, \r\n' +
+  '              "value": false \r\n' +
+  '            }, \r\n' +
+  '            { \r\n' +
+  '              "id": "button'+i+'InsightsTitleTrue", \r\n' +
+  '              "type": "text", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Insights Title True", "nl":"Insights titel Waar" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is." \r\n' +
+  '              }, \r\n' +
+  '              "value": "" \r\n' +
+  '            }, \r\n' +
+  '            { \r\n' +
+  '              "id": "button'+i+'InsightsTitleFalse", \r\n' +
+  '              "type": "text", \r\n' +
+  '              "label": { \r\n' +
+  '                "en": "Insights Title False", "nl":"Insights titel Onwaar" \r\n' +
+  '              }, \r\n' +
+  '              "hint": { \r\n' +
+  '                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is." \r\n' +
+  '              }, \r\n' +
+  '              "value": "" \r\n' +
+  '            } \r\n' +
   '          ] \r\n' +
   '        }, \r\n';
 }
@@ -675,12 +697,12 @@ str+='       },' +
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Cameras"}, \r\n' +
+'          "label": {"en": "Cameras", "nl":"Camera\'s"}, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
-'              "id": "labelCameras1", \r\n' +
+'              "id": "labelCamerasRestart", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": " "}, \r\n' +
+'              "label": {"en": " ", "nl":" "}, \r\n' +
 '              "value":"After removing a camera (by clearing the name or url), the app requires a restart to remove the camera-image from the device." \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
@@ -690,20 +712,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Camera '+i+'" \r\n' +
-  '          }, \r\n' +
-  '          "hint": { \r\n' +
-  '            "en": "Enter al settings for Camera '+i+'" \r\n' +
+  '            "en": "Camera '+i+'", "nl":"Camera '+i+'" \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
   '              "id": "camera'+i+'Name", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Name" \r\n' +
+  '                "en": "Name", "nl":"Naam" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The name for Camera '+i+'" \r\n' +
+  '                "en": "The name for Camera '+i+'", "nl":"De naam voor camera '+i+'" \r\n' +
   '              }, \r\n' +
   '              "value":"" \r\n' +
   '            }, \r\n' +
@@ -711,10 +730,10 @@ for(var i=1;i<=fields;i++) {
   '              "id": "camera'+i+'Url", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Url" \r\n' +
+  '                "en": "Url", "nl":"URL" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The URL for Camera '+i+'" \r\n' +
+  '                "en": "The Url for Camera '+i+'", "nl":"De URL voor camera '+i+'" \r\n' +
   '              }, \r\n' +
   '              "value":"" \r\n' +
   '            }, \r\n' +
@@ -725,10 +744,10 @@ for(var i=1;i<=fields;i++) {
   '              "max": 86400, \r\n' +
   '              "step": 1, \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Interval in Seconds" \r\n' +
+  '                "en": "Interval in Seconds", "nl":"Interval in seconden" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The Interval in seconds to refresh the image for Camera '+i+'. Entering 0 will disable automatic refresh." \r\n' +
+  '                "en": "The Interval in seconds to refresh the image for Camera '+i+'. Entering 0 will disable automatic refresh.", "nl":"Het interval in seconden om het beeld voor Camera '+i+' te vernieuwen. Wanneer 0 is ingevoert, wordt automatisch vernieuwen uitgeschakeld." \r\n' +
   '              }, \r\n' +
   '              "value":0 \r\n' +
   '            }';
