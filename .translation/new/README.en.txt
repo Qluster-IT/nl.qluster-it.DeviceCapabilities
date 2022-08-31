@@ -2,7 +2,7 @@ New: Fully Customisable Virtual Device!
 See the topic for examples.
 
 Create a device and configure it yourself:
-* Textual Status on Device Tile in Mobile App setable through flows.
+* Textual Status which you can select as Status Indicator on the Device Tile in Mobile App, setable through flows.
 * Custom uploadable icons can be set as capability icon.
 * Have the Device Tile function as a Pushbutton (staying light/dark after clicked) but set Dark/Light on the Tile as status from a flow.
 * 10 Numbers, Texts, Yes/No's, Buttons and Cameras can be add_devices.
