@@ -10,7 +10,7 @@ Create a device and configure it yourself:
 
 And 
 
-A flow to retrieve the User and Client from the Insights from x minutes ago (can be zero for now).
+A flowcard to retrieve the User and Client from the Insights from x minutes ago (can be zero for now).
 Example: Retrieve the value from LivingRoom for Temperature from 30 minutes ago.
 
 Or
