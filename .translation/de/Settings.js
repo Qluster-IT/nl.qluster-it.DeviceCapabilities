@@ -81,31 +81,31 @@ var icons = '              "values": [ \r\n' +
 var str = '"settings": [ \r\n' +
 '         { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "General", "nl":"Algemeen", "new":"" }, \r\n' +
+'          "label": {"en": "General", "nl":"Algemeen", "de":"" }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelGeneral", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Be aware", "nl":"Let op", "new":"" }, \r\n' +
+'              "label": {"en": "Be aware", "nl":"Let op", "de":"" }, \r\n' +
 '              "value":"Changing the properties Icon, \'Show as\' or \'Create Flow Cards\' will causes Tag IDs to be changed and thus may break flows." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "labelAlso", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Also", "nl":"En verder", "new":"" }, \r\n' +
+'              "label": {"en": "Also", "nl":"En verder", "de":"" }, \r\n' +
 '              "value":"Enabling all fields at once and pressing save, might be hard for your Homey and could take a while." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "labelCustomIcons", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Custom icons", "nl":"Aangepaste pictogrammen", "new":"" }, \r\n' +
+'              "label": {"en": "Custom icons", "nl":"Aangepaste pictogrammen", "de":"" }, \r\n' +
 '              "value":"The 10 custom icons can be set through the App Settings." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "cls", \r\n' +
 '              "type": "dropdown", \r\n' +
-'              "label": {"en": "Device Class", "nl":"Apparaatklasse", "new":"" }, \r\n' +
-'              "hint": {"en": "Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.", "nl":"Het wijzigen van de apparaatklasse kan flows breken die afhankelijk zijn van automatisch gemaakte flowkaarten van de eerder gespecificeerde klasse.", "new":"" }, \r\n' +
+'              "label": {"en": "Device Class", "nl":"Apparaatklasse", "de":"" }, \r\n' +
+'              "hint": {"en": "Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.", "nl":"Het wijzigen van de apparaatklasse kan flows breken die afhankelijk zijn van automatisch gemaakte flowkaarten van de eerder gespecificeerde klasse.", "de":"" }, \r\n' +
 '              "values":['+
 '                {"id":"other", "label":"Other (Default)"}, '+
 '                {"id":"amplifier", "label":"Amplifier"}, '+
@@ -133,17 +133,17 @@ var str = '"settings": [ \r\n' +
 '        { \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Status Indicator Field", "nl":"Statusindicatorveld", "new":""  \r\n' +
+'            "en": "Status Indicator Field", "nl":"Statusindicatorveld", "de":""  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "status1Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+'                "en": "Name", "nl":"Naam", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for the Status Field", "nl":"De naam voor het statusveld", "new":""  \r\n' +
+'                "en": "The name for the Status Field", "nl":"De naam voor het statusveld", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -154,7 +154,7 @@ var str = '"settings": [ \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.", "nl":"Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID\'s worden gewijzigd en dus flows kunnen onderbreken.", "new":""  \r\n' +
+'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.", "nl":"Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID\'s worden gewijzigd en dus flows kunnen onderbreken.", "de":""  \r\n' +
 '              }, \r\n' +
 icons +
 '              "value": "" \r\n' +
@@ -163,10 +163,10 @@ icons +
 '              "id": "status1Decimals", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Decimals", "nl":"Decimalen", "new":""  \r\n' +
+'                "en": "Decimals", "nl":"Decimalen", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The number of decimals to show.", "nl":"Het aantal decimalen dat moet worden weergegeven.", "new":""  \r\n' +
+'                "en": "The number of decimals to show.", "nl":"Het aantal decimalen dat moet worden weergegeven.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": 0, \r\n' +
 '              "min": 0, \r\n' +
@@ -177,10 +177,10 @@ icons +
 '              "id": "status1PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "new":""  \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -193,17 +193,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Textfield '+i+'", "nl":"Tekstveld '+i+'", "new":""  \r\n' +
+'            "en": "Textfield '+i+'", "nl":"Tekstveld '+i+'", "de":""  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "text'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+'                "en": "Name", "nl":"Naam", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for textfield '+i+'", "nl":"De naam voor tekstveld '+i+'", "new":""  \r\n' +
+'                "en": "The name for textfield '+i+'", "nl":"De naam voor tekstveld '+i+'", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value":"" \r\n' +
 '            }, \r\n' +
@@ -211,10 +211,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "text'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as", "nl":"Toon als", "new":""  \r\n' +
+'                "en": "Show as", "nl":"Toon als", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the text must be displayed.", "nl":"Selecteer hoe de tekst moet worden weergegeven.", "new":""  \r\n' +
+'                "en": "Select how the text must be displayed.", "nl":"Selecteer hoe de tekst moet worden weergegeven.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -229,10 +229,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "text'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon", "nl":"Pictogram", "new":""  \r\n' +
+'                "en": "Icon", "nl":"Pictogram", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -244,7 +244,7 @@ for(var i=1;i<=fields;i++) {
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Numbers", "nl":"Nummers", "new":"" }, \r\n' +
+'          "label": {"en": "Numbers", "nl":"Nummers", "de":"" }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelNumber1", \r\n' +
@@ -260,17 +260,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'", "new":""  \r\n' +
+'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'", "de":""  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "number'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+'                "en": "Name", "nl":"Naam", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for numberfield '+i+'", "nl":"De naam voor nummerveld '+i+'", "new":""  \r\n' +
+'                "en": "The name for numberfield '+i+'", "nl":"De naam voor nummerveld '+i+'", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value":"" \r\n' +
 '            }, \r\n' +
@@ -278,10 +278,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "number'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as", "nl":"Toon als", "new":""  \r\n' +
+'                "en": "Show as", "nl":"Toon als", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the number must be displayed.", "nl":"Selecteer hoe het nummer moet worden weergegeven.", "new":""  \r\n' +
+'                "en": "Select how the number must be displayed.", "nl":"Selecteer hoe het nummer moet worden weergegeven.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -305,10 +305,10 @@ str+='       },' +
   '              "id": "number'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten", "new":""  \r\n' +
+  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt.", "new":""  \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -318,10 +318,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon", "nl":"Pictogram", "new":""  \r\n' +
+'                "en": "Icon", "nl":"Pictogram", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -330,10 +330,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Units", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Units", "nl":"Eenheden", "new":""  \r\n' +
+'                "en": "Units", "nl":"Eenheden", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translated into Fahrenheit.", "nl":"De eenheden die voor het nummer moeten worden gebruikt. Als je Fahrenheit nodig hebt, voer dan °C in en het wordt vertaald in Fahrenheit.", "new":""  \r\n' +
+'                "en": "The Units to use for the number. If you need Fahrenheit, enter °C and it will be translated into Fahrenheit.", "nl":"De eenheden die voor het nummer moeten worden gebruikt. Als je Fahrenheit nodig hebt, voer dan °C in en het wordt vertaald in Fahrenheit.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -341,10 +341,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Decimals", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Decimals", "nl":"Decimalen", "new":""  \r\n' +
+'                "en": "Decimals", "nl":"Decimalen", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value.", "nl":"Het aantal decimalen dat moet worden weergegeven. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "new":""  \r\n' +
+'                "en": "The number of decimals to show. Enter -1 will be ignored and thus use a default value.", "nl":"Het aantal decimalen dat moet worden weergegeven. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": -1, \r\n' +
 '              "min": -1, \r\n' +
@@ -355,10 +355,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Min", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Min", "nl":"Min", "new":""  \r\n' +
+'                "en": "Min", "nl":"Min", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De minimale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "new":""  \r\n' +
+'                "en": "The minimum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De minimale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": -1 \r\n' +
 // '              "min": 0, \r\n' +
@@ -369,10 +369,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'Max", \r\n' +
 '              "type": "number", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Max", "nl":"Max", "new":""  \r\n' +
+'                "en": "Max", "nl":"Max", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De maximale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "new":""  \r\n' +
+'                "en": "The maximum value for the Number. Enter -1 will be ignored and thus use a default value.", "nl":"De maximale waarde voor het getal. Voer -1 in en het wordt genegeerd en zal de standaardwaarde gebruiken.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": -1 \r\n' +
 // '              "min": 0, \r\n' +
@@ -383,10 +383,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "new":""  \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -399,17 +399,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'", "new":""  \r\n' +
+'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'", "de":""  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "boolean'+i+'Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+'                "en": "Name", "nl":"Naam", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for Yes/No field '+i+'", "nl":"De naam voor Ja/Nee-veld '+i+'", "new":""  \r\n' +
+'                "en": "The name for Yes/No field '+i+'", "nl":"De naam voor Ja/Nee-veld '+i+'", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value":"" \r\n' +
 '            }, \r\n' +
@@ -417,10 +417,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "boolean'+i+'ShowAs", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Show as", "nl":"Toon als", "new":""  \r\n' +
+'                "en": "Show as", "nl":"Toon als", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the Yes/No must be displayed.", "nl":"Selecteer hoe de Ja/Nee moet worden weergegeven.", "new":""  \r\n' +
+'                "en": "Select how the Yes/No must be displayed.", "nl":"Selecteer hoe de Ja/Nee moet worden weergegeven.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -435,10 +435,10 @@ str+='       },' +
   '              "id": "boolean'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten", "new":""  \r\n' +
+  '                "en": "Create Flow Cards", "nl":"Creëer flowkaarten", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt.", "new":""  \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -447,10 +447,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'Icon", \r\n' +
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Icon", "nl":"Pictogram", "new":""  \r\n' +
+'                "en": "Icon", "nl":"Pictogram", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -470,10 +470,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'PreventInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "new":""  \r\n' +
+'                "en": "Prevent Insights", "nl":"Voorkom inzichten", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -481,10 +481,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'InsightsTitleTrue", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Insights Title True", "nl":"Insights titel Waar", "new":""  \r\n' +
+'                "en": "Insights Title True", "nl":"Insights titel Waar", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is.", "new":""  \r\n' +
+'                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -492,10 +492,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'InsightsTitleFalse", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Insights Title False", "nl":"Insights titel Onwaar", "new":""  \r\n' +
+'                "en": "Insights Title False", "nl":"Insights titel Onwaar", "de":""  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is.", "new":""  \r\n' +
+'                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is.", "de":""  \r\n' +
 '              }, \r\n' +
 '              "value": "" \r\n' +
 '            } \r\n' +
@@ -508,13 +508,13 @@ str+='       }, \r\n' +
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Buttons", "nl":"Knoppen", "new":"" }, \r\n' +
+'          "label": {"en": "Buttons", "nl":"Knoppen", "de":"" }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelButton1", \r\n' +
 '              "type": "label", \r\n' +
 '              "label": {"en": " ", "nl":" ", "new":" " }, \r\n' +
-'              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator.", "new":""  \r\n' +
+'              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator.", "de":""  \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n';
@@ -523,17 +523,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Button '+i+'", "nl":"Knop '+i+'", "new":""  \r\n' +
+  '            "en": "Button '+i+'", "nl":"Knop '+i+'", "de":""  \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'Name", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+  '                "en": "Name", "nl":"Naam", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The name for Button '+i+'", "nl":"De naam voor knop '+i+'", "new":""  \r\n' +
+  '                "en": "The name for Button '+i+'", "nl":"De naam voor knop '+i+'", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value":"" \r\n' +
   '            }, \r\n' +
@@ -541,10 +541,10 @@ for(var i=1;i<=fields;i++) {
   '              "id": "button'+i+'ShowAs", \r\n' +
   '              "type": "dropdown", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Show as", "nl":"Toon als", "new":""  \r\n' +
+  '                "en": "Show as", "nl":"Toon als", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "Select how the button must be displayed.", "nl":"Selecteer hoe de knop moet worden weergegeven.", "new":""  \r\n' +
+  '                "en": "Select how the button must be displayed.", "nl":"Selecteer hoe de knop moet worden weergegeven.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "values":[';
   if(i===1) str+= '{"id":"indicatoronly", "label":"Indicator Only"}, ';
@@ -577,10 +577,10 @@ str+='       },' +
   '              "id": "button'+i+'CreateFlowCards", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Flow Cards *", "nl":"Creëer flowkaarten *", "new":""  \r\n' +
+  '                "en": "Create Flow Cards *", "nl":"Creëer flowkaarten *", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt. Ook nodig voor sommige knoppen, zoals Afspelen, Vorige en Volgende.", "new":""  \r\n' +
+  '                "en": "When selected Default Flow Cards will be created for this capability. Also needed for some buttons, like Play, Previous and Next.", "nl":"Indien geselecteerd, worden er standaard flowkaarten voor deze capability gemaakt. Ook nodig voor sommige knoppen, zoals Afspelen, Vorige en Volgende.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -590,10 +590,10 @@ str+='       },' +
   '              "id": "button'+i+'Icon", \r\n' +
   '              "type": "dropdown", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Icon (only for Button or On/Off)", "nl":"Pictogram (voor Knop of Aan/Uit)", "new":""  \r\n' +
+  '                "en": "Icon (only for Button or On/Off)", "nl":"Pictogram (voor Knop of Aan/Uit)", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+  '                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
   '              }, \r\n' +
   icons +'       "value": "" \r\n';
 
@@ -602,10 +602,10 @@ str+='       },' +
   '              "id": "button'+i+'Disabled", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Non-Clickable", "nl":"Niet-klikbaar", "new":""  \r\n' +
+  '                "en": "Non-Clickable", "nl":"Niet-klikbaar", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Non-Clickable.", "nl":"Indien geselecteerd is deze knop niet klikbaar. Vereist een herstart van de app na instellen op Niet-klikbaar", "new":""  \r\n' +
+  '                "en": "When selected this button will not be clickable. Requires a restart of the App after setting to Non-Clickable.", "nl":"Indien geselecteerd is deze knop niet klikbaar. Vereist een herstart van de app na instellen op Niet-klikbaar", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -614,10 +614,10 @@ str+='       },' +
   '              "id": "button'+i+'Checked", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Checked (Non-Clickable only)", "nl":"Aangevinkt (alleen niet-klikbaar)", "new":""  \r\n' +
+  '                "en": "Checked (Non-Clickable only)", "nl":"Aangevinkt (alleen niet-klikbaar)", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "When selected this button will be light, else dark.", "nl":"Als deze knop is geselecteerd, is deze licht, anders donker.", "new":""  \r\n' +
+  '                "en": "When selected this button will be light, else dark.", "nl":"Als deze knop is geselecteerd, is deze licht, anders donker.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n';
   
@@ -626,10 +626,10 @@ str+='       },' +
   '              "id": "button'+i+'PreventInsights", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Prevent Insights", "nl":"Voorkom inzichten", "new":""  \r\n' +
+  '                "en": "Prevent Insights", "nl":"Voorkom inzichten", "de":""  \r\n' +
   '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "new":""  \r\n' +
+'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
   '            }, \r\n' +
@@ -637,10 +637,10 @@ str+='       },' +
   '              "id": "button'+i+'InsightsTitleTrue", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Insights Title True", "nl":"Insights titel Waar", "new":""  \r\n' +
+  '                "en": "Insights Title True", "nl":"Insights titel Waar", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is.", "new":""  \r\n' +
+  '                "en": "Insights Description for when the value is True.", "nl":"Insights omschrijving voor wanneer de waarde Waar is.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": "" \r\n' +
   '            }, \r\n' +
@@ -648,10 +648,10 @@ str+='       },' +
   '              "id": "button'+i+'InsightsTitleFalse", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Insights Title False", "nl":"Insights titel Onwaar", "new":""  \r\n' +
+  '                "en": "Insights Title False", "nl":"Insights titel Onwaar", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is.", "new":""  \r\n' +
+  '                "en": "Insights Description for when the value is False.", "nl":"Insights omschrijving voor wanneer de waarde Onwaar is.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value": "" \r\n' +
   '            } \r\n' +
@@ -727,7 +727,7 @@ str+='       },' +
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Cameras", "nl":"Camera\'s", "new":"" }, \r\n' +
+'          "label": {"en": "Cameras", "nl":"Camera\'s", "de":"" }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelCamerasRestart", \r\n' +
@@ -742,17 +742,17 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Camera '+i+'", "nl":"Camera '+i+'", "new":""  \r\n' +
+  '            "en": "Camera '+i+'", "nl":"Camera '+i+'", "de":""  \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
   '              "id": "camera'+i+'Name", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Name", "nl":"Naam", "new":""  \r\n' +
+  '                "en": "Name", "nl":"Naam", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The name for Camera '+i+'", "nl":"De naam voor camera '+i+'", "new":""  \r\n' +
+  '                "en": "The name for Camera '+i+'", "nl":"De naam voor camera '+i+'", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value":"" \r\n' +
   '            }, \r\n' +
@@ -760,10 +760,10 @@ for(var i=1;i<=fields;i++) {
   '              "id": "camera'+i+'Url", \r\n' +
   '              "type": "text", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Url", "nl":"URL", "new":""  \r\n' +
+  '                "en": "Url", "nl":"URL", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The Url for Camera '+i+'", "nl":"De URL voor camera '+i+'", "new":""  \r\n' +
+  '                "en": "The Url for Camera '+i+'", "nl":"De URL voor camera '+i+'", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value":"" \r\n' +
   '            }, \r\n' +
@@ -774,10 +774,10 @@ for(var i=1;i<=fields;i++) {
   '              "max": 86400, \r\n' +
   '              "step": 1, \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Interval in Seconds", "nl":"Interval in seconden", "new":""  \r\n' +
+  '                "en": "Interval in Seconds", "nl":"Interval in seconden", "de":""  \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-  '                "en": "The Interval in seconds to refresh the image for Camera '+i+'. Entering 0 will disable automatic refresh.", "nl":"Het interval in seconden om het beeld voor Camera '+i+' te vernieuwen. Wanneer 0 is ingevoert, wordt automatisch vernieuwen uitgeschakeld.", "new":""  \r\n' +
+  '                "en": "The Interval in seconds to refresh the image for Camera '+i+'. Entering 0 will disable automatic refresh.", "nl":"Het interval in seconden om het beeld voor Camera '+i+' te vernieuwen. Wanneer 0 is ingevoert, wordt automatisch vernieuwen uitgeschakeld.", "de":""  \r\n' +
   '              }, \r\n' +
   '              "value":0 \r\n' +
   '            }';
