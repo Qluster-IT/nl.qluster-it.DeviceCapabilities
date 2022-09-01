@@ -78,7 +78,7 @@ let icons = ['',
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"" \r\n'+
+'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes Gerät" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
@@ -94,7 +94,7 @@ for(var j=0;j<sets1.length;j++) {
   str+= '"devicecapabilities'+val+'_button": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Button", "nl":"Knop", "de":"" \r\n'+
+  '        "en": "Button", "nl":"Knop", "de":"Taste" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_hide'?'false':'true')+', \r\n'+
@@ -116,7 +116,7 @@ for(var i=0;i<icons.length;i++) {
 str+='"devicecapabilities_text'+header+'": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Text", "nl":"Tekst", "de":"" \r\n'+
+'        "en": "Text", "nl":"Tekst", "de":"Text" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": true, \r\n'+
@@ -127,7 +127,7 @@ str+='"devicecapabilities_text'+header+'": { \r\n'+
 str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 '      "type": "number", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Number", "nl":"Nummer", "de":"" \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": true, \r\n'+
@@ -140,7 +140,7 @@ str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '      "type": "boolean", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Yes/No", "nl":"Ja/Nee", "de":"" \r\n'+
+'        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": true, \r\n'+
@@ -151,7 +151,7 @@ str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '    "devicecapabilities_boolean'+header+'": { \r\n'+
 '      "type": "boolean", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Yes/No", "nl":"Ja/Nee", "de":"" \r\n'+
+'        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": true, \r\n'+
@@ -182,7 +182,7 @@ for(var j=0;j<sets1.length;j++) {
     '    "'+val2+'devicecapabilities'+val+'_button'+header+'": { \r\n'+
     '      "type": "boolean", \r\n'+
     '      "title": { \r\n'+
-    '        "en": "Yes/No", "nl":"Ja/Nee", "de":"" \r\n'+
+    '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
     '      }, \r\n'+
     '      "getable": '+(val2=='onoffbuttontab_'?'true':'false')+', \r\n'+
     '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
@@ -198,7 +198,7 @@ for(var j=0;j<sets1.length;j++) {
   '    "onoff_devicecapabilities'+val+'_button'+header+'": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Yes/No", "nl":"Ja/Nee", "de":"" \r\n'+
+  '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
