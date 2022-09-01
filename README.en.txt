@@ -1,36 +1,36 @@
-New: Fully Customisable Virtual Device!
-See the topic for examples.
+Neu: Vollständig individualisierbare virtuelle Geräte!
+Beispiele finden Sie im entsprechenden Thread im Community Forum.
 
-Create a device and configure it yourself:
-* Textual Status which you can select as Status Indicator on the Device Tile in Mobile App, setable through flows.
-* Custom uploadable icons can be set as capability icon.
-* Have the Device Tile function as a Pushbutton (staying light/dark after clicked) but set Dark/Light on the Tile as status from a flow.
-* 10 Numbers, Texts, Yes/No's, Buttons and Cameras can be add_devices.
-* Hide device tile button from the device itself.
+Erstellen Sie ein Gerät und konfigurieren Sie es selbst:
+* Textstatus, den Sie als Statusindikator auf der Gerätekachel in der mobilen App auswählen können, einstellbar über Flows.
+* Benutzerdefinierte hochladbare Icons können als Capability-Icons festgelegt werden.
+* Gerätekacheln können wie ein Schalter genutzt werden (Kachel bleibt hell/dunkel nachdem sie angeklickt wurde). Nutzen Sie die Kachel (hell/dunkel) als Statusindikator aus einem Flow heraus.
+* 10 Nummern, Texte, Ja/Nein, Buttons und Kameras können add_devices sein.
+* Ausblenden der Gerätekachel-Schaltfläche.
 
-And 
+Und
 
-A flowcard to retrieve the User and Client from the Insights from x minutes ago (can be zero for now).
-Example: Retrieve the value from LivingRoom for Temperature from 30 minutes ago.
+Flowkarte zum Abrufen des Benutzers und des Clients aus den Insights von vor x Minuten (kann vorläufig Null sein).
+Beispiel: Abrufen des Temperaturwertes vom Wohnzimmer von vor 30 Minuten.
 
-Or
+Oder
 
-Set capabilities of device's per zone, for example open or close all curtains in a certain zone, including (or not) the subzones, of a certain brand or devicetype.
-Also listens for capabilities of which there are no triggers from the app developer and gives you tokens with the User and Client (App) which activated/changed the capability value.
-And a condition able to set a capability and wait for a specific "error".
+Legen Sie die Capabilities der Geräte pro Zone fest. Öffnen oder schließen Sie beispielsweise alle Vorhänge in einer bestimmten Zone, einschließlich (oder nicht) der Unterzonen, einer bestimmten Marke oder eines bestimmten Gerätetyps.
+"Hört" auch auf Capabilities für die es keine Auslöser vom App-Entwickler gibt, und gibt Ihnen Token mit dem Benutzer und dem Client (App) zurück, der den Capability-Wert aktiviert/geändert hat.
+Und eine Bedingung die in der Lage ist, eine Capability festzulegen und auf einen bestimmten "Fehler" zu warten.
 
-Now also a new actioncard, which retrieves the value from a capability from a device from [numberof] minutes ago (including the User and Client which changed the value).
+Jetzt auch eine neue Aktionskarte, die den Wert einer Capability von einem Gerät von vor [numberof] Minuten abruft (einschließlich des Benutzers und des Clients der den Wert geändert hat).
 
-And an App has started card (When) and an App is running card (And).
+Und eine Karte "App hat gestartet" (Wenn...) sowie eine Karte "App läuft" (Und...).
 
-Example: Set curtain.windowcoverings_set To 0 in Home including subzones (Yes).
-This will close all curtains in the Home and subzones. Setting it to 1 will open all curtains.
+Beispiel: Setzen Sie in der Zone "Zuhause" einschließlich Unterzonen (Ja) curtain.windowcoverings_set auf 0.
+Dadurch werden alle Vorhänge im gesamten Zuhause geschlossen. Wenn Sie curtain.windowcoverings_set auf 1 setzen werden alle Vorhänge geöffnet.
 
-Example: Listen (watch) from Vacuumcleaner1 for bin_full
-The flow will be triggered when a device called Vacuumcleaner1 has the capacity bin_full changed.
-Check the value for true and send a notification to your phone to know when the vacuumcleaner bin is full.
+Beispiel: "Abhören" (beobachten) von Vacuumcleaner1 für bin_full.
+Der Flow wird ausgelöst wenn bei einem Gerät namens Vacuumcleaner1 die Capability bin_full geändert wird.
+Prüfen Sie den Wert auf "Wahr" und senden Sie eine Benachrichtigung an Ihr Telefon wenn der Staubsaugerbehälter voll ist.
 
-Example: Set SamsungFrameTV.onof to True and wait for error: Powered on already...
-The flow will continue after the TV has been turned ON. So no more flows with delays for waiting for TV or Coffeemaker to turn on.
+Beispiel: Setzen Sie SamsungFrameTV.onoff auf "Wahr" und warten Sie auf den Fehler: Ist bereits eingeschaltet...
+Der Ablauf wird fortgesetzt, nachdem der Fernseher eingeschaltet wurde. Es gibt also keine Verzögerungen mehr beim Warten auf das Einschalten des Fernsehers oder der Kaffeemaschine.
 
-Example: Retrieve the value from LivingRoom for Temperature from 30 minutes ago.
+Beispiel: Rufen Sie den Temperaturwert vom Wohnzimmer von vor 30 Minuten ab.
