@@ -13,7 +13,7 @@
 		"file_api_err": "The File APIs are not fully supported in this browser.",
 		"title_virtualdevices": "Your virtual devices",
 		"title_customicons": "Your custom icons",
-		"explain_customicons": "Here you can change the custom icon's that can be used for capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",
+		"explain_customicons": "Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",
 
 
 		"functions":"Functions",

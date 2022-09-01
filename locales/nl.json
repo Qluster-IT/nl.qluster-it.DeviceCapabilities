@@ -10,7 +10,7 @@
 		"file_api_err": "De bestands-API's worden niet volledig ondersteund in deze browser.",
 		"title_virtualdevices": "Uw virtuele apparaten",
 		"title_customicons": "Uw aangepaste pictogrammen",
-		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor capabilities kunnen worden gebruikt. Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",
+		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor apparaten en capabilities kunnen worden gebruikt. Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",
 
 
         

@@ -132,9 +132,10 @@
   <ul id="icon_list">
         <div v-for="(cat, index) in iconCategories" :key="index" class="category">
           <h1  class="category-title">{{cat.title}}</h1>
-          <div v-for="(item, index) in cat.icons" :key="index" v-on:click='setIcon(item)' class="icon tile">
+          <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
             <label for="icon" class="icon-wrap">
-              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item + '.svg'}"></span>
+              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item + '.svg'}"></div>
+              <div>{{icon.id}}</div>
             </label>
           </div>
         </div>
