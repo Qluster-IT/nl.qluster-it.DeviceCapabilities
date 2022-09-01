@@ -192,27 +192,28 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
               }).bind(this));
               
               this.setFunctions();
-          }
-          async setFunctions() {			  	  
-            this.functions = await this.homey.settings.get('javascript_functions');
-            //this.log('this.functions', typeof(this.functions), this.functions);
-            this.context = {
-              _:_
-            };
-            if(this.functions && this.functions.length>0) for (let i = 0; i < this.functions.length; i++) {
-              try {          
-                const funcObj = this.functions[i];
-                
-                let func = funcObj.value.parseFunction();
-                //func.bind(this.context);
-                this.log('func', func);
-                this.context[funcObj.name] = func;
-              } catch (error) {
-                this.log('Error creating function ' + this.functions[i].name);
-                this.error(error);
-              }
-            }
-          }
+    }
+
+    async setFunctions() {			  	  
+    this.functions = await this.homey.settings.get('javascript_functions');
+    //this.log('this.functions', typeof(this.functions), this.functions);
+    this.context = {
+        _:_
+    };
+    if(this.functions && this.functions.length>0) for (let i = 0; i < this.functions.length; i++) {
+        try {          
+        const funcObj = this.functions[i];
+        
+        let func = funcObj.value.parseFunction();
+        //func.bind(this.context);
+        this.log('func', func);
+        this.context[funcObj.name] = func;
+        } catch (error) {
+        this.log('Error creating function ' + this.functions[i].name);
+        this.error(error);
+        }
+    }
+    }
     
 
     runSandBox(code) {
@@ -381,8 +382,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         let id=0;
         for(let i=0;i<r.length;i++)
+        {
             for(let j=0;j<r[i].icons.length;j++)
-            r[i].icons[j].id=id++;
+                r[i].icons[j] = { id:id++, url:r[i].icons[j]};
+        }
         return r;
 
         /**

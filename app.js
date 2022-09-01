@@ -508,6 +508,9 @@ class DeviceSetter extends Homey.App {
 	async createCustomIcon({ type, name, buffer, id }) {
 		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
 	}
+	async fileExists(path) {
+		return await existsAsync(path);
+	}
 	async _createIcon({ type, name, buffer, id, subpath }) {
 		if( !TYPES_MAP[type] )
 			throw new Error(`invalid_type:${type}`);
