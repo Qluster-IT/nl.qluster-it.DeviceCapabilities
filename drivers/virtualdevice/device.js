@@ -19,7 +19,16 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		if (process.env.DEBUG === '1')  {
-			
+			let categories = this.driver.getCustomIcons();
+			for(let i=0;i<categories.length;i++)
+			{
+				for(let j=0;j<categories[i].icons.length;j++){
+					let url = categories[i].icons[j].url.substring(5);
+					if(await this.homey.app.fileExists(url)) console.log(url);
+					//categories[i].icons[j] = { id:id++, url:categories[i].icons[j]};
+				}
+					
+			}
 		}
 
 
@@ -36,6 +45,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
 				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[1]))
 				) {
+					//If it's a new Version, place stuff here
 					let newSettings = {
 						"labelGeneral":this.homey.__("virtualdevicesettings.labelGeneral"),
 						"labelAlso":this.homey.__("virtualdevicesettings.labelAlso"),
