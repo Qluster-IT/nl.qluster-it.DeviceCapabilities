@@ -231,23 +231,6 @@
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
 	<div ng-show="!editdeviceicon && !editcustomicon">
 
-		<h1 data-i18n="settings.title_customicons">Your custom icons</h1>
-		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
-
-		<ul id="customicons">
-			<li class="customicon" ng-repeat="customicon in customicons">
-				<div class="image"
-					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon + '.svg?'+ stamp + ')'}">
-				</div>
-				<div class="name">{{customicon}}</div>
-				<div class="buttons">
-					<button class="edit" ng-click="setEditCustomIcon(customicon);"><i
-							class="fa fa-edit"></i></button>
-				</div>
-
-			</li>
-		</ul>
-
 		<h1 data-i18n="settings.functions">Functions</h1>
         <p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
         <p data-i18n="settings.functions_be_aware">Be aware that removing functions could corrupt flows that are using that function.</p>
@@ -295,6 +278,27 @@
             <textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
             <button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
         </div>
+
+
+
+		<!-- Custom Icons -->
+		<h1 data-i18n="settings.title_customicons">Your custom icons</h1>
+		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
+
+		<ul id="customicons">
+			<li class="customicon" ng-repeat="customicon in customicons">
+				<div class="image"
+					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon + '.svg?'+ stamp + ')'}">
+				</div>
+				<div class="name">{{customicon}}</div>
+				<div class="buttons">
+					<button class="edit" ng-click="setEditCustomIcon(customicon);"><i
+							class="fa fa-edit"></i></button>
+				</div>
+
+			</li>
+		</ul>
+
 
 
 
@@ -543,7 +547,7 @@
 
 				$scope.getCustomIcons = function () {
 					var arr = [];
-					for (let i = 1; i <= 40; i++) arr.push('custom_' + i);
+					for (let i = 1; i <= 60; i++) arr.push('custom_' + i);
 					console.log('$scope.customicons');
 					console.log(arr);
 					$scope.$apply(function () {

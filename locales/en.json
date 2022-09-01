@@ -13,10 +13,7 @@
 		"file_api_err": "The File APIs are not fully supported in this browser.",
 		"title_virtualdevices": "Your virtual devices",
 		"title_customicons": "Your custom icons",
-		"explain_customicons": "Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",
-
-
-		"functions":"Functions",
+		"explain_customicons": "Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",		"functions":"Functions",
 		"functions_expressions":"These functions can be used within (javascript) expression.",
 		"functions_be_aware":"Be aware that removing functions could corrupt flows that are using that function.",
 		"add_function_text":"To create a function, enter a name, press Add Function, then press edit below.",
@@ -31,7 +28,6 @@
 		"function_exists":"Function already exists.",
 		"delete_all_confirm":"Are you sure you wish to delete ALL functions?",
 		"delete_confirm":"Are you sure you wish to delete function __functionName__?",
-
 		"search_for_name":"search for name"
 
 	},
@@ -46,7 +42,9 @@
 			"title":"Device Icon",
 			"loading":"Loading",
 			"custom_device_icon":"If you wish to use a custom icon for your device, you can upload it here. The icon needs to be in .svg format.",
-			"select_device_icon":"Or select one from the list."
+			"select_device_icon":"Or select one from the list.",
+
+			"set_icon_and_customize":"Here you can select an icon (id) for your device. You can change the icon for each ID/number later through App Settings, but you cannot change which icon ID your device uses after creation. So pick a Unique number for each device. Any icon can be chosen for devices and capabilities, the categories are for clarity.  All icons can be set to any default icon through App Settings."
 		},
 
 		"done":{

@@ -19,16 +19,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		if (process.env.DEBUG === '1')  {
-			let categories = this.driver.getCustomIcons();
-			for(let i=0;i<categories.length;i++)
-			{
-				for(let j=0;j<categories[i].icons.length;j++){
-					let url = categories[i].icons[j].url.substring(5);
-					if(await this.homey.app.fileExists(url)) console.log(url);
-					//categories[i].icons[j] = { id:id++, url:categories[i].icons[j]};
-				}
-					
-			}
+			
 		}
 
 
@@ -36,15 +27,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		var caps = this.getCapabilities();		
 		this.Settings = await this.getSettings();
 
-		let versionUpdatedTo = this.getStoreValue('Version') || "0.0.0";
-		if(this.homey.app.manifest.version!=versionUpdatedTo) {
-			let versionArr = this.homey.app.manifest.version.split(".");
-			let versionUpdatedToArr = versionUpdatedTo.split(".");
-			if(
-				parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
-				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
-				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[1]))
-				) {
+		if(this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
 					//If it's a new Version, place stuff here
 					let newSettings = {
 						"labelGeneral":this.homey.__("virtualdevicesettings.labelGeneral"),
@@ -62,7 +45,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					this.setStoreValue('Version', this.homey.app.manifest.version);
 					await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
 				}
-		}
+		
 
 		
 

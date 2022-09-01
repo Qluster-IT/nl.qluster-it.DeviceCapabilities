@@ -116,7 +116,7 @@
 
 </script>
 
-<div>
+<!-- <div>
     <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br/>
     <div class="form-group" style="margin-top:10px;">
         <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
@@ -129,8 +129,10 @@
     <div class="form-group buttons" style="margin-top:10px;">
       <button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
     </div>  
+</div> -->
+<div>
+  <span data-i18n="pair.list_icons.set_icon_and_customize"></span>
 </div>
-
 
 <div style="margin-top:10px;">
   <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
@@ -140,8 +142,8 @@
           <h1  class="category-title">{{cat.title}}</h1>
           <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
             <label for="icon" class="icon-wrap">
-              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item.url + '.svg'}"></div>
-              <div class="icon id">{{item.id}}</div>
+              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
+              <div class="icon id">{{item.subid}}</div>
             </label>
           </div>
         </div>
