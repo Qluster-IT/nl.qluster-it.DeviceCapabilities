@@ -1,0 +1,1656 @@
+{
+    "name": {
+        "en": "Device Capabilities",
+        "nl": "Apparaat mogelijkheden",
+        "de":""
+      },
+      "description": {
+        "en": "Enhance the capabilities of devices",
+        "nl": "Verbeter de capabilities van apparaten",
+        "de":""
+      },
+      "tags": {
+        "en": [
+          "device",
+          "capabilities",
+          "capability",
+          "user",
+          "client",
+          "operator",
+          "log",
+          "insights",
+          "watch",
+          "listener",
+          "zones",
+          "virtual",
+          "customize",
+          "customisable"
+        ],
+        "nl": [
+          "device",
+          "capabilities",
+          "capability",
+          "gebruiker",
+          "client",
+          "operator",
+          "log",
+          "insights",
+          "watch",
+          "listener",
+          "ruimtes",
+          "virtueel",
+          "virtual",
+          "aanpassen",
+          "aanbasbaar"
+        ],
+        "new":[]
+      },
+      "flow": {
+        "triggers": [
+          {
+            "id": "trigger_capability_changed",
+            "deprecated": true,
+            "title": {
+              "en": "Capability listener",
+              "nl": "Capability luisteraar"
+            },
+            "titleFormatted": {
+              "en": "Listen (watch) from [[device]] for [[capability]]",
+              "nl": "Luister (watch) van [[device]] naar [[capability]]"
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Device",
+                  "nl": "Apparaat"
+                },
+                "placeholder": {
+                  "en": "Device",
+                  "nl": "Apparaat"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "value",
+                "type": "string",
+                "title": {
+                  "en": "value",
+                  "nl": "waarde"
+                }
+              }
+            ]
+          },
+          {
+            "id": "trigger_capability_changed2",
+            "title": {
+              "en": "Capability listener",
+              "nl": "Capability luisteraar",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Listen (watch) from [[device]] for [[capability]]",
+              "nl": "Luister (watch) van [[device]] naar [[capability]]",
+              "de":""
+            },
+            "hint": {
+              "en": "This card will execute when a certain capability from a device has changed.\r\nFor OnOff and capabilities with Insights, it will also supply as tokens, the User and Client how changed the value.",
+              "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde mogelijkheid (eigenschap) van een apparaat is gewijzigd.\r\nVoor AanUit en capabilities met Insights zal het ook als tokens de Gebruiker en Client geven die de waarde heeft gewijzigd.",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Device",
+                  "nl": "Apparaat",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Device",
+                  "nl": "Apparaat",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "user",
+                "type": "string",
+                "title": {
+                  "en": "User",
+                  "nl": "Gebruiker",
+                  "de":""
+                }
+              },
+              {
+                "name": "client",
+                "type": "string",
+                "title": {
+                  "en": "Client",
+                  "nl": "Cliënt",
+                  "de":""
+                }
+              },
+              {
+                "name": "text1",
+                "type": "string",
+                "title": {
+                  "en": "Text 1",
+                  "nl": "Tekst 1",
+                  "de":""
+                }
+              },
+              {
+                "name": "number1",
+                "type": "number",
+                "title": {
+                  "en": "Number 1",
+                  "nl": "Nummer 1",
+                  "de":""
+                }
+              },
+              {
+                "name": "boolean1",
+                "type": "boolean",
+                "title": {
+                  "en": "Yes/No 1",
+                  "nl": "Ja/Nee 1",
+                  "de":""
+                }
+              }
+            ]
+          },
+          {
+            "id": "trigger_app_started",
+            "title": {
+              "en": "App started",
+              "nl": "App is gestart",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "App [[app]] started",
+              "nl": "App [[app]] is gestart",
+              "de":""
+            },
+            "hint": {
+              "en": "This card will execute when a certain App is started.",
+              "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde app wordt gestart.",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "app",
+                "title": {
+                  "en": "App",
+                  "nl": "App",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "App",
+                  "nl": "App",
+                  "de":""
+                }
+              }
+            ]
+          },
+          {
+            "id": "trigger_virtualdevice_button",
+            "title": {
+              "en": "Button pushed",
+              "nl": "Knop ingedrukt",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Button [[field]] pushed",
+              "nl": "Knop [[field]] ingedrukt",
+              "de":""
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Button",
+                  "nl": "Knop",
+                  "de":""
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "value",
+                "type": "boolean",
+                "title": {
+                  "en": "Value",
+                  "nl": "Waarde",
+                  "de":""
+                }
+              }
+            ]
+          },
+          {
+            "id": "trigger_virtualdevice_boolean",
+            "title": {
+              "en": "Yes/No set",
+              "nl": "Ja/Nee ingesteld",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Yes/No [[field]] set",
+              "nl": "Ja/Nee [[field]] ingesteld",
+              "de":""
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Button",
+                  "nl": "Knop",
+                  "de":""
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "value",
+                "type": "boolean",
+                "title": {
+                  "en": "Value",
+                  "nl": "Waarde",
+                  "de":""
+                }
+              }
+            ]
+          },
+          {
+            "id": "trigger_virtualdevice_number",
+            "title": {
+              "en": "Number set",
+              "nl": "Nummer ingesteld",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Number [[field]] set",
+              "nl": "Number [[field]] ingesteld",
+              "de":""
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Number",
+                  "nl": "Nummer",
+                  "de":""
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "value",
+                "type": "number",
+                "title": {
+                  "en": "Value",
+                  "nl": "Waarde",
+                  "de":""
+                }
+              }
+            ]
+          }
+        ],
+        "conditions": [
+          {
+            "id": "condition_change_capability_boolean",
+            "title": {
+              "en": "Capability listener",
+              "nl": "Capability luisteraar",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Set [[device]].[[capability]] to [[value]] and wait for error: [[error]]",
+              "nl": "Set [[device]].[[capability]] naar [[value]] en wacht op error: [[error]]",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Device",
+                  "nl": "Apparaat",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Device",
+                  "nl": "Apparaat",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "value",
+                "placeholder": {
+                  "en": "True or False",
+                  "nl": "Ja of Nee",
+                  "de":""
+                },
+                "values": [
+                  {
+                    "id": "true",
+                    "label": {
+                      "en": "True",
+                      "nl": "Ja",
+                      "de":""
+                    }
+                  },
+                  {
+                    "id": "false",
+                    "label": {
+                      "en": "False",
+                      "nl": "Nee",
+                      "de":""
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "error",
+                "type": "text",
+                "title": {
+                  "en": "Error",
+                  "nl": "Foutmelding",
+                  "de":""
+                }
+              }
+            ]
+          },
+          {
+            "id": "condition_app_running",
+            "title": {
+              "en": "App running",
+              "nl": "App actief",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "App [[app]] is !{{|not}} running",
+              "nl": "App [[app]] is !{{|niet}} actief",
+              "de":""
+            },
+            "hint": {
+              "en": "Check if a certain App is running or not",
+              "nl": "Controleer of een bepaalde app actief is of niet",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "app",
+                "title": {
+                  "en": "App",
+                  "nl": "App",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "App",
+                  "nl": "App",
+                  "de":""
+                }
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "id": "set_capability_zone_text",
+            "title": {
+              "en": "Set text capabilities in a zone",
+              "nl": "Zet tekst capabilities in een ruimte",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de":""
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain text.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde tekst.",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                }
+              },
+              {
+                "type": "text",
+                "name": "value",
+                "title": {
+                  "en": "Text",
+                  "nl": "Tekst",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in",
+                  "de":""
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja",
+                      "de":""
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee",
+                      "de":""
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "set_capability_zone_number",
+            "title": {
+              "en": "Set number capabilities in a zone",
+              "nl": "Zet number capabilities in een zone",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de":""
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain number.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde nummer.",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                }
+              },
+              {
+                "type": "number",
+                "name": "value",
+                "title": {
+                  "en": "Number",
+                  "nl": "Nummer",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Number",
+                  "nl": "Nummer",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in",
+                  "de":""
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja",
+                      "de":""
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee",
+                      "de":""
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "set_capability_zone_percentage",
+            "title": {
+              "en": "Set percentage capabilities in a zone",
+              "nl": "Zet procent capabilities in een zone",
+              "de":""
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de":""
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain percentage.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde percentage.",
+              "de":""
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type",
+                  "de":""
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability",
+                  "de":""
+                }
+              },
+              {
+                "type": "range",
+                "name": "value",
+                "title": {
+                  "en": "%",
+                  "nl": "%",
+                  "new":"%"
+                },
+                "placeholder": {
+                  "en": "%",
+                  "nl": "%",
+                  "new":"%"
+                },
+                "min": 0,
+                "max": 1,
+                "step": 0.01,
+                "labelMultiplier": 100,
+                "labelDecimals": 0
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte",
+                  "de":""
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's"
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in"
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja"
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "set_capability_zone_boolean",
+            "deprecated": true,
+            "title": {
+              "en": "Set true/false capabilities in a zone",
+              "nl": "Zet ja/nee capabilities in een ruimte"
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee."
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "value",
+                "title": {
+                  "en": "True or False",
+                  "nl": "Ja of Nee"
+                },
+                "placeholder": {
+                  "en": "True or False",
+                  "nl": "Ja of Nee"
+                },
+                "values": [
+                  {
+                    "id": "true",
+                    "label": {
+                      "en": "True",
+                      "nl": "Ja"
+                    }
+                  },
+                  {
+                    "id": "false",
+                    "label": {
+                      "en": "False",
+                      "nl": "Nee"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's"
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in"
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja"
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "set_capability_zone_2_boolean",
+            "title": {
+              "en": "Set true/false capabilities in a zone",
+              "nl": "Zet ja/nee capabilities in een ruimte"
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee."
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                }
+              },
+              {
+                "type": "checkbox",
+                "name": "value",
+                "title": {
+                  "en": "Yes/No",
+                  "nl": "Ja/Nee"
+                },
+                "placeholder": {
+                  "en": "Yes/No",
+                  "nl": "Ja/Nee"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's"
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in"
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja"
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "set_capability_zone_json",
+            "title": {
+              "en": "Set json as value for capabilities in a zone",
+              "nl": "Zet json als waarde voor capabilities in een ruimte"
+            },
+            "titleFormatted": {
+              "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+            },
+            "hint": {
+              "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability value as a JSON value.\r\n\"text\", 0.25 or true.\r\nMind the double quotes for text.",
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) waarde in als JSON waarde.\r\n\"tekst\", 0.25 of true.\r\nLet op de dubbele aanhalingstekens voor tekst."
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "deviceclass",
+                "title": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                },
+                "placeholder": {
+                  "en": "Deviceclass",
+                  "nl": "Apparaatklasse"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "brand",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Brand",
+                  "nl": "optioneel: Merk"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "devicetype",
+                "required": false,
+                "placeholder": {
+                  "en": "optional: Device Type",
+                  "nl": "optioneel: Apparaat Type"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                }
+              },
+              {
+                "type": "text",
+                "name": "value",
+                "title": {
+                  "en": "JSON",
+                  "nl": "JSON"
+                },
+                "placeholder": {
+                  "en": "\"track\", true or 0.25",
+                  "nl": "\"track\", true or 0.25"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "zone",
+                "title": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                },
+                "placeholder": {
+                  "en": "Zone",
+                  "nl": "Ruimte"
+                }
+              },
+              {
+                "type": "dropdown",
+                "name": "subzones",
+                "title": {
+                  "en": "Subzones",
+                  "nl": "Sub-ruimte's"
+                },
+                "placeholder": {
+                  "en": "Set Subzones",
+                  "nl": "Stel sub-ruimte's in"
+                },
+                "values": [
+                  {
+                    "id": "yes",
+                    "label": {
+                      "en": "Yes",
+                      "nl": "Ja"
+                    }
+                  },
+                  {
+                    "id": "no",
+                    "label": {
+                      "en": "No",
+                      "nl": "Nee"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "action_capability_log",
+            "title": {
+              "en": "Retrieve Insight Log Value",
+              "nl": "Ontvang Insight Log Waarde"
+            },
+            "titleFormatted": {
+              "en": "Retrieve the insights value from [[device]] for [[capability]] from [[numberof]] minutes ago",
+              "nl": "Ontvang de insights waarde van [[device]] voor [[capability]] van [[numberof]] minuten geleden"
+            },
+            "hint": {
+              "en": "Retrieve the Value from the Insight Log (and OnOff) from x Minutes ago. Setting it to zero (0) minutes will retrieve the last changed value.\r\nIncludes Tokens for with the User and Client who changed the value.",
+              "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd."
+            },
+            "highlight": true,
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Device",
+                  "nl": "Apparaat"
+                },
+                "placeholder": {
+                  "en": "Device",
+                  "nl": "Apparaat"
+                }
+              },
+              {
+                "type": "autocomplete",
+                "name": "capability",
+                "title": {
+                  "en": "Capability",
+                  "nl": "Capability"
+                },
+                "placeholder": {
+                  "en": "Capability",
+                  "nl": "Mogelijkheid"
+                }
+              },
+              {
+                "type": "number",
+                "name": "numberof",
+                "placeholder": {
+                  "en": "Minutes ago",
+                  "nl": "Minuten geleden"
+                }
+              }
+            ],
+            "tokens": [
+              {
+                "name": "user",
+                "type": "string",
+                "title": {
+                  "en": "User",
+                  "nl": "Gebruiker"
+                }
+              },
+              {
+                "name": "client",
+                "type": "string",
+                "title": {
+                  "en": "Client",
+                  "nl": "Cliënt"
+                }
+              },
+              {
+                "name": "text",
+                "type": "string",
+                "title": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                }
+              },
+              {
+                "name": "number",
+                "type": "number",
+                "title": {
+                  "en": "Number",
+                  "nl": "Nummer"
+                }
+              },
+              {
+                "name": "boolean",
+                "type": "boolean",
+                "title": {
+                  "en": "Yes/No",
+                  "nl": "Ja/Nee"
+                }
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_text",
+            "title": {
+              "en": "Set Text",
+              "nl": "Zet Tekst"
+            },
+            "titleFormatted": {
+              "en": "Set [[field]] to [[text]]",
+              "nl": "Zet [[field]] naar [[text]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Textfield",
+                  "nl": "Tekstveld"
+                }
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_number",
+            "title": {
+              "en": "Set Number",
+              "nl": "Zet Nummer"
+            },
+            "titleFormatted": {
+              "en": "Set [[field]] to [[number]]",
+              "nl": "Zet [[field]] naar [[number]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Numberfield",
+                  "nl": "Nummerveld"
+                }
+              },
+              {
+                "type": "number",
+                "name": "number",
+                "placeholder": {
+                  "en": "Number",
+                  "nl": "Nummer"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_boolean",
+            "title": {
+              "en": "Set Yes/No",
+              "nl": "Zet Ja/Nee"
+            },
+            "titleFormatted": {
+              "en": "Set [[field]] to [[boolean]]",
+              "nl": "Zet [[field]] naar [[boolean]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Yes/No field",
+                  "nl": "Ja/Nee veld"
+                }
+              },
+              {
+                "type": "checkbox",
+                "name": "boolean",
+                "placeholder": {
+                  "en": "Yes/No",
+                  "nl": "Ja/Nee"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_button",
+            "title": {
+              "en": "Set Button",
+              "nl": "Zet Knop"
+            },
+            "titleFormatted": {
+              "en": "Set [[field]] to [[boolean]]",
+              "nl": "Zet [[field]] naar [[boolean]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Button",
+                  "nl": "Knop"
+                }
+              },
+              {
+                "type": "checkbox",
+                "name": "boolean",
+                "placeholder": {
+                  "en": "Yes/No",
+                  "nl": "Ja/Nee"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_status",
+            "title": {
+              "en": "Set Status",
+              "nl": "Zet Status"
+            },
+            "titleFormatted": {
+              "en": "Set Status to [[text]]",
+              "nl": "Zet Status naar [[text]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_status_optionalnumber",
+            "title": {
+              "en": "Set Status with Number",
+              "nl": "Zet Status met Nummer"
+            },
+            "titleFormatted": {
+              "en": "Set Status to [[text]] with [[number]]",
+              "nl": "Zet Status naar [[text]] met [[number]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                },
+                "required": false
+              },
+              {
+                "type": "number",
+                "name": "number",
+                "placeholder": {
+                  "en": "Number",
+                  "nl": "Nummer"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_expression",
+            "title": {
+              "en": "Set Expression",
+              "nl": "Zet Expression"
+            },
+            "titleFormatted": {
+              "en": "Set [[field]] to [[expression]]",
+              "nl": "Zet [[field]] naar [[expression]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "autocomplete",
+                "name": "field",
+                "placeholder": {
+                  "en": "Field",
+                  "nl": "Veld"
+                }
+              },
+              {
+                "type": "text",
+                "name": "expression",
+                "placeholder": {
+                  "en": "Expression",
+                  "nl": "Expression"
+                },
+                "required": false
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_name",
+            "deprecated": true,
+            "title": {
+              "en": "Set Name",
+              "nl": "Zet Naam"
+            },
+            "titleFormatted": {
+              "en": "Set Name to [[text]]",
+              "nl": "Zet Naam naar [[text]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                }
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_warning",
+            "title": {
+              "en": "Set Warning",
+              "nl": "Zet Waarschuwing"
+            },
+            "titleFormatted": {
+              "en": "Set Warning to [[text]]",
+              "nl": "Zet Waarschuwing naar [[text]]"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                }
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_unavailable",
+            "title": {
+              "en": "Set Unavailable",
+              "nl": "Zet Niet Beschikbaar"
+            },
+            "titleFormatted": {
+              "en": "Set [[device]] Unavailable with message [[text]]",
+              "nl": "Zet [[device]] Niet Beschikbaar met bericht [[text]]"
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Virtual Device",
+                  "nl": "Virtueel Apparaat"
+                },
+                "placeholder": {
+                  "en": "Virtual Device",
+                  "nl": "Virtueel Apparaat"
+                }
+              },
+              {
+                "type": "text",
+                "name": "text",
+                "placeholder": {
+                  "en": "Text",
+                  "nl": "Tekst"
+                }
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_clear_warning",
+            "title": {
+              "en": "Clear Warning",
+              "nl": "Maak Waarschuwing leeg"
+            },
+            "titleFormatted": {
+              "en": "Clear Warning",
+              "nl": "Maak Waarschuwing leeg"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=virtualdevice"
+              }
+            ]
+          },
+          {
+            "id": "virtualdevice_set_available",
+            "title": {
+              "en": "Set Available",
+              "nl": "Maak Beschikbaar"
+            },
+            "titleFormatted": {
+              "en": "Set [[device]] Available",
+              "nl": "Maak [[device]] Beschikbaar"
+            },
+            "args": [
+              {
+                "type": "autocomplete",
+                "name": "device",
+                "title": {
+                  "en": "Virtual Device",
+                  "nl": "Virtueel Apparaat"
+                },
+                "placeholder": {
+                  "en": "Virtual Device",
+                  "nl": "Virtueel Apparaat"
+                }
+              }
+            ]
+          }
+        ]
+      }
+
+}
