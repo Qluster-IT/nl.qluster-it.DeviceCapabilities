@@ -39,8 +39,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     }
 				}
 			}
+            
+
+            await this.homey.settings.set('Version', this.homey.app.manifest.version);
+        } else {
+            try {             
+                this.defaultIcons =  await this.homey.settings.get('DefaultIcons');
+            } catch (error) {
+                
+            }
+        }
+
+        if(!this.defaultIcons) {
             this.defaultIcons = {};
-            var _path = './assets/';
+            var _path = './assets/icons/';
             let filesandfolders = await this.homey.app.readdir(_path);
             
             let f = (dir, file)=> {
@@ -51,20 +63,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             for (let i = 0; i < filesandfolders.length; i++) {
                 const faf = filesandfolders[i];
-                let stats = await this.homey.app.stat(path.join(_path,faf));
+                let stats = await this.homey.app.fsstat(path.join(_path,faf));
                 if(stats.isDirectory()) {
                     let files = await this.homey.app.readdir(path.join(_path,faf));
                     for (let j = 0; j < files.length; j++) {
                         const file = files[j];
-                        let stats = await this.homey.app.stat(path.join(_path,faf, file));
-                        if(stats.isFile() ) f(faf, faf+file);
+                        let stats = await this.homey.app.fsstat(path.join(_path,faf, file));
+                        if(stats.isFile() ) f(faf, path.join(faf, file));
                     }
 
-                } else if(stats.isFile()) f('Unsorted', faf); //isFile!
-                
+                } else if(stats.isFile()) f('Unsorted', faf); //isFile!                
             }
-
-            await this.homey.settings.set('Version', this.homey.app.manifest.version);
+            await this.homey.settings.set('DefaultIcons', this.defaultIcons);
         }
         
 
@@ -77,6 +87,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if (!args || !args.device) return false;
                     let fieldId = args.field? args.field.id : 'status1';
                     let cap = args.device.getStoreValue(fieldId);
+                    if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
+                    let dontUpdateField = false;
                     try {
                         let val;
                         switch (action) {
@@ -102,14 +114,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
                                     opt.units = args.text;
-                                    args.device.setCapabilityOptions(cap, opt);
+                                    await args.device.setCapabilityOptions(cap, opt);
                                 }
                                 if(args.number!==undefined && args.number!=='undefined') val = args.number;
                                 else if(action=="virtualdevice_set_status_optionalnumber") val = null;
+                                else dontUpdateField = true;
+                                if(args.refreshmobilebug===true) {
+                                    await args.device.setUnavailable('Updating');
+                                    await args.device.setAvailable();
+                                }
                                 break;
                         }
 
-                        if(args.device.hasCapability(cap)) await args.device.setCapabilityValue(cap, val);
+                        if(args.device.hasCapability(cap) && !dontUpdateField) await args.device.setCapabilityValue(cap, val);
                         await args.device.setStoreValue(fieldId+"Value", val);
                         return true;
 					} catch (error) {
@@ -235,13 +252,16 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             });
 		
             
-            this.homey.settings.on('set', (function(settingName) {
+            this.homey.settings.on('set', (async function(settingName) {
                 if(settingName=='javascript_functions') {
                   this.setFunctions();
                 }
+                if(settingName=='customIconNames') {
+                    this.customIconNames = await this.homey.settings.get('customIconNames');
+                  }                
           
               }).bind(this));
-              
+              this.customIconNames = await this.homey.settings.get('customIconNames');
               this.setFunctions();
     }
 
@@ -322,7 +342,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     {name:"other_20", file:'custom_60', defaultIcon:''}
                 ]
             }
-
         ];
 
         let id=1;
@@ -331,13 +350,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             for(let j=0;j<r[i].icons.length;j++){
                 r[i].icons[j].id = id++;
                 r[i].icons[j].subid = j+1;
+                r[i].icons[j].customname = this.customIconNames ? this.customIconNames[r[i].icons[j].file] : undefined;
             }
         }
-        return r;
+        return {icons:r, iconnames:this.customIconNames};
 
       }
 
       getDefaultIcons() {
+        return this.defaultIcons;
         return [
             {
                 title:'Alarms',
@@ -605,7 +626,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         session.setHandler('icon_picked', async (data) => {
             device = devices[0];
-            var iconPath = "../../../assets/icons/" + data.icon+'.svg';
+            var iconPath = "../../../userdata/customicons/" + data.icon.file+'.svg';
             device.data.icon = iconPath;
             device.icon = iconPath;
             return device;

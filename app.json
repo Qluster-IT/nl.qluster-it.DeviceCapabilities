@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.991",
+  "version": "1.9.9951",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -77,6 +77,14 @@
     "getDevices": {
       "method": "GET",
       "path": "/getdevices/"
+    },
+    "setFromDefaultIcon": {
+      "method": "POST",
+      "path": "/setFromDefaultIcon/"
+    },
+    "getCustomIcons": {
+      "method": "GET",
+      "path": "/getcustomicons/"
     },
     "createDeviceIcon": {
       "method": "POST",
@@ -1406,8 +1414,8 @@
           "nl": "Zet Status"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]]",
-          "nl": "Zet Status naar [[text]]"
+          "en": "Set Status to [[text]], [[refreshmobilebug]]",
+          "nl": "Zet Status naar [[text]], [[refreshmobilebug]]"
         },
         "args": [
           {
@@ -1423,6 +1431,15 @@
               "nl": "Tekst"
             },
             "required": false
+          },
+          {
+            "type": "checkbox",
+            "name": "refreshmobilebug",
+            "placeholder": {
+              "en": "Optionally Update Mobile App",
+              "nl": "Update Mobile App optioneel"
+            },
+            "required": false
           }
         ]
       },
@@ -1433,8 +1450,8 @@
           "nl": "Zet Status met Nummer"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]] with [[number]]",
-          "nl": "Zet Status naar [[text]] met [[number]]"
+          "en": "Set Status to [[text]] with [[number]], [[refreshmobilebug]]",
+          "nl": "Zet Status naar [[text]] met [[number]], [[refreshmobilebug]]"
         },
         "args": [
           {
@@ -1457,6 +1474,15 @@
             "placeholder": {
               "en": "Number",
               "nl": "Nummer"
+            },
+            "required": false
+          },
+          {
+            "type": "checkbox",
+            "name": "refreshmobilebug",
+            "placeholder": {
+              "en": "Optionally Update Mobile App",
+              "nl": "Update Mobile App optioneel"
             },
             "required": false
           }
@@ -1638,7 +1664,7 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": false,
-      "icon": "/assets/icons/virtual_device.svg",
+      "icon": "/assets/virtual_device.svg",
       "value": "And start creating your own device"
     },
     "devicecapabilities_hide_button": {
@@ -30269,6 +30295,33 @@
                 "nl": "Het interval in seconden om het beeld voor Camera 10 te vernieuwen. Wanneer 0 is ingevoert, wordt automatisch vernieuwen uitgeschakeld."
               },
               "value": 0
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Icons",
+            "nl": "Pictogrammen"
+          },
+          "children": [
+            {
+              "id": "labelIcons",
+              "type": "label",
+              "label": {
+                "en": "Customized Icon Names",
+                "nl": "Aangepaste pictogram namen"
+              },
+              "value": "Here you will get a list with the names you have customized, once you have changed names in the App Settings."
+            },
+            {
+              "id": "iconNames",
+              "type": "label",
+              "label": {
+                "en": " ",
+                "nl": " "
+              },
+              "value": ""
             }
           ]
         }

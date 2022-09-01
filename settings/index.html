@@ -74,8 +74,29 @@
 			left: 10px;
 		}
 
+		#defaultIcons .default-icon {
+			position: relative;
+			border: 1px solid #eee;
+			border-radius: 5px;
+			display: inline-block;
+			width: 52px;
+			height: 52px;
+		}
 
-/* 
+		#defaultIcons .default-icon .image {
+			width: 32px;
+			height: 32px;
+			-webkit-mask-size: contain;
+			-webkit-mask-position: center center;
+			-webkit-mask-repeat: no-repeat;
+			background: #333;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+		}
+
+
+		/* 
 
 		#devices {
 			list-style: none;
@@ -145,7 +166,7 @@
 		} */
 
 
-		
+
 
 		#customicons {
 			list-style: none;
@@ -174,7 +195,7 @@
 			top: 10px;
 			bottom: 10px;
 			font-size: 14px;
-			line-height: 40px;
+			line-height: 20px;
 			font-weight: 400;
 		}
 
@@ -218,86 +239,123 @@
 			width: 50px;
 			height: 50px;
 		}
+
 		.functions-table button {
-			padding-left:5px!important;
-			padding-right:5px!important;
-    		font-size: 12px!important;
+			padding-left: 5px !important;
+			padding-right: 5px !important;
+			font-size: 12px !important;
 		}
-		
 	</style>
 
 </head>
 
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
-	<div ng-show="!editdeviceicon && !editcustomicon">
-
-		<h1 data-i18n="settings.functions">Functions</h1>
-        <p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
-        <p data-i18n="settings.functions_be_aware">Be aware that removing functions could corrupt flows that are using that function.</p>
-        <div >
-            <div class="panel panel-default">
-                <div class="panel-heading" data-i18n="settings.add_function_text">To create a function, enter a name, press Add Function, then press edit below.</div>
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="functionName" data-i18n="settings.function_name">Function name</label>
-                            <input class="form-control" id="functionName" type="text" ng-model="newFunction.name" data-i18n="[placeholder]settings.name" placeholder="Name"><span class="error">{{messages}}</span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>                        
-                            <button class="btn btn-default" type="button" ng-click="deleteAll()" data-i18n="settings.delete_all">Delete All</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table" style="margin-top:30px;">
-                <thead>
-                    <tr>
-                        <th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">
-                            <input st-search="name" placeholder="{{__('settings.search_for_name') || 'search for name'}}" class="input-sm form-control" type="search" />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="function in displayedCollection" >
-                        <td>{{function.name}}</td>
-                        <td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') || 'Edit'}}</button></td>
-                        <td><button ng-click="removeFunction(function)" data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;" ng-if="editFunctionItem">
-            <input  class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
-            <textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
-            <button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
-        </div>
-
+	<div ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon">
 
 
 		<!-- Custom Icons -->
-		<h1 data-i18n="settings.title_customicons" style="margin-top:50px;">Your custom icons</h1>
-		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
+		<h1 data-i18n="settings.title_customicons" style="margin-top:15px;">Your custom icons</h1>
+		<div data-i18n="settings.explain_customicons">Here you can change the custom icon's that can be used for devices
+			and capabilities. After changing an icon, you personally need to restart the App before the new icon(s)
+			is/are implemented.</div>
+		<div data-i18n="settings.explain_customicons_doubleclick">Double click on a name to give it a description, which
+			can be seen back at the bottom of the Device Settings.</div>
 
-		<ul id="customicons">
-			<li class="customicon" ng-repeat="customicon in customicons">
-				<div class="image"
-					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon + '.svg?'+ stamp + ')'}">
-				</div>
-				<div class="name">{{customicon}}</div>
-				<div class="buttons">
-					<button class="edit" ng-click="setEditCustomIcon(customicon);"><i
-							class="fa fa-edit"></i></button>
-				</div>
+		<div>
+			<div ng-repeat="category in customicons" style="margin-top:30px;">
+				<h1 class="name">{{category.title}}</h1>
+				<ul id="customicons">
+					<li class="customicon" ng-repeat="customicon in category.icons">
+						<div class="image" ng-if="$index<customIconLoadIndex"
+							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
+						</div>
+						<div>
+							<div ng-show="!customicon.updating" class="name">
+								<div style="display:block;" ng-dblclick="customicon.updating = true;">
+									{{customicon.name}}</div>
+								<div style="display:block;" ng-dblclick="customicon.updating = true;">
+									{{customIconNames[customicon.file] || '&nbsp;'}}</div>
+							</div>
+							<input ng-show="customicon.updating" class="name" type="text"
+								ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)" ng-blur="updateCustomIconName(customicon)"
+								style="z-index:10; width:80%;" />
+						</div>
+						<div class="buttons">
+							<button class="edit" ng-click="setEditCustomIcon(customicon.file);"><i
+									class="fa fa-upload"></i></button>
+							<button class="pick" ng-click="editFromDefaultIcon(customicon);"><i
+									class="fa fa-search"></i></button>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 
-			</li>
-		</ul>
+
+		<!-- Functions  -->
+
+		<h1 data-i18n="settings.functions">Functions</h1>
+		<p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
+		<p data-i18n="settings.functions_be_aware">Be aware that removing functions could corrupt flows that are using
+			that function.</p>
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading" data-i18n="settings.add_function_text">To create a function, enter a name,
+					press Add Function, then press edit below.</div>
+				<div class="panel-body">
+					<form role="form">
+						<div class="form-group">
+							<label for="functionName" data-i18n="settings.function_name">Function name</label>
+							<input class="form-control" id="functionName" type="text" ng-model="newFunction.name"
+								data-i18n="[placeholder]settings.name" placeholder="Name"><span
+								class="error">{{messages}}</span>
+						</div>
+
+						<div class="form-group">
+							<button class="btn btn-default" type="button" ng-disabled="!newFunction.name"
+								ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>
+							<button class="btn btn-default" type="button" ng-click="deleteAll()"
+								data-i18n="settings.delete_all">Delete All</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table"
+				style="margin-top:30px;">
+				<thead>
+					<tr>
+						<th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
+					</tr>
+					<tr>
+						<th colspan="3">
+							<input st-search="name"
+								placeholder="{{__('settings.search_for_name') || 'search for name'}}"
+								class="input-sm form-control" type="search" />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="function in displayedCollection">
+						<td>{{function.name}}</td>
+						<td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') ||
+								'Edit'}}</button></td>
+						<td><button ng-click="removeFunction(function)"
+								data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;"
+			ng-if="editFunctionItem">
+			<input class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
+			<textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
+			<button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button
+				style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)"
+				data-i18n="settings.save_close">Save & Close</button>
+		</div>
+
 
 
 
@@ -364,46 +422,64 @@
 		</div>
 	</div> -->
 
-	<div id="editcustomicon" ng-show="editcustomicon">
-		<div>
-			<span data-i18n="settings.edit_customicon_icon">You can change your capability icon here. The icon needs to be in
-				.svg format.</span><br />
-			<div class="form-group">
-				<input id="custom-icon" type="file" accept=".svg" name="image">
-			</div>
-			<div id="preview-outerframe">
-				<div id="preview-innerframe">
-					<img id="preview" />
+	<div id="defaultIcons" ng-show="setCustomIcon" style="width:100%;height:100%;position:fixed;top:0px;">
+		<div style="width:100%;position:fixed;top:0px;bottom:60px;overflow: auto;">
+			<div ng-repeat="category in defaultIcons">
+				<div ng-if="$index<=defaultCategoryLoadIndex">
+					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">{{category.title}}</h1>
+					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
+						<div class="image" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + defaulticon + ')'}">
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group buttons">
-				<button id="save-icon" class="button" data-i18n="settings.save" ng-disabled="!editcustomicon.buffer"
-					ng-click="uploadCustomIcon();">Save</button>
+		</div>
+		<button style="height:40px;position: fixed; bottom:0;" ng-click="editFromDefaultIcon(null)" data-i18n="settings.close">Close</button>
+	</div>
+
+	<div id="editcustomicon" ng-show="editcustomicon">
+
+		<span data-i18n="settings.edit_customicon_icon">You can change your capability icon here. The icon needs to be
+			in
+			.svg format.</span><br />
+		<div class="form-group">
+			<input id="custom-icon" type="file" accept=".svg" name="image">
+		</div>
+		<div id="preview-outerframe">
+			<div id="preview-innerframe">
+				<img id="preview" />
 			</div>
 		</div>
+		<div class="form-group buttons">
+			<button id="save-icon" class="button" data-i18n="settings.close"
+				ng-click="setEditCustomIcon(null);">Close</button>
+			<button id="save-icon" class="button" data-i18n="settings.save" ng-click="uploadCustomIcon();">Save</button>
+		</div>
+
 	</div>
 	<br><br>
 	<br><br>
-	
+
 
 	<script type="text/javascript">
 		angular.module('devicecapabilities', ['smart-table'])
 			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
 				var Homey;
-				$scope.stamp=Date.now();
+				$scope.stamp = Date.now();
 				//Homey.ready();
-				
+
 				$scope.icons = [];
 				$scope.customicons = [];
 				// $scope.editdeviceicon = null;
 				// $scope.editdeviceiconfile = null;
 				$scope.editcustomicon = null;
 
-				
-				$scope.messages = '';
-        		$scope.selected = {};
 
-				
+				$scope.messages = '';
+				$scope.selected = {};
+
+
 				$scope.$on('ready', function ($e, Homey_) {
 					console.log('ready');
 					Homey = Homey_;
@@ -419,7 +495,8 @@
 
 					// $scope.getIcons();
 					// $scope.getDevices();
-					$scope.getCustomIcons();					
+					$scope.getCustomIcons();
+					$scope.getDefaultIcons();
 					$scope.getFunctionFromSettings();
 					Homey.ready();
 
@@ -428,48 +505,48 @@
 
 
 
-				$scope.getFunctionFromSettings = function() {
-					Homey.get('javascript_functions', (err, newFunctions)=> {                
-						if(!err && !newFunctions) {
+				$scope.getFunctionFromSettings = function () {
+					Homey.get('javascript_functions', (err, newFunctions) => {
+						if (!err && !newFunctions) {
 							newFunctions = [];
 						}
-						$scope.$apply(()=> {
+						$scope.$apply(() => {
 							$scope.functions = newFunctions;
 							$scope.messages = err;
 						});
-					}); 
+					});
 				}
 
-				$scope.savefunctions = function() {
+				$scope.savefunctions = function () {
 					Homey.set('javascript_functions', $scope.functions);
 					Homey.alert(Homey.__("settings.functions_saved") || 'Functions saved');
 				}
 
-				$scope.addFunction = function() {
-					try {                
+				$scope.addFunction = function () {
+					try {
 						console.log('addFunction');
-						if ($scope.functions && $scope.functions.filter(function(e) { return e.name == $scope.newFunction.name; }).length > 0) {
+						if ($scope.functions && $scope.functions.filter(function (e) { return e.name == $scope.newFunction.name; }).length > 0) {
 							$scope.messages = Homey.__("settings.function_exists") || "Function already exists.";
 							return;
 						}
-					
+
 						var func = {
 							name: $scope.newFunction.name,
-							value:undefined,
+							value: undefined,
 							remove: false
 						};
 						$scope.functions.push(func);
 						$scope.storeFunction();
 						$scope.messages = '';
-						$scope.newFunction = {}  ;              
+						$scope.newFunction = {};
 						console.log('addFunction done');
-					} catch (error) {                           
+					} catch (error) {
 						console.log('addFunction error: ' + error);
 						$scope.messages = error;
 						//$scope.messages = JSON.stringify($scope.functions) + '\r\n\r\n' +  JSON.stringify($scope.newFunction) ;
 					}
 				};
-				$scope.deleteAll = function() {
+				$scope.deleteAll = function () {
 					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, () => {
 						$scope.$apply(function () {
 							$scope.functions = [];
@@ -477,8 +554,8 @@
 						});
 					})
 				}
-				$scope.removeFunction = function(row) {
-					Homey.confirm(Homey.__("settings.delete_confirm", {functionName:row.name}) || 'Are you sure you wish to delete function '+row.name+'?', null, () => {                
+				$scope.removeFunction = function (row) {
+					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, () => {
 						var index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);
@@ -486,23 +563,23 @@
 						});
 					})
 				};
-				$scope.editFunction = function(row) {
+				$scope.editFunction = function (row) {
 					$scope.editFunctionItem = row;
 				};
-				$scope.saveActiveFunction = function(close) {
+				$scope.saveActiveFunction = function (close) {
 					$scope.storeFunction();
-					if(close)$scope.editFunctionItem = null;
+					if (close) $scope.editFunctionItem = null;
 				};
 
-				$scope.storeFunction = function() {
+				$scope.storeFunction = function () {
 					Homey.set('javascript_functions', angular.copy($scope.functions));
 				}
 
 
 
-				
+
 				$scope.setEditCustomIcon = function (custom) {
-					$scope.editcustomicon = { id: custom };
+					$scope.editcustomicon = custom ? { id: custom } : null;
 				}
 				$scope.uploadCustomIcon = function (custom) {
 					// console.log({
@@ -518,7 +595,7 @@
 						id: $scope.editcustomicon.id
 					}, function (err, result) {
 						if (err) return Homey.alert(err.message || err.toString(), 'error');
-							$scope.getCustomIcons();
+						$scope.getCustomIcons();
 						$scope.$apply(function () {
 							$scope.editcustomicon = null;
 						});
@@ -545,18 +622,95 @@
 				}
 
 
-				$scope.getCustomIcons = function () {
-					var arr = [];
-					for (let i = 1; i <= 60; i++) arr.push('custom_' + i);
-					console.log('$scope.customicons');
-					console.log(arr);
-					$scope.$apply(function () {
-						$scope.stamp = Date.now();
-						$scope.customicons =  arr;
-					});
-					
+
+
+				$scope.setFromDefaultIcon = function (defaultIcon) {
+					// console.log({
+					// 	type: $scope.editcustomicon.type,
+					// 	name: $scope.editcustomicon.name,
+					// 	buffer: $scope.editcustomicon.buffer,
+					// 	id: $scope.editcustomicon.id
+					// });
+					Homey.api('POST', '/setFromDefaultIcon/', {
+						customicon: $scope.setCustomIcon,
+						defaulticon: defaultIcon,
+					}, function (err, result) {
+						if (err) return Homey.alert(err.message || err.toString(), 'error');
+						$scope.getCustomIcons();
+						$scope.$apply(function () {
+							$scope.setCustomIcon = null;
+						});
+					})
+
 				}
+
+				$scope.editFromDefaultIcon = function (customIcon) {
+					$scope.setCustomIcon = customIcon;
+					$scope.dedaultLoadInterval = setInterval(function(){
+						$scope.$apply(() => {
+							let catKeys= Object.keys($scope.defaultIcons);
+							let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
+							if(!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+							if($scope.defaultIconLoadIndex<(cat.icons?cat.icons.length:0)) $scope.defaultIconLoadIndex+=5;
+							else if ($scope.defaultCategoryLoadIndex<catKeys.length) {
+								$scope.defaultCategoryLoadIndex++;
+								$scope.defaultIconLoadIndex=0.0;
+							} else return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+						});
+						//Homey.alert('test');
+					}, 100);
+				}
+
+				$scope.getCustomIcons = function () {
+					Homey.api('GET', '/getcustomicons/', function (err, result) {
+						if (err) return Homey.alert(err, 'error');
+						//console.log(result);
+						$scope.$apply(function () {
+							$scope.stamp = Date.now();
+							$scope.customicons = result.icons;
+							$scope.customIconNames = result.iconnames || {};
+							$scope.customIconCount =0;
+							for (let i = 0; i < result.icons.length; i++) $scope.customIconCount+=result.icons[i].icons.length;
+							$scope.customIconLoadIndex = 0;
+							$scope.dedaultLoadInterval = setInterval(function(){
+								$scope.$apply(() => {
+									if($scope.customIconLoadIndex<$scope.customIconCount ) $scope.customIconLoadIndex++;
+									else return clearInterval($scope.dedaultLoadInterval);
+							
+								 }, 100);
+							});
+						});
+					});
+				}
+
 				
+				$scope.getDefaultIcons = function () {
+					Homey.get('DefaultIcons', (err, defaultIcons) => {
+						if (!err && !defaultIcons) {
+							defaultIcons = [];
+						}
+						$scope.$apply(() => {
+							$scope.defaultIcons = defaultIcons;
+							for (let i = 0; i < Object.keys(defaultIcons).length; i++) {
+								const cat = defaultIcons[Object.keys(defaultIcons)[i]];
+								cat.title = Homey.__('icons.' + cat.title) || cat.title;
+								
+							}
+							$scope.messages = err;
+							$scope.defaultCategoryLoadIndex = 0;
+							$scope.defaultIconLoadIndex = 0.0;
+						});
+					});
+				}
+				$scope.updateCustomIconName = function (customicon) {
+					console.log('$scope.customIconNames', $scope.customIconNames);
+					Homey.set('customIconNames', $scope.customIconNames, function (err, result) {
+						$scope.$apply(() => {
+							if (!err) customicon.updating = false;
+						});
+					});
+				}
+
 
 				// $scope.setEditDeviceIcon = function (device) {
 				// 	$scope.editdeviceicon = { id: device.id };
@@ -663,7 +817,7 @@
 				// 		reader.readAsDataURL(file);
 				// 	};
 				// }
-				
+
 			}])
 			.directive('ngEnter', function () {
 				return function (scope, element, attrs) {

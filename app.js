@@ -461,6 +461,23 @@ class DeviceSetter extends Homey.App {
 		// 	});
 	}
 
+	getCustomIcons() {
+		return this.homey.drivers.getDriver('virtualdevice').getCustomIcons();
+	}
+
+	async setFromDefaultIcon({ customicon, defaulticon }) {
+		
+		let filePathAssets = './assets/icons/';
+		let file = defaulticon;// + '.svg';
+		
+		let filePath = './userdata/customicons/';
+		let iconName = customicon.file + '.svg';
+		if(await this.homey.app.fileExists(filePathAssets + file) ){
+			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
+		}
+	}
+
+
 	getIcons() {
 		return this.homey.settings.getKeys()
 			.filter(key => {
