@@ -3,6 +3,7 @@
 //var variableManager = require('../../lib/variablemanagement/variablemanagement.js');
 
 const Homey = require('homey');
+const path = require('path');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 
@@ -20,7 +21,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 		this.log("Capabilities", Object.keys(this.homey.app.manifest.capabilities).length);
 
         //true || 
-        if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
+        if(process.env.DEBUG === '1' || this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
             //if(await this.homey.app.fileExists('./assets/icons/bell.svg')) console.log('bell!!');					
             let categories = this.getCustomIcons();
 			for(let i=0;i<categories.length;i++)
@@ -36,8 +37,33 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(await this.homey.app.fileExists(filePathAssets + file) && !await this.homey.app.fileExists(filePath + iconName)){
                         await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
                     }
-				}					
+				}
 			}
+            this.defaultIcons = {};
+            var _path = './assets/';
+            let filesandfolders = await this.homey.app.readdir(_path);
+            
+            let f = (dir, file)=> {
+                if(!this.defaultIcons[dir]) this.defaultIcons[dir] = {title:dir, icons:[]};
+                this.defaultIcons[dir].icons.push(file);
+                    
+            };
+
+            for (let i = 0; i < filesandfolders.length; i++) {
+                const faf = filesandfolders[i];
+                let stats = await this.homey.app.stat(path.join(_path,faf));
+                if(stats.isDirectory()) {
+                    let files = await this.homey.app.readdir(path.join(_path,faf));
+                    for (let j = 0; j < files.length; j++) {
+                        const file = files[j];
+                        let stats = await this.homey.app.stat(path.join(_path,faf, file));
+                        if(stats.isFile() ) f(faf, faf+file);
+                    }
+
+                } else if(stats.isFile()) f('Unsorted', faf); //isFile!
+                
+            }
+
             await this.homey.settings.set('Version', this.homey.app.manifest.version);
         }
         

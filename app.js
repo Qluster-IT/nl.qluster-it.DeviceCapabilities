@@ -7,7 +7,7 @@ const _ = require('lodash-core');
 const { Defer } = require('./lib/proto');
 
 const { join } = require('path');
-const { readFile, writeFile, unlink, rename, exists, mkdir, copyFile } = require('fs');
+const { readFile, writeFile, unlink, rename, exists, mkdir, copyFile, readdir, stat } = require('fs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const fs = require('fs');
@@ -26,6 +26,8 @@ const unlinkAsync = promisify(unlink);
 const renameAsync = promisify(rename);
 const existsAsync = promisify(exists);
 const mkdirAsync = promisify(mkdir);
+const readdirAsync = promisify(readdir);
+const statAsync = promisify(stat);
 
 
 class DeviceSetter extends Homey.App {
@@ -509,9 +511,11 @@ class DeviceSetter extends Homey.App {
 	async createCustomIcon({ type, name, buffer, id }) {
 		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
 	}
+
 	async fileExists(path) {
 		return await existsAsync(path);
 	}
+
 	async copyFile(from, to, toPath) {
 		if(await existsAsync(from)) {
 			if(!(await existsAsync(toPath))) await mkdirAsync(toPath);
@@ -520,6 +524,12 @@ class DeviceSetter extends Homey.App {
 				// console.log('source.txt was copied to destination.txt');
 			  } );
 		}
+	}
+	async readdir(dir) {
+		return await readdirAsync(dir);
+	}
+	async fsstat(file) {
+		return await statAsync(file);
 	}
 	async _createIcon({ type, name, buffer, id, subpath }) {
 		if( !TYPES_MAP[type] )
