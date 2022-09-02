@@ -45,29 +45,21 @@ module.exports = class WatchDevice extends Homey.Device {
 			await this.setSettings(newSettings);
 			this.Settings = await this.getSettings();
 			this.setStoreValue('Version', this.homey.app.manifest.version);
-			await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
-		}
-
-
-		/// Clear all capabilities that doesn't exists anymore.
-		// let allCaps = this.homey.app.manifest.capabilities;
-		// for (const capabilityKey in allCaps) {
-		// 	if (Object.hasOwnProperty.call(allCaps, capabilityKey)) {
-		// 		const Capability = allCaps[capabilityKey];
-				
-		// 	}
-		// }
-		for (let i = 0; i < caps.length; i++) {
-			let fieldId = this.getStoreValue(caps[i]);
-			if(caps[i].indexOf('devicecapabilities')>-1 && !this.homey.app.manifest.capabilities[caps[i].split('.')[0]]) {
-				this.removeCapability(caps[i]);
-				//this.log('cap doesn\'t exists any more', caps[i]);
+			for (let i = 0; i < caps.length; i++) {
+				let fieldId = this.getStoreValue(caps[i]);
+				let _cap = caps[i].split('.')[0];
+				if((caps[i].indexOf('devicecapabilities')>-1 || caps[i].indexOf('dc-')===0) && !this.homey.app.manifest.capabilities[_cap]) {
+					this.removeCapability(caps[i]);
+					continue;
+					//this.log('cap doesn\'t exists any more', caps[i]);
+				}
 			}
-			if (!fieldId) continue;
-
-			await this.setListener({ fieldId, settings: this.Settings, cap: caps[i] });
+			await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
+		} else {
+			await this.setCameras(); //Allready happends in loadFromSettings
 		}
-		var api = await this.homey.app.refreshHomeyAPI();
+
+		//var api = await this.homey.app.refreshHomeyAPI();
 		//let apiDevice =  await api.devices.getDevice({ id: this.__id });
 		// let insights = await api.insights.getLogs();
 		// for (let i = 0; i < insights.length; i++) {
@@ -88,7 +80,6 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			await this.setListener({ fieldId, settings: this.Settings, cap: caps[i] });
 		}
-		await this.setCameras();
 
 		this.homey.settings.on('set', (async function (settingName, settingValue) {
 			if (settingName == 'customIconNames') {
@@ -121,21 +112,26 @@ module.exports = class WatchDevice extends Homey.Device {
 						await this.setCapabilityValue(cap, val);
 						return setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
-							this.driver.triggerFlow(this, !val, { field: { id: fieldId } });
+							this.driver.triggerFlow(this, !val, { field: { id: fieldId } }); //Do we need to await for triggerFlow
 						}, 1);
-					} else this.driver.triggerFlow(this, value, { field: { id: fieldId } });
+					} else {						
+                        await this.driver.setSecondCapability({ val:value, device:this , fieldId});
+						this.driver.triggerFlow(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
+					}
 					return true;
 				}).bind(this));
 		}
 		if (fieldId.startsWith('boolean')) {
 			if (cap.indexOf('_button') > -1)
-				this.registerCapabilityListener(cap, ((value, options) => {
-					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } });
+				this.registerCapabilityListener(cap, (async (value, options) => {
+					await this.driver.setSecondCapability({ val:value, device:this , fieldId});
+					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
 				}).bind(this));
 		}
 		if (fieldId.startsWith('number')) {
-			this.registerCapabilityListener(cap, ((value, options) => {
-				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } });
+			this.registerCapabilityListener(cap, (async (value, options) => {
+				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
+				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
 			}).bind(this));
 		}
 	}
@@ -202,7 +198,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			const type = types[iTypes];
 
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
-				if(type=="status" && i>0)continue;
+				if(type=="status" && i>1)continue;
 				try {
 					let oldCap = this.getStoreValue(type + i);
 					let oldValue;
@@ -322,28 +318,22 @@ module.exports = class WatchDevice extends Homey.Device {
 					}
 
 					if (name && name.length > 0) {
+						
+						let secondCap = this.capitalizeFirstLetter(type) +"."+type+i;
+
 						if ((type == "button" || (type == "boolean" && cap.indexOf('_button') > -1)) && button1Reset) {
 							if (this.hasCapability(cap)) await this.removeCapability(cap);
+							if (this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+
 						}
 						this.setStoreValue(type + i, cap);
 						this.setStoreValue(cap, type + i);
 						if (!this.hasCapability(cap)) {
-							if (type == "button" && i === 1) button1Reset = true;
-							await this.addCapability(cap);							
-							// if(targetInsight && settings[type + i + 'PreventInsights']!==true) {								
-							// 		var _a=1;
-							// 		// try {								
-							// 		// 	let insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'everything' });
-							// 		// 	let a=0;
-							// 		// } catch (error) {								
-							// 		// 	let a=0;
-							// 		// }
-							// 		let insights2 = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
-							// 		let insights3 = await api.insights.getLog({ uri: targetInsight.uri, id: targetInsight.id });
-									
-							// 		let a=0;								
-							// }
-
+							if (type == "button" && i === 1) {
+								button1Reset = true;
+								if (this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+							}
+							await this.addCapability(cap);
 							if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
 							await this.setListener({ fieldId: type + i, settings, cap });
 						}
@@ -369,54 +359,67 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 
-
-						if (
-							opt.title != name || opt.preventInsights != settings[type + i + 'PreventInsights'] ||
+						let capOptionsChanged = 
+							opt.title != name || 
+							opt.preventTag!==true || 
+							((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
+									//opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 							(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
 							(opt.decimals != decimals && decimals !== -1) ||
-							opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] || opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] ||
+							(opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue']  && settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue']!='')|| 
+							(opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse']  && settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse']!='') ||
 							values ||
 							(decimals != oldSettings[type + i + 'Decimals']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  ||
 							(min != oldSettings[type + i + 'Min']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && min!==-1 && !oldSettings[type + i + 'Min'])  ||
-							(max != oldSettings[type + i + 'Max']) //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && max!==-1 && !oldSettings[type + i + 'Max']) 
+							(max != oldSettings[type + i + 'Max']); //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && max!==-1 && !oldSettings[type + i + 'Max']) 
 							//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
-							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked )
-
-
-						) {
-							let optNew = {
-								title: name,
-								preventInsights: settings[type + i + 'PreventInsights'],
-								//decimals: decimals,
-								insightsTitleTrue: settings[type + i + 'InsightsTitleTrue'],
-								insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
-							};
-							if (type == 'status') optNew.units = opt.units;
-							else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
-
-							if (decimals !== -1) optNew.decimals = decimals;
-							if (min !== -1) optNew.min = min;
-							if (max !== -1) optNew.max = max;
-
-							//if(type == 'dropdown' && values) optNew.valuesasd = values;
-							// switch (type) {
-							// 	case "number":
-							// 		break;
-							// 	case "status":
-							// 		if(decimals!==-1) optNew.decimals = decimals;
-							// 		break;
-							// 	default:
-							// 		break;
-							// }
-
-							//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
-							//if(type == 'button' && disabled && !pushbutton ) optNew.value = checked;
-
-							//if(settings[type + i + 'Disabled']!==undefined) optNew.setable= !settings[type + i + 'Disabled'];
-							//if(settings[type + i + 'UiQuickAction']!==undefined) optNew.uiQuickAction= !settings[type + i + 'UiQuickAction'];
-							//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
-							if (this.hasCapability(cap))  await this.setCapabilityOptions(cap, optNew);
+							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
+						if (capOptionsChanged) {
+							let optionValues = {type, i, settings, decimals, min, max, name};
+							if(type=="status") optionValues.units = name;
+							let optNew = this.getOptions(optionValues);
+							if(settings[type + i + 'SeparateCapabilities']===false) {
+								optNew.preventInsights = !settings[type + i + 'CreateInsights'];
+								optNew.preventTag = !settings[type + i + 'CreateTag'];
+							}
+							if (this.hasCapability(cap))  
+								await this.setCapabilityOptions(cap, optNew);
 						}
+						let secondCapRemoved = false;
+						if((settings[type + i + 'CreateInsights']===true ||settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false) {
+							if(!this.hasCapability(secondCap)) {
+								await this.addCapability(secondCap);
+								capOptionsChanged = true;
+							}
+							//let secondOpt; try { secondOpt = this.getCapabilityOptions(cap); } catch (error) { }
+							if(
+								capOptionsChanged || 
+								settings[type + i + 'CreateInsights']!=oldSettings[type + i + 'CreateInsights'] || 
+								settings[type + i + 'CreateTag']!=oldSettings[type + i + 'CreateTag']) {
+									let optNew = this.getOptions({type, i, settings, decimals, min, max, name});
+									optNew.preventInsights = settings[type + i + 'CreateInsights']!==true;
+									optNew.preventTag = settings[type + i + 'CreateTag']!==true;
+									//if(settings[type + i + 'CreateInsights']===true)
+									if (this.hasCapability(secondCap))  
+										await this.setCapabilityOptions(secondCap, optNew);
+							}
+							
+							if (oldValue !== undefined && capOptionsChanged) await this.setCapabilityValue(secondCap, oldValue);
+							
+
+						} else {
+							if(this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+							secondCapRemoved = true;
+						}
+						//Remove logs here
+						// if((secondCapRemoved || settings[type + i + 'CreateInsights']!==true)){// && await this.homey.insights.getLog({id:secondCap}) ){
+						// 	//Remove logs here
+						// 	let a = await this.homey.insights.getLogs();
+						// 	let b = a;
+						// 	//await this.homey.insights.deleteLog({id:secondCap});
+						// }
+						
+
 						if (type == 'button' && disabled && !pushbutton) {
 							await this.setCapabilityValue(cap, checked);
 						}
@@ -494,5 +497,27 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.Settings = newSettings;
 		// if the settings must not be saved for whatever reason:
 		// throw new Error('Your error message');
+	}
+
+ 	capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	getOptions({type, i, settings, decimals, min, max, name, units}) {
+		let optNew = {
+			title: name,
+			preventInsights: true,
+			preventTag:true,
+			//decimals: decimals,
+			insightsTitleTrue: settings[type + i + 'InsightsTitleTrue'],
+			insightsTitleFalse: settings[type + i + 'InsightsTitleFalse']
+		};
+		if (units) optNew.units = units;
+		else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
+
+		if (decimals!==undefined && decimals !== -1) optNew.decimals = decimals;
+		if (min!==undefined && min !== -1) optNew.min = min;
+		if (max!==undefined && max !== -1) optNew.max = max;
+		return optNew;
 	}
 };

@@ -1,5 +1,6 @@
 var fields = 10;
 var icons = '              "values": [ \r\n' +
+'                {"id": "","label": {"en": " "}}, \r\n' + 
 '                {"id": " ","label": {"en": "-----   Devices           -----"}}, \r\n' + 
 '                {"id": "custom_1","label": {"en": "device_1"}}, \r\n' + 
 '                {"id": "custom_2","label": {"en": "device_2"}}, \r\n' + 
@@ -127,6 +128,17 @@ var str = '"settings": [ \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
+'              "id": "labelStatusIndicator", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": { \r\n' +
+'                "en": " ", "nl":" " \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "After changing the icon, you need to reset the Status Indicator in the Mobile App.", "nl":"Nadat u het pictogram hebt gewijzigd, dient u de Status Indicator opnieuw instellen in de Mobiele App." \r\n' +
+'              }, \r\n' +
+'              "value": "Remember to set the status field as Status Indicator in the Mobile App. Reset" \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "status1Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
@@ -164,13 +176,24 @@ icons +
 '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "status1PreventInsights", \r\n' +
+'              "id": "status1CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "status1CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -220,9 +243,6 @@ for(var i=1;i<=fields;i++) {
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
-'              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -310,9 +330,6 @@ str+='       }, \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-'              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -370,13 +387,24 @@ str+='       }, \r\n' +
 // '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "number'+i+'PreventInsights", \r\n' +
+'              "id": "number'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "number'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -439,9 +467,6 @@ str+='       }, \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-'              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -457,13 +482,24 @@ str+='       }, \r\n' +
 // '              "value": false \r\n' +
 // '            }, \r\n' +
 '            { \r\n' +
-'              "id": "boolean'+i+'PreventInsights", \r\n' +
+'              "id": "boolean'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "boolean'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -582,9 +618,6 @@ str+='       },' +
   '              "label": { \r\n' +
   '                "en": "Icon (only for Button or On/Off)", "nl":"Pictogram (voor Knop of Aan/Uit)" \r\n' +
   '              }, \r\n' +
-  '              "hint": { \r\n' +
-  '                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-  '              }, \r\n' +
   icons +'       "value": "" \r\n';
 
 str+='       },' +
@@ -613,15 +646,26 @@ str+='       },' +
   
   str+='       }, \r\n' +
   '            { \r\n' +
-  '              "id": "button'+i+'PreventInsights", \r\n' +
+  '              "id": "button'+i+'CreateInsights", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+  '                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
   '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "button'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
   '            }, \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'InsightsTitleTrue", \r\n' +

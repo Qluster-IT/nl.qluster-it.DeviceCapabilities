@@ -1667,6 +1667,66 @@
       "icon": "/assets/virtual_device.svg",
       "value": "And start creating your own device"
     },
+    "Text": {
+      "type": "string",
+      "title": {
+        "en": "Text"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "uiQuickAction": false,
+      "insights": true,
+      "value": ""
+    },
+    "Number": {
+      "type": "number",
+      "title": {
+        "en": "Number"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "uiQuickAction": false,
+      "insights": true,
+      "value": ""
+    },
+    "Boolean": {
+      "type": "boolean",
+      "title": {
+        "en": "Boolean"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "uiQuickAction": false,
+      "insights": true,
+      "value": ""
+    },
+    "Button": {
+      "type": "boolean",
+      "title": {
+        "en": "Button"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "uiQuickAction": false,
+      "insights": true,
+      "value": ""
+    },
+    "Status": {
+      "type": "number",
+      "title": {
+        "en": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "uiQuickAction": false,
+      "insights": true,
+      "value": ""
+    },
     "devicecapabilities_hide_button": {
       "type": "boolean",
       "title": {
@@ -1695,7 +1755,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -1705,7 +1765,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -1725,7 +1785,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -1799,7 +1859,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -1810,7 +1870,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -1832,7 +1892,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -1913,7 +1973,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -1924,7 +1984,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -1946,7 +2006,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -2027,7 +2087,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -2038,7 +2098,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -2060,7 +2120,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -2141,7 +2201,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -2152,7 +2212,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -2174,7 +2234,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -2255,7 +2315,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -2266,7 +2326,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -2288,7 +2348,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -2369,7 +2429,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -2380,7 +2440,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -2402,7 +2462,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -2483,7 +2543,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -2494,7 +2554,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -2516,7 +2576,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -2597,7 +2657,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -2608,7 +2668,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -2630,7 +2690,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -2711,7 +2771,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -2722,7 +2782,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -2744,7 +2804,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -2825,7 +2885,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -2836,7 +2896,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -2858,7 +2918,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -2939,7 +2999,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -2950,7 +3010,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -2972,7 +3032,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -3053,7 +3113,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -3064,7 +3124,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -3086,7 +3146,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -3167,7 +3227,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -3178,7 +3238,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -3200,7 +3260,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -3281,7 +3341,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -3292,7 +3352,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -3314,7 +3374,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -3395,7 +3455,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -3406,7 +3466,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -3428,7 +3488,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -3509,7 +3569,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -3520,7 +3580,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -3542,7 +3602,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -3623,7 +3683,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -3634,7 +3694,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -3656,7 +3716,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -3737,7 +3797,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -3748,7 +3808,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -3770,7 +3830,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -3851,7 +3911,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -3862,7 +3922,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -3884,7 +3944,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -3965,7 +4025,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -3976,7 +4036,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -3998,7 +4058,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -4079,7 +4139,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -4090,7 +4150,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -4112,7 +4172,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -4193,7 +4253,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -4204,7 +4264,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -4226,7 +4286,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -4307,7 +4367,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -4318,7 +4378,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -4340,7 +4400,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -4421,7 +4481,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -4432,7 +4492,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -4454,7 +4514,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -4535,7 +4595,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -4546,7 +4606,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -4568,7 +4628,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -4649,7 +4709,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -4660,7 +4720,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -4682,7 +4742,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -4763,7 +4823,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -4774,7 +4834,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -4796,7 +4856,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -4877,7 +4937,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -4888,7 +4948,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -4910,7 +4970,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -4991,7 +5051,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -5002,7 +5062,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -5024,7 +5084,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -5105,7 +5165,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -5116,7 +5176,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -5138,7 +5198,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -5219,7 +5279,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -5230,7 +5290,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -5252,7 +5312,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -5333,7 +5393,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -5344,7 +5404,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -5366,7 +5426,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -5447,7 +5507,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -5458,7 +5518,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -5480,7 +5540,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -5561,7 +5621,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -5572,7 +5632,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -5594,7 +5654,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -5675,7 +5735,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -5686,7 +5746,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -5708,7 +5768,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -5789,7 +5849,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -5800,7 +5860,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -5822,7 +5882,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -5903,7 +5963,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -5914,7 +5974,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -5936,7 +5996,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -6017,7 +6077,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -6028,7 +6088,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -6050,7 +6110,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -6131,7 +6191,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -6142,7 +6202,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -6164,7 +6224,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -6245,7 +6305,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -6256,7 +6316,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -6278,7 +6338,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -6359,7 +6419,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -6370,7 +6430,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -6392,7 +6452,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -6473,7 +6533,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -6484,7 +6544,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -6506,7 +6566,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -6587,7 +6647,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -6598,7 +6658,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -6620,7 +6680,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -6701,7 +6761,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -6712,7 +6772,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -6734,7 +6794,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -6815,7 +6875,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -6826,7 +6886,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -6848,7 +6908,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -6929,7 +6989,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -6940,7 +7000,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -6962,7 +7022,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -7043,7 +7103,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -7054,7 +7114,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -7076,7 +7136,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -7157,7 +7217,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -7168,7 +7228,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -7190,7 +7250,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -7271,7 +7331,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -7282,7 +7342,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -7304,7 +7364,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -7385,7 +7445,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -7396,7 +7456,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -7418,7 +7478,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -7499,7 +7559,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -7510,7 +7570,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -7532,7 +7592,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -7613,7 +7673,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -7624,7 +7684,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -7646,7 +7706,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -7727,7 +7787,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -7738,7 +7798,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -7760,7 +7820,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -7841,7 +7901,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -7852,7 +7912,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -7874,7 +7934,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -7955,7 +8015,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -7966,7 +8026,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -7988,7 +8048,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -8069,7 +8129,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -8080,7 +8140,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -8102,7 +8162,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -8183,7 +8243,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -8194,7 +8254,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -8216,7 +8276,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -8297,7 +8357,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -8308,7 +8368,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -8330,7 +8390,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -8411,7 +8471,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -8422,7 +8482,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -8444,7 +8504,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -8525,7 +8585,7 @@
         "en": "Text"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -8536,7 +8596,7 @@
         "en": "Number"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -8558,7 +8618,7 @@
         "en": "Yes/No"
       },
       "getable": true,
-      "setable": true,
+      "setable": false,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -8691,7 +8751,7 @@
                 "en": "Be aware",
                 "nl": "Let op"
               },
-              "value": "Changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows."
+              "value": "By Default, when using Insights or Tags, separate hidden Capabilities will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created."
             },
             {
               "id": "labelAlso",
@@ -9249,15 +9309,28 @@
               "step": 1
             },
             {
-              "id": "status1PreventInsights",
+              "id": "status1CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "status1CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -9325,10 +9398,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -9716,6 +9785,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text1CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -9781,10 +9863,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -10172,6 +10250,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text2CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -10237,10 +10328,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -10628,6 +10715,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text3CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -10693,10 +10793,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -11084,6 +11180,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text4CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -11149,10 +11258,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -11540,6 +11645,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text5CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -11605,10 +11723,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -11996,6 +12110,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text6CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -12061,10 +12188,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -12452,6 +12575,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text7CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -12517,10 +12653,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -12908,6 +13040,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text8CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -12973,10 +13118,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -13364,6 +13505,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text9CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -13429,10 +13583,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -13820,6 +13970,19 @@
                 }
               ],
               "value": ""
+            },
+            {
+              "id": "text10CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
+              },
+              "value": false
             }
           ]
         },
@@ -13950,10 +14113,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -14399,15 +14558,28 @@
               "value": -1
             },
             {
-              "id": "number1PreventInsights",
+              "id": "number1CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number1CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -14523,10 +14695,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -14972,15 +15140,28 @@
               "value": -1
             },
             {
-              "id": "number2PreventInsights",
+              "id": "number2CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number2CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -15096,10 +15277,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -15545,15 +15722,28 @@
               "value": -1
             },
             {
-              "id": "number3PreventInsights",
+              "id": "number3CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number3CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -15669,10 +15859,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -16118,15 +16304,28 @@
               "value": -1
             },
             {
-              "id": "number4PreventInsights",
+              "id": "number4CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number4CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -16242,10 +16441,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -16691,15 +16886,28 @@
               "value": -1
             },
             {
-              "id": "number5PreventInsights",
+              "id": "number5CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number5CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -16815,10 +17023,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -17264,15 +17468,28 @@
               "value": -1
             },
             {
-              "id": "number6PreventInsights",
+              "id": "number6CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number6CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -17388,10 +17605,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -17837,15 +18050,28 @@
               "value": -1
             },
             {
-              "id": "number7PreventInsights",
+              "id": "number7CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number7CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -17961,10 +18187,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -18410,15 +18632,28 @@
               "value": -1
             },
             {
-              "id": "number8PreventInsights",
+              "id": "number8CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number8CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -18534,10 +18769,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -18983,15 +19214,28 @@
               "value": -1
             },
             {
-              "id": "number9PreventInsights",
+              "id": "number9CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number9CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -19107,10 +19351,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -19556,15 +19796,28 @@
               "value": -1
             },
             {
-              "id": "number10PreventInsights",
+              "id": "number10CreateInsights",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "number10CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             }
@@ -19640,10 +19893,6 @@
               "label": {
                 "en": "Icon",
                 "nl": "Pictogram"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -20034,15 +20283,41 @@
               "value": ""
             },
             {
-              "id": "boolean1PreventInsights",
+              "id": "boolean1SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean1CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean1CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -20145,10 +20420,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -20538,15 +20809,41 @@
               "value": ""
             },
             {
-              "id": "boolean2PreventInsights",
+              "id": "boolean2SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean2CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean2CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -20649,10 +20946,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -21042,15 +21335,41 @@
               "value": ""
             },
             {
-              "id": "boolean3PreventInsights",
+              "id": "boolean3SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean3CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean3CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -21153,10 +21472,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -21546,15 +21861,41 @@
               "value": ""
             },
             {
-              "id": "boolean4PreventInsights",
+              "id": "boolean4SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean4CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean4CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -21657,10 +21998,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -22050,15 +22387,41 @@
               "value": ""
             },
             {
-              "id": "boolean5PreventInsights",
+              "id": "boolean5SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean5CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean5CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -22161,10 +22524,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -22554,15 +22913,41 @@
               "value": ""
             },
             {
-              "id": "boolean6PreventInsights",
+              "id": "boolean6SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean6CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean6CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -22665,10 +23050,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -23058,15 +23439,41 @@
               "value": ""
             },
             {
-              "id": "boolean7PreventInsights",
+              "id": "boolean7SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean7CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean7CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -23169,10 +23576,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -23562,15 +23965,41 @@
               "value": ""
             },
             {
-              "id": "boolean8PreventInsights",
+              "id": "boolean8SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean8CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean8CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -23673,10 +24102,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -24066,15 +24491,41 @@
               "value": ""
             },
             {
-              "id": "boolean9PreventInsights",
+              "id": "boolean9SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean9CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean9CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -24177,10 +24628,6 @@
                 "en": "Icon",
                 "nl": "Pictogram"
               },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
-              },
               "values": [
                 {
                   "id": "",
@@ -24570,15 +25017,41 @@
               "value": ""
             },
             {
-              "id": "boolean10PreventInsights",
+              "id": "boolean10SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": true
+            },
+            {
+              "id": "boolean10CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "boolean10CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -24770,15 +25243,41 @@
               "value": false
             },
             {
-              "id": "button1PreventInsights",
+              "id": "button1SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button1CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button1CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -24936,10 +25435,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -25356,15 +25851,41 @@
               "value": false
             },
             {
-              "id": "button2PreventInsights",
+              "id": "button2SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button2CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button2CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -25522,10 +26043,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -25942,15 +26459,41 @@
               "value": false
             },
             {
-              "id": "button3PreventInsights",
+              "id": "button3SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button3CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button3CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -26108,10 +26651,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -26528,15 +27067,41 @@
               "value": false
             },
             {
-              "id": "button4PreventInsights",
+              "id": "button4SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button4CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button4CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -26694,10 +27259,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -27114,15 +27675,41 @@
               "value": false
             },
             {
-              "id": "button5PreventInsights",
+              "id": "button5SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button5CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button5CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -27280,10 +27867,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -27700,15 +28283,41 @@
               "value": false
             },
             {
-              "id": "button6PreventInsights",
+              "id": "button6SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button6CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button6CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -27866,10 +28475,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -28286,15 +28891,41 @@
               "value": false
             },
             {
-              "id": "button7PreventInsights",
+              "id": "button7SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button7CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button7CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -28452,10 +29083,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -28872,15 +29499,41 @@
               "value": false
             },
             {
-              "id": "button8PreventInsights",
+              "id": "button8SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button8CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button8CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -29038,10 +29691,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -29458,15 +30107,41 @@
               "value": false
             },
             {
-              "id": "button9PreventInsights",
+              "id": "button9SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button9CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button9CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },
@@ -29624,10 +30299,6 @@
               "label": {
                 "en": "Icon (only for Button or On/Off)",
                 "nl": "Pictogram (voor Knop of Aan/Uit)"
-              },
-              "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
                 {
@@ -30044,15 +30715,41 @@
               "value": false
             },
             {
-              "id": "button10PreventInsights",
+              "id": "button10SeparateCapabilities",
               "type": "checkbox",
               "label": {
-                "en": "Prevent Insights",
-                "nl": "Voorkom inzichten"
+                "en": "Create Separate Capabilities",
+                "nl": "Creëer apparte capabilities"
               },
               "hint": {
-                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.",
-                "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
+                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.",
+                "nl": "Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd."
+              },
+              "value": false
+            },
+            {
+              "id": "button10CreateInsights",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Insights",
+                "nl": "Creëer inzichten"
+              },
+              "hint": {
+                "en": "When selected Insights will be created.",
+                "nl": "When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld."
+              },
+              "value": false
+            },
+            {
+              "id": "button10CreateTag",
+              "type": "checkbox",
+              "label": {
+                "en": "Create Tag",
+                "nl": "Creëer tag"
+              },
+              "hint": {
+                "en": "When selected a Tag will be created.",
+                "nl": "Indien geselecteerd, wordt een tag aangemaakt."
               },
               "value": false
             },

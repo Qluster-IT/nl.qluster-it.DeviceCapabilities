@@ -383,7 +383,7 @@ class DeviceSetter extends Homey.App {
 							}
 							var now = new Date();
 							now.setMinutes(now.getMinutes() - args.numberof);
-							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null || i.v !== undefined); });
+							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null && i.v !== undefined); });
 							if (insights && (lastOne = _.last(insights.values))) {
 								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
 								if (lastOne.originName) tokens.client = lastOne.originName;

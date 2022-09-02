@@ -31,6 +31,72 @@ str+='"devicecapabilities_starttext": { \r\n'+
 '      "value": "And start creating your own device" \r\n'+
 '    }, \r\n';
 
+
+str+='"Text": { \r\n'+
+'      "type": "string", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Text" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Number": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Boolean": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Boolean" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Button": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Button" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Status": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Status" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
 var sets1 = ['_hide', '_onoff_hide'];
 for(var j=0;j<sets1.length;j++) {
   var val = sets1[j];
@@ -62,8 +128,9 @@ str+='"devicecapabilities_text'+header+'": { \r\n'+
 '        "en": "Text" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
-'      "uiComponent": "sensor" \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "insights": true \r\n'+
         icon+
 '    }, \r\n';
 
@@ -73,7 +140,7 @@ str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 '        "en": "Number" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
+'      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
@@ -97,7 +164,7 @@ str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '        "en": "Yes/No" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
+'      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+

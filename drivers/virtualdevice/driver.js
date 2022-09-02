@@ -126,7 +126,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 break;
                         }
 
-                        if(args.device.hasCapability(cap) && !dontUpdateField) await args.device.setCapabilityValue(cap, val);
+                        if(args.device.hasCapability(cap) && !dontUpdateField) {
+                            await this.setSecondCapability({ val, device:args.device , fieldId});
+                            await args.device.setCapabilityValue(cap, val);
+							// //Remove logs here
+							// let a = await this.homey.insights.getLogs();
+							// let b = a;
+							// //await this.homey.insights.deleteLog({id:secondCap});
+						}
                         await args.device.setStoreValue(fieldId+"Value", val);
                         return true;
 					} catch (error) {
@@ -149,10 +156,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             try {
                     if(args.expression!==undefined && args.expression!=='undefined') {
                         let result = this.runSandBox(args.expression);
+                        
+                        await this.setSecondCapability({ val:result, device:args.device , fieldId});
                         await args.device.setCapabilityValue(cap, result);
                         await args.device.setStoreValue(fieldId+"Value", result);
                     }
                     else {
+                        await this.setSecondCapability({ val:null, device:args.device , fieldId});
                         await args.device.setCapabilityValue(cap, null);
                         await args.device.setStoreValue(fieldId+"Value", null);
                     }
@@ -263,6 +273,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
               }).bind(this));
               this.customIconNames = await this.homey.settings.get('customIconNames');
               this.setFunctions();
+    }
+
+
+    async setSecondCapability({fieldId, device, val}) {
+        var type = fieldId.startsWith('text') ? 'Text' : 
+            fieldId.startsWith('number') ? 'Number' : 
+            fieldId.startsWith('boolean') ? 'Boolean' : 
+            fieldId.startsWith('button') ? 'Button' : 
+            fieldId.startsWith('status') ? 'Status' : 'unknown';
+            
+        if(device.hasCapability(type+"."+fieldId)) return await device.setCapabilityValue(type+"."+fieldId, val);
     }
 
     getCustomIcons(){
@@ -528,13 +549,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
     async triggerFlow(device, value, state) {
-        this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
+        try {
+            
+            this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
+        } catch (error) {
+            this.error(error);
+        }
+        //return await this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
     }
     async triggerFlowBoolean(device, value, state) {
-        this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
+        return await this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
     }
     async triggerFlowNumber(device, value, state) {
-        this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
+        return await this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
