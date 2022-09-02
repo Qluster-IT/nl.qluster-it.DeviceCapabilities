@@ -2,12 +2,12 @@
     "name": {
         "en": "Device Capabilities",
         "nl": "Apparaat mogelijkheden",
-        "de":""
+        "de": "Device Capabilities"
       },
       "description": {
         "en": "Enhance the capabilities of devices",
         "nl": "Verbeter de capabilities van apparaten",
-        "de":""
+        "de": "Nutzen Sie alle Fähigkeiten Ihrer Geräten"
       },
       "tags": {
         "en": [
@@ -43,7 +43,22 @@
           "aanpassen",
           "aanbasbaar"
         ],
-        "new":[]
+        "de":[
+          "Gerät",
+          "Fähigkeiten",
+          "Fähigkeit",
+          "Benutzer",
+          "Client",
+          "Anwender",
+          "Protokoll",
+          "Einblicke",
+          "Überwachung",
+          "Zuhörer",
+          "Zonen",
+          "virtuell",
+          "Anpassen",
+          "anpassbar"
+        ]
       },
       "flow": {
         "triggers": [
@@ -52,11 +67,13 @@
             "deprecated": true,
             "title": {
               "en": "Capability listener",
-              "nl": "Capability luisteraar"
+              "nl": "Capability luisteraar",
+              "de": "Fähigkeit überwachen"
             },
             "titleFormatted": {
               "en": "Listen (watch) from [[device]] for [[capability]]",
-              "nl": "Luister (watch) van [[device]] naar [[capability]]"
+              "nl": "Luister (watch) van [[device]] naar [[capability]]",
+              "de": "Überwachen von [[device]] auf [[capability]]"
             },
             "args": [
               {
@@ -64,11 +81,13 @@
                 "name": "device",
                 "title": {
                   "en": "Device",
-                  "nl": "Apparaat"
+                  "nl": "Apparaat",
+                  "de": "Gerät"
                 },
                 "placeholder": {
                   "en": "Device",
-                  "nl": "Apparaat"
+                  "nl": "Apparaat",
+                  "de": "Gerät"
                 }
               },
               {
@@ -76,11 +95,13 @@
                 "name": "capability",
                 "title": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 }
               }
             ],
@@ -90,7 +111,8 @@
                 "type": "string",
                 "title": {
                   "en": "value",
-                  "nl": "waarde"
+                  "nl": "waarde",
+                  "de": "Wert"
                 }
               }
             ]
@@ -100,17 +122,17 @@
             "title": {
               "en": "Capability listener",
               "nl": "Capability luisteraar",
-              "de":""
+              "de": "Fähigkeit überwachen"
             },
             "titleFormatted": {
               "en": "Listen (watch) from [[device]] for [[capability]]",
               "nl": "Luister (watch) van [[device]] naar [[capability]]",
-              "de":""
+              "de": "Überwachen von [[device]] auf [[capability]]"
             },
             "hint": {
               "en": "This card will execute when a certain capability from a device has changed.\r\nFor OnOff and capabilities with Insights, it will also supply as tokens, the User and Client how changed the value.",
               "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde mogelijkheid (eigenschap) van een apparaat is gewijzigd.\r\nVoor AanUit en capabilities met Insights zal het ook als tokens de Gebruiker en Client geven die de waarde heeft gewijzigd.",
-              "de":""
+              "de": "Diese Karte wird ausgeführt, wenn sich eine bestimmte Fähigkeit eines Geräts geändert hat.\r\nFür OnOff und Fähigkeiten mit aktivierten Einblicken werden auch der Benutzer und der Client, die den Wert geändert haben, als Token geliefert."
             },
             "args": [
               {
@@ -119,12 +141,12 @@
                 "title": {
                   "en": "Device",
                   "nl": "Apparaat",
-                  "de":""
+                  "de": "Gerät"
                 },
                 "placeholder": {
                   "en": "Device",
                   "nl": "Apparaat",
-                  "de":""
+                  "de": "Gerät"
                 }
               },
               {
@@ -133,12 +155,12 @@
                 "title": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 }
               }
             ],
@@ -149,7 +171,7 @@
                 "title": {
                   "en": "User",
                   "nl": "Gebruiker",
-                  "de":""
+                  "de": "Benutzer"
                 }
               },
               {
@@ -158,7 +180,7 @@
                 "title": {
                   "en": "Client",
                   "nl": "Cliënt",
-                  "de":""
+                  "de": "Client"
                 }
               },
               {
@@ -167,7 +189,7 @@
                 "title": {
                   "en": "Text 1",
                   "nl": "Tekst 1",
-                  "de":""
+                  "de": "Text 1"
                 }
               },
               {
@@ -176,7 +198,7 @@
                 "title": {
                   "en": "Number 1",
                   "nl": "Nummer 1",
-                  "de":""
+                  "de": "Nummer 1"
                 }
               },
               {
@@ -185,7 +207,7 @@
                 "title": {
                   "en": "Yes/No 1",
                   "nl": "Ja/Nee 1",
-                  "de":""
+                  "de": "Ja/Nein 1"
                 }
               }
             ]
@@ -195,17 +217,17 @@
             "title": {
               "en": "App started",
               "nl": "App is gestart",
-              "de":""
+              "de": "App wurde gestartet"
             },
             "titleFormatted": {
               "en": "App [[app]] started",
               "nl": "App [[app]] is gestart",
-              "de":""
+              "de": "App [[app]] wurde gestartet"
             },
             "hint": {
               "en": "This card will execute when a certain App is started.",
               "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde app wordt gestart.",
-              "de":""
+              "de": "Diese Karte wird ausgeführt, wenn eine bestimmte App gestartet wird."
             },
             "args": [
               {
@@ -214,12 +236,12 @@
                 "title": {
                   "en": "App",
                   "nl": "App",
-                  "de":""
+                  "de": "App"
                 },
                 "placeholder": {
                   "en": "App",
                   "nl": "App",
-                  "de":""
+                  "de": "App"
                 }
               }
             ]
@@ -229,12 +251,12 @@
             "title": {
               "en": "Button pushed",
               "nl": "Knop ingedrukt",
-              "de":""
+              "de": "Taste gedrückt"
             },
             "titleFormatted": {
               "en": "Button [[field]] pushed",
               "nl": "Knop [[field]] ingedrukt",
-              "de":""
+              "de": "Taste [[field]] gedrückt"
             },
             "args": [
               {
@@ -248,7 +270,7 @@
                 "placeholder": {
                   "en": "Button",
                   "nl": "Knop",
-                  "de":""
+                  "de": "Taste"
                 }
               }
             ],
@@ -259,7 +281,7 @@
                 "title": {
                   "en": "Value",
                   "nl": "Waarde",
-                  "de":""
+                  "de": "Wert"
                 }
               }
             ]
@@ -269,12 +291,12 @@
             "title": {
               "en": "Yes/No set",
               "nl": "Ja/Nee ingesteld",
-              "de":""
+              "de": "Ja/Nein eingestellt"
             },
             "titleFormatted": {
               "en": "Yes/No [[field]] set",
               "nl": "Ja/Nee [[field]] ingesteld",
-              "de":""
+              "de": "Ja/Nein [[field]] festgelegt"
             },
             "args": [
               {
@@ -288,7 +310,7 @@
                 "placeholder": {
                   "en": "Button",
                   "nl": "Knop",
-                  "de":""
+                  "de": "Taste"
                 }
               }
             ],
@@ -299,7 +321,7 @@
                 "title": {
                   "en": "Value",
                   "nl": "Waarde",
-                  "de":""
+                  "de": "Wert"
                 }
               }
             ]
@@ -309,12 +331,12 @@
             "title": {
               "en": "Number set",
               "nl": "Nummer ingesteld",
-              "de":""
+              "de": "Nummer festgelegt"
             },
             "titleFormatted": {
               "en": "Number [[field]] set",
-              "nl": "Number [[field]] ingesteld",
-              "de":""
+              "nl": "Nummer [[field]] ingesteld",
+              "de": "Nummer [[field]] festgelegt"
             },
             "args": [
               {
@@ -328,7 +350,7 @@
                 "placeholder": {
                   "en": "Number",
                   "nl": "Nummer",
-                  "de":""
+                  "de": "Nummer"
                 }
               }
             ],
@@ -339,7 +361,7 @@
                 "title": {
                   "en": "Value",
                   "nl": "Waarde",
-                  "de":""
+                  "de": "Wert"
                 }
               }
             ]
@@ -351,12 +373,12 @@
             "title": {
               "en": "Capability listener",
               "nl": "Capability luisteraar",
-              "de":""
+              "de": "Fähigkeit überwachen"
             },
             "titleFormatted": {
               "en": "Set [[device]].[[capability]] to [[value]] and wait for error: [[error]]",
               "nl": "Set [[device]].[[capability]] naar [[value]] en wacht op error: [[error]]",
-              "de":""
+              "de": "Lege [[device]].[[capability]] auf [[value]] fest und warte auf Fehler: [[error]]"
             },
             "args": [
               {
@@ -365,12 +387,12 @@
                 "title": {
                   "en": "Device",
                   "nl": "Apparaat",
-                  "de":""
+                  "de": "Gerät"
                 },
                 "placeholder": {
                   "en": "Device",
                   "nl": "Apparaat",
-                  "de":""
+                  "de": "Gerät"
                 }
               },
               {
@@ -379,12 +401,12 @@
                 "title": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -393,7 +415,7 @@
                 "placeholder": {
                   "en": "True or False",
                   "nl": "Ja of Nee",
-                  "de":""
+                  "de": "Wahr oder Unwahr"
                 },
                 "values": [
                   {
@@ -401,7 +423,7 @@
                     "label": {
                       "en": "True",
                       "nl": "Ja",
-                      "de":""
+                      "de": "Wahr"
                     }
                   },
                   {
@@ -409,7 +431,7 @@
                     "label": {
                       "en": "False",
                       "nl": "Nee",
-                      "de":""
+                      "de": "Unwahr"
                     }
                   }
                 ]
@@ -420,7 +442,7 @@
                 "title": {
                   "en": "Error",
                   "nl": "Foutmelding",
-                  "de":""
+                  "de": "Fehler"
                 }
               }
             ]
@@ -430,17 +452,17 @@
             "title": {
               "en": "App running",
               "nl": "App actief",
-              "de":""
+              "de": "App läuft"
             },
             "titleFormatted": {
               "en": "App [[app]] is !{{|not}} running",
               "nl": "App [[app]] is !{{|niet}} actief",
-              "de":""
+              "de": "App [[app]] wird !{{|nicht}} ausgeführt"
             },
             "hint": {
               "en": "Check if a certain App is running or not",
               "nl": "Controleer of een bepaalde app actief is of niet",
-              "de":""
+              "de": "Prüfen, ob eine bestimmte App läuft oder nicht"
             },
             "args": [
               {
@@ -449,12 +471,12 @@
                 "title": {
                   "en": "App",
                   "nl": "App",
-                  "de":""
+                  "de": "App"
                 },
                 "placeholder": {
                   "en": "App",
                   "nl": "App",
-                  "de":""
+                  "de": "App"
                 }
               }
             ]
@@ -466,17 +488,17 @@
             "title": {
               "en": "Set text capabilities in a zone",
               "nl": "Zet tekst capabilities in een ruimte",
-              "de":""
+              "de": "Text-Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
               "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-              "de":""
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] einschließlich Unterzonen ([[subzones]])"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain text.",
               "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde tekst.",
-              "de":""
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, die Fähigkeit auf einen bestimmten Text fest."
             },
             "args": [
               {
@@ -485,12 +507,12 @@
                 "title": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -500,7 +522,7 @@
                 "placeholder": {
                   "en": "optional: Brand",
                   "nl": "optioneel: Merk",
-                  "de":""
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -510,7 +532,7 @@
                 "placeholder": {
                   "en": "optional: Device Type",
                   "nl": "optioneel: Apparaat Type",
-                  "de":""
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -519,7 +541,7 @@
                 "placeholder": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -528,12 +550,12 @@
                 "title": {
                   "en": "Text",
                   "nl": "Tekst",
-                  "de":""
+                  "de": "Text"
                 },
                 "placeholder": {
                   "en": "Text",
                   "nl": "Tekst",
-                  "de":""
+                  "de": "Text"
                 }
               },
               {
@@ -542,12 +564,12 @@
                 "title": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 }
               },
               {
@@ -556,12 +578,12 @@
                 "title": {
                   "en": "Subzones",
                   "nl": "Sub-ruimte's",
-                  "de":""
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
                   "nl": "Stel sub-ruimte's in",
-                  "de":""
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
@@ -569,7 +591,7 @@
                     "label": {
                       "en": "Yes",
                       "nl": "Ja",
-                      "de":""
+                      "de": "Ja"
                     }
                   },
                   {
@@ -577,7 +599,7 @@
                     "label": {
                       "en": "No",
                       "nl": "Nee",
-                      "de":""
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -589,17 +611,17 @@
             "title": {
               "en": "Set number capabilities in a zone",
               "nl": "Zet number capabilities in een zone",
-              "de":""
+              "de": "Nummern-Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
               "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-              "de":""
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain number.",
               "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde nummer.",
-              "de":""
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, die Fähigkeit auf eine bestimmte Nummer fest."
             },
             "args": [
               {
@@ -608,12 +630,12 @@
                 "title": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -623,7 +645,7 @@
                 "placeholder": {
                   "en": "optional: Brand",
                   "nl": "optioneel: Merk",
-                  "de":""
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -633,7 +655,7 @@
                 "placeholder": {
                   "en": "optional: Device Type",
                   "nl": "optioneel: Apparaat Type",
-                  "de":""
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -642,12 +664,12 @@
                 "title": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -656,12 +678,12 @@
                 "title": {
                   "en": "Number",
                   "nl": "Nummer",
-                  "de":""
+                  "de": "Nummer"
                 },
                 "placeholder": {
                   "en": "Number",
                   "nl": "Nummer",
-                  "de":""
+                  "de": "Nummer"
                 }
               },
               {
@@ -670,12 +692,12 @@
                 "title": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 }
               },
               {
@@ -684,12 +706,12 @@
                 "title": {
                   "en": "Subzones",
                   "nl": "Sub-ruimte's",
-                  "de":""
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
                   "nl": "Stel sub-ruimte's in",
-                  "de":""
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
@@ -697,7 +719,7 @@
                     "label": {
                       "en": "Yes",
                       "nl": "Ja",
-                      "de":""
+                      "de": "Ja"
                     }
                   },
                   {
@@ -705,7 +727,7 @@
                     "label": {
                       "en": "No",
                       "nl": "Nee",
-                      "de":""
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -717,17 +739,17 @@
             "title": {
               "en": "Set percentage capabilities in a zone",
               "nl": "Zet procent capabilities in een zone",
-              "de":""
+              "de": "Prozentuale-Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
               "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-              "de":""
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain percentage.",
               "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar een bepaalde percentage.",
-              "de":""
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, die Fähigkeit auf einen bestimmten Prozentsatz fest."
             },
             "args": [
               {
@@ -736,12 +758,12 @@
                 "title": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
                   "nl": "Apparaatklasse",
-                  "de":""
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -751,7 +773,7 @@
                 "placeholder": {
                   "en": "optional: Brand",
                   "nl": "optioneel: Merk",
-                  "de":""
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -761,7 +783,7 @@
                 "placeholder": {
                   "en": "optional: Device Type",
                   "nl": "optioneel: Apparaat Type",
-                  "de":""
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -770,12 +792,12 @@
                 "title": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
                   "nl": "Capability",
-                  "de":""
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -784,12 +806,12 @@
                 "title": {
                   "en": "%",
                   "nl": "%",
-                  "new":"%"
+                  "de": "%"
                 },
                 "placeholder": {
                   "en": "%",
                   "nl": "%",
-                  "new":"%"
+                  "de": "%"
                 },
                 "min": 0,
                 "max": 1,
@@ -803,12 +825,12 @@
                 "title": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
                   "nl": "Ruimte",
-                  "de":""
+                  "de": "Zone"
                 }
               },
               {
@@ -816,25 +838,29 @@
                 "name": "subzones",
                 "title": {
                   "en": "Subzones",
-                  "nl": "Sub-ruimte's"
+                  "nl": "Sub-ruimte's",
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
-                  "nl": "Stel sub-ruimte's in"
+                  "nl": "Stel sub-ruimte's in",
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
                     "id": "yes",
                     "label": {
                       "en": "Yes",
-                      "nl": "Ja"
+                      "nl": "Ja",
+                      "de": "Ja"
                     }
                   },
                   {
                     "id": "no",
                     "label": {
                       "en": "No",
-                      "nl": "Nee"
+                      "nl": "Nee",
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -846,15 +872,18 @@
             "deprecated": true,
             "title": {
               "en": "Set true/false capabilities in a zone",
-              "nl": "Zet ja/nee capabilities in een ruimte"
+              "nl": "Zet ja/nee capabilities in een ruimte",
+              "de": "Wahr/Unwahr-Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
-              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee."
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee.",
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, die Fähigkeit auf Wahr oder Unwahr fest."
             },
             "args": [
               {
@@ -862,11 +891,13 @@
                 "name": "deviceclass",
                 "title": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -875,7 +906,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Brand",
-                  "nl": "optioneel: Merk"
+                  "nl": "optioneel: Merk",
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -884,7 +916,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Device Type",
-                  "nl": "optioneel: Apparaat Type"
+                  "nl": "optioneel: Apparaat Type",
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -892,11 +925,13 @@
                 "name": "capability",
                 "title": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -904,25 +939,29 @@
                 "name": "value",
                 "title": {
                   "en": "True or False",
-                  "nl": "Ja of Nee"
+                  "nl": "Ja of Nee",
+                  "de": "Wahr oder Unwahr"
                 },
                 "placeholder": {
                   "en": "True or False",
-                  "nl": "Ja of Nee"
+                  "nl": "Ja of Nee",
+                  "de": "Wahr oder Unwahr"
                 },
                 "values": [
                   {
                     "id": "true",
                     "label": {
                       "en": "True",
-                      "nl": "Ja"
+                      "nl": "Ja",
+                      "de": "Wahr"
                     }
                   },
                   {
                     "id": "false",
                     "label": {
                       "en": "False",
-                      "nl": "Nee"
+                      "nl": "Nee",
+                      "de": "Unwahr"
                     }
                   }
                 ]
@@ -932,11 +971,13 @@
                 "name": "zone",
                 "title": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 }
               },
               {
@@ -944,25 +985,29 @@
                 "name": "subzones",
                 "title": {
                   "en": "Subzones",
-                  "nl": "Sub-ruimte's"
+                  "nl": "Sub-ruimte's",
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
-                  "nl": "Stel sub-ruimte's in"
+                  "nl": "Stel sub-ruimte's in",
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
                     "id": "yes",
                     "label": {
                       "en": "Yes",
-                      "nl": "Ja"
+                      "nl": "Ja",
+                      "de": "Ja"
                     }
                   },
                   {
                     "id": "no",
                     "label": {
                       "en": "No",
-                      "nl": "Nee"
+                      "nl": "Nee",
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -973,15 +1018,18 @@
             "id": "set_capability_zone_2_boolean",
             "title": {
               "en": "Set true/false capabilities in a zone",
-              "nl": "Zet ja/nee capabilities in een ruimte"
+              "nl": "Zet ja/nee capabilities in een ruimte",
+              "de": "Ja/Nein-Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
-              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee."
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) naar Ja of Nee.",
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, die Fähigkeit auf Ja oder Nein fest."
             },
             "args": [
               {
@@ -989,11 +1037,13 @@
                 "name": "deviceclass",
                 "title": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -1002,7 +1052,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Brand",
-                  "nl": "optioneel: Merk"
+                  "nl": "optioneel: Merk",
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -1011,7 +1062,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Device Type",
-                  "nl": "optioneel: Apparaat Type"
+                  "nl": "optioneel: Apparaat Type",
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -1019,11 +1071,13 @@
                 "name": "capability",
                 "title": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -1031,11 +1085,13 @@
                 "name": "value",
                 "title": {
                   "en": "Yes/No",
-                  "nl": "Ja/Nee"
+                  "nl": "Ja/Nee",
+                  "de": "Ja/Nein"
                 },
                 "placeholder": {
                   "en": "Yes/No",
-                  "nl": "Ja/Nee"
+                  "nl": "Ja/Nee",
+                  "de": "Ja/Nein"
                 }
               },
               {
@@ -1043,11 +1099,13 @@
                 "name": "zone",
                 "title": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 }
               },
               {
@@ -1055,25 +1113,29 @@
                 "name": "subzones",
                 "title": {
                   "en": "Subzones",
-                  "nl": "Sub-ruimte's"
+                  "nl": "Sub-ruimte's",
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
-                  "nl": "Stel sub-ruimte's in"
+                  "nl": "Stel sub-ruimte's in",
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
                     "id": "yes",
                     "label": {
                       "en": "Yes",
-                      "nl": "Ja"
+                      "nl": "Ja",
+                      "de": "Ja"
                     }
                   },
                   {
                     "id": "no",
                     "label": {
                       "en": "No",
-                      "nl": "Nee"
+                      "nl": "Nee",
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -1084,15 +1146,18 @@
             "id": "set_capability_zone_json",
             "title": {
               "en": "Set json as value for capabilities in a zone",
-              "nl": "Zet json als waarde voor capabilities in een ruimte"
+              "nl": "Zet json als waarde voor capabilities in een ruimte",
+              "de": "JSON als Wert für Fähigkeiten in einer Zone festlegen"
             },
             "titleFormatted": {
               "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+              "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
+              "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
             },
             "hint": {
               "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability value as a JSON value.\r\n\"text\", 0.25 or true.\r\nMind the double quotes for text.",
-              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) waarde in als JSON waarde.\r\n\"tekst\", 0.25 of true.\r\nLet op de dubbele aanhalingstekens voor tekst."
+              "nl": "Zet van alle apparaten in een ruimte, optioneel alle sub-ruimte's, van een bepaalde klasse (licht/gordijn/etc), optioneel gefilterd op merk en apparaattype, de mogelijkheid (eigenschap) waarde in als JSON waarde.\r\n\"tekst\", 0.25 of true.\r\nLet op de dubbele aanhalingstekens voor tekst.",
+              "de": "Lege von allen Geräten in einer Zone, optional allen Unterzonen, einer bestimmten Klasse (Licht/Vorhang/etc), optional gefiltert nach Hersteller und Gerätetyp, den Wert der Fähigkeit als JSON-Wert fest.\r\n\"text\", 0.25 oder Wahr.\r\nBeachten Sie die doppelten Anführungszeichen für Text."
             },
             "args": [
               {
@@ -1100,11 +1165,13 @@
                 "name": "deviceclass",
                 "title": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 },
                 "placeholder": {
                   "en": "Deviceclass",
-                  "nl": "Apparaatklasse"
+                  "nl": "Apparaatklasse",
+                  "de": "Geräteklasse"
                 }
               },
               {
@@ -1113,7 +1180,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Brand",
-                  "nl": "optioneel: Merk"
+                  "nl": "optioneel: Merk",
+                  "de": "optional: Hersteller"
                 }
               },
               {
@@ -1122,7 +1190,8 @@
                 "required": false,
                 "placeholder": {
                   "en": "optional: Device Type",
-                  "nl": "optioneel: Apparaat Type"
+                  "nl": "optioneel: Apparaat Type",
+                  "de": "optional: Gerätetyp"
                 }
               },
               {
@@ -1130,11 +1199,13 @@
                 "name": "capability",
                 "title": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -1142,11 +1213,13 @@
                 "name": "value",
                 "title": {
                   "en": "JSON",
-                  "nl": "JSON"
+                  "nl": "JSON",
+                  "de": "JSON"
                 },
                 "placeholder": {
                   "en": "\"track\", true or 0.25",
-                  "nl": "\"track\", true or 0.25"
+                  "nl": "\"track\", true or 0.25",
+                  "de": "\"track\", Wahr oder 0.25"
                 }
               },
               {
@@ -1154,11 +1227,13 @@
                 "name": "zone",
                 "title": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 },
                 "placeholder": {
                   "en": "Zone",
-                  "nl": "Ruimte"
+                  "nl": "Ruimte",
+                  "de": "Zone"
                 }
               },
               {
@@ -1166,25 +1241,29 @@
                 "name": "subzones",
                 "title": {
                   "en": "Subzones",
-                  "nl": "Sub-ruimte's"
+                  "nl": "Sub-ruimte's",
+                  "de": "Unterzone"
                 },
                 "placeholder": {
                   "en": "Set Subzones",
-                  "nl": "Stel sub-ruimte's in"
+                  "nl": "Stel sub-ruimte's in",
+                  "de": "Unterzone festlegen"
                 },
                 "values": [
                   {
                     "id": "yes",
                     "label": {
                       "en": "Yes",
-                      "nl": "Ja"
+                      "nl": "Ja",
+                      "de": "Ja"
                     }
                   },
                   {
                     "id": "no",
                     "label": {
                       "en": "No",
-                      "nl": "Nee"
+                      "nl": "Nee",
+                      "de": "Nein"
                     }
                   }
                 ]
@@ -1195,15 +1274,18 @@
             "id": "action_capability_log",
             "title": {
               "en": "Retrieve Insight Log Value",
-              "nl": "Ontvang Insight Log Waarde"
+              "nl": "Ontvang Insight Log Waarde",
+              "de": "Einblicke-Protokollwert abrufen"
             },
             "titleFormatted": {
               "en": "Retrieve the insights value from [[device]] for [[capability]] from [[numberof]] minutes ago",
-              "nl": "Ontvang de insights waarde van [[device]] voor [[capability]] van [[numberof]] minuten geleden"
+              "nl": "Ontvang de insights waarde van [[device]] voor [[capability]] van [[numberof]] minuten geleden",
+              "de": "Einblicke-Protokollwert vom [[device]] für [[capability]] von [[numberof]] Minuten zuvor abrufen"
             },
             "hint": {
               "en": "Retrieve the Value from the Insight Log (and OnOff) from x Minutes ago. Setting it to zero (0) minutes will retrieve the last changed value.\r\nIncludes Tokens for with the User and Client who changed the value.",
-              "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd."
+              "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd.",
+              "de": "Ruft den Wert aus dem Einblicke-Protokoll (und OnOff) von x Minuten zuvor ab. Wenn der Wert auf null (0) Minuten eingestellt ist, wird der zuletzt geänderte Wert abgerufen.\r\nEnthält Token für den Benutzer und den Client, der den Wert geändert hat."
             },
             "highlight": true,
             "args": [
@@ -1212,11 +1294,13 @@
                 "name": "device",
                 "title": {
                   "en": "Device",
-                  "nl": "Apparaat"
+                  "nl": "Apparaat",
+                  "de": "Gerät"
                 },
                 "placeholder": {
                   "en": "Device",
-                  "nl": "Apparaat"
+                  "nl": "Apparaat",
+                  "de": "Gerät"
                 }
               },
               {
@@ -1224,11 +1308,13 @@
                 "name": "capability",
                 "title": {
                   "en": "Capability",
-                  "nl": "Capability"
+                  "nl": "Capability",
+                  "de": "Fähigkeit"
                 },
                 "placeholder": {
                   "en": "Capability",
-                  "nl": "Mogelijkheid"
+                  "nl": "Mogelijkheid",
+                  "de": "Fähigkeit"
                 }
               },
               {
@@ -1236,7 +1322,8 @@
                 "name": "numberof",
                 "placeholder": {
                   "en": "Minutes ago",
-                  "nl": "Minuten geleden"
+                  "nl": "Minuten geleden",
+                  "de": "Minuten zuvor"
                 }
               }
             ],
@@ -1246,7 +1333,8 @@
                 "type": "string",
                 "title": {
                   "en": "User",
-                  "nl": "Gebruiker"
+                  "nl": "Gebruiker",
+                  "de": "Benutzer"
                 }
               },
               {
@@ -1254,7 +1342,8 @@
                 "type": "string",
                 "title": {
                   "en": "Client",
-                  "nl": "Cliënt"
+                  "nl": "Cliënt",
+                  "de": "Client"
                 }
               },
               {
@@ -1262,7 +1351,8 @@
                 "type": "string",
                 "title": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 }
               },
               {
@@ -1270,7 +1360,8 @@
                 "type": "number",
                 "title": {
                   "en": "Number",
-                  "nl": "Nummer"
+                  "nl": "Nummer",
+                  "de": "Nummer"
                 }
               },
               {
@@ -1278,7 +1369,8 @@
                 "type": "boolean",
                 "title": {
                   "en": "Yes/No",
-                  "nl": "Ja/Nee"
+                  "nl": "Ja/Nee",
+                  "de": "Ja/Nein"
                 }
               }
             ]
@@ -1287,11 +1379,13 @@
             "id": "virtualdevice_set_text",
             "title": {
               "en": "Set Text",
-              "nl": "Zet Tekst"
+              "nl": "Zet Tekst",
+              "de": "Text setzen"
             },
             "titleFormatted": {
               "en": "Set [[field]] to [[text]]",
-              "nl": "Zet [[field]] naar [[text]]"
+              "nl": "Zet [[field]] naar [[text]]",
+              "de": "Setze [[field]] auf [[text]]"
             },
             "args": [
               {
@@ -1304,7 +1398,8 @@
                 "name": "field",
                 "placeholder": {
                   "en": "Textfield",
-                  "nl": "Tekstveld"
+                  "nl": "Tekstveld",
+                  "de": "Textfeld"
                 }
               },
               {
@@ -1312,7 +1407,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 },
                 "required": false
               }
@@ -1322,11 +1418,13 @@
             "id": "virtualdevice_set_number",
             "title": {
               "en": "Set Number",
-              "nl": "Zet Nummer"
+              "nl": "Zet Nummer",
+              "de": "Nummer setzen"
             },
             "titleFormatted": {
               "en": "Set [[field]] to [[number]]",
-              "nl": "Zet [[field]] naar [[number]]"
+              "nl": "Zet [[field]] naar [[number]]",
+              "de": "Setze [[field]] auf [[number]]"
             },
             "args": [
               {
@@ -1339,7 +1437,8 @@
                 "name": "field",
                 "placeholder": {
                   "en": "Numberfield",
-                  "nl": "Nummerveld"
+                  "nl": "Nummerveld",
+                  "de": "Nummernfeld"
                 }
               },
               {
@@ -1347,7 +1446,8 @@
                 "name": "number",
                 "placeholder": {
                   "en": "Number",
-                  "nl": "Nummer"
+                  "nl": "Nummer",
+                  "de": "Nummer"
                 },
                 "required": false
               }
@@ -1357,11 +1457,13 @@
             "id": "virtualdevice_set_boolean",
             "title": {
               "en": "Set Yes/No",
-              "nl": "Zet Ja/Nee"
+              "nl": "Zet Ja/Nee",
+              "de": "Ja/Nein setzen"
             },
             "titleFormatted": {
               "en": "Set [[field]] to [[boolean]]",
-              "nl": "Zet [[field]] naar [[boolean]]"
+              "nl": "Zet [[field]] naar [[boolean]]",
+              "de": "Setze [[field]] auf [[boolean]]"
             },
             "args": [
               {
@@ -1374,7 +1476,8 @@
                 "name": "field",
                 "placeholder": {
                   "en": "Yes/No field",
-                  "nl": "Ja/Nee veld"
+                  "nl": "Ja/Nee veld",
+                  "de": "Ja/Nein-Feld"
                 }
               },
               {
@@ -1382,7 +1485,8 @@
                 "name": "boolean",
                 "placeholder": {
                   "en": "Yes/No",
-                  "nl": "Ja/Nee"
+                  "nl": "Ja/Nee",
+                  "de": "Ja/Nein"
                 },
                 "required": false
               }
@@ -1392,11 +1496,13 @@
             "id": "virtualdevice_set_button",
             "title": {
               "en": "Set Button",
-              "nl": "Zet Knop"
+              "nl": "Zet Knop",
+              "de": "Taste setzen"
             },
             "titleFormatted": {
               "en": "Set [[field]] to [[boolean]]",
-              "nl": "Zet [[field]] naar [[boolean]]"
+              "nl": "Zet [[field]] naar [[boolean]]",
+              "de": "Setze [[field]] auf [[boolean]]"
             },
             "args": [
               {
@@ -1409,7 +1515,8 @@
                 "name": "field",
                 "placeholder": {
                   "en": "Button",
-                  "nl": "Knop"
+                  "nl": "Knop",
+                  "de": "Taste"
                 }
               },
               {
@@ -1417,7 +1524,8 @@
                 "name": "boolean",
                 "placeholder": {
                   "en": "Yes/No",
-                  "nl": "Ja/Nee"
+                  "nl": "Ja/Nee",
+                  "de": "Ja/Nein"
                 },
                 "required": false
               }
@@ -1427,11 +1535,13 @@
             "id": "virtualdevice_set_status",
             "title": {
               "en": "Set Status",
-              "nl": "Zet Status"
+              "nl": "Zet Status",
+              "de": "Status setzen"
             },
             "titleFormatted": {
               "en": "Set Status to [[text]]",
-              "nl": "Zet Status naar [[text]]"
+              "nl": "Zet Status naar [[text]]",
+              "de": "Setze Status auf [[text]]"
             },
             "args": [
               {
@@ -1444,7 +1554,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 },
                 "required": false
               }
@@ -1454,11 +1565,13 @@
             "id": "virtualdevice_set_status_optionalnumber",
             "title": {
               "en": "Set Status with Number",
-              "nl": "Zet Status met Nummer"
+              "nl": "Zet Status met Nummer",
+              "de": "Status mit Nummer setzen"
             },
             "titleFormatted": {
               "en": "Set Status to [[text]] with [[number]]",
-              "nl": "Zet Status naar [[text]] met [[number]]"
+              "nl": "Zet Status naar [[text]] met [[number]]",
+              "de": "Setze Status auf [[text]] mit [[number]]"
             },
             "args": [
               {
@@ -1471,7 +1584,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 },
                 "required": false
               },
@@ -1480,7 +1594,8 @@
                 "name": "number",
                 "placeholder": {
                   "en": "Number",
-                  "nl": "Nummer"
+                  "nl": "Nummer",
+                  "de": "Nummer"
                 },
                 "required": false
               }
@@ -1490,11 +1605,13 @@
             "id": "virtualdevice_set_expression",
             "title": {
               "en": "Set Expression",
-              "nl": "Zet Expression"
+              "nl": "Zet Expression",
+              "de": "Bezeichnung setzen"
             },
             "titleFormatted": {
               "en": "Set [[field]] to [[expression]]",
-              "nl": "Zet [[field]] naar [[expression]]"
+              "nl": "Zet [[field]] naar [[expression]]",
+              "de": "Setze [[field]] auf [[expression]]"
             },
             "args": [
               {
@@ -1507,7 +1624,8 @@
                 "name": "field",
                 "placeholder": {
                   "en": "Field",
-                  "nl": "Veld"
+                  "nl": "Veld",
+                  "de": "Feld"
                 }
               },
               {
@@ -1515,7 +1633,8 @@
                 "name": "expression",
                 "placeholder": {
                   "en": "Expression",
-                  "nl": "Expression"
+                  "nl": "Expression",
+                  "de": "Bezeichnung"
                 },
                 "required": false
               }
@@ -1526,11 +1645,13 @@
             "deprecated": true,
             "title": {
               "en": "Set Name",
-              "nl": "Zet Naam"
+              "nl": "Zet Naam",
+              "de": "Namen setzen"
             },
             "titleFormatted": {
               "en": "Set Name to [[text]]",
-              "nl": "Zet Naam naar [[text]]"
+              "nl": "Zet Naam naar [[text]]",
+              "de": "Setze Namen auf [[text]]"
             },
             "args": [
               {
@@ -1543,7 +1664,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 }
               }
             ]
@@ -1552,11 +1674,13 @@
             "id": "virtualdevice_set_warning",
             "title": {
               "en": "Set Warning",
-              "nl": "Zet Waarschuwing"
+              "nl": "Zet Waarschuwing",
+              "de": "Warnung setzen"
             },
             "titleFormatted": {
               "en": "Set Warning to [[text]]",
-              "nl": "Zet Waarschuwing naar [[text]]"
+              "nl": "Zet Waarschuwing naar [[text]]",
+              "de": "Setze Warnung auf [[text]]"
             },
             "args": [
               {
@@ -1569,7 +1693,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 }
               }
             ]
@@ -1578,11 +1703,13 @@
             "id": "virtualdevice_set_unavailable",
             "title": {
               "en": "Set Unavailable",
-              "nl": "Zet Niet Beschikbaar"
+              "nl": "Zet Niet Beschikbaar",
+              "de": "Deaktivieren"
             },
             "titleFormatted": {
               "en": "Set [[device]] Unavailable with message [[text]]",
-              "nl": "Zet [[device]] Niet Beschikbaar met bericht [[text]]"
+              "nl": "Zet [[device]] Niet Beschikbaar met bericht [[text]]",
+              "de": "[[device]] deaktivieren mit Meldung [[text]]"
             },
             "args": [
               {
@@ -1590,11 +1717,13 @@
                 "name": "device",
                 "title": {
                   "en": "Virtual Device",
-                  "nl": "Virtueel Apparaat"
+                  "nl": "Virtueel Apparaat",
+                  "de": "Virtuelles Gerät"
                 },
                 "placeholder": {
                   "en": "Virtual Device",
-                  "nl": "Virtueel Apparaat"
+                  "nl": "Virtueel Apparaat",
+                  "de": "Virtuelles Gerät"
                 }
               },
               {
@@ -1602,7 +1731,8 @@
                 "name": "text",
                 "placeholder": {
                   "en": "Text",
-                  "nl": "Tekst"
+                  "nl": "Tekst",
+                  "de": "Text"
                 }
               }
             ]
@@ -1611,11 +1741,13 @@
             "id": "virtualdevice_clear_warning",
             "title": {
               "en": "Clear Warning",
-              "nl": "Maak Waarschuwing leeg"
+              "nl": "Maak Waarschuwing leeg",
+              "de": "Eindeutige Warnung"
             },
             "titleFormatted": {
               "en": "Clear Warning",
-              "nl": "Maak Waarschuwing leeg"
+              "nl": "Maak Waarschuwing leeg",
+              "de": "Eindeutige Warnung"
             },
             "args": [
               {
@@ -1629,11 +1761,13 @@
             "id": "virtualdevice_set_available",
             "title": {
               "en": "Set Available",
-              "nl": "Maak Beschikbaar"
+              "nl": "Maak Beschikbaar",
+              "de": "Aktivieren"
             },
             "titleFormatted": {
               "en": "Set [[device]] Available",
-              "nl": "Maak [[device]] Beschikbaar"
+              "nl": "Maak [[device]] Beschikbaar",
+              "de": "[[device]] aktivieren"
             },
             "args": [
               {
@@ -1641,11 +1775,13 @@
                 "name": "device",
                 "title": {
                   "en": "Virtual Device",
-                  "nl": "Virtueel Apparaat"
+                  "nl": "Virtueel Apparaat",
+                  "de": "Virtuelles Gerät"
                 },
                 "placeholder": {
                   "en": "Virtual Device",
-                  "nl": "Virtueel Apparaat"
+                  "nl": "Virtueel Apparaat",
+                  "de": "Virtuelles Gerät"
                 }
               }
             ]
