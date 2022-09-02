@@ -19,7 +19,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		if (process.env.DEBUG === '1') {
-
+			if(this.hasCapability('measure_Status.status.status1'))await this.removeCapability('measure_Status.status.status1');
 		}
 
 
@@ -33,6 +33,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				"labelGeneral": this.homey.__("virtualdevicesettings.labelGeneral"),
 				"labelAlso": this.homey.__("virtualdevicesettings.labelAlso"),
 				"labelCustomIcons": this.homey.__("virtualdevicesettings.labelCustomIcons"),
+				"labelButton1": this.homey.__("virtualdevicesettings.labelButton1"),
 				"labelCamerasRestart": this.homey.__("virtualdevicesettings.labelCamerasRestart"),
 				"labelIcons": this.homey.__("virtualdevicesettings.labelIcons"),
 				"labelStatusIndicator": this.homey.__("virtualdevicesettings.labelStatusIndicator")
@@ -48,7 +49,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			for (let i = 0; i < caps.length; i++) {
 				let fieldId = this.getStoreValue(caps[i]);
 				let _cap = caps[i].split('.')[0];
-				if((caps[i].indexOf('devicecapabilities')>-1 || caps[i].indexOf('dc-')===0) && !this.homey.app.manifest.capabilities[_cap]) {
+				if(caps[i].indexOf('devicecapabilities')>-1 && !this.homey.app.manifest.capabilities[_cap]) {
 					this.removeCapability(caps[i]);
 					continue;
 					//this.log('cap doesn\'t exists any more', caps[i]);
@@ -253,7 +254,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							}
 							break;
 						case "status":
-							cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
+							cap = 'devicecapabilities_number' + icon + '.' + type + i;
+							//cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
 							break;
 						case "boolean":
 							let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
@@ -300,6 +302,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							break;
 					}
 					if (oldCap) oldValue = this.getCapabilityValue(oldCap) || oldValue;
+					else if (type=="status") oldValue = 0;
 
 
 					if (oldCap && cap != oldCap && this.hasCapability(oldCap)) {
@@ -319,7 +322,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 					if (name && name.length > 0) {
 						
-						let secondCap = this.capitalizeFirstLetter(type) +"."+type+i;
+						let secondCap = type=='status'? ("measure_Status"+"."+type+i) : (this.capitalizeFirstLetter(type) +"."+type+i);
 
 						if ((type == "button" || (type == "boolean" && cap.indexOf('_button') > -1)) && button1Reset) {
 							if (this.hasCapability(cap)) await this.removeCapability(cap);
@@ -376,7 +379,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 						if (capOptionsChanged) {
 							let optionValues = {type, i, settings, decimals, min, max, name};
-							if(type=="status") optionValues.units = name;
+							if(type=="status") optionValues.units = opt.units || name;
 							let optNew = this.getOptions(optionValues);
 							if(settings[type + i + 'SeparateCapabilities']===false) {
 								optNew.preventInsights = !settings[type + i + 'CreateInsights'];
@@ -386,7 +389,8 @@ module.exports = class WatchDevice extends Homey.Device {
 								await this.setCapabilityOptions(cap, optNew);
 						}
 						let secondCapRemoved = false;
-						if((settings[type + i + 'CreateInsights']===true ||settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false) {
+						let isStatus = type=="status";
+						if(isStatus || ((settings[type + i + 'CreateInsights']===true ||settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false)) {
 							if(!this.hasCapability(secondCap)) {
 								await this.addCapability(secondCap);
 								capOptionsChanged = true;
@@ -394,8 +398,11 @@ module.exports = class WatchDevice extends Homey.Device {
 							//let secondOpt; try { secondOpt = this.getCapabilityOptions(cap); } catch (error) { }
 							if(
 								capOptionsChanged || 
+								//(isStatus && )
 								settings[type + i + 'CreateInsights']!=oldSettings[type + i + 'CreateInsights'] || 
 								settings[type + i + 'CreateTag']!=oldSettings[type + i + 'CreateTag']) {
+									let optionValues = {type, i, settings, decimals, min, max, name};
+									if(type=="status") optionValues.units = opt.units || name;
 									let optNew = this.getOptions({type, i, settings, decimals, min, max, name});
 									optNew.preventInsights = settings[type + i + 'CreateInsights']!==true;
 									optNew.preventTag = settings[type + i + 'CreateTag']!==true;

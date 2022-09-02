@@ -513,8 +513,8 @@ str+='   { \r\n' +
 '            { \r\n' +
 '              "id": "labelButton1", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": " ", "nl":" ", "new":" " }, \r\n' +
-'              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator.", "de":"Taste 1 ist ein Sonderfall und bleibt die erste und daher die Haupttaste und -anzeige des Geräts."  \r\n' +
+'              "label": {"en": " ", "nl":" ", "de":" " }, \r\n' +
+'              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator."  \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n';

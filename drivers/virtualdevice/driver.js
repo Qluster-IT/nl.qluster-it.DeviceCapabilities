@@ -115,6 +115,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 					                if (!opt) opt = {};
                                     opt.units = args.text;
                                     await args.device.setCapabilityOptions(cap, opt);
+                                    
+                                    await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
                                 }
                                 if(args.number!==undefined && args.number!=='undefined') val = args.number;
                                 else if(action=="virtualdevice_set_status_optionalnumber") val = null;
@@ -276,14 +278,21 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
 
-    async setSecondCapability({fieldId, device, val}) {
+    async setSecondCapability({fieldId, device, val, units}={}) {
         var type = fieldId.startsWith('text') ? 'Text' : 
             fieldId.startsWith('number') ? 'Number' : 
             fieldId.startsWith('boolean') ? 'Boolean' : 
             fieldId.startsWith('button') ? 'Button' : 
-            fieldId.startsWith('status') ? 'Status' : 'unknown';
-            
-        if(device.hasCapability(type+"."+fieldId)) return await device.setCapabilityValue(type+"."+fieldId, val);
+            fieldId.startsWith('status') ? 'measure_Status' : 'unknown';
+        let cap = type+"."+fieldId;
+        if(device.hasCapability(cap)) {
+            if(units) {
+                var opt = device.getCapabilityOptions(cap);
+                if (!opt) opt = {};
+                opt.units = units;
+                await device.setCapabilityOptions(cap, opt);
+            } else return await device.setCapabilityValue(cap, val);
+        }
     }
 
     getCustomIcons(){
