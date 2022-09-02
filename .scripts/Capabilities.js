@@ -1,91 +1,100 @@
 var str = '';
-let icons = ['',
-    'alarm_smoke', 
-    'alarm_water',
-    'battery', 
-    'circle', 
-    'curtain-half', 
-    'device_capabilities',
-    'game',
-    'measure_clouds',
-    'measure_humidity',
-    'measure_luminance',
-    'measure_noise', 
-    'measure_power',
-    'measure_pressure',
-    'measure_rain',
-    'measure_temperature',
-    'measure_wind_angle',
-    'measure_wind_strength',
-    'meter_gas', 
-    'meter_power', 
-    'meter_water',
-    'meter_rain',
-    'music',
-    'onoff',
-    'sensor',
-    'speaker_next',
-    'speaker_play',
-    'speaker_prev',
-    'tv',
-    'virtual_device',
-    'volume_down',
-    'volume_mute',
-    'volume_up',
-
-    'custom_1',
-    'custom_2',
-    'custom_3',
-    'custom_4',
-    'custom_5',
-    'custom_6',
-    'custom_7',
-    'custom_8',
-    'custom_9',
-    'custom_10',
-    'custom_11',
-    'custom_12',
-    'custom_13',
-    'custom_14',
-    'custom_15',
-    'custom_16',
-    'custom_17',
-    'custom_18',
-    'custom_19',
-    'custom_20',
-    'custom_21',
-    'custom_22',
-    'custom_23',
-    'custom_24',
-    'custom_25',
-    'custom_26',
-    'custom_27',
-    'custom_28',
-    'custom_29',
-    'custom_30',
-    'custom_31',
-    'custom_32',
-    'custom_33',
-    'custom_34',
-    'custom_35',
-    'custom_36',
-    'custom_37',
-    'custom_38',
-    'custom_39',
-    'custom_40'
+let icons = [
+  '',          'custom_1',  'custom_2',  'custom_3',
+  'custom_4',  'custom_5',  'custom_6',  'custom_7',
+  'custom_8',  'custom_9',  'custom_10', 'custom_11',
+  'custom_12', 'custom_13', 'custom_14', 'custom_15',
+  'custom_16', 'custom_17', 'custom_18', 'custom_19',
+  'custom_20', 'custom_21', 'custom_22', 'custom_23',
+  'custom_24', 'custom_25', 'custom_26', 'custom_27',
+  'custom_28', 'custom_29', 'custom_30', 'custom_31',
+  'custom_32', 'custom_33', 'custom_34', 'custom_35',
+  'custom_36', 'custom_37', 'custom_38', 'custom_39',
+  'custom_40', 'custom_41', 'custom_42', 'custom_43',
+  'custom_44', 'custom_45', 'custom_46', 'custom_47',
+  'custom_48', 'custom_49', 'custom_50', 'custom_51',
+  'custom_52', 'custom_53', 'custom_54', 'custom_55',
+  'custom_56', 'custom_57', 'custom_58', 'custom_59',
+  'custom_60'
 ];
 
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat" \r\n'+
+'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes Gerät" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": false, \r\n'+
-'      "icon": "/assets/icons/virtual_device.svg", \r\n'+
+'      "icon": "/assets/virtual_device.svg", \r\n'+
 '      "value": "And start creating your own device" \r\n'+
+'    }, \r\n';
+
+
+str+='"Text": { \r\n'+
+'      "type": "string", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Text", "nl":"Tekst", "de":"Text" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Number": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Boolean": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Boolean" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Button": { \r\n'+
+'      "type": "boolean", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Button", "nl":"Knop", "de":"Taste" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
+'    }, \r\n';
+
+str+='"Status": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Status" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": null, \r\n'+
+'      "uiQuickAction": false, \r\n'+
+'      "insights": true, \r\n'+
+'      "value": "" \r\n'+
 '    }, \r\n';
 
 var sets1 = ['_hide', '_onoff_hide'];
@@ -94,7 +103,7 @@ for(var j=0;j<sets1.length;j++) {
   str+= '"devicecapabilities'+val+'_button": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Button", "nl":"Knop" \r\n'+
+  '        "en": "Button", "nl":"Knop", "de":"Taste" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_hide'?'false':'true')+', \r\n'+
@@ -116,21 +125,22 @@ for(var i=0;i<icons.length;i++) {
 str+='"devicecapabilities_text'+header+'": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Text", "nl":"Tekst" \r\n'+
+'        "en": "Text", "nl":"Tekst", "de":"Text" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
-'      "uiComponent": "sensor" \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "insights": true \r\n'+
         icon+
 '    }, \r\n';
 
 str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 '      "type": "number", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Number", "nl":"Nummer" \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
+'      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
@@ -140,7 +150,7 @@ str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '      "type": "boolean", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Yes/No", "nl":"Ja/Nee" \r\n'+
+'        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": true, \r\n'+
@@ -151,10 +161,10 @@ str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '    "devicecapabilities_boolean'+header+'": { \r\n'+
 '      "type": "boolean", \r\n'+
 '      "title": { \r\n'+
-'        "en": "Yes/No", "nl":"Ja/Nee" \r\n'+
+'        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
+'      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
@@ -182,7 +192,7 @@ for(var j=0;j<sets1.length;j++) {
     '    "'+val2+'devicecapabilities'+val+'_button'+header+'": { \r\n'+
     '      "type": "boolean", \r\n'+
     '      "title": { \r\n'+
-    '        "en": "Yes/No", "nl":"Ja/Nee" \r\n'+
+    '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
     '      }, \r\n'+
     '      "getable": '+(val2=='onoffbuttontab_'?'true':'false')+', \r\n'+
     '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
@@ -198,7 +208,7 @@ for(var j=0;j<sets1.length;j++) {
   '    "onoff_devicecapabilities'+val+'_button'+header+'": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Yes/No", "nl":"Ja/Nee" \r\n'+
+  '        "en": "Yes/No" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+

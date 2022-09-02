@@ -36,6 +36,7 @@
 
 	},
 	"virtualdevicesettings":{
+		"labelButton1":"Taste 1 ist ein Sonderfall und bleibt die erste und daher die Haupttaste und -anzeige des Geräts.",
         "labelGeneral":"Das Ändern der Eigenschafts-Symbole, \"Anzeigen als\" oder \"Flow-Karten erstellen\" führt dazu, dass die Tag-IDs geändert werden und somit die Flows unterbrochen werden können.",
 		"labelAlso":"Alle Felder auf einmal zu aktivieren und auf Speichern zu drücken, könnte für Homey rechenintensiv sein und eine Weile dauern.",
 		"labelCustomIcons":"Die eigenen Symbole können in den App-Einstellungen festgelegt werden.",

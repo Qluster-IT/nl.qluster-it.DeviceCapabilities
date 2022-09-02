@@ -7,7 +7,7 @@ const _ = require('lodash-core');
 const { Defer } = require('./lib/proto');
 
 const { join } = require('path');
-const { readFile, writeFile, unlink, rename, exists, mkdir } = require('fs');
+const { readFile, writeFile, unlink, rename, exists, mkdir, copyFile, readdir, stat } = require('fs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const fs = require('fs');
@@ -21,10 +21,13 @@ const TYPES_MAP = {
 
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
+const copyFileAsync = promisify(copyFile);
 const unlinkAsync = promisify(unlink);
 const renameAsync = promisify(rename);
 const existsAsync = promisify(exists);
 const mkdirAsync = promisify(mkdir);
+const readdirAsync = promisify(readdir);
+const statAsync = promisify(stat);
 
 
 class DeviceSetter extends Homey.App {
@@ -380,7 +383,7 @@ class DeviceSetter extends Homey.App {
 							}
 							var now = new Date();
 							now.setMinutes(now.getMinutes() - args.numberof);
-							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null || i.v !== undefined); });
+							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null && i.v !== undefined); });
 							if (insights && (lastOne = _.last(insights.values))) {
 								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
 								if (lastOne.originName) tokens.client = lastOne.originName;
@@ -458,6 +461,23 @@ class DeviceSetter extends Homey.App {
 		// 	});
 	}
 
+	getCustomIcons() {
+		return this.homey.drivers.getDriver('virtualdevice').getCustomIcons();
+	}
+
+	async setFromDefaultIcon({ customicon, defaulticon }) {
+		
+		let filePathAssets = './assets/icons/';
+		let file = defaulticon;// + '.svg';
+		
+		let filePath = './userdata/customicons/';
+		let iconName = customicon.file + '.svg';
+		if(await this.homey.app.fileExists(filePathAssets + file) ){
+			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
+		}
+	}
+
+
 	getIcons() {
 		return this.homey.settings.getKeys()
 			.filter(key => {
@@ -508,8 +528,25 @@ class DeviceSetter extends Homey.App {
 	async createCustomIcon({ type, name, buffer, id }) {
 		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
 	}
+
 	async fileExists(path) {
 		return await existsAsync(path);
+	}
+
+	async copyFile(from, to, toPath) {
+		if(await existsAsync(from)) {
+			if(!(await existsAsync(toPath))) await mkdirAsync(toPath);
+			await copyFile(from, to, function(err) {
+				// if (err) throw err;
+				// console.log('source.txt was copied to destination.txt');
+			  } );
+		}
+	}
+	async readdir(dir) {
+		return await readdirAsync(dir);
+	}
+	async fsstat(file) {
+		return await statAsync(file);
 	}
 	async _createIcon({ type, name, buffer, id, subpath }) {
 		if( !TYPES_MAP[type] )

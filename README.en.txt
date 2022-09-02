@@ -1,4 +1,4 @@
-New: Fully Customisable Virtual Device!
+New: Fully Customisable Virtual Device with unique Textual Status Indicator!
 See the topic for examples.
 
 Create a device and configure it yourself:

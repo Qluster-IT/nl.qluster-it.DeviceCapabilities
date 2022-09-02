@@ -1,0 +1,1 @@
+New: Fully Customisable Virtual Device with unique Textual Status Indicator!
