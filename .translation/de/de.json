@@ -1,61 +1,61 @@
 {
-    "via":"through",
+    "via":"durch",
 
 
-	"imagetolarge":"Image size is too large",			
+	"imagetolarge":"Bild ist zu groß",			
     "settings": {
-		"title_icons": "Your icons",
-		"title_upload": "Upload a icon",
-		"no_icons": "You don't have any icons yet!",
-		"delete": "Remove",
-		"confirm_delete": "Are you sure you want to remove this icon?",
-		"invalid_type": "Invalid file type! Supported type is .svg",
-		"file_api_err": "The File APIs are not fully supported in this browser.",
-		"title_virtualdevices": "Your virtual devices",
-		"title_customicons": "Your custom icons",
-		"explain_customicons": "Here you can change the custom icon's that can be used for devices and capabilities. After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",
+		"title_icons": "Ihre Symbole",
+		"title_upload": "Symbol hochladen",
+		"no_icons": "Sie haben noch keine Symbole!",
+		"delete": "Entfernen",
+		"confirm_delete": "Sind Sie sicher, dass Sie dieses Symbol entfernen möchten?",
+		"invalid_type": "Ungültiger Dateityp! Der unterstützte Typ ist .svg.",
+		"file_api_err": "Die Datei-APIs werden in diesem Browser nicht vollständig unterstützt.",
+		"title_virtualdevices": "Ihre virtuellen Geräte",
+		"title_customicons": "Ihre eigenen Symbole",
+		"explain_customicons": "Hier können Sie die eigenen Symbole ändern, die für Geräte und Funktionen verwendet werden können. Nach dem Ändern eines Symbols müssen Sie die App neu starten, bevor das/die neue(n) Symbol(e) übernommen wird/werden.",
 
 
-		"functions":"Functions",
-		"functions_expressions":"These functions can be used within (javascript) expression.",
-		"functions_be_aware":"Be aware that removing functions could corrupt flows that are using that function.",
-		"add_function_text":"To create a function, enter a name, press Add Function, then press edit below.",
-		"add_function":"Add function",
-		"function_name":"Function name",
-		"delete_all":"Delete All",
+		"functions":"Funktionen",
+		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.",
+		"functions_be_aware":"Beachten Sie, dass das Entfernen von Funktionen die Flows beschädigen kann, die diese Funktion verwenden.",
+		"add_function_text":"Um eine Funktion zu erstellen, geben Sie einen Namen ein, drücken Sie auf Funktion hinzufügen und dann unten auf Bearbeiten.",
+		"add_function":"Funktion hinzufügen",
+		"function_name":"Bezeichnung der Funktion",
+		"delete_all":"Alles löschen",
 		"name":"Name",
-		"edit":"Edit",
-		"save":"Save",
-		"save_close":"Save & Close",
-		"functions_saved":"Functions saved.",
-		"function_exists":"Function already exists.",
-		"delete_all_confirm":"Are you sure you wish to delete ALL functions?",
-		"delete_confirm":"Are you sure you wish to delete function __functionName__?",
+		"edit":"Bearbeiten",
+		"save":"Speichern",
+		"save_close":"Speichern & Schließen",
+		"functions_saved":"Funktionen gespeichert.",
+		"function_exists":"Funktion bereits vorhanden.",
+		"delete_all_confirm":"Sind Sie sicher, dass Sie ALLE Funktionen löschen möchten?",
+		"delete_confirm":"Sind Sie sicher, dass Sie die Funktion __functionName__ löschen möchten?",
 
-		"search_for_name":"search for name"
+		"search_for_name":"Nach Namen suchen"
 
 	},
 	"virtualdevicesettings":{
-		"labelGeneral":"Changing the properties Icon, \"Show as\" or \"Create Flow Cards\" will causes Tag IDs to be changed and thus may break flows.",
-		"labelAlso":"Enabling all fields at once and pressing save, might be hard for Homey and could take a while.",
-		"labelCustomIcons":"The custom icons can be set through the App Settings.",
-		"labelCamerasRestart":"After removing a camera (by clearing the name or url), the Device Capabilities App requires a restart to remove the camera-image from the virtual device."
+        "labelGeneral":"Das Ändern der Eigenschafts-Symbole, \"Anzeigen als\" oder \"Flow-Karten erstellen\" führt dazu, dass die Tag-IDs geändert werden und somit die Flows unterbrochen werden können.",
+		"labelAlso":"Alle Felder auf einmal zu aktivieren und auf Speichern zu drücken, könnte für Homey rechenintensiv sein und eine Weile dauern.",
+		"labelCustomIcons":"Die eigenen Symbole können in den App-Einstellungen festgelegt werden.",
+		"labelCamerasRestart":"Nach dem Entfernen einer Kamera (durch Löschen des Namens oder der URL) erfordert die App Device Capabilities einen Neustart, um das Kamerabild aus dem virtuellen Gerät zu entfernen."
 	},
 	"pair": {
 		"list_icons":{
-			"title":"Device Icon",
-			"loading":"Loading",
-			"custom_device_icon":"If you wish to use a custom icon for your device, you can upload it here. The icon needs to be in .svg format.",
-			"select_device_icon":"Or select one from the list."
+			"title":"Gerätesymbol",
+			"loading":"Laden",
+			"custom_device_icon":"Wenn Sie ein eigenes Symbol für Ihr Gerät verwenden möchten, können Sie es hier hochladen. Das Symbol muss im .svg-Format vorliegen.",
+			"select_device_icon":"Oder wählen Sie eines aus der Liste."
 		},
 
 		"done":{
-			"title":"One moment please",
-			"creating_device":"Your New Virtual Device is Being Created.",
-			"done":"Done!"
+			"title":"Einen Moment bitte",
+			"creating_device":"Ihr neues virtuelles Gerät wird erstellt.",
+			"done":"Erledigt!"
 		},
 		"buttons":{
-			"save_use":"Save & use"
+			"save_use":"Speichern & verwenden"
 		}
 	}
 }
