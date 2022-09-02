@@ -4,6 +4,7 @@
 		
     },
     "virtualdevicesettings":{
+		"labelGeneral":"By Default, when using Insights or Tags, separate hidden Capabilities will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created.",
 		"labelIcons":"Here you will get a list with the names you have customized, once you have changed names in the App Settings.",
 		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
 		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App."
