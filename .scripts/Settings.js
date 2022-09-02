@@ -1,78 +1,69 @@
 var fields = 10;
 var icons = '              "values": [ \r\n' +
-'                {"id": "","label": {"en": ""}}, \r\n' +
-'                {"id": "alarm_smoke", "label": { "en": "alarm_smoke" } }, \r\n' +
-'                {"id": "alarm_water", "label": { "en": "alarm_water" } }, \r\n' +
-'                {"id": "battery", "label": { "en": "battery" } }, \r\n' +
-'                {"id": "circle", "label": { "en": "circle" } }, \r\n' +
-'                {"id": "curtain-half", "label": { "en": "curtain-half" } }, \r\n' +
-'                {"id": "device_capabilities", "label": { "en": "device_capabilities" } }, \r\n' +
-'                {"id": "game", "label": { "en": "game" } }, \r\n' +
-'                {"id": "measure_clouds", "label": { "en": "measure_clouds" } }, \r\n' +
-'                {"id": "measure_humidity", "label": { "en": "measure_humidity" } }, \r\n' +
-'                {"id": "measure_luminance", "label": { "en": "measure_luminance" } }, \r\n' +
-'                {"id": "measure_noise", "label": { "en": "measure_noise" } }, \r\n' +
-'                {"id": "measure_power", "label": { "en": "measure_power" } }, \r\n' +
-'                {"id": "measure_pressure", "label": { "en": "measure_pressure" } }, \r\n' +
-'                {"id": "measure_rain", "label": { "en": "measure_rain" } }, \r\n' +
-'                {"id": "measure_temperature", "label": { "en": "measure_temperature" } }, \r\n' +
-'                {"id": "measure_wind_angle", "label": { "en": "measure_wind_angle" } }, \r\n' +
-'                {"id": "measure_wind_strength", "label": { "en": "measure_wind_strength" } }, \r\n' +
-'                {"id": "meter_gas", "label": { "en": "meter_gas" } }, \r\n' +
-'                {"id": "meter_power", "label": { "en": "meter_power" } }, \r\n' +
-'                {"id": "meter_rain", "label": { "en": "meter_rain" } }, \r\n' +
-'                {"id": "meter_water", "label": { "en": "meter_water" } },  \r\n' +       
-'                {"id": "music", "label": { "en": "music" } }, \r\n' +
-'                {"id": "onoff", "label": { "en": "onoff" } }, \r\n' +
-'                {"id": "sensor", "label": { "en": "sensor" } }, \r\n' +
-'                {"id": "speaker_next", "label": { "en": "speaker_next" } }, \r\n' +
-'                {"id": "speaker_play", "label": { "en": "speaker_play" } }, \r\n' +
-'                {"id": "speaker_prev", "label": { "en": "speaker_prev" } }, \r\n' +
-'                {"id": "tv", "label": { "en": "tv" } }, \r\n' +
-'                {"id": "virtual_device", "label": { "en": "virtual_device" } }, \r\n' +
-'                {"id": "volume_down", "label": { "en": "volume_down" } }, \r\n' +
-'                {"id": "volume_mute", "label": { "en": "volume_mute" } }, \r\n' +
-'                {"id": "volume_up", "label": { "en": "volume_up" } }, \r\n' +
-'                {"id": "custom_1", "label": { "en": "custom_1" } }, \r\n' +
-'                {"id": "custom_2", "label": { "en": "custom_2" } }, \r\n' +
-'                {"id": "custom_3", "label": { "en": "custom_3" } }, \r\n' +
-'                {"id": "custom_4", "label": { "en": "custom_4" } }, \r\n' +
-'                {"id": "custom_5", "label": { "en": "custom_5" } }, \r\n' +
-'                {"id": "custom_6", "label": { "en": "custom_6" } }, \r\n' +
-'                {"id": "custom_7", "label": { "en": "custom_7" } }, \r\n' +
-'                {"id": "custom_8", "label": { "en": "custom_8" } }, \r\n' +
-'                {"id": "custom_9", "label": { "en": "custom_9" } }, \r\n' +
-'                {"id": "custom_10", "label": { "en": "custom_10" } }, \r\n' +
-'                {"id": "custom_11", "label": { "en": "custom_11" } }, \r\n' +
-'                {"id": "custom_12", "label": { "en": "custom_12" } }, \r\n' +
-'                {"id": "custom_13", "label": { "en": "custom_13" } }, \r\n' +
-'                {"id": "custom_14", "label": { "en": "custom_14" } }, \r\n' +
-'                {"id": "custom_15", "label": { "en": "custom_15" } }, \r\n' +
-'                {"id": "custom_16", "label": { "en": "custom_16" } }, \r\n' +
-'                {"id": "custom_17", "label": { "en": "custom_17" } }, \r\n' +
-'                {"id": "custom_18", "label": { "en": "custom_18" } }, \r\n' +
-'                {"id": "custom_19", "label": { "en": "custom_19" } }, \r\n' +
-'                {"id": "custom_20", "label": { "en": "custom_20" } }, \r\n' +
-'                {"id": "custom_21", "label": { "en": "custom_21" } }, \r\n' +
-'                {"id": "custom_22", "label": { "en": "custom_22" } }, \r\n' +
-'                {"id": "custom_23", "label": { "en": "custom_23" } }, \r\n' +
-'                {"id": "custom_24", "label": { "en": "custom_24" } }, \r\n' +
-'                {"id": "custom_25", "label": { "en": "custom_25" } }, \r\n' +
-'                {"id": "custom_26", "label": { "en": "custom_26" } }, \r\n' +
-'                {"id": "custom_27", "label": { "en": "custom_27" } }, \r\n' +
-'                {"id": "custom_28", "label": { "en": "custom_28" } }, \r\n' +
-'                {"id": "custom_29", "label": { "en": "custom_29" } }, \r\n' +
-'                {"id": "custom_30", "label": { "en": "custom_30" } }, \r\n' +
-'                {"id": "custom_31", "label": { "en": "custom_31" } }, \r\n' +
-'                {"id": "custom_32", "label": { "en": "custom_32" } }, \r\n' +
-'                {"id": "custom_33", "label": { "en": "custom_33" } }, \r\n' +
-'                {"id": "custom_34", "label": { "en": "custom_34" } }, \r\n' +
-'                {"id": "custom_35", "label": { "en": "custom_35" } }, \r\n' +
-'                {"id": "custom_36", "label": { "en": "custom_36" } }, \r\n' +
-'                {"id": "custom_37", "label": { "en": "custom_37" } }, \r\n' +
-'                {"id": "custom_38", "label": { "en": "custom_38" } }, \r\n' +
-'                {"id": "custom_39", "label": { "en": "custom_39" } }, \r\n' +
-'                {"id": "custom_40", "label": { "en": "custom_40" } } \r\n' +
+'                {"id": "","label": {"en": " "}}, \r\n' + 
+'                {"id": " ","label": {"en": "-----   Devices           -----"}}, \r\n' + 
+'                {"id": "custom_1","label": {"en": "device_1"}}, \r\n' + 
+'                {"id": "custom_2","label": {"en": "device_2"}}, \r\n' + 
+'                {"id": "custom_3","label": {"en": "device_3"}}, \r\n' + 
+'                {"id": "custom_4","label": {"en": "device_4"}}, \r\n' + 
+'                {"id": "custom_5","label": {"en": "device_5"}}, \r\n' + 
+'                {"id": "custom_6","label": {"en": "device_6"}}, \r\n' + 
+'                {"id": "custom_7","label": {"en": "device_7"}}, \r\n' + 
+'                {"id": "custom_8","label": {"en": "device_8"}}, \r\n' + 
+'                {"id": "custom_9","label": {"en": "device_9"}}, \r\n' + 
+'                {"id": "custom_10","label": {"en": "device_10"}}, \r\n' + 
+'                {"id": "custom_11","label": {"en": "device_11"}}, \r\n' + 
+'                {"id": "custom_12","label": {"en": "device_12"}}, \r\n' + 
+'                {"id": "custom_13","label": {"en": "device_13"}}, \r\n' + 
+'                {"id": "custom_14","label": {"en": "device_14"}}, \r\n' + 
+'                {"id": "custom_15","label": {"en": "device_15"}}, \r\n' + 
+'                {"id": "custom_16","label": {"en": "device_16"}}, \r\n' + 
+'                {"id": "custom_17","label": {"en": "device_17"}}, \r\n' + 
+'                {"id": "custom_18","label": {"en": "device_18"}}, \r\n' + 
+'                {"id": "custom_19","label": {"en": "device_19"}}, \r\n' + 
+'                {"id": "custom_20","label": {"en": "device_20"}}, \r\n' + 
+'                {"id": "  ","label": {"en": "-----   Capabilities      -----"}}, \r\n' + 
+'                {"id": "custom_21","label": {"en": "capabilities_1"}}, \r\n' + 
+'                {"id": "custom_22","label": {"en": "capabilities_2"}}, \r\n' + 
+'                {"id": "custom_23","label": {"en": "capabilities_3"}}, \r\n' + 
+'                {"id": "custom_24","label": {"en": "capabilities_4"}}, \r\n' + 
+'                {"id": "custom_25","label": {"en": "capabilities_5"}}, \r\n' + 
+'                {"id": "custom_26","label": {"en": "capabilities_6"}}, \r\n' + 
+'                {"id": "custom_27","label": {"en": "capabilities_7"}}, \r\n' + 
+'                {"id": "custom_28","label": {"en": "capabilities_8"}}, \r\n' + 
+'                {"id": "custom_29","label": {"en": "capabilities_9"}}, \r\n' + 
+'                {"id": "custom_30","label": {"en": "capabilities_10"}}, \r\n' + 
+'                {"id": "custom_31","label": {"en": "capabilities_11"}}, \r\n' + 
+'                {"id": "custom_32","label": {"en": "capabilities_12"}}, \r\n' + 
+'                {"id": "custom_33","label": {"en": "capabilities_13"}}, \r\n' + 
+'                {"id": "custom_34","label": {"en": "capabilities_14"}}, \r\n' + 
+'                {"id": "custom_35","label": {"en": "capabilities_15"}}, \r\n' + 
+'                {"id": "custom_36","label": {"en": "capabilities_16"}}, \r\n' + 
+'                {"id": "custom_37","label": {"en": "capabilities_17"}}, \r\n' + 
+'                {"id": "custom_38","label": {"en": "capabilities_18"}}, \r\n' + 
+'                {"id": "custom_39","label": {"en": "capabilities_19"}}, \r\n' + 
+'                {"id": "custom_40","label": {"en": "capabilities_20"}}, \r\n' + 
+'                {"id": "   ","label": {"en": "-----   Other             -----"}}, \r\n' + 
+'                {"id": "custom_41","label": {"en": "other_1"}}, \r\n' + 
+'                {"id": "custom_42","label": {"en": "other_2"}}, \r\n' + 
+'                {"id": "custom_43","label": {"en": "other_3"}}, \r\n' + 
+'                {"id": "custom_44","label": {"en": "other_4"}}, \r\n' + 
+'                {"id": "custom_45","label": {"en": "other_5"}}, \r\n' + 
+'                {"id": "custom_46","label": {"en": "other_6"}}, \r\n' + 
+'                {"id": "custom_47","label": {"en": "other_7"}}, \r\n' + 
+'                {"id": "custom_48","label": {"en": "other_8"}}, \r\n' + 
+'                {"id": "custom_49","label": {"en": "other_9"}}, \r\n' + 
+'                {"id": "custom_50","label": {"en": "other_10"}}, \r\n' + 
+'                {"id": "custom_51","label": {"en": "other_11"}}, \r\n' + 
+'                {"id": "custom_52","label": {"en": "other_12"}}, \r\n' + 
+'                {"id": "custom_53","label": {"en": "other_13"}}, \r\n' + 
+'                {"id": "custom_54","label": {"en": "other_14"}}, \r\n' + 
+'                {"id": "custom_55","label": {"en": "other_15"}}, \r\n' + 
+'                {"id": "custom_56","label": {"en": "other_16"}}, \r\n' + 
+'                {"id": "custom_57","label": {"en": "other_17"}}, \r\n' + 
+'                {"id": "custom_58","label": {"en": "other_18"}}, \r\n' + 
+'                {"id": "custom_59","label": {"en": "other_19"}}, \r\n' + 
+'                {"id": "custom_60","label": {"en": "other_20"}}\r\n' + 
 '              ], \r\n' ;
 
 
@@ -137,6 +128,17 @@ var str = '"settings": [ \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
+'              "id": "labelStatusIndicator", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": { \r\n' +
+'                "en": " ", "nl":" " \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "After changing the icon, you need to reset the Status Indicator in the Mobile App.", "nl":"Nadat u het pictogram hebt gewijzigd, dient u de Status Indicator opnieuw instellen in de Mobiele App." \r\n' +
+'              }, \r\n' +
+'              "value": "Remember to set the status field as Status Indicator in the Mobile App. Reset" \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "status1Name", \r\n' +
 '              "type": "text", \r\n' +
 '              "label": { \r\n' +
@@ -154,7 +156,7 @@ var str = '"settings": [ \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.", "nl":"Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID\'s worden gewijzigd en dus flows kunnen onderbreken." \r\n' +
+'                "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.", "nl":"Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID\'s worden gewijzigd en dus flows kan breken." \r\n' +
 '              }, \r\n' +
 icons +
 '              "value": "" \r\n' +
@@ -174,13 +176,24 @@ icons +
 '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "status1PreventInsights", \r\n' +
+'              "id": "status1CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, niet gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "status1CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -230,9 +243,6 @@ for(var i=1;i<=fields;i++) {
 '              "type": "dropdown", \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
-'              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
@@ -320,9 +330,6 @@ str+='       }, \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-'              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -380,13 +387,24 @@ str+='       }, \r\n' +
 // '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
-'              "id": "number'+i+'PreventInsights", \r\n' +
+'              "id": "number'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "number'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -449,9 +467,6 @@ str+='       }, \r\n' +
 '              "label": { \r\n' +
 '                "en": "Icon", "nl":"Pictogram" \r\n' +
 '              }, \r\n' +
-'              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-'              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
 '            }, \r\n' +
@@ -467,13 +482,24 @@ str+='       }, \r\n' +
 // '              "value": false \r\n' +
 // '            }, \r\n' +
 '            { \r\n' +
-'              "id": "boolean'+i+'PreventInsights", \r\n' +
+'              "id": "boolean'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "boolean'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -592,9 +618,6 @@ str+='       },' +
   '              "label": { \r\n' +
   '                "en": "Icon (only for Button or On/Off)", "nl":"Pictogram (voor Knop of Aan/Uit)" \r\n' +
   '              }, \r\n' +
-  '              "hint": { \r\n' +
-  '                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
-  '              }, \r\n' +
   icons +'       "value": "" \r\n';
 
 str+='       },' +
@@ -623,15 +646,26 @@ str+='       },' +
   
   str+='       }, \r\n' +
   '            { \r\n' +
-  '              "id": "button'+i+'PreventInsights", \r\n' +
+  '              "id": "button'+i+'CreateInsights", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Prevent Insights", "nl":"Voorkom inzichten" \r\n' +
+  '                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
   '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected prevents Insights log from being automatically generated, or if it exists allready, or filled.", "nl":"Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "button'+i+'CreateTag", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
   '            }, \r\n' +
   '            { \r\n' +
   '              "id": "button'+i+'InsightsTitleTrue", \r\n' +
@@ -785,11 +819,29 @@ for(var i=1;i<=fields;i++) {
 
   str+=
   '          ] \r\n' +
-  '        }';
-  if(i<fields) str+= ',';
+  '        },';
+  //if(i<fields) str+= ',';
   str+='\r\n';
 }
 
+str+='    { \r\n' +
+'          "type": "group", \r\n' +
+'          "label": {"en": "Icons", "nl":"Pictogrammen"}, \r\n' +
+'          "children": [ \r\n' +
+'            { \r\n' +
+'              "id": "labelIcons", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": "Customized Icon Names", "nl":"Aangepaste pictogram namen"}, \r\n' +
+'              "value":"Here you will get a list with the names you have customized, once you have changed names in the App Settings." \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "iconNames", \r\n' +
+'              "type": "label", \r\n' +
+'              "label": {"en": " ", "nl":" "}, \r\n' +
+'              "value":"" \r\n' +
+'            } \r\n' +
+'          ] \r\n' +
+'        } \r\n';
 
 
 

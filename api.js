@@ -4,7 +4,13 @@ const Homey = require('homey');
 module.exports = {
     async getDevices({ homey, query }) {
         return await homey.app.getDevices();    
-    },    
+    },   
+    async getCustomIcons({ homey, query }) {
+        return await homey.app.getCustomIcons();    
+    },
+    async setFromDefaultIcon({ homey,  body: { customicon, defaulticon } }) {
+        return await homey.app.setFromDefaultIcon({ customicon, defaulticon });
+    },
     async getIcons({ homey, query }) {
         return await homey.app.getIcons();    
     },
