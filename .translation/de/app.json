@@ -1,7 +1,7 @@
 {
     "name": {
         "en": "Device Capabilities",
-        "nl": "Apparaat mogelijkheden",
+        "nl": "Device Capabilities",
         "de": "Device Capabilities"
       },
       "description": {
@@ -27,8 +27,8 @@
           "customisable"
         ],
         "nl": [
-          "device",
-          "capabilities",
+          "apparaat",
+          "mogelijkheden",
           "capability",
           "gebruiker",
           "client",
