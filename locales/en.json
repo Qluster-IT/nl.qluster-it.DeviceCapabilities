@@ -39,7 +39,8 @@
 		"labelCustomIcons":"The custom icons can be set through the App Settings.",
 		"labelCamerasRestart":"After removing a camera (by clearing the name or url), the Device Capabilities App requires a restart to remove the camera-image from the virtual device.",
 		"labelIcons":"Here you will get a list with the names you have customized, once you have changed names in the App Settings.",
-		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field."
+		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
+		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App."
 	},
 	"pair": {
 		"list_icons":{

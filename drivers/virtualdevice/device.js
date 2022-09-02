@@ -34,7 +34,8 @@ module.exports = class WatchDevice extends Homey.Device {
 				"labelAlso": this.homey.__("virtualdevicesettings.labelAlso"),
 				"labelCustomIcons": this.homey.__("virtualdevicesettings.labelCustomIcons"),
 				"labelCamerasRestart": this.homey.__("virtualdevicesettings.labelCamerasRestart"),
-				"labelIcons": this.homey.__("virtualdevicesettings.labelIcons")
+				"labelIcons": this.homey.__("virtualdevicesettings.labelIcons"),
+				"labelStatusIndicator": this.homey.__("virtualdevicesettings.labelStatusIndicator")
 
 			};
 			for (const settingKey in this.Settings)
@@ -48,6 +49,36 @@ module.exports = class WatchDevice extends Homey.Device {
 		}
 
 
+		/// Clear all capabilities that doesn't exists anymore.
+		// let allCaps = this.homey.app.manifest.capabilities;
+		// for (const capabilityKey in allCaps) {
+		// 	if (Object.hasOwnProperty.call(allCaps, capabilityKey)) {
+		// 		const Capability = allCaps[capabilityKey];
+				
+		// 	}
+		// }
+		for (let i = 0; i < caps.length; i++) {
+			let fieldId = this.getStoreValue(caps[i]);
+			if(caps[i].indexOf('devicecapabilities')>-1 && !this.homey.app.manifest.capabilities[caps[i].split('.')[0]]) {
+				this.removeCapability(caps[i]);
+				//this.log('cap doesn\'t exists any more', caps[i]);
+			}
+			if (!fieldId) continue;
+
+			await this.setListener({ fieldId, settings: this.Settings, cap: caps[i] });
+		}
+		var api = await this.homey.app.refreshHomeyAPI();
+		//let apiDevice =  await api.devices.getDevice({ id: this.__id });
+		// let insights = await api.insights.getLogs();
+		// for (let i = 0; i < insights.length; i++) {
+		// 	const insight = insights[i];
+		// 	if(insight.uri==='homey:device:' + this.__id && caps.indexOf(insight.id)===-1) {
+		// 		api.insights.deleteLog(insight);
+		// 	}
+		// }
+
+		
+		//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id });
 
 
 
@@ -164,15 +195,23 @@ module.exports = class WatchDevice extends Homey.Device {
 		var types = ['status', 'text', 'number', 'button', 'boolean'];//, 'dropdown'];
 		var button1Reset = false;
 		var a = this;
+		var api = await this.homey.app.refreshHomeyAPI();
+		//let apiDevice =  await api.devices.getDevice({ id: this.__id });
 
 		for (let iTypes = 0; iTypes < types.length; iTypes++) {
 			const type = types[iTypes];
 
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
+				if(type=="status" && i>0)continue;
 				try {
 					let oldCap = this.getStoreValue(type + i);
 					let oldValue;
-					if (oldCap) oldValue = this.getCapabilityValue(oldCap);
+					//let targetInsight;
+					if (oldCap) {
+						oldValue = this.getCapabilityValue(oldCap);
+						//targetInsight = _.find(apiDevice.insights, x => x.id == oldCap);
+						
+					}
 
 					let icon = (settings[type + i + 'Icon'] || '').trim().length > 0 ? '-' + settings[type + i + 'Icon'] : '';
 					let disabled = settings[type + i + 'Disabled'] === true;
@@ -267,7 +306,11 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (oldCap) oldValue = this.getCapabilityValue(oldCap) || oldValue;
 
 
-					if (oldCap && cap != oldCap) await this.removeCapability(oldCap);
+					if (oldCap && cap != oldCap && this.hasCapability(oldCap)) {
+						await this.removeCapability(oldCap);
+						//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id }); // Do i want this automatic, or after a restart?
+					}
+					//else targetInsight = null;
 
 
 
@@ -286,7 +329,21 @@ module.exports = class WatchDevice extends Homey.Device {
 						this.setStoreValue(cap, type + i);
 						if (!this.hasCapability(cap)) {
 							if (type == "button" && i === 1) button1Reset = true;
-							await this.addCapability(cap);
+							await this.addCapability(cap);							
+							// if(targetInsight && settings[type + i + 'PreventInsights']!==true) {								
+							// 		var _a=1;
+							// 		// try {								
+							// 		// 	let insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'everything' });
+							// 		// 	let a=0;
+							// 		// } catch (error) {								
+							// 		// 	let a=0;
+							// 		// }
+							// 		let insights2 = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+							// 		let insights3 = await api.insights.getLog({ uri: targetInsight.uri, id: targetInsight.id });
+									
+							// 		let a=0;								
+							// }
+
 							if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
 							await this.setListener({ fieldId: type + i, settings, cap });
 						}
@@ -358,14 +415,16 @@ module.exports = class WatchDevice extends Homey.Device {
 							//if(settings[type + i + 'Disabled']!==undefined) optNew.setable= !settings[type + i + 'Disabled'];
 							//if(settings[type + i + 'UiQuickAction']!==undefined) optNew.uiQuickAction= !settings[type + i + 'UiQuickAction'];
 							//if(settings[type + i + 'Icon']) optNew.icon= "/assets/" + settings[type + i + 'Icon'] + ".svg";
-							await this.setCapabilityOptions(cap, optNew);
+							if (this.hasCapability(cap))  await this.setCapabilityOptions(cap, optNew);
 						}
 						if (type == 'button' && disabled && !pushbutton) {
 							await this.setCapabilityValue(cap, checked);
 						}
 					} else if (this.hasCapability(cap)) await this.removeCapability(cap);
 				}
-				catch (err) { }
+				catch (err) {
+					this.error(err);
+				 }
 
 			}
 		}

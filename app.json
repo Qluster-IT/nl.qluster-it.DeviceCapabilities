@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "1.9.9951",
+  "version": "1.9.996",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1696,7 +1696,8 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "sensor"
+      "uiComponent": "sensor",
+      "insights": true
     },
     "measure_devicecapabilities_number": {
       "type": "number",
@@ -1800,6 +1801,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
     },
     "measure_devicecapabilities_number-custom_1": {
@@ -1913,6 +1915,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
     },
     "measure_devicecapabilities_number-custom_2": {
@@ -2026,6 +2029,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
     },
     "measure_devicecapabilities_number-custom_3": {
@@ -2139,6 +2143,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
     },
     "measure_devicecapabilities_number-custom_4": {
@@ -2252,6 +2257,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
     },
     "measure_devicecapabilities_number-custom_5": {
@@ -2365,6 +2371,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
     },
     "measure_devicecapabilities_number-custom_6": {
@@ -2478,6 +2485,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
     },
     "measure_devicecapabilities_number-custom_7": {
@@ -2591,6 +2599,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
     },
     "measure_devicecapabilities_number-custom_8": {
@@ -2704,6 +2713,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
     },
     "measure_devicecapabilities_number-custom_9": {
@@ -2817,6 +2827,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
     },
     "measure_devicecapabilities_number-custom_10": {
@@ -2930,6 +2941,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
     },
     "measure_devicecapabilities_number-custom_11": {
@@ -3043,6 +3055,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
     },
     "measure_devicecapabilities_number-custom_12": {
@@ -3156,6 +3169,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
     },
     "measure_devicecapabilities_number-custom_13": {
@@ -3269,6 +3283,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
     },
     "measure_devicecapabilities_number-custom_14": {
@@ -3382,6 +3397,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
     },
     "measure_devicecapabilities_number-custom_15": {
@@ -3495,6 +3511,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
     },
     "measure_devicecapabilities_number-custom_16": {
@@ -3608,6 +3625,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
     },
     "measure_devicecapabilities_number-custom_17": {
@@ -3721,6 +3739,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
     },
     "measure_devicecapabilities_number-custom_18": {
@@ -3834,6 +3853,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
     },
     "measure_devicecapabilities_number-custom_19": {
@@ -3947,6 +3967,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
     },
     "measure_devicecapabilities_number-custom_20": {
@@ -4060,6 +4081,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
     },
     "measure_devicecapabilities_number-custom_21": {
@@ -4173,6 +4195,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
     },
     "measure_devicecapabilities_number-custom_22": {
@@ -4286,6 +4309,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
     },
     "measure_devicecapabilities_number-custom_23": {
@@ -4399,6 +4423,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
     },
     "measure_devicecapabilities_number-custom_24": {
@@ -4512,6 +4537,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
     },
     "measure_devicecapabilities_number-custom_25": {
@@ -4625,6 +4651,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
     },
     "measure_devicecapabilities_number-custom_26": {
@@ -4738,6 +4765,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
     },
     "measure_devicecapabilities_number-custom_27": {
@@ -4851,6 +4879,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
     },
     "measure_devicecapabilities_number-custom_28": {
@@ -4964,6 +4993,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
     },
     "measure_devicecapabilities_number-custom_29": {
@@ -5077,6 +5107,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
     },
     "measure_devicecapabilities_number-custom_30": {
@@ -5190,6 +5221,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
     },
     "measure_devicecapabilities_number-custom_31": {
@@ -5303,6 +5335,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
     },
     "measure_devicecapabilities_number-custom_32": {
@@ -5416,6 +5449,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
     },
     "measure_devicecapabilities_number-custom_33": {
@@ -5529,6 +5563,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
     },
     "measure_devicecapabilities_number-custom_34": {
@@ -5642,6 +5677,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
     },
     "measure_devicecapabilities_number-custom_35": {
@@ -5755,6 +5791,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
     },
     "measure_devicecapabilities_number-custom_36": {
@@ -5868,6 +5905,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
     },
     "measure_devicecapabilities_number-custom_37": {
@@ -5981,6 +6019,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
     },
     "measure_devicecapabilities_number-custom_38": {
@@ -6094,6 +6133,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
     },
     "measure_devicecapabilities_number-custom_39": {
@@ -6207,6 +6247,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
     },
     "measure_devicecapabilities_number-custom_40": {
@@ -6320,6 +6361,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
     },
     "measure_devicecapabilities_number-custom_41": {
@@ -6433,6 +6475,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
     },
     "measure_devicecapabilities_number-custom_42": {
@@ -6546,6 +6589,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
     },
     "measure_devicecapabilities_number-custom_43": {
@@ -6659,6 +6703,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
     },
     "measure_devicecapabilities_number-custom_44": {
@@ -6772,6 +6817,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
     },
     "measure_devicecapabilities_number-custom_45": {
@@ -6885,6 +6931,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
     },
     "measure_devicecapabilities_number-custom_46": {
@@ -6998,6 +7045,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
     },
     "measure_devicecapabilities_number-custom_47": {
@@ -7111,6 +7159,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
     },
     "measure_devicecapabilities_number-custom_48": {
@@ -7224,6 +7273,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
     },
     "measure_devicecapabilities_number-custom_49": {
@@ -7337,6 +7387,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
     },
     "measure_devicecapabilities_number-custom_50": {
@@ -7450,6 +7501,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
     },
     "measure_devicecapabilities_number-custom_51": {
@@ -7563,6 +7615,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
     },
     "measure_devicecapabilities_number-custom_52": {
@@ -7676,6 +7729,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
     },
     "measure_devicecapabilities_number-custom_53": {
@@ -7789,6 +7843,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
     },
     "measure_devicecapabilities_number-custom_54": {
@@ -7902,6 +7957,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
     },
     "measure_devicecapabilities_number-custom_55": {
@@ -8015,6 +8071,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
     },
     "measure_devicecapabilities_number-custom_56": {
@@ -8128,6 +8185,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
     },
     "measure_devicecapabilities_number-custom_57": {
@@ -8241,6 +8299,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
     },
     "measure_devicecapabilities_number-custom_58": {
@@ -8354,6 +8413,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
     },
     "measure_devicecapabilities_number-custom_59": {
@@ -8467,6 +8527,7 @@
       "getable": true,
       "setable": true,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
     },
     "measure_devicecapabilities_number-custom_60": {
@@ -8747,6 +8808,19 @@
           },
           "children": [
             {
+              "id": "labelStatusIndicator",
+              "type": "label",
+              "label": {
+                "en": " ",
+                "nl": " "
+              },
+              "hint": {
+                "en": "After changing the icon, you need to reset the Status Indicator in the Mobile App.",
+                "nl": "Nadat u het pictogram hebt gewijzigd, dient u de Status Indicator opnieuw instellen in de Mobiele App."
+              },
+              "value": "Remember to set the status field as Status Indicator in the Mobile App. Reset"
+            },
+            {
               "id": "status1Name",
               "type": "text",
               "label": {
@@ -8768,9 +8842,15 @@
               },
               "hint": {
                 "en": "Select an Icon for this capability. Be aware that this causes Tag IDs to be changed and thus may break flows.",
-                "nl": "Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID's worden gewijzigd en dus flows kunnen onderbreken."
+                "nl": "Selecteer een pictogram voor deze capability. Houd er rekening mee dat dit ertoe leidt dat tag-ID's worden gewijzigd en dus flows kan breken."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -9251,6 +9331,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -9700,6 +9786,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -10151,6 +10243,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -10600,6 +10698,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -11051,6 +11155,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -11500,6 +11610,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -11951,6 +12067,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -12400,6 +12522,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -12851,6 +12979,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -13300,6 +13434,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -13816,6 +13956,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -14384,6 +14530,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -14950,6 +15102,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -15518,6 +15676,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -16084,6 +16248,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -16652,6 +16822,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -17218,6 +17394,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -17786,6 +17968,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -18352,6 +18540,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -18920,6 +19114,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -19447,6 +19647,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -19944,6 +20150,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -20443,6 +20655,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -20940,6 +21158,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -21439,6 +21663,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -21936,6 +22166,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -22435,6 +22671,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -22932,6 +23174,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -23431,6 +23679,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -23928,6 +24182,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -24683,6 +24943,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -25262,6 +25528,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -25843,6 +26115,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -26422,6 +26700,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -27003,6 +27287,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -27582,6 +27872,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
@@ -28163,6 +28459,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -28743,6 +29045,12 @@
               },
               "values": [
                 {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
+                {
                   "id": " ",
                   "label": {
                     "en": "-----   Devices           -----"
@@ -29322,6 +29630,12 @@
                 "nl": "Indien geselecteerd, wordt het inzichten-logboek niet automatisch gegenereerd, of als het al bestaat, of gevuld."
               },
               "values": [
+                {
+                  "id": "",
+                  "label": {
+                    "en": " "
+                  }
+                },
                 {
                   "id": " ",
                   "label": {
