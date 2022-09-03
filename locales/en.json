@@ -34,6 +34,7 @@
 
 	},
 	"virtualdevicesettings":{
+		"labelButton1":"Button 1 is special and remains the first, and therefore, the main device button and indicator.",
 		"labelGeneral":"By Default, when using Insights or Tags, separate hidden Capabilities will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created.",
 		"labelAlso":"Enabling all fields at once and pressing save, might be hard for Homey and could take a while.",
 		"labelCustomIcons":"The custom icons can be set through the App Settings.",
