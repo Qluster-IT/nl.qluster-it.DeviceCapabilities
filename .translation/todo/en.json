@@ -1,28 +1,28 @@
 {
     "settings":{
-        "explain_customicons_doubleclick": "Double click on a name to give it a description, which can be seen back at the bottom of the Device Settings."
+        "explain_customicons_doubleclick": "Klicken Sie doppelt auf einem Namen, um eine Beschreibung hinzuzufügen, die man unten in den Geräteeinstellungen sehen kann."
 		
     },
     "virtualdevicesettings":{
-		"labelGeneral":"By Default, when using Insights or Tags, separate hidden Capabilities will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created.",
-		"labelIcons":"Here you will get a list with the names you have customized, once you have changed names in the App Settings.",
-		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
-		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App."
+		"labelGeneral":"Standardmäßig werden bei der Verwendung von Insights oder Tags separate versteckte Fähigkeiten erstellt. Das bedeutet, dass im Protokoll nicht zu erkennen ist, was die Fähigkeit geändert hat. Bei Schaltflächen ist dies möglicherweise nicht erwünscht. Wenn diese Funktion jedoch deaktiviert ist, führt das Ändern der Eigenschaften 'Symbol', 'Anzeigen als' oder 'Flow-Karten erstellen' dazu, dass Tag-IDs geändert werden und somit Abläufe unterbrochen werden können, und dass neue Einblicke erstellt werden.",
+		"labelIcons":"Wenn Sie Namen in den App-Einstellungen geändert haben, erhalten Sie hier eine Liste der angepassten Namen.",
+		"field-not-set":"__fieldId__ wurde noch nicht festgelegt. Gehen Sie in die Geräteeinstellungen und fügen Sie das Feld hinzu.",
+		"labelStatusIndicator":"Vergessen Sie nicht, das Statusfeld in der Mobile App als Statusindikator einzustellen."
 	},
     "pair": {
 		"list_icons":{
-			"set_icon_and_customize":"Here you can select an icon (id) for your device. You can change the icon for each ID/number later through App Settings, but you cannot change which icon ID your device uses after creation. So pick a Unique number for each device. Any icon can be chosen for devices and capabilities, the categories are for clarity.  All icons can be set to any default icon through App Settings."
+			"set_icon_and_customize":"Hier können Sie ein Symbol (ID) für Ihr Gerät auswählen. Über die App-Einstellungen können sie später noch das Symbol für jede ID/Nummer änder, aber Sie können die ID nach Erstellung nicht mehr ändern. Wählen Sie also für jedes Gerät eine eindeutige Nummer. Sie können jedes beliebige Symbol für Geräte und Funktionen wählen, die Kategorien dienen nur der Übersichtlichkeit. Alle Symbole können über die App-Einstellungen auf ein beliebiges Standardsymbol geändert werden."
 		}
     },    
 	"icons":{
-		"Alarms":"Alarms",
-		"Buttons":"Buttons",
-		"Devices":"Devices",
+		"Alarms":"Alarme",
+		"Buttons":"Tasten",
+		"Devices":"Geräte",
 		"Flows":"Flows",
 		"Peter_kawa":"Peter Kawa",
-		"Media":"Media",
-		"Gauges_and_meters":"Gauges & Meters",
-		"Other":"Other",
-		"Weather":"Weather"
+		"Media":"Medien",
+		"Gauges_and_meters":"Anzeigen & Messgeräte",
+		"Other":"Andere",
+		"Weather":"Wetter"
 	}
 }
