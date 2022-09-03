@@ -21,7 +21,7 @@ let icons = [
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes Ger„t" \r\n'+
+'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes GerÃ¤t" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
@@ -84,7 +84,7 @@ str+='"Button": { \r\n'+
 '      "value": "" \r\n'+
 '    }, \r\n';
 
-str+='"Status": { \r\n'+
+str+='"measure_Status": { \r\n'+
 '      "type": "number", \r\n'+
 '      "title": { \r\n'+
 '        "en": "Status" \r\n'+
@@ -126,6 +126,18 @@ str+='"devicecapabilities_text'+header+'": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
 '        "en": "Text", "nl":"Tekst", "de":"Text" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": false, \r\n'+
+'      "uiComponent": "sensor", \r\n'+
+'      "insights": true \r\n'+
+        icon+
+'    }, \r\n';
+
+str+='"devicecapabilities_number'+header+'": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
@@ -208,7 +220,7 @@ for(var j=0;j<sets1.length;j++) {
   '    "onoff_devicecapabilities'+val+'_button'+header+'": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
+  '        "en": "Yes/No" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
