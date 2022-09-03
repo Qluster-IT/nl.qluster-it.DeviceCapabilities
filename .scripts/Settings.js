@@ -156,7 +156,7 @@ str+='        { \r\n' +
 '                "en": "Icon", "nl":"Pictogram", "de":"Symbol" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select an Icon for this capability.", "nl":"Selecteer een pictogram voor deze capability.", "de":"Wählen Sie ein Symbol für diese Capability aus."  \r\n' +
+'                "en": "Select an Icon for this capability.", "nl":"Selecteer een pictogram voor deze capability.", "de":"Wählen Sie ein Symbol für diese Fähigkeit aus."  \r\n' +
 '              }, \r\n' +
 icons +
 '              "value": "" \r\n' +
@@ -179,10 +179,10 @@ icons +
 '              "id": "status1CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -190,10 +190,10 @@ icons +
 '              "id": "status1CreateTag", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag", "de": "Tag erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -251,10 +251,10 @@ for(var i=1;i<=fields;i++) {
 '              "id": "text'+i+'CreateTag", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag", "de": "Tag erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -265,7 +265,7 @@ for(var i=1;i<=fields;i++) {
 
 str+='   { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Numbers", "nl":"Nummers", "de":"Zahl" }, \r\n' +
+'          "label": {"en": "Numbers", "nl":"Nummers", "de":"Nummer" }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelNumber1", \r\n' +
@@ -281,7 +281,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'", "de":"Zahlenfeld"  \r\n' +
+'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'", "de":"Nummernfeld"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -291,7 +291,7 @@ for(var i=1;i<=fields;i++) {
 '                "en": "Name", "nl":"Naam", "de":"Bezeichnung"  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for numberfield '+i+'", "nl":"De naam voor nummerveld '+i+'", "de":"Die Bezeichnung des Zahlenfeldes"  \r\n' +
+'                "en": "The name for numberfield '+i+'", "nl":"De naam voor nummerveld '+i+'", "de":"Die Bezeichnung des Nummernfeldes"  \r\n' +
 '              }, \r\n' +
 '              "value":"" \r\n' +
 '            }, \r\n' +
@@ -302,7 +302,7 @@ for(var i=1;i<=fields;i++) {
 '                "en": "Show as", "nl":"Toon als", "de":"Anzeigen als"  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "Select how the number must be displayed.", "nl":"Selecteer hoe het nummer moet worden weergegeven.", "de":"Wählen Sie aus, wie die Zahl angezeigt werden soll."  \r\n' +
+'                "en": "Select how the number must be displayed.", "nl":"Selecteer hoe het nummer moet worden weergegeven.", "de":"Wählen Sie aus, wie die Nummer angezeigt werden soll."  \r\n' +
 '              }, \r\n' +
 '              "values":['+
 '                {"id":"", "label":" "}, '+
@@ -398,10 +398,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -409,10 +409,10 @@ str+='       }, \r\n' +
 '              "id": "number'+i+'CreateTag", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag", "de": "Tag erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            } \r\n' +
@@ -425,7 +425,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'", "de":"Ja/Nein Feld"  \r\n' +
+'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'", "de":"Ja/Nein-Feld"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -435,7 +435,7 @@ for(var i=1;i<=fields;i++) {
 '                "en": "Name", "nl":"Naam", "de":"Bezeichnung"  \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "The name for Yes/No field '+i+'", "nl":"De naam voor Ja/Nee-veld '+i+'", "de":"Die Bezeichnung des Ja/Nein Feldes"  \r\n' +
+'                "en": "The name for Yes/No field '+i+'", "nl":"De naam voor Ja/Nee-veld '+i+'", "de":"Die Bezeichnung des Ja/Nein-Feldes"  \r\n' +
 '              }, \r\n' +
 '              "value":"" \r\n' +
 '            }, \r\n' +
@@ -482,10 +482,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'SeparateCapabilities", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities" \r\n' +
+'                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities", "de": "Separate Fähigkeiten erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd." \r\n' +
+'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd.", "de": "Wenn diese Option ausgewählt ist, werden versteckte Fähigkeiten für Einblicke und Tags (falls verwendet) erstellt. Das macht es deutlicher. Aber Sie können nicht wissen, was den Wert geändert hat." \r\n' +
 '              }, \r\n' +
 '              "value": true \r\n' +
 '            }, \r\n' +
@@ -504,10 +504,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
+'                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -515,10 +515,10 @@ str+='       }, \r\n' +
 '              "id": "boolean'+i+'CreateTag", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag", "de": "Tag erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -558,7 +558,7 @@ str+='   { \r\n' +
 '            { \r\n' +
 '              "id": "labelButton1", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": " ", "nl":" "}, \r\n' +
+'              "label": {"en": " ", "nl":" ", "de":" "}, \r\n' +
 '              "value":"Button 1 is special and remains the first, and therefore, the main device button and indicator." \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
@@ -668,10 +668,10 @@ str+='         }, \r\n' +
   '              "id": "button'+i+'SeparateCapabilities", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities" \r\n' +
+  '                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities", "de": "Separate Fähigkeiten erstellen" \r\n' +
   '              }, \r\n' +
   '              "hint": { \r\n' +
-'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd." \r\n' +
+'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd.", "de": "Wenn diese Option ausgewählt ist, werden versteckte Fähigkeiten für Einblicke und Tags (falls verwendet) erstellt. Das macht es deutlicher. Aber Sie können nicht wissen, was den Wert geändert hat." \r\n' +
 '              }, \r\n' +
   '              "value": false \r\n'+
   '            }, \r\n' +
@@ -679,10 +679,10 @@ str+='         }, \r\n' +
   '              "id": "button'+i+'CreateInsights", \r\n' +
   '              "type": "checkbox", \r\n' +
   '              "label": { \r\n' +
-  '                "en": "Create Insights", "nl":"Creëer inzichten" \r\n' +
+  '                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
   '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
 '            }, \r\n' +
@@ -690,10 +690,10 @@ str+='         }, \r\n' +
 '              "id": "button'+i+'CreateTag", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
-'                "en": "Create Tag", "nl":"Creëer tag" \r\n' +
+'                "en": "Create Tag", "nl":"Creëer tag", "de": "Tag erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt." \r\n' +
+'                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
   '            }, \r\n' +
@@ -856,12 +856,12 @@ for(var i=1;i<=fields;i++) {
 
 str+='    { \r\n' +
 '          "type": "group", \r\n' +
-'          "label": {"en": "Icons", "nl":"Pictogrammen"}, \r\n' +
+'          "label": {"en": "Icons", "nl":"Pictogrammen", "de":"Symbole"}, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
 '              "id": "labelIcons", \r\n' +
 '              "type": "label", \r\n' +
-'              "label": {"en": "Customized Icon Names", "nl":"Aangepaste pictogram namen"}, \r\n' +
+'              "label": {"en": "Customized Icon Names", "nl":"Aangepaste pictogram namen", "de":"Eigene Symbole"}, \r\n' +
 '              "value":"Here you will get a list with the names you have customized, once you have changed names in the App Settings." \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
