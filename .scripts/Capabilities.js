@@ -21,7 +21,7 @@ let icons = [
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes GerÃ¤t" \r\n'+
+'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes Ger„t" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
@@ -208,7 +208,7 @@ for(var j=0;j<sets1.length;j++) {
   '    "onoff_devicecapabilities'+val+'_button'+header+'": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Yes/No" \r\n'+
+  '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
