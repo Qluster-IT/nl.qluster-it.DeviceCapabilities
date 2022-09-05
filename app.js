@@ -343,6 +343,7 @@ class DeviceSetter extends Homey.App {
 			set_capability_log
 				.on('update', (() => { this.clearHomeyAPI(action); }).bind(this))
 				.registerRunListener((async (args, state) => {
+					var tokens = { text: '', number: 0, boolean: false, user: '', client: '' };
 					try {
 						if (!args || !args.device || !args.capability) return false;
 
@@ -358,11 +359,15 @@ class DeviceSetter extends Homey.App {
 						// var homey = this.homey;
 						//End test
 
-						var device = await api.devices.getDevice({ id: args.device.id });
-						var targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
+						let targetInsight;
 
-						var tokens = { text: '', number: 0, boolean: false, user: '', client: '' };
-
+						if(args.capability.uri) {
+							targetInsight = {uri:args.capability.uri, id:args.capability.id};
+						} else {
+							var device = await api.devices.getDevice({ id: args.device.id });
+							targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
+						}
+						
 						if (targetInsight) {
 							var insights, lastOne = null;
 							try {
@@ -397,12 +402,15 @@ class DeviceSetter extends Homey.App {
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
 							}
 						}
-
-						return tokens;
 					} catch (error) {
 						this.log('set_capability-error:');
 						this.log(error);
 					}
+					
+					if(!tokens.user) tokens.user = '';
+					if(!tokens.client) tokens.client = '';
+					return tokens;
+					
 				}).bind(this));
 
 
@@ -795,10 +803,11 @@ class DeviceSetter extends Homey.App {
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
 			if(app) list = _.filter(list, device => device.driverUri==app);
 			if(insights) {
-				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l=>l.uriObj.type=='manager'), 'uri'), l=> { return {uri:l.uri, uriName:l.uriObj.name} ;});
+				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l=>l.uriObj.type=='manager'), 'uri'), l=> { return {uri:l.uri, uriName:'Manager - ' + l.uriObj.name} ;});
 				_.each(logs,l=> list.push({id:l.uri, name:l.uriName}));
-				list = _.orderBy(list, 'name');
 			}
+			if(query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+			list = _.orderBy(list, 'name');
 			var array = _.map(list, device => { return { id: device.id, name: device.name }; });
 			return Promise.resolve(array);
 			// defer.resolve(array);
@@ -811,9 +820,10 @@ class DeviceSetter extends Homey.App {
 			var defer = new Defer();
 			this.refreshHomeyAPI().then((async api => {
 				var list = [];
+				if(query) query = query.toLowerCase();
 				if (!args || !args.device || !args.device.id) return defer.resolve(list);
 				if(args.device.id.startsWith('homey:manager:') && insights) {
-					list = _.map(_.filter(api.insights.getLogs(), l=>l.uri==args.device.id), l=> { return {uri:l.uri, id:l.id, name:l.title} ;});
+					list = _.map(_.filter(await api.insights.getLogs(), l=>l.uri==args.device.id), l=> { return {uri:l.uri, id:l.id, name:l.title} ;});
 				} else {
 					var device = await api.devices.getDevice({ id: args.device.id });
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
@@ -821,8 +831,10 @@ class DeviceSetter extends Homey.App {
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
 					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });					
-					list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
-				}			
+					
+				}
+				if(query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+				list = _.orderBy(list, 'name');
 				defer.resolve(list);	
 			}).bind(this));
 			return defer.promise;
