@@ -593,7 +593,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         var id = '_'+(index+1).toString();
         return [
               {
-                  name: 'DeviceCapability VD '+(index+1),
+                  name: 'Advanced Virtual Device '+(index+1),
                   data: {
                       id: 'DeviceCapabilityVirtualDevice'+id
                   }

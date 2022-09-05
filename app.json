@@ -1812,14 +1812,14 @@
             "type": "autocomplete",
             "name": "device",
             "title": {
-              "en": "Virtual Device",
-              "nl": "Virtueel Apparaat",
-              "de": "Virtuelles Gerät"
+              "en": "Advanced Virtual Device",
+              "nl": "Geadvanceerd Virtueel Apparaat",
+              "de": "Erweitertes Virtuelles Gerät"
             },
             "placeholder": {
-              "en": "Virtual Device",
-              "nl": "Virtueel Apparaat",
-              "de": "Virtuelles Gerät"
+              "en": "Advanced Virtual Device",
+              "nl": "Geadvanceerd Virtueel Apparaat",
+              "de": "Erweitertes Virtuelles Gerät"
             }
           },
           {
@@ -1870,14 +1870,14 @@
             "type": "autocomplete",
             "name": "device",
             "title": {
-              "en": "Virtual Device",
-              "nl": "Virtueel Apparaat",
-              "de": "Virtuelles Gerät"
+              "en": "Advanced Virtual Device",
+              "nl": "Geadvanceerd Virtueel Apparaat",
+              "de": "Erweitertes Virtuelles Gerät"
             },
             "placeholder": {
-              "en": "Virtual Device",
-              "nl": "Virtueel Apparaat",
-              "de": "Virtuelles Gerät"
+              "en": "Advanced Virtual Device",
+              "nl": "Geadvanceerd Virtueel Apparaat",
+              "de": "Erweitertes Virtuelles Gerät"
             }
           }
         ]
@@ -10708,7 +10708,7 @@
     {
       "id": "virtualdevice",
       "name": {
-        "en": "Virtual Device"
+        "en": "Advanced Virtual Device"
       },
       "images": {
         "large": "drivers/virtualdevice/assets/images/large.jpg",

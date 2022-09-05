@@ -19,7 +19,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 		if (process.env.DEBUG === '1') {
-			if(this.hasCapability('measure_Status.status.status1'))await this.removeCapability('measure_Status.status.status1');
+			//if(this.hasCapability('measure_Status.status.status1'))await this.removeCapability('measure_Status.status.status1');
 		}
 
 
@@ -84,24 +84,29 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		this.homey.settings.on('set', (async function (settingName, settingValue) {
 			if (settingName == 'customIconNames') {
-				this.customIconNames = await this.homey.settings.get('customIconNames');
-				let str = "";
-				let customIcons = this.driver.getCustomIcons();
-				for (const key in this.customIconNames) {
-					if (Object.hasOwnProperty.call(this.customIconNames, key)) {
-						const name = this.customIconNames[key];
-						let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
-							icon.file === key
-						);
-						str += (f ? f.name : key) + " = " + name + ", ";
-					}
-				}
-				if (str.length > 1) str = str.substring(0, str.length - 2);
-				await this.setSettings({ iconNames: str });
+				this.setIconNames();
 			}
 
 		}).bind(this));
 
+		if(!this.Settings.iconNames) await this.setIconNames();
+	}
+
+	async setIconNames() {
+		this.customIconNames = await this.homey.settings.get('customIconNames');
+		let str = "";
+		let customIcons = this.driver.getCustomIcons();
+		for (const key in this.customIconNames) {
+			if (Object.hasOwnProperty.call(this.customIconNames, key)) {
+				const name = this.customIconNames[key];
+				let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
+					icon.file === key
+				);
+				str += (f ? f.name : key) + " = " + name + ", ";
+			}
+		}
+		if (str.length > 1) str = str.substring(0, str.length - 2);
+		await this.setSettings({ iconNames: str });
 	}
 
 	async setListener({ fieldId, cap, settings }) {

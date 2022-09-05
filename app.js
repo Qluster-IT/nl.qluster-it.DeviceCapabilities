@@ -407,7 +407,7 @@ class DeviceSetter extends Homey.App {
 
 
 			set_capability_log.getArgument('device')
-				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log' }));
+				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log', insights:true }));
 			set_capability_log.getArgument('capability')
 				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log', insights: true }));
 		}).bind(this));
@@ -785,35 +785,45 @@ class DeviceSetter extends Homey.App {
 
 	}
 
-	autocompleteDevice({ api, app } = {}) {
-		return ((query, args, a, b, c,) => {
+	autocompleteDevice({ api, app, insights } = {}) {
+		return (async (query, args, a, b, c,) => {
 			query = query.toLowerCase();
 			var queries = query.split(' ');
-			var defer = new Defer(10000);
+			//var defer = new Defer(10000);
 
 			var devices = this.devices;
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
 			if(app) list = _.filter(list, device => device.driverUri==app);
-			list = _.orderBy(list, 'name');
-			var array = _.map(list, device => { return { id: device.id, name: device.name } });
-			defer.resolve(array);
+			if(insights) {
+				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l=>l.uriObj.type=='manager'), 'uri'), l=> { return {uri:l.uri, uriName:l.uriObj.name} ;});
+				_.each(logs,l=> list.push({id:l.uri, name:l.uriName}));
+				list = _.orderBy(list, 'name');
+			}
+			var array = _.map(list, device => { return { id: device.id, name: device.name }; });
+			return Promise.resolve(array);
+			// defer.resolve(array);
 
-			return defer.promise;
+			// return defer.promise;
 		}).bind(this);
 	}
 	autocompleteCapability({ getable, setable, api, insights } = {}) {
 		return ((query, args) => {
 			var defer = new Defer();
 			this.refreshHomeyAPI().then((async api => {
-				if (!args || !args.device || !args.device.id) return defer.resolve([]);
-				var device = await api.devices.getDevice({ id: args.device.id });
-				if (!device) return defer.resolve([]);
-				var list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable }; });
-				if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
-				if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
-				if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });
-				list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
-				defer.resolve(list);
+				var list = [];
+				if (!args || !args.device || !args.device.id) return defer.resolve(list);
+				if(args.device.id.startsWith('homey:manager:') && insights) {
+					list = _.map(_.filter(api.insights.getLogs(), l=>l.uri==args.device.id), l=> { return {uri:l.uri, id:l.id, name:l.title} ;});
+				} else {
+					var device = await api.devices.getDevice({ id: args.device.id });
+					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
+					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable }; });
+					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
+					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
+					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });					
+					list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+				}			
+				defer.resolve(list);	
 			}).bind(this));
 			return defer.promise;
 		}).bind(this);

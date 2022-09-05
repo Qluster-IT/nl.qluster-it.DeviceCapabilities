@@ -38,6 +38,7 @@ ______________________________________
 Hoe kan ik een setting die ik heb weggehaald (label) verwijderen uit de settings (i.p.v. een lege string waar)?
 ______________________________________
 
+Waarom staat in Web bij aanmaken nieuw device de naam op engels? (Advanced Virtual Device)
 ______________________________________
 
 
