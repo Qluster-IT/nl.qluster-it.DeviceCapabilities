@@ -15,7 +15,7 @@
 		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",        
 		"functions":"Functies",
 		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
-		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies flows welke die functie gebruiken, kan breken.",
+		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies, flows, welke die functie gebruiken, kan breken.",
 		"add_function_text":"Om een ​​functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
 		"add_function":"Functie toevoegen",
 		"function_name":"Functienaam",

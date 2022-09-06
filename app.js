@@ -544,8 +544,8 @@ class DeviceSetter extends Homey.App {
 	async copyFile(from, to, toPath) {
 		if(await existsAsync(from)) {
 			if(!(await existsAsync(toPath))) await mkdirAsync(toPath);
-			await copyFile(from, to, function(err) {
-				// if (err) throw err;
+			await copyFile(from, to, fs.constants.COPYFILE_FICLONE, function(err) {
+				 if (err) this.error(err);//throw err;
 				// console.log('source.txt was copied to destination.txt');
 			  } );
 		}

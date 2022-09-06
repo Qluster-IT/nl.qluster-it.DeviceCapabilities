@@ -1,3 +1,73 @@
+Tijdens ontwikkelen van DeviceCapabilities, kwamen er wat bugs en ongewoonheden naar voren.
+Die wou ik graag delen.
+
+Apps (SDK)
+* When i enter an empty group, without children in devicesettings {
+          "type": "group",
+          "label": {
+            "en": "Select lists"
+          }
+        },
+i get a long error list during build:
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["text","password","textarea","label"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["number","slider"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["radio","dropdown"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43] should have required property 'values' 
+manifest.drivers['virtualdevice'].settings[43].type should be equal to one of the allowed values ["checkbox"]
+manifest.drivers['virtualdevice'].settings[43] should have required property 'id' 
+manifest.drivers['virtualdevice'].settings[43] should have required property 'children' 
+manifest.drivers['virtualdevice'].settings[43] matched no available schemas, see previous errors
+
+While only one line is what its about appareantly:
+manifest.drivers['virtualdevice'].settings[43] should have required property 'children' 
+
+* There is no device.clearCameraImage();
+
+* There is no driver.removeCapabilityListener();
+
+* Wat doet uiQuickAction bij booleans?
+Of ik het nu op true of false set, het lijkt geen verschil te maken.
+uiComponent=toggle bepaald of de knop een toggle in Web krijgt.
+uiComponent=button bepaald of het een knop op de button-tab wordt.
+getable bepaald of ik de Mobile-Device-Tile kan indrukken.
+
+* Hoe kan ik een setting die ik heb weggehaald (een label value) verwijderen uit de settings (i.p.v. op een lege string tee zetten)?
+
+Homey Web App:
+* Bij het aanmaken van een device staat de naam in het Engels, ipv nederlands?
+
+Homey Mobile App:
+* Wanneer een units wordt aangepast via setCapabilityValue, dan wordt deze in Mobile niet geupdate. Pas na verlaten scherm of un/available zetten.
+
+* Wanneer het getal nog undefined is van een Status Indicator met units, dan wordt in Mobile niks getoond op de device tile. Terwijl in de Web App een streepje komt plus de units.
+
+* Wanneer units wordt aangepast, dan kost dat in Web App geen tijd/kosten/resources, maar Mobile blijft ong. 2 seconde hangen, zelfs zonder de daadwerkelijk device-tile te updaten.
+Ook wanneer het betreffende device niet zichtbaar is in het scherm, of je zit bijv. in de settings op Mobile: wanneer de units wordt aangepast blijft de hele Mobile App kort hangen.
+
+* Device Setting Labels worden na 2 regels afgebroken.
+
+
+Ik hoop dat jullie hier wat mee kunnen.
+Als er vragen zijn hoor ik het graag. Alle genoemde punten zijn direct simuleerbaar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------
 There is no device.clearCameraImage();
 There is no driver.removeCapabilityListener();
 
@@ -37,7 +107,7 @@ getable bepaald of ik de Mobile-Device-Tile kan indrukken.
 ______________________________________
 
 
-Hoe kan ik een setting die ik heb weggehaald (label) verwijderen uit de settings (i.p.v. een lege string waar)?
+Hoe kan ik een setting die ik heb weggehaald (een label value) verwijderen uit de settings (i.p.v. op een lege string tee zetten)?
 ______________________________________
 
 Waarom staat in Web bij aanmaken nieuw device de naam op engels? (Advanced Virtual Device)
