@@ -324,16 +324,16 @@
         ]
       },
       {
-        "id": "trigger_virtualdevice_button",
+        "id": "trigger_virtualdevice_text",
         "title": {
-          "en": "Button pushed",
-          "nl": "Knop ingedrukt",
-          "de": "Taste gedrückt"
+          "en": "Text set",
+          "nl": "Tekst ingesteld",
+          "de": "Text festgelegt"
         },
         "titleFormatted": {
-          "en": "Button [[field]] pushed",
-          "nl": "Knop [[field]] ingedrukt",
-          "de": "Taste [[field]] gedrückt"
+          "en": "When [[field]] [[mode]]",
+          "nl": "Wanneer [[field]] [[mode]]",
+          "de": "Wenn [[field]] [[mode]]"
         },
         "args": [
           {
@@ -345,56 +345,44 @@
             "type": "autocomplete",
             "name": "field",
             "placeholder": {
-              "en": "Button",
-              "nl": "Knop",
-              "de": "Taste"
+              "en": "Textfield",
+              "nl": "Tekstveld",
+              "de": "Textfeld"
             }
-          }
-        ],
-        "tokens": [
-          {
-            "name": "value",
-            "type": "boolean",
-            "title": {
-              "en": "Value",
-              "nl": "Waarde",
-              "de": "Wert"
-            }
-          }
-        ]
-      },
-      {
-        "id": "trigger_virtualdevice_boolean",
-        "title": {
-          "en": "Yes/No set",
-          "nl": "Ja/Nee ingesteld",
-          "de": "Ja/Nein eingestellt"
-        },
-        "titleFormatted": {
-          "en": "Yes/No [[field]] set",
-          "nl": "Ja/Nee [[field]] ingesteld",
-          "de": "Ja/Nein [[field]] festgelegt"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=virtualdevice"
           },
           {
-            "type": "autocomplete",
-            "name": "field",
+            "type": "dropdown",
+            "name": "mode",
             "placeholder": {
-              "en": "Button",
-              "nl": "Knop",
-              "de": "Taste"
-            }
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
           }
         ],
         "tokens": [
           {
             "name": "value",
-            "type": "boolean",
+            "type": "string",
             "title": {
               "en": "Value",
               "nl": "Waarde",
@@ -411,9 +399,9 @@
           "de": "Nummer festgelegt"
         },
         "titleFormatted": {
-          "en": "Number [[field]] set",
-          "nl": "Nummer [[field]] ingesteld",
-          "de": "Nummer [[field]] festgelegt"
+          "en": "Number [[field]] [[mode]]",
+          "nl": "Nummer [[field]] [[mode]]",
+          "de": "Nummer [[field]] [[mode]]"
         },
         "args": [
           {
@@ -429,12 +417,176 @@
               "nl": "Nummer",
               "de": "Nummer"
             }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
           }
         ],
         "tokens": [
           {
             "name": "value",
             "type": "number",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde",
+              "de": "Wert"
+            }
+          }
+        ]
+      },
+      {
+        "id": "trigger_virtualdevice_boolean",
+        "title": {
+          "en": "Yes/No set",
+          "nl": "Ja/Nee ingesteld",
+          "de": "Ja/Nein eingestellt"
+        },
+        "titleFormatted": {
+          "en": "Yes/No [[field]] [[mode]]",
+          "nl": "Ja/Nee [[field]] [[mode]]",
+          "de": "Ja/Nein [[field]] [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Button",
+              "nl": "Knop",
+              "de": "Taste"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde",
+              "de": "Wert"
+            }
+          }
+        ]
+      },
+      {
+        "id": "trigger_virtualdevice_button",
+        "title": {
+          "en": "Button pushed",
+          "nl": "Knop ingedrukt",
+          "de": "Taste gedrückt"
+        },
+        "titleFormatted": {
+          "en": "Button [[field]] [[mode]]",
+          "nl": "Knop [[field]] [[mode]]",
+          "de": "Taste [[field]] [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Button",
+              "nl": "Knop",
+              "de": "Taste"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "boolean",
             "title": {
               "en": "Value",
               "nl": "Waarde",
@@ -1460,9 +1612,9 @@
           "de": "Text setzen"
         },
         "titleFormatted": {
-          "en": "Set [[field]] to [[text]]",
-          "nl": "Zet [[field]] naar [[text]]",
-          "de": "Setze [[field]] auf [[text]]"
+          "en": "Set [[field]] to [[text]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[text]] en [[mode]]",
+          "de": "Setze [[field]] auf [[text]] und [[mode]]"
         },
         "args": [
           {
@@ -1488,6 +1640,34 @@
               "de": "Text"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "Sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
@@ -1499,9 +1679,9 @@
           "de": "Nummer setzen"
         },
         "titleFormatted": {
-          "en": "Set [[field]] to [[number]], execute flowcards (When) =[[executeflowcards]]",
-          "nl": "Zet [[field]] naar [[number]], start flowkaarten (Als) =[[executeflowcards]]",
-          "de": "Setze [[field]] auf [[number]], flowkarten ausführen (Wenn) =[[executeflowcards]]"
+          "en": "Set [[field]] to [[number]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[number]] en [[mode]]",
+          "de": "Setze [[field]] auf [[number]] und [[mode]]"
         },
         "args": [
           {
@@ -1529,13 +1709,31 @@
             "required": false
           },
           {
-            "type": "checkbox",
-            "name": "executeflowcards",
+            "type": "dropdown",
+            "name": "mode",
             "placeholder": {
-              "en": "No",
-              "nl": "Nee",
-              "de": "Nein"
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
             },
+            "values": [
+              {
+                "id": "",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "Sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
             "required": false
           }
         ]
@@ -1548,9 +1746,9 @@
           "de": "Ja/Nein setzen"
         },
         "titleFormatted": {
-          "en": "Set [[field]] to [[boolean]]",
-          "nl": "Zet [[field]] naar [[boolean]]",
-          "de": "Setze [[field]] auf [[boolean]]"
+          "en": "Set [[field]] to [[boolean]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[boolean]] en [[mode]]",
+          "de": "Setze [[field]] auf [[boolean]] und [[mode]]"
         },
         "args": [
           {
@@ -1576,6 +1774,34 @@
               "de": "Ja/Nein"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "Sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
@@ -1587,9 +1813,9 @@
           "de": "Taste setzen"
         },
         "titleFormatted": {
-          "en": "Set [[field]] to [[boolean]]",
-          "nl": "Zet [[field]] naar [[boolean]]",
-          "de": "Setze [[field]] auf [[boolean]]"
+          "en": "Set [[field]] to [[boolean]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[boolean]] en [[mode]]",
+          "de": "Setze [[field]] auf [[boolean]] und [[mode]]"
         },
         "args": [
           {
@@ -1614,6 +1840,34 @@
               "nl": "Ja/Nee",
               "de": "Ja/Nein"
             },
+            "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "Sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
             "required": false
           }
         ]
@@ -1715,9 +1969,9 @@
           "de": "Bezeichnung setzen"
         },
         "titleFormatted": {
-          "en": "Set [[field]] to [[expression]]",
-          "nl": "Zet [[field]] naar [[expression]]",
-          "de": "Setze [[field]] auf [[expression]]"
+          "en": "Set [[field]] to [[expression]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[expression]] en [[mode]]",
+          "de": "Setze [[field]] auf [[expression]] und [[mode]]"
         },
         "args": [
           {
@@ -1742,6 +1996,34 @@
               "nl": "Expression",
               "de": "Bezeichnung"
             },
+            "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "Sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
             "required": false
           }
         ]
@@ -16365,6 +16647,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -16982,6 +17348,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -17599,6 +18049,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -18216,6 +18750,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -18833,6 +19451,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -19450,6 +20152,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -20067,6 +20853,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -20684,6 +21554,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -21301,6 +22255,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""
@@ -21918,6 +22956,90 @@
                 {
                   "id": "speaker_position",
                   "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
                 }
               ],
               "value": ""

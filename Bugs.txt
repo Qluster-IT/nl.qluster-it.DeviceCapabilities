@@ -1,4 +1,6 @@
 There is no device.clearCameraImage();
+There is no driver.removeCapabilityListener();
+
 ______________________________________
 
 
@@ -46,7 +48,7 @@ Op Mobile App --> Device Setting Labels worden na 2 lines afgebroken.
 ______________________________________
 
 
-Wanneer setCapabilityOptions (units) wordt uitgevoerd, blijft Mobile App bijna compleet hangen.
+Wanneer setCapabilityOptions (units) wordt uitgevoerd, blijft Mobile App bijna compleet hangen (terwijl deze niet wordt geupdate(!))
 ______________________________________
 
 

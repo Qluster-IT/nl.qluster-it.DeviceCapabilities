@@ -112,17 +112,19 @@ module.exports = class WatchDevice extends Homey.Device {
 	async setListener({ fieldId, cap, settings }) {
 		if (fieldId.startsWith('button')) {
 			if (settings[fieldId + 'Disabled'] !== true)
-				this.registerCapabilityListener(cap, (async (value, options) => {
+				this.registerCapabilityListener(cap, (async (value, options) => {					
+					let oldValue = this.getStoreValue(fieldId+"Value");
 					if (settings[fieldId + 'ShowAs'] === "pushbutton_indicator") {
 						let val = this.getStoreValue(fieldId + "Value") === true;
 						await this.setCapabilityValue(cap, val);
 						return setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
-							this.driver.triggerFlow(this, !val, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
+							this.driver.triggerFlowButton(this, !val, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 						}, 1);
 					} else {						
                         await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-						this.driver.triggerFlow(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
+						await this.setStoreValue(fieldId+"Value", value===true);
+						this.driver.triggerFlowButton(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 					}
 					return true;
 				}).bind(this));
@@ -130,14 +132,18 @@ module.exports = class WatchDevice extends Homey.Device {
 		if (fieldId.startsWith('boolean')) {
 			if (cap.indexOf('_button') > -1)
 				this.registerCapabilityListener(cap, (async (value, options) => {
+					let oldValue = this.getStoreValue(fieldId+"Value");
 					await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
+					await this.setStoreValue(fieldId+"Value", value===true);
+					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 				}).bind(this));
 		}
 		if (fieldId.startsWith('number')) {
 			this.registerCapabilityListener(cap, (async (value, options) => {
+				let oldValue = this.getStoreValue(fieldId+"Value");
 				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
+				await this.setStoreValue(fieldId+"Value", value);
+				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
 	}
@@ -341,7 +347,8 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!this.hasCapability(cap)) {
 							if (type == "button" && i === 1) {
 								button1Reset = true;
-								if (this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+								if (this.hasCapability(secondCap)) 
+									await this.removeCapability(secondCap);
 							}
 							await this.addCapability(cap);
 							if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
@@ -419,11 +426,13 @@ module.exports = class WatchDevice extends Homey.Device {
 										await this.setCapabilityOptions(secondCap, optNew);
 							}
 							
-							if (oldValue !== undefined && capOptionsChanged) await this.setCapabilityValue(secondCap, oldValue);
+							if (oldValue !== undefined && capOptionsChanged) 
+								await this.setCapabilityValue(secondCap, oldValue);
 							
 
 						} else {
-							if(this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+							if(this.hasCapability(secondCap)) 
+								await this.removeCapability(secondCap);
 							secondCapRemoved = true;
 						}
 						//Remove logs here
@@ -438,7 +447,8 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (type == 'button' && disabled && !pushbutton) {
 							await this.setCapabilityValue(cap, checked);
 						}
-					} else if (this.hasCapability(cap)) await this.removeCapability(cap);
+					} else if (this.hasCapability(cap)) 
+						await this.removeCapability(cap);
 				}
 				catch (err) {
 					this.error(err);
