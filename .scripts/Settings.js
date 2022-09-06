@@ -298,7 +298,7 @@ for(var i=1;i<=fields;i++) {
 '              "hint": { \r\n' +
 '                "en": "When selected a Tag will be created.", "nl":"Indien geselecteerd, wordt een tag aangemaakt.", "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt." \r\n' +
 '              }, \r\n' +
-'              "value": false \r\n' +
+'              "value": true \r\n' +
 '            } \r\n' +
 '          ] \r\n' +
 '        }, \r\n';

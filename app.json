@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -15241,7 +15241,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -15849,7 +15849,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -16457,7 +16457,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -17065,7 +17065,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -17673,7 +17673,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -18281,7 +18281,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -18889,7 +18889,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -19497,7 +19497,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -20105,7 +20105,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
@@ -20713,7 +20713,7 @@
                 "nl": "Indien geselecteerd, wordt een tag aangemaakt.",
                 "de": "Wenn diese Option ausgewählt ist, werden Tags erstellt."
               },
-              "value": false
+              "value": true
             }
           ]
         },
