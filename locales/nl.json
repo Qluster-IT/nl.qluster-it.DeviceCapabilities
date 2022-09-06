@@ -1,5 +1,6 @@
 {
     "via":"via",
+	"imagetolarge":"Afbeelding te groot",	
     "settings": {
 		"title_icons": "Uw pictogrammen",
 		"title_upload": "Upload een pictogram",
@@ -11,10 +12,7 @@
 		"title_virtualdevices": "Uw virtuele apparaten",
 		"title_customicons": "Uw aangepaste pictogrammen",
 		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor apparaten en capabilities kunnen worden gebruikt. Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",		
-		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",
-
-
-        
+		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",        
 		"functions":"Functies",
 		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
 		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies flows welke die functie gebruiken, kan breken.",
@@ -30,7 +28,8 @@
 		"function_exists":"Functie bestaat al.",
 		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
 		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
-		"search_for_name":"zoek op naam"
+		"search_for_name":"zoek op naam",
+		"devicecapabilities_starttext":"ga naar apparaat instellingen"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",

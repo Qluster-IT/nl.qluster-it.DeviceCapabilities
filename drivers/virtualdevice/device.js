@@ -14,7 +14,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
 
-		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', "Goto Device Settings");
+		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', "To start");//"Goto Device Settings");
 
 
 
