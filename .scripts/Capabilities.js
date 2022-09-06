@@ -15,21 +15,28 @@ let icons = [
   'custom_48', 'custom_49', 'custom_50', 'custom_51',
   'custom_52', 'custom_53', 'custom_54', 'custom_55',
   'custom_56', 'custom_57', 'custom_58', 'custom_59',
+  'custom_60',
+  'custom_61', 'custom_62', 'custom_63',
+  'custom_64', 'custom_65', 'custom_66', 'custom_67',
+  'custom_68', 'custom_69', 'custom_70', 'custom_71',
+  'custom_72', 'custom_73', 'custom_74', 'custom_75',
+  'custom_76', 'custom_77', 'custom_78', 'custom_79',
   'custom_60'
 ];
 
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "And start creating your own device", "nl":"En begin met het aanmaken van je eigen apparaat", "de":"Und erstellen Sie Ihr eigenes Gerät" \r\n'+
+'        "en": "goto Device Settings", "nl":"door naar apparaat instellingen te gaan", "de":"mit den Geräteeinstellungen" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": false, \r\n'+
 '      "icon": "/assets/virtual_device.svg", \r\n'+
-'      "value": "And start creating your own device" \r\n'+
+'      "value": "Goto Device Settings" \r\n'+
 '    }, \r\n';
+
 
 
 str+='"Text": { \r\n'+

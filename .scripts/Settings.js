@@ -22,6 +22,26 @@ var icons = '              "values": [ \r\n' +
 '                {"id": "custom_18","label": {"en": "device_18"}}, \r\n' + 
 '                {"id": "custom_19","label": {"en": "device_19"}}, \r\n' + 
 '                {"id": "custom_20","label": {"en": "device_20"}}, \r\n' + 
+'                {"id": "custom_61","label": {"en": "device_21"}}, \r\n' + 
+'                {"id": "custom_62","label": {"en": "device_22"}}, \r\n' + 
+'                {"id": "custom_63","label": {"en": "device_23"}}, \r\n' + 
+'                {"id": "custom_64","label": {"en": "device_24"}}, \r\n' + 
+'                {"id": "custom_65","label": {"en": "device_25"}}, \r\n' + 
+'                {"id": "custom_66","label": {"en": "device_26"}}, \r\n' + 
+'                {"id": "custom_67","label": {"en": "device_27"}}, \r\n' + 
+'                {"id": "custom_68","label": {"en": "device_28"}}, \r\n' + 
+'                {"id": "custom_69","label": {"en": "device_29"}}, \r\n' + 
+'                {"id": "custom_70","label": {"en": "device_30"}}, \r\n' + 
+'                {"id": "custom_71","label": {"en": "device_31"}}, \r\n' + 
+'                {"id": "custom_72","label": {"en": "device_32"}}, \r\n' + 
+'                {"id": "custom_73","label": {"en": "device_33"}}, \r\n' + 
+'                {"id": "custom_74","label": {"en": "device_34"}}, \r\n' + 
+'                {"id": "custom_75","label": {"en": "device_35"}}, \r\n' + 
+'                {"id": "custom_76","label": {"en": "device_36"}}, \r\n' + 
+'                {"id": "custom_77","label": {"en": "device_37"}}, \r\n' + 
+'                {"id": "custom_78","label": {"en": "device_38"}}, \r\n' + 
+'                {"id": "custom_79","label": {"en": "device_39"}}, \r\n' + 
+'                {"id": "custom_80","label": {"en": "device_40"}}, \r\n' + 
 '                {"id": "  ","label": {"en": "-----   Capabilities      -----"}}, \r\n' + 
 '                {"id": "custom_21","label": {"en": "capabilities_1"}}, \r\n' + 
 '                {"id": "custom_22","label": {"en": "capabilities_2"}}, \r\n' + 
@@ -340,7 +360,28 @@ for(var i=1;i<=fields;i++) {
 '                {"id":"windowcoverings_tilt_set", "label":"Window Coverings tilt set"}, '+
 '                {"id":"windowcoverings_set", "label":"Window Coverings Position"}, '+
 '                {"id":"speaker_duration", "label":"Speaker Duration"}, '+
-'                {"id":"speaker_position", "label":"Speaker Position"} ' +
+'                {"id":"speaker_position", "label":"Speaker Position"}, ' +
+'                {"id":"measure_co", "label":"CO (Sensor)"}, '+
+'                {"id":"measure_co2", "label":"CO2 (Sensor)"}, '+
+'                {"id":"measure_pm25", "label":"PM2.5 (Sensor)"}, '+
+'                {"id":"measure_humidity", "label":"Humidity (Sensor)"}, '+
+'                {"id":"measure_pressure", "label":"Pressure (Sensor)"}, '+
+'                {"id":"measure_noise", "label":"Noise (Sensor)"}, '+
+'                {"id":"measure_rain", "label":"Rain (Sensor)"}, '+
+'                {"id":"measure_wind_strength", "label":"Wind strength (Sensor)"}, '+
+'                {"id":"measure_wind_angle", "label":"Wind angle (Sensor)"}, '+
+'                {"id":"measure_gust_strength", "label":"Gust strength (Sensor)"}, '+
+'                {"id":"measure_gust_angle", "label":"Gust angle (Sensor)"}, '+
+'                {"id":"measure_power", "label":"Power (Sensor)"}, '+
+'                {"id":"measure_voltage", "label":"Voltage (Sensor)"}, '+
+'                {"id":"measure_current", "label":"Current (Sensor)"}, '+
+'                {"id":"measure_luminance", "label":"Luminance (Sensor)"}, '+
+'                {"id":"measure_ultraviolet", "label":"Ultraviolet (Sensor)"}, '+
+'                {"id":"measure_water", "label":"Water flow (Sensor)"}, '+
+'                {"id":"meter_power", "label":"Energy (Sensor)"}, '+
+'                {"id":"meter_water", "label":"Water meter (Sensor)"}, '+
+'                {"id":"meter_gas", "label":"Gas meter (Sensor)"}, '+
+'                {"id":"meter_rain", "label":"Rain meter (Sensor)"} '+
 '              ], '+
 '              "value":""  \r\n';
 str+='       },' +

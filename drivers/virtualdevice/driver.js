@@ -163,11 +163,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         var virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
             let fieldId = args.field.id;
-            let type = args.field.type;
             let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
             if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
             cap = args.device.getStoreValue(fieldId) || cap;
-
+            let type = this.getTypeFromField(fieldId);
+            
             try {
                 let oldValue = args.device.getStoreValue(fieldId+"Value");
                 let value = null;
@@ -175,9 +175,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(args.expression!==undefined && args.expression!=='undefined') {
                     value = this.runSandBox(args.expression);                
                 }
-                await this.setSecondCapability({ val:null, device:args.device , fieldId});
-                    await args.device.setCapabilityValue(cap, null);
-                    await args.device.setStoreValue(fieldId+"Value", null);
+                await this.setSecondCapability({ val:value, device:args.device , fieldId});
+                    await args.device.setCapabilityValue(cap, value);
+                    await args.device.setStoreValue(fieldId+"Value", value);
                 if(args.mode==="executewhencards") {
                     if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
                 }
@@ -241,7 +241,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
               this.setFunctions();
     }
 
-
+    getTypeFromField(fieldId) {
+       return fieldId.startsWith('text') ? 'text' : 
+            fieldId.startsWith('number') ? 'number' : 
+            fieldId.startsWith('boolean') ? 'boolean' : 
+            fieldId.startsWith('button') ? 'button' : 
+            fieldId.startsWith('status') ? 'status' : 'unknown';
+    }
     async setSecondCapability({fieldId, device, val, units}={}) {
         var type = fieldId.startsWith('text') ? 'Text' : 
             fieldId.startsWith('number') ? 'Number' : 
@@ -262,7 +268,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
     getCustomIcons(){
-        let r= [            
+        let r=[            
             {
                 title:'Devices',
                 icons:[
@@ -285,7 +291,28 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     {name:"device_17", file:'custom_17', defaultIcon:'Buttons/toggle'},
                     {name:"device_18", file:'custom_18', defaultIcon:'Flows/advanced-flow'},
                     {name:"device_19", file:'custom_19', defaultIcon:'Flows/flow-bold'},
-                    {name:"device_20", file:'custom_20', defaultIcon:'Flows/logic'}
+                    {name:"device_20", file:'custom_20', defaultIcon:'Flows/logic'},
+          
+                    {name:"device_21", file:'custom_61', defaultIcon:'Kawa/clock'},
+                    {name:"device_22", file:'custom_62', defaultIcon:'Kawa/cooking_icon'},
+                    {name:"device_23", file:'custom_63', defaultIcon:'Kawa/doorbell2'},
+                    {name:"device_24", file:'custom_64', defaultIcon:'Kawa/fan_big_black'},
+                    {name:"device_25", file:'custom_65', defaultIcon:'Kawa/fan_icon'},
+                    {name:"device_26", file:'custom_66', defaultIcon:'Kawa/fireplace_icon'},
+                    {name:"device_27", file:'custom_67', defaultIcon:'Kawa/ggl_hub'},
+                    {name:"device_28", file:'custom_68', defaultIcon:'Kawa/homey_fake'},
+                    {name:"device_29", file:'custom_69', defaultIcon:'Kawa/homey_pro'},
+                    {name:"device_30", file:'custom_70', defaultIcon:'Kawa/kitchen_icon'},
+                    {name:"device_31", file:'custom_71', defaultIcon:'Kawa/lamp_desklight_icon'},
+                    {name:"device_32", file:'custom_72', defaultIcon:'Kawa/light_ceilinglight'},
+                    {name:"device_33", file:'custom_73', defaultIcon:'Kawa/location-pin-compact-outline'},
+                    {name:"device_34", file:'custom_74', defaultIcon:'Kawa/lock_fingerprint2'},
+                    {name:"device_35", file:'custom_75', defaultIcon:'Kawa/microwave'},
+                    {name:"device_36", file:'custom_76', defaultIcon:'Kawa/relay'},
+                    {name:"device_37", file:'custom_77', defaultIcon:'Kawa/remote_bluebtn'},
+                    {name:"device_38", file:'custom_78', defaultIcon:'Kawa/solarpower'},
+                    {name:"device_39", file:'custom_79', defaultIcon:'Kawa/stove_icon'},
+                    {name:"device_40", file:'custom_80', defaultIcon:'Kawa/wc_icon'}
                 ]
             },
             {
@@ -338,7 +365,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     {name:"other_20", file:'custom_60', defaultIcon:'Kawa/human'}
                 ]
             }
-        ];
+          ];
 
         let id=1;
         for(let i=0;i<r.length;i++)

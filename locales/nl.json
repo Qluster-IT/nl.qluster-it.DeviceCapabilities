@@ -39,7 +39,9 @@
 		"labelCamerasRestart":"Na het verwijderen van een camera (door de naam of url te wissen), is het vereist de Apparaat Mogelijkheden App test herstarten om het camerabeeld van dit virtuele apparaat te verwijderen.",
 		"labelIcons":"Hier krijgt u een lijst met de namen die u heeft aangepast, zodra u namen hebt gewijzigd in de app-instellingen.",
 		"field-not-set":"__fieldId__ is nog niet ingesteld. Ga naar apparaat instelling om het veld toe te voegen.",
-		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App."
+		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App.",
+		
+		"devicecapabilities_starttext":"Begin"
 		
 	},
 	"pair": {
