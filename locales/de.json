@@ -40,7 +40,7 @@
 		"field-not-set":"__fieldId__ wurde noch nicht festgelegt. Gehen Sie in die Geräteeinstellungen und fügen Sie das Feld hinzu.",
 		"labelStatusIndicator":"Vergessen Sie nicht, das Statusfeld in der Mobile App als Statusindikator einzustellen.",
 
-		"devicecapabilities_starttext":"gehen Sie zu den Geräteeinstellungen"
+		"devicecapabilities_starttext":"Gehen Sie"
 	},
 	"pair": {
 		"list_icons":{

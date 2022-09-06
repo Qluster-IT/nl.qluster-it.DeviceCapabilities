@@ -176,13 +176,24 @@ icons +
 '              "step": 1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
+'              "id": "status'+i+'SeparateCapabilities", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities", "de": "Separate Fähigkeiten erstellen" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd.", "de": "Wenn diese Option ausgewählt ist, werden versteckte Fähigkeiten für Einblicke und Tags (falls verwendet) erstellt. Das macht es deutlicher. Aber Sie können nicht wissen, was den Wert geändert hat." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "status1CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
 '                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -246,6 +257,17 @@ for(var i=1;i<=fields;i++) {
 '              }, \r\n' +
               icons +
 '              "value": "" \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
+'              "id": "text'+i+'SeparateCapabilities", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities", "de": "Separate Fähigkeiten erstellen" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd.", "de": "Wenn diese Option ausgewählt ist, werden versteckte Fähigkeiten für Einblicke und Tags (falls verwendet) erstellt. Das macht es deutlicher. Aber Sie können nicht wissen, was den Wert geändert hat." \r\n' +
+'              }, \r\n' +
+'              "value": false \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
 '              "id": "text'+i+'CreateTag", \r\n' +
@@ -395,13 +417,24 @@ str+='       }, \r\n' +
 '              "value": -1 \r\n' +
 '            }, \r\n' +
 '            { \r\n' +
+'              "id": "number'+i+'SeparateCapabilities", \r\n' +
+'              "type": "checkbox", \r\n' +
+'              "label": { \r\n' +
+'                "en": "Create Separate Capabilities", "nl":"Creëer apparte capabilities", "de": "Separate Fähigkeiten erstellen" \r\n' +
+'              }, \r\n' +
+'              "hint": { \r\n' +
+'                "en": "When selected will create hidden capabilities for the Insights and Tag (if used). This makes it cleaner. But you cannot know Who changed the value.", "nl":"Indien geselecteerd, worden verborgen Capabilities gecreëerd voor de Insights en Tag. Dit maakt het schoner. Maar u kunt niet weten Wie de waarde heeft gewijzigd.", "de": "Wenn diese Option ausgewählt ist, werden versteckte Fähigkeiten für Einblicke und Tags (falls verwendet) erstellt. Das macht es deutlicher. Aber Sie können nicht wissen, was den Wert geändert hat." \r\n' +
+'              }, \r\n' +
+'              "value": true \r\n' +
+'            }, \r\n' +
+'            { \r\n' +
 '              "id": "number'+i+'CreateInsights", \r\n' +
 '              "type": "checkbox", \r\n' +
 '              "label": { \r\n' +
 '                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -507,7 +540,7 @@ str+='       }, \r\n' +
 '                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
 '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
 '              }, \r\n' +
 '              "value": false \r\n' +
 '            }, \r\n' +
@@ -682,7 +715,7 @@ str+='         }, \r\n' +
   '                "en": "Create Insights", "nl":"Creëer inzichten", "de": "Einblicke erstellen" \r\n' +
   '              }, \r\n' +
 '              "hint": { \r\n' +
-'                "en": "When selected Insights will be created.", "nl":"When selected Insights Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
+'                "en": "When selected Insights will be created.", "nl":"Indien geselecteerd, wordt het inzichten-logboek automatisch gegenereerd en gevuld.", "de": "Wenn diese Option ausgewählt ist, werden Einblicke erstellt." \r\n' +
   '              }, \r\n' +
   '              "value": false \r\n' +
 '            }, \r\n' +

@@ -28,7 +28,7 @@ str+='"devicecapabilities_starttext": { \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": false, \r\n'+
 '      "icon": "/assets/virtual_device.svg", \r\n'+
-'      "value": "Goto Device Settings" \r\n'+
+'      "value": "And start creating your own device" \r\n'+
 '    }, \r\n';
 
 

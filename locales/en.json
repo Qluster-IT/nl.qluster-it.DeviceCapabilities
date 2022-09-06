@@ -39,7 +39,7 @@
 		"labelIcons":"Here you will get a list with the names you have customized, once you have changed names in the App Settings.",
 		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
 		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App.",
-		"devicecapabilities_starttext":"goto Device Settings"
+		"devicecapabilities_starttext":"To Start"
 	},
 	"pair": {
 		"list_icons":{

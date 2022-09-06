@@ -29,7 +29,7 @@
 		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
 		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
 		"search_for_name":"zoek op naam",
-		"devicecapabilities_starttext":"ga naar apparaat instellingen"
+		"devicecapabilities_starttext":"Begin"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",

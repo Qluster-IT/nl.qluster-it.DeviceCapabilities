@@ -14,7 +14,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
 
-		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', "To start");//"Goto Device Settings");
+		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', this.homey.__("virtualdevicesettings.devicecapabilities_starttext") || "To start");//"Goto Device Settings");
 
 
 
@@ -118,11 +118,11 @@ module.exports = class WatchDevice extends Homey.Device {
 						await this.setCapabilityValue(cap, val);
 						return setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
-							this.driver.triggerFlow(this, !val, { field: { id: fieldId } }); //Do we need to await for triggerFlow
+							this.driver.triggerFlow(this, !val, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
 						}, 1);
 					} else {						
                         await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-						this.driver.triggerFlow(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
+						this.driver.triggerFlow(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
 					}
 					return true;
 				}).bind(this));
@@ -131,13 +131,13 @@ module.exports = class WatchDevice extends Homey.Device {
 			if (cap.indexOf('_button') > -1)
 				this.registerCapabilityListener(cap, (async (value, options) => {
 					await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
+					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
 				}).bind(this));
 		}
 		if (fieldId.startsWith('number')) {
 			this.registerCapabilityListener(cap, (async (value, options) => {
 				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
-				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow
+				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId } }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
 	}
@@ -204,7 +204,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			const type = types[iTypes];
 
 			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
-				if(type=="status" && i>1)continue;
+				if(type=="status" && i>1) continue;
 				try {
 					let oldCap = this.getStoreValue(type + i);
 					let oldValue;
@@ -224,6 +224,8 @@ module.exports = class WatchDevice extends Homey.Device {
 
 					let sensor = false;
 
+					//let isStatus = type=="status";
+					let createSecondCap = (settings[type + i + 'CreateInsights']===true || settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false;
 
 					let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
 					let capSet = false;
@@ -259,8 +261,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							}
 							break;
 						case "status":
-							cap = 'devicecapabilities_number' + icon + '.' + type + i;
-							//cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
+							if(createSecondCap) cap = 'devicecapabilities_number' + icon + '.' + type + i;
+							else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
 							break;
 						case "boolean":
 							let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
@@ -394,8 +396,9 @@ module.exports = class WatchDevice extends Homey.Device {
 								await this.setCapabilityOptions(cap, optNew);
 						}
 						let secondCapRemoved = false;
-						let isStatus = type=="status";
-						if(isStatus || ((settings[type + i + 'CreateInsights']===true ||settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false)) {
+						//Status needs it second capability?
+						//if(isStatus || ((settings[type + i + 'CreateInsights']===true ||settings[type + i + 'CreateTag']===true) && settings[type + i + 'SeparateCapabilities']!==false)) {
+						if(createSecondCap) {
 							if(!this.hasCapability(secondCap)) {
 								await this.addCapability(secondCap);
 								capOptionsChanged = true;

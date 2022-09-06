@@ -42,12 +42,11 @@ Waarom staat in Web bij aanmaken nieuw device de naam op engels? (Advanced Virtu
 ______________________________________
 
 
-
-
+Op Mobile App --> Device Setting Labels worden na 2 lines afgebroken.
 ______________________________________
 
 
-
+Wanneer setCapabilityOptions (units) wordt uitgevoerd, blijft Mobile App bijna compleet hangen.
 ______________________________________
 
 

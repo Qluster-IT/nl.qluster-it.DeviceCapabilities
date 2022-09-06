@@ -90,36 +90,44 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
                     let dontUpdateField = false;
                     try {
-                        let val;
+                        let value;
+                        let triggerCard;
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                if(args.text!==undefined && args.text!=='undefined') val = args.text;
-                                else val = null;
+                                if(args.text!==undefined && args.text!=='undefined') value = args.text;
+                                else value = null;
                                 break;
                             case 'virtualdevice_set_number':
-                                if(args.number!==undefined && args.number!=='undefined') val = args.number;                                
-                                else val = null;
+                                if(args.number!==undefined && args.number!=='undefined') value = args.number;                                
+                                else value = null;
+                                triggerCard = this.driver.triggerFlowNumber;
                                 break;
                             case 'virtualdevice_set_boolean':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
-                                else val = null;
+                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                else value = null;
+                                triggerCard = this.driver.triggerFlowBoolean;
                                 break;
                             case 'virtualdevice_set_button':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
-                                else val = null;
+                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                else value = null;
+                                triggerCard = this.driver.triggerFlow;
                                 break;
                             case 'virtualdevice_set_status':
                             case 'virtualdevice_set_status_optionalnumber':
                                 if(args.text!==undefined && args.text!=='undefined') {
                                     var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
-                                    opt.units = args.text;
-                                    await args.device.setCapabilityOptions(cap, opt);
-                                    
+                                    if(opt.units!=args.text) {
+                                        //await args.device.setUnavailable('Updating');
+                                        opt.units = args.text;
+                                        await args.device.setCapabilityOptions(cap, opt);
+                                        //await args.device.setAvailable();
+                                    }
                                     await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
+                                    
                                 }
-                                if(args.number!==undefined && args.number!=='undefined') val = args.number;
-                                else if(action=="virtualdevice_set_status_optionalnumber") val = null;
+                                if(args.number!==undefined && args.number!=='undefined') value = args.number;
+                                else if(action=="virtualdevice_set_status_optionalnumber") value = null;
                                 else dontUpdateField = true;
                                 if(args.refreshmobilebug===true) {
                                     await args.device.setUnavailable('Updating');
@@ -129,14 +137,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         }
 
                         if(args.device.hasCapability(cap) && !dontUpdateField) {
-                            await this.setSecondCapability({ val, device:args.device , fieldId});
-                            await args.device.setCapabilityValue(cap, val);
+                            await this.setSecondCapability({ val: value, device:args.device , fieldId});
+                            await args.device.setCapabilityValue(cap, value);
 							// //Remove logs here
 							// let a = await this.homey.insights.getLogs();
 							// let b = a;
 							// //await this.homey.insights.deleteLog({id:secondCap});
 						}
-                        await args.device.setStoreValue(fieldId+"Value", val);
+                        if(args.executeflowcards===true && triggerCard) {
+                            triggerCard(this, value, { field: { id: fieldId } });
+                        }
+                        await args.device.setStoreValue(fieldId+"Value", value);
                         return true;
 					} catch (error) {
                         throw new Error(error.message.replace(cap.split('.')[0]+' ', ''));
@@ -289,8 +300,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(units) {
                 var opt = device.getCapabilityOptions(cap);
                 if (!opt) opt = {};
-                opt.units = units;
-                await device.setCapabilityOptions(cap, opt);
+                if(opt.units!=args.text) {
+                    opt.units = units;
+                    await device.setCapabilityOptions(cap, opt);
+                }
             } else return await device.setCapabilityValue(cap, val);
         }
     }
