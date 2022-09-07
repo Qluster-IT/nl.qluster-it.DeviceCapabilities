@@ -1,5 +1,6 @@
 {
     "via":"via",
+	"imagetolarge":"Afbeelding te groot",	
     "settings": {
 		"title_icons": "Uw pictogrammen",
 		"title_upload": "Upload een pictogram",
@@ -11,13 +12,10 @@
 		"title_virtualdevices": "Uw virtuele apparaten",
 		"title_customicons": "Uw aangepaste pictogrammen",
 		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor apparaten en capabilities kunnen worden gebruikt. Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",		
-		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",
-
-
-        
+		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",        
 		"functions":"Functies",
 		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
-		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies flows welke die functie gebruiken, kan breken.",
+		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies, flows, welke die functie gebruiken, kan breken.",
 		"add_function_text":"Om een ​​functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
 		"add_function":"Functie toevoegen",
 		"function_name":"Functienaam",
@@ -30,7 +28,8 @@
 		"function_exists":"Functie bestaat al.",
 		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
 		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
-		"search_for_name":"zoek op naam"
+		"search_for_name":"zoek op naam",
+		"devicecapabilities_starttext":"Begin"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",
@@ -40,7 +39,9 @@
 		"labelCamerasRestart":"Na het verwijderen van een camera (door de naam of url te wissen), is het vereist de Apparaat Mogelijkheden App test herstarten om het camerabeeld van dit virtuele apparaat te verwijderen.",
 		"labelIcons":"Hier krijgt u een lijst met de namen die u heeft aangepast, zodra u namen hebt gewijzigd in de app-instellingen.",
 		"field-not-set":"__fieldId__ is nog niet ingesteld. Ga naar apparaat instelling om het veld toe te voegen.",
-		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App."
+		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App.",
+		
+		"devicecapabilities_starttext":"Begin"
 		
 	},
 	"pair": {

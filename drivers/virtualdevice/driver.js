@@ -23,7 +23,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //true || 
         if(process.env.DEBUG === '1' || this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
             //if(await this.homey.app.fileExists('./assets/icons/bell.svg')) console.log('bell!!');					
-            let categories = this.getCustomIcons();
+            let categories = this.getCustomIcons().icons;
 			for(let i=0;i<categories.length;i++)
 			{
 				for(let j=0;j<categories[i].icons.length;j++){
@@ -90,36 +90,45 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
                     let dontUpdateField = false;
                     try {
-                        let val;
+                        let value;
+                        let triggerCard;
                         switch (action) {
                             case 'virtualdevice_set_text':
-                                if(args.text!==undefined && args.text!=='undefined') val = args.text;
-                                else val = null;
+                                if(args.text!==undefined && args.text!=='undefined') value = args.text;
+                                else value = null;
+                                triggerCard = this.triggerFlowText;
                                 break;
                             case 'virtualdevice_set_number':
-                                if(args.number!==undefined && args.number!=='undefined') val = args.number;                                
-                                else val = null;
+                                if(args.number!==undefined && args.number!=='undefined') value = args.number;                                
+                                else value = null;
+                                triggerCard = this.triggerFlowNumber;
                                 break;
                             case 'virtualdevice_set_boolean':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
-                                else val = null;
+                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                else value = null;
+                                triggerCard = this.triggerFlowBoolean;
                                 break;
                             case 'virtualdevice_set_button':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') val = args.boolean;
-                                else val = null;
+                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                else value = null;
+                                triggerCard = this.triggerFlowButton;
                                 break;
                             case 'virtualdevice_set_status':
                             case 'virtualdevice_set_status_optionalnumber':
                                 if(args.text!==undefined && args.text!=='undefined') {
                                     var opt = args.device.getCapabilityOptions(cap);
 					                if (!opt) opt = {};
-                                    opt.units = args.text;
-                                    await args.device.setCapabilityOptions(cap, opt);
-                                    
+                                    if(opt.units!=args.text) {
+                                        //await args.device.setUnavailable('Updating');
+                                        opt.units = args.text;
+                                        await args.device.setCapabilityOptions(cap, opt);
+                                        //await args.device.setAvailable();
+                                    }
                                     await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
+                                    
                                 }
-                                if(args.number!==undefined && args.number!=='undefined') val = args.number;
-                                else if(action=="virtualdevice_set_status_optionalnumber") val = null;
+                                if(args.number!==undefined && args.number!=='undefined') value = args.number;
+                                else if(action=="virtualdevice_set_status_optionalnumber") value = null;
                                 else dontUpdateField = true;
                                 if(args.refreshmobilebug===true) {
                                     await args.device.setUnavailable('Updating');
@@ -129,14 +138,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         }
 
                         if(args.device.hasCapability(cap) && !dontUpdateField) {
-                            await this.setSecondCapability({ val, device:args.device , fieldId});
-                            await args.device.setCapabilityValue(cap, val);
+                            await this.setSecondCapability({ val: value, device:args.device , fieldId});
+                            await args.device.setCapabilityValue(cap, value);
 							// //Remove logs here
 							// let a = await this.homey.insights.getLogs();
 							// let b = a;
 							// //await this.homey.insights.deleteLog({id:secondCap});
 						}
-                        await args.device.setStoreValue(fieldId+"Value", val);
+                        if(args.mode==="executewhencards" && triggerCard) {
+                            let oldValue = args.device.getStoreValue(fieldId+"Value");
+                            triggerCard.call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        }
+                        await args.device.setStoreValue(fieldId+"Value", value);
                         return true;
 					} catch (error) {
                         throw new Error(error.message.replace(cap.split('.')[0]+' ', ''));
@@ -150,25 +163,25 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         var virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
             let fieldId = args.field.id;
-            let type = args.field.type;
             let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
             if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
             cap = args.device.getStoreValue(fieldId) || cap;
-
+            let type = this.getTypeFromField(fieldId);
+            //let  energy = args.device.getEnergy();
             try {
-                    if(args.expression!==undefined && args.expression!=='undefined') {
-                        let result = this.runSandBox(args.expression);
+                let oldValue = args.device.getStoreValue(fieldId+"Value");
+                let value = null;
                         
-                        await this.setSecondCapability({ val:result, device:args.device , fieldId});
-                        await args.device.setCapabilityValue(cap, result);
-                        await args.device.setStoreValue(fieldId+"Value", result);
-                    }
-                    else {
-                        await this.setSecondCapability({ val:null, device:args.device , fieldId});
-                        await args.device.setCapabilityValue(cap, null);
-                        await args.device.setStoreValue(fieldId+"Value", null);
-                    }
-                    return true;                    
+                if(args.expression!==undefined && args.expression!=='undefined') {
+                    value = this.runSandBox(args.expression);                
+                }
+                await this.setSecondCapability({ val:value, device:args.device , fieldId});
+                    await args.device.setCapabilityValue(cap, value);
+                    await args.device.setStoreValue(fieldId+"Value", value);
+                if(args.mode==="executewhencards") {
+                    if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                }
+                return true;                    
             } catch (error) {
                 //this.log('action_virtualdevice_set_name:');
                 //this.error(error);
@@ -177,14 +190,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         virtualdevice_set_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
 
-        var trigger_virtualdevice_button = ['trigger_virtualdevice_button'];
-        trigger_virtualdevice_button.forEach((action => {
+        let button = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text'];
+        button.forEach((action => {
 			var button = this.homey.flow.getDeviceTriggerCard(action);
-            this.trigger_virtualdevice_button = button;
+            this[action]= button;
 			button
 				.registerRunListener(async (args, state) => {
                     try {
-					    return args.field.id==state.field.id;
+					    return args.field.id==state.field.id && (args.mode!="changed" || state.changed);
 					} catch (error) {
 						this.log('set_value:');
 						this.log(error);
@@ -193,56 +206,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             button.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
 		}).bind(this));
 
-        var trigger_virtualdevice_boolean = ['trigger_virtualdevice_boolean'];
-        trigger_virtualdevice_boolean.forEach((action => {
-			var boolean = this.homey.flow.getDeviceTriggerCard(action);
-            this.trigger_virtualdevice_boolean = boolean;
-			boolean
-				.registerRunListener(async (args, state) => {
-                    try {
-					    return args.field.id==state.field.id;
-					} catch (error) {
-						this.log('set_value:');
-						this.log(error);
-					}
-				});
-            boolean.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
-		}).bind(this));
-
-        var trigger_virtualdevice_number = ['trigger_virtualdevice_number'];
-        trigger_virtualdevice_number.forEach((action => {
-			var number = this.homey.flow.getDeviceTriggerCard(action);
-            this.trigger_virtualdevice_number = number;
-			number.registerRunListener(async (args, state) => {
-                    try {
-					    return args.field.id==state.field.id;
-					} catch (error) {
-						this.log('set_value:');
-						this.log(error);
-					}
-				});
-            number.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
-		}).bind(this));
-
-
-        // var action_virtualdevice_set_name = ['virtualdevice_set_name'];
-        // action_virtualdevice_set_name.forEach((action => {
-		// 	var actionCard = this.homey.flow.getActionCard(action);
-        //     this.action_virtualdevice_set_name = actionCard;
-		// 	actionCard
-		// 		.registerRunListener(async (args, state) => {
-        //             try {
-        //                 var id = args.device.getData().id;
-		// 			    var device = _.find(DeviceSetter.Current.devices, device=> device.data.id==id);
-        //                 device.name = args.text;
-        //                 DeviceSetter.Current.homeyAPI.devices.updateDevice({id:device.id, device:device});
-		// 			} catch (error) {
-		// 				this.log('set_value:');
-		// 				this.log(error);
-		// 			}
-		// 		});            
-		// }).bind(this));
-       
+        
         	this.homey.flow.getActionCard('virtualdevice_set_warning').registerRunListener(async (args, state) => {
                 try {
                     args.device.setWarning(args.text);                    
@@ -274,10 +238,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
           
               }).bind(this));
               this.customIconNames = await this.homey.settings.get('customIconNames');
-              this.setFunctions();
+              await this.setFunctions();
+              
+            //this.log('Driver size: ', this.homey.app.roughSizeOfObject(this));
     }
 
-
+    getTypeFromField(fieldId) {
+       return fieldId.startsWith('text') ? 'text' : 
+            fieldId.startsWith('number') ? 'number' : 
+            fieldId.startsWith('boolean') ? 'boolean' : 
+            fieldId.startsWith('button') ? 'button' : 
+            fieldId.startsWith('status') ? 'status' : 'unknown';
+    }
     async setSecondCapability({fieldId, device, val, units}={}) {
         var type = fieldId.startsWith('text') ? 'Text' : 
             fieldId.startsWith('number') ? 'Number' : 
@@ -289,90 +261,113 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(units) {
                 var opt = device.getCapabilityOptions(cap);
                 if (!opt) opt = {};
-                opt.units = units;
-                await device.setCapabilityOptions(cap, opt);
+                if(opt.units!=units) {
+                    opt.units = units;
+                    await device.setCapabilityOptions(cap, opt);
+                }
             } else return await device.setCapabilityValue(cap, val);
         }
     }
 
     getCustomIcons(){
-        let r= [            
+        let r=[            
             {
                 title:'Devices',
                 icons:[
-                    {name:"device_1", file:'custom_1', defaultIcon:'device_capabilities'},
-                    {name:"device_2", file:'custom_2', defaultIcon:'virtual_device'},
-                    {name:"device_3", file:'custom_3', defaultIcon:'circle'},
-                    {name:"device_4", file:'custom_4', defaultIcon:'curtain-half'},
-                    {name:"device_5", file:'custom_5', defaultIcon:'game'},
-                    {name:"device_6", file:'custom_6', defaultIcon:'onoff'},
-                    {name:"device_7", file:'custom_7', defaultIcon:'settings'},
-                    {name:"device_8", file:'custom_8', defaultIcon:'tv'},
-                    {name:"device_9", file:'custom_9', defaultIcon:'button'},
-                    {name:"device_10", file:'custom_10', defaultIcon:'devices'},
-                    {name:"device_11", file:'custom_11', defaultIcon:'energy'},
-                    {name:"device_12", file:'custom_12', defaultIcon:'insights'},
-                    {name:"device_13", file:'custom_13', defaultIcon:'home'},
-                    {name:"device_14", file:'custom_14', defaultIcon:'homeyscript'},
-                    {name:"device_15", file:'custom_15', defaultIcon:'search'},
-                    {name:"device_16", file:'custom_16', defaultIcon:'ternary'},
-                    {name:"device_17", file:'custom_17', defaultIcon:'toggle'},
-                    {name:"device_18", file:'custom_18', defaultIcon:'advanced-flow'},
-                    {name:"device_19", file:'custom_19', defaultIcon:'flow-bold'},
-                    {name:"device_20", file:'custom_20', defaultIcon:'logic'}
+                    {name:"device_1", file:'custom_1', defaultIcon:'Devices/device_capabilities'},
+                    {name:"device_2", file:'custom_2', defaultIcon:'Devices/virtual_device'},
+                    {name:"device_3", file:'custom_3', defaultIcon:'Devices/circle'},
+                    {name:"device_4", file:'custom_4', defaultIcon:'Devices/curtain-half'},
+                    {name:"device_5", file:'custom_5', defaultIcon:'Devices/game'},
+                    {name:"device_6", file:'custom_6', defaultIcon:'Devices/onoff'},
+                    {name:"device_7", file:'custom_7', defaultIcon:'Devices/settings'},
+                    {name:"device_8", file:'custom_8', defaultIcon:'Devices/tv'},
+                    {name:"device_9", file:'custom_9', defaultIcon:'Buttons/button'},
+                    {name:"device_10", file:'custom_10', defaultIcon:'Buttons/devices'},
+                    {name:"device_11", file:'custom_11', defaultIcon:'Buttons/energy'},
+                    {name:"device_12", file:'custom_12', defaultIcon:'Buttons/insights'},
+                    {name:"device_13", file:'custom_13', defaultIcon:'Buttons/home'},
+                    {name:"device_14", file:'custom_14', defaultIcon:'Buttons/homeyscript'},
+                    {name:"device_15", file:'custom_15', defaultIcon:'Buttons/search'},
+                    {name:"device_16", file:'custom_16', defaultIcon:'Buttons/ternary'},
+                    {name:"device_17", file:'custom_17', defaultIcon:'Buttons/toggle'},
+                    {name:"device_18", file:'custom_18', defaultIcon:'Flows/advanced-flow'},
+                    {name:"device_19", file:'custom_19', defaultIcon:'Flows/flow-bold'},
+                    {name:"device_20", file:'custom_20', defaultIcon:'Flows/logic'},
+          
+                    {name:"device_21", file:'custom_61', defaultIcon:'Kawa/clock'},
+                    {name:"device_22", file:'custom_62', defaultIcon:'Kawa/cooking_icon'},
+                    {name:"device_23", file:'custom_63', defaultIcon:'Kawa/doorbell2'},
+                    {name:"device_24", file:'custom_64', defaultIcon:'Kawa/fan_big_black'},
+                    {name:"device_25", file:'custom_65', defaultIcon:'Kawa/fan_icon'},
+                    {name:"device_26", file:'custom_66', defaultIcon:'Kawa/fireplace_icon'},
+                    {name:"device_27", file:'custom_67', defaultIcon:'Kawa/ggl_hub'},
+                    {name:"device_28", file:'custom_68', defaultIcon:'Kawa/homey_fake'},
+                    {name:"device_29", file:'custom_69', defaultIcon:'Kawa/homey_pro'},
+                    {name:"device_30", file:'custom_70', defaultIcon:'Kawa/kitchen_icon'},
+                    {name:"device_31", file:'custom_71', defaultIcon:'Kawa/lamp_desklight_icon'},
+                    {name:"device_32", file:'custom_72', defaultIcon:'Kawa/light_ceilinglight'},
+                    {name:"device_33", file:'custom_73', defaultIcon:'Kawa/location-pin-compact-outline'},
+                    {name:"device_34", file:'custom_74', defaultIcon:'Kawa/lock_fingerprint2'},
+                    {name:"device_35", file:'custom_75', defaultIcon:'Kawa/microwave'},
+                    {name:"device_36", file:'custom_76', defaultIcon:'Kawa/relay'},
+                    {name:"device_37", file:'custom_77', defaultIcon:'Kawa/remote_bluebtn'},
+                    {name:"device_38", file:'custom_78', defaultIcon:'Kawa/solarpower'},
+                    {name:"device_39", file:'custom_79', defaultIcon:'Kawa/stove_icon'},
+                    {name:"device_40", file:'custom_80', defaultIcon:'Kawa/wc_icon'}
                 ]
             },
             {
                 title:'Capabilities', 
                 icons:[
-                    {name:"capabilities_1", file:'custom_21', defaultIcon:'measure_clouds'},
-                    {name:"capabilities_2", file:'custom_22', defaultIcon:'measure_humidity'},
-                    {name:"capabilities_3", file:'custom_23', defaultIcon:'measure_luminance'},
-                    {name:"capabilities_4", file:'custom_24', defaultIcon:'measure_power'},
-                    {name:"capabilities_5", file:'custom_25', defaultIcon:'measure_rain'},
-                    {name:"capabilities_6", file:'custom_26', defaultIcon:'measure_temperature'},
-                    {name:"capabilities_7", file:'custom_27', defaultIcon:'measure_wind_angle'},
-                    {name:"capabilities_8", file:'custom_28', defaultIcon:'measure_wind_strength'},
-                    {name:"capabilities_9", file:'custom_29', defaultIcon:'heart-outline'},
-                    {name:"capabilities_10", file:'custom_30', defaultIcon:'bell'},
-                    {name:"capabilities_11", file:'custom_31', defaultIcon:'moon-round'},
-                    {name:"capabilities_12", file:'custom_32', defaultIcon:'measure_noise'},
-                    {name:"capabilities_13", file:'custom_33', defaultIcon:'measure_pressure'},
-                    {name:"capabilities_14", file:'custom_34', defaultIcon:'meter_gas'},
-                    {name:"capabilities_15", file:'custom_35', defaultIcon:'meter_power'},
-                    {name:"capabilities_16", file:'custom_36', defaultIcon:'sensor'},
-                    {name:"capabilities_17", file:'custom_37', defaultIcon:'alarm_smoke'},
-                    {name:"capabilities_18", file:'custom_38', defaultIcon:'alarm_water'},
-                    {name:"capabilities_19", file:'custom_39', defaultIcon:'battery'},
-                    {name:"capabilities_20", file:'custom_40', defaultIcon:'tag'}
+                    {name:"capabilities_1", file:'custom_21', defaultIcon:'Other/measure_clouds'},
+                    {name:"capabilities_2", file:'custom_22', defaultIcon:'Other/measure_humidity'},
+                    {name:"capabilities_3", file:'custom_23', defaultIcon:'Other/measure_luminance'},
+                    {name:"capabilities_4", file:'custom_24', defaultIcon:'Other/measure_power'},
+                    {name:"capabilities_5", file:'custom_25', defaultIcon:'Other/measure_rain'},
+                    {name:"capabilities_6", file:'custom_26', defaultIcon:'Other/measure_temperature'},
+                    {name:"capabilities_7", file:'custom_27', defaultIcon:'Other/measure_wind_angle'},
+                    {name:"capabilities_8", file:'custom_28', defaultIcon:'Other/measure_wind_strength'},
+                    {name:"capabilities_9", file:'custom_29', defaultIcon:'Other/heart-outline'},
+                    {name:"capabilities_10", file:'custom_30', defaultIcon:'Other/bell'},
+                    {name:"capabilities_11", file:'custom_31', defaultIcon:'Other/moon-round'},
+                    {name:"capabilities_12", file:'custom_32', defaultIcon:'Gauges_and_meters/measure_noise'},
+                    {name:"capabilities_13", file:'custom_33', defaultIcon:'Gauges_and_meters/measure_pressure'},
+                    {name:"capabilities_14", file:'custom_34', defaultIcon:'Gauges_and_meters/meter_gas'},
+                    {name:"capabilities_15", file:'custom_35', defaultIcon:'Gauges_and_meters/meter_power'},
+                    {name:"capabilities_16", file:'custom_36', defaultIcon:'Gauges_and_meters/sensor'},
+                    {name:"capabilities_17", file:'custom_37', defaultIcon:'Alarms/alarm_smoke'},
+                    {name:"capabilities_18", file:'custom_38', defaultIcon:'Alarms/alarm_water'},
+                    {name:"capabilities_19", file:'custom_39', defaultIcon:'Devices/battery'},
+                    {name:"capabilities_20", file:'custom_40', defaultIcon:'Flows/tag'}
                 ]
             },
             {
                 title:'Other',
                 icons:[
-                    {name:"other_1", file:'custom_41', defaultIcon:'music'},
-                    {name:"other_2", file:'custom_42', defaultIcon:'speaker_next'},
-                    {name:"other_3", file:'custom_43', defaultIcon:'speaker_play'},
-                    {name:"other_4", file:'custom_44', defaultIcon:'speaker_prev'},
-                    {name:"other_5", file:'custom_45', defaultIcon:'volume_down'},
-                    {name:"other_6", file:'custom_46', defaultIcon:'volume_mute'},
-                    {name:"other_7", file:'custom_47', defaultIcon:'volume_up'},
-                    {name:"other_8", file:'custom_48', defaultIcon:''},
-                    {name:"other_9", file:'custom_49', defaultIcon:''},
-                    {name:"other_10", file:'custom_50', defaultIcon:''},
-                    {name:"other_11", file:'custom_51', defaultIcon:''},
-                    {name:"other_12", file:'custom_52', defaultIcon:''},
-                    {name:"other_13", file:'custom_53', defaultIcon:''},
-                    {name:"other_14", file:'custom_54', defaultIcon:''},
-                    {name:"other_15", file:'custom_55', defaultIcon:''},
-                    {name:"other_16", file:'custom_56', defaultIcon:''},
-                    {name:"other_17", file:'custom_57', defaultIcon:''},
-                    {name:"other_18", file:'custom_58', defaultIcon:''},
-                    {name:"other_19", file:'custom_59', defaultIcon:''},
-                    {name:"other_20", file:'custom_60', defaultIcon:''}
+                    {name:"other_1", file:'custom_41', defaultIcon:'Media/music'},
+                    {name:"other_2", file:'custom_42', defaultIcon:'Media/speaker_next'},
+                    {name:"other_3", file:'custom_43', defaultIcon:'Media/speaker_play'},
+                    {name:"other_4", file:'custom_44', defaultIcon:'Media/speaker_prev'},
+                    {name:"other_5", file:'custom_45', defaultIcon:'Media/volume_down'},
+                    {name:"other_6", file:'custom_46', defaultIcon:'Media/volume_mute'},
+                    {name:"other_7", file:'custom_47', defaultIcon:'Media/volume_up'},
+                    {name:"other_8", file:'custom_48', defaultIcon:'Weather/bewolkt-blk'},
+                    {name:"other_9", file:'custom_49', defaultIcon:'Weather/dampn-blk'},
+                    {name:"other_10", file:'custom_50', defaultIcon:'Weather/hagel-blk'},
+                    {name:"other_11", file:'custom_51', defaultIcon:'Weather/hardewind-blk'},
+                    {name:"other_12", file:'custom_52', defaultIcon:'Weather/regen-blk'},
+                    {name:"other_13", file:'custom_53', defaultIcon:'Weather/storm-blk'},
+                    {name:"other_14", file:'custom_54', defaultIcon:'Kawa/watch'},
+                    {name:"other_15", file:'custom_55', defaultIcon:'Weather/zeerkoud-blk'},
+                    {name:"other_16", file:'custom_56', defaultIcon:'Weather/zeerwarm-blk'},
+                    {name:"other_17", file:'custom_57', defaultIcon:'Weather/zonnigeperioden-blk'},
+                    {name:"other_18", file:'custom_58', defaultIcon:'Weather/zonnign-blk'},
+                    {name:"other_19", file:'custom_59', defaultIcon:'Kawa/bathroom_icon'},
+                    {name:"other_20", file:'custom_60', defaultIcon:'Kawa/human'}
                 ]
             }
-        ];
+          ];
 
         let id=1;
         for(let i=0;i<r.length;i++)
@@ -557,7 +552,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         };
     }
 
-    async triggerFlow(device, value, state) {
+    async triggerFlowButton(device, value, state) {
         try {
             
             this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
@@ -571,6 +566,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     async triggerFlowNumber(device, value, state) {
         return await this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
+    }
+    async triggerFlowText(device, value, state) {
+        return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
@@ -593,7 +591,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         var id = '_'+(index+1).toString();
         return [
               {
-                  name: 'DeviceCapability VD '+(index+1),
+                  name: 'Advanced Virtual Device '+(index+1),
                   data: {
                       id: 'DeviceCapabilityVirtualDevice'+id
                   }
@@ -711,6 +709,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //   console.log("View: " + viewId);
         // });
       }
+      capitalizeFirstLetter(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 
   };
 // var self = module.exports = class MyDriver  {

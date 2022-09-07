@@ -128,7 +128,22 @@
   "1.9.91" : {
     "en" : "Added Number Show as, and More Button Show as options"
   },
-  "1.9.997" : {
-    "en" : "Added Customisable Virtual Device"
+  "2.0.5" : {
+    "en" : "Added Customisable Advanced Virtual Device and some new flowcards"
+  },
+  "2.0.6" : {
+    "en" : "Added Customisable Advanced Virtual Device and some new flowcards, bugfixed"
+  },
+  "2.0.8" : {
+    "en" : "Memory improvement (v1.0 App Parts)"
+  },
+  "2.0.9" : {
+    "en" : "More Memory Improvement (v1.0 App Parts)"
+  },
+  "2.0.10" : {
+    "en" : "More Memory Improvement"
+  },
+  "2.0.11" : {
+    "en" : "Added: Classes"
   }
 }

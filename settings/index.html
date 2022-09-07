@@ -428,7 +428,7 @@
 				<div ng-if="$index<=defaultCategoryLoadIndex">
 					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">{{category.title}}</h1>
 					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
-						<div class="image" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
 							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + defaulticon + ')'}">
 						</div>
 					</div>
@@ -441,8 +441,7 @@
 	<div id="editcustomicon" ng-show="editcustomicon">
 
 		<span data-i18n="settings.edit_customicon_icon">You can change your capability icon here. The icon needs to be
-			in
-			.svg format.</span><br />
+			in .svg format.</span><br />
 		<div class="form-group">
 			<input id="custom-icon" type="file" accept=".svg" name="image">
 		</div>
