@@ -12,6 +12,8 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const fs = require('fs');
 
+const sandbox = require('./lib/sandbox');
+
 
 const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
@@ -53,7 +55,7 @@ class DeviceSetter extends Homey.App {
 		devices: {}
 	}
 
-	onInit() {
+	async onInit() {
 		DeviceSetter.Current = this;        
         this.VirtualDevices = {};
 		//return null;
@@ -296,7 +298,7 @@ class DeviceSetter extends Homey.App {
 				if (!(args.device && args.device.id && args.capability && args.capability.id)) {
 					defer.reject('Reject');
 					return defer.promise;
-				};
+				}
 				this.refreshHomeyAPI().then((async api => {
 					var device = await api.devices.getDevice({ id: args.device.id, $skipCache: true });
 					if (!device) {
@@ -449,9 +451,73 @@ class DeviceSetter extends Homey.App {
 		});
 		virtualdevice_set_unavailable.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
 
-	
-	
+
+		this.homey.flow.getActionCard('execute_expression').registerRunListener(async (args, state) => {
+			try {				
+                if(args.expression!==undefined && args.expression!=='undefined') {
+                    let value = this.runSandBox(args.expression);
+					let tokens = {text:'', number:0, boolean:false};
+					switch (typeof(value)) {
+						case "string":tokens.text = value; break;					
+						case "number":tokens.number = value; break;					
+						case "boolean":tokens.boolean = value; break;					
+						default:
+							break;
+					}
+					return tokens;
+                }
+			} catch (error) {
+				this.log('execute_expression:');
+				this.error(error);
+			}
+		});
+
+		
+		this.homey.settings.on('set', (async function(settingName) {
+			if(settingName=='javascript_functions') {
+			  this.setFunctions();
+			}
+		  }).bind(this));
+		  
+		  await this.setFunctions();
+		  
+		
 	}
+
+
+	
+    async setFunctions() {			  	  
+		this.functions = await this.homey.settings.get('javascript_functions');
+		//this.log('this.functions', typeof(this.functions), this.functions);
+		this.context = {
+			_:_
+		};
+		if(this.functions && this.functions.length>0) for (let i = 0; i < this.functions.length; i++) {
+			try {          
+			const funcObj = this.functions[i];
+			
+			let func = funcObj.value.parseFunction();
+			//func.bind(this.context);
+			this.log('func', func);
+			this.context[funcObj.name] = func;
+			} catch (error) {
+			this.log('Error creating function ' + this.functions[i].name);
+			this.error(error);
+			}
+		}
+	}
+		
+
+	
+    runSandBox(code) {
+        var context = this.context;
+        //this.log('this.context', this.context);
+        //try {
+          return sandbox(code, context);
+        //} catch (error) {
+          
+        //} 
+      }
 
 	getDevices() {
 		var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();

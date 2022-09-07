@@ -145,5 +145,8 @@
   },
   "2.0.11" : {
     "en" : "Added: Classes"
+  },
+  "2.0.12" : {
+    "en" : "Added: App Flowcard: Execute Expression (as tokens) "
   }
 }
