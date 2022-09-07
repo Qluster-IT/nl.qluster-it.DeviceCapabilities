@@ -135,7 +135,15 @@ var str = '"settings": [ \r\n' +
 '                {"id":"lock", "label":"Lock"}, '+
 '                {"id":"remote", "label":"Remote"}, '+
 '                {"id":"sensor", "label":"Sensor"}, '+
-'                {"id":"socket", "label":"Wall Plug"} '+
+'                {"id":"socket", "label":"Wall Plug"}, '+
+
+'                {"id":"speaker", "label":"Speaker"}, '+
+'                {"id":"solarpanel", "label":"Solar Panel"}, '+
+'                {"id":"sunshade", "label":"Sunshade"}, '+
+'                {"id":"thermostat", "label":"Thermostat"}, '+
+'                {"id":"tv", "label":"TV"}, '+
+'                {"id":"vacuumcleaner", "label":"Vacuum Cleaner"}, '+
+'                {"id":"windowcoverings", "label":"Window Coverings"} '+
 '              ], '+
 '              "value":"other" \r\n' +
 '            } \r\n' +
@@ -927,6 +935,29 @@ for(var i=1;i<=fields;i++) {
   //if(i<fields) str+= ',';
   str+='\r\n';
 }
+
+
+// str+='    { \r\n' +
+// '          "type": "group", \r\n' +
+// '          "label": {"en": "Batteries", "nl":"Batterijen", "de":"Batterien"}, \r\n' +
+// '          "children": [ \r\n' +
+// '            { \r\n' +
+// '              "id": "labelBatteries", \r\n' +
+// '              "type": "label", \r\n' +
+// '              "label": {"en": "You can set the batteries for this device", "nl":"U kunt de batterijen voor dit apparaat instellen", "de":"Sie können die Batterien für dieses Gerät einstellen"}, \r\n' +
+// '              "hint": { \r\n' +
+// '                "en": "Comma separated list (example: AAA,AAA,AAA). Options are LS14250, C, AA, AAA, AAAA, A23, A27, PP3, CR123A, CR2, CR1632, CR2032, CR2430, CR2450, CR2477, CR3032, CR14250, INTERNAL, OTHER.", "nl":"Door komma\'s gescheiden lijst (voorbeeld: AAA,AAA,AAA). Opties zijn LS14250, C, AA, AAA, AAAA, A23, A27, PP3, CR123A, CR2, CR1632, CR2032, CR2430, CR2450, CR2477, CR3032, CR14250, INTERNAL, OTHER.", "de":"Kommagetrennte Liste (Beispiel: AAA,AAA,AAA). Optionen sind LS14250, C, AA, AAA, AAAA, A23, A27, PP3, CR123A, CR2, CR1632, CR2032, CR2430, CR2450, CR2477, CR3032, CR14250, INTERNAL, OTHER."  \r\n' +
+// '              }, \r\n' +
+// '              "value":"" \r\n' +
+// '            }, \r\n' +
+// '            { \r\n' +
+// '              "id": "batteries", \r\n' +
+// '              "type": "text", \r\n' +
+// '              "label": {"en": "Type", "nl":"Type", "de":"Typ"}, \r\n' +
+// '              "value":"" \r\n' +
+// '            } \r\n' +
+// '          ] \r\n' +
+// '        }, \r\n';
 
 str+='    { \r\n' +
 '          "type": "group", \r\n' +

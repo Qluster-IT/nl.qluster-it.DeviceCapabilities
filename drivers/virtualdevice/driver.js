@@ -167,7 +167,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
             cap = args.device.getStoreValue(fieldId) || cap;
             let type = this.getTypeFromField(fieldId);
-            
+            //let  energy = args.device.getEnergy();
             try {
                 let oldValue = args.device.getStoreValue(fieldId+"Value");
                 let value = null;
@@ -238,7 +238,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
           
               }).bind(this));
               this.customIconNames = await this.homey.settings.get('customIconNames');
-              this.setFunctions();
+              await this.setFunctions();
+              
+            //this.log('Driver size: ', this.homey.app.roughSizeOfObject(this));
     }
 
     getTypeFromField(fieldId) {
@@ -259,7 +261,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(units) {
                 var opt = device.getCapabilityOptions(cap);
                 if (!opt) opt = {};
-                if(opt.units!=args.text) {
+                if(opt.units!=units) {
                     opt.units = units;
                     await device.setCapabilityOptions(cap, opt);
                 }

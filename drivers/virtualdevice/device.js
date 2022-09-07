@@ -202,8 +202,8 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		var types = ['status', 'text', 'number', 'button', 'boolean'];//, 'dropdown'];
 		var button1Reset = false;
-		var a = this;
-		var api = await this.homey.app.refreshHomeyAPI();
+		//var a = this;
+		//var api = await this.homey.app.refreshHomeyAPI();
 		//let apiDevice =  await api.devices.getDevice({ id: this.__id });
 
 		for (let iTypes = 0; iTypes < types.length; iTypes++) {
@@ -274,7 +274,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
 							let quickAction = settings[type + i + 'ShowAs'] === 'onoff';// || settings[type + i + 'ShowAs']=='';
 							cap =
-								(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + (quickAction ? 'quickaction_' : '') + //(disabled ? 'disabled_' : '') + 
+								(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + //(disabled ? 'disabled_' : '') + 
 								type + icon + '.' + type + i;
 							if (quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
 							break;
@@ -399,7 +399,8 @@ module.exports = class WatchDevice extends Homey.Device {
 								optNew.preventInsights = !settings[type + i + 'CreateInsights'];
 								optNew.preventTag = !settings[type + i + 'CreateTag'];
 							}
-							if (this.hasCapability(cap))  
+							if(cap ==='measure_power' || cap.startsWith('measure_power.')) optNew.approximated = true; //Does not do much usefulls, only remove the graph from Mobile--> Energy, or not?
+							if (this.hasCapability(cap))
 								await this.setCapabilityOptions(cap, optNew);
 						}
 						let secondCapRemoved = false;
@@ -456,6 +457,13 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			}
 		}
+
+		if(settings.batteries !=oldSettings.batteries) {
+			let energy = this.getEnergy();
+			if(settings.batteries.trim()=='') delete energy.batteries;
+			else energy.batteries = settings.batteries.replace(' ', '').split(',');
+			this.setEnergy(energy);
+		} 
 
 		await this.setCameras(settings);
 

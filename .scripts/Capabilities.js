@@ -21,7 +21,7 @@ let icons = [
   'custom_68', 'custom_69', 'custom_70', 'custom_71',
   'custom_72', 'custom_73', 'custom_74', 'custom_75',
   'custom_76', 'custom_77', 'custom_78', 'custom_79',
-  'custom_60'
+  'custom_80'
 ];
 
 str+='"devicecapabilities_starttext": { \r\n'+
@@ -172,7 +172,7 @@ str+='"alarm_devicecapabilities_boolean'+header+'": { \r\n'+
 '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": true, \r\n'+
+'      "setable": false, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
