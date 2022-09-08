@@ -154,5 +154,8 @@
   },
   "2.1.0" : {
     "en" : "Improved: Device Icons are per device and can be changed later."
+  },
+  "2.2.0" : {
+    "en" : "Improved: Device Repair is the new Device Settings (in development)"
   }
 }

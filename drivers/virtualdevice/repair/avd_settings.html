@@ -47,6 +47,8 @@
 		text-align:center;
 		width:100%;
 		position:relative;
+		margin-top:10px;
+		
 	}
 </style>
 
@@ -101,7 +103,7 @@
 	<div class="group">
 		Textfields
 	</div>
-	<div class="group" ng-class="{even:$even}" ng-repeat="i in numberOfTextFields track by $index">
+	<div class="group" ng-class="{even:$even}" ng-repeat="x in [].constructor(s.numberOfTextFields || 10) track by $index">
 		<div class="label">🟩 Textfield {{$index+1}}</div>
 		<div class="field">
 			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
@@ -131,9 +133,9 @@
 				<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'SeparateCapabilities']"/>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<div class="create-button">
-		<input type="button" class="button" ng-click="s.numberOfTextFields=s.numberOfTextFields+1;updateNumbers();" value="Create Text Field"/>
+		<input type="button" class="button" ng-click="s.numberOfTextFields=s.numberOfTextFields+1;" value="Create Text Field"/>
 	</div>
 
 	<div class="group">
@@ -194,7 +196,10 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="create-button">
+		<input type="button" class="button" ng-click="s.numberOfNumberFields=s.numberOfNumberFields+1;" value="Create Number Field"/>
+	</div>
+
 	<div class="group">
 		Yes/No Fields
 	</div>
@@ -244,6 +249,9 @@
 				<input class="value" type="text" ng-model="s['boolean'+($index+1)+'InsightsTitleFalse']"/>
 			</div>
 		</div>
+	</div>
+	<div class="create-button">
+		<input type="button" class="button" ng-click="s.numberOfBooleanFields=s.numberOfBooleanFields+1;" value="Create Yes/No Field"/>
 	</div>
 
 	<div class="group">
@@ -307,6 +315,9 @@
 				<input class="value" type="text" ng-model="s['button'+($index+1)+'InsightsTitleFalse']"/>
 			</div>
 		</div>
+	</div>
+	<div class="create-button">
+		<input type="button" class="button" ng-click="s.numberOfButtonFields=s.numberOfButtonFields+1;" value="Create Button Field"/>
 	</div>
 
 	<div></div>
@@ -755,38 +766,29 @@
                 }
               ];
 			
-			function getNumber(num) {
-				return new Array(num);   
-			}
-			  
 			function fixSetting(settings) {
+				console.log(settings);
 				if(settings.numberOfTextFields===undefined) {
 					settings.numberOfTextFields = 0;
-					for (let i = 1; i <= 10; i++) if(settings['text'+i+'Name'] && settings['text'+i+'Name']!=='') settings.numberOfTextFields=i;
+					for (let i = 1; i <= 10; i++) if(settings['text'+i+'Name'] && settings['text'+i+'Name']!='') settings.numberOfTextFields=i;
 				}
 				if(settings.numberOfNumberFields===undefined) {
 					settings.numberOfNumberFields = 0;
-					for (let i = 1; i <= 10; i++) if(settings['number'+i+'Name'] && settings['number'+i+'Name']!=='') settings.numberOfNumberFields=i;
+					for (let i = 1; i <= 10; i++) if(settings['number'+i+'Name'] && settings['number'+i+'Name']!='') settings.numberOfNumberFields=i;
 				}
 				if(settings.numberOfBooleanFields===undefined) {
 					settings.numberOfBooleanFields = 0;
-					for (let i = 1; i <= 10; i++) if(settings['boolean'+i+'Name'] && settings['boolean'+i+'Name']!=='') settings.numberOfBooleanFields=i;
+					for (let i = 1; i <= 10; i++) if(settings['boolean'+i+'Name'] && settings['boolean'+i+'Name']!='') settings.numberOfBooleanFields=i;
 				}
 				if(settings.numberOfButtonFields===undefined) {
 					settings.numberOfButtonFields = 0;
-					for (let i = 1; i <= 10; i++) if(settings['button'+i+'Name'] && settings['button'+i+'Name']!=='') settings.numberOfButtonFields=i;
+					for (let i = 1; i <= 10; i++) if(settings['button'+i+'Name'] && settings['button'+i+'Name']!='') settings.numberOfButtonFields=i;
 				}
 				if(settings.numberOfCameraFields===undefined) {
 					settings.numberOfCameraFields = 0;
-					for (let i = 1; i <= 10; i++) if(settings['camera'+i+'Name'] && settings['camera'+i+'Name']!=='') settings.numberOfCameraFields=i;
+					for (let i = 1; i <= 10; i++) if(settings['camera'+i+'Name'] && settings['camera'+i+'Name']!='') settings.numberOfCameraFields=i;
 				}
-				$scope.updateNumbers();
 				return settings;
-			}
-
-			$scope.updateNumbers = function() {
-				console.log('updateNumbers');
-				$scope.numberOfTextFields = getNumber($scope.s.numberOfTextFields);
 			}
 			
 			//$scope.$on('ready', function ($e, Homey_) {
