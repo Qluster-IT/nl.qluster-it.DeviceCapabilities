@@ -94,6 +94,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	async setIconNames() {
 		this.customIconNames = await this.homey.settings.get('customIconNames');
+		let languagecode = await this.homey.i18n.getLanguage();
 		let str = "";
 		let customIcons = this.driver.getCustomIcons();
 		for (const key in this.customIconNames) {
@@ -102,7 +103,12 @@ module.exports = class WatchDevice extends Homey.Device {
 				let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
 					icon.file === key
 				);
-				str += (f ? f.name : key) + " = " + name + ", ";
+				let originalName = (f ? f.name : key);
+				if(f && f.title) {
+					originalName = f.title[languagecode] || f.title.en;
+				}
+				
+				str += originalName + " = " + name + ", ";
 			}
 		}
 		if (str.length > 1) str = str.substring(0, str.length - 2);

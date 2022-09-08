@@ -146,7 +146,13 @@
   "2.0.11" : {
     "en" : "Added: Classes"
   },
-  "2.0.12" : {
+  "2.0.13" : {
     "en" : "Added: App Flowcard: Execute Expression (as tokens) "
+  },
+  "2.0.14" : {
+    "en" : "Improved: Device Settings"
+  },
+  "2.1.0" : {
+    "en" : "Improved: Device Icons are per device and can be changed later."
   }
 }
