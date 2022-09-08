@@ -4,7 +4,6 @@ const Homey = require('homey');
 const Homeyman = require('../../app');
 
 const _ = require('lodash-core');
-const NUMBEROFFIELDS = 10;
 
 module.exports = class WatchDevice extends Homey.Device {
 
@@ -25,27 +24,57 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		Homeyman.Current.VirtualDevices[this.getName()] = this;
 		var caps = this.getCapabilities();
-		this.Settings = await this.getSettings();
+
+		this.Settings = await this.getStoreValue('Settings');
+		if(!this.Settings) {
+			if(!this.Settings) this.Settings = await this.getSettings();
+			let settings = this.Settings;
+			this.removeAllSettings(settings, 'label');
+			this.removeAllSettings(settings, 'batteries');
+			this.removeAllSettings(settings, 'dropdown');
+			
+			if(settings.status1Name=='') this.removeAllSettings(settings, 'status1');
+
+			settings.numberOfTextFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(settings['text'+i+'Name'] && settings['text'+i+'Name']!='') settings.numberOfTextFields=i; else this.removeAllSettings(settings, 'text'+i);
+			
+			settings.numberOfNumberFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(settings['number'+i+'Name'] && settings['number'+i+'Name']!='') settings.numberOfNumberFields=i;else this.removeAllSettings(settings, 'number'+i);
+			settings.numberOfBooleanFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(settings['boolean'+i+'Name'] && settings['boolean'+i+'Name']!='') settings.numberOfBooleanFields=i;else this.removeAllSettings(settings, 'boolean'+i);
+			settings.numberOfButtonFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(settings['button'+i+'Name'] && settings['button'+i+'Name']!='') settings.numberOfButtonFields=i;else this.removeAllSettings(settings, 'button'+i);
+			settings.numberOfCameraFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(settings['camera'+i+'Name'] && settings['camera'+i+'Name']!='') settings.numberOfCameraFields=i;else this.removeAllSettings(settings, 'camera'+i);
+			await this.setStoreValue('Settings', settings);	
+		}
+
 		//this.log('Settings', this.Settings);
 
 		if (process.env.DEBUG === '1' || this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
+			
 			//If it's a new Version, place stuff here
-			let newSettings = {
-				"labelGeneral": this.homey.__("virtualdevicesettings.labelGeneral"),
-				"labelAlso": this.homey.__("virtualdevicesettings.labelAlso"),
-				"labelCustomIcons": this.homey.__("virtualdevicesettings.labelCustomIcons"),
-				"labelButton1": this.homey.__("virtualdevicesettings.labelButton1"),
-				"labelCamerasRestart": this.homey.__("virtualdevicesettings.labelCamerasRestart"),
-				"labelIcons": this.homey.__("virtualdevicesettings.labelIcons"),
-				"labelStatusIndicator": this.homey.__("virtualdevicesettings.labelStatusIndicator")
+			// let newSettings = {
+			// 	"labelGeneral": this.homey.__("virtualdevicesettings.labelGeneral"),
+			// 	"labelAlso": this.homey.__("virtualdevicesettings.labelAlso"),
+			// 	"labelCustomIcons": this.homey.__("virtualdevicesettings.labelCustomIcons"),
+			// 	"labelButton1": this.homey.__("virtualdevicesettings.labelButton1"),
+			// 	"labelCamerasRestart": this.homey.__("virtualdevicesettings.labelCamerasRestart"),
+			// 	"labelIcons": this.homey.__("virtualdevicesettings.labelIcons"),
+			// 	"labelStatusIndicator": this.homey.__("virtualdevicesettings.labelStatusIndicator")
+			// };
+			// for (const settingKey in this.Settings)
+			// 	if (settingKey.startsWith("label") && Object.keys(newSettings).indexOf(settingKey) === -1) newSettings[settingKey] = "";
 
-			};
-			for (const settingKey in this.Settings)
-				if (settingKey.startsWith("label") && Object.keys(newSettings).indexOf(settingKey) === -1) newSettings[settingKey] = "";
 
+			// await this.setSettings(newSettings);
+			// this.Settings = await this.getSettings();
 
-			await this.setSettings(newSettings);
-			this.Settings = await this.getSettings();
 			this.setStoreValue('Version', this.homey.app.manifest.version);
 			for (let i = 0; i < caps.length; i++) {
 				let fieldId = this.getStoreValue(caps[i]);
@@ -58,7 +87,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			}
 			await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
 		} else {
-			await this.setCameras(); //Allready happends in loadFromSettings
+			await this.setCameras(this.Settings); //Allready happends in loadFromSettings
 		}
 
 		//var api = await this.homey.app.refreshHomeyAPI();
@@ -157,14 +186,13 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 	async setCameras(settings) {
-		settings = settings || (await this.getSettings());
 		if (!this.Cameras) this.Cameras = {};
-		for (let i = 1; i <= 10; i++) {
+		for (let i = 1; i <= settings.numberOfCameraFields || 0; i++) {
 			const ref = "camera" + i;
-			if (settings[ref + "Name"] != "" && settings[ref + "Url"] != "") {
+			if (settings[ref + "Name"] && settings[ref + "Url"] && settings[ref + "Name"] != "" && settings[ref + "Url"] != "") {
 				if (!this.Cameras[ref]) this.Cameras[ref] = { id: ref, image: await this.homey.images.createImage(), url: settings[ref + "Url"], name: settings[ref + "Name"] };
 				if (this.Cameras[ref].interval) clearInterval(this.Cameras[ref].interval);
-				if (settings[ref + "Interval"] !== 0) this.Cameras[ref].interval = setInterval(() => {
+				if (settings[ref + "Interval"] && settings[ref + "Interval"] !== 0) this.Cameras[ref].interval = setInterval(() => {
 					this.setCameraImageFromRef(ref);
 				}, (settings[ref + "Interval"] || 60) * 1000);
 				await this.setCameraImageFromRef(ref);
@@ -198,11 +226,11 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	// }
 
-	async loadFromSettings(settings, oldSettings, changedKeys) {
+	async loadFromSettings(settings, oldSettings, changedKeys, saved) {
 
 		let cls = this.getClass();
 		if (cls != settings.cls) await this.setClass(settings.cls);
-		if (this.hasCapability('devicecapabilities_starttext') && changedKeys && changedKeys.length > 0) await this.removeCapability('devicecapabilities_starttext');
+		if (this.hasCapability('devicecapabilities_starttext') && saved) await this.removeCapability('devicecapabilities_starttext');
 		//let b = JSON.parse(JSON.stringify(settings));
 		//b.number1Max = 15;
 		//this.setSettings({number1Max:15});
@@ -215,9 +243,10 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		for (let iTypes = 0; iTypes < types.length; iTypes++) {
 			const type = types[iTypes];
+			const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
 
-			for (let i = 1; i <= NUMBEROFFIELDS; i++) {
-				if(type=="status" && i>1) continue;
+			for (let i = 1; i <= fieldCount; i++) {
+				//if(type=="status" && i>1) continue;
 				try {
 					let oldCap = this.getStoreValue(type + i);
 					let oldValue;
@@ -245,6 +274,8 @@ module.exports = class WatchDevice extends Homey.Device {
 					switch (type) {
 						case "text":
 							switch (settings[type + i + 'ShowAs']) {
+								case undefined:
+								case null:
 								case "":
 								case "sensor":
 									break;
@@ -261,6 +292,8 @@ module.exports = class WatchDevice extends Homey.Device {
 						case "number":
 							cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i;
 							switch (settings[type + i + 'ShowAs']) {
+								case undefined:
+								case null:
 								case "": sensor = true; break;
 								case "sensor": sensor = true; break;
 								default:
@@ -287,7 +320,9 @@ module.exports = class WatchDevice extends Homey.Device {
 							break;
 						case "button":
 							switch (settings[type + i + 'ShowAs']) {
-								case "": pushbutton = true; break;
+								case undefined:
+								case null:
+								case "": 
 								case "button": pushbutton = true; break;
 								case "onoff": isOnOff = true; break;
 								case "onoff_buttontab": isOnOffButtonTab = true; break;
@@ -465,15 +500,17 @@ module.exports = class WatchDevice extends Homey.Device {
 			}
 		}
 
-		if(settings.batteries !=oldSettings.batteries) {
-			let energy = this.getEnergy();
-			if(settings.batteries.trim()=='') delete energy.batteries;
-			else energy.batteries = settings.batteries.replace(' ', '').split(',');
-			this.setEnergy(energy);
-		} 
+		// if(settings.batteries != oldSettings.batteries) {
+		// 	let energy = this.getEnergy();
+		// 	if(settings.batteries.trim()=='') delete energy.batteries;
+		// 	else energy.batteries = settings.batteries.replace(' ', '').split(',');
+		// 	this.setEnergy(energy);
+		// } 
 
 		await this.setCameras(settings);
-
+		await this.setStoreValue('Settings', settings);
+		this.Settings = settings;
+		return settings;
 	}
 
 	getCaps(type, i, settings, oldCap) {
@@ -531,16 +568,21 @@ module.exports = class WatchDevice extends Homey.Device {
 	// }
 
 
-	async onSettings({ oldSettings, newSettings, changedKeys }) {
+	// async onSettings({ oldSettings, newSettings, changedKeys }) {
 
-		await this.loadFromSettings(newSettings, oldSettings, changedKeys);
-		this.Settings = newSettings;
-		// if the settings must not be saved for whatever reason:
-		// throw new Error('Your error message');
-	}
+	// 	await this.loadFromSettings(newSettings, oldSettings, changedKeys);
+	// 	this.Settings = newSettings;
+	// 	// if the settings must not be saved for whatever reason:
+	// 	// throw new Error('Your error message');
+	// }
 
  	capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+	removeAllSettings(settings, startName) {
+		for (const settingKey in settings) if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName)) delete settings[settingKey];				
+			
+		
 	}
 
 	getOptions({type, i, settings, decimals, min, max, name, units}) {

@@ -45,7 +45,8 @@
 		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App.",		
 		"devicecapabilities_starttext":"To Start",
 		
-		"title_repair":"Device Settings"
+		"title_repair":"Device Settings",
+		"device_saving":"The Device is being saved"
 	},
 	"pair": {
 		"list_icons":{

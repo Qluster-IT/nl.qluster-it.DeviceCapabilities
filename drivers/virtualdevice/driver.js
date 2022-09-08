@@ -8,7 +8,6 @@ const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 
 
-const NUMBEROFFIELDS = 10;
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
@@ -398,13 +397,16 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     registerAutocompleteField(action) {
         return async( query, args ) => {
+            let settings = args.device.Settings;
+            if(!settings) return;
             var ret = [];
-            var actiontype = action.split('_')[2];
-            for(var i=1;i<=NUMBEROFFIELDS;i++){
-                let cap = args.device.getStoreValue(actiontype + i);
+            var type = action.split('_')[2];            
+            const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
+            for(var i=1;i<=fieldCount;i++){
+                let cap = args.device.getStoreValue(type + i);
                 if(cap) {
-                    var typeText = actiontype=='text' ? 'Text ' +i : actiontype=='number' ? 'Number ' +i : actiontype=='boolean' ? 'Yes/No ' +i : actiontype=='button' ? 'Button ' +i : 'unknown';
-                    ret.push({'id':actiontype + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
+                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i : 'unknown';
+                    ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
             }
           return ret;
@@ -412,17 +414,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     registerAutocompleteFieldExpression() {
         return async( query, args ) => {
-            let settings = args.device.getSettings();
+            let settings = args.device.Settings;
+            if(!settings) return;
             let ret = [];
             let caps = args.device.getCapabilities();
             let types = ['status', 'text', 'number', 'boolean', 'button'];
             for (let k = 0; k < types.length; k++) {
-                const actiontype = types[k];
-                for(let i=1;i<=NUMBEROFFIELDS;i++){
-                    let cap = args.device.getStoreValue(actiontype + i);
+                const type = types[k];
+                const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
+                for(let i=1;i<=fieldCount;i++){
+                    let cap = args.device.getStoreValue(type + i);
                     if(cap) {
-                        var typeText = actiontype=='text' ? 'Tekst ' + i : actiontype=='number' ? 'Number ' + i : actiontype=='boolean' ? 'Yes/No ' + i : actiontype=='button' ? 'Button ' + i : actiontype=='status' ? 'Status' : 'unknown';
-                        ret.push({'id':actiontype + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
+                        var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : 'unknown';
+                        ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
                     
                 }
@@ -491,6 +495,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             // return devices when searching is done
             
             return {settings:device.Settings, customicons:await this.getCustomIcons()};
+        });
+        session.setHandler('virtualdevicesettings_save', async (settings) => {
+            //console.log(settings, device.Settings , []);
+            return await device.loadFromSettings(settings, device.Settings , [], true);
+            
+            //return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
     }
       
