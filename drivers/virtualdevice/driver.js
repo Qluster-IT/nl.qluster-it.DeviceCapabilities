@@ -482,13 +482,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
       async onRepair(session, device) {
         // var s = session;
         // await session.nextView();
-        
-        session.setHandler('list_devices', async (data) => {
+        //console.log(JSON.stringify(await this.getCustomIcons()));
+
+        session.setHandler('virtualdevicesettings_load', async (data) => {
             // // emit when devices are still being searched
             // session.emit('list_devices', devices);
       
             // return devices when searching is done
-            return {};
+            
+            return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
     }
       

@@ -1,16 +1,14 @@
 <script type="text/javascript" src="angular.js"></script>
-<script type="text/javascript" src="fontawesome.css"></script>
 
 
-<!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
-<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
-
+<!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
+<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
 <script type="text/javascript" src="smart-table.min.js"></script>
 
 <style type="text/css">
-	html {
+	/* html {
 		height:auto!important;
-	}
+	} */
 	.top-labels {
 		position:relative;
 		margin-top:10px;
@@ -19,36 +17,53 @@
 		position:relative;
 		display:block;
 		width:100%;
-		margin-top:10px;
+		padding-top:20px;
+		border-bottom: 2px solid black;
+		padding-bottom:20px;
+	}
+	.group.even {
+		background-color:#eee;
 	}
 	.field {
 		position:relative;
 		display:block;
 		width:100%;
+		margin-top:10px;
 	}
 	.label {
 		position:relative;
-		width:49%;
+		width:48%;
 		display:inline-block;
-	}		
+	}
+	.label .fa {
+		float:right;
+	}
 	.value {
 		position:relative;
-		width:49%;
+		width: 49%!important;
 		display:inline-block;
+	}
+	.create-button {
+		text-align:center;
+		width:100%;
+		position:relative;
 	}
 </style>
 
 
-<div ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
+<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
 	<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">By Default, when using Insights or Tags, separate hidden fields will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created.</div>	
 	<div data-i18n="virtualdevicesettings.labelCustomIcons" class="top-labels">Enabling all fields at once and pressing save, might be hard for Homey and could take a while.</div>	
 	<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">The custom icons can be set through the App Settings.</div>
 
 	<div class="field">
 		<div class="label">Device Class</div>
-		<select class="value" ng-model="s.cls">
+		<!-- <select class="value" ng-model="s.cls">
 			<option value="other">Other (Default)</option>
 			<option value="amplifier">Amplifier</option>
+		</select> -->
+		<select class="value" ng-model="s.cls">
+			<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
 		</select>
 	</div>
 	<div class="group">
@@ -59,11 +74,238 @@
 		</div>
 		<div class="field">
 			<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
-			<div class="value"  ng-include="'iconlist.html'"></div>
+			<select class="value" ng-model="s.status1Icon">
+				<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+			</select>
+			<!-- <div class="value"  ng-include="'iconlist.html'"></div> -->
 		</div>
 		<div class="field">
 			<div class="label">Decimals <span class="fa fa-icon fa-info-circle"></span></div>
 			<input class="value" type="number" min="0" max="10" step="1" ng-model="s.status1Decimals"/>
+		</div>
+		<div class="field">
+			<div class="label">Create Tag <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="checkbox" ng-model="s.status1CreateTag"/>
+		</div>		
+		<div class="field">
+			<div class="label">Create Insights <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="checkbox" ng-model="s.status1CreateInsights"/>
+		</div>
+		<div class="field">
+			<div class="label">Create Separate Capabilities <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="checkbox" ng-model="s.status1SeparateCapabilities"/>
+		</div>
+	</div>
+	<div class="group">
+		Textfields
+	</div>
+	<div class="group" ng-class="{even:$even}" ng-repeat="i in numberOfTextFields track by $index">
+		<div class="label">🟩 Textfield {{$index+1}}</div>
+		<div class="field">
+			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="text" ng-model="s['text'+($index+1)+'Name']"/>
+		</div>
+		<div ng-if="s['text'+($index+1)+'Name']">
+			<div class="field">
+				<div class="label">Show as <span class="fa fa-icon fa-info-circle"></span></div>				
+				<select class="value" ng-model="s['text'+($index+1)+'ShowAs']">
+					<option ng-repeat="item in textShowAs" value="{{item.id}}">{{item.label}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
+				<select class="value" ng-model="s['text'+($index+1)+'Icon']">
+					<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Create Tag <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'CreateTag']"/>
+			</div>		
+			<div class="field" ng-if="s['text'+($index+1)+'CreateTag']">
+				<div class="label">Create Separate Capabilities <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'SeparateCapabilities']"/>
+			</div>
+		</div>
+	</div>	
+	<div class="create-button">
+		<input type="button" class="button" ng-click="s.numberOfTextFields=s.numberOfTextFields+1;updateNumbers();" value="Create Text Field"/>
+	</div>
+
+	<div class="group">
+		Numberfields
+	</div>
+	<div class="group" ng-class="{even:$even}" ng-repeat="x in [].constructor(s.numberOfNumberFields || 10) track by $index">		
+		<div class="label">🟦 Numberfield {{$index+1}}</div>
+		<div class="field">
+			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="text" ng-model="s['number'+($index+1)+'Name']"/>
+		</div>
+		<div ng-if="s['number'+($index+1)+'Name']">
+			<div class="field">
+				<div class="label">Show as <span class="fa fa-icon fa-info-circle"></span></div>				
+				<select class="value" ng-model="s['number'+($index+1)+'ShowAs']">
+					<option ng-repeat="item in numberShowAs" value="{{item.id}}">{{item.label}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Create Flow Cards <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateFlowCards']"/>
+			</div>
+			<div class="field">
+				<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
+				<select class="value" ng-model="s['number'+($index+1)+'Icon']">
+					<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Units <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="text" ng-model="s['number'+($index+1)+'Units']"/>
+			</div>			
+			<div class="field">
+				<div class="label">Decimals <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="number" min="0" max="10" step="1" ng-model="s['number'+($index+1)+'Decimals']"/>
+			</div>						
+			<div class="field">
+				<div class="label">Min <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="number" ng-model="s['number'+($index+1)+'Min']"/>
+			</div>			
+			<div class="field">
+				<div class="label">Max <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="number" ng-model="s['number'+($index+1)+'Max']"/>
+			</div>
+			<div class="field">
+				<div class="label">Create Tag <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateTag']"/>
+			</div>
+			<div class="field">
+				<div class="label">Create Insights <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s.status1CreateInsights"/>
+			</div>
+			<div class="field" ng-if="s['number'+($index+1)+'CreateTag'] || s['number'+($index+1)+'CreateInsights']">
+				<div class="label">Create Separate Capabilities <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'SeparateCapabilities']"/>
+			</div>
+		</div>
+	</div>
+	
+	<div class="group">
+		Yes/No Fields
+	</div>
+	<div class="group" ng-class="{even:$even}" ng-repeat="x in [].constructor(s.numberOfBooleanFields || 10) track by $index">
+		<div class="label">🟧 Yes/No field {{$index+1}}</div>
+		<div class="field">
+			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="text" ng-model="s['boolean'+($index+1)+'Name']"/>
+		</div>
+		<div ng-if="s['boolean'+($index+1)+'Name']">
+			<div class="field">
+				<div class="label">Show as <span class="fa fa-icon fa-info-circle"></span></div>				
+				<select class="value" ng-model="s['boolean'+($index+1)+'ShowAs']">
+					<option ng-repeat="item in booleanShowAs" value="{{item.id}}">{{item.label}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Create Flow Cards <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateFlowCards']"/>
+			</div>
+			<div class="field">
+				<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
+				<select class="value" ng-model="s['boolean'+($index+1)+'Icon']">
+					<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Create Tag <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateTag']"/>
+			</div>
+			<div class="field">
+				<div class="label">Create Insights <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s.status1CreateInsights"/>
+			</div>
+			<div class="field" ng-if="s['boolean'+($index+1)+'CreateTag'] || s['boolean'+($index+1)+'CreateInsights']">
+				<div class="label">Create Separate Capabilities <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'SeparateCapabilities']"/>
+			</div>
+			<div class="field" ng-if="s['boolean'+($index+1)+'CreateInsights']">
+				<div class="label">Insights Title True <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="text" ng-model="s['boolean'+($index+1)+'InsightsTitleTrue']"/>
+			</div>
+			<div class="field" ng-if="s['boolean'+($index+1)+'CreateInsights']">
+				<div class="label">Insights Title False <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="text" ng-model="s['boolean'+($index+1)+'InsightsTitleFalse']"/>
+			</div>
+		</div>
+	</div>
+
+	<div class="group">
+		Buttons
+	</div>
+	<div class="group" ng-class="{even:$even}" ng-repeat="x in [].constructor(s.numberOfButtonFields || 10) track by $index">
+		<div class="label">🟠 Button {{$index+1}}</div>
+		<div class="field">
+			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="text" ng-model="s['button'+($index+1)+'Name']"/>
+		</div>
+		<div ng-if="s['button'+($index+1)+'Name']">
+			<div class="field">
+				<div class="label">Show as <span class="fa fa-icon fa-info-circle"></span></div>				
+				<select class="value" ng-model="s['button'+($index+1)+'ShowAs']" ng-if="($index+1)===1">
+					<option ng-repeat="item in buttonShowAs1" value="{{item.id}}">{{item.label}}</option>
+				</select>
+				<select class="value" ng-model="s['button'+($index+1)+'ShowAs']" ng-if="($index+1)>1">
+					<option ng-repeat="item in buttonShowAsRest" value="{{item.id}}">{{item.label}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Create Flow Cards <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateFlowCards']"/>
+			</div>
+			<div class="field">
+				<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
+				<select class="value" ng-model="s['button'+($index+1)+'Icon']">
+					<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+				</select>
+			</div>
+			<div class="field">
+				<div class="label">Non-Clickable Tag <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'Disabled']"/>
+			</div>
+			<div class="field" ng-if="s['button'+($index+1)+'Disabled']">
+				<div class="label">Checked <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'Checked']"/>
+			</div>
+
+			<div class="field">
+				<div class="label">Create Tag <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateTag']"/>
+			</div>
+			<div class="field">
+				<div class="label">Create Insights <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s.status1CreateInsights"/>
+			</div>
+			<div class="field" ng-if="s['button'+($index+1)+'CreateTag'] || s['button'+($index+1)+'CreateInsights']">
+				<div class="label">Create Separate Capabilities <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'SeparateCapabilities']"/>
+			</div>
+			<div class="field" ng-if="s['button'+($index+1)+'CreateInsights']">
+				<div class="label">Insights Title True <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="text" ng-model="s['button'+($index+1)+'InsightsTitleTrue']"/>
+			</div>
+			<div class="field" ng-if="s['button'+($index+1)+'CreateInsights']">
+				<div class="label">Insights Title False <span class="fa fa-icon fa-info-circle"></span></div>
+				<input class="value" type="text" ng-model="s['button'+($index+1)+'InsightsTitleFalse']"/>
+			</div>
 		</div>
 	</div>
 
@@ -73,53 +315,1946 @@
 	<br><br>
 
 
-	<script type="text/javascript">
-		angular.module('avdsettings', ['smart-table'])
-			.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
-				var Homey;
-				$scope.s = {};
+</div>
 
 
-				$scope.$on('ready', function ($e, Homey_) {
+<script type="text/javascript">
+	//let _homey = Homey;
+	angular.module('avdsettings', ['smart-table'])
+		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+			console.log('controller started');
+			scope = $scope;
+			//let Homey = _homey
+			$scope.s = {};
+			$scope.numberShowAs =  [
+                {
+                  "id": "",
+                  "label": " "
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "target_temperature",
+                  "label": "Temperature (target)"
+                },
+                {
+                  "id": "measure_temperature",
+                  "label": "Temperature (measure)"
+                },
+                {
+                  "id": "dim",
+                  "label": "Dim"
+                },
+                {
+                  "id": "light_hue",
+                  "label": "Hue"
+                },
+                {
+                  "id": "light_saturation",
+                  "label": "Color Saturation"
+                },
+                {
+                  "id": "light_temperature",
+                  "label": "Color Temperature"
+                },
+                {
+                  "id": "measure_battery",
+                  "label": "Battery"
+                },
+                {
+                  "id": "volume_set",
+                  "label": "Set Volume"
+                },
+                {
+                  "id": "windowcoverings_tilt_set",
+                  "label": "Window Coverings tilt set"
+                },
+                {
+                  "id": "windowcoverings_set",
+                  "label": "Window Coverings Position"
+                },
+                {
+                  "id": "speaker_duration",
+                  "label": "Speaker Duration"
+                },
+                {
+                  "id": "speaker_position",
+                  "label": "Speaker Position"
+                },
+                {
+                  "id": "measure_co",
+                  "label": "CO (Sensor)"
+                },
+                {
+                  "id": "measure_co2",
+                  "label": "CO2 (Sensor)"
+                },
+                {
+                  "id": "measure_pm25",
+                  "label": "PM2.5 (Sensor)"
+                },
+                {
+                  "id": "measure_humidity",
+                  "label": "Humidity (Sensor)"
+                },
+                {
+                  "id": "measure_pressure",
+                  "label": "Pressure (Sensor)"
+                },
+                {
+                  "id": "measure_noise",
+                  "label": "Noise (Sensor)"
+                },
+                {
+                  "id": "measure_rain",
+                  "label": "Rain (Sensor)"
+                },
+                {
+                  "id": "measure_wind_strength",
+                  "label": "Wind strength (Sensor)"
+                },
+                {
+                  "id": "measure_wind_angle",
+                  "label": "Wind angle (Sensor)"
+                },
+                {
+                  "id": "measure_gust_strength",
+                  "label": "Gust strength (Sensor)"
+                },
+                {
+                  "id": "measure_gust_angle",
+                  "label": "Gust angle (Sensor)"
+                },
+                {
+                  "id": "measure_power",
+                  "label": "Power (Sensor)"
+                },
+                {
+                  "id": "measure_voltage",
+                  "label": "Voltage (Sensor)"
+                },
+                {
+                  "id": "measure_current",
+                  "label": "Current (Sensor)"
+                },
+                {
+                  "id": "measure_luminance",
+                  "label": "Luminance (Sensor)"
+                },
+                {
+                  "id": "measure_ultraviolet",
+                  "label": "Ultraviolet (Sensor)"
+                },
+                {
+                  "id": "measure_water",
+                  "label": "Water flow (Sensor)"
+                },
+                {
+                  "id": "meter_power",
+                  "label": "Energy (Sensor)"
+                },
+                {
+                  "id": "meter_water",
+                  "label": "Water meter (Sensor)"
+                },
+                {
+                  "id": "meter_gas",
+                  "label": "Gas meter (Sensor)"
+                },
+                {
+                  "id": "meter_rain",
+                  "label": "Rain meter (Sensor)"
+                }
+              ];
+			
+			$scope.textShowAs = [				
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "speaker_artist",
+                  "label": "Artist"
+                },
+                {
+                  "id": "speaker_album",
+                  "label": "Album"
+                },
+                {
+                  "id": "speaker_track",
+                  "label": "Track"
+                }
+			];
 
+			$scope.booleanShowAs = [				
+                {
+                  "id": "sensor",
+                  "label": "Sensor (Default)"
+                },
+                {
+                  "id": "alarm",
+                  "label": "Alarm"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off (Button Tab)"
+                }
+			];
+			
+			$scope.buttonShowAs1 = [
+				{
+                  "id": "button",
+                  "label": "Push Button (Default)"
+                },
+                {
+                  "id": "indicatoronly",
+                  "label": "Indicator Only"
+                },
+                {
+                  "id": "pushbutton_indicator",
+                  "label": "Pushbutton and separate Indicator"
+                },
+                {
+                  "id": "onoff_hide",
+                  "label": "On/Off (Hidden)"
+                },                
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "locked",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
+                }
+			];
+			$scope.buttonShowAsRest = [                
+                {
+                  "id": "button",
+                  "label": "Push Button (Default)"
+                },
+                {
+                  "id": "onoff",
+                  "label": "On/Off"
+                },
+                {
+                  "id": "onoff_buttontab",
+                  "label": "On/Off (Button Tab)"
+                },
+                {
+                  "id": "locked",
+                  "label": "Lock"
+                },
+                {
+                  "id": "garagedoor_closed",
+                  "label": "Garagedoor Closed"
+                },
+                {
+                  "id": "windowcoverings_closed",
+                  "label": "Windowcoverings Closed"
+                },
+                {
+                  "id": "speaker_playing",
+                  "label": "Speaker Playing"
+                },
+                {
+                  "id": "speaker_next",
+                  "label": "Speaker Next"
+                },
+                {
+                  "id": "speaker_prev",
+                  "label": "Speaker Previous"
+                },
+                {
+                  "id": "speaker_shuffle",
+                  "label": "Speaker Shuffle"
+                },
+                {
+                  "id": "volume_mute",
+                  "label": "Volume muted"
+                },
+                {
+                  "id": "volume_up",
+                  "label": "Volume up"
+                },
+                {
+                  "id": "volume_down",
+                  "label": "Volume down"
+                },
+                {
+                  "id": "channel_up",
+                  "label": "Channel up"
+                },
+                {
+                  "id": "channel_down",
+                  "label": "Channel down"
+                },
+                {
+                  "id": "windowcoverings_tilt_up",
+                  "label": "Window coverings tilt up"
+                },
+                {
+                  "id": "windowcoverings_tilt_down",
+                  "label": "Window coverings tilt down"
+                }
+              ];
+
+			$scope.deviceClasses = [
+                {
+                  "id": "other",
+                  "label": "Other (Default)"
+                },
+                {
+                  "id": "amplifier",
+                  "label": "Amplifier"
+                },
+                {
+                  "id": "blinds",
+                  "label": "Blinds"
+                },
+                {
+                  "id": "button",
+                  "label": "Button"
+                },
+                {
+                  "id": "camera",
+                  "label": "Camera"
+                },
+                {
+                  "id": "coffeemachine",
+                  "label": "Coffee machine"
+                },
+                {
+                  "id": "curtain",
+                  "label": "Curtains"
+                },
+                {
+                  "id": "doorbell",
+                  "label": "Doorbell"
+                },
+                {
+                  "id": "fan",
+                  "label": "Fan"
+                },
+                {
+                  "id": "garagedoor",
+                  "label": "Garage door"
+                },
+                {
+                  "id": "heater",
+                  "label": "Heater"
+                },
+                {
+                  "id": "homealarm",
+                  "label": "Home Security"
+                },
+                {
+                  "id": "kettle",
+                  "label": "Kettle"
+                },
+                {
+                  "id": "light",
+                  "label": "Light"
+                },
+                {
+                  "id": "lock",
+                  "label": "Lock"
+                },
+                {
+                  "id": "remote",
+                  "label": "Remote"
+                },
+                {
+                  "id": "sensor",
+                  "label": "Sensor"
+                },
+                {
+                  "id": "socket",
+                  "label": "Wall Plug"
+                },
+                {
+                  "id": "speaker",
+                  "label": "Speaker"
+                },
+                {
+                  "id": "solarpanel",
+                  "label": "Solar Panel"
+                },
+                {
+                  "id": "sunshade",
+                  "label": "Sunshade"
+                },
+                {
+                  "id": "thermostat",
+                  "label": "Thermostat"
+                },
+                {
+                  "id": "tv",
+                  "label": "TV"
+                },
+                {
+                  "id": "vacuumcleaner",
+                  "label": "Vacuum Cleaner"
+                },
+                {
+                  "id": "windowcoverings",
+                  "label": "Window Coverings"
+                }
+              ];
+			
+			function getNumber(num) {
+				return new Array(num);   
+			}
+			  
+			function fixSetting(settings) {
+				if(settings.numberOfTextFields===undefined) {
+					settings.numberOfTextFields = 0;
+					for (let i = 1; i <= 10; i++) if(settings['text'+i+'Name'] && settings['text'+i+'Name']!=='') settings.numberOfTextFields=i;
+				}
+				if(settings.numberOfNumberFields===undefined) {
+					settings.numberOfNumberFields = 0;
+					for (let i = 1; i <= 10; i++) if(settings['number'+i+'Name'] && settings['number'+i+'Name']!=='') settings.numberOfNumberFields=i;
+				}
+				if(settings.numberOfBooleanFields===undefined) {
+					settings.numberOfBooleanFields = 0;
+					for (let i = 1; i <= 10; i++) if(settings['boolean'+i+'Name'] && settings['boolean'+i+'Name']!=='') settings.numberOfBooleanFields=i;
+				}
+				if(settings.numberOfButtonFields===undefined) {
+					settings.numberOfButtonFields = 0;
+					for (let i = 1; i <= 10; i++) if(settings['button'+i+'Name'] && settings['button'+i+'Name']!=='') settings.numberOfButtonFields=i;
+				}
+				if(settings.numberOfCameraFields===undefined) {
+					settings.numberOfCameraFields = 0;
+					for (let i = 1; i <= 10; i++) if(settings['camera'+i+'Name'] && settings['camera'+i+'Name']!=='') settings.numberOfCameraFields=i;
+				}
+				$scope.updateNumbers();
+				return settings;
+			}
+
+			$scope.updateNumbers = function() {
+				console.log('updateNumbers');
+				$scope.numberOfTextFields = getNumber($scope.s.numberOfTextFields);
+			}
+			
+			//$scope.$on('ready', function ($e, Homey_) {
+				//console.log('ready', homey);
+				if(typeof Homey !== 'undefined') {
+					Homey.hideLoadingOverlay();
+					Homey.setTitle( Homey.__("virtualdevicesettings.title_repair") );
+					Homey.emit('virtualdevicesettings_load', null, function(err, result) {
+						if (err) {
+                            console.log(err);
+                            return;
+                        }
+						$scope.$apply(function() {
+							$scope.s=fixSetting(result.settings);
+							$scope.customicons=result.customicons;
+						});
+						
+						//settings
+						//customicons
+						
+					});
 					// Homey.showLoadingOverlay();
 					// Homey.setTitle( Homey.__("pair.list_icons.title") );
 					
-    				// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
+					// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
 
 					console.log('ready');
-					Homey = Homey_;
 					$scope.__ = Homey.__;
 
-					
-					Homey.ready();
-
 					console.log('ready done');
-				});
-			}])
-			.directive('ngEnter', function () {
-				return function (scope, element, attrs) {
-					element.bind('keydown keypress', function (event) {
-						if (event.which === 13) {
-							scope.$apply(function () {
-								scope.$eval(attrs.ngEnter || attrs.ngClick, {
-									$event: event
-								});
-							});
-							event.preventDefault();
+				} else {
+					$scope.customicons = {
+					"icons": [
+						{
+							"title": "Devices",
+							"icons": [
+								{
+									"name": "device_1",
+									"file": "custom_1",
+									"defaultIcon": "Devices/device_capabilities",
+									"title": {
+										"en": "Device 1",
+										"nl": "Apparaat 1",
+										"de": ""
+									},
+									"id": 1,
+									"subid": 1,
+									"customname": "Living room"
+								},
+								{
+									"name": "device_2",
+									"file": "custom_2",
+									"defaultIcon": "Devices/virtual_device",
+									"title": {
+										"en": "Device 2",
+										"nl": "Apparaat 2",
+										"de": ""
+									},
+									"id": 2,
+									"subid": 2,
+									"customname": "DC VD"
+								},
+								{
+									"name": "device_3",
+									"file": "custom_3",
+									"defaultIcon": "Devices/circle",
+									"title": {
+										"en": "Device 3",
+										"nl": "Apparaat 3",
+										"de": ""
+									},
+									"id": 3,
+									"subid": 3,
+									"customname": "Test"
+								},
+								{
+									"name": "device_4",
+									"file": "custom_4",
+									"defaultIcon": "Devices/curtain-half",
+									"title": {
+										"en": "Device 4",
+										"nl": "Apparaat 4",
+										"de": ""
+									},
+									"id": 4,
+									"subid": 4
+								},
+								{
+									"name": "device_5",
+									"file": "custom_5",
+									"defaultIcon": "Devices/game",
+									"title": {
+										"en": "Device 5",
+										"nl": "Apparaat 5",
+										"de": ""
+									},
+									"id": 5,
+									"subid": 5,
+									"customname": "gamecontroller"
+								},
+								{
+									"name": "device_6",
+									"file": "custom_6",
+									"defaultIcon": "Devices/onoff",
+									"title": {
+										"en": "Device 6",
+										"nl": "Apparaat 6",
+										"de": ""
+									},
+									"id": 6,
+									"subid": 6
+								},
+								{
+									"name": "device_7",
+									"file": "custom_7",
+									"defaultIcon": "Devices/settings",
+									"title": {
+										"en": "Device 7",
+										"nl": "Apparaat 7",
+										"de": ""
+									},
+									"id": 7,
+									"subid": 7
+								},
+								{
+									"name": "device_8",
+									"file": "custom_8",
+									"defaultIcon": "Devices/tv",
+									"title": {
+										"en": "Device 8",
+										"nl": "Apparaat 8",
+										"de": ""
+									},
+									"id": 8,
+									"subid": 8,
+									"customname": "tv"
+								},
+								{
+									"name": "device_9",
+									"file": "custom_9",
+									"defaultIcon": "Buttons/button",
+									"title": {
+										"en": "Device 9",
+										"nl": "Apparaat 9",
+										"de": ""
+									},
+									"id": 9,
+									"subid": 9
+								},
+								{
+									"name": "device_10",
+									"file": "custom_10",
+									"defaultIcon": "Buttons/devices",
+									"title": {
+										"en": "Device 10",
+										"nl": "Apparaat 10",
+										"de": ""
+									},
+									"id": 10,
+									"subid": 10
+								},
+								{
+									"name": "device_11",
+									"file": "custom_11",
+									"defaultIcon": "Buttons/energy",
+									"title": {
+										"en": "Device 11",
+										"nl": "Apparaat 11",
+										"de": ""
+									},
+									"id": 11,
+									"subid": 11
+								},
+								{
+									"name": "device_12",
+									"file": "custom_12",
+									"defaultIcon": "Buttons/insights",
+									"title": {
+										"en": "Device 12",
+										"nl": "Apparaat 12",
+										"de": ""
+									},
+									"id": 12,
+									"subid": 12
+								},
+								{
+									"name": "device_13",
+									"file": "custom_13",
+									"defaultIcon": "Buttons/home",
+									"title": {
+										"en": "Device 13",
+										"nl": "Apparaat 13",
+										"de": ""
+									},
+									"id": 13,
+									"subid": 13
+								},
+								{
+									"name": "device_14",
+									"file": "custom_14",
+									"defaultIcon": "Buttons/homeyscript",
+									"title": {
+										"en": "Device 14",
+										"nl": "Apparaat 14",
+										"de": ""
+									},
+									"id": 14,
+									"subid": 14
+								},
+								{
+									"name": "device_15",
+									"file": "custom_15",
+									"defaultIcon": "Buttons/search",
+									"title": {
+										"en": "Device 15",
+										"nl": "Apparaat 15",
+										"de": ""
+									},
+									"id": 15,
+									"subid": 15
+								},
+								{
+									"name": "device_16",
+									"file": "custom_16",
+									"defaultIcon": "Buttons/ternary",
+									"title": {
+										"en": "Device 16",
+										"nl": "Apparaat 16",
+										"de": ""
+									},
+									"id": 16,
+									"subid": 16
+								},
+								{
+									"name": "device_17",
+									"file": "custom_17",
+									"defaultIcon": "Buttons/toggle",
+									"title": {
+										"en": "Device 17",
+										"nl": "Apparaat 17",
+										"de": ""
+									},
+									"id": 17,
+									"subid": 17
+								},
+								{
+									"name": "device_18",
+									"file": "custom_18",
+									"defaultIcon": "Flows/advanced-flow",
+									"title": {
+										"en": "Device 18",
+										"nl": "Apparaat 18",
+										"de": ""
+									},
+									"id": 18,
+									"subid": 18
+								},
+								{
+									"name": "device_19",
+									"file": "custom_19",
+									"defaultIcon": "Flows/flow-bold",
+									"title": {
+										"en": "Device 19",
+										"nl": "Apparaat 19",
+										"de": ""
+									},
+									"id": 19,
+									"subid": 19
+								},
+								{
+									"name": "device_20",
+									"file": "custom_20",
+									"defaultIcon": "Flows/logic",
+									"title": {
+										"en": "Device 20",
+										"nl": "Apparaat 20",
+										"de": ""
+									},
+									"id": 20,
+									"subid": 20
+								}
+							]
+						},
+						{
+							"title": "Capabilities",
+							"icons": [
+								{
+									"name": "capabilities_1",
+									"file": "custom_21",
+									"defaultIcon": "Other/measure_clouds",
+									"title": {
+										"en": "Fields 1",
+										"nl": "Velden 1",
+										"de": ""
+									},
+									"id": 21,
+									"subid": 1,
+									"customname": "curtains"
+								},
+								{
+									"name": "capabilities_2",
+									"file": "custom_22",
+									"defaultIcon": "Other/measure_humidity",
+									"title": {
+										"en": "Fields 2",
+										"nl": "Velden 2",
+										"de": ""
+									},
+									"id": 22,
+									"subid": 2
+								},
+								{
+									"name": "capabilities_3",
+									"file": "custom_23",
+									"defaultIcon": "Other/measure_luminance",
+									"title": {
+										"en": "Fields 3",
+										"nl": "Velden 3",
+										"de": ""
+									},
+									"id": 23,
+									"subid": 3
+								},
+								{
+									"name": "capabilities_4",
+									"file": "custom_24",
+									"defaultIcon": "Other/measure_power",
+									"title": {
+										"en": "Fields 4",
+										"nl": "Velden 4",
+										"de": ""
+									},
+									"id": 24,
+									"subid": 4
+								},
+								{
+									"name": "capabilities_5",
+									"file": "custom_25",
+									"defaultIcon": "Other/measure_rain",
+									"title": {
+										"en": "Fields 5",
+										"nl": "Velden 5",
+										"de": ""
+									},
+									"id": 25,
+									"subid": 5
+								},
+								{
+									"name": "capabilities_6",
+									"file": "custom_26",
+									"defaultIcon": "Other/measure_temperature",
+									"title": {
+										"en": "Fields 6",
+										"nl": "Velden 6",
+										"de": ""
+									},
+									"id": 26,
+									"subid": 6
+								},
+								{
+									"name": "capabilities_7",
+									"file": "custom_27",
+									"defaultIcon": "Other/measure_wind_angle",
+									"title": {
+										"en": "Fields 7",
+										"nl": "Velden 7",
+										"de": ""
+									},
+									"id": 27,
+									"subid": 7
+								},
+								{
+									"name": "capabilities_8",
+									"file": "custom_28",
+									"defaultIcon": "Other/measure_wind_strength",
+									"title": {
+										"en": "Fields 8",
+										"nl": "Velden 8",
+										"de": ""
+									},
+									"id": 28,
+									"subid": 8
+								},
+								{
+									"name": "capabilities_9",
+									"file": "custom_29",
+									"defaultIcon": "Other/heart-outline",
+									"title": {
+										"en": "Fields 9",
+										"nl": "Velden 9",
+										"de": ""
+									},
+									"id": 29,
+									"subid": 9
+								},
+								{
+									"name": "capabilities_10",
+									"file": "custom_30",
+									"defaultIcon": "Other/bell",
+									"title": {
+										"en": "Fields 10",
+										"nl": "Velden 10",
+										"de": ""
+									},
+									"id": 30,
+									"subid": 10
+								},
+								{
+									"name": "capabilities_11",
+									"file": "custom_31",
+									"defaultIcon": "Other/moon-round",
+									"title": {
+										"en": "Fields 11",
+										"nl": "Velden 11",
+										"de": ""
+									},
+									"id": 31,
+									"subid": 11
+								},
+								{
+									"name": "capabilities_12",
+									"file": "custom_32",
+									"defaultIcon": "Gauges_and_meters/measure_noise",
+									"title": {
+										"en": "Fields 12",
+										"nl": "Velden 12",
+										"de": ""
+									},
+									"id": 32,
+									"subid": 12
+								},
+								{
+									"name": "capabilities_13",
+									"file": "custom_33",
+									"defaultIcon": "Gauges_and_meters/measure_pressure",
+									"title": {
+										"en": "Fields 13",
+										"nl": "Velden 13",
+										"de": ""
+									},
+									"id": 33,
+									"subid": 13
+								},
+								{
+									"name": "capabilities_14",
+									"file": "custom_34",
+									"defaultIcon": "Gauges_and_meters/meter_gas",
+									"title": {
+										"en": "Fields 14",
+										"nl": "Velden 14",
+										"de": ""
+									},
+									"id": 34,
+									"subid": 14
+								},
+								{
+									"name": "capabilities_15",
+									"file": "custom_35",
+									"defaultIcon": "Gauges_and_meters/meter_power",
+									"title": {
+										"en": "Fields 15",
+										"nl": "Velden 15",
+										"de": ""
+									},
+									"id": 35,
+									"subid": 15
+								},
+								{
+									"name": "capabilities_16",
+									"file": "custom_36",
+									"defaultIcon": "Gauges_and_meters/sensor",
+									"title": {
+										"en": "Fields 16",
+										"nl": "Velden 16",
+										"de": ""
+									},
+									"id": 36,
+									"subid": 16
+								},
+								{
+									"name": "capabilities_17",
+									"file": "custom_37",
+									"defaultIcon": "Alarms/alarm_smoke",
+									"title": {
+										"en": "Fields 17",
+										"nl": "Velden 17",
+										"de": ""
+									},
+									"id": 37,
+									"subid": 17
+								},
+								{
+									"name": "capabilities_18",
+									"file": "custom_38",
+									"defaultIcon": "Alarms/alarm_water",
+									"title": {
+										"en": "Fields 18",
+										"nl": "Velden 18",
+										"de": ""
+									},
+									"id": 38,
+									"subid": 18
+								},
+								{
+									"name": "capabilities_19",
+									"file": "custom_39",
+									"defaultIcon": "Devices/battery",
+									"title": {
+										"en": "Fields 19",
+										"nl": "Velden 19",
+										"de": ""
+									},
+									"id": 39,
+									"subid": 19
+								},
+								{
+									"name": "capabilities_20",
+									"file": "custom_40",
+									"defaultIcon": "Flows/tag",
+									"title": {
+										"en": "Fields 20",
+										"nl": "Velden 20",
+										"de": ""
+									},
+									"id": 40,
+									"subid": 20
+								},
+								{
+									"name": "capabilities_21",
+									"file": "custom_61",
+									"defaultIcon": "Kawa/clock",
+									"title": {
+										"en": "Fields 21",
+										"nl": "Velden 21",
+										"de": ""
+									},
+									"id": 41,
+									"subid": 21
+								},
+								{
+									"name": "capabilities_22",
+									"file": "custom_62",
+									"defaultIcon": "Kawa/cooking_icon",
+									"title": {
+										"en": "Fields 22",
+										"nl": "Velden 22",
+										"de": ""
+									},
+									"id": 42,
+									"subid": 22
+								},
+								{
+									"name": "capabilities_23",
+									"file": "custom_63",
+									"defaultIcon": "Kawa/doorbell2",
+									"title": {
+										"en": "Fields 23",
+										"nl": "Velden 23",
+										"de": ""
+									},
+									"id": 43,
+									"subid": 23
+								},
+								{
+									"name": "capabilities_24",
+									"file": "custom_64",
+									"defaultIcon": "Kawa/fan_big_black",
+									"title": {
+										"en": "Fields 24",
+										"nl": "Velden 24",
+										"de": ""
+									},
+									"id": 44,
+									"subid": 24
+								},
+								{
+									"name": "capabilities_25",
+									"file": "custom_65",
+									"defaultIcon": "Kawa/fan_icon",
+									"title": {
+										"en": "Fields 25",
+										"nl": "Velden 25",
+										"de": ""
+									},
+									"id": 45,
+									"subid": 25
+								},
+								{
+									"name": "capabilities_26",
+									"file": "custom_66",
+									"defaultIcon": "Kawa/fireplace_icon",
+									"title": {
+										"en": "Fields 26",
+										"nl": "Velden 26",
+										"de": ""
+									},
+									"id": 46,
+									"subid": 26
+								},
+								{
+									"name": "capabilities_27",
+									"file": "custom_67",
+									"defaultIcon": "Kawa/ggl_hub",
+									"title": {
+										"en": "Fields 27",
+										"nl": "Velden 27",
+										"de": ""
+									},
+									"id": 47,
+									"subid": 27
+								},
+								{
+									"name": "capabilities_28",
+									"file": "custom_68",
+									"defaultIcon": "Kawa/homey_fake",
+									"title": {
+										"en": "Fields 28",
+										"nl": "Velden 28",
+										"de": ""
+									},
+									"id": 48,
+									"subid": 28
+								},
+								{
+									"name": "capabilities_29",
+									"file": "custom_69",
+									"defaultIcon": "Kawa/homey_pro",
+									"title": {
+										"en": "Fields 29",
+										"nl": "Velden 29",
+										"de": ""
+									},
+									"id": 49,
+									"subid": 29
+								},
+								{
+									"name": "capabilities_30",
+									"file": "custom_70",
+									"defaultIcon": "Kawa/kitchen_icon",
+									"title": {
+										"en": "Fields 30",
+										"nl": "Velden 30",
+										"de": ""
+									},
+									"id": 50,
+									"subid": 30
+								},
+								{
+									"name": "capabilities_31",
+									"file": "custom_71",
+									"defaultIcon": "Kawa/lamp_desklight_icon",
+									"title": {
+										"en": "Fields 31",
+										"nl": "Velden 31",
+										"de": ""
+									},
+									"id": 51,
+									"subid": 31
+								},
+								{
+									"name": "capabilities_32",
+									"file": "custom_72",
+									"defaultIcon": "Kawa/light_ceilinglight",
+									"title": {
+										"en": "Fields 32",
+										"nl": "Velden 32",
+										"de": ""
+									},
+									"id": 52,
+									"subid": 32
+								},
+								{
+									"name": "capabilities_33",
+									"file": "custom_73",
+									"defaultIcon": "Kawa/location-pin-compact-outline",
+									"title": {
+										"en": "Fields 33",
+										"nl": "Velden 33",
+										"de": ""
+									},
+									"id": 53,
+									"subid": 33
+								},
+								{
+									"name": "capabilities_34",
+									"file": "custom_74",
+									"defaultIcon": "Kawa/lock_fingerprint2",
+									"title": {
+										"en": "Fields 34",
+										"nl": "Velden 34",
+										"de": ""
+									},
+									"id": 54,
+									"subid": 34
+								},
+								{
+									"name": "capabilities_35",
+									"file": "custom_75",
+									"defaultIcon": "Kawa/microwave",
+									"title": {
+										"en": "Fields 35",
+										"nl": "Velden 35",
+										"de": ""
+									},
+									"id": 55,
+									"subid": 35
+								},
+								{
+									"name": "capabilities_36",
+									"file": "custom_76",
+									"defaultIcon": "Kawa/relay",
+									"title": {
+										"en": "Fields 36",
+										"nl": "Velden 36",
+										"de": ""
+									},
+									"id": 56,
+									"subid": 36
+								},
+								{
+									"name": "capabilities_37",
+									"file": "custom_77",
+									"defaultIcon": "Kawa/remote_bluebtn",
+									"title": {
+										"en": "Fields 37",
+										"nl": "Velden 37",
+										"de": ""
+									},
+									"id": 57,
+									"subid": 37
+								},
+								{
+									"name": "capabilities_38",
+									"file": "custom_78",
+									"defaultIcon": "Kawa/solarpower",
+									"title": {
+										"en": "Fields 38",
+										"nl": "Velden 38",
+										"de": ""
+									},
+									"id": 58,
+									"subid": 38
+								},
+								{
+									"name": "capabilities_39",
+									"file": "custom_79",
+									"defaultIcon": "Kawa/stove_icon",
+									"title": {
+										"en": "Fields 39",
+										"nl": "Velden 39",
+										"de": ""
+									},
+									"id": 59,
+									"subid": 39
+								},
+								{
+									"name": "capabilities_40",
+									"file": "custom_80",
+									"defaultIcon": "Kawa/wc_icon",
+									"title": {
+										"en": "Fields 40",
+										"nl": "Velden 40",
+										"de": ""
+									},
+									"id": 60,
+									"subid": 40
+								}
+							]
+						},
+						{
+							"title": "Other",
+							"icons": [
+								{
+									"name": "other_1",
+									"file": "custom_41",
+									"defaultIcon": "Media/music",
+									"title": {
+										"en": "Other 1",
+										"nl": "Overige 1",
+										"de": ""
+									},
+									"id": 61,
+									"subid": 1
+								},
+								{
+									"name": "other_2",
+									"file": "custom_42",
+									"defaultIcon": "Media/speaker_next",
+									"title": {
+										"en": "Other 2",
+										"nl": "Overige 2",
+										"de": ""
+									},
+									"id": 62,
+									"subid": 2
+								},
+								{
+									"name": "other_3",
+									"file": "custom_43",
+									"defaultIcon": "Media/speaker_play",
+									"title": {
+										"en": "Other 3",
+										"nl": "Overige 3",
+										"de": ""
+									},
+									"id": 63,
+									"subid": 3
+								},
+								{
+									"name": "other_4",
+									"file": "custom_44",
+									"defaultIcon": "Media/speaker_prev",
+									"title": {
+										"en": "Other 4",
+										"nl": "Overige 4",
+										"de": ""
+									},
+									"id": 64,
+									"subid": 4
+								},
+								{
+									"name": "other_5",
+									"file": "custom_45",
+									"defaultIcon": "Media/volume_down",
+									"title": {
+										"en": "Other 5",
+										"nl": "Overige 5",
+										"de": ""
+									},
+									"id": 65,
+									"subid": 5
+								},
+								{
+									"name": "other_6",
+									"file": "custom_46",
+									"defaultIcon": "Media/volume_mute",
+									"title": {
+										"en": "Other 6",
+										"nl": "Overige 6",
+										"de": ""
+									},
+									"id": 66,
+									"subid": 6
+								},
+								{
+									"name": "other_7",
+									"file": "custom_47",
+									"defaultIcon": "Media/volume_up",
+									"title": {
+										"en": "Other 7",
+										"nl": "Overige 7",
+										"de": ""
+									},
+									"id": 67,
+									"subid": 7
+								},
+								{
+									"name": "other_8",
+									"file": "custom_48",
+									"defaultIcon": "Weather/bewolkt-blk",
+									"title": {
+										"en": "Other 8",
+										"nl": "Overige 8",
+										"de": ""
+									},
+									"id": 68,
+									"subid": 8
+								},
+								{
+									"name": "other_9",
+									"file": "custom_49",
+									"defaultIcon": "Weather/dampn-blk",
+									"title": {
+										"en": "Other 9",
+										"nl": "Overige 9",
+										"de": ""
+									},
+									"id": 69,
+									"subid": 9
+								},
+								{
+									"name": "other_10",
+									"file": "custom_50",
+									"defaultIcon": "Weather/hagel-blk",
+									"title": {
+										"en": "Other 10",
+										"nl": "Overige 10",
+										"de": ""
+									},
+									"id": 70,
+									"subid": 10
+								},
+								{
+									"name": "other_11",
+									"file": "custom_51",
+									"defaultIcon": "Weather/hardewind-blk",
+									"title": {
+										"en": "Other 11",
+										"nl": "Overige 11",
+										"de": ""
+									},
+									"id": 71,
+									"subid": 11
+								},
+								{
+									"name": "other_12",
+									"file": "custom_52",
+									"defaultIcon": "Weather/regen-blk",
+									"title": {
+										"en": "Other 12",
+										"nl": "Overige 12",
+										"de": ""
+									},
+									"id": 72,
+									"subid": 12
+								},
+								{
+									"name": "other_13",
+									"file": "custom_53",
+									"defaultIcon": "Weather/storm-blk",
+									"title": {
+										"en": "Other 13",
+										"nl": "Overige 13",
+										"de": ""
+									},
+									"id": 73,
+									"subid": 13
+								},
+								{
+									"name": "other_14",
+									"file": "custom_54",
+									"defaultIcon": "Kawa/watch",
+									"title": {
+										"en": "Other 14",
+										"nl": "Overige 14",
+										"de": ""
+									},
+									"id": 74,
+									"subid": 14
+								},
+								{
+									"name": "other_15",
+									"file": "custom_55",
+									"defaultIcon": "Weather/zeerkoud-blk",
+									"title": {
+										"en": "Other 15",
+										"nl": "Overige 15",
+										"de": ""
+									},
+									"id": 75,
+									"subid": 15
+								},
+								{
+									"name": "other_16",
+									"file": "custom_56",
+									"defaultIcon": "Weather/zeerwarm-blk",
+									"title": {
+										"en": "Other 16",
+										"nl": "Overige 16",
+										"de": ""
+									},
+									"id": 76,
+									"subid": 16
+								},
+								{
+									"name": "other_17",
+									"file": "custom_57",
+									"defaultIcon": "Weather/zonnigeperioden-blk",
+									"title": {
+										"en": "Other 17",
+										"nl": "Overige 17",
+										"de": ""
+									},
+									"id": 77,
+									"subid": 17
+								},
+								{
+									"name": "other_18",
+									"file": "custom_58",
+									"defaultIcon": "Weather/zonnign-blk",
+									"title": {
+										"en": "Other 18",
+										"nl": "Overige 18",
+										"de": ""
+									},
+									"id": 78,
+									"subid": 18
+								},
+								{
+									"name": "other_19",
+									"file": "custom_59",
+									"defaultIcon": "Kawa/bathroom_icon",
+									"title": {
+										"en": "Other 19",
+										"nl": "Overige 19",
+										"de": ""
+									},
+									"id": 79,
+									"subid": 19
+								},
+								{
+									"name": "other_20",
+									"file": "custom_60",
+									"defaultIcon": "Kawa/human",
+									"title": {
+										"en": "Other 20",
+										"nl": "Overige 20",
+										"de": ""
+									},
+									"id": 80,
+									"subid": 20
+								}
+							]
 						}
-					});
-				};
-			});
-		//console.log('onHomeyReady', Homey);
-		// var scope = angular.element(document.body).scope();
-		// scope.$emit('ready', Homey);
+					],
+					"iconnames": {
+						"custom_1": "Living room",
+						"custom_2": "DC VD",
+						"custom_3": "Test",
+						"custom_21": "curtains",
+						"custom_8": "tv",
+						"custom_5": "gamecontroller"
+					},
+					"languagecode": "nl"
+					}
+								
+					
+					$scope.s = {
+						labelGeneral: "Bij het gebruik van Insights of Tags worden standaard afzonderlijke verborgen velden aangemaakt. Dit betekent dat u niet in de Insights kunt zien Wie het heeft gewijzigd. Voor knoppen wil je dit misschien wel weten. Schakel deze dan uit. Maar wanneer uitgeschakeld, zal het wijzigen van het Pictrogram, 'Toon als' of 'Creëer flowkaarten' ervoor zorgen dat tag-ID's worden gewijzigd en kunnen dus flows worden gebroken, en zullen nieuwe Insights worden gemaakt.",
+						labelAlso: 'Alle velden tegelijk inschakelen en op opslaan drukken, kan moeilijk zijn voor Homey en even duren.',
+						labelCustomIcons: 'De aanpasbare pictogrammen kunnen worden ingesteld via de app-instellingen.',
+						cls: 'other',
+						status1Name: 'Status',
+						status1Icon: '',
+						status1Decimals: 0,
+						status1CreateInsights: false,
+						status1CreateTag: false,
+						text1Name: 'Naam',
+						text1ShowAs: '',
+						text1Icon: '',
+						text1CreateTag: false,
+						text2Name: 'Naam',
+						text2ShowAs: '',
+						text2Icon: 'custom_1',
+						text2CreateTag: true,
+						text3Name: '',
+						text3ShowAs: '',
+						text3Icon: '',
+						text3CreateTag: false,
+						text4Name: '',
+						text4ShowAs: '',
+						text4Icon: '',
+						text4CreateTag: false,
+						text5Name: '',
+						text5ShowAs: '',
+						text5Icon: '',
+						text5CreateTag: false,
+						text6Name: '',
+						text6ShowAs: '',
+						text6Icon: '',
+						text6CreateTag: false,
+						text7Name: '',
+						text7ShowAs: '',
+						text7Icon: '',
+						text7CreateTag: false,
+						text8Name: '',
+						text8ShowAs: '',
+						text8Icon: '',
+						text8CreateTag: false,
+						text9Name: '',
+						text9ShowAs: '',
+						text9Icon: '',
+						text9CreateTag: false,
+						text10Name: '',
+						text10ShowAs: '',
+						text10Icon: '',
+						text10CreateTag: false,
+						labelNumber1: '',
+						number1Name: 'Naam',
+						number1ShowAs: '',
+						number1CreateFlowCards: false,
+						number1Icon: '',
+						number1Units: '',
+						number1Decimals: -1,
+						number1Min: -1,
+						number1Max: -1,
+						number1CreateInsights: false,
+						number1CreateTag: false,
+						number2Name: 'Naam',
+						number2ShowAs: '',
+						number2CreateFlowCards: false,
+						number2Icon: '',
+						number2Units: '',
+						number2Decimals: -1,
+						number2Min: -1,
+						number2Max: -1,
+						number2CreateInsights: false,
+						number2CreateTag: false,
+						number3Name: 'Naam',
+						number3ShowAs: '',
+						number3CreateFlowCards: false,
+						number3Icon: '',
+						number3Units: '',
+						number3Decimals: -1,
+						number3Min: -1,
+						number3Max: -1,
+						number3CreateInsights: false,
+						number3CreateTag: false,
+						number4Name: 'Naam',
+						number4ShowAs: '',
+						number4CreateFlowCards: false,
+						number4Icon: '',
+						number4Units: '',
+						number4Decimals: -1,
+						number4Min: -1,
+						number4Max: -1,
+						number4CreateInsights: false,
+						number4CreateTag: false,
+						number5Name: 'Naam',
+						number5ShowAs: '',
+						number5CreateFlowCards: false,
+						number5Icon: '',
+						number5Units: '',
+						number5Decimals: -1,
+						number5Min: -1,
+						number5Max: -1,
+						number5CreateInsights: false,
+						number5CreateTag: false,
+						number6Name: 'Naam',
+						number6ShowAs: '',
+						number6CreateFlowCards: false,
+						number6Icon: '',
+						number6Units: '',
+						number6Decimals: -1,
+						number6Min: -1,
+						number6Max: -1,
+						number6CreateInsights: false,
+						number6CreateTag: false,
+						number7Name: 'Naam',
+						number7ShowAs: '',
+						number7CreateFlowCards: false,
+						number7Icon: '',
+						number7Units: '',
+						number7Decimals: -1,
+						number7Min: -1,
+						number7Max: -1,
+						number7CreateInsights: false,
+						number7CreateTag: false,
+						number8Name: 'Naam',
+						number8ShowAs: '',
+						number8CreateFlowCards: false,
+						number8Icon: '',
+						number8Units: '',
+						number8Decimals: -1,
+						number8Min: -1,
+						number8Max: -1,
+						number8CreateInsights: false,
+						number8CreateTag: false,
+						number9Name: 'Naam',
+						number9ShowAs: '',
+						number9CreateFlowCards: false,
+						number9Icon: '',
+						number9Units: '',
+						number9Decimals: -1,
+						number9Min: -1,
+						number9Max: -1,
+						number9CreateInsights: false,
+						number9CreateTag: false,
+						number10Name: 'Naam',
+						number10ShowAs: '',
+						number10CreateFlowCards: false,
+						number10Icon: '',
+						number10Units: '',
+						number10Decimals: -1,
+						number10Min: -1,
+						number10Max: -1,
+						number10CreateInsights: false,
+						number10CreateTag: false,
+						boolean1Name: 'Naam',
+						boolean1ShowAs: '',
+						boolean1CreateFlowCards: false,
+						boolean1Icon: '',
+						boolean1SeparateCapabilities: true,
+						boolean1CreateInsights: false,
+						boolean1CreateTag: false,
+						boolean1InsightsTitleTrue: '',
+						boolean1InsightsTitleFalse: '',
+						boolean2Name: 'Naam',
+						boolean2ShowAs: '',
+						boolean2CreateFlowCards: false,
+						boolean2Icon: '',
+						boolean2SeparateCapabilities: true,
+						boolean2CreateInsights: false,
+						boolean2CreateTag: false,
+						boolean2InsightsTitleTrue: '',
+						boolean2InsightsTitleFalse: '',
+						boolean3Name: 'Naam',
+						boolean3ShowAs: '',
+						boolean3CreateFlowCards: false,
+						boolean3Icon: '',
+						boolean3SeparateCapabilities: true,
+						boolean3CreateInsights: false,
+						boolean3CreateTag: false,
+						boolean3InsightsTitleTrue: '',
+						boolean3InsightsTitleFalse: '',
+						boolean4Name: 'Naam',
+						boolean4ShowAs: '',
+						boolean4CreateFlowCards: false,
+						boolean4Icon: '',
+						boolean4SeparateCapabilities: true,
+						boolean4CreateInsights: false,
+						boolean4CreateTag: false,
+						boolean4InsightsTitleTrue: '',
+						boolean4InsightsTitleFalse: '',
+						boolean5Name: 'Naam',
+						boolean5ShowAs: '',
+						boolean5CreateFlowCards: false,
+						boolean5Icon: '',
+						boolean5SeparateCapabilities: true,
+						boolean5CreateInsights: false,
+						boolean5CreateTag: false,
+						boolean5InsightsTitleTrue: '',
+						boolean5InsightsTitleFalse: '',
+						boolean6Name: 'Naam',
+						boolean6ShowAs: '',
+						boolean6CreateFlowCards: false,
+						boolean6Icon: '',
+						boolean6SeparateCapabilities: true,
+						boolean6CreateInsights: false,
+						boolean6CreateTag: false,
+						boolean6InsightsTitleTrue: '',
+						boolean6InsightsTitleFalse: '',
+						boolean7Name: 'Naam',
+						boolean7ShowAs: '',
+						boolean7CreateFlowCards: false,
+						boolean7Icon: '',
+						boolean7SeparateCapabilities: true,
+						boolean7CreateInsights: false,
+						boolean7CreateTag: false,
+						boolean7InsightsTitleTrue: '',
+						boolean7InsightsTitleFalse: '',
+						boolean8Name: 'Naam',
+						boolean8ShowAs: '',
+						boolean8CreateFlowCards: false,
+						boolean8Icon: '',
+						boolean8SeparateCapabilities: true,
+						boolean8CreateInsights: false,
+						boolean8CreateTag: false,
+						boolean8InsightsTitleTrue: '',
+						boolean8InsightsTitleFalse: '',
+						boolean9Name: 'Naam',
+						boolean9ShowAs: '',
+						boolean9CreateFlowCards: false,
+						boolean9Icon: '',
+						boolean9SeparateCapabilities: true,
+						boolean9CreateInsights: false,
+						boolean9CreateTag: false,
+						boolean9InsightsTitleTrue: '',
+						boolean9InsightsTitleFalse: '',
+						boolean10Name: 'Naam',
+						boolean10ShowAs: '',
+						boolean10CreateFlowCards: false,
+						boolean10Icon: '',
+						boolean10SeparateCapabilities: true,
+						boolean10CreateInsights: false,
+						boolean10CreateTag: false,
+						boolean10InsightsTitleTrue: '',
+						boolean10InsightsTitleFalse: '',
+						labelButton1: 'Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.',
+						button1Name: 'Naam',
+						button1ShowAs: '',
+						button1CreateFlowCards: false,
+						button1Disabled: false,
+						button1SeparateCapabilities: false,
+						button1CreateInsights: false,
+						button1CreateTag: false,
+						button1InsightsTitleTrue: '',
+						button1InsightsTitleFalse: '',
+						button2Name: 'Naam',
+						button2ShowAs: '',
+						button2CreateFlowCards: false,
+						button2Icon: '',
+						button2Disabled: false,
+						button2Checked: false,
+						button2SeparateCapabilities: false,
+						button2CreateInsights: false,
+						button2CreateTag: false,
+						button2InsightsTitleTrue: '',
+						button2InsightsTitleFalse: '',
+						button3Name: '',
+						button3ShowAs: '',
+						button3CreateFlowCards: false,
+						button3Icon: '',
+						button3Disabled: false,
+						button3Checked: false,
+						button3SeparateCapabilities: false,
+						button3CreateInsights: false,
+						button3CreateTag: false,
+						button3InsightsTitleTrue: '',
+						button3InsightsTitleFalse: '',
+						button4Name: '',
+						button4ShowAs: '',
+						button4CreateFlowCards: false,
+						button4Icon: '',
+						button4Disabled: false,
+						button4Checked: false,
+						button4SeparateCapabilities: false,
+						button4CreateInsights: false,
+						button4CreateTag: false,
+						button4InsightsTitleTrue: '',
+						button4InsightsTitleFalse: '',
+						button5Name: '',
+						button5ShowAs: '',
+						button5CreateFlowCards: false,
+						button5Icon: '',
+						button5Disabled: false,
+						button5Checked: false,
+						button5SeparateCapabilities: false,
+						button5CreateInsights: false,
+						button5CreateTag: false,
+						button5InsightsTitleTrue: '',
+						button5InsightsTitleFalse: '',
+						button6Name: '',
+						button6ShowAs: '',
+						button6CreateFlowCards: false,
+						button6Icon: '',
+						button6Disabled: false,
+						button6Checked: false,
+						button6SeparateCapabilities: false,
+						button6CreateInsights: false,
+						button6CreateTag: false,
+						button6InsightsTitleTrue: '',
+						button6InsightsTitleFalse: '',
+						button7Name: '',
+						button7ShowAs: '',
+						button7CreateFlowCards: false,
+						button7Icon: '',
+						button7Disabled: false,
+						button7Checked: false,
+						button7SeparateCapabilities: false,
+						button7CreateInsights: false,
+						button7CreateTag: false,
+						button7InsightsTitleTrue: '',
+						button7InsightsTitleFalse: '',
+						button8Name: '',
+						button8ShowAs: '',
+						button8CreateFlowCards: false,
+						button8Icon: '',
+						button8Disabled: false,
+						button8Checked: false,
+						button8SeparateCapabilities: false,
+						button8CreateInsights: false,
+						button8CreateTag: false,
+						button8InsightsTitleTrue: '',
+						button8InsightsTitleFalse: '',
+						button9Name: '',
+						button9ShowAs: '',
+						button9CreateFlowCards: false,
+						button9Icon: '',
+						button9Disabled: false,
+						button9Checked: false,
+						button9SeparateCapabilities: false,
+						button9CreateInsights: false,
+						button9CreateTag: false,
+						button9InsightsTitleTrue: '',
+						button9InsightsTitleFalse: '',
+						button10Name: '',
+						button10ShowAs: '',
+						button10CreateFlowCards: false,
+						button10Icon: '',
+						button10Disabled: false,
+						button10Checked: false,
+						button10SeparateCapabilities: false,
+						button10CreateInsights: false,
+						button10CreateTag: false,
+						button10InsightsTitleTrue: '',
+						button10InsightsTitleFalse: '',
+						labelCamerasRestart: 'Na het verwijderen van een camera (door de naam of url te wissen), is het vereist de Apparaat Mogelijkheden App test herstarten om het camerabeeld van dit virtuele apparaat te verwijderen.',
+						camera1Name: '',
+						camera1Url: '',
+						camera1Interval: 0,
+						camera2Name: '',
+						camera2Url: '',
+						camera2Interval: 0,
+						camera3Name: '',
+						camera3Url: '',
+						camera3Interval: 0,
+						camera4Name: '',
+						camera4Url: '',
+						camera4Interval: 0,
+						camera5Name: '',
+						camera5Url: '',
+						camera5Interval: 0,
+						camera6Name: '',
+						camera6Url: '',
+						camera6Interval: 0,
+						camera7Name: '',
+						camera7Url: '',
+						camera7Interval: 0,
+						camera8Name: '',
+						camera8Url: '',
+						camera8Interval: 0,
+						camera9Name: '',
+						camera9Url: '',
+						camera9Interval: 0,
+						camera10Name: '',
+						camera10Url: '',
+						camera10Interval: 0,
+						labelIcons: 'Hier krijgt u een lijst met de namen die u heeft aangepast, zodra u namen hebt gewijzigd in de app-instellingen.',
+						iconNames: 'Apparaat 1 = Living room, Apparaat 2 = DC VD, Apparaat 3 = Test, Velden 1 = curtains, Apparaat 8 = tv, Apparaat 5 = gamecontroller',
+						energy_value_constant: 0,
+						labelStatusIndicator: 'Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App.',
+						statusundefinedSeparateCapabilities: false,
+						text1SeparateCapabilities: false,
+						text2SeparateCapabilities: false,
+						text3SeparateCapabilities: false,
+						text4SeparateCapabilities: false,
+						text5SeparateCapabilities: false,
+						text6SeparateCapabilities: false,
+						text7SeparateCapabilities: false,
+						text8SeparateCapabilities: false,
+						text9SeparateCapabilities: false,
+						text10SeparateCapabilities: false,
+						number1SeparateCapabilities: true,
+						number2SeparateCapabilities: true,
+						number3SeparateCapabilities: true,
+						number4SeparateCapabilities: true,
+						number5SeparateCapabilities: true,
+						number6SeparateCapabilities: true,
+						number7SeparateCapabilities: true,
+						number8SeparateCapabilities: true,
+						number9SeparateCapabilities: true,
+						number10SeparateCapabilities: true,
+						labelBatteries: '',
+						batteries: ''
+					};
+					$scope.s = fixSetting($scope.s);
+				}
+			//});
+		}])
+		.directive('ngEnter', function () {
+			return function (scope, element, attrs) {
+				element.bind('keydown keypress', function (event) {
+					if (event.which === 13) {
+						scope.$apply(function () {
+							scope.$eval(attrs.ngEnter || attrs.ngClick, {
+								$event: event
+							});
+						});
+						event.preventDefault();
+					}
+				});
+			};
+		});
+	
+	
+	// let ctrl = document.getElementById('avdsettingsCtrl');
+	// console.log('angular', angular);		
+	// console.log('ctrl', ctrl);
+	// console.log('scopeCtrl', angular.element(ctrl).scope());
+	// console.log('scope', scope);
+	// //console.log('onHomeyReady', Homey);
+	
+	// scope.$emit('ready', Homey);
 
-		// function onHomeyReady(Homey) {
-		// 	console.log('onHomeyReady');
-		// 	var scope = angular.element(document.body).scope();
-		// 	scope.$emit('ready', Homey);
-		// }
-	</script>
-</div>
-
+	// function onHomeyReady(Homey) {
+	// 	console.log('onHomeyReady');
+	// 	var scope = angular.element(document.body).scope();
+	// 	scope.$emit('ready', Homey);
+	// }
+</script>

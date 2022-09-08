@@ -26,6 +26,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		Homeyman.Current.VirtualDevices[this.getName()] = this;
 		var caps = this.getCapabilities();
 		this.Settings = await this.getSettings();
+		//this.log('Settings', this.Settings);
 
 		if (process.env.DEBUG === '1' || this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
 			//If it's a new Version, place stuff here
