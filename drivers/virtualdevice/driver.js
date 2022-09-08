@@ -479,7 +479,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
           ];
       }
 
-     
+      async onRepair(session, device) {
+        // var s = session;
+        // await session.nextView();
+        
+        session.setHandler('list_devices', async (data) => {
+            // // emit when devices are still being searched
+            // session.emit('list_devices', devices);
+      
+            // return devices when searching is done
+            return {};
+        });
+    }
       
       async onPair(session, arg1) {
         // var s = session;

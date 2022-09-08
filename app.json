@@ -14282,6 +14282,11 @@
           "template": "add_devices"
         }
       ],
+      "repair": [        
+        {
+          "id": "avd_settings"          
+        }
+      ],
       "settings": [
         {
           "type": "group",

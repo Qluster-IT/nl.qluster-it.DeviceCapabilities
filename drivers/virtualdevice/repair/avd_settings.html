@@ -1,0 +1,125 @@
+<script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="fontawesome.css"></script>
+
+
+<!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
+<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
+
+<script type="text/javascript" src="smart-table.min.js"></script>
+
+<style type="text/css">
+	html {
+		height:auto!important;
+	}
+	.top-labels {
+		position:relative;
+		margin-top:10px;
+	}
+	.group {
+		position:relative;
+		display:block;
+		width:100%;
+		margin-top:10px;
+	}
+	.field {
+		position:relative;
+		display:block;
+		width:100%;
+	}
+	.label {
+		position:relative;
+		width:49%;
+		display:inline-block;
+	}		
+	.value {
+		position:relative;
+		width:49%;
+		display:inline-block;
+	}
+</style>
+
+
+<div ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
+	<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">By Default, when using Insights or Tags, separate hidden fields will be created. This means you cannot see in the log who changed it. For buttons, you might not want this. But when disabled, changing the properties Icon, 'Show as' or 'Create Flow Cards' will causes Tag IDs to be changed and thus may break flows, and new Insights will be created.</div>	
+	<div data-i18n="virtualdevicesettings.labelCustomIcons" class="top-labels">Enabling all fields at once and pressing save, might be hard for Homey and could take a while.</div>	
+	<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">The custom icons can be set through the App Settings.</div>
+
+	<div class="field">
+		<div class="label">Device Class</div>
+		<select class="value" ng-model="s.cls">
+			<option value="other">Other (Default)</option>
+			<option value="amplifier">Amplifier</option>
+		</select>
+	</div>
+	<div class="group">
+		<div class="label">🟪 Status Indicator Field</div>
+		<div class="field">
+			<div class="label">Naam <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="text" ng-model="s.status1Name"/>
+		</div>
+		<div class="field">
+			<div class="label">Icon <span class="fa fa-icon fa-info-circle"></span></div>
+			<div class="value"  ng-include="'iconlist.html'"></div>
+		</div>
+		<div class="field">
+			<div class="label">Decimals <span class="fa fa-icon fa-info-circle"></span></div>
+			<input class="value" type="number" min="0" max="10" step="1" ng-model="s.status1Decimals"/>
+		</div>
+	</div>
+
+	<div></div>
+	
+	<br><br>
+	<br><br>
+
+
+	<script type="text/javascript">
+		angular.module('avdsettings', ['smart-table'])
+			.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+				var Homey;
+				$scope.s = {};
+
+
+				$scope.$on('ready', function ($e, Homey_) {
+
+					// Homey.showLoadingOverlay();
+					// Homey.setTitle( Homey.__("pair.list_icons.title") );
+					
+    				// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
+
+					console.log('ready');
+					Homey = Homey_;
+					$scope.__ = Homey.__;
+
+					
+					Homey.ready();
+
+					console.log('ready done');
+				});
+			}])
+			.directive('ngEnter', function () {
+				return function (scope, element, attrs) {
+					element.bind('keydown keypress', function (event) {
+						if (event.which === 13) {
+							scope.$apply(function () {
+								scope.$eval(attrs.ngEnter || attrs.ngClick, {
+									$event: event
+								});
+							});
+							event.preventDefault();
+						}
+					});
+				};
+			});
+		//console.log('onHomeyReady', Homey);
+		// var scope = angular.element(document.body).scope();
+		// scope.$emit('ready', Homey);
+
+		// function onHomeyReady(Homey) {
+		// 	console.log('onHomeyReady');
+		// 	var scope = angular.element(document.body).scope();
+		// 	scope.$emit('ready', Homey);
+		// }
+	</script>
+</div>
+
