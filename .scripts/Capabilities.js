@@ -227,7 +227,7 @@ for(var j=0;j<sets1.length;j++) {
   '    "onoff_devicecapabilities'+val+'_button'+header+'": { \r\n'+
   '      "type": "boolean", \r\n'+
   '      "title": { \r\n'+
-  '        "en": "Yes/No" \r\n'+
+  '        "en": "Yes/No", "nl":"Ja/Nee", "de":"Ja/Nein" \r\n'+
   '      }, \r\n'+
   '      "getable": true, \r\n'+
   '      "setable": '+(val=='_disabled'?'false':'true')+', \r\n'+
