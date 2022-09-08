@@ -7,7 +7,6 @@ const path = require('path');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 
-const sandbox = require('./../../lib/sandbox');
 
 const NUMBEROFFIELDS = 10;
 
@@ -227,19 +226,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 }
             });
 		
-            
             this.homey.settings.on('set', (async function(settingName) {
-                if(settingName=='javascript_functions') {
-                  this.setFunctions();
-                }
                 if(settingName=='customIconNames') {
                     this.customIconNames = await this.homey.settings.get('customIconNames');
                   }                
           
               }).bind(this));
               this.customIconNames = await this.homey.settings.get('customIconNames');
-              await this.setFunctions();
               
+            
             //this.log('Driver size: ', this.homey.app.roughSizeOfObject(this));
     }
 
@@ -484,37 +479,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return false;
     }
 
-    async setFunctions() {			  	  
-    this.functions = await this.homey.settings.get('javascript_functions');
-    //this.log('this.functions', typeof(this.functions), this.functions);
-    this.context = {
-        _:_
-    };
-    if(this.functions && this.functions.length>0) for (let i = 0; i < this.functions.length; i++) {
-        try {          
-        const funcObj = this.functions[i];
-        
-        let func = funcObj.value.parseFunction();
-        //func.bind(this.context);
-        this.log('func', func);
-        this.context[funcObj.name] = func;
-        } catch (error) {
-        this.log('Error creating function ' + this.functions[i].name);
-        this.error(error);
-        }
-    }
-    }
-    
 
-    runSandBox(code) {
-        var context = this.context;
-        //this.log('this.context', this.context);
-        //try {
-          return sandbox(code, context);
-        //} catch (error) {
-          
-        //} 
-      }
 
     registerAutocompleteField(action) {
         return async( query, args ) => {

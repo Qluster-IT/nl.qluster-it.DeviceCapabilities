@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2177,6 +2177,58 @@
               "en": "Advanced Virtual Device",
               "nl": "Geadvanceerd Virtueel Apparaat",
               "de": "Erweitertes Virtuelles Gerät"
+            }
+          }
+        ]
+      },{
+        "id": "execute_expression",
+        "title": {
+          "en": "Set Expression",
+          "nl": "Zet Expression",
+          "de": "Bezeichnung setzen"
+        },
+        "titleFormatted": {
+          "en": "Execute [[expression]]",
+          "nl": "Voer [[expression]] uit",
+          "de": "Führen Sie [[expression]] aus"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "expression",
+            "placeholder": {
+              "en": "Expression",
+              "nl": "Expression",
+              "de": "Bezeichnung"
+            }
+          }
+        ],
+        "tokens": [          
+          {
+            "name": "text",
+            "type": "string",
+            "title": {
+              "en": "Text",
+              "nl": "Tekst",
+              "de": "Text"
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer",
+              "de": "Nummer"
+            }
+          },
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Yes/No",
+              "nl": "Ja/Nee",
+              "de": "Ja/Nein"
             }
           }
         ]
