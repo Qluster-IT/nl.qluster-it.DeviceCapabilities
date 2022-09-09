@@ -46,7 +46,9 @@
 		"devicecapabilities_starttext":"To Start",
 		
 		"title_repair":"Device Settings",
-		"device_saving":"The Device is being saved"
+		"device_saving":"The Device is being saved",
+
+		"titleGeneral":"General"
 	},
 	"pair": {
 		"list_icons":{

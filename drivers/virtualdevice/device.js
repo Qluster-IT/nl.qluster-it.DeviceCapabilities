@@ -311,12 +311,27 @@ module.exports = class WatchDevice extends Homey.Device {
 							else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
 							break;
 						case "boolean":
+							switch (settings[type + i + 'ShowAs']) {
+								case undefined:
+								case null:
+								case "": sensor = true; break;
+								case "sensor": sensor = true; break;
+								default:
+									capSet = true;
+									break;
+							}
 							let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
 							let quickAction = settings[type + i + 'ShowAs'] === 'onoff';// || settings[type + i + 'ShowAs']=='';
 							cap =
 								(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + //(disabled ? 'disabled_' : '') + 
 								type + icon + '.' + type + i;
 							if (quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
+							
+							if (capSet) {
+								let caps = this.getCaps(type, i, settings, oldCap);
+								cap = caps.cap;
+								oldCap = caps.oldCap;
+							}
 							break;
 						case "button":
 							switch (settings[type + i + 'ShowAs']) {
