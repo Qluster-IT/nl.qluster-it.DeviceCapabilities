@@ -84,16 +84,20 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			// await this.setSettings(newSettings);
 			// this.Settings = await this.getSettings();
-
-			this.setStoreValue('Version', this.homey.app.manifest.version);
-			for (let i = 0; i < caps.length; i++) {
-				let fieldId = this.getStoreValue(caps[i]);
-				let _cap = caps[i].split('.')[0];
-				if(caps[i].indexOf('devicecapabilities')>-1 && !this.homey.app.manifest.capabilities[_cap]) {
-					this.removeCapability(caps[i]);
-					continue;
-					//this.log('cap doesn\'t exists any more', caps[i]);
+			try {
+				
+				this.setStoreValue('Version', this.homey.app.manifest.version);
+				for (let i = 0; i < caps.length; i++) {
+					let fieldId = this.getStoreValue(caps[i]);
+					let _cap = caps[i].split('.')[0];
+					if(caps[i].indexOf('devicecapabilities')>-1 && !this.homey.app.manifest.capabilities[_cap]) {
+						this.removeCapability(caps[i]);
+						continue;
+						//this.log('cap doesn\'t exists any more', caps[i]);
+					}
 				}
+			} catch (error) {
+				this.error(error);
 			}
 			await this.loadFromSettings(this.Settings, this.Settings, []); //Do i want to keep this in or is this just for testing?
 		} else {

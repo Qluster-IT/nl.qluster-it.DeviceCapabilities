@@ -121,7 +121,8 @@ ______________________________________
 Wanneer setCapabilityOptions (units) wordt uitgevoerd, blijft Mobile App bijna compleet hangen (terwijl deze niet wordt geupdate(!))
 ______________________________________
 
-
+Capability booleans alarm_ met .boolean1 erachter, maakt wel flowkaarten aan, maar die werken niet.
+zonder .boolean1 werken ze wel.
 ______________________________________
 
 
