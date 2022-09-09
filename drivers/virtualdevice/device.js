@@ -7,6 +7,10 @@ const _ = require('lodash-core');
 
 module.exports = class WatchDevice extends Homey.Device {
 
+
+	onDeleted() {
+		//delete Homeyman.Current.VirtualDevices[this.getName()];
+	}
 	// this method is called when the Device is inited
 	async onInit() {
 		this.log('Device init');
@@ -22,7 +26,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		}
 
 
-		Homeyman.Current.VirtualDevices[this.getName()] = this;
+		//Homeyman.Current.VirtualDevices[this.getName()] = this;
 		var caps = this.getCapabilities();
 
 
@@ -442,7 +446,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						let decimals = settings[type + i + 'Decimals'];// decimals = decimals===1?undefined:null;
 						let max = settings[type + i + 'Max'];///max = max===1?undefined:null;
 						let min = settings[type + i + 'Min'];///min = min===1?undefined:null;
-
+						let step = settings[type + i + 'Step'];
 
 
 						let capOptionsChanged = 
@@ -457,7 +461,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							values ||
 							(decimals != oldSettings[type + i + 'Decimals']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  ||
 							(min != oldSettings[type + i + 'Min']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && min!==-1 && !oldSettings[type + i + 'Min'])  ||
-							(max != oldSettings[type + i + 'Max']); //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && max!==-1 && !oldSettings[type + i + 'Max']) 
+							(max != oldSettings[type + i + 'Max']) ||
+							(step != oldSettings[type + i + 'Step']) ;
 							//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 						if (capOptionsChanged) {
@@ -612,7 +617,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		
 	}
 
-	getOptions({type, i, settings, decimals, min, max, name, units}) {
+	getOptions({type, i, settings, decimals, min, max, name, units, step}) {
 		let optNew = {
 			title: name,
 			preventInsights: true,
@@ -627,6 +632,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		if (decimals!==undefined) optNew.decimals = decimals;
 		if (min!==undefined) optNew.min = min;
 		if (max!==undefined) optNew.max = max;
+		if (step!==undefined) optNew.step = step;
 		return optNew;
 	}
 };
