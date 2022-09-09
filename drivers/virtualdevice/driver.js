@@ -458,10 +458,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     // and the 'list_devices' view is called
       async onPairListDevices( ) {
         var index = 0;
-        var count = Object.keys(DeviceSetter.Current.VirtualDevices).length;
-        for (const key in DeviceSetter.Current.VirtualDevices) {
-            if (Object.hasOwnProperty.call(DeviceSetter.Current.VirtualDevices, key)) {
-                const element = DeviceSetter.Current.VirtualDevices[key];
+        var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+        //var count = Object.keys(devices).length;
+        for (const key in devices) {
+            if (Object.hasOwnProperty.call(devices, key)) {
+                const element = devices[key];
                 try {                    
                     var _id = element.getData().id;
                     var nr =Number.parseInt(_id.split('_')[1]);

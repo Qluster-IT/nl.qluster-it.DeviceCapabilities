@@ -1,474 +1,584 @@
 const asv_settings = {
-    numberShowAs:  [
-        {
-          "id": "",
-          "label": " "
-        },
+    numberShowAs:  [        
         {
           "id": "sensor",
-          "label": "Sensor (Default)"
+          "label": "Sensor (Default)",
+          "order": 0
         },
         {
           "id": "target_temperature",
-          "label": "Temperature (target)"
+          "label": "Temperature (Target)",
+          "order": 1
         },
         {
           "id": "measure_temperature",
-          "label": "Temperature (measure)"
+          "label": "Temperature (Measure)",
+          "order": 1
         },
         {
           "id": "dim",
-          "label": "Dim"
+          "label": "Dim",
+          "order": 2
         },
         {
           "id": "light_hue",
-          "label": "Hue"
+          "label": "Hue",
+          "order": 2
         },
         {
           "id": "light_saturation",
-          "label": "Color Saturation"
+          "label": "Color Saturation",
+          "order": 2
         },
         {
           "id": "light_temperature",
-          "label": "Color Temperature"
+          "label": "Color Temperature",
+          "order": 2
         },
         {
           "id": "measure_battery",
-          "label": "Battery"
+          "label": "Battery",
+          "order": 2
         },
         {
           "id": "volume_set",
-          "label": "Set Volume"
+          "label": "Set Volume",
+          "order": 2
         },
         {
           "id": "windowcoverings_tilt_set",
-          "label": "Window Coverings tilt set"
+          "label": "Window Coverings tilt set",
+          "order": 2
         },
         {
           "id": "windowcoverings_set",
-          "label": "Window Coverings Position"
+          "label": "Window Coverings Position",
+          "order": 2
         },
         {
           "id": "speaker_duration",
-          "label": "Speaker Duration"
+          "label": "Speaker Duration",
+          "order": 2
         },
         {
           "id": "speaker_position",
-          "label": "Speaker Position"
+          "label": "Speaker Position",
+          "order": 2
         },
         {
           "id": "measure_co",
-          "label": "CO (Sensor)"
+          "label": "CO (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_co2",
-          "label": "CO2 (Sensor)"
+          "label": "CO2 (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_pm25",
-          "label": "PM2.5 (Sensor)"
+          "label": "PM2.5 (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_humidity",
-          "label": "Humidity (Sensor)"
+          "label": "Humidity (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_pressure",
-          "label": "Pressure (Sensor)"
+          "label": "Pressure (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_noise",
-          "label": "Noise (Sensor)"
+          "label": "Noise (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_rain",
-          "label": "Rain (Sensor)"
+          "label": "Rain (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_wind_strength",
-          "label": "Wind strength (Sensor)"
+          "label": "Wind strength (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_wind_angle",
-          "label": "Wind angle (Sensor)"
+          "label": "Wind angle (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_gust_strength",
-          "label": "Gust strength (Sensor)"
+          "label": "Gust strength (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_gust_angle",
-          "label": "Gust angle (Sensor)"
+          "label": "Gust angle (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_power",
-          "label": "Power (Sensor)"
+          "label": "Power (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_voltage",
-          "label": "Voltage (Sensor)"
+          "label": "Voltage (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_current",
-          "label": "Current (Sensor)"
+          "label": "Current (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_luminance",
-          "label": "Luminance (Sensor)"
+          "label": "Luminance (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_ultraviolet",
-          "label": "Ultraviolet (Sensor)"
+          "label": "Ultraviolet (Sensor)",
+          "order": 3
         },
         {
           "id": "measure_water",
-          "label": "Water flow (Sensor)"
+          "label": "Water flow (Sensor)",
+          "order": 3
         },
         {
           "id": "meter_power",
-          "label": "Energy (Sensor)"
+          "label": "Energy (Sensor)",
+          "order": 3
         },
         {
           "id": "meter_water",
-          "label": "Water meter (Sensor)"
+          "label": "Water meter (Sensor)",
+          "order": 3
         },
         {
           "id": "meter_gas",
-          "label": "Gas meter (Sensor)"
+          "label": "Gas meter (Sensor)",
+          "order": 3
         },
         {
           "id": "meter_rain",
-          "label": "Rain meter (Sensor)"
+          "label": "Rain meter (Sensor)",
+          "order": 3
         }
     ],
     textShowAs: [
         {
           "id": "sensor",
-          "label": "Sensor (Default)"
+          "label": "Sensor (Default)",
+          "order": 0
         },
         {
           "id": "speaker_artist",
-          "label": "Artist"
+          "label": "Artist",
+          "order": 2
         },
         {
           "id": "speaker_album",
-          "label": "Album"
+          "label": "Album",
+          "order": 2
         },
         {
           "id": "speaker_track",
-          "label": "Track"
+          "label": "Track",
+          "order": 2
         }
     ],
     booleanShowAs: [
         {
           "id": "sensor",
-          "label": "Sensor (Default)"
+          "label": "Sensor (Default)",
+          "order": 0
         },
         {
           "id": "alarm",
-          "label": "Alarm"
+          "label": "Alarm",
+          "order": 1
         },
         {
           "id": "onoff",
-          "label": "On/Off (Button Tab)"
+          "label": "On/Off (Button Tab)",
+          "order": 1
         },
         {
           "id": "alarm_generic",
-          "label": "Generic alarm"
+          "label": "Generic alarm",
+          "order": 2
         },
         {
           "id": "alarm_motion",
-          "label": "Motion alarm"
+          "label": "Motion alarm",
+          "order": 2
         },
         {
           "id": "alarm_contact",
-          "label": "Contact alarm"
+          "label": "Contact alarm",
+          "order": 2
         },
         {
           "id": "alarm_co",
-          "label": "CO alarm"
+          "label": "CO alarm",
+          "order": 2
         },
         {
           "id": "alarm_co2",
-          "label": "CO2 alarm"
+          "label": "CO2 alarm",
+          "order": 2
         },
         {
           "id": "alarm_pm25",
-          "label": "PM2.5 alarm"
+          "label": "PM2.5 alarm",
+          "order": 2
         },
         {
           "id": "alarm_tamper",
-          "label": "Tamper alarm"
+          "label": "Tamper alarm",
+          "order": 2
         },
         {
           "id": "alarm_smoke",
-          "label": "Smoke alarm"
+          "label": "Smoke alarm",
+          "order": 2
         },
         {
           "id": "alarm_fire",
-          "label": "Fire alarm"
+          "label": "Fire alarm",
+          "order": 2
         },
         {
           "id": "alarm_heat",
-          "label": "Heat alarm"
+          "label": "Heat alarm",
+          "order": 2
         },
         {
           "id": "alarm_water",
-          "label": "Water alarm"
+          "label": "Water alarm",
+          "order": 2
         },
         {
           "id": "alarm_night",
-          "label": "Night alarm"
+          "label": "Night alarm",
+          "order": 2
         }
     ],
     buttonShowAs1: [
         {
           "id": "button",
-          "label": "Push Button (Default)"
+          "label": "Push Button (Default)",
+          "order": 0
         },
         {
           "id": "indicatoronly",
-          "label": "Indicator Only"
+          "label": "Indicator Only",
+          "order": 1
         },
         {
           "id": "pushbutton_indicator",
-          "label": "Pushbutton and separate Indicator"
+          "label": "Pushbutton and separate Indicator",
+          "order": 1
         },
         {
           "id": "onoff_hide",
-          "label": "On/Off (Hidden)"
+          "label": "On/Off (Hidden)",
+          "order": 1
         },                
         {
           "id": "onoff",
-          "label": "On/Off"
+          "label": "On/Off",
+          "order": 1
         },
         {
           "id": "locked",
-          "label": "Lock"
+          "label": "Lock",
+          "order": 2
         },
         {
           "id": "garagedoor_closed",
-          "label": "Garagedoor Closed"
+          "label": "Garagedoor Closed",
+          "order": 2
         },
         {
           "id": "windowcoverings_closed",
-          "label": "Windowcoverings Closed"
+          "label": "Windowcoverings Closed",
+          "order": 2
         },
         {
           "id": "speaker_playing",
-          "label": "Speaker Playing"
+          "label": "Speaker Playing",
+          "order": 2
         },
         {
           "id": "speaker_next",
-          "label": "Speaker Next"
+          "label": "Speaker Next",
+          "order": 2
         },
         {
           "id": "speaker_prev",
-          "label": "Speaker Previous"
+          "label": "Speaker Previous",
+          "order": 2
         },
         {
           "id": "speaker_shuffle",
-          "label": "Speaker Shuffle"
+          "label": "Speaker Shuffle",
+          "order": 2
         },
         {
           "id": "volume_mute",
-          "label": "Volume muted"
+          "label": "Volume muted",
+          "order": 2
         },
         {
           "id": "volume_up",
-          "label": "Volume up"
+          "label": "Volume up",
+          "order": 2
         },
         {
           "id": "volume_down",
-          "label": "Volume down"
+          "label": "Volume down",
+          "order": 2
         },
         {
           "id": "channel_up",
-          "label": "Channel up"
+          "label": "Channel up",
+          "order": 2
         },
         {
           "id": "channel_down",
-          "label": "Channel down"
+          "label": "Channel down",
+          "order": 2
         },
         {
           "id": "windowcoverings_tilt_up",
-          "label": "Window coverings tilt up"
+          "label": "Window coverings tilt up",
+          "order": 2
         },
         {
           "id": "windowcoverings_tilt_down",
-          "label": "Window coverings tilt down"
+          "label": "Window coverings tilt down",
+          "order": 2
         }
     ],
     buttonShowAsRest: [
         {
           "id": "button",
-          "label": "Push Button (Default)"
+          "label": "Push Button (Default)",
+          "order": 0
         },
         {
           "id": "onoff",
-          "label": "On/Off"
+          "label": "On/Off",
+          "order": 1
         },
         {
           "id": "onoff_buttontab",
-          "label": "On/Off (Button Tab)"
+          "label": "On/Off (Button Tab)",
+          "order": 1
         },
         {
           "id": "locked",
-          "label": "Lock"
+          "label": "Lock",
+          "order": 2
         },
         {
           "id": "garagedoor_closed",
-          "label": "Garagedoor Closed"
+          "label": "Garagedoor Closed",
+          "order": 2
         },
         {
           "id": "windowcoverings_closed",
-          "label": "Windowcoverings Closed"
+          "label": "Windowcoverings Closed",
+          "order": 2
         },
         {
           "id": "speaker_playing",
-          "label": "Speaker Playing"
+          "label": "Speaker Playing",
+          "order": 2
         },
         {
           "id": "speaker_next",
-          "label": "Speaker Next"
+          "label": "Speaker Next",
+          "order": 2
         },
         {
           "id": "speaker_prev",
-          "label": "Speaker Previous"
+          "label": "Speaker Previous",
+          "order": 2
         },
         {
           "id": "speaker_shuffle",
-          "label": "Speaker Shuffle"
+          "label": "Speaker Shuffle",
+          "order": 2
         },
         {
           "id": "volume_mute",
-          "label": "Volume muted"
+          "label": "Volume muted",
+          "order": 2
         },
         {
           "id": "volume_up",
-          "label": "Volume up"
+          "label": "Volume up",
+          "order": 2
         },
         {
           "id": "volume_down",
-          "label": "Volume down"
+          "label": "Volume down",
+          "order": 2
         },
         {
           "id": "channel_up",
-          "label": "Channel up"
+          "label": "Channel up",
+          "order": 2
         },
         {
           "id": "channel_down",
-          "label": "Channel down"
+          "label": "Channel down",
+          "order": 2
         },
         {
           "id": "windowcoverings_tilt_up",
-          "label": "Window coverings tilt up"
+          "label": "Window coverings tilt up",
+          "order": 2
         },
         {
           "id": "windowcoverings_tilt_down",
-          "label": "Window coverings tilt down"
+          "label": "Window coverings tilt down",
+          "order": 2
         }
     ],
     deviceClasses: [
         {
           "id": "other",
-          "label": "Other (Default)"
+          "label": "Other (Default)",
+          "order": 0
         },
         {
           "id": "amplifier",
-          "label": "Amplifier"
+          "label": "Amplifier",
+          "order": 2
         },
         {
           "id": "blinds",
-          "label": "Blinds"
+          "label": "Blinds",
+          "order": 2
         },
         {
           "id": "button",
-          "label": "Button"
+          "label": "Button",
+          "order": 2
         },
         {
           "id": "camera",
-          "label": "Camera"
+          "label": "Camera",
+          "order": 2
         },
         {
           "id": "coffeemachine",
-          "label": "Coffee machine"
+          "label": "Coffee machine",
+          "order": 2
         },
         {
           "id": "curtain",
-          "label": "Curtains"
+          "label": "Curtains",
+          "order": 2
         },
         {
           "id": "doorbell",
-          "label": "Doorbell"
+          "label": "Doorbell",
+          "order": 2
         },
         {
           "id": "fan",
-          "label": "Fan"
+          "label": "Fan",
+          "order": 2
         },
         {
           "id": "garagedoor",
-          "label": "Garage door"
+          "label": "Garage door",
+          "order": 2
         },
         {
           "id": "heater",
-          "label": "Heater"
+          "label": "Heater",
+          "order": 2
         },
         {
           "id": "homealarm",
-          "label": "Home Security"
+          "label": "Home Security",
+          "order": 2
         },
         {
           "id": "kettle",
-          "label": "Kettle"
+          "label": "Kettle",
+          "order": 2
         },
         {
           "id": "light",
-          "label": "Light"
+          "label": "Light",
+          "order": 2
         },
         {
           "id": "lock",
-          "label": "Lock"
+          "label": "Lock",
+          "order": 2
         },
         {
           "id": "remote",
-          "label": "Remote"
+          "label": "Remote",
+          "order": 2
         },
         {
           "id": "sensor",
-          "label": "Sensor"
+          "label": "Sensor",
+          "order": 2
         },
         {
           "id": "socket",
-          "label": "Wall Plug"
+          "label": "Wall Plug",
+          "order": 2
         },
         {
           "id": "speaker",
-          "label": "Speaker"
+          "label": "Speaker",
+          "order": 2
         },
         {
           "id": "solarpanel",
-          "label": "Solar Panel"
+          "label": "Solar Panel",
+          "order": 2
         },
         {
           "id": "sunshade",
-          "label": "Sunshade"
+          "label": "Sunshade",
+          "order": 2
         },
         {
           "id": "thermostat",
-          "label": "Thermostat"
+          "label": "Thermostat",
+          "order": 2
         },
         {
           "id": "tv",
-          "label": "TV"
+          "label": "TV",
+          "order": 2
         },
         {
           "id": "vacuumcleaner",
-          "label": "Vacuum Cleaner"
+          "label": "Vacuum Cleaner",
+          "order": 2
         },
         {
           "id": "windowcoverings",
-          "label": "Window Coverings"
+          "label": "Window Coverings",
+          "order": 2
         }
     ],
 
@@ -1471,7 +1581,7 @@ const asv_settings = {
 
     exampleSettings: {
         "numberOfTextFields": 0,
-        "numberOfNumberFields": 0,
+        "numberOfNumberFields": 1,
         "numberOfBooleanFields": 0,
         "numberOfButtons": 0,
         "energy_value_constant": 0,
@@ -1518,7 +1628,7 @@ const asv_settings = {
         "boolean4InsightsTitleTrue": "",
         "boolean4InsightsTitleFalse": "",
         "status1Name": "[Status]",
-        "status1Decimals": undefined,
+        "status1Decimals": 0,
         "status1PreventInsights": false,
         "button1Name": "Button1",
         "button2Name": "Btn2.",
@@ -2012,3 +2122,9 @@ const asv_settings = {
 
     
 };
+
+let arr = ['booleanShowAs', 'buttonShowAs1', 'buttonShowAsRest', 'numberShowAs', 'textShowAs'];
+for (let i = 0; i < arr.length; i++)     
+    asv_settings[arr[i]] = _.sortBy(asv_settings[arr[i]], function(x){ return x.order + x.label;});
+    
+

@@ -1,4 +1,5 @@
 <script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="lodash.js"></script>
 <script type="text/javascript" src="avd_settings.js"></script>
 
 
@@ -20,7 +21,7 @@
 		min-height:24px;
 		font-size: 20px;
 	}
-	
+
 	.top-labels {
 		position:relative;
 		margin-top:10px;
@@ -339,11 +340,15 @@
 				</div>						
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.min') || 'Min'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.minHint') || 'The minimum value for the Number.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
-					<input class="value" type="number" ng-model="s['number'+($index+1)+'Min']" ng-blur="onBlurNumber($event)"/>
-				</div>			
+					<input class="value" type="number" ng-model="s['number'+($index+1)+'Min']" step="{{s['number'+($index+1)+'Step']}}" ng-blur="onBlurNumber($event)"/>
+				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.max') || 'Max'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.maxHint') || 'The maximum value for the Number.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
-					<input class="value" type="number" ng-model="s['number'+($index+1)+'Max']" ng-blur="onBlurNumber($event)"/>
+					<input class="value" type="number" ng-model="s['number'+($index+1)+'Max']" step="{{s['number'+($index+1)+'Step']}}" ng-blur="onBlurNumber($event)"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.step') || 'Step'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.stepHint') || 'The maximum value for the Number.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
+					<input class="value" type="number" ng-model="s['number'+($index+1)+'Step']"  ng-blur="onBlurNumber($event)"/>
 				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
@@ -549,7 +554,7 @@
 					scope.hidden = true;
 
 					var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
-					tooltipElement.append("<div>" + text + "</div>");
+					tooltipElement.append("<div>" + text.replace('\r\n', '<br/>') + "</div>");
 
 					element.parent().append(tooltipElement);
 					element

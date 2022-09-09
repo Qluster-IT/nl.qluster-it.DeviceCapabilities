@@ -57,7 +57,7 @@ class DeviceSetter extends Homey.App {
 
 	async onInit() {
 		DeviceSetter.Current = this;        
-        this.VirtualDevices = {};
+        //this.VirtualDevices = {};
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
@@ -430,7 +430,8 @@ class DeviceSetter extends Homey.App {
 
 		var virtualdevice_set_available = this.homey.flow.getActionCard('virtualdevice_set_available').registerRunListener(async (args, state) => {
 			try {
-				var device = _.find(this.VirtualDevices, dv=> dv.__id==args.device.id);
+				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+				var device = _.find(devices, dv=> dv.__id==args.device.id);
 				device.setAvailable();
 				//args.device.setAvailable();
 			} catch (error) {
@@ -442,7 +443,8 @@ class DeviceSetter extends Homey.App {
 		
 		var virtualdevice_set_unavailable = this.homey.flow.getActionCard('virtualdevice_set_unavailable').registerRunListener(async (args, state) => {
 			try {
-				var device = _.find(this.VirtualDevices, dv=> dv.__id==args.device.id);
+				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+				var device = _.find(devices, dv=> dv.__id==args.device.id);
 				device.setUnavailable(args.text);
 			} catch (error) {
 				this.log('action_virtualdevice_set_name:');

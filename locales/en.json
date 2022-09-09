@@ -108,8 +108,8 @@
 		"createBooleanField":"Create Yes/No-Field",
 		"createButtonField":"Create Button",
 		"createCameraField":"Create Camera",
-		"":"",
-		"":"",
+		"step":"Step",
+		"stepHint":"The step sets the stepping interval for the Number.",
 		"":""
 	},
 	"pair": {
