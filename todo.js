@@ -1,3 +1,8 @@
+// https://emojipedia.org/symbols/
+
+
+
+
 
 /// status update elke keer met device options?
 /**

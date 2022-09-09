@@ -146,7 +146,25 @@
   "2.0.11" : {
     "en" : "Added: Classes"
   },
-  "2.0.12" : {
+  "2.0.13" : {
     "en" : "Added: App Flowcard: Execute Expression (as tokens) "
+  },
+  "2.0.14" : {
+    "en" : "Improved: Device Settings"
+  },
+  "2.1.0" : {
+    "en" : "Improved: Device Icons are per device and can be changed later."
+  },
+  "2.2.1" : {
+    "en" : "Improved: Device Repair is the new Device Settings (in development)"
+  },
+  "2.2.3" : {
+    "en" : "Improved: Device Repair is the new Device Settings (Saving works)"
+  },
+  "2.2.4" : {
+    "en" : "Improved: Device Repair is the new Device Settings (language done)"
+  },
+  "2.2.9" : {
+    "en" : "Improved: Device Repair is the new Device Settings (almost done)"
   }
 }

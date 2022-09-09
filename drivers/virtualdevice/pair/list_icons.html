@@ -1,5 +1,6 @@
 <script src='../../../assets/vue.min.js'></script>
-<div class="hy-view visible" data-id="icons"><style>
+<div class="hy-view visible" data-id="icons">
+  <style>
     [v-cloak] {
         display: none;
     }
@@ -44,6 +45,7 @@
     margin-top: 20px;
     text-align: center;
     margin: 0 auto;
+    padding:10px;
   }
   #preview-innerframe img {
     width: 125px;
@@ -64,11 +66,13 @@
     $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
 
     Homey.emit('list_icons', null, function (err, result) {
+      console.log('list_icons');
+      console.log(result);
 
       new Vue({
             el: '#icon_list',
             data: {
-                iconCategories: result.icons,
+                iconCategories: result,
             },
             mounted() {
                 Homey.hideLoadingOverlay();
@@ -116,7 +120,11 @@
 
 </script>
 
-<!-- <div>
+<div>
+  <span data-i18n="pair.list_icons.set_icon_and_customize"></span>  
+  <span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
+</div>
+<div style="margin-top:20px;">
     <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br/>
     <div class="form-group" style="margin-top:10px;">
         <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
@@ -129,23 +137,31 @@
     <div class="form-group buttons" style="margin-top:10px;">
       <button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
     </div>  
-</div> -->
-<div>
-  <span data-i18n="pair.list_icons.set_icon_and_customize"></span>
 </div>
 
-<div style="margin-top:10px;">
-  <!-- <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/> -->
+<div style="margin-top:20px;">
+  <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
   
   <ul id="icon_list">
         <div v-for="(cat, index) in iconCategories" :key="index" class="category">
           <h1  class="category-title">{{cat.title}}</h1>
           <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
             <label for="icon" class="icon-wrap">
-              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
-              <div class="icon id">{{item.subid}}</div>
+              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item}"  title="{{item}}"></div>
             </label>
           </div>
         </div>
   </ul> 
+
+  <!-- <ul id="icon_list">
+    <div v-for="(cat, index) in iconCategories" :key="index" class="category">
+      <h1  class="category-title">{{cat.title}}</h1>
+      <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
+        <label for="icon" class="icon-wrap">
+          <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
+          <div class="icon id">{{item.subid}}</div>
+        </label>
+      </div>
+    </div>
+  </ul>  -->
 </div> 

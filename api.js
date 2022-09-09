@@ -8,8 +8,8 @@ module.exports = {
     async getCustomIcons({ homey, query }) {
         return await homey.app.getCustomIcons();    
     },
-    async setFromDefaultIcon({ homey,  body: { customicon, defaulticon } }) {
-        return await homey.app.setFromDefaultIcon({ customicon, defaulticon });
+    async setFromDefaultIcon({ homey,  body: { customicon, defaulticon, deviceicon } }) {
+        return await homey.app.setFromDefaultIcon({ customicon, defaulticon, deviceicon });
     },
     async getIcons({ homey, query }) {
         return await homey.app.getIcons();    

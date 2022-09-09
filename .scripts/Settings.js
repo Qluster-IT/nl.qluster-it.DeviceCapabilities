@@ -2,88 +2,88 @@ var fields = 10;
 var icons = '              "values": [ \r\n' +
 '                {"id": "","label": {"en": " "}}, \r\n' + 
 '                {"id": " ","label": {"en": "-----   Devices           -----"}}, \r\n' + 
-'                {"id": "custom_1","label": {"en": "device_1"}}, \r\n' + 
-'                {"id": "custom_2","label": {"en": "device_2"}}, \r\n' + 
-'                {"id": "custom_3","label": {"en": "device_3"}}, \r\n' + 
-'                {"id": "custom_4","label": {"en": "device_4"}}, \r\n' + 
-'                {"id": "custom_5","label": {"en": "device_5"}}, \r\n' + 
-'                {"id": "custom_6","label": {"en": "device_6"}}, \r\n' + 
-'                {"id": "custom_7","label": {"en": "device_7"}}, \r\n' + 
-'                {"id": "custom_8","label": {"en": "device_8"}}, \r\n' + 
-'                {"id": "custom_9","label": {"en": "device_9"}}, \r\n' + 
-'                {"id": "custom_10","label": {"en": "device_10"}}, \r\n' + 
-'                {"id": "custom_11","label": {"en": "device_11"}}, \r\n' + 
-'                {"id": "custom_12","label": {"en": "device_12"}}, \r\n' + 
-'                {"id": "custom_13","label": {"en": "device_13"}}, \r\n' + 
-'                {"id": "custom_14","label": {"en": "device_14"}}, \r\n' + 
-'                {"id": "custom_15","label": {"en": "device_15"}}, \r\n' + 
-'                {"id": "custom_16","label": {"en": "device_16"}}, \r\n' + 
-'                {"id": "custom_17","label": {"en": "device_17"}}, \r\n' + 
-'                {"id": "custom_18","label": {"en": "device_18"}}, \r\n' + 
-'                {"id": "custom_19","label": {"en": "device_19"}}, \r\n' + 
-'                {"id": "custom_20","label": {"en": "device_20"}}, \r\n' + 
-'                {"id": "custom_61","label": {"en": "device_21"}}, \r\n' + 
-'                {"id": "custom_62","label": {"en": "device_22"}}, \r\n' + 
-'                {"id": "custom_63","label": {"en": "device_23"}}, \r\n' + 
-'                {"id": "custom_64","label": {"en": "device_24"}}, \r\n' + 
-'                {"id": "custom_65","label": {"en": "device_25"}}, \r\n' + 
-'                {"id": "custom_66","label": {"en": "device_26"}}, \r\n' + 
-'                {"id": "custom_67","label": {"en": "device_27"}}, \r\n' + 
-'                {"id": "custom_68","label": {"en": "device_28"}}, \r\n' + 
-'                {"id": "custom_69","label": {"en": "device_29"}}, \r\n' + 
-'                {"id": "custom_70","label": {"en": "device_30"}}, \r\n' + 
-'                {"id": "custom_71","label": {"en": "device_31"}}, \r\n' + 
-'                {"id": "custom_72","label": {"en": "device_32"}}, \r\n' + 
-'                {"id": "custom_73","label": {"en": "device_33"}}, \r\n' + 
-'                {"id": "custom_74","label": {"en": "device_34"}}, \r\n' + 
-'                {"id": "custom_75","label": {"en": "device_35"}}, \r\n' + 
-'                {"id": "custom_76","label": {"en": "device_36"}}, \r\n' + 
-'                {"id": "custom_77","label": {"en": "device_37"}}, \r\n' + 
-'                {"id": "custom_78","label": {"en": "device_38"}}, \r\n' + 
-'                {"id": "custom_79","label": {"en": "device_39"}}, \r\n' + 
-'                {"id": "custom_80","label": {"en": "device_40"}}, \r\n' + 
+'                {"id": "custom_1","label": {"en":"Device 1","nl":"Apparaat 1","de":""}}, \r\n' + 
+'                {"id": "custom_2","label": {"en":"Device 2","nl":"Apparaat 2","de":""}}, \r\n' + 
+'                {"id": "custom_3","label": {"en":"Device 3","nl":"Apparaat 3","de":""}}, \r\n' + 
+'                {"id": "custom_4","label": {"en":"Device 4","nl":"Apparaat 4","de":""}}, \r\n' + 
+'                {"id": "custom_5","label": {"en":"Device 5","nl":"Apparaat 5","de":""}}, \r\n' + 
+'                {"id": "custom_6","label": {"en":"Device 6","nl":"Apparaat 6","de":""}}, \r\n' + 
+'                {"id": "custom_7","label": {"en":"Device 7","nl":"Apparaat 7","de":""}}, \r\n' + 
+'                {"id": "custom_8","label": {"en":"Device 8","nl":"Apparaat 8","de":""}}, \r\n' + 
+'                {"id": "custom_9","label": {"en":"Device 9","nl":"Apparaat 9","de":""}}, \r\n' + 
+'                {"id": "custom_10","label": {"en":"Device 10","nl":"Apparaat 10","de":""}}, \r\n' + 
+'                {"id": "custom_11","label": {"en":"Device 11","nl":"Apparaat 11","de":""}}, \r\n' + 
+'                {"id": "custom_12","label": {"en":"Device 12","nl":"Apparaat 12","de":""}}, \r\n' + 
+'                {"id": "custom_13","label": {"en":"Device 13","nl":"Apparaat 13","de":""}}, \r\n' + 
+'                {"id": "custom_14","label": {"en":"Device 14","nl":"Apparaat 14","de":""}}, \r\n' + 
+'                {"id": "custom_15","label": {"en":"Device 15","nl":"Apparaat 15","de":""}}, \r\n' + 
+'                {"id": "custom_16","label": {"en":"Device 16","nl":"Apparaat 16","de":""}}, \r\n' + 
+'                {"id": "custom_17","label": {"en":"Device 17","nl":"Apparaat 17","de":""}}, \r\n' + 
+'                {"id": "custom_18","label": {"en":"Device 18","nl":"Apparaat 18","de":""}}, \r\n' + 
+'                {"id": "custom_19","label": {"en":"Device 19","nl":"Apparaat 19","de":""}}, \r\n' + 
+'                {"id": "custom_20","label": {"en":"Device 20","nl":"Apparaat 20","de":""}}, \r\n' + 
 '                {"id": "  ","label": {"en": "-----   Capabilities      -----"}}, \r\n' + 
-'                {"id": "custom_21","label": {"en": "capabilities_1"}}, \r\n' + 
-'                {"id": "custom_22","label": {"en": "capabilities_2"}}, \r\n' + 
-'                {"id": "custom_23","label": {"en": "capabilities_3"}}, \r\n' + 
-'                {"id": "custom_24","label": {"en": "capabilities_4"}}, \r\n' + 
-'                {"id": "custom_25","label": {"en": "capabilities_5"}}, \r\n' + 
-'                {"id": "custom_26","label": {"en": "capabilities_6"}}, \r\n' + 
-'                {"id": "custom_27","label": {"en": "capabilities_7"}}, \r\n' + 
-'                {"id": "custom_28","label": {"en": "capabilities_8"}}, \r\n' + 
-'                {"id": "custom_29","label": {"en": "capabilities_9"}}, \r\n' + 
-'                {"id": "custom_30","label": {"en": "capabilities_10"}}, \r\n' + 
-'                {"id": "custom_31","label": {"en": "capabilities_11"}}, \r\n' + 
-'                {"id": "custom_32","label": {"en": "capabilities_12"}}, \r\n' + 
-'                {"id": "custom_33","label": {"en": "capabilities_13"}}, \r\n' + 
-'                {"id": "custom_34","label": {"en": "capabilities_14"}}, \r\n' + 
-'                {"id": "custom_35","label": {"en": "capabilities_15"}}, \r\n' + 
-'                {"id": "custom_36","label": {"en": "capabilities_16"}}, \r\n' + 
-'                {"id": "custom_37","label": {"en": "capabilities_17"}}, \r\n' + 
-'                {"id": "custom_38","label": {"en": "capabilities_18"}}, \r\n' + 
-'                {"id": "custom_39","label": {"en": "capabilities_19"}}, \r\n' + 
-'                {"id": "custom_40","label": {"en": "capabilities_20"}}, \r\n' + 
+'                {"id": "custom_21","label": {"en":"Fields 1","nl":"Velden 1","de":""}}, \r\n' + 
+'                {"id": "custom_22","label": {"en":"Fields 2","nl":"Velden 2","de":""}}, \r\n' + 
+'                {"id": "custom_23","label": {"en":"Fields 3","nl":"Velden 3","de":""}}, \r\n' + 
+'                {"id": "custom_24","label": {"en":"Fields 4","nl":"Velden 4","de":""}}, \r\n' + 
+'                {"id": "custom_25","label": {"en":"Fields 5","nl":"Velden 5","de":""}}, \r\n' + 
+'                {"id": "custom_26","label": {"en":"Fields 6","nl":"Velden 6","de":""}}, \r\n' + 
+'                {"id": "custom_27","label": {"en":"Fields 7","nl":"Velden 7","de":""}}, \r\n' + 
+'                {"id": "custom_28","label": {"en":"Fields 8","nl":"Velden 8","de":""}}, \r\n' + 
+'                {"id": "custom_29","label": {"en":"Fields 9","nl":"Velden 9","de":""}}, \r\n' + 
+'                {"id": "custom_30","label": {"en":"Fields 10","nl":"Velden 10","de":""}}, \r\n' + 
+'                {"id": "custom_31","label": {"en":"Fields 11","nl":"Velden 11","de":""}}, \r\n' + 
+'                {"id": "custom_32","label": {"en":"Fields 12","nl":"Velden 12","de":""}}, \r\n' + 
+'                {"id": "custom_33","label": {"en":"Fields 13","nl":"Velden 13","de":""}}, \r\n' + 
+'                {"id": "custom_34","label": {"en":"Fields 14","nl":"Velden 14","de":""}}, \r\n' + 
+'                {"id": "custom_35","label": {"en":"Fields 15","nl":"Velden 15","de":""}}, \r\n' + 
+'                {"id": "custom_36","label": {"en":"Fields 16","nl":"Velden 16","de":""}}, \r\n' + 
+'                {"id": "custom_37","label": {"en":"Fields 17","nl":"Velden 17","de":""}}, \r\n' + 
+'                {"id": "custom_38","label": {"en":"Fields 18","nl":"Velden 18","de":""}}, \r\n' + 
+'                {"id": "custom_39","label": {"en":"Fields 19","nl":"Velden 19","de":""}}, \r\n' + 
+'                {"id": "custom_40","label": {"en":"Fields 20","nl":"Velden 20","de":""}}, \r\n' + 
+'                {"id": "custom_61","label": {"en":"Fields 21","nl":"Velden 21","de":""}}, \r\n' + 
+'                {"id": "custom_62","label": {"en":"Fields 22","nl":"Velden 22","de":""}}, \r\n' + 
+'                {"id": "custom_63","label": {"en":"Fields 23","nl":"Velden 23","de":""}}, \r\n' + 
+'                {"id": "custom_64","label": {"en":"Fields 24","nl":"Velden 24","de":""}}, \r\n' + 
+'                {"id": "custom_65","label": {"en":"Fields 25","nl":"Velden 25","de":""}}, \r\n' + 
+'                {"id": "custom_66","label": {"en":"Fields 26","nl":"Velden 26","de":""}}, \r\n' + 
+'                {"id": "custom_67","label": {"en":"Fields 27","nl":"Velden 27","de":""}}, \r\n' + 
+'                {"id": "custom_68","label": {"en":"Fields 28","nl":"Velden 28","de":""}}, \r\n' + 
+'                {"id": "custom_69","label": {"en":"Fields 29","nl":"Velden 29","de":""}}, \r\n' + 
+'                {"id": "custom_70","label": {"en":"Fields 30","nl":"Velden 30","de":""}}, \r\n' + 
+'                {"id": "custom_71","label": {"en":"Fields 31","nl":"Velden 31","de":""}}, \r\n' + 
+'                {"id": "custom_72","label": {"en":"Fields 32","nl":"Velden 32","de":""}}, \r\n' + 
+'                {"id": "custom_73","label": {"en":"Fields 33","nl":"Velden 33","de":""}}, \r\n' + 
+'                {"id": "custom_74","label": {"en":"Fields 34","nl":"Velden 34","de":""}}, \r\n' + 
+'                {"id": "custom_75","label": {"en":"Fields 35","nl":"Velden 35","de":""}}, \r\n' + 
+'                {"id": "custom_76","label": {"en":"Fields 36","nl":"Velden 36","de":""}}, \r\n' + 
+'                {"id": "custom_77","label": {"en":"Fields 37","nl":"Velden 37","de":""}}, \r\n' + 
+'                {"id": "custom_78","label": {"en":"Fields 38","nl":"Velden 38","de":""}}, \r\n' + 
+'                {"id": "custom_79","label": {"en":"Fields 39","nl":"Velden 39","de":""}}, \r\n' + 
+'                {"id": "custom_80","label": {"en":"Fields 40","nl":"Velden 40","de":""}}, \r\n' + 
 '                {"id": "   ","label": {"en": "-----   Other             -----"}}, \r\n' + 
-'                {"id": "custom_41","label": {"en": "other_1"}}, \r\n' + 
-'                {"id": "custom_42","label": {"en": "other_2"}}, \r\n' + 
-'                {"id": "custom_43","label": {"en": "other_3"}}, \r\n' + 
-'                {"id": "custom_44","label": {"en": "other_4"}}, \r\n' + 
-'                {"id": "custom_45","label": {"en": "other_5"}}, \r\n' + 
-'                {"id": "custom_46","label": {"en": "other_6"}}, \r\n' + 
-'                {"id": "custom_47","label": {"en": "other_7"}}, \r\n' + 
-'                {"id": "custom_48","label": {"en": "other_8"}}, \r\n' + 
-'                {"id": "custom_49","label": {"en": "other_9"}}, \r\n' + 
-'                {"id": "custom_50","label": {"en": "other_10"}}, \r\n' + 
-'                {"id": "custom_51","label": {"en": "other_11"}}, \r\n' + 
-'                {"id": "custom_52","label": {"en": "other_12"}}, \r\n' + 
-'                {"id": "custom_53","label": {"en": "other_13"}}, \r\n' + 
-'                {"id": "custom_54","label": {"en": "other_14"}}, \r\n' + 
-'                {"id": "custom_55","label": {"en": "other_15"}}, \r\n' + 
-'                {"id": "custom_56","label": {"en": "other_16"}}, \r\n' + 
-'                {"id": "custom_57","label": {"en": "other_17"}}, \r\n' + 
-'                {"id": "custom_58","label": {"en": "other_18"}}, \r\n' + 
-'                {"id": "custom_59","label": {"en": "other_19"}}, \r\n' + 
-'                {"id": "custom_60","label": {"en": "other_20"}}\r\n' + 
+'                {"id": "custom_41","label": {"en":"Other 1","nl":"Overige 1","de":""}}, \r\n' + 
+'                {"id": "custom_42","label": {"en":"Other 2","nl":"Overige 2","de":""}}, \r\n' + 
+'                {"id": "custom_43","label": {"en":"Other 3","nl":"Overige 3","de":""}}, \r\n' + 
+'                {"id": "custom_44","label": {"en":"Other 4","nl":"Overige 4","de":""}}, \r\n' + 
+'                {"id": "custom_45","label": {"en":"Other 5","nl":"Overige 5","de":""}}, \r\n' + 
+'                {"id": "custom_46","label": {"en":"Other 6","nl":"Overige 6","de":""}}, \r\n' + 
+'                {"id": "custom_47","label": {"en":"Other 7","nl":"Overige 7","de":""}}, \r\n' + 
+'                {"id": "custom_48","label": {"en":"Other 8","nl":"Overige 8","de":""}}, \r\n' + 
+'                {"id": "custom_49","label": {"en":"Other 9","nl":"Overige 9","de":""}}, \r\n' + 
+'                {"id": "custom_50","label": {"en":"Other 10","nl":"Overige 10","de":""}}, \r\n' + 
+'                {"id": "custom_51","label": {"en":"Other 11","nl":"Overige 11","de":""}}, \r\n' + 
+'                {"id": "custom_52","label": {"en":"Other 12","nl":"Overige 12","de":""}}, \r\n' + 
+'                {"id": "custom_53","label": {"en":"Other 13","nl":"Overige 13","de":""}}, \r\n' + 
+'                {"id": "custom_54","label": {"en":"Other 14","nl":"Overige 14","de":""}}, \r\n' + 
+'                {"id": "custom_55","label": {"en":"Other 15","nl":"Overige 15","de":""}}, \r\n' + 
+'                {"id": "custom_56","label": {"en":"Other 16","nl":"Overige 16","de":""}}, \r\n' + 
+'                {"id": "custom_57","label": {"en":"Other 17","nl":"Overige 17","de":""}}, \r\n' + 
+'                {"id": "custom_58","label": {"en":"Other 18","nl":"Overige 18","de":""}}, \r\n' + 
+'                {"id": "custom_59","label": {"en":"Other 19","nl":"Overige 19","de":""}}, \r\n' + 
+'                {"id": "custom_60","label": {"en":"Other 20","nl":"Overige 20","de":""}}\r\n' + 
 '              ], \r\n' ;
 
 
@@ -152,7 +152,7 @@ var str = '"settings": [ \r\n' +
 '        { \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Status Indicator Field", "nl":"Statusindicatorveld", "de":"Statusanzeigefeld"  \r\n' +
+'            "en": "🟪 Status Indicator Field", "nl":"🟪 Statusindicatorveld", "de":"🟪 Statusanzeigefeld"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n';
 // '            { \r\n' +
@@ -245,7 +245,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Textfield '+i+'", "nl":"Tekstveld '+i+'", "de":"Textfeld"  \r\n' +
+'            "en": "🟩 Textfield '+i+'", "nl":"🟩 Tekstveld '+i+'", "de":"🟩 Textfeld"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -331,7 +331,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Numberfield '+i+'", "nl":"Nummerveld '+i+'", "de":"Nummernfeld"  \r\n' +
+'            "en": "🟦 Numberfield '+i+'", "nl":"🟦 Nummerveld '+i+'", "de":"🟦 Nummernfeld"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -507,7 +507,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
 '          "type": "group", \r\n' +
 '          "label": { \r\n' +
-'            "en": "Yes/No field '+i+'", "nl":"Ja/Nee-veld '+i+'", "de":"Ja/Nein-Feld"  \r\n' +
+'            "en": "🟧 Yes/No field '+i+'", "nl":"🟧 Ja/Nee-veld '+i+'", "de":"🟧 Ja/Nein-Feld '+i+'"  \r\n' +
 '          }, \r\n' +
 '          "children": [ \r\n' +
 '            { \r\n' +
@@ -650,7 +650,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Button '+i+'", "nl":"Knop '+i+'", "de":"Taste"  \r\n' +
+  '            "en": "🟠 Button '+i+'", "nl":"🟠 Knop '+i+'", "de":"🟠 Taste '+i+'"  \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +
@@ -888,7 +888,7 @@ for(var i=1;i<=fields;i++) {
   str+='{ \r\n' +
   '          "type": "group", \r\n' +
   '          "label": { \r\n' +
-  '            "en": "Camera '+i+'", "nl":"Camera '+i+'", "de":"Kamera '+i+'"  \r\n' +
+  '            "en": "⬜ Camera '+i+'", "nl":"⬜ Camera '+i+'", "de":"⬜ Kamera '+i+'"  \r\n' +
   '          }, \r\n' +
   '          "children": [ \r\n' +
   '            { \r\n' +

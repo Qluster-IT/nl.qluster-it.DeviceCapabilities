@@ -1,0 +1,674 @@
+<script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="avd_settings.js"></script>
+
+
+<!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
+<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
+<script type="text/javascript" src="smart-table.min.js"></script>
+
+<style type="text/css">
+	* {
+
+		box-sizing: border-box;
+	}
+	/* html {
+		height:auto!important;
+	} */
+	
+	.fa-icon {
+		min-width:24px;
+		min-height:24px;
+		font-size: 20px;
+	}
+	
+	.top-labels {
+		position:relative;
+		margin-top:10px;
+	}
+	.group {
+		position: relative;
+		display: block;
+		width: 100%;
+		/* border-bottom: 2px solid black; */
+		padding:10px;
+		padding-bottom: 20px;
+	}
+	.group.header {
+		padding-top: 20px;
+		margin-top:20px;
+		border-radius: 20px 20px 0px 0px;
+		
+	}
+	.group input[type="text"], .group select { 
+		background-color: #eee;
+	}
+	.group.odd {
+		background-color:#eee;
+	}
+	.group.odd input[type="text"], .group.odd select  {
+		background-color: white;
+	}
+
+	.group.last {
+		/* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+	}
+	.field {
+		position:relative;
+		display:block;
+		width:100%;
+		margin-top:10px;
+	}
+	.label {
+		position:relative;
+		width:48%;
+		display:inline-block;
+	}
+	.label .fa {
+		float:right;
+	}
+	.value {
+		position:relative;
+		width: 49%!important;
+		display:inline-block;
+	}
+	.create-button {
+		text-align:center;
+		width:100%;
+		position:relative;
+		/* margin: 10px 0px;
+		left:-20px; */
+		cursor:pointer;
+	}
+	.color-icon {
+		display: inline-block;;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		border:1px solid black;
+	}
+	.round {
+		border-radius: 25px;
+	}
+	.green {
+		background-color: #75D600;
+	}
+	.blue {
+		background-color: #2FB0FF;
+	}
+	.orange {
+		background-color: #FA6400;
+	}
+	.white {
+		background-color: #cecece;
+	}
+	.purple {
+		background-color: purple;
+		color:white;
+	}
+	.color-icon+*{
+		position: relative;
+		left: 25px;
+	}
+	.main-view {
+		height: calc(100% - 60px);
+		position: fixed;
+		overflow: auto;
+		padding-right: 10px;
+	}
+	.main-buttons {
+		height: 60px;
+		width: 100%;
+		position: fixed;
+		bottom: 0;
+		text-align:center;
+	}
+	.button {
+		padding: 16px;
+		width: auto !important;
+		display: inline-block;
+		font-size: 20pt;
+		cursor:pointer;
+	}
+	.main-buttons .button {
+		top: 6px;
+		position: relative;
+		margin: 0px 50px;
+	}
+	.remove-icon {
+		color: black;
+		width: 30px;
+		height: 30px;
+		display: inline-block;
+		position: absolute;
+		right: 10px;
+		/* border: 1px solid black;
+		border-radius: 3px; */
+		font-size: 24px;
+		/* color: black; */
+		padding-top: 2px;
+		padding-left: 4px;
+		top:-10px;
+	}
+	.text-center {
+		text-align: center;
+	}
+	div[disabled] {
+		color: lightgray!important;
+	}
+	 input.ng-invalid {
+		background-color: lightcoral;
+	}
+	input[type="text"]:not(.hy-nostyle), input[type="password"]:not(.hy-nostyle), input[type="email"]:not(.hy-nostyle), .hy-input-text {
+		border-bottom: 1px solid #999;
+	}
+	select {
+		padding:5px;
+	}
+	/* @media (hover: none), (pointer: coarse) {
+    body {
+        cursor: pointer;
+    } */
+
+	.tooltip {
+		/* display: block!important; */
+		position: absolute;
+		z-index: 100;
+		background-color: white;
+		display: inline-block;
+		width: 40vw;
+		border: 1px solid grey;
+		border-radius: 3px;
+		padding:10px;
+		left:0px;
+		transform: translate(50%, -115% );
+		/* top:-200%; */
+		/* transform: translate(-50%, -25% ); */
+		background-color: #efefef;
+		/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+	}
+	.tooltip>div {
+	}
+
+</style>
+
+
+<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
+	<form name="settings" class="main-view">
+		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
+		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>	
+		<h1 data-i18n="virtualdevicesettings.titleAlso" class="top-labels">Also</h1>
+		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing save, might be hard for Homey and could take a while.</div>	
+		<h1 data-i18n="virtualdevicesettings.titleCustomIcons" class="top-labels">Custom icons</h1>
+		<div data-i18n="virtualdevicesettings.labelCustomIcons" class="top-labels">The custom icons can be set through the App Settings.</div>
+
+		<div class="field">
+			<div class="label">Device Class <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.hintClass') || 'Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.'}}"></span></div>
+			<select class="value" ng-model="s.cls">
+				<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
+			</select>
+		</div>
+		<div class="group header purple text-center">
+			{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}
+		</div>
+		<div class="group">
+			<div class="field">
+				<div class="label"><span class="color-icon purple"></span> <span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1);"></span>
+			</div>
+			<!-- <div class="label"><span class="color-icon purple"></span> ><span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div> -->
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s.status1Name"/>
+			</div>
+			<div ng-if="s['status1Name']">
+				<div class="field">
+					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
+					<select class="value" ng-model="s.status1Icon">
+						<option value=""></option>
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.decimalsHint') || 'The number of decimals to show.'}}"></span></div>
+					<input class="value" type="number" min="0" max="10" step="1" ng-model="s.status1Decimals" ng-blur="onBlurNumber($event, 0)" placeholder="0" required/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s.status1CreateTag"/>
+				</div>		
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s.status1CreateInsights"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden Fields'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesStatusHint') || 'When selected will create hidden fields for the Insights, Tag as Status Indicator field, which will not unlink when settings are changed.\r\nBut it costs double the resources.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s.status1SeparateCapabilities"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="group header green text-center">
+			{{__('virtualdevicesettings.textFields') || 'Textfields'}}
+		</div>
+		<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfTextFields) track by $index">
+			<div class="field">
+				<div class="label"><span class="color-icon green"></span> <span>{{__('virtualdevicesettings.textFieldI', {i:$index+1}) || 'Textfield ' + ($index+1)}}</span></div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('text', ($index+1));"></span>
+			</div>
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s['text'+($index+1)+'Name']"/>
+			</div>
+			<div ng-if="s['text'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.showAs') || 'Show as'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.showAsTextHint') || 'Select how the text must be displayed.'}}"></span></div>
+					<select class="value" ng-model="s['text'+($index+1)+'ShowAs']">
+						<option ng-repeat="item in textShowAs" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>
+				<div class="field" ng-if="!(!s['text'+($index+1)+'ShowAs'] || s['text'+($index+1)+'ShowAs']==='sensor')">
+					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'CreateFlowCards']"/>
+				</div>
+				<div class="field" ng-if="!s['text'+($index+1)+'ShowAs'] || s['text'+($index+1)+'ShowAs']==='sensor'">
+					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
+					<select class="value" ng-model="s['text'+($index+1)+'Icon']">
+						<option value=""></option>
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'CreateTag']"/>
+				</div>		
+				<div class="field" ng-if="s['text'+($index+1)+'CreateTag']">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden Fields'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesTextHint') || 'When selected will create a hidden field for the Tag, which will not unlink when settings are changed. But it costs more resources.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'SeparateCapabilities']"/>
+				</div>
+			</div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfTextFields=s.numberOfTextFields+1;" value="{{__('virtualdevicesettings.createTextField') || 'Create Text Field'}}"/>
+		</div>
+
+		<div class="group header blue text-center">
+			{{__('virtualdevicesettings.numberFields') || 'Numberfields'}}
+		</div>
+		<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfNumberFields) track by $index">		
+			<div class="field">
+				<div class="label"><span class="color-icon blue"></span> <span>{{__('virtualdevicesettings.numberFieldI', {i:$index+1}) || 'Numberfield ' + ($index+1)}}</span> </div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('number', ($index+1));"></span>
+			</div>			
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s['number'+($index+1)+'Name']"/>
+			</div>
+			<div ng-if="s['number'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.showAs') || 'Show as'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.showAsNumberHint') || 'Select how the number must be displayed.'}}"></span></div>
+					<select class="value" ng-model="s['number'+($index+1)+'ShowAs']">
+						<option ng-repeat="item in numberShowAs" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateFlowCards']"/>
+				</div>
+				<div class="field" ng-if="!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor'">
+					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
+					<select class="value" ng-model="s['number'+($index+1)+'Icon']">
+						<option value=""></option>
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.units' || 'Units')}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.unitsHint')}}"></span></div>
+					<input class="value" type="text" ng-model="s['number'+($index+1)+'Units']"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.decimalsHint') || 'The number of decimals to show.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
+					<input class="value" type="number" min="0" max="10" step="1" ng-model="s['number'+($index+1)+'Decimals']" ng-blur="onBlurNumber($event)"/>
+				</div>						
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.min') || 'Min'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.minHint') || 'The minimum value for the Number.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
+					<input class="value" type="number" ng-model="s['number'+($index+1)+'Min']" ng-blur="onBlurNumber($event)"/>
+				</div>			
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.max') || 'Max'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{(__('virtualdevicesettings.maxHint') || 'The maximum value for the Number.') + (__('virtualdevicesettings.hintEmptyDefault') || '\r\nWhen left empty, will be set to default.')}}"></span></div>
+					<input class="value" type="number" ng-model="s['number'+($index+1)+'Max']" ng-blur="onBlurNumber($event)"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateTag']"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateInsights']"/>
+				</div>
+				<div class="field" ng-if="s['number'+($index+1)+'CreateTag'] || s['number'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden Fields'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesHint') || 'When selected will create hidden fields for the Insights and Tag, which will not unlink when settings are changed. But it costs more resources.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'SeparateCapabilities']"/>
+				</div>
+			</div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfNumberFields=s.numberOfNumberFields+1;" value="{{__('virtualdevicesettings.createNumberField') || 'Create Number Field'}}"/>
+		</div>
+
+		<div class="group header orange text-center">
+			{{__('virtualdevicesettings.booleanFields') || 'Yes/No fields'}}
+		</div>
+		<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfBooleanFields) track by $index">
+			<div class="field">
+				<div class="label"><span class="color-icon orange"></span> <span>{{__('virtualdevicesettings.booleanFieldI', {i:$index+1}) || 'Yes/No Field ' + ($index+1)}}</span> </div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('boolean', ($index+1));"></span>
+			</div>
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s['boolean'+($index+1)+'Name']"/>
+			</div>
+			<div ng-if="s['boolean'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.showAs') || 'Show as'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.showAsBooleanHint') || 'Select how the yes/no must be displayed.'}}"></span></div>
+					<select class="value" ng-model="s['boolean'+($index+1)+'ShowAs']">
+						<option ng-repeat="item in booleanShowAs" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>
+				<div class="field" ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
+					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateFlowCards']"/>
+				</div>
+				<div class="field" ng-if="!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff'">
+					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
+					<select class="value" ng-model="s['boolean'+($index+1)+'Icon']">
+						<option value=""></option>
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateTag']"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateInsights']"/>
+				</div>
+				<div class="field" ng-if="s['boolean'+($index+1)+'CreateTag'] || s['boolean'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden Fields'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesBooleanHint') || 'When selected will create hidden fields for the Insights and Tag, which will not unlink when settings are changed.\r\nBut it costs more resources and you cannot know Who changed the value.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'SeparateCapabilities']"/>
+				</div>
+				<div class="field" ng-if="s['boolean'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.insightsTitleTrue') || 'Insights Title True'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.insightsTitleTrueHint') || 'Insights Description for when the value is True.'}}"></span></div>
+					<input class="value" type="text" ng-model="s['boolean'+($index+1)+'InsightsTitleTrue']"/>
+				</div>
+				<div class="field" ng-if="s['boolean'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.insightsTitleFalse') || 'Insights Title False'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.insightsTitleFalseHint') || 'Insights Description for when the value is False.'}}"></span></div>
+					<input class="value" type="text" ng-model="s['boolean'+($index+1)+'InsightsTitleFalse']"/>
+				</div>
+			</div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfBooleanFields=s.numberOfBooleanFields+1;" value="{{__('virtualdevicesettings.createBooleanField') || 'Create Yes/No Field'}}"/>
+		</div>
+
+		<div class="group header orange round text-center">
+			{{__('virtualdevicesettings.buttonFields') || 'Buttons'}}
+		</div>
+		<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfButtonFields) track by $index">
+			<div class="field">
+				<div class="label"><span class="color-icon orange round"></span> <span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1} || 'Button ' + ($index+1))}}</span></div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('button', ($index+1));"></span>
+			</div>
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s['button'+($index+1)+'Name']"/>
+			</div>
+			<div ng-if="s['button'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.showAs') || 'Show as'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.showAsButtonHint') || 'Select how the button must be displayed.'}}"></span></div>
+					<select class="value" ng-model="s['button'+($index+1)+'ShowAs']" ng-if="($index+1)===1">
+						<option ng-repeat="item in buttonShowAs1" value="{{item.id}}">{{item.label}}</option>
+					</select>
+					<select class="value" ng-model="s['button'+($index+1)+'ShowAs']" ng-if="($index+1)>1">
+						<option ng-repeat="item in buttonShowAsRest" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>
+				<div class="field" ng-if="!(!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button' || s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || s['button'+($index+1)+'ShowAs']==='indicatoronly' || s['button'+($index+1)+'ShowAs']==='pushbutton_indicator' || s['button'+($index+1)+'ShowAs']==='onoff_hide' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0))">
+					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateFlowCards']"/>
+				</div>
+				<div class="field" ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' ">
+					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
+					<select class="value" ng-model="s['button'+($index+1)+'Icon']">
+						<option value=""></option>
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname || icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div class="field" ng-if="!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button'|| s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0)">
+					<div class="label"><span>{{__('virtualdevicesettings.nonClickable') || 'Non-Clickable'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.nonClickableHint') || 'When selected this button will not be clickable. Requires a restart of the App after setting to Non-Clickable.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'Disabled']"/>
+				</div>
+				<div class="field" ng-if="s['button'+($index+1)+'Disabled']">
+					<div class="label"><span>{{__('virtualdevicesettings.checked') || 'Checked'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.checkedHint') || 'When selected this button will be light, else dark.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'Checked']"/>
+				</div>
+
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateTag']"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateInsights']"/>
+				</div>
+				<div class="field" ng-if="s['button'+($index+1)+'CreateTag'] || s['button'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden Fields'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesButtonHint') || 'When selected will create hidden fields for the Insights and Tag, which will not unlink when settings are changed.\r\nBut it costs more resources and you cannot know Who pushed the button.'}}"></span></div>
+					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'SeparateCapabilities']"/>
+				</div>				
+				<div class="field" ng-if="s['button'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.insightsTitleTrue') || 'Insights Title True'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.insightsTitleTrueHint') || 'Insights Description for when the value is True.'}}"></span></div>
+					<input class="value" type="text" ng-model="s['button'+($index+1)+'InsightsTitleTrue']"/>
+				</div>
+				<div class="field" ng-if="s['button'+($index+1)+'CreateInsights']">
+					<div class="label"><span>{{__('virtualdevicesettings.insightsTitleFalse') || 'Insights Title False'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.insightsTitleFalseHint') || 'Insights Description for when the value is False.'}}"></span></div>
+					<input class="value" type="text" ng-model="s['button'+($index+1)+'InsightsTitleFalse']"/>
+				</div>
+			</div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfButtonFields=s.numberOfButtonFields+1;" value="{{__('virtualdevicesettings.createButtonField') || 'Create Button'}}"/>
+		</div>
+
+		<div class="group header white text-center">
+			<span>{{__('virtualdevicesettings.cameraFields') || 'Cameras'}}</span>
+		</div>		
+		<div class="group">
+			<div ng-if="s.numberOfCameraFields" data-i18n="virtualdevicesettings.labelCamerasRestart" class="top-labels">After removing a camera (by clearing the name or url), the Device Capabilities App requires a restart to remove the camera-image from the virtual device.</div>
+		</div>
+		<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfCameraFields) track by $index">
+			<div class="field">
+				<div class="label"><span class="color-icon white"></span> <span>{{__('virtualdevicesettings.cameraFieldI', {i:$index+1}) || 'Camera ' + ($index+1)}}</span></div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('camera', ($index+1));"></span>
+			</div>			
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="camera" ng-model="s['camera'+($index+1)+'Name']"/>
+			</div>
+			<div ng-if="s['camera'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.cameraUrl') || 'Url'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.cameraUrlHint', {i:($index+1)}) || ('The Url for Camera '+($index+1)+'. The Url has to be accessable through Homey\'s network.')}}"></span></div>
+					<input class="value" type="camera" ng-model="s['camera'+($index+1)+'Url']"/>
+				</div>
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.cameraInterval') || 'Interval in Seconds'}}</span> <span class="fa fa-icon fa-info-circle" tooltip="{{__('virtualdevicesettings.cameraIntervalHint', {i:($index+1)}) || ('The Interval in seconds to refresh the image for Camera '+($index+1)+'. Entering 0 will disable automatic refresh.')}}"></span></div>
+					<input class="value" type="number" min="0" max="86400" step="1" ng-model="s['camera'+($index+1)+'Interval']" ng-blur="onBlurNumber($event, 0)" required placeholder="0"/>
+				</div>
+			</div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfCameraFields=s.numberOfCameraFields+1;" value="{{__('virtualdevicesettings.createCameraField') || 'Create Camera'}}"/>
+		</div>
+
+
+		<div></div>
+		
+		<br><br>
+		<br><br>
+	</form>
+	<div class="main-buttons">
+		<div class="button" ng-click="log(settings); settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save</div>
+		<div class="button" ng-click="close()">Close</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	let tooltipModule = angular.module('tooltipModule',[]);
+		tooltipModule.directive('tooltip', function($compile){
+			var contentContainer;
+			return {
+				restrict: "A",
+				scope: {
+				myTooltipScope: "="
+				},
+				link: function(scope, element, attrs){
+					var text = attrs.tooltip;
+
+					scope.hidden = true;
+
+					var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+					tooltipElement.append("<div>" + text + "</div>");
+
+					element.parent().append(tooltipElement);
+					element
+						.on('mouseenter', function(){scope.hidden = false; scope.$digest();} )
+						.on('mouseleave', function(){scope.hidden = true; scope.$digest();});
+					
+					var toolTipScope = scope.$new(true);
+					angular.extend(toolTipScope, scope.myTooltipScope);
+					$compile(tooltipElement.contents())(toolTipScope);
+					$compile(tooltipElement)(scope);
+					}
+				};
+			});
+
+// angular.module('app', ['luStyle']);
+	//let _homey = Homey;
+	angular.module('avdsettings', ['smart-table', 'tooltipModule'])
+		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', function ($scope, $rootScope, $timeout, $parse) {
+			console.log('controller started');
+			scope = $scope;
+			//let Homey = _homey
+			$scope.s = {};
+			$scope.numberShowAs = asv_settings.numberShowAs;
+			$scope.textShowAs = asv_settings.textShowAs;
+
+			$scope.booleanShowAs = asv_settings.booleanShowAs;
+			
+			$scope.buttonShowAs1 =  asv_settings.buttonShowAs1;
+			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
+			$scope.deviceClasses = asv_settings.deviceClasses;
+
+			$scope.removeAllSettings = function(startName, i) {
+				let settings = $scope.s;
+				let name = capitalizeFirstLetter(startName);
+				startName = startName + i;
+				if(settings['numberOf'+name+'Fields']===i) settings['numberOf'+name+'Fields']--;
+				for (const settingKey in settings) if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName)) delete settings[settingKey];				
+			}
+
+			$scope.onBlurNumber = function($event, defaultValue) {
+				if(arguments.length<2)  defaultValue = undefined;
+				if(event && event.target && Number.isNaN(event.target.valueAsNumber)) {
+					event.target.value=defaultValue;					
+					let modelValueSetter = $parse(event.target.getAttribute('ng-model')).assign;
+  					modelValueSetter($scope, defaultValue);
+				}
+			}
+			
+
+			$scope.save = function() {
+				Homey.showLoadingOverlay();
+				$('#hy-overlay-loading-message').html( Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved' );
+				Homey.emit('virtualdevicesettings_save', $scope.s, function(err, result) {
+						Homey.hideLoadingOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function() {
+							$scope.s=result;
+						});
+					});
+			}
+			
+			$scope.close = function() {
+				Homey.done();
+			}
+			$scope.log = function(s) {
+				console.log($scope);
+			}
+			
+			if(typeof Homey !== 'undefined') {
+				Homey.hideLoadingOverlay();
+				Homey.setTitle( Homey.__("virtualdevicesettings.title_repair") );
+				Homey.emit('virtualdevicesettings_load', null, function(err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					$scope.$apply(function() {
+						$scope.s=result.settings;
+						$scope.customicons=result.customicons;
+					});
+				});
+				// Homey.showLoadingOverlay();
+				// Homey.setTitle( Homey.__("pair.list_icons.title") );
+				
+				// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
+
+				console.log('ready');
+				$scope.__ = Homey.__;
+
+				console.log('ready done');
+			} else {
+				$scope.customicons = asv_settings.customicons;	
+				
+				$scope.s = asv_settings.exampleSettings;
+				
+			}
+			
+
+
+
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+		}])
+		.directive('ngEnter', function () {
+			return function (scope, element, attrs) {
+				element.bind('keydown keypress', function (event) {
+					if (event.which === 13) {
+						scope.$apply(function () {
+							scope.$eval(attrs.ngEnter || attrs.ngClick, {
+								$event: event
+							});
+						});
+						event.preventDefault();
+					}
+				});
+			};
+		});
+</script>

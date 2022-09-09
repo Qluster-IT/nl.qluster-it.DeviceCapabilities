@@ -544,16 +544,33 @@ class DeviceSetter extends Homey.App {
 		return this.homey.drivers.getDriver('virtualdevice').getCustomIcons();
 	}
 
-	async setFromDefaultIcon({ customicon, defaulticon }) {
-		
+	async setFromDefaultIcon({ customicon, defaulticon, deviceicon }) {
+		if(deviceicon) {
+			return await this.setDeviceIconFromDefault({device:{data:{id:deviceicon.id}}, icon:defaulticon});
+		}
+
 		let filePathAssets = './assets/icons/';
 		let file = defaulticon;// + '.svg';
 		
 		let filePath = './userdata/customicons/';
 		let iconName = customicon.file + '.svg';
+		
 		if(await this.homey.app.fileExists(filePathAssets + file) ){
 			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
 		}
+	}
+
+	async setDeviceIconFromDefault({icon, device}) {
+		let filePathAssets = './assets/icons/';
+            let file = icon;// + '.svg';
+            
+            let filePath = './userdata/virtualdeviceicons/';
+            let iconName = device.data.id + '.svg';
+
+            if(await this.homey.app.fileExists(filePathAssets + file)) {// && !await this.homey.app.fileExists(filePath + iconName)){
+                await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
+            }
+			return filePath + iconName;
 	}
 
 
@@ -616,7 +633,7 @@ class DeviceSetter extends Homey.App {
 		if(await existsAsync(from)) {
 			if(!(await existsAsync(toPath))) await mkdirAsync(toPath);
 			await copyFile(from, to, fs.constants.COPYFILE_FICLONE, function(err) {
-				 if (err) this.error(err);//throw err;
+				 if (err) console.log('error',err);//throw err;
 				// console.log('source.txt was copied to destination.txt');
 			  } );
 		}
@@ -642,7 +659,7 @@ class DeviceSetter extends Homey.App {
 		const path = `./userdata/${subpath}/${id}${ext}`;
 		
 		if(!(await existsAsync(`./userdata/${subpath}/`))) await mkdirAsync(`./userdata/${subpath}/`);
-
+		if(await existsAsync(path)) await unlinkAsync(path);
 		await writeFileAsync(path, buf);
 
 		// var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
