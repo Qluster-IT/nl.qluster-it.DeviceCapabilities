@@ -158,7 +158,13 @@
   "2.2.1" : {
     "en" : "Improved: Device Repair is the new Device Settings (in development)"
   },
-  "2.2.2" : {
+  "2.2.3" : {
     "en" : "Improved: Device Repair is the new Device Settings (Saving works)"
+  },
+  "2.2.4" : {
+    "en" : "Improved: Device Repair is the new Device Settings (language done)"
+  },
+  "2.2.8" : {
+    "en" : "Improved: Device Repair is the new Device Settings (almost done)"
   }
 }

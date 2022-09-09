@@ -320,10 +320,10 @@
 						</div>
 						<div>
 							<div ng-show="!customicon.updating" class="name">
+								<!-- <div style="display:block;" ng-dblclick="customicon.updating = true;">
+									{{customicon.title[languagecode] || customicon.name}}</div> -->
 								<div style="display:block;" ng-dblclick="customicon.updating = true;">
-									{{customicon.title[languagecode] || customicon.name}}</div>
-								<div style="display:block;" ng-dblclick="customicon.updating = true;">
-									{{customIconNames[customicon.file] || '&nbsp;'}}</div>
+									{{customIconNames[customicon.file] || (customicon.title[languagecode] || customicon.name)}}</div>
 							</div>
 							<input ng-show="customicon.updating" class="name" type="text"
 								ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)" ng-blur="updateCustomIconName(customicon)"

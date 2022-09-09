@@ -25,7 +25,9 @@ module.exports = class WatchDevice extends Homey.Device {
 		Homeyman.Current.VirtualDevices[this.getName()] = this;
 		var caps = this.getCapabilities();
 
+
 		this.Settings = await this.getStoreValue('Settings');
+		let useNewSettings = (this.Settings!=null);
 		if(!this.Settings) {
 			if(!this.Settings) this.Settings = await this.getSettings();
 			let settings = this.Settings;
@@ -33,7 +35,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			this.removeAllSettings(settings, 'batteries');
 			this.removeAllSettings(settings, 'dropdown');
 			
-			if(settings.status1Name=='') this.removeAllSettings(settings, 'status1');
+			if(settings.status1Name==='') this.removeAllSettings(settings, 'status1');
 
 			settings.numberOfTextFields = 0;
 			for (let i = 1; i <= 10; i++) 
@@ -57,7 +59,15 @@ module.exports = class WatchDevice extends Homey.Device {
 		//this.log('Settings', this.Settings);
 
 		if (process.env.DEBUG === '1' || this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
+			if(useNewSettings) {
+				for (let i = 1; i <= 10; i++) {
+					if(this.Settings['number'+i+'Decimals']===-1) this.Settings['number'+i+'Decimals'] = undefined;
+					if(this.Settings['number'+i+'Min']===-1) this.Settings['number'+i+'Min'] = undefined;
+					if(this.Settings['number'+i+'Max']===-1) this.Settings['number'+i+'Max'] = undefined;
+				}
+				
 			
+			}
 			//If it's a new Version, place stuff here
 			// let newSettings = {
 			// 	"labelGeneral": this.homey.__("virtualdevicesettings.labelGeneral"),
@@ -119,31 +129,31 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		}).bind(this));
 
-		if(!this.Settings.iconNames) await this.setIconNames();
+		//if(!this.Settings.iconNames) await this.setIconNames();
 	}
 
-	async setIconNames() {
-		this.customIconNames = await this.homey.settings.get('customIconNames');
-		let languagecode = await this.homey.i18n.getLanguage();
-		let str = "";
-		let customIcons = this.driver.getCustomIcons();
-		for (const key in this.customIconNames) {
-			if (Object.hasOwnProperty.call(this.customIconNames, key)) {
-				const name = this.customIconNames[key];
-				let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
-					icon.file === key
-				);
-				let originalName = (f ? f.name : key);
-				if(f && f.title) {
-					originalName = f.title[languagecode] || f.title.en;
-				}
+	// async setIconNames() {
+	// 	this.customIconNames = await this.homey.settings.get('customIconNames');
+	// 	let languagecode = await this.homey.i18n.getLanguage();
+	// 	let str = "";
+	// 	let customIcons = this.driver.getCustomIcons();
+	// 	for (const key in this.customIconNames) {
+	// 		if (Object.hasOwnProperty.call(this.customIconNames, key)) {
+	// 			const name = this.customIconNames[key];
+	// 			let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
+	// 				icon.file === key
+	// 			);
+	// 			let originalName = (f ? f.name : key);
+	// 			if(f && f.title) {
+	// 				originalName = f.title[languagecode] || f.title.en;
+	// 			}
 				
-				str += originalName + " = " + name + ", ";
-			}
-		}
-		if (str.length > 1) str = str.substring(0, str.length - 2);
-		await this.setSettings({ iconNames: str });
-	}
+	// 			str += originalName + " = " + name + ", ";
+	// 		}
+	// 	}
+	// 	if (str.length > 1) str = str.substring(0, str.length - 2);
+	// 	await this.setSettings({ iconNames: str });
+	// }
 
 	async setListener({ fieldId, cap, settings }) {
 		if (fieldId.startsWith('button')) {
@@ -243,7 +253,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		for (let iTypes = 0; iTypes < types.length; iTypes++) {
 			const type = types[iTypes];
-			const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
+			const fieldCount = type=="status" ? 1 : Math.max((settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0, oldSettings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0));
 
 			for (let i = 1; i <= fieldCount; i++) {
 				//if(type=="status" && i>1) continue;
@@ -290,7 +300,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							}
 							break;
 						case "number":
-							cap = 'measure_devicecapabilities_' + type + icon + '.' + type + i;
+							cap = (settings[type + i + 'CreateFlowCards'] !== true ? '' : 'measure_') + 'devicecapabilities_' + type + icon + '.' + type + i;
 							switch (settings[type + i + 'ShowAs']) {
 								case undefined:
 								case null:
@@ -311,20 +321,19 @@ module.exports = class WatchDevice extends Homey.Device {
 							else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
 							break;
 						case "boolean":
+							let isAlarm, quickAction;
 							switch (settings[type + i + 'ShowAs']) {
 								case undefined:
 								case null:
-								case "": sensor = true; break;
+								case "": 
 								case "sensor": sensor = true; break;
+								case "alarm": isAlarm = true; break;
+								case "onoff": quickAction=true; break;
 								default:
 									capSet = true;
 									break;
 							}
-							let isAlarm = settings[type + i + 'ShowAs'] === 'alarm';
-							let quickAction = settings[type + i + 'ShowAs'] === 'onoff';// || settings[type + i + 'ShowAs']=='';
-							cap =
-								(isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + //(disabled ? 'disabled_' : '') + 
-								type + icon + '.' + type + i;
+							cap = (isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + type + icon + '.' + type + i;
 							if (quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
 							
 							if (capSet) {
@@ -341,8 +350,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								case "button": pushbutton = true; break;
 								case "onoff": isOnOff = true; break;
 								case "onoff_buttontab": isOnOffButtonTab = true; break;
-								//case "indicatoronly": isOnOff = true; hide = true;  break;
-								case "indicatoronly": isOnOff = false; hide = true; break;
+								case "indicatoronly": hide = true; break;
 								case "onoff_hide":
 								case "pushbutton_indicator":
 									isOnOff = true; hide = true; break;
@@ -362,7 +370,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 							if (!hide && !capSet) {
 								if (i === 1) {
-									cap = isOnOff ? 'onoff' : type;
+									cap = (isOnOff ? 'onoff' : type) + (settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : '');
 								} else {
 									cap = ((isOnOff ? 'onoff_' : '') + (isOnOffButtonTab ? 'onoffbuttontab_' : '') + ("devicecapabilities" + (disabled ? "_disabled" : "") + "_button" + icon + "." + type + i));
 								}
@@ -439,7 +447,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
 									//opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 							(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
-							(opt.decimals != decimals && decimals !== -1) ||
+							(opt.decimals != decimals) ||
 							(opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue']  && settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue']!='')|| 
 							(opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse']  && settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse']!='') ||
 							values ||
@@ -544,7 +552,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			capAllreadyFound = false;
 		}
 		if (capAllreadyFound && otherCap === oldCap) oldCap = undefined;
-		return { cap: capTarget ? capTarget : settings[type + i + 'ShowAs'] + (capAllreadyFound || settings[type + i + 'CreateFlowCards'] === false ? "." + type + i : ""), oldCap: oldCap };
+		return { cap: capTarget ? capTarget : settings[type + i + 'ShowAs'] + (capAllreadyFound || settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : ""), oldCap: oldCap };
 	}
 
 	// getDropDownValues(text) {
@@ -612,9 +620,9 @@ module.exports = class WatchDevice extends Homey.Device {
 		if (units) optNew.units = units;
 		else if (settings[type + i + 'Units']) optNew.units = settings[type + i + 'Units'];
 
-		if (decimals!==undefined && decimals !== -1) optNew.decimals = decimals;
-		if (min!==undefined && min !== -1) optNew.min = min;
-		if (max!==undefined && max !== -1) optNew.max = max;
+		if (decimals!==undefined) optNew.decimals = decimals;
+		if (min!==undefined) optNew.min = min;
+		if (max!==undefined) optNew.max = max;
 		return optNew;
 	}
 };

@@ -498,6 +498,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         session.setHandler('virtualdevicesettings_save', async (settings) => {
             //console.log(settings, device.Settings , []);
+            //device.data.icon = "../../../assets/icon.svg";
+            //device.icon = "../../../assets/icon.svg";
             return await device.loadFromSettings(settings, device.Settings , [], true);
             
             //return {settings:device.Settings, customicons:await this.getCustomIcons()};
