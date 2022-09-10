@@ -6,8 +6,31 @@ const Homey = require('homey');
 const path = require('path');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
-
-
+const TYPES = ['status', 'text', 'number', 'button', 'boolean'];
+const CUSTOM_ICONS = [
+    'custom_1',  'custom_2',  'custom_3',
+    'custom_4',  'custom_5',  'custom_6',  'custom_7',
+    'custom_8',  'custom_9',  'custom_10', 'custom_11',
+    'custom_12', 'custom_13', 'custom_14', 'custom_15',
+    'custom_16', 'custom_17', 'custom_18', 'custom_19',
+    'custom_20', 'custom_21', 'custom_22', 'custom_23',
+    'custom_24', 'custom_25', 'custom_26', 'custom_27',
+    'custom_28', 'custom_29', 'custom_30', 'custom_31',
+    'custom_32', 'custom_33', 'custom_34', 'custom_35',
+    'custom_36', 'custom_37', 'custom_38', 'custom_39',
+    'custom_40', 'custom_41', 'custom_42', 'custom_43',
+    'custom_44', 'custom_45', 'custom_46', 'custom_47',
+    'custom_48', 'custom_49', 'custom_50', 'custom_51',
+    'custom_52', 'custom_53', 'custom_54', 'custom_55',
+    'custom_56', 'custom_57', 'custom_58', 'custom_59',
+    'custom_60',
+    'custom_61', 'custom_62', 'custom_63',
+    'custom_64', 'custom_65', 'custom_66', 'custom_67',
+    'custom_68', 'custom_69', 'custom_70', 'custom_71',
+    'custom_72', 'custom_73', 'custom_74', 'custom_75',
+    'custom_76', 'custom_77', 'custom_78', 'custom_79',
+    'custom_80'
+  ];
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
@@ -505,17 +528,86 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             //return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
-        session.setHandler('virtualdevicesettings_getTextSettings', async () => {
-            try {                
-                const fs = require('fs').promises;
-                let getData = device.getData();
-                let iconPath = getData && getData.icon ? getData.icon.substring(7) : undefined;
-                const contents = await fs.readFile(iconPath, {encoding: 'base64'});
-                return {deviceIcon:'data:image/svg+xml;base64,'+contents};
-            } catch (error) {
-                return {};
+
+        
+        session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
+            let dev = {};
+            
+            dev.customIconsAvailable = [];
+            let iconsInUse = {};
+            let devices  = await this.getDevices();
+            for (const deviceId in devices) {
+                if (Object.hasOwnProperty.call(devices, deviceId)) {
+                    const device = devices[deviceId];
+                    await this.executeForAllTypes(device, (type, i )=> {
+                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
+
+                    });
+                }
+            }   
+            let keys = Object.keys(iconsInUse);
+            for (let i = 0; i < CUSTOM_ICONS.length; i++) {
+                const icon = CUSTOM_ICONS[i];
+                if(keys.indexOf(icon)===-1)dev.customIconsAvailable.push(icon);
             }
+
+            for (const iconUsedKey in iconsInUse) {
+                if (Object.hasOwnProperty.call(iconsInUse, iconUsedKey)) {
+                    
+                }
+            }            
+            return dev;
         });        
+
+        session.setHandler('virtualdevicesettings_getTextSettings', async () => {
+                let dev = {deviceIcon:await this.getDeviceIcon(device), customIcons:{}};
+                await this.executeForAllTypes(device, async (type, i )=> {
+                    if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]])dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                });
+                // if(Object.keys(dev.customIcons)) {
+                //     let iconsInUse = {};
+                //     let devices  = await this.getDevices();
+                //     for (const deviceId in devices) {
+                //         if (Object.hasOwnProperty.call(devices, deviceId)) {
+                //             const device = devices[deviceId];
+                //             await this.executeForAllTypes(device, (type, i )=> {
+                //                 if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
+
+                //             });
+                //         }
+                //     }                    
+                // }
+                if(!Object.keys(dev.customIcons)) dev.customIcons=null;
+                return dev;
+        });        
+    }
+
+    
+    async executeForAllTypes(device, func=(type, i)=> {}) {
+        for (let i = 0; i < TYPES.length; i++) {
+            const type = TYPES[i];
+            const fieldCount = type=="status" ? 1 : Math.max(device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
+            for (let i = 1; i <= fieldCount; i++) {
+                if(func && func.constructor.name === 'AsyncFunction') await func(type, i);
+                else if(func && typeof(func)=='function') func(type, i);
+            }
+        }
+
+    }
+
+    async getDeviceIcon(device) {
+        try {
+            let getData = device.getData();
+            return await this.getIcon(getData && getData.icon ? getData.icon.substring(7) : undefined);
+        } catch (error) { return undefined; }
+    }
+    
+    async getIcon(path) {
+        try {
+            const fs = require('fs').promises;
+            const contents = await fs.readFile(path, {encoding: 'base64'});
+            return 'data:image/svg+xml;base64,'+contents;
+        } catch (error) { return undefined; }
     }
       
       async onPair(session, arg1) {
@@ -544,7 +636,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         });
 
-        session.setHandler('icon_picked', async (data) => {
+        session.setHandler('icon_picked', async ({icon, name}) => {
 
             device = devices[0];
             
@@ -557,11 +649,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             // if(await this.homey.app.fileExists(filePathAssets + file) && !await this.homey.app.fileExists(filePath + iconName)){
             //     await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
             // }
-            let icon = "../../." +(await this.homey.app.setDeviceIconFromDefault({device, icon:data.icon}));
+            let iconpath = "../../." +(await this.homey.app.setDeviceIconFromDefault({device, icon:icon}));
             
             //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
-            device.data.icon = icon;//iconPath;
-            device.icon = icon;//iconPath;
+            device.data.icon = iconpath;//iconPath;
+            device.icon = iconpath;//iconPath;
+            device.name = name;
             return device;
             // This is for custom icon picked
             // device = devices[0];
@@ -571,12 +664,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             // return device;
         });
         
-        session.setHandler('icon_save', async (data)=> {     
+        session.setHandler('icon_save', async ({image, name})=> {     
             device = devices[0];       
-            var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:data, id:device.data.id });              
+            var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
             var iconPath = "../../." + icon.path;      
             device.data.icon = iconPath;
             device.icon = iconPath;
+            device.name = name;
             return device;      
             
           });

@@ -286,7 +286,7 @@
 			<div class="field" ng-if="true">
 				<div class="label"><span class="color-icon purple"></span>
 					<span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div>
-				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1);"></span>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true);"></span>
 			</div>
 			<!-- <div class="label"><span class="color-icon purple"></span> ><span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div> -->
 			<div class="field">
@@ -346,7 +346,7 @@
 			<div class="field">
 				<div class="label"><span class="color-icon green"></span> <span>{{__('virtualdevicesettings.textFieldI',
 						{i:$index+1}) || 'Textfield ' + ($index+1)}}</span></div>
-				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('text', ($index+1));"></span>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('text', ($index+1), true);"></span>
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -399,7 +399,7 @@
 				</div>
 				<div ng-else execute="s['text'+($index+1)+'SeparateCapabilities']=false;" ></div>
 			</div>						
-			<div ng-else execute="removeAllSettings('text', 1);"></div>
+			<div ng-else execute="removeAllSettings('text', ($index+1));"></div>
 		</div>
 		<div class="create-button group last">
 			<input type="button" class="button" ng-click="s.numberOfTextFields=s.numberOfTextFields+1;"
@@ -416,7 +416,7 @@
 					<span>{{__('virtualdevicesettings.numberFieldI', {i:$index+1}) || 'Numberfield ' +
 						($index+1)}}</span> </div>
 				<span class="remove-icon fa fa-icon fa-trash"
-					ng-click="removeAllSettings('number', ($index+1));"></span>
+					ng-click="removeAllSettings('number', ($index+1), true);"></span>
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -513,7 +513,7 @@
 				</div>
 				<div ng-else execute="s['number'+($index+1)+'SeparateCapabilities']=false;" ></div>
 			</div>	
-			<div ng-else execute="removeAllSettings('number', i)" ></div>
+			<div ng-else execute="removeAllSettings('number', ($index+1))" ></div>
 		</div>
 		<div class="create-button group last">
 			<input type="button" class="button" ng-click="s.numberOfNumberFields=s.numberOfNumberFields+1;"
@@ -530,7 +530,7 @@
 					<span>{{__('virtualdevicesettings.booleanFieldI', {i:$index+1}) || 'Yes/No Field ' +
 						($index+1)}}</span> </div>
 				<span class="remove-icon fa fa-icon fa-trash"
-					ng-click="removeAllSettings('boolean', ($index+1));"></span>
+					ng-click="removeAllSettings('boolean', ($index+1), true);"></span>
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -609,7 +609,7 @@
 				</div>
 				<div ng-else execute="s['boolean'+($index+1)+'InsightsTitleFalse']=undefined" ></div>
 			</div>	
-			<div ng-else execute="removeAllSettings('boolean', i)" ></div>
+			<div ng-else execute="removeAllSettings('boolean', ($index+1))" ></div>
 		</div>
 		<div class="create-button group last">
 			<input type="button" class="button" ng-click="s.numberOfBooleanFields=s.numberOfBooleanFields+1;"
@@ -626,7 +626,7 @@
 					<span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1} || 'Button ' + ($index+1))}}</span>
 				</div>
 				<span class="remove-icon fa fa-icon fa-trash"
-					ng-click="removeAllSettings('button', ($index+1));"></span>
+					ng-click="removeAllSettings('button', ($index+1), true);"></span>
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -725,7 +725,7 @@
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'InsightsTitleFalse'] = undefined;" ></div>
 			</div>
-			<div ng-else execute="removeAllSettings('button', i)" ></div>
+			<div ng-else execute="removeAllSettings('button', ($index+1))" ></div>
 		</div>
 		<div class="create-button group last">
 			<input type="button" class="button" ng-click="s.numberOfButtonFields=s.numberOfButtonFields+1;"
@@ -747,7 +747,7 @@
 					<span>{{__('virtualdevicesettings.cameraFieldI', {i:$index+1}) || 'Camera ' + ($index+1)}}</span>
 				</div>
 				<span class="remove-icon fa fa-icon fa-trash"
-					ng-click="removeAllSettings('camera', ($index+1));"></span>
+					ng-click="removeAllSettings('camera', ($index+1), true);"></span>
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -771,7 +771,7 @@
 						placeholder="0" />
 				</div>
 			</div>
-			<div ng-else execute="removeAllSettings('camera', i)" ></div>
+			<div ng-else execute="removeAllSettings('camera', ($index+1))" ></div>
 		</div>
 		<div class="create-button group last">
 			<input type="button" class="button" ng-click="s.numberOfCameraFields=s.numberOfCameraFields+1;"
@@ -789,25 +789,48 @@
 			Save</div>
 		<div class="button" ng-click="close()">Close</div>
 	</div>
-	<form name="editor" class="main-view hide" ng-show="view=='editor'">
+
+	<form name="editor" class="main-view hide" ng-if="view=='editor'">
 		<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
 		<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can copy and paste the whole
 			device settings.</div>
-		<a data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openLink($event)" 
+		<a data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" x-ng-click="openLink($event)" 
 			href="https://community.homey.app/t/advanced-virtual-device-share-your-device/68676">See
 			the Share Your Device Forum Topic for other AVDs</a>
 		<div class="group">
 			<div class="field">
-				<div class="button" ng-click="getTextSettings();">Export</div>
+				<div class="button" ng-click="getTextSettings();">Get JSON</div>
 			</div>
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="textSettings" rows="20"></textarea>
+				<div class="label">Include icons</div>
+				<input type="checkbox" ng-model="vars.copyWithIcons" ng-if="copy.customIcons" ng-click="updateCopy();"/>
+			</div>
+			<!-- <div class="field">
+				<div class="button" ng-click="exportTextSettings();">Export</div>
+			</div> -->
+			<div class="field">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="textSettings" rows="10"></textarea>
+			</div>
+			<div class="field">
+				<div class="button" ng-click="readTextSettings()">Read</div>
+			</div>
+			<div class="field" ng-if="readcopy.customIcons">
+				<div class="label">Custom icon</div>
+				<div class="value">Save as</div>
+			</div>
+			<div class="field"  ng-repeat="(key,item)  in readcopy.customIcons">
+				<div class="label">{{key}}</div>
+				<select class="value" ng-model="readcopy.saveCustomIcons[key]">
+					<option value="">Don't save</option>
+					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
+				</select>
 			</div>			
 			<div class="field">
-				<div class="button" ng-click="setTextSettings()">Import and Save</div>
+				<div class="button" ng-click="setTextSettings();">Save & Close</div>
 			</div>
 		</div>
 	</form>
+	<div ng-else execute="textSettings=null;readycopy=null;"></div>
 	<div class="main-buttons" ng-show="view=='editor'">
 		<div class="button" ng-click="view=undefined;">Close</div>
 	</div>
@@ -852,7 +875,8 @@
 			scope = $scope;
 			//let Homey = _homey
 			$scope.s = {};
-			$scope.show = 'editor';
+			//$scope.show = 'editor';
+			$scope.vars = {copyWithIcons : true};
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
 
@@ -862,11 +886,12 @@
 			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
 			$scope.deviceClasses = asv_settings.deviceClasses;
 
-			$scope.removeAllSettings = function (startName, i) {
+			$scope.removeAllSettings = function (startName, i, removeNumberOf) {
+				console.log('removeAllSettings', startName, i);
 				let settings = $scope.s;
 				let name = capitalizeFirstLetter(startName);
 				startName = startName + i;
-				if (settings['numberOf' + name + 'Fields'] === i) settings['numberOf' + name + 'Fields']--;
+				if (removeNumberOf && settings['numberOf' + name + 'Fields'] === i) settings['numberOf' + name + 'Fields']--;
 				for (const settingKey in settings) if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName)) delete settings[settingKey];
 			}
 
@@ -880,10 +905,10 @@
 			}
 
 
-			$scope.save = function (successFunction) {
+			$scope.save = function (successFunction, settings) {
 				Homey.showLoadingOverlay();
 				$('#hy-overlay-loading-message').html(Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved');
-				Homey.emit('virtualdevicesettings_save', $scope.s, function (err, result) {
+				Homey.emit('virtualdevicesettings_save', settings || $scope.s , function (err, result) {
 					Homey.hideLoadingOverlay();
 					if (err) {
 						console.log(err);
@@ -903,6 +928,8 @@
 			$scope.log = function (s) {
 				console.log(s);
 			}
+			
+			
 			$scope.getTextSettings = function () {
 				Homey.emit('virtualdevicesettings_getTextSettings', null, function (err, result) {
 					if (err) {
@@ -910,28 +937,63 @@
 						return;
 					}
 					$scope.$apply(function () {
-						let copy = JSON.parse(JSON.stringify($scope.s));
-						copy.deviceIcon = result.deviceIcon;
-						
-						$scope.textSettings = JSON.stringify(copy);
+						$scope.copy = JSON.parse(JSON.stringify($scope.s));
+						$scope.copy.deviceIcon = result.deviceIcon;
+						$scope.copy.customIcons = result.customIcons;
+						$scope.updateCopy();
 						
 					});
 				});
 			}
-			$scope.setTextSettings = function () {
+
+			$scope.updateCopy = function () {
+				let copy = JSON.parse(JSON.stringify($scope.copy));
+				if(!$scope.vars.copyWithIcons) {
+					delete copy.deviceIcon;
+					delete copy.customIcons;
+				}
+				$scope.textSettings = JSON.stringify(copy);
+			}
+
+			$scope.readTextSettings = function () {
 				let o;
 				try {
 					o = JSON.parse($scope.textSettings);	
 					o.imported = 2;
+					//o.saveCustomIcons = {};
 				} catch (error) {
 					return Homey.alert(error);
-				} 
-				if(o && o.cls) $scope.save(function() {$scope.view=undefined;}, $scope.s=o);
+				}
+				$scope.readcopy = o;
+			}
+
+
+			$scope.setTextSettings = function () {
+				// let o;
+				// try {
+				// 	o = JSON.parse($scope.readcopy);
+				// 	console.log(o);
+				// 	o.imported = 2;
+				// } catch (error) {
+				// 	return Homey.alert(error);
+				// } 
+				//console.log($scope.readcopy);
+				if($scope.readcopy && $scope.readcopy.cls) $scope.save(function() {$scope.view=undefined;}, $scope.readcopy);
 				//$scope.textSettings = JSON.stringify($scope.s);
 			}
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
 				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					$scope.$apply(function () {
+						$scope.customIconsAvailable = result.customIconsAvailable;
+					});
+				});
+			
 				Homey.emit('virtualdevicesettings_load', null, function (err, result) {
 					if (err) {
 						console.log(err);
@@ -954,6 +1016,30 @@
 			} else {
 				$scope.customicons = asv_settings.customicons;
 				$scope.s = asv_settings.exampleSettings;
+				$scope.customIconsAvailable = [
+    'custom_1',  'custom_2',  'custom_3',
+    'custom_4',  'custom_5',  'custom_6',  'custom_7',
+    'custom_8',  'custom_9',  'custom_10', 'custom_11',
+    'custom_12', 'custom_13', 'custom_14', 'custom_15',
+    'custom_16', 'custom_17', 'custom_18', 'custom_19',
+    'custom_20', 'custom_21', 'custom_22', 'custom_23',
+    'custom_24', 'custom_25', 'custom_26', 'custom_27',
+    'custom_28', 'custom_29', 'custom_30', 'custom_31',
+    'custom_32', 'custom_33', 'custom_34', 'custom_35',
+    'custom_36', 'custom_37', 'custom_38', 'custom_39',
+    'custom_40', 'custom_41', 'custom_42', 'custom_43',
+    'custom_44', 'custom_45', 'custom_46', 'custom_47',
+    'custom_48', 'custom_49', 'custom_50', 'custom_51',
+    'custom_52', 'custom_53', 'custom_54', 'custom_55',
+    'custom_56', 'custom_57', 'custom_58', 'custom_59',
+    'custom_60',
+    'custom_61', 'custom_62', 'custom_63',
+    'custom_64', 'custom_65', 'custom_66', 'custom_67',
+    'custom_68', 'custom_69', 'custom_70', 'custom_71',
+    'custom_72', 'custom_73', 'custom_74', 'custom_75',
+    'custom_76', 'custom_77', 'custom_78', 'custom_79',
+    'custom_80'
+  ];
 			}
 
 

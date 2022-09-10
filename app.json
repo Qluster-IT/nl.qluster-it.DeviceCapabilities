@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.3.4",
+  "version": "2.3.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -488,9 +488,9 @@
             "type": "autocomplete",
             "name": "field",
             "placeholder": {
-              "en": "Button",
-              "nl": "Knop",
-              "de": "Taste"
+              "en": "Yes/No",
+              "nl": "Ja/Nee",
+              "de": "Ja/Nein"
             }
           },
           {
@@ -14256,13 +14256,10 @@
       ],
       "pair": [
         {
-          "id": "list_icons",
-          "navigation": {
-            "next": "done"
-          },
-          "options": {
-            "singular": true
-          }
+          "id": "list_icons"
+        },
+        {
+          "id": "done"
         },
         {
           "id": "list_virtualdevice",
@@ -14273,9 +14270,6 @@
           "options": {
             "singular": true
           }
-        },
-        {
-          "id": "done"
         },
         {
           "id": "add_virtualdevice",

@@ -623,8 +623,8 @@ class DeviceSetter extends Homey.App {
 	async createDeviceIcon({ type, buffer, id }) {
 		return await this._createIcon({ type, buffer, id, subpath: 'virtualdeviceicons' });
 	}
-	async createCustomIcon({ type, name, buffer, id }) {
-		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
+	async createCustomIcon({ type,  buffer, id }) {
+		return await this._createIcon({ type, buffer, id, subpath: 'customicons' });
 	}
 
 	async fileExists(path) {

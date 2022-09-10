@@ -120,9 +120,10 @@
 			"loading":"Laden",
 			"custom_device_icon":"Als u een aangepast pictogram voor uw apparaat wilt gebruiken, kunt u dit hier uploaden. Het pictogram moet de indeling .svg hebben.",
 			"select_device_icon":"Of kies er een uit de lijst.",
-
 			"set_icon_and_customize":"Hier kunt u een pictogram voor het Geavanceerde Virtuele Apparaten instellen, door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
-			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen."
+			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
+
+			"set_name":"Hier kunt u de naam van het apparaat instellen:"
 		},
 
 		"done":{

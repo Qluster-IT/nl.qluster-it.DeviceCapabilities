@@ -118,9 +118,10 @@
 			"loading":"Laden",
 			"custom_device_icon":"Wenn Sie ein eigenes Symbol für Ihr Gerät verwenden möchten, können Sie es hier hochladen. Das Symbol muss im .svg-Format vorliegen.",
 			"select_device_icon":"Oder wählen Sie eines aus der Liste.",
-
 			"set_icon_and_customize":"Hier können Sie ein Symbol für die Advanced Virtual Devices festlegen, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus der Standardliste auswählen.",
-			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern."
+			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern.",
+
+			"set_name":"Hier können Sie den Namen für das Gerät festlegen:"
 		},
 
 		"done":{

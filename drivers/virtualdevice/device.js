@@ -4,7 +4,8 @@ const Homey = require('homey');
 const Homeyman = require('../../app');
 
 const _ = require('lodash-core');
-
+const types = ['status', 'text', 'number', 'button', 'boolean'];
+			
 module.exports = class WatchDevice extends Homey.Device {
 
 
@@ -258,6 +259,28 @@ module.exports = class WatchDevice extends Homey.Device {
 					await this.homey.app.createDeviceIcon({type:"image/svg", id:this.getData().id, buffer:settings.deviceIcon });
 					delete settings.deviceIcon;
 				} 
+				if(settings.saveCustomIcons) {
+					//await this.homey.app.createDeviceIcon({type:"image/svg", id:this.getData().id, buffer:settings.deviceIcon });
+					for (const iconUsedKey	in settings.saveCustomIcons) {
+						if (Object.hasOwnProperty.call(settings.saveCustomIcons, iconUsedKey)) {
+							const toIconName = settings.saveCustomIcons[iconUsedKey];
+							try {
+								let data = settings.customIcons[iconUsedKey];
+								if(data && data.length>0) {
+									await this.homey.app.createCustomIcon({type:"image/svg", id:toIconName, buffer:data });
+								}
+							} catch (error) {
+								
+							}
+							this.driver.executeForAllTypes(this, (type, i)=> {
+								if(settings[type+i+"Icon"]== iconUsedKey) settings[type+i+"Icon"] = toIconName;
+							});
+						}
+					}
+					delete settings.saveCustomIcons;
+				}
+				
+				if(settings.customIcons) delete settings.customIcons;
 				delete settings.imported;
 			}
 
@@ -265,7 +288,6 @@ module.exports = class WatchDevice extends Homey.Device {
 			//b.number1Max = 15;
 			//this.setSettings({number1Max:15});
 
-			var types = ['status', 'text', 'number', 'button', 'boolean'];//, 'dropdown'];
 			var button1Reset = false;
 			//var a = this;
 			//var api = await this.homey.app.refreshHomeyAPI();
@@ -273,8 +295,8 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
-				let tt = this.capitalizeFirstLetter(type);
-				let ttt = settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'];
+				//let tt = this.capitalizeFirstLetter(type);
+				//let ttt = settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'];
 				const fieldCount = type=="status" ? 1 : Math.max(settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0, oldSettings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
 
 				for (let i = 1; i <= fieldCount; i++) {
