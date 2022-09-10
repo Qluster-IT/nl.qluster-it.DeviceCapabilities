@@ -620,8 +620,8 @@ class DeviceSetter extends Homey.App {
 		});
 		return this.getIcon({ id });
 	}
-	async createDeviceIcon({ type, name, buffer, id }) {
-		return await this._createIcon({ type, name, buffer, id, subpath: 'virtualdeviceicons' });
+	async createDeviceIcon({ type, buffer, id }) {
+		return await this._createIcon({ type, buffer, id, subpath: 'virtualdeviceicons' });
 	}
 	async createCustomIcon({ type, name, buffer, id }) {
 		return await this._createIcon({ type, name, buffer, id, subpath: 'customicons' });
@@ -646,7 +646,7 @@ class DeviceSetter extends Homey.App {
 	async fsstat(file) {
 		return await statAsync(file);
 	}
-	async _createIcon({ type, name, buffer, id, subpath }) {
+	async _createIcon({ type, buffer, id, subpath }) {
 		if( !TYPES_MAP[type] )
 			throw new Error(`invalid_type:${type}`);
 			
@@ -670,7 +670,6 @@ class DeviceSetter extends Homey.App {
 		return {
 			id,
 			type,
-			name,
 			path,
 		};
 	}

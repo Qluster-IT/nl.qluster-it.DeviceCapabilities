@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.2.11",
+  "version": "2.3.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2240,9 +2240,9 @@
     "devicecapabilities_starttext": {
       "type": "string",
       "title": {
-        "en": "goto Device Settings",
-        "nl": "door naar apparaat instellingen te gaan",
-        "de": "mit den Geräteeinstellungen"
+        "en": "goto Device Maintainance/Repair",
+        "nl": "door naar apparaat Onderhoud/Repareren te gaan",
+        "de": "mit den Gerätewartung/reparatur"
       },
       "getable": true,
       "setable": false,
@@ -14256,19 +14256,19 @@
       ],
       "pair": [
         {
-          "id": "list_virtualdevice",
-          "template": "list_devices",
+          "id": "list_icons",
           "navigation": {
-            "next": "list_icons"
+            "next": "done"
           },
           "options": {
             "singular": true
           }
         },
         {
-          "id": "list_icons",
+          "id": "list_virtualdevice",
+          "template": "list_devices",
           "navigation": {
-            "next": "done"
+            "next": "list_icons"
           },
           "options": {
             "singular": true
@@ -14282,11 +14282,21 @@
           "template": "add_devices"
         }
       ],
-      "repair": [        
+      "repair": [
         {
-          "id": "avd_settings"          
+          "id": "avd_settings"
         }
-      ]      
+      ],
+      "settings": [
+        {
+          "id":"labelGotoRepair",
+          "type":"label",
+          "label": { 
+            "en": " ", "nl":" ", "de":" "
+          },
+          "value": " "
+        }
+      ]
     }
   ]
 }

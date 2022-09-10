@@ -44,6 +44,7 @@
 		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
 		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App.",		
 		"devicecapabilities_starttext":"To Start",
+		"devicecapabilities_starttextend":"goto Device Maintainance/Repair",
 		
 		"title_repair":"Device Settings",
 		"device_saving":"The Device is being saved",
@@ -110,7 +111,7 @@
 		"createCameraField":"Create Camera",
 		"step":"Step",
 		"stepHint":"The step sets the stepping interval for the Number.",
-		"":""
+		"labelTopicLink":"See the Forum Topic for examples, explanations or if you have any questions."
 	},
 	"pair": {
 		"list_icons":{

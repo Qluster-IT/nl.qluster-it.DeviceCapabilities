@@ -166,5 +166,8 @@
   },
   "2.2.11" : {
     "en" : "Improved: Device Repair is the new Device Settings."
+  },
+  "2.3.2" : {
+    "en" : "Added: Share Your Device, with Device Icon."
   }
 }

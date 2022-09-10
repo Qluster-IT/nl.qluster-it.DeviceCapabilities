@@ -28,7 +28,7 @@
 		"function_exists":"Funktion bereits vorhanden.",
 		"delete_all_confirm":"Sind Sie sicher, dass Sie ALLE Funktionen löschen möchten?",
 		"delete_confirm":"Sind Sie sicher, dass Sie die Funktion __functionName__ löschen möchten?",
-		"search_for_name":"Nach Namen suchen",
+		"search_for_name":"mit den Gerätewartung/reparatur",
 		
 		"close":"Close",
 		"explain_virtualdevices": "Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
@@ -44,6 +44,7 @@
 		"field-not-set":"__fieldId__ wurde noch nicht festgelegt. Gehen Sie in die Geräteeinstellungen und fügen Sie das Feld hinzu.",
 		"labelStatusIndicator":"Vergessen Sie nicht, das Statusfeld in der Mobile App als Statusindikator einzustellen.",
 		"devicecapabilities_starttext":"Beginnen Sie",
+		"devicecapabilities_starttextend":"Begin",
 		
 		
 		"title_repair":"Device Settings",
@@ -109,6 +110,7 @@
 		"createBooleanField":"Create Yes/No-Field",
 		"createButtonField":"Create Button",
 		"createCameraField":"Create Camera",
+		"labelTopicLink":"Sehen Sie sich das Forum-Thema für Beispiele, Erklärungen oder wenn Sie Fragen haben.",
 		"":"",
 		"":"",
 		"":"",

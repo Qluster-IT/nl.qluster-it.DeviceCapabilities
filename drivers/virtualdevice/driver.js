@@ -505,6 +505,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             //return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
+        session.setHandler('virtualdevicesettings_getTextSettings', async () => {
+            const fs = require('fs').promises;
+            let getData = device.getData();
+            let iconPath = getData && getData.icon ? getData.icon.substring(7) : undefined;
+            const contents = await fs.readFile(iconPath, {encoding: 'base64'});
+            return {deviceIcon:'data:image/svg+xml;base64,'+contents};
+        });        
     }
       
       async onPair(session, arg1) {

@@ -290,7 +290,12 @@ const asv_settings = {
           "id": "onoff_hide",
           "label": "On/Off (Hidden)",
           "order": 1
-        },                
+        },
+        {
+          "id": "onoff_buttontab",
+          "label": "On/Off (Button Tab)",
+          "order": 1
+        },
         {
           "id": "onoff",
           "label": "On/Off",

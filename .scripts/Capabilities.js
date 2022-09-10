@@ -27,7 +27,7 @@ let icons = [
 str+='"devicecapabilities_starttext": { \r\n'+
 '      "type": "string", \r\n'+
 '      "title": { \r\n'+
-'        "en": "goto Device Settings", "nl":"door naar apparaat instellingen te gaan", "de":"mit den Geräteeinstellungen" \r\n'+
+'        "en": "goto Device Maintainance/Repair", "nl":"door naar apparaat Onderhoud/Repareren te gaan", "de":"mit den Gerätewartung/reparatur" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
 '      "setable": false, \r\n'+

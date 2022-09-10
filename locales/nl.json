@@ -29,7 +29,6 @@
 		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
 		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
 		"search_for_name":"zoek op naam",
-		"devicecapabilities_starttext":"Begin",
 		
 		"close":"Sluiten",
 		"explain_virtualdevices": "Hier kunt u het pictogram voor Geavanceerde Virtuele Apparaten bewerken door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
@@ -45,6 +44,7 @@
 		"field-not-set":"__fieldId__ is nog niet ingesteld. Ga naar apparaat instelling om het veld toe te voegen.",
 		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App.",		
 		"devicecapabilities_starttext":"Begin",
+		"devicecapabilities_starttextend":"door naar apparaat Onderhoud/Repareren te gaan",
 		
 		
 		"title_repair":"Apparaat instellingen",
@@ -112,6 +112,7 @@
 		"createCameraField":"Creëer  Camera",
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
+		"labelTopicLink":"Zie het Forum Topic voor voorbeelden, uitleg of als je vragen hebt.",
 		"":"",
 		"":"",
 		"":"",
