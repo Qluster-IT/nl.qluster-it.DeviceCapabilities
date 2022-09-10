@@ -110,12 +110,7 @@
 		"createBooleanField":"Yes/No-Feld erstellen",
 		"createButtonField":"Taste erstellen",
 		"createCameraField":"Kamera erstellen",
-		"":"",
-		"":"",
-		"":"",
-		"":"",
-		"":"",
-		"":""
+		"labelTopicLink":"Sehen Sie sich das Forum-Thema für Beispiele, Erklärungen oder wenn Sie Fragen haben."
 	},
 	"pair": {
 		"list_icons":{

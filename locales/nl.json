@@ -112,11 +112,7 @@
 		"createCameraField":"Creëer  Camera",
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
-		"labelTopicLink":"Zie het Forum Topic voor voorbeelden, uitleg of als je vragen hebt.",
-		"":"",
-		"":"",
-		"":"",
-		"":""
+		"labelTopicLink":"Zie het Forum Topic voor voorbeelden, uitleg of als je vragen hebt."
 	},
 	"pair": {
 		"list_icons":{
