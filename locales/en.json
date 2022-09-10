@@ -44,6 +44,7 @@
 		"field-not-set":"__fieldId__ has not been set. Goto Device Settings and add the field.",
 		"labelStatusIndicator":"Remember to set the status field as Status Indicator in the Mobile App.",		
 		"devicecapabilities_starttext":"To Start",
+		"devicecapabilities_starttextend":"goto Device Maintainance/Repair",
 		
 		"title_repair":"Device Settings",
 		"device_saving":"The Device is being saved",
@@ -108,9 +109,9 @@
 		"createBooleanField":"Create Yes/No-Field",
 		"createButtonField":"Create Button",
 		"createCameraField":"Create Camera",
-		"":"",
-		"":"",
-		"":""
+		"step":"Step",
+		"stepHint":"The step sets the stepping interval for the Number.",
+		"labelTopicLink":"See the Forum Topic for examples, explanations or if you have any questions."
 	},
 	"pair": {
 		"list_icons":{
@@ -118,9 +119,10 @@
 			"loading":"Loading",
 			"custom_device_icon":"If you wish to use a custom icon for your device, you can upload it here. The icon needs to be in .svg format.",
 			"select_device_icon":"Or select one from the list.",
-
 			"set_icon_and_customize":"Here you can pick an icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
-			"set_icon_and_customize_change" : "You can change the icon later through App Settings."
+			"set_icon_and_customize_change" : "You can change the icon later through App Settings.",
+
+			"set_name":"Here you can set the name for the device:"
 		},
 
 		"done":{

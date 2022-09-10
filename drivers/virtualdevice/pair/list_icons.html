@@ -79,7 +79,12 @@
             },
             methods: {
                 setIcon(icon) {
-                    Homey.emit('icon_picked', {'icon': icon}, function (err, result) {
+                  let name=undefined;
+                  try {
+                    name = $('#name').val();
+                    console.log(name);
+                  } catch (error) { }
+                    Homey.emit('icon_picked', {'icon': icon, name:name}, function (err, result) {
                         if (err) {
                             console.log(err);
                             return;
@@ -92,14 +97,19 @@
     });
 
     $('#save-icon').click(function() {
-    Homey.emit('icon_save', imgBase64)
-      .then(result => {
-        Homey.nextView();
-      })
-      .catch(error => {
-        Homey.alert(error.message, 'error');
-        Homey.done()
-      });
+      let name=undefined;
+      try {
+        name = $('#name').val();
+        console.log(name);
+      } catch (error) { }
+      Homey.emit('icon_save', {icon:imgBase64, name:name})
+        .then(result => {
+          Homey.nextView();
+        })
+        .catch(error => {
+          Homey.alert(error.message, 'error');
+          Homey.done()
+        });
   });
 
     
@@ -120,7 +130,12 @@
 
 </script>
 
-<div>
+
+<div style="margin-top:20px;">
+  <span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>  
+  <input type="text" id="name"/>
+</div>
+<div style="margin-top:20px;">
   <span data-i18n="pair.list_icons.set_icon_and_customize"></span>  
   <span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
 </div>

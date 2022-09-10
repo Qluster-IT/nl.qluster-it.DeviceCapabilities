@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.2.9",
+  "version": "2.3.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -488,9 +488,9 @@
             "type": "autocomplete",
             "name": "field",
             "placeholder": {
-              "en": "Button",
-              "nl": "Knop",
-              "de": "Taste"
+              "en": "Yes/No",
+              "nl": "Ja/Nee",
+              "de": "Ja/Nein"
             }
           },
           {
@@ -2240,9 +2240,9 @@
     "devicecapabilities_starttext": {
       "type": "string",
       "title": {
-        "en": "goto Device Settings",
-        "nl": "door naar apparaat instellingen te gaan",
-        "de": "mit den Geräteeinstellungen"
+        "en": "goto Device Maintainance/Repair",
+        "nl": "door naar apparaat Onderhoud/Repareren te gaan",
+        "de": "mit den Gerätewartung/reparatur"
       },
       "getable": true,
       "setable": false,
@@ -14256,6 +14256,12 @@
       ],
       "pair": [
         {
+          "id": "list_icons"
+        },
+        {
+          "id": "done"
+        },
+        {
           "id": "list_virtualdevice",
           "template": "list_devices",
           "navigation": {
@@ -14266,27 +14272,25 @@
           }
         },
         {
-          "id": "list_icons",
-          "navigation": {
-            "next": "done"
-          },
-          "options": {
-            "singular": true
-          }
-        },
-        {
-          "id": "done"
-        },
-        {
           "id": "add_virtualdevice",
           "template": "add_devices"
         }
       ],
-      "repair": [        
+      "repair": [
         {
-          "id": "avd_settings"          
+          "id": "avd_settings"
         }
-      ]      
+      ],
+      "settings": [
+        {
+          "id":"labelGotoRepair",
+          "type":"label",
+          "label": { 
+            "en": " ", "nl":" ", "de":" "
+          },
+          "value": " "
+        }
+      ]
     }
   ]
 }
