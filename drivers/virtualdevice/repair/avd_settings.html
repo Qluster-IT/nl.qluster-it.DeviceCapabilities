@@ -87,6 +87,9 @@
 		width: 100%;
 		margin-top: 10px;
 	}
+	.label > * {
+		display: inline-block;
+	}
 
 	.label {
 		position: relative;
@@ -248,6 +251,17 @@
 		/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
+	}
+
+
+	.custom-icon {
+		height:24px;
+		width:24px;
+		position: absolute;
+	}
+	.custom-icon + * {
+		position: relative;
+		left:30px;
 	}
 
 	/* .tooltip>div {} */
@@ -799,28 +813,31 @@
 			the Share Your Device Forum Topic for other AVDs</a>
 		<div class="group">
 			<div class="field">
-				<div class="button" ng-click="getTextSettings();">Get JSON</div>
+				<div class="button" ng-click="getTextSettings();">Create JSON</div>
 			</div>
 			<div class="field">
-				<div class="label">Include icons</div>
+				<div>Include icons</div>
 				<input type="checkbox" ng-model="vars.copyWithIcons" ng-if="copy.customIcons" ng-click="updateCopy();"/>
 			</div>
 			<!-- <div class="field">
 				<div class="button" ng-click="exportTextSettings();">Export</div>
 			</div> -->
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="textSettings" rows="10"></textarea>
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="10"></textarea>
 			</div>
 			<div class="field">
 				<div class="button" ng-click="readTextSettings()">Read</div>
 			</div>
-			<div class="field" ng-if="readcopy.customIcons">
+			<div class="field" ng-if="vars.readcopy.customIcons">
 				<div class="label">Custom icon</div>
 				<div class="value">Save as</div>
 			</div>
-			<div class="field"  ng-repeat="(key,item)  in readcopy.customIcons">
-				<div class="label">{{key}}</div>
-				<select class="value" ng-model="readcopy.saveCustomIcons[key]">
+			<div class="field"  ng-repeat="(key,item)  in vars.readcopy.customIcons">				
+				<div class="label">
+					<img class="custom-icon" src="{{item}}"></img>
+					<div>{{key}}</div>					
+				</div>
+				<select class="value" ng-model="vars.readcopy.saveCustomIcons[key]">
 					<option value="">Don't save</option>
 					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
 				</select>
@@ -830,7 +847,7 @@
 			</div>
 		</div>
 	</form>
-	<div ng-else execute="textSettings=null;readycopy=null;"></div>
+	<div ng-else execute="vars.textSettings=null;readycopy=null;"></div>
 	<div class="main-buttons" ng-show="view=='editor'">
 		<div class="button" ng-click="view=undefined;">Close</div>
 	</div>
@@ -876,7 +893,7 @@
 			//let Homey = _homey
 			$scope.s = {};
 			//$scope.show = 'editor';
-			$scope.vars = {copyWithIcons : true};
+			$scope.vars = {copyWithIcons : true, textSettings: null, readcopy:null};
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
 
@@ -952,34 +969,37 @@
 					delete copy.deviceIcon;
 					delete copy.customIcons;
 				}
-				$scope.textSettings = JSON.stringify(copy);
+				$scope.vars.textSettings = JSON.stringify(copy);
 			}
 
 			$scope.readTextSettings = function () {
 				let o;
+				$scope.vars.readcopy = null;
 				try {
-					o = JSON.parse($scope.textSettings);	
+					o = JSON.parse($scope.vars.textSettings);
+					//console.log('$scope.vars.textSettings', $scope.vars.textSettings);
+					if(!o) return Homey.alert('o is not a object, text was: ' + $scope.vars.textSettings);
 					o.imported = 2;
 					//o.saveCustomIcons = {};
 				} catch (error) {
 					return Homey.alert(error);
 				}
-				$scope.readcopy = o;
+				$scope.vars.readcopy = o;
 			}
 
 
 			$scope.setTextSettings = function () {
 				// let o;
 				// try {
-				// 	o = JSON.parse($scope.readcopy);
+				// 	o = JSON.parse($scope.vars.readcopy);
 				// 	console.log(o);
 				// 	o.imported = 2;
 				// } catch (error) {
 				// 	return Homey.alert(error);
 				// } 
-				//console.log($scope.readcopy);
-				if($scope.readcopy && $scope.readcopy.cls) $scope.save(function() {$scope.view=undefined;}, $scope.readcopy);
-				//$scope.textSettings = JSON.stringify($scope.s);
+				//console.log($scope.vars.readcopy);
+				if($scope.vars.readcopy && $scope.vars.readcopy.cls) $scope.save(function() {$scope.view=undefined;}, $scope.vars.readcopy);
+				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
