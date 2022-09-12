@@ -156,18 +156,18 @@
     "en" : "Improved: Device Icons are per device and can be changed later."
   },
   "2.2.1" : {
-    "en" : "Improved: Device Repair is the new Device Settings (in development)"
+    "en" : "Improved: Device Repair is the new Device Settings (in development)."
   },
   "2.2.3" : {
-    "en" : "Improved: Device Repair is the new Device Settings (Saving works)"
+    "en" : "Improved: Device Repair is the new Device Settings (Saving works)."
   },
   "2.2.4" : {
-    "en" : "Improved: Device Repair is the new Device Settings (language done)"
+    "en" : "Improved: Device Repair is the new Device Settings (language done)."
   },
   "2.2.11" : {
     "en" : "Improved: Device Repair is the new Device Settings."
   },
-  "2.3.9" : {
-    "en" : "Added: Share Your Device, with Device Icon and Custom Icons."
+  "2.3.17" : {
+    "en" : "Added: Share Your Device now (can) include flows."
   }
 }

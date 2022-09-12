@@ -16,7 +16,10 @@
 	a {
 		display: inline-block;
 	}
-
+.float-right {
+	float: right !important;
+	z-index:100;
+}
 	/* html {
 		height:auto!important;
 	} */
@@ -812,21 +815,26 @@
 			href="https://community.homey.app/t/advanced-virtual-device-share-your-device/68676">See
 			the Share Your Device Forum Topic for other AVDs</a>
 		<div class="group">
-			<div class="field">
+			<div class="value float-right">
 				<div class="button" ng-click="getTextSettings();">Create JSON</div>
 			</div>
 			<div class="field">
 				<div>Include icons</div>
-				<input type="checkbox" ng-model="vars.copyWithIcons" ng-if="copy.customIcons" ng-click="updateCopy();"/>
+				<input type="checkbox" ng-model="vars.copyWithIcons"/>
+			</div>
+			<div class="field">
+				<div>Include flows</div>
+				<input type="checkbox" ng-model="vars.copyWithFlows"/>
 			</div>
 			<!-- <div class="field">
 				<div class="button" ng-click="exportTextSettings();">Export</div>
 			</div> -->
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="10"></textarea>
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5"></textarea>
 			</div>
 			<div class="field">
-				<div class="button" ng-click="readTextSettings()">Read</div>
+				<div class="button" ng-click="readTextSettings()">Read Device</div>
+				<div class="button" ng-click="readFlows();" ng-if="!vars.advancedflows && vars.advancedflows.length!=0">Read Flows</div>
 			</div>
 			<div class="field" ng-if="vars.readcopy.customIcons">
 				<div class="label">Custom icon</div>
@@ -841,9 +849,28 @@
 					<option value="">Don't save</option>
 					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
 				</select>
-			</div>			
+			</div>
 			<div class="field">
-				<div class="button" ng-click="setTextSettings();">Save & Close</div>
+				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.advancedflows || vars.advancedflows.length>0">Save</div>
+				<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.advancedflows && vars.advancedflows.length!=0 && vars.readcopy">Save & Close</div>
+			</div>
+			<div ng-if="vars.apiCommand">
+				<div class="field"  ng-repeat="(key,item)  in vars.devicesToReplace">
+					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+					<select class="value" ng-model="vars.devicesToReplace[key].replaceWith">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in vars.devicesToReplace[key].replacements" value="{{replacement.id}}" >{{replacement.name}}</option>
+					</select>
+				</div>				
+				<div class="field">
+					<div class="button" ng-click="updateFlows();">Update Text</div>
+				</div>
+				<div class="field margin-top">
+					Run this in the <a href="https://tools.developer.homey.app/tools/api-playground">Homey API Playground</a> to create the Flows!
+				</div>
+				<div class="field">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.apiCommand" rows="5"></textarea>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -893,7 +920,7 @@
 			//let Homey = _homey
 			$scope.s = {};
 			//$scope.show = 'editor';
-			$scope.vars = {copyWithIcons : true, textSettings: null, readcopy:null};
+			$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null};
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
 
@@ -922,18 +949,25 @@
 			}
 
 
-			$scope.save = function (successFunction, settings) {
+			function showOverlay(str) {				
 				Homey.showLoadingOverlay();
-				$('#hy-overlay-loading-message').html(Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved');
+				$('#hy-overlay-loading-message').html(str || '');
+			}
+			function hideOverlay() {
+				Homey.hideLoadingOverlay();
+			}
+
+			$scope.save = function (successFunction, settings) {
+				showOverlay(Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved');
 				Homey.emit('virtualdevicesettings_save', settings || $scope.s , function (err, result) {
-					Homey.hideLoadingOverlay();
+					hideOverlay();
 					if (err) {
 						console.log(err);
 						return;
 					}
 					$scope.$apply(function () {
 						$scope.s = result;
-						$scope.log(typeof(successFunction));
+						//$scope.vars.apiCommand = result.apiCommand;
 						if(successFunction && typeof(successFunction)=='function') successFunction();
 					});
 				});
@@ -945,50 +979,106 @@
 			$scope.log = function (s) {
 				console.log(s);
 			}
+
+			$scope.updateFlows = function() {
+				if(typeof(Homey)!=='undefined') 
+					showOverlay();
+					Homey.emit('virtualdevicesettings_updateFlowCommand', {advancedflows: $scope.vars.advancedflows, devicesToReplace:$scope.vars.devicesToReplace}, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							//$scope.vars.devicesToReplace = result.devicesToReplace;
+							$scope.vars.apiCommand = result.apiCommand;
+						});
+					});
+			}
 			
+			
+			$scope.readFlows = function () {
+				//$scope.vars.devicesToReplace = null;
+				//$scope.vars.apiCommand = null;
+				$scope.vars.copy = null
+				$scope.vars.readcopy = null;
+
+				if(typeof(Homey)!=='undefined') {
+					showOverlay();
+					Homey.emit('virtualdevicesettings_readFlows', $scope.vars.textSettings, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							$scope.vars.devicesToReplace = result.devicesToReplace;
+							$scope.vars.apiCommand = result.apiCommand;
+							$scope.vars.advancedflows = result.advancedflows;
+						});
+					});
+				}
+				else {
+					let o = {"apiCommand":"Homey.flow.createAdvancedFlow({advancedflow:{\"id\":\"c41748c3-0caf-4ef6-baa3-12722a43cc5e\",\"name\":\"_Share Your Device\",\"enabled\":true,\"cards\":{\"fa7c707c-23dd-4436-a9a7-bbcef5207169\":{\"ownerUri\":\"homey:device:470e638f-7ad8-478d-b526-8e3cf3812111\",\"id\":\"virtualdevice_set_expression\",\"type\":\"action\",\"x\":120,\"y\":260,\"args\":{\"field\":{\"id\":\"text1\",\"name\":\"Homey\",\"description\":\"Tekst 1\"},\"expression\":\"\\\"asd\\\"\"},\"outputSuccess\":[\"a323bc84-668c-464e-9857-8dced847e73d\"]},\"a323bc84-668c-464e-9857-8dced847e73d\":{\"ownerUri\":\"homey:manager:logic\",\"id\":\"variable_set_string\",\"args\":{\"variable\":{\"id\":\"7859c113-4c21-4b94-8db0-bc730a3f1ac3\",\"name\":\"test\"},\"value\":\"Hallo [[homey:device:470e638f-7ad8-478d-b526-8e3cf3812111|devicecapabilities_text-custom_80.text1]]\"},\"type\":\"action\",\"x\":700,\"y\":240},\"d7730ae6-4a90-43d1-a6a0-d1d327274111\":{\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"on\",\"type\":\"action\",\"x\":620,\"y\":440}}}});\r\n","devicesToReplace":{"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad":{"name":"Woonkamer lamp","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on"]}}};
+					$scope.vars.devicesToReplace = o.devicesToReplace;
+					$scope.vars.apiCommand = o.apiCommand;					
+				}
+				
+			}
+
+
 			
 			$scope.getTextSettings = function () {
-				Homey.emit('virtualdevicesettings_getTextSettings', null, function (err, result) {
+				showOverlay();
+				$scope.vars.devicesToReplace = null;
+				$scope.vars.apiCommand = null;
+				
+				$scope.vars.advancedflows = null;
+				//$scope.copy = null
+				$scope.readcopy = null;
+				$scope.vars.textSettings = '';
+
+				Homey.emit('virtualdevicesettings_getTextSettings', {copyWithIcons:$scope.vars.copyWithIcons, copyWithFlows:$scope.vars.copyWithFlows }, function (err, result) {
+					hideOverlay();
 					if (err) {
 						console.log(err);
 						return;
 					}
 					$scope.$apply(function () {
-						$scope.copy = JSON.parse(JSON.stringify($scope.s));
-						$scope.copy.deviceIcon = result.deviceIcon;
-						$scope.copy.customIcons = result.customIcons;
-						$scope.updateCopy();
-						
+						$scope.vars.textSettings = result.compressed;						
 					});
 				});
 			}
 
-			$scope.updateCopy = function () {
-				let copy = JSON.parse(JSON.stringify($scope.copy));
-				if(!$scope.vars.copyWithIcons) {
-					delete copy.deviceIcon;
-					delete copy.customIcons;
-				}
-				$scope.vars.textSettings = JSON.stringify(copy);
-			}
 
 			$scope.readTextSettings = function () {
 				let o;
 				$scope.vars.readcopy = null;
 				try {
-					o = JSON.parse($scope.vars.textSettings);
-					//console.log('$scope.vars.textSettings', $scope.vars.textSettings);
-					if(!o) return Homey.alert('o is not a object, text was: ' + $scope.vars.textSettings);
-					o.imported = 2;
+					showOverlay();
+					Homey.emit('virtualdevicesettings_getJson', $scope.vars.textSettings, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {							
+							o = result;
+							//delete o.advancedflows;
+							//delete o.originalId;
+							if(!o) return Homey.alert('o is not a object, text was: ' + $scope.vars.textSettings);
+							o.imported = 2;
+							$scope.vars.readcopy = o;
+						});
+					});
 					//o.saveCustomIcons = {};
 				} catch (error) {
 					return Homey.alert(error);
 				}
-				$scope.vars.readcopy = o;
 			}
 
 
-			$scope.setTextSettings = function () {
+			$scope.setTextSettings = function (close) {
 				// let o;
 				// try {
 				// 	o = JSON.parse($scope.vars.readcopy);
@@ -998,7 +1088,9 @@
 				// 	return Homey.alert(error);
 				// } 
 				//console.log($scope.vars.readcopy);
-				if($scope.vars.readcopy && $scope.vars.readcopy.cls) $scope.save(function() {$scope.view=undefined;}, $scope.vars.readcopy);
+				if($scope.vars.readcopy && $scope.vars.readcopy.cls) $scope.save(function() {
+						if(close) $scope.view=undefined;
+					}, $scope.vars.readcopy);
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
 			if (typeof Homey !== 'undefined') {

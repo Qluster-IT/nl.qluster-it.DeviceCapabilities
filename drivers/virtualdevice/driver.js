@@ -1,6 +1,7 @@
 ﻿"use strict";
 //var util = require('../../lib/util/util.js');
 //var variableManager = require('../../lib/variablemanagement/variablemanagement.js');
+const {gzip, ungzip} = require('node-gzip');
 
 const Homey = require('homey');
 const path = require('path');
@@ -508,9 +509,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
       }
 
       async onRepair(session, device) {
+        let allDevices,  allDrivers, actionCards, conditionCards, triggerCards;
+        
+
         // var s = session;
         // await session.nextView();
         //console.log(JSON.stringify(await this.getCustomIcons()));
+        ///let data = device.getData();
 
         session.setHandler('virtualdevicesettings_load', async (data) => {
             // // emit when devices are still being searched
@@ -531,7 +536,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         
         session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
+            
             let dev = {};
+
             
             dev.customIconsAvailable = [];
             let iconsInUse = {};
@@ -559,27 +566,180 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             return dev;
         });        
 
-        session.setHandler('virtualdevicesettings_getTextSettings', async () => {
-                let dev = {deviceIcon:await this.getDeviceIcon(device), customIcons:{}};
-                await this.executeForAllTypes(device, async (type, i )=> {
-                    if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]])dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-                });
-                // if(Object.keys(dev.customIcons)) {
-                //     let iconsInUse = {};
-                //     let devices  = await this.getDevices();
-                //     for (const deviceId in devices) {
-                //         if (Object.hasOwnProperty.call(devices, deviceId)) {
-                //             const device = devices[deviceId];
-                //             await this.executeForAllTypes(device, (type, i )=> {
-                //                 if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
+        session.setHandler('virtualdevicesettings_getJson', async (str) => {
+            try {                
+                return JSON.parse(await this.unzip(str));
+            } catch (error) {
+                this.error(error);
+            }
+        });
 
-                //             });
-                //         }
-                //     }                    
-                // }
+        session.setHandler('virtualdevicesettings_getTextSettings', async (obj) => {
+            try {                
+                let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id};
+                if(obj&& obj.copyWithIcons) 
+                    await this.executeForAllTypes(device, async (type, i )=> {
+                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]]){
+                            //let buffer = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");                            
+                            //const compressed = await gzip(buffer);
+                            //var str = Buffer.from(await gzip(buffer)).toString('base64');
+                            //var str2 = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                            dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                            //dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                        }
+                    });
+                
+                if(obj&& obj.copyWithFlows) {
+                    allDevices = allDevices ? allDevices : await this.homey.app.devices;
+                    let advancedflows = _.filter(await this.homey.app.homeyAPI.flow.getAdvancedFlows(), x=> x.enabled && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
+                    _.each(advancedflows, f=> {
+                        delete f.__athom_api_type;
+                        delete f.triggerable;
+                        delete f.broken;
+                        
+                        delete f.folder;
+                        _.each(f.cards, c=> {
+                        });
+                    });
+                    let devicesToReplace = {};
+                    _.each(advancedflows, (flow, flowKey)=>{
+                        _.each(flow.cards, (card, cardKey)=>{
+                            let deviceId;
+                            if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))!=device.__id) {
+                                if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
+                                    let _device = allDevices[deviceId];
+                                    devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
+                                }
+                                //if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);
+                            }
+                            if(card.args) for (const argKey in card.args) {
+                                if (Object.hasOwnProperty.call(card.args, argKey)) {
+                                    const argument = card.args[argKey];
+                                    switch (typeof(argument)) {
+                                        case "string":
+                                            let a = argument.matchAll("/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gm");
+                                            break;
+                                    }
+                                }
+                            }
+                            //\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]
+
+
+                            //delete f.folder;
+                        });    
+                        //delete f.folder;
+                    });
+                    if(Object.keys(devicesToReplace).length>0) dev.devicesToReplace = devicesToReplace;
+
+                    dev.advancedflows = advancedflows;
+                }
                 if(!Object.keys(dev.customIcons)) dev.customIcons=null;
+                dev.settings = device.Settings;
+                const json = JSON.stringify(dev);
+                const compressed = Buffer.from(await gzip(json)).toString('base64');                
+                dev.compressed = compressed;
                 return dev;
-        });        
+            } catch (error) {
+                this.error(error);
+            }
+        });
+
+        
+        session.setHandler('virtualdevicesettings_readFlows', async (settings) => {
+            try {                    
+                settings = JSON.parse(await this.unzip(settings));
+                allDevices = allDevices ? allDevices : await this.homey.app.devices;
+                allDrivers = allDrivers ? allDrivers : await this.homey.app.devices;
+                actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
+                conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
+                triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
+            
+                let apiCommand = "";
+                let cards = _.flatMap(settings.advancedflows, f=>_.toArray(f.cards));
+                //let cardsNeeded = _.filter(cards, c=>c.ownerUri.startsWith('homey:device:'));
+                //let devicesNeeded = _.map(cardsNeeded, c=>c.ownerUri.substring(13));
+                if(!settings.devicesToReplace) settings.devicesToReplace = {};
+                let devicesToReplace = settings.devicesToReplace;
+                if(!settings.devicesToReplace[settings.originalId]) settings.devicesToReplace[settings.originalId] = {replaceWith: device.__id};
+
+                _.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replace(settings.originalId, device.__id) ; });
+                
+                _.each(settings.advancedflows, (flow, flowKey)=>{
+                    _.each(flow.cards, (card, cardKey)=>{
+                        let deviceId;
+                        if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))!=device.__id) {
+                            if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
+                                devicesToReplace[deviceId] = {replacements: [], actions:[]};
+                            }
+                            if(!devicesToReplace[deviceId].replacements)devicesToReplace[deviceId].replacements = [];
+                            if(!devicesToReplace[deviceId].actions)devicesToReplace[deviceId].actions = [];
+                            if(!devicesToReplace[deviceId].triggers)devicesToReplace[deviceId].triggers = [];
+                            if(!devicesToReplace[deviceId].conditions)devicesToReplace[deviceId].conditions = [];
+                            if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);                         
+                        }
+                    });
+                });
+                
+                _.each(devicesToReplace, (device, deviceKey)=>{
+                    device.replacements = _.map(_.filter(allDevices, (d, dKey)=> 
+                        _.find(actionCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.actions, a=>a==ac.id)) || 
+                        _.find(conditionCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.conditions, a=>a==ac.id)) || 
+                        _.find(triggerCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.triggers, a=>a==ac.id))
+                    ),
+                        d=> { return {id:d.id, name:d.name};});
+                });
+                
+
+                _.each(settings.advancedflows, f=>{
+                    apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
+                });
+                return {apiCommand: apiCommand, devicesToReplace, advancedflows: settings.advancedflows};
+            } catch (error) {
+                this.error(error);                
+            }
+        });
+
+        session.setHandler('virtualdevicesettings_updateFlowCommand', async (obj) => {
+            try {
+                let apiCommand = "";
+                //let settings = obj ? obj.settings : null;
+                let cards = _.flatMap(obj.advancedflows, f=>_.toArray(f.cards));
+                //_.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replace(settings.originalId, device.__id) ; });
+                
+                if(obj && obj.devicesToReplace) for (const deviceToReplaceKey in obj.devicesToReplace) {
+                    if (Object.hasOwnProperty.call(obj.devicesToReplace, deviceToReplaceKey)) {
+                        const deviceToReplace = obj.devicesToReplace[deviceToReplaceKey];
+                        if(deviceToReplace.replaceWith && deviceToReplace.replaceWith.length>0) _.each(cards, c=>{
+                            if(c.ownerUri=='homey:device:' + deviceToReplaceKey) c.ownerUri= c.ownerUri.replace(deviceToReplaceKey, deviceToReplace.replaceWith);
+                            if(c.args) for (const argKey in c.args) {
+                                if (Object.hasOwnProperty.call(c.args, argKey)) {
+                                    const argument = c.args[argKey];
+                                    switch (typeof(argument)) {
+                                        case "string":      
+                                            if(argument.indexOf('[[homey:device:' + deviceToReplaceKey)>-1) 
+                                                c.args[argKey] = argument.replace(deviceToReplaceKey, deviceToReplace.replaceWith);
+                                            break;
+                                    }
+                                }
+                            }
+                        }); 
+                    }
+                }
+                
+                // for (let i = 0; i < obj.devicesToReplace.length; i++) {
+                //     const element = obj.devicesToReplace[i];
+                    
+                // }
+
+                _.each(obj.advancedflows, f=>{
+                    apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
+                });
+                return {apiCommand: apiCommand};
+            } catch (error) {                
+                this.error(error);
+            }
+            
+        });
     }
 
     
@@ -599,7 +759,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         try {
             let getData = device.getData();
             return await this.getIcon(getData && getData.icon ? getData.icon.substring(7) : undefined);
-        } catch (error) { return undefined; }
+        } catch (error) { return null; }
+    }
+    
+    async getDeviceIconZipped(device) {
+        try {
+            let getData = device.getData();
+            return await this.getIconZipped(getData && getData.icon ? getData.icon.substring(7) : undefined);
+        } catch (error) { return null; }
+    }
+    
+    async unzip(str) {
+        var gzippedJson = Buffer.from(str, 'base64');
+        var jsonBuffer = await ungzip(gzippedJson);
+        return jsonBuffer.toString();
     }
     
     async getIcon(path) {
@@ -607,6 +780,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             const fs = require('fs').promises;
             const contents = await fs.readFile(path, {encoding: 'base64'});
             return 'data:image/svg+xml;base64,'+contents;
+        } catch (error) { return undefined; }
+    }
+    async getIconZipped(path) {
+        try {
+            const fs = require('fs').promises;
+            const contents = await fs.readFile(path);            
+            return Buffer.from(await gzip(contents)).toString('base64');
         } catch (error) { return undefined; }
     }
       

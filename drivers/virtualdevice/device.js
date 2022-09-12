@@ -281,7 +281,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				}
 				
 				if(settings.customIcons) delete settings.customIcons;
-				delete settings.imported;
+				//delete settings.imported;
 			}
 
 			//let b = JSON.parse(JSON.stringify(settings));
@@ -485,10 +485,20 @@ module.exports = class WatchDevice extends Homey.Device {
 							let step = settings[type + i + 'Step'];
 
 
+							let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
+							let var2= (settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ;
+							let var3= ((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false)) ;
+							let var4= (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false);
+							let var5= (settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status');
+
 							let capOptionsChanged = 
 								opt.title != name || 
-								opt.preventTag!==true || 
-								((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
+								//(opt.preventTag!==true && (settings[type + i + 'SeparateCapabilities']===true || settings[type + i + 'CreateTag']===true)) ||
+								//(opt.preventTag===true && (settings[type + i + 'SeparateCapabilities']!==true && settings[type + i + 'CreateTag']===true)) ||
+								(settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag===settings[type + i + 'CreateTag'] || opt.preventInsights===settings[type + i + 'CreateInsights'])) ||
+								(settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ||
+								//((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || 
+								//(opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
 										//opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 								(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
 								(opt.decimals != decimals) ||
@@ -505,7 +515,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								let optionValues = {type, i, settings, decimals, min, max, name};
 								if(type=="status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
-								if(settings[type + i + 'SeparateCapabilities']===false) {
+								if(settings[type + i + 'SeparateCapabilities']!==true) {
 									optNew.preventInsights = !settings[type + i + 'CreateInsights'];
 									optNew.preventTag = !settings[type + i + 'CreateTag'];
 								}
@@ -577,8 +587,16 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			await this.setCameras(settings);
 			await this.setStoreValue('Settings', settings);
+
+			
+			if(settings.imported) delete settings.imported;
+			if(settings.flows) delete settings.flows;
+			if(settings.advancedflows) delete settings.advancedflows;
+			if(settings.originalId) delete settings.originalId;
+
+			//if(command=="") command = null;
 			this.Settings = settings;
-			return settings;
+			return settings;//, apiCommand:command};
 			
 		} catch (error) {
 			this.error(error);
