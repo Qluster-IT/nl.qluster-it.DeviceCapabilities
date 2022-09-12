@@ -617,7 +617,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     const argument = card.args[argKey];
                                     switch (typeof(argument)) {
                                         case "string":
-                                            let a = argument.matchAll("/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gm");
+                                            let a = argument.match(/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gi);
                                             break;
                                     }
                                 }
