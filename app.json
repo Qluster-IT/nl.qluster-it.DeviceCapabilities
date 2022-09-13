@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.4.6",
+  "version": "2.4.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -95,6 +95,9 @@
     "translators": [
       {
         "name": "🇩🇪 Dirk Göbel"
+      },
+      {
+        "name": "Peter Dwarswaard"
       }
     ]
   },

@@ -854,62 +854,64 @@
 				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readflow.advancedflows || vars.readflow.advancedflows.length>0">Save</div>
 				<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.readflow.advancedflows && vars.readflow.advancedflows.length!=0 && vars.readcopy">Save & Close</div>
 			</div>
-			<div ng-if="vars.readflow.apiCommand">
-				<div class="field">
+			<div ng-if="vars.readflow">
+				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
+					want to replace with which of your own in the to create flow(s)(scripts).</div>
+				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
 					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
 					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" value="{{replacement.id}}" >{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field">
+				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
 					<div class="label">Users</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.usersToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()">
-						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" value="{{replacement.id}}" >{{replacement.name}}</option>
+					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()" required>
+						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field">
+				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
 					<div class="label">Variables</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
 					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" value="{{replacement.id}}" >{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field">
+				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
+				<div class="field" ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
 					<div class="label">{{app.name}}</div>
-					<div class="field"  ng-repeat="(key,item)  in app.tokens">
+					<div class="field" ng-repeat="(key,item)  in app.tokens">
 						<div class="label">{{item.name}}</div>
 						<select class="value" ng-model="app.tokens[key].replaceWith" ng-change="updateReadFlow()">
 							<option value="">Don't change</option>
-							<option ng-repeat="replacement in app.tokens[key].replacements" value="{{replacement.id}}" >{{replacement.name}}</option>
+							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement">
+								{{replacement.name}}</option>
 						</select>
 					</div>
 				</div>
 				<div class="field">
-					<div class="button" ng-click="updateFlows();">Update Text</div>
-				</div>
-				<div class="field margin-top">
-					Run this in the <a href="https://tools.developer.homey.app/tools/api-playground">Homey API Playground</a> to create the Flows!
+					<div class="button" ng-click="log(theflowexchange); theflowexchange.$valid ? updateFlows() : null" ng-disabled="!theflowexchange.$valid">Update Text</div>
 				</div>
 				<div class="field">
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+				</div>
+				<div class="field margin-top">
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
 				</div>
 			</div>
 		</div>
