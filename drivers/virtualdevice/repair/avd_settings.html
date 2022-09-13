@@ -802,7 +802,7 @@
 		<br><br>
 	</form>
 	<div class="main-buttons" ng-show="!view">
-		<div class="button" ng-click="log(settings); settings.$valid ? save() : null" ng-disabled="!settings.$valid">
+		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">
 			Save</div>
 		<div class="button" ng-click="close()">Close</div>
 	</div>

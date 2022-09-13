@@ -9,10 +9,10 @@ module.exports = {
         return await homey.drivers.getDriver('virtualdevice').getAdvancedFlows({ homey,  query });
     },   
     async getAdvancedFlowsJSON({ homey,  body: { advancedflowsselected } }) {        
-        return await homey.drivers.getDriver('virtualdevice').getAdvancedFlowsJSON({ homey,  body: { advancedflowsselected } });
+        return await homey.drivers.getDriver('virtualdevice').getAdvancedFlowsJSON({ homey,  advancedflowsselected });
     },       
     async readAdvancedFlowsJSON({ homey,  body: { json } }) {        
-        return await homey.drivers.getDriver('virtualdevice').readAdvancedFlowsJSON({ homey,  body: { json } });
+        return await homey.drivers.getDriver('virtualdevice').readAdvancedFlowsJSON({ homey,  json });
     },        
     async updateAdvancedFlowsJSON({ homey,  body: exchangerFile }) {        
         return await homey.drivers.getDriver('virtualdevice').updateAdvancedFlowsJSON({ homey,  body: exchangerFile });

@@ -459,6 +459,7 @@
 			box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
 		}
+
 		.pointer {
 			cursor: pointer;
 		}
@@ -471,33 +472,30 @@
 		<!-- The Flow Exchange -->
 		<h1 data-i18n="settings.title_theflowexchange" ng-click="showtheflowexchange=!showtheflowexchange">The Flow
 			Exchanger</h1>
-		<form id="theflowexchange" ng-show="showtheflowexchange" style="margin-bottom:60px;">
+		<form id="theflowexchange"  name="theflowexchange" ng-show="showtheflowexchange" style="margin-bottom:60px;">
 			<div data-i18n="settings.explain_theflowexchange">Here you can create or read Flow Exchange files.</div>
 			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
+			<input type="text" class="label" ng-model="vars.filter.flow" placeholder="filter"/>
 			<ul>
-				<li class="flow" ng-repeat="flow in advancedflows |orderBy:'name'">
+				<li class="flow" ng-repeat="flow in advancedflows |filter:{name:vars.filter.flow} |orderBy:'name'">
 					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]" />
-					<div class="name">{{flow.name}}</div>
+					<div class="name pointer" ng-click="vars.advancedflowsselected[flow.id]=!vars.advancedflowsselected[flow.id]">{{flow.name}}</div>
 				</li>
 
 			</ul>
 			<div class="button" ng-click="getTextSettings();">Create Exchanger File</div>
 			<div class="label">
-				<input type="checkbox" class="checkbox" ng-model="vars.useMinified"
-					ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
+				<input type="checkbox" class="checkbox" ng-model="vars.useMinified" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
 			</div>
 			<div class="float-right">
-				<input type="checkbox" class="checkbox" ng-model="vars.useCompressed"
-					ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
+				<input type="checkbox" class="checkbox" ng-model="vars.useCompressed" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
 			</div>
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5"
-					placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
 			</div>
 			<div class="button margin-top margin-bottom" ng-click="readFlows();">Read Flows</div>
 			<div ng-if="vars.readflow">
-				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or
-					apptokens you
+				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
 					want to replace with which of your own in the to create flow(s)(scripts).</div>
 				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
 					<div class="label">Devices</div>
@@ -505,11 +503,9 @@
 				</div>
 				<div class="field" ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
 					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith"
-						ng-change="updateReadFlow()">
+					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements"
-							ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
@@ -518,10 +514,8 @@
 				</div>
 				<div class="field" ng-repeat="(key,item)  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith"
-						ng-change="updateReadFlow()">
-						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements"
-							ng-value="replacement">{{replacement.name}}</option>
+					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()" required>
+						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
@@ -530,11 +524,9 @@
 				</div>
 				<div class="field" ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith"
-						ng-change="updateReadFlow()">
+					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements"
-							ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
@@ -553,15 +545,13 @@
 					</div>
 				</div>
 				<div class="field">
-					<div class="button" ng-click="updateFlows();">Update Text</div>
-				</div>
-				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');"
-						href="#">Homey API Playground</a> to create the Flows!
+					<div class="button" ng-click="log(theflowexchange); theflowexchange.$valid ? updateFlows() : null" ng-disabled="!theflowexchange.$valid">Update Text</div>
 				</div>
 				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand"
-						rows="5"></textarea>
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+				</div>
+				<div class="field margin-top">
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
 				</div>
 			</div>
 		</form>
@@ -579,14 +569,11 @@
 
 				<div class="name">{{device.name}}</div>
 				<div ng-if="device.icon.substr(8).startsWith('/userdata/virtualdeviceicons/')">
-					<div class="image"
-						ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
+					<div class="image" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
 					</div>
 					<div class="buttons">
-						<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i
-								class="fa fa-upload"></i></button>
-						<button class="edit" ng-click="editFromDefaultIcon(null, device);" ng-if="device.icon"><i
-								class="fa fa-search"></i></button>
+						<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i class="fa fa-upload"></i></button>
+						<button class="edit" ng-click="editFromDefaultIcon(null, device);" ng-if="device.icon"><i class="fa fa-search"></i></button>
 					</div>
 				</div>
 			</li>
@@ -614,8 +601,7 @@
 				<h1 class="name">{{category.title}}</h1>
 				<ul id="customicons">
 					<li class="customicon" ng-repeat="customicon in category.icons">
-						<div class="image" ng-if="$index<customIconLoadIndex"
-							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
+						<div class="image" ng-if="$index<customIconLoadIndex" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
 						</div>
 						<div>
 							<div ng-show="!customicon.updating" class="name">
@@ -625,15 +611,11 @@
 									{{customIconNames[customicon.file] || (customicon.title[languagecode] ||
 									customicon.name)}}</div>
 							</div>
-							<input ng-show="customicon.updating" class="name" type="text"
-								ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)"
-								ng-blur="updateCustomIconName(customicon)" style="z-index:10; width:80%;" />
+							<input ng-show="customicon.updating" class="name" type="text" ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)" ng-blur="updateCustomIconName(customicon)" style="z-index:10; width:80%;" />
 						</div>
 						<div class="buttons">
-							<button class="edit" ng-click="setEditCustomIcon(customicon.file);"><i
-									class="fa fa-upload"></i></button>
-							<button class="pick" ng-click="editFromDefaultIcon(customicon);"><i
-									class="fa fa-search"></i></button>
+							<button class="edit" ng-click="setEditCustomIcon(customicon.file);"><i class="fa fa-upload"></i></button>
+							<button class="pick" ng-click="editFromDefaultIcon(customicon);"><i class="fa fa-search"></i></button>
 						</div>
 					</li>
 				</ul>
@@ -658,31 +640,25 @@
 					<form role="form">
 						<div class="form-group">
 							<label for="functionName" data-i18n="settings.function_name">Function name</label>
-							<input class="form-control" id="functionName" type="text" ng-model="newFunction.name"
-								placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
+							<input class="form-control" id="functionName" type="text" ng-model="newFunction.name" placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
 						</div>
 
 						<div class="form-group">
-							<button class="btn btn-default" type="button" ng-disabled="!newFunction.name"
-								ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>
-							<button class="btn btn-default" type="button" ng-click="deleteAll()"
-								data-i18n="settings.delete_all">Delete All</button>
+							<button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>
+							<button class="btn btn-default" type="button" ng-click="deleteAll()" data-i18n="settings.delete_all">Delete All</button>
 						</div>
 					</form>
 				</div>
 			</div>
 
-			<table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table"
-				style="margin-top:30px;">
+			<table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table" style="margin-top:30px;">
 				<thead>
 					<tr>
 						<th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
 					</tr>
 					<tr>
 						<th colspan="3">
-							<input st-search="name"
-								placeholder="{{__('settings.search_for_name') || 'search for name'}}"
-								class="input-sm form-control" type="search" />
+							<input st-search="name" placeholder="{{__('settings.search_for_name') || 'search for name'}}" class="input-sm form-control" type="search" />
 						</th>
 					</tr>
 				</thead>
@@ -691,21 +667,18 @@
 						<td>{{function.name}}</td>
 						<td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') ||
 								'Edit'}}</button></td>
-						<td><button ng-click="removeFunction(function)"
-								data-i18n="settings.delete">{{__('settings.delete')
+						<td><button ng-click="removeFunction(function)" data-i18n="settings.delete">{{__('settings.delete')
 								|| 'Delete'}}</button></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-		<div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;"
-			ng-if="editFunctionItem">
+		<div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;" ng-if="editFunctionItem">
 			<input class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
 			<textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
-			<button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button><button
-				style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)"
-				data-i18n="settings.save_close">Save & Close</button>
+			<button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button>
+			<button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
 		</div>
 
 
@@ -750,31 +723,27 @@
 				</div>
 			</div>
 			<div class="form-group buttons">
-				<button id="save-icon" class="button" data-i18n="pair.button.icon.use"
-					ng-disabled="!editdeviceicon.buffer" ng-click="uploadDeviceIcon(editdeviceicon);">Save &
+				<button id="save-icon" class="button" data-i18n="pair.button.icon.use" ng-disabled="!editdeviceicon.buffer" ng-click="uploadDeviceIcon(editdeviceicon);">Save &
 					use</button>
 			</div>
 		</div>
 	</div>
 
-	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon"
-		style="width:100%;height:100%;position:fixed;top:0px;">
+	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon" style="width:100%;height:100%;position:fixed;top:0px;">
 		<div style="width:100%;position:fixed;top:0px;bottom:60px;overflow: auto;">
 			<div ng-repeat="category in defaultIcons">
 				<div ng-if="$index<=defaultCategoryLoadIndex">
 					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
 						{{category.title}}</h1>
 					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
-						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)"
-							ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
 							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + defaulticon + ')'}">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<button style="height:40px;position: fixed; bottom:0;" ng-click="editFromDefaultIcon(null, null)"
-			data-i18n="settings.close">Close</button>
+		<button style="height:40px;position: fixed; bottom:0;" ng-click="editFromDefaultIcon(null, null)" data-i18n="settings.close">Close</button>
 	</div>
 
 	<div id="editcustomicon" ng-show="editcustomicon">
@@ -790,16 +759,14 @@
 			</div>
 		</div>
 		<div class="form-group buttons">
-			<button id="save-icon" class="button" data-i18n="settings.close"
-				ng-click="setEditCustomIcon(null);">Close</button>
+			<button id="save-icon" class="button" data-i18n="settings.close" ng-click="setEditCustomIcon(null);">Close</button>
 			<button id="save-icon" class="button" data-i18n="settings.save" ng-click="uploadCustomIcon();">Save</button>
 		</div>
 
 	</div>
 	<br><br>
 	<br><br>
-	<div id="overlay"
-		style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
+	<div id="overlay" style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
 
 
 	<script type="text/javascript">
@@ -809,7 +776,10 @@
 				//let $;
 				var Homey;
 				$scope.stamp = Date.now();
-				$scope.vars = { advancedflowsselected: {}, readflow: null, devicesToReplaceLength: 0, usersToReplaceLength: 0, variablesToReplaceLength: 0, tokensToReplaceLength: 0, useCompressed: true };
+				$scope.vars = {
+					advancedflowsselected: {}, readflow: null, devicesToReplaceLength: 0, usersToReplaceLength: 0, variablesToReplaceLength: 0, tokensToReplaceLength: 0, useCompressed: true, useMinified: true
+					, filter: { flow: '' }
+				};
 				//Homey.ready();
 
 				$scope.icons = [];
@@ -908,7 +878,7 @@
 				}
 
 				$scope.updateCompressed = function () {
-					$scope.vars.textSettings =  $scope.vars[($scope.vars.useCompressed ? '' : 'un') +'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
+					$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
 				}
 
 				$scope.readFlows = function () {
@@ -924,10 +894,10 @@
 						$scope.$apply(function () {
 							$scope.vars.readflow = result;
 							$scope.vars.readflow.apiCommand = '';
-							$scope.vars.devicesToReplaceLength = Object.keys($scope.vars.readflow.devicesToReplace).length;
-							$scope.vars.usersToReplaceLength = Object.keys($scope.vars.readflow.usersToReplace).length;
-							$scope.vars.variablesToReplaceLength = Object.keys($scope.vars.readflow.variablesToReplace).length;
-							$scope.vars.tokensToReplaceLength = Object.keys($scope.vars.readflow.tokensToReplace).length;
+							$scope.vars.devicesToReplaceLength = $scope.vars.readflow.devicesToReplace ? Object.keys($scope.vars.readflow.devicesToReplace).length : 0;
+							$scope.vars.usersToReplaceLength = $scope.vars.readflow.usersToReplace ? Object.keys($scope.vars.readflow.usersToReplace).length : 0;
+							$scope.vars.variablesToReplaceLength = $scope.vars.readflow.variablesToReplace ? Object.keys($scope.vars.readflow.variablesToReplace).length : 0;
+							$scope.vars.tokensToReplaceLength = $scope.vars.readflow.tokensToReplace ? Object.keys($scope.vars.readflow.tokensToReplace).length : 0;
 						});
 					});
 
@@ -1105,6 +1075,7 @@
 				}
 
 				//setEditDeviceFromDefaultIcon
+				$scope.log = function (o) { console.log(o); }
 
 				$scope.getCustomIcons = function () {
 					Homey.api('GET', '/getcustomicons/', function (err, result) {
