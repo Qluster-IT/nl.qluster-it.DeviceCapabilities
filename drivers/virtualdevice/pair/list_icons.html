@@ -102,7 +102,7 @@
         name = $('#name').val();
         console.log(name);
       } catch (error) { }
-      Homey.emit('icon_save', {icon:imgBase64, name:name})
+      Homey.emit('icon_save', {image:imgBase64, name:name})
         .then(result => {
           Homey.nextView();
         })

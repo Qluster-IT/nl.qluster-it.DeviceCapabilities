@@ -13,39 +13,45 @@
 		* {
 
 			box-sizing: border-box;
-			}
-			a {
+		}
+
+		a {
 			display: inline-block;
-			}
-			.float-right {
+		}
+
+		.float-right {
 			float: right !important;
-			z-index:100;
-			}
-			.bold {
-				font-weight:bold!important;
-			}
-			/* html {
+			z-index: 100;
+		}
+
+		.bold {
+			font-weight: bold !important;
+		}
+
+		/* html {
 			height:auto!important;
 			} */
 
-			.fa-icon {
+		.fa-icon {
 			min-width: 24px;
 			min-height: 24px;
 			font-size: 20px;
-			}
+		}
 
-			.block {
+		.block {
 			display: block !important;
-			}
-			.margin-top {
-			margin-top:10px;
-			}
-			.margin-bottom {
-			margin-bottom:10px;
-			}
+		}
+
+		.margin-top {
+			margin-top: 10px;
+		}
+
+		.margin-bottom {
+			margin-bottom: 10px;
+		}
 
 		html {
-			height:auto!important;
+			height: auto !important;
 		}
 
 		#preview-outerframe {
@@ -54,13 +60,15 @@
 			margin-top: 20px;
 			text-align: center;
 			margin: 0 auto;
-			padding:10px;
+			padding: 10px;
 		}
+
 		#preview-innerframe img {
 			width: 125px;
 			height: 125px;
 			padding: 20px;
 		}
+
 		input {
 			border-radius: 3px;
 		}
@@ -148,7 +156,7 @@
 		}
 
 
-		
+
 
 		#devices {
 			list-style: none;
@@ -192,7 +200,7 @@
 			position: relative;
 			right: 10px;
 			top: 5px;
-			float:right;
+			float: right;
 		}
 
 		.device button {
@@ -218,7 +226,7 @@
 			position: absolute;
 			top: 0px;
 			left: 0px;
-		} 
+		}
 
 
 
@@ -252,7 +260,7 @@
 			font-size: 16px;
 			line-height: 20px;
 			font-weight: 400;
-			margin-top:10px;
+			margin-top: 10px;
 		}
 
 		.customicon input.name {
@@ -301,28 +309,31 @@
 			padding-right: 5px !important;
 			font-size: 12px !important;
 		}
-	
+
 		[ng-click^="show"] {
-			cursor:pointer;
-			margin-top:30px;
+			cursor: pointer;
+			margin-top: 30px;
 		}
 
-		#theflowexchange {
-		}
+		#theflowexchange {}
+
 		#theflowexchange ul {
 			height: 40vw;
-			overflow-y: scroll;			
+			overflow-y: scroll;
 			list-style: none;
 			margin-left: 0;
 			overflow-x: hidden;
 			white-space: nowrap;
 		}
+
 		#theflowexchange ul .checkbox {
 			/* display: inline; */
 		}
-		#theflowexchange ul  li {
-			height:30px;
+
+		#theflowexchange ul li {
+			height: 30px;
 		}
+
 		#theflowexchange ul .name {
 			display: inline;
 			white-space: nowrap;
@@ -330,14 +341,15 @@
 		}
 
 
-		
+
 		.field {
 			position: relative;
 			display: block;
 			width: 100%;
 			margin-top: 10px;
 		}
-		.label > * {
+
+		.label>* {
 			display: inline-block;
 		}
 
@@ -357,7 +369,7 @@
 			display: inline-block;
 		}
 
-			
+
 		.main-buttons {
 			height: 60px;
 			width: 100%;
@@ -447,8 +459,9 @@
 			box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
 		}
-
-
+		.pointer {
+			cursor: pointer;
+		}
 	</style>
 
 </head>
@@ -456,68 +469,86 @@
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
 	<div ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon">
 		<!-- The Flow Exchange -->
-		<h1 data-i18n="settings.title_theflowexchange" ng-click="showtheflowexchange=!showtheflowexchange">The Flow Exchanger</h1>
-		<div id="theflowexchange"  ng-show="showtheflowexchange" style="margin-bottom:60px;">
-			<div data-i18n="settings.explain_theflowexchange">Here you can create or read Flow Exchange files.</div>		
-			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>		
-				<ul>
+		<h1 data-i18n="settings.title_theflowexchange" ng-click="showtheflowexchange=!showtheflowexchange">The Flow
+			Exchanger</h1>
+		<form id="theflowexchange" ng-show="showtheflowexchange" style="margin-bottom:60px;">
+			<div data-i18n="settings.explain_theflowexchange">Here you can create or read Flow Exchange files.</div>
+			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
+			<ul>
 				<li class="flow" ng-repeat="flow in advancedflows |orderBy:'name'">
-					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]"/>
+					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]" />
 					<div class="name">{{flow.name}}</div>
 				</li>
-				
+
 			</ul>
-			<div class="button" ng-click="getTextSettings();">Create Exchanger File</div>			
+			<div class="button" ng-click="getTextSettings();">Create Exchanger File</div>
+			<div class="label">
+				<input type="checkbox" class="checkbox" ng-model="vars.useMinified"
+					ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
+			</div>
+			<div class="float-right">
+				<input type="checkbox" class="checkbox" ng-model="vars.useCompressed"
+					ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
+			</div>
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
-			</div>			
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5"
+					placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
+			</div>
 			<div class="button margin-top margin-bottom" ng-click="readFlows();">Read Flows</div>
-			<div ng-if="vars.readflow">				
-				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you want to replace with which of your own in the to create flow(s)(scripts).</div>	
+			<div ng-if="vars.readflow">
+				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or
+					apptokens you
+					want to replace with which of your own in the to create flow(s)(scripts).</div>
 				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
 					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith"
+						ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements"
+							ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
 					<div class="label">Users</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.usersToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()">
-						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith"
+						ng-change="updateReadFlow()">
+						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements"
+							ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
 					<div class="label">Variables</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
+				<div class="field" ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith"
+						ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements"
+							ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field"  ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
+				<div class="field" ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
 					<div class="label">{{app.name}}</div>
-					<div class="field"  ng-repeat="(key,item)  in app.tokens">
+					<div class="field" ng-repeat="(key,item)  in app.tokens">
 						<div class="label">{{item.name}}</div>
 						<select class="value" ng-model="app.tokens[key].replaceWith" ng-change="updateReadFlow()">
 							<option value="">Don't change</option>
-							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement">
+								{{replacement.name}}</option>
 						</select>
 					</div>
 				</div>
@@ -525,30 +556,37 @@
 					<div class="button" ng-click="updateFlows();">Update Text</div>
 				</div>
 				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');"
+						href="#">Homey API Playground</a> to create the Flows!
 				</div>
 				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand"
+						rows="5"></textarea>
 				</div>
 			</div>
-		</div>
+		</form>
 
 		<!-- Devices -->
 		<h1 data-i18n="settings.title_virtualdevices" ng-click="showvirtualdevices=!showvirtualdevices"></h1>
-		<div data-i18n="settings.explain_virtualdevices" ng-show="showvirtualdevices">Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.</div>
-		<div data-i18n="settings.explain_restart" ng-show="showvirtualdevices">After changing an icon, you personally need to restart the App before the new icon(s)
+		<div data-i18n="settings.explain_virtualdevices" ng-show="showvirtualdevices">Here you can edit the icon for
+			Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.</div>
+		<div data-i18n="settings.explain_restart" ng-show="showvirtualdevices">After changing an icon, you personally
+			need
+			to restart the App before the new icon(s)
 			is/are implemented.</div>
 		<ul id="devices" ng-show="showvirtualdevices" style="margin-bottom:60px;">
 			<li class="device" ng-repeat="device in devices">
-				
+
 				<div class="name">{{device.name}}</div>
 				<div ng-if="device.icon.substr(8).startsWith('/userdata/virtualdeviceicons/')">
 					<div class="image"
 						ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
 					</div>
 					<div class="buttons">
-						<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i class="fa fa-upload"></i></button>
-						<button class="edit" ng-click="editFromDefaultIcon(null, device);" ng-if="device.icon"><i class="fa fa-search"></i></button>
+						<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i
+								class="fa fa-upload"></i></button>
+						<button class="edit" ng-click="editFromDefaultIcon(null, device);" ng-if="device.icon"><i
+								class="fa fa-search"></i></button>
 					</div>
 				</div>
 			</li>
@@ -558,14 +596,20 @@
 
 		<!-- Custom Icons -->
 		<h1 data-i18n="settings.title_customicons" ng-click="showcustomicons=!showcustomicons">Your custom icons</h1>
-		<div data-i18n="settings.explain_customicons" ng-show="showcustomicons">Here you can change the custom icon's that can be used for devices
+		<div data-i18n="settings.explain_customicons" ng-show="showcustomicons">Here you can change the custom icon's
+			that
+			can be used for devices
 			and capabilities.</div>
-		<div data-i18n="settings.explain_restart" ng-show="showcustomicons">After changing an icon, you personally need to restart the App before the new icon(s)
+		<div data-i18n="settings.explain_restart" ng-show="showcustomicons">After changing an icon, you personally need
+			to
+			restart the App before the new icon(s)
 			is/are implemented.</div>
-		<div data-i18n="settings.explain_customicons_doubleclick" ng-show="showcustomicons">Double click on a name to give it a description, which
+		<div data-i18n="settings.explain_customicons_doubleclick" ng-show="showcustomicons">Double click on a name to
+			give
+			it a description, which
 			can be seen back at the bottom of the Device Settings.</div>
 
-		<div ng-show="showcustomicons"  style="margin-bottom:30px;">
+		<div ng-show="showcustomicons" style="margin-bottom:30px;">
 			<div ng-repeat="category in customicons" style="margin-top:30px;">
 				<h1 class="name">{{category.title}}</h1>
 				<ul id="customicons">
@@ -578,11 +622,12 @@
 								<!-- <div style="display:block;" ng-dblclick="customicon.updating = true;">
 									{{customicon.title[languagecode] || customicon.name}}</div> -->
 								<div style="display:block;" ng-dblclick="customicon.updating = true;">
-									{{customIconNames[customicon.file] || (customicon.title[languagecode] || customicon.name)}}</div>
+									{{customIconNames[customicon.file] || (customicon.title[languagecode] ||
+									customicon.name)}}</div>
 							</div>
 							<input ng-show="customicon.updating" class="name" type="text"
-								ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)" ng-blur="updateCustomIconName(customicon)"
-								style="z-index:10; width:80%;" />
+								ng-model="customIconNames[customicon.file]" ng-enter="updateCustomIconName(customicon)"
+								ng-blur="updateCustomIconName(customicon)" style="z-index:10; width:80%;" />
 						</div>
 						<div class="buttons">
 							<button class="edit" ng-click="setEditCustomIcon(customicon.file);"><i
@@ -599,10 +644,13 @@
 		<!-- Functions  -->
 
 		<h1 data-i18n="settings.functions" ng-click="showfunctions=!showfunctions">Functions</h1>
-		<p data-i18n="settings.functions_expressions" ng-show="showfunctions">These functions can be used within (javascript) expression.</p>
-		<p data-i18n="settings.functions_be_aware" ng-show="showfunctions">Be aware that removing functions could corrupt flows that are using
+		<p data-i18n="settings.functions_expressions" ng-show="showfunctions">These functions can be used within
+			(javascript) expression.</p>
+		<p data-i18n="settings.functions_be_aware" ng-show="showfunctions">Be aware that removing functions could
+			corrupt
+			flows that are using
 			that function.</p>
-		<div ng-show="showfunctions" >
+		<div ng-show="showfunctions">
 			<div class="panel panel-default">
 				<div class="panel-heading" data-i18n="settings.add_function_text">To create a function, enter a name,
 					press Add Function, then press edit below.</div>
@@ -610,8 +658,8 @@
 					<form role="form">
 						<div class="form-group">
 							<label for="functionName" data-i18n="settings.function_name">Function name</label>
-							<input class="form-control" id="functionName" type="text" ng-model="newFunction.name" placeholder="{{__('settings.name') || 'Name'}}"><span
-								class="error">{{messages}}</span>
+							<input class="form-control" id="functionName" type="text" ng-model="newFunction.name"
+								placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
 						</div>
 
 						<div class="form-group">
@@ -644,7 +692,8 @@
 						<td><button ng-click="editFunction(function)" data-i18n="settings.edit">{{__('settings.edit') ||
 								'Edit'}}</button></td>
 						<td><button ng-click="removeFunction(function)"
-								data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
+								data-i18n="settings.delete">{{__('settings.delete')
+								|| 'Delete'}}</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -701,26 +750,31 @@
 				</div>
 			</div>
 			<div class="form-group buttons">
-				<button id="save-icon" class="button" data-i18n="pair.button.icon.use" ng-disabled="!editdeviceicon.buffer"
-					ng-click="uploadDeviceIcon(editdeviceicon);">Save & use</button>
+				<button id="save-icon" class="button" data-i18n="pair.button.icon.use"
+					ng-disabled="!editdeviceicon.buffer" ng-click="uploadDeviceIcon(editdeviceicon);">Save &
+					use</button>
 			</div>
 		</div>
 	</div>
 
-	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon" style="width:100%;height:100%;position:fixed;top:0px;">
+	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon"
+		style="width:100%;height:100%;position:fixed;top:0px;">
 		<div style="width:100%;position:fixed;top:0px;bottom:60px;overflow: auto;">
 			<div ng-repeat="category in defaultIcons">
 				<div ng-if="$index<=defaultCategoryLoadIndex">
-					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">{{category.title}}</h1>
+					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
+						{{category.title}}</h1>
 					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
-						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)"
+							ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
 							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + defaulticon + ')'}">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<button style="height:40px;position: fixed; bottom:0;" ng-click="editFromDefaultIcon(null, null)" data-i18n="settings.close">Close</button>
+		<button style="height:40px;position: fixed; bottom:0;" ng-click="editFromDefaultIcon(null, null)"
+			data-i18n="settings.close">Close</button>
 	</div>
 
 	<div id="editcustomicon" ng-show="editcustomicon">
@@ -744,7 +798,8 @@
 	</div>
 	<br><br>
 	<br><br>
-	<div id="overlay" style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
+	<div id="overlay"
+		style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
 
 
 	<script type="text/javascript">
@@ -754,7 +809,7 @@
 				//let $;
 				var Homey;
 				$scope.stamp = Date.now();
-				$scope.vars = {advancedflowsselected : {}, readflow : null, devicesToReplaceLength:0, usersToReplaceLength:0, variablesToReplaceLength:0, tokensToReplaceLength:0};
+				$scope.vars = { advancedflowsselected: {}, readflow: null, devicesToReplaceLength: 0, usersToReplaceLength: 0, variablesToReplaceLength: 0, tokensToReplaceLength: 0, useCompressed: true };
 				//Homey.ready();
 
 				$scope.icons = [];
@@ -791,7 +846,7 @@
 					console.log('ready done');
 				});
 
-				$scope.openUrl = function(url) {
+				$scope.openUrl = function (url) {
 					Homey.openURL(url);
 				}
 
@@ -801,11 +856,12 @@
 				}
 				function hideOverlay() {
 					$('#overlay').css('display', 'none');
-					
+
 				}
-				$scope.updateFlows = function() {
+
+				$scope.updateFlows = function () {
 					showOverlay();
-					Homey.api('POST', 'updateadvancedflowsJSON',$scope.vars.readflow, function (err, result) {
+					Homey.api('POST', 'updateadvancedflowsJSON', $scope.vars.readflow, function (err, result) {
 						hideOverlay();
 						if (err) {
 							console.log(err);
@@ -825,33 +881,41 @@
 						$scope.$apply(function () {
 							$scope.advancedflows = result;
 							console.log('advancedflows', result);
-						
+
 						});
 					});
 				}
 
-				
-				$scope.getTextSettings = function () {					
+
+				$scope.getTextSettings = function () {
 					showOverlay();
 					$scope.vars.textSettings = '';
 
-					Homey.api('POST', '/getadvancedflowsJSON/', {advancedflowsselected :$scope.vars.advancedflowsselected}, function (err, result) {						
+					Homey.api('POST', '/getadvancedflowsJSON/', { advancedflowsselected: $scope.vars.advancedflowsselected }, function (err, result) {
 						hideOverlay();
 						if (err) {
 							console.log(err);
 							return;
 						}
 						$scope.$apply(function () {
-							$scope.vars.textSettings = result.compressed;						
+							$scope.vars.compressed = result.compressed;
+							$scope.vars.uncompressed = result.uncompressed;
+							$scope.vars.compressedMinified = result.compressedMinified;
+							$scope.vars.uncompressedMinified = result.uncompressedMinified;
+							$scope.updateCompressed();
 						});
 					});
 				}
 
-				$scope.readFlows = function () {					
+				$scope.updateCompressed = function () {
+					$scope.vars.textSettings =  $scope.vars[($scope.vars.useCompressed ? '' : 'un') +'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
+				}
+
+				$scope.readFlows = function () {
 					showOverlay();
 					//$scope.vars.readflow = null;
-					
-					Homey.api('POST', 'readadvancedflowsJSON', {json:$scope.vars.textSettings}, function (err, result) {
+
+					Homey.api('POST', 'readadvancedflowsJSON', { json: $scope.vars.textSettings }, function (err, result) {
 						hideOverlay();
 						if (err) {
 							console.log(err);
@@ -866,11 +930,11 @@
 							$scope.vars.tokensToReplaceLength = Object.keys($scope.vars.readflow.tokensToReplace).length;
 						});
 					});
-					
+
 				}
 
-				
-				$scope.updateReadFlow = function() {
+
+				$scope.updateReadFlow = function () {
 					$scope.vars.readflow.apiCommand = '';
 				}
 
@@ -1006,13 +1070,13 @@
 						defaulticon: defaultIcon,
 					}, function (err, result) {
 						if (err) return Homey.alert(err.message || err.toString(), 'error');
-						if($scope.setCustomIcon) {
+						if ($scope.setCustomIcon) {
 							$scope.getCustomIcons();
 							$scope.$apply(function () {
 								$scope.setCustomIcon = null;
 							});
 						}
-						else if($scope.setDeviceIcon) {
+						else if ($scope.setDeviceIcon) {
 							$scope.getDevices();
 							$scope.$apply(function () {
 								$scope.setDeviceIcon = null;
@@ -1025,15 +1089,15 @@
 				$scope.editFromDefaultIcon = function (customIcon, device) {
 					$scope.setCustomIcon = customIcon;
 					$scope.setDeviceIcon = device;
-					$scope.dedaultLoadInterval = setInterval(function(){
+					$scope.dedaultLoadInterval = setInterval(function () {
 						$scope.$apply(() => {
-							let catKeys= Object.keys($scope.defaultIcons);
+							let catKeys = Object.keys($scope.defaultIcons);
 							let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
-							if(!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
-							if($scope.defaultIconLoadIndex<(cat.icons?cat.icons.length:0)) $scope.defaultIconLoadIndex+=5;
-							else if ($scope.defaultCategoryLoadIndex<catKeys.length) {
+							if (!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+							if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 5;
+							else if ($scope.defaultCategoryLoadIndex < catKeys.length) {
 								$scope.defaultCategoryLoadIndex++;
-								$scope.defaultIconLoadIndex=0.0;
+								$scope.defaultIconLoadIndex = 0.0;
 							} else return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
 						});
 						//Homey.alert('test');
@@ -1051,33 +1115,33 @@
 							$scope.customicons = result.icons;
 							$scope.customIconNames = result.iconnames || {};
 							$scope.languagecode = result.languagecode || 'en';
-							$scope.customIconCount =0;
-							for (let i = 0; i < result.icons.length; i++) $scope.customIconCount+=result.icons[i].icons.length;
+							$scope.customIconCount = 0;
+							for (let i = 0; i < result.icons.length; i++) $scope.customIconCount += result.icons[i].icons.length;
 							$scope.customIconLoadIndex = 0;
-							$scope.dedaultLoadInterval = setInterval(function(){
+							$scope.dedaultLoadInterval = setInterval(function () {
 								$scope.$apply(() => {
-									if($scope.customIconLoadIndex<$scope.customIconCount ) $scope.customIconLoadIndex++;
+									if ($scope.customIconLoadIndex < $scope.customIconCount) $scope.customIconLoadIndex++;
 									else return clearInterval($scope.dedaultLoadInterval);
-							
-								 }, 100);
+
+								}, 100);
 							});
 						});
 					});
 				}
 
-				
+
 				$scope.getDefaultIcons = function () {
 					Homey.get('DefaultIcons', (err, defaultIcons) => {
 						if (!err && !defaultIcons) {
 							defaultIcons = [];
 						}
-						
+
 						$scope.$apply(() => {
 							$scope.defaultIcons = defaultIcons;
 							for (let i = 0; i < Object.keys(defaultIcons).length; i++) {
 								const cat = defaultIcons[Object.keys(defaultIcons)[i]];
 								cat.title = Homey.__('icons.' + cat.title) || cat.title;
-								
+
 							}
 							$scope.messages = err;
 							$scope.defaultCategoryLoadIndex = 0;
@@ -1143,15 +1207,15 @@
 					Homey.api('GET', '/getdevices/', function (err, result) {
 						if (err) return Homey.alert(err, 'error');
 						//console.log(result);
-						$scope.$apply(function () {							
+						$scope.$apply(function () {
 							$scope.stamp = Date.now();
 							$scope.devices = result;
 							console.log('devices', result);
-						
+
 						});
 					});
 				}
-				
+
 
 				// $scope.getIcons = function () {
 				// 	Homey.api('GET', '/geticons/', function (err, result) {
