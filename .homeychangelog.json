@@ -167,7 +167,10 @@
   "2.2.11" : {
     "en" : "Improved: Device Repair is the new Device Settings."
   },
-  "2.3.17" : {
+  "2.3.18" : {
     "en" : "Added: Share Your Device now (can) include flows."
+  },
+  "2.4.1" : {
+    "en" : "Added: The Flow Exchange(r)."
   }
 }

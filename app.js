@@ -58,6 +58,7 @@ class DeviceSetter extends Homey.App {
 	async onInit() {
 		DeviceSetter.Current = this;        
         //this.VirtualDevices = {};
+		
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
@@ -531,16 +532,20 @@ class DeviceSetter extends Homey.App {
 			};			
 		});
 		return ret;
-		// ;.getKeys()
-		// 	.filter(key => {
-		// 		return key.indexOf(SETTING_PREFIX) === 0;
-		// 	})
-		// 	.map(key => {
-		// 		return this.getIcon({
-		// 			id: key.substring(SETTING_PREFIX.length),
-		// 		});			
-		// 	});
 	}
+
+	// getAdvancedFlows() {
+	// 	var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+	// 	var ret = devices.map(vd => {
+	// 		return {
+	// 			id: vd.getData().id,
+	// 			name:vd.getName(),
+	// 			icon: vd.getData().icon,
+	// 		};			
+	// 	});
+	// 	return ret;
+	// }
+
 
 	getCustomIcons() {
 		return this.homey.drivers.getDriver('virtualdevice').getCustomIcons();

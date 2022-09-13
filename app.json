@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.3.17",
+  "version": "2.4.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -102,6 +102,22 @@
     "getDevices": {
       "method": "GET",
       "path": "/getdevices/"
+    },
+    "getAdvancedFlows": {
+      "method": "GET",
+      "path": "/getadvancedflows/"
+    },
+    "getAdvancedFlowsJSON": {
+      "method": "POST",
+      "path": "/getadvancedflowsjson/"
+    },
+    "readAdvancedFlowsJSON": {
+      "method": "POST",
+      "path": "/readadvancedflowsjson/"
+    },
+    "updateAdvancedFlowsJSON": {
+      "method": "POST",
+      "path": "/updateadvancedflowsjson/"
     },
     "setFromDefaultIcon": {
       "method": "POST",

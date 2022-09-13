@@ -7,6 +7,7 @@ const Homey = require('homey');
 const path = require('path');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
+const { Defer } = require('../../lib/proto');
 const TYPES = ['status', 'text', 'number', 'button', 'boolean'];
 const CUSTOM_ICONS = [
     'custom_1',  'custom_2',  'custom_3',
@@ -33,11 +34,17 @@ const CUSTOM_ICONS = [
     'custom_80'
   ];
 
+
+let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;
+
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     
     async onInit() {
         this.log('VirtualDeviceDriver onInit');
+        this.on("virtualdevicesettings_updateFlowCommand", (obj)=> {
+            this.log('virtualdevicesettings_updateFlowCommand');
+        });
         //return null;
 
 		this.log("Capabilities", Object.keys(this.homey.app.manifest.capabilities).length);
@@ -509,7 +516,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
       }
 
       async onRepair(session, device) {
-        let allDevices,  allDrivers, actionCards, conditionCards, triggerCards;
+        //let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;
         
 
         // var s = session;
@@ -575,6 +582,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
 
         session.setHandler('virtualdevicesettings_getTextSettings', async (obj) => {
+            let devicesToReplace = {};
+            let usersToReplace = {};
+            let variablesToReplace = {};            
+            let tokensToReplace = {};
+
+            function addDeviceToReplace(deviceId) {
+                let _device = allDevices[deviceId];
+                if(devicesToReplace && _device) devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
+            }
             try {                
                 let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id};
                 if(obj&& obj.copyWithIcons) 
@@ -591,6 +607,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 
                 if(obj&& obj.copyWithFlows) {
                     allDevices = allDevices ? allDevices : await this.homey.app.devices;
+                    allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
+                    allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
+                    allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
                     let advancedflows = _.filter(await this.homey.app.homeyAPI.flow.getAdvancedFlows(), x=> x.enabled && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
                     _.each(advancedflows, f=> {
                         delete f.__athom_api_type;
@@ -601,15 +620,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         _.each(f.cards, c=> {
                         });
                     });
-                    let devicesToReplace = {};
                     _.each(advancedflows, (flow, flowKey)=>{
                         _.each(flow.cards, (card, cardKey)=>{
                             let deviceId;
                             if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))!=device.__id) {
-                                if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
-                                    let _device = allDevices[deviceId];
-                                    devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
-                                }
+                                if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) addDeviceToReplace(deviceId) ;
                                 //if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);
                             }
                             if(card.args) for (const argKey in card.args) {
@@ -617,19 +632,69 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     const argument = card.args[argKey];
                                     switch (typeof(argument)) {
                                         case "string":
-                                            let a = argument.match(/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gi);
+                                            let a = argument.matchAll(/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gm);
+                                            if(!a) continue;
+                                            const tokens = [...a];
+                                            for (let i = 0; i < tokens.length; i++) {
+                                                const tokenMatchs = tokens[i];
+                                                //console.log(tokenMatchs[2]);
+                                                switch (tokenMatchs[1]) {
+                                                    case "manager": 
+                                                        switch (tokenMatchs[2]) {
+                                                            case "presence":
+                                                              let presenceId = tokenMatchs[3].substring(0,36);//.split('-')[0];
+                                                              //console.log(presenceId);
+                                                              let user = _.find(allUsers, y=>y.id==presenceId);
+                                                              if(!usersToReplace[presenceId]) usersToReplace[presenceId] =  {name:user.name};
+                                                                break;
+                                                            case "logic":
+                                                                if(!variablesToReplace[tokenMatchs[3]]) variablesToReplace[tokenMatchs[3]] = {
+                                                                    name:allVariables[tokenMatchs[3]].name, 
+                                                                    type:allVariables[tokenMatchs[3]].type};
+                                                                break;
+                                                        }
+                                                    break;
+                                                    case "device": 
+                                                        let deviceId = tokenMatchs[2];
+                                                        let capId = tokenMatchs[3];
+                                                        let cap = allDevices[deviceId].capabilitiesObj[capId];
+                                                        let capType = 'string';
+                                                        switch (cap.type) {
+                                                            case "number":
+                                                                capType = "number";
+                                                                break;
+                                                            case "boolean":
+                                                                capType = "boolean";
+                                                                break;
+                                                        }
+                                                        if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) addDeviceToReplace(deviceId) ;
+                                                        if(!devicesToReplace[deviceId].tags) devicesToReplace[deviceId].tags = {};
+                                                        if(!devicesToReplace[deviceId].tags[capId]) {
+                                                            let token = _.find(allTokens, t=>t.uri=='homey:device:'+deviceId && t.id==capId);
+                                                            if(token) devicesToReplace[deviceId].tags[capId] = {name:token.title, type:token.type};
+                                                            else devicesToReplace[deviceId].tags[capId] = {name:cap.title, type:capType};
+                                                        }
+                                                    break;
+                                                    case "app": 
+                                                        let token = _.find(allTokens, y=>y.uri=='homey:app:' + tokenMatchs[2] &&y.id==tokenMatchs[3] );
+                                                        let appIp = tokenMatchs[2];
+                                                        if(!tokensToReplace[appIp]) tokensToReplace[appIp] =  {tokens:{}};
+                                                        if(!tokensToReplace[appIp].tokens[token.id]) tokensToReplace[appIp].tokens[token.id] =  {name:token.title, type:token.type};
+                                                        break;                                                
+                                                default:
+                                                        break;
+                                                }
+                                            }
                                             break;
                                     }
                                 }
                             }
-                            //\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]
-
-
-                            //delete f.folder;
-                        });    
-                        //delete f.folder;
+                        });
                     });
                     if(Object.keys(devicesToReplace).length>0) dev.devicesToReplace = devicesToReplace;
+                    if(Object.keys(usersToReplace).length>0) dev.usersToReplace = usersToReplace;
+                    if(Object.keys(variablesToReplace).length>0) dev.variablesToReplace = variablesToReplace;
+                    if(Object.keys(tokensToReplace).length>0) dev.tokensToReplace = tokensToReplace;
 
                     dev.advancedflows = advancedflows;
                 }
@@ -648,8 +713,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         session.setHandler('virtualdevicesettings_readFlows', async (settings) => {
             try {                    
                 settings = JSON.parse(await this.unzip(settings));
+                
                 allDevices = allDevices ? allDevices : await this.homey.app.devices;
-                allDrivers = allDrivers ? allDrivers : await this.homey.app.devices;
+                allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
+                allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
+                allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+                
                 actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
                 conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
                 triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
@@ -660,9 +729,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 //let devicesNeeded = _.map(cardsNeeded, c=>c.ownerUri.substring(13));
                 if(!settings.devicesToReplace) settings.devicesToReplace = {};
                 let devicesToReplace = settings.devicesToReplace;
-                if(!settings.devicesToReplace[settings.originalId]) settings.devicesToReplace[settings.originalId] = {replaceWith: device.__id};
+                if(!settings.devicesToReplace[settings.originalId]) settings.devicesToReplace[settings.originalId] = {replaceWith: {id:device.__id}};
+                if(!settings.devicesToReplace[settings.originalId].replaceWith) settings.devicesToReplace[settings.originalId].replaceWith = {id:device.__id};
 
-                _.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replace(settings.originalId, device.__id) ; });
+                //_.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replace(settings.originalId, device.__id) ; });
                 
                 _.each(settings.advancedflows, (flow, flowKey)=>{
                     _.each(flow.cards, (card, cardKey)=>{
@@ -688,50 +758,76 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     ),
                         d=> { return {id:d.id, name:d.name};});
                 });
-                
+
+                _.each(settings.usersToReplace, (user, userId)=>{
+                    user.replacements = _.map(_.filter(allUsers, (u, uKey)=> true), d=> { return {id:d.id, name:d.name};});
+                });
+                _.each(settings.variablesToReplace, (variable, variableId)=>{
+                    variable.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==variable.type ), d=> { return {id:d.id, name:d.name};});
+                });
+                _.each(settings.tokensToReplace, (app, appId)=>{
+                    _.each(app.tokens, (token, tokenId)=>{
+                        token.replacements = _.map(_.filter(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), d=> { return {id:d.id, name:d.title};});
+                    });
+                    //app.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==app.type ), d=> { return {id:d.id, name:d.name};});
+                });
 
                 _.each(settings.advancedflows, f=>{
                     apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
                 });
-                return {apiCommand: apiCommand, devicesToReplace, advancedflows: settings.advancedflows};
+                return {apiCommand: apiCommand, devicesToReplace, advancedflows: settings.advancedflows, usersToReplace:settings.usersToReplace, variablesToReplace:settings.variablesToReplace, tokensToReplace:settings.tokensToReplace};
             } catch (error) {
                 this.error(error);                
             }
         });
 
-        session.setHandler('virtualdevicesettings_updateFlowCommand', async (obj) => {
+        session.setHandler('virtualdevicesettings_updateFlowCommand', async (settings) => {
             try {
                 let apiCommand = "";
-                //let settings = obj ? obj.settings : null;
-                let cards = _.flatMap(obj.advancedflows, f=>_.toArray(f.cards));
-                //_.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replace(settings.originalId, device.__id) ; });
+                let cards = _.flatMap(settings.advancedflows, f=>_.toArray(f.cards));
                 
-                if(obj && obj.devicesToReplace) for (const deviceToReplaceKey in obj.devicesToReplace) {
-                    if (Object.hasOwnProperty.call(obj.devicesToReplace, deviceToReplaceKey)) {
-                        const deviceToReplace = obj.devicesToReplace[deviceToReplaceKey];
-                        if(deviceToReplace.replaceWith && deviceToReplace.replaceWith.length>0) _.each(cards, c=>{
-                            if(c.ownerUri=='homey:device:' + deviceToReplaceKey) c.ownerUri= c.ownerUri.replace(deviceToReplaceKey, deviceToReplace.replaceWith);
-                            if(c.args) for (const argKey in c.args) {
-                                if (Object.hasOwnProperty.call(c.args, argKey)) {
-                                    const argument = c.args[argKey];
-                                    switch (typeof(argument)) {
-                                        case "string":      
-                                            if(argument.indexOf('[[homey:device:' + deviceToReplaceKey)>-1) 
-                                                c.args[argKey] = argument.replace(deviceToReplaceKey, deviceToReplace.replaceWith);
-                                            break;
-                                    }
-                                }
-                            }
-                        }); 
-                    }
-                }
-                
-                // for (let i = 0; i < obj.devicesToReplace.length; i++) {
-                //     const element = obj.devicesToReplace[i];
-                    
-                // }
+                _.each(settings.devicesToReplace, (device, deviceId)=>{
+                    if(!device.replaceWith) return;
+                    device.searchFor = "homey:device:"+deviceId;
+                    device.searchReplaceWith = "homey:device:" + device.replaceWith.id;
+                });
 
-                _.each(obj.advancedflows, f=>{
+                _.each(settings.usersToReplace, (user, userId)=>{
+                    if(!user.replaceWith) return;
+                    user.searchFor = "[[homey:manager:presence|"+userId;
+                    user.searchReplaceWith = "[[homey:manager:presence|" + user.replaceWith.id;
+                });
+                _.each(settings.variablesToReplace, (variable, variableId)=>{
+                    if(!variable.replaceWith) return;
+                    variable.searchFor = "[[homey:manager:logic|"+variableId;
+                    variable.searchReplaceWith = "[[homey:manager:logic|" + variable.replaceWith;
+                });
+                _.each(settings.tokensToReplace, (app, appId)=>{
+                    _.each(app.tokens, (token, tokenId)=>{
+                        if(!token.replaceWith) return;
+                        token.searchFor = "[[homey:app:"+appId+"|"+tokenId;
+                        token.searchReplaceWith = "[[homey:app:"+appId+"|"+token.replaceWith;
+                    });
+                });
+                _.each(cards, c=>{
+                    if(c && c.ownerUri) {
+                        _.each(settings.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.ownerUri.indexOf(device.searchFor)>-1)c.ownerUri = c.ownerUri.replace(device.searchFor, device.searchReplaceWith);  });
+                    }
+                    if(c.args) for (const argKey in c.args) {
+                        if (Object.hasOwnProperty.call(c.args, argKey)) {
+                            const argument = c.args[argKey];
+                            switch (typeof(argument)) {
+                                case "string":      
+                                    _.each(settings.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && argument.indexOf("[[" + device.searchFor)>-1)c.args[argKey] = argument.replace("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
+                                    _.each(settings.usersToReplace, (user, userId)=>{ if(user.searchFor && argument.indexOf(user.searchFor)>-1)c.args[argKey] = argument.replace(user.searchFor, user.searchReplaceWith);  });
+                                    _.each(settings.variablesToReplace, (variable, variableId)=>{ if(variable.searchFor && argument.indexOf(variable.searchFor)>-1)c.args[argKey] = argument.replace(variable.searchFor, variable.searchReplaceWith);  });
+                                    _.each(settings.tokensToReplace, (app, appId)=>{ _.each(app.tokens, (token, tokenId)=>{ if(token.searchFor && argument.indexOf(token.searchFor)>-1)c.args[argKey] = argument.replace(token.searchFor, token.searchReplaceWith); }); });
+                                    break;
+                            }
+                        }
+                    }
+                 });
+                _.each(settings.advancedflows, f=>{
                     apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
                 });
                 return {apiCommand: apiCommand};
@@ -741,7 +837,297 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
         });
     }
+    
+    async getAdvancedFlows({ homey, query }) {
+        let defer = new Defer();
+        defer.then(async ()=> {
+            allDevices = allDevices ? allDevices : await this.homey.app.devices;
+            allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
+            allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
+            allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+            
+            actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
+            conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
+            triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
+    
+        });
+        var afs = await homey.app.homeyAPI.flow.getAdvancedFlows();
+		var ret = _.map(afs, af => {
+			return {
+				id: af.id,
+				name:af.name
+			};			
+		});
+        setTimeout(()=> {
+            defer.resolve();
+		
+        }, 1);
+        return ret;
 
+    }
+
+
+    async getAdvancedFlowsJSON({ homey,  body: { advancedflowsselected } }) {        
+        function addDeviceToReplace(deviceId) {
+            let _device = allDevices[deviceId];
+            if(devicesToReplace && _device) devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
+        }
+
+        let devicesToReplace = {};
+        let usersToReplace = {};
+        let variablesToReplace = {};            
+        let tokensToReplace = {};
+
+        let dev = {};
+        allDevices = allDevices ? allDevices : await this.homey.app.devices;
+        allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
+        allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
+        allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+        let advancedflowsselectedKeys = Object.keys(advancedflowsselected);
+        let advancedflows = _.filter(await this.homey.app.homeyAPI.flow.getAdvancedFlows(), x=> x.enabled && advancedflowsselectedKeys.indexOf(x.id)>-1 && advancedflowsselected[x.id]===true);// && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
+        _.each(advancedflows, f=> {
+            delete f.__athom_api_type;
+            delete f.triggerable;
+            delete f.broken;
+            
+            delete f.folder;
+            // _.each(f.cards, c=> {
+            // });
+        });
+        _.each(advancedflows, (flow, flowKey)=>{
+            _.each(flow.cards, (card, cardKey)=>{
+                let deviceId;
+                if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))){//!=device.__id) {
+                    if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) addDeviceToReplace(deviceId) ;
+                    //if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);
+                }
+                if(card.args) for (const argKey in card.args) {
+                    if (Object.hasOwnProperty.call(card.args, argKey)) {
+                        const argument = card.args[argKey];
+                        switch (typeof(argument)) {
+                            case "string":
+                                let a = argument.matchAll(/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gm);
+                                if(!a) continue;
+                                const tokens = [...a];
+                                for (let i = 0; i < tokens.length; i++) {
+                                    const tokenMatchs = tokens[i];
+                                    //console.log(tokenMatchs[2]);
+                                    switch (tokenMatchs[1]) {
+                                        case "manager": 
+                                            switch (tokenMatchs[2]) {
+                                                case "presence":
+                                                    let presenceId = tokenMatchs[3].substring(0,36);
+                                                    let user = _.find(allUsers, y=>y.id==presenceId);
+                                                    if(!usersToReplace[presenceId]) usersToReplace[presenceId] =  {name:user.name};
+                                                    break;
+                                                case "logic":
+                                                    if(!variablesToReplace[tokenMatchs[3]]) variablesToReplace[tokenMatchs[3]] = {
+                                                        name:allVariables[tokenMatchs[3]].name, 
+                                                        type:allVariables[tokenMatchs[3]].type};
+                                                    break;
+                                            }
+                                        break;
+                                        case "device": 
+                                            let deviceId = tokenMatchs[2];
+                                            let capId = tokenMatchs[3];
+                                            let cap = allDevices[deviceId].capabilitiesObj[capId];
+                                            let capType = 'string';
+                                            switch (cap.type) {
+                                                case "number":
+                                                    capType = "number";
+                                                    break;
+                                                case "boolean":
+                                                    capType = "boolean";
+                                                    break;
+                                            }
+                                            if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) addDeviceToReplace(deviceId) ;
+                                            if(!devicesToReplace[deviceId].tags) devicesToReplace[deviceId].tags = {};
+                                            if(!devicesToReplace[deviceId].tags[capId]) {
+                                                let token = _.find(allTokens, t=>t.uri=='homey:device:'+deviceId && t.id==capId);
+                                                if(token) devicesToReplace[deviceId].tags[capId] = {name:token.title, type:token.type};
+                                                else devicesToReplace[deviceId].tags[capId] = {name:cap.title, type:capType};
+                                            }
+                                        break;
+                                        case "app": 
+                                            let token = _.find(allTokens, y=>y.uri=='homey:app:' + tokenMatchs[2] &&y.id==tokenMatchs[3] );
+                                            let appIp = tokenMatchs[2];
+                                            if(!tokensToReplace[appIp]) tokensToReplace[appIp] =  {tokens:{}};
+                                            if(!tokensToReplace[appIp].tokens[token.id]) tokensToReplace[appIp].tokens[token.id] =  {name:token.title, type:token.type};
+                                            break;                                                
+                                    }
+                                }
+                                break;
+                                
+                            case "object":
+                                if(argument.id && card.ownerUri) {                                    
+                                    if(card.ownerUri=='homey:manager:presence') {
+                                        let user = _.find(allUsers, y=>y.id==argument.id);
+                                        if(!usersToReplace[argument.id]) usersToReplace[argument.id] =  {name:user.name};
+                                    }
+                                    else if(card.ownerUri=='homey:manager:logic') {
+                                        if(!variablesToReplace[argument.id]) variablesToReplace[argument.id] = {
+                                            name:allVariables[argument.id].name, 
+                                            type:allVariables[argument.id].type};
+                                    }
+                                    
+                                }
+                                break;
+                        }
+                    }
+                }
+            });
+        });
+        if(Object.keys(devicesToReplace).length>0) dev.devicesToReplace = devicesToReplace;
+        if(Object.keys(usersToReplace).length>0) dev.usersToReplace = usersToReplace;
+        if(Object.keys(variablesToReplace).length>0) dev.variablesToReplace = variablesToReplace;
+        if(Object.keys(tokensToReplace).length>0) dev.tokensToReplace = tokensToReplace;
+
+        dev.advancedflows = advancedflows;
+        const json = JSON.stringify(dev);
+        const compressed = Buffer.from(await gzip(json)).toString('base64');                
+        dev.compressed = compressed;
+        return dev;
+    }
+    async readAdvancedFlowsJSON({ homey,  body: { json } }) { 
+        try {                    
+            let exchangeFile = JSON.parse(await this.unzip(json));
+            
+            allDevices = allDevices ? allDevices : await this.homey.app.devices;
+            allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
+            allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
+            allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+            
+            actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
+            conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
+            triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
+        
+
+            let _allDevices = allDevices;
+
+            let apiCommand = "";
+            let cards = _.flatMap(exchangeFile.advancedflows, f=>_.toArray(f.cards));
+            if(!exchangeFile.devicesToReplace) exchangeFile.devicesToReplace = {};
+            let devicesToReplace = exchangeFile.devicesToReplace;
+            //if(!exchangeFile.devicesToReplace[exchangeFile.originalId]) exchangeFile.devicesToReplace[exchangeFile.originalId] = {replaceWith: device.__id};
+            //if(!exchangeFile.devicesToReplace[exchangeFile.originalId].replaceWith) exchangeFile.devicesToReplace[exchangeFile.originalId].replaceWith = device.__id;
+
+            _.each(exchangeFile.advancedflows, (flow, flowKey)=>{
+                _.each(flow.cards, (card, cardKey)=>{
+                    let deviceId;
+                    if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))) { //!=device.__id) {
+                        if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
+                            devicesToReplace[deviceId] = {replacements: [], actions:[]};
+                        }
+                        if(!devicesToReplace[deviceId].replacements)devicesToReplace[deviceId].replacements = [];
+                        if(!devicesToReplace[deviceId].actions)devicesToReplace[deviceId].actions = [];
+                        if(!devicesToReplace[deviceId].triggers)devicesToReplace[deviceId].triggers = [];
+                        if(!devicesToReplace[deviceId].conditions)devicesToReplace[deviceId].conditions = [];
+                        if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);                         
+                    }
+                });
+            });
+
+            let actionIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.actions));
+            let conditionIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.conditions));
+            let triggerIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.triggers));
+
+            let _actionCards = _.filter(actionCards, x=> actionIds.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:device'));
+            let _conditionCards = _.filter(conditionCards, x=> conditionIds.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
+            let _triggerCards = _.filter(triggerCards, x=> triggerIds.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
+            _allDevices = _.filter(_allDevices, d=>_.find(_actionCards, x=>x.uri && x.uri=='homey:device:'+d.id));
+            
+            _.each(devicesToReplace, (device, deviceKey)=>{
+                device.replacements = _.map(_.filter(_allDevices, (d, dKey)=> 
+                    _.find(_actionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id)) || 
+                    _.find(_conditionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id)) || 
+                    _.find(_triggerCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id))
+                ),
+                    d=> { return {id:d.id, name:d.name};});
+            });
+
+            _.each(exchangeFile.usersToReplace, (user, userId)=>{
+                user.replacements = _.map(_.filter(allUsers, (u, uKey)=> true), d=> { return {id:d.id, name:d.name};});
+            });
+            _.each(exchangeFile.variablesToReplace, (variable, variableId)=>{
+                variable.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==variable.type ), d=> { return {id:d.id, name:d.name};});
+            });
+            _.each(exchangeFile.tokensToReplace, (app, appId)=>{
+                _.each(app.tokens, (token, tokenId)=>{
+                    token.replacements = _.map(_.filter(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), d=> { return {id:d.id, name:d.title};});
+                });
+            });
+
+            _.each(exchangeFile.advancedflows, f=>{
+                apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
+            });
+            
+            return {apiCommand: apiCommand, devicesToReplace, advancedflows: exchangeFile.advancedflows, usersToReplace:exchangeFile.usersToReplace, variablesToReplace:exchangeFile.variablesToReplace, tokensToReplace:exchangeFile.tokensToReplace};
+        } catch (error) {
+            this.error(error);                
+        }
+
+    }
+    async updateAdvancedFlowsJSON({ homey,  body: exchangerFile }) { 
+        try {
+            let apiCommand = "";
+            let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
+            
+            _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
+                if(!device.replaceWith) return;
+                device.searchFor = "homey:device:"+deviceId;
+                device.searchReplaceWith = "homey:device:" + device.replaceWith.id;
+            });
+
+            _.each(exchangerFile.usersToReplace, (user, userId)=>{
+                if(!user.replaceWith) return;
+                user.searchFor = "[[homey:manager:presence|"+userId;
+                user.searchReplaceWith = "[[homey:manager:presence|" + user.replaceWith.id;
+            });
+            _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
+                if(!variable.replaceWith) return;
+                variable.searchFor = "[[homey:manager:logic|"+variableId;
+                variable.searchReplaceWith = "[[homey:manager:logic|" + variable.replaceWith.id;
+            });
+            _.each(exchangerFile.tokensToReplace, (app, appId)=>{
+                _.each(app.tokens, (token, tokenId)=>{
+                    if(!token.replaceWith) return;
+                    token.searchFor = "[[homey:app:"+appId+"|"+tokenId;
+                    token.searchReplaceWith = "[[homey:app:"+appId+"|"+token.replaceWith.id;
+                });
+            });
+            _.each(cards, c=>{
+                if(c && c.ownerUri) {
+                    _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.ownerUri.indexOf(device.searchFor)>-1)c.ownerUri = c.ownerUri.replace(device.searchFor, device.searchReplaceWith);  });
+                }
+                if(c.args) for (const argKey in c.args) {
+                    if (Object.hasOwnProperty.call(c.args, argKey)) {
+                        //const c.args[argKey] = c.args[argKey];
+                        switch (typeof(c.args[argKey])) {
+                            case "string":      
+                                _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.args[argKey].indexOf("[[" + device.searchFor)>-1)c.args[argKey] = c.args[argKey].replace("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
+                                _.each(exchangerFile.usersToReplace, (user, userId)=>{ if(user.searchFor && c.args[argKey].indexOf(user.searchFor)>-1)c.args[argKey] = c.args[argKey].replace(user.searchFor, user.searchReplaceWith);  });
+                                _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{ if(variable.searchFor && c.args[argKey].indexOf(variable.searchFor)>-1)c.args[argKey] = c.args[argKey].replace(variable.searchFor, variable.searchReplaceWith);  });
+                                _.each(exchangerFile.tokensToReplace, (app, appId)=>{ _.each(app.tokens, (token, tokenId)=>{ if(token.searchFor && c.args[argKey].indexOf(token.searchFor)>-1)c.args[argKey] = c.args[argKey].replace(token.searchFor, token.searchReplaceWith); }); });
+                                break;
+                            case "object":      
+                                //_.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.args[argKey].indexOf("[[" + device.searchFor)>-1)c.args[argKey] = c.args[argKey].replace("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
+                                if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:presence') _.each(exchangerFile.usersToReplace, (user, userId)=>{ if(c.args[argKey].id==userId && user.replaceWith) {c.args[argKey].id = user.replaceWith.id ;c.args[argKey].name = user.replaceWith.name; }   });
+                                if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{ if(c.args[argKey].id==variableId && variable.replaceWith) {c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;}  });
+                                //_.each(exchangerFile.variablesToReplace, (variable, variableId)=>{ if(variable.searchFor && c.args[argKey].indexOf(variable.searchFor)>-1)c.args[argKey] = c.args[argKey].replace(variable.searchFor, variable.searchReplaceWith);  });
+                                //_.each(exchangerFile.tokensToReplace, (app, appId)=>{ _.each(app.tokens, (token, tokenId)=>{ if(token.searchFor && c.args[argKey].indexOf(token.searchFor)>-1)c.args[argKey] = c.args[argKey].replace(token.searchFor, token.searchReplaceWith); }); });
+                                break;
+                        }
+                    }
+                }
+             });
+            _.each(exchangerFile.advancedflows, f=>{
+                apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
+            });
+            return {apiCommand: apiCommand};
+        } catch (error) {
+            this.error(error);
+        }
+    }
     
     async executeForAllTypes(device, func=(type, i)=> {}) {
         for (let i = 0; i < TYPES.length; i++) {

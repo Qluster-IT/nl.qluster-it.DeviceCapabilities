@@ -5,10 +5,45 @@
 
 	<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
 	<script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
+	<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 	<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
 	<script type="text/javascript" src="smart-table.min.js"></script>
 
 	<style type="text/css">
+		* {
+
+			box-sizing: border-box;
+			}
+			a {
+			display: inline-block;
+			}
+			.float-right {
+			float: right !important;
+			z-index:100;
+			}
+			.bold {
+				font-weight:bold!important;
+			}
+			/* html {
+			height:auto!important;
+			} */
+
+			.fa-icon {
+			min-width: 24px;
+			min-height: 24px;
+			font-size: 20px;
+			}
+
+			.block {
+			display: block !important;
+			}
+			.margin-top {
+			margin-top:10px;
+			}
+			.margin-bottom {
+			margin-bottom:10px;
+			}
+
 		html {
 			height:auto!important;
 		}
@@ -271,14 +306,233 @@
 			cursor:pointer;
 			margin-top:30px;
 		}
+
+		#theflowexchange {
+		}
+		#theflowexchange ul {
+			height: 40vw;
+			overflow-y: scroll;			
+			list-style: none;
+			margin-left: 0;
+			overflow-x: hidden;
+			white-space: nowrap;
+		}
+		#theflowexchange ul .checkbox {
+			/* display: inline; */
+		}
+		#theflowexchange ul  li {
+			height:30px;
+		}
+		#theflowexchange ul .name {
+			display: inline;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+
+		
+		.field {
+			position: relative;
+			display: block;
+			width: 100%;
+			margin-top: 10px;
+		}
+		.label > * {
+			display: inline-block;
+		}
+
+		.label {
+			position: relative;
+			width: 48%;
+			display: inline-block;
+		}
+
+		.label .fa {
+			float: right;
+		}
+
+		.value {
+			position: relative;
+			width: 49% !important;
+			display: inline-block;
+		}
+
+			
+		.main-buttons {
+			height: 60px;
+			width: 100%;
+			position: fixed;
+			bottom: 0;
+			text-align: center;
+			/* padding-top:30px; */
+		}
+
+		.button {
+			padding: 16px;
+			width: auto !important;
+			display: inline-block;
+			font-size: 20pt;
+			cursor: pointer;
+		}
+
+		.main-buttons .button {
+			display: inline-block;
+			/* top: 6px;
+			position: relative;
+			margin: 0px 50px; */
+			margin: 0px 20px;
+
+		}
+
+		.remove-icon {
+			color: black;
+			width: 30px;
+			height: 30px;
+			display: inline-block;
+			position: absolute;
+			right: 10px;
+			/* border: 1px solid black;
+			border-radius: 3px; */
+			font-size: 24px;
+			/* color: black; */
+			padding-top: 2px;
+			padding-left: 4px;
+			top: -10px;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+
+		div[disabled] {
+			color: lightgray !important;
+		}
+
+		input.ng-invalid {
+			background-color: lightcoral;
+		}
+
+		input[type="text"]:not(.hy-nostyle),
+		input[type="password"]:not(.hy-nostyle),
+		input[type="email"]:not(.hy-nostyle),
+		.hy-input-text {
+			border-bottom: 1px solid #999;
+		}
+
+		select {
+			padding: 5px;
+		}
+
+		/* @media (hover: none), (pointer: coarse) {
+		body {
+			cursor: pointer;
+		} */
+
+		.tooltip {
+			/* display: block!important; */
+			position: absolute;
+			z-index: 100;
+			background-color: white;
+			display: inline-block;
+			width: 40vw;
+			border: 1px solid grey;
+			border-radius: 3px;
+			padding: 10px;
+			left: 0px;
+			transform: translate(50%, -115%);
+			/* top:-200%; */
+			/* transform: translate(-50%, -25% ); */
+			background-color: #efefef;
+			/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+			box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+		}
+
+
 	</style>
 
 </head>
 
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
 	<div ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon">
+		<!-- The Flow Exchange -->
+		<h1 data-i18n="settings.title_theflowexchange" ng-click="showtheflowexchange=!showtheflowexchange">The Flow Exchanger</h1>
+		<div id="theflowexchange"  ng-show="showtheflowexchange" style="margin-bottom:60px;">
+			<div data-i18n="settings.explain_theflowexchange">Here you can create or read Flow Exchange files.</div>		
+			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>		
+				<ul>
+				<li class="flow" ng-repeat="flow in advancedflows |orderBy:'name'">
+					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]"/>
+					<div class="name">{{flow.name}}</div>
+				</li>
+				
+			</ul>
+			<div class="button" ng-click="getTextSettings();">Create Exchanger File</div>			
+			<div class="field">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
+			</div>			
+			<div class="button margin-top margin-bottom" ng-click="readFlows();">Read Flows</div>
+			<div ng-if="vars.readflow">				
+				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you want to replace with which of your own in the to create flow(s)(scripts).</div>	
+				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
+					<div class="label">Devices</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field"  ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
+					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+					</select>
+				</div>
+				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
+					<div class="label">Users</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field"  ng-repeat="(key,item)  in vars.readflow.usersToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+					</select>
+				</div>
+				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
+					<div class="label">Variables</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field"  ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+					</select>
+				</div>
+				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
+					<div class="label">App Tokens</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field"  ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
+					<div class="label">{{app.name}}</div>
+					<div class="field"  ng-repeat="(key,item)  in app.tokens">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="app.tokens[key].replaceWith" ng-change="updateReadFlow()">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement" >{{replacement.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="field">
+					<div class="button" ng-click="updateFlows();">Update Text</div>
+				</div>
+				<div class="field margin-top">
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
+				</div>
+				<div class="field">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+				</div>
+			</div>
+		</div>
 
-		
 		<!-- Devices -->
 		<h1 data-i18n="settings.title_virtualdevices" ng-click="showvirtualdevices=!showvirtualdevices"></h1>
 		<div data-i18n="settings.explain_virtualdevices" ng-show="showvirtualdevices">Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.</div>
@@ -490,13 +744,17 @@
 	</div>
 	<br><br>
 	<br><br>
+	<div id="overlay" style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
 
 
 	<script type="text/javascript">
+
 		angular.module('devicecapabilities', ['smart-table'])
 			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+				//let $;
 				var Homey;
 				$scope.stamp = Date.now();
+				$scope.vars = {advancedflowsselected : {}, readflow : null, devicesToReplaceLength:0, usersToReplaceLength:0, variablesToReplaceLength:0, tokensToReplaceLength:0};
 				//Homey.ready();
 
 				$scope.icons = [];
@@ -511,7 +769,6 @@
 
 
 				$scope.$on('ready', function ($e, Homey_) {
-					console.log('ready');
 					Homey = Homey_;
 					$scope.__ = Homey.__;
 
@@ -524,6 +781,7 @@
 					}
 
 					// $scope.getIcons();
+					$scope.getAdvancedFlows();
 					$scope.getDevices();
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
@@ -533,7 +791,88 @@
 					console.log('ready done');
 				});
 
+				$scope.openUrl = function(url) {
+					Homey.openURL(url);
+				}
 
+				function showOverlay(str) {
+					//let elms=angular.element('#overlay');
+					$('#overlay').css('display', 'block');
+				}
+				function hideOverlay() {
+					$('#overlay').css('display', 'none');
+					
+				}
+				$scope.updateFlows = function() {
+					showOverlay();
+					Homey.api('POST', 'updateadvancedflowsJSON',$scope.vars.readflow, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							$scope.vars.readflow.apiCommand = result.apiCommand;
+						});
+					});
+				}
+
+				$scope.getAdvancedFlows = function () {
+					showOverlay();
+					Homey.api('GET', '/getadvancedflows/', function (err, result) {
+						hideOverlay();
+						if (err) return Homey.alert(err, 'error');
+						$scope.$apply(function () {
+							$scope.advancedflows = result;
+							console.log('advancedflows', result);
+						
+						});
+					});
+				}
+
+				
+				$scope.getTextSettings = function () {					
+					showOverlay();
+					$scope.vars.textSettings = '';
+
+					Homey.api('POST', '/getadvancedflowsJSON/', {advancedflowsselected :$scope.vars.advancedflowsselected}, function (err, result) {						
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							$scope.vars.textSettings = result.compressed;						
+						});
+					});
+				}
+
+				$scope.readFlows = function () {					
+					showOverlay();
+					//$scope.vars.readflow = null;
+					
+					Homey.api('POST', 'readadvancedflowsJSON', {json:$scope.vars.textSettings}, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							$scope.vars.readflow = result;
+							$scope.vars.readflow.apiCommand = '';
+							$scope.vars.devicesToReplaceLength = Object.keys($scope.vars.readflow.devicesToReplace).length;
+							$scope.vars.usersToReplaceLength = Object.keys($scope.vars.readflow.usersToReplace).length;
+							$scope.vars.variablesToReplaceLength = Object.keys($scope.vars.readflow.variablesToReplace).length;
+							$scope.vars.tokensToReplaceLength = Object.keys($scope.vars.readflow.tokensToReplace).length;
+						});
+					});
+					
+				}
+
+				
+				$scope.updateReadFlow = function() {
+					$scope.vars.readflow.apiCommand = '';
+				}
 
 				$scope.getFunctionFromSettings = function () {
 					Homey.get('javascript_functions', (err, newFunctions) => {
@@ -812,6 +1151,7 @@
 						});
 					});
 				}
+				
 
 				// $scope.getIcons = function () {
 				// 	Homey.api('GET', '/geticons/', function (err, result) {
@@ -886,7 +1226,7 @@
 		function onHomeyReady(Homey) {
 			console.log('onHomeyReady');
 			var scope = angular.element(document.body).scope();
-			scope.$emit('ready', Homey);
+			scope.$emit('ready', Homey, $);//, $);
 		}
 	</script>
 
