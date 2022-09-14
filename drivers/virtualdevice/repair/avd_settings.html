@@ -807,7 +807,7 @@
 		<div class="button" ng-click="close()">Close</div>
 	</div>
 
-	<form name="editor" class="main-view hide" ng-if="view=='editor'">
+	<form name="theflowexchange" class="main-view hide" ng-if="view=='editor'">
 		<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
 		<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can copy and paste the whole
 			device settings.</div>
@@ -911,12 +911,12 @@
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
 				</div>
 				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</a> to create the Flows!
 				</div>
 			</div>
 		</div>
 	</form>
-	<div ng-else execute="vars.textSettings=null;readycopy=null;"></div>
+	<div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div>
 	<div class="main-buttons" ng-show="view=='editor'">
 		<div class="button" ng-click="view=undefined;">Close</div>
 	</div>
@@ -1091,7 +1091,7 @@
 						return;
 					}
 					$scope.$apply(function () {
-						$scope.vars.textSettings = result.compressed;						
+						$scope.vars.textSettings = result.compressedMinified;						
 					});
 				});
 			}
@@ -1134,12 +1134,19 @@
 				// 	return Homey.alert(error);
 				// } 
 				//console.log($scope.vars.readcopy);
-				if($scope.vars.readcopy && $scope.vars.readcopy.settings && $scope.vars.readcopy.settings.cls) $scope.save(function() {
+				if($scope.vars.readcopy && $scope.vars.readcopy.settings && $scope.vars.readcopy.settings.cls){
+
+					($scope.vars.readcopy.settings.imported = 2) | 
+					($scope.vars.readcopy.settings.deviceIcon = $scope.vars.readcopy.deviceIcon) | 
+					($scope.vars.readcopy.settings.customIcons = $scope.vars.readcopy.customIcons) | 
+					($scope.vars.readcopy.settings.saveCustomIcons = $scope.vars.readcopy.saveCustomIcons) | 
+				 $scope.save(function() {
 						if(close) {
 							$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};			
 							$scope.view=undefined;
 						}
 					}, $scope.vars.readcopy.settings);
+				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
 			if (typeof Homey !== 'undefined') {

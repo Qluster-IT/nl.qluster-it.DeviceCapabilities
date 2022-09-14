@@ -772,31 +772,35 @@ class DeviceSetter extends Homey.App {
 					const capability = device.capabilities[keys[i]];
 					if (!capability.listener) {
 						var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
-						capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
-							var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
-							if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
-							else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
-							else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
+						try {								
+							capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
+								var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
+								if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
+								else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
+								else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
 
-							if (targetInsight) {
-								var insights, lastOne = null;
-								try {
-									insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
-								} catch (error) {
-									insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+								if (targetInsight) {
+									var insights, lastOne = null;
+									try {
+										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
+									} catch (error) {
+										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+									}
+									if (insights && (lastOne = _.last(insights.values))) {
+										if (lastOne.originUserName) tokens.user = lastOne.originUserName;
+										if (lastOne.originName) tokens.client = lastOne.originName;
+										else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+									}
+									//if(lastOne) tokens
 								}
-								if (insights && (lastOne = _.last(insights.values))) {
-									if (lastOne.originUserName) tokens.user = lastOne.originUserName;
-									if (lastOne.originName) tokens.client = lastOne.originName;
-									else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
-								}
-								//if(lastOne) tokens
-							}
 
 
-							trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
+								trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
 
-						});
+							});
+						} catch (error) {
+							this.log(error);
+						}
 					}
 				}
 			}

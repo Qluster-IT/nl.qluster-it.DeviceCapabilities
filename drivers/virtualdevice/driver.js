@@ -578,25 +578,38 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         session.setHandler('virtualdevicesettings_getJson', async (str) => {
             try {                
-                return JSON.parse(await this.unzip(str));
+                let exchangerFile = await this.getNormalExchangerFile(str);
+                if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
+                if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
+                    if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
+                        if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
+                    }
+                }
+                    //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
+                
+                // await this.executeForAllTypes(device, async (type, i )=> {
+                //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
+                //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
+                //         let b =device.Settings[type+i+"Icon"];
+                //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                //     }
+                // });
+                return exchangerFile;
+
+                //return JSON.parse(await this.unzip(str));
             } catch (error) {
                 this.error(error);
             }
         });
 
-        session.setHandler('virtualdevicesettings_getTextSettings', async (obj) => {
+        session.setHandler('virtualdevicesettings_getTextSettings', async (viewSettings) => {
             try {
                 
-                let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id};
-                if(obj&& obj.copyWithIcons) 
+                let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id, settings:device.Settings};
+                if(viewSettings && viewSettings.copyWithIcons) 
                     await this.executeForAllTypes(device, async (type, i )=> {
                         if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]]){
-                            //let buffer = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");                            
-                            //const compressed = await gzip(buffer);
-                            //var str = Buffer.from(await gzip(buffer)).toString('base64');
-                            //var str2 = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
                             dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-                            //dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIcon("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
                         }
                     });
                 dev = await this.getAdvancedFlowsJSON({dev, device });
@@ -608,128 +621,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
 
         
-        session.setHandler('virtualdevicesettings_readFlows', async (settings) => {
+        session.setHandler('virtualdevicesettings_readFlows', async (exchangerFile) => {
             try {                    
-                return await this.readAdvancedFlowsJSON({json:settings});
-                // settings = JSON.parse(await this.unzip(settings));
-                
-                // allDevices = allDevices ? allDevices : await this.homey.app.devices;
-                // allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
-                // allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
-                // allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
-                
-                // actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
-                // conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
-                // triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
-            
-                // let apiCommand = "";
-                // let cards = _.flatMap(settings.advancedflows, f=>_.toArray(f.cards));
-                // //let cardsNeeded = _.filter(cards, c=>c.ownerUri.startsWith('homey:device:'));
-                // //let devicesNeeded = _.map(cardsNeeded, c=>c.ownerUri.substring(13));
-                // if(!settings.devicesToReplace) settings.devicesToReplace = {};
-                // let devicesToReplace = settings.devicesToReplace;
-                // if(!settings.devicesToReplace[settings.originalId]) settings.devicesToReplace[settings.originalId] = {replaceWith: {id:device.__id}};
-                // if(!settings.devicesToReplace[settings.originalId].replaceWith) settings.devicesToReplace[settings.originalId].replaceWith = {id:device.__id};
-
-                // //_.each(cards, c=>{if(c.ownerUri=='homey:device:' + settings.originalId) c.ownerUri= c.ownerUri.replaceAll(settings.originalId, device.__id) ; });
-                
-                // _.each(settings.advancedflows, (flow, flowKey)=>{
-                //     _.each(flow.cards, (card, cardKey)=>{
-                //         let deviceId;
-                //         if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))!=device.__id) {
-                //             if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
-                //                 devicesToReplace[deviceId] = {replacements: [], actions:[]};
-                //             }
-                //             if(!devicesToReplace[deviceId].replacements)devicesToReplace[deviceId].replacements = [];
-                //             if(!devicesToReplace[deviceId].actions)devicesToReplace[deviceId].actions = [];
-                //             if(!devicesToReplace[deviceId].triggers)devicesToReplace[deviceId].triggers = [];
-                //             if(!devicesToReplace[deviceId].conditions)devicesToReplace[deviceId].conditions = [];
-                //             if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);                         
-                //         }
-                //     });
-                // });
-                
-                // _.each(devicesToReplace, (device, deviceKey)=>{
-                //     device.replacements = _.map(_.filter(allDevices, (d, dKey)=> 
-                //         _.find(actionCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.actions, a=>a==ac.id)) || 
-                //         _.find(conditionCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.conditions, a=>a==ac.id)) || 
-                //         _.find(triggerCards, ac=> ac.uri=='homey:device:' + dKey && _.find(device.triggers, a=>a==ac.id))
-                //     ),
-                //         d=> { return {id:d.id, name:d.name};});
-                // });
-
-                // _.each(settings.usersToReplace, (user, userId)=>{
-                //     user.replacements = _.map(_.filter(allUsers, (u, uKey)=> true), d=> { return {id:d.id, name:d.name};});
-                // });
-                // _.each(settings.variablesToReplace, (variable, variableId)=>{
-                //     variable.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==variable.type ), d=> { return {id:d.id, name:d.name};});
-                // });
-                // _.each(settings.tokensToReplace, (app, appId)=>{
-                //     _.each(app.tokens, (token, tokenId)=>{
-                //         token.replacements = _.map(_.filter(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), d=> { return {id:d.id, name:d.title};});
-                //     });
-                //     //app.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==app.type ), d=> { return {id:d.id, name:d.name};});
-                // });
-
-                // _.each(settings.advancedflows, f=>{
-                //     apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
-                // });
-                // return {apiCommand: apiCommand, devicesToReplace, advancedflows: settings.advancedflows, usersToReplace:settings.usersToReplace, variablesToReplace:settings.variablesToReplace, tokensToReplace:settings.tokensToReplace};
+                return await this.readAdvancedFlowsJSON({exchangerFile});
             } catch (error) {
                 this.error(error);                
             }
         });
 
-        session.setHandler('virtualdevicesettings_updateFlowCommand', async (settings) => {
+        session.setHandler('virtualdevicesettings_updateFlowCommand', async (exchangerFile) => {            
             try {
-                let apiCommand = "";
-                let cards = _.flatMap(settings.advancedflows, f=>_.toArray(f.cards));
-                
-                _.each(settings.devicesToReplace, (device, deviceId)=>{
-                    if(!device.replaceWith) return;
-                    device.searchFor = "homey:device:"+deviceId;
-                    device.searchReplaceWith = "homey:device:" + device.replaceWith.id;
-                });
-
-                _.each(settings.usersToReplace, (user, userId)=>{
-                    if(!user.replaceWith) return;
-                    user.searchFor = "[[homey:manager:presence|"+userId;
-                    user.searchReplaceWith = "[[homey:manager:presence|" + user.replaceWith.id;
-                });
-                _.each(settings.variablesToReplace, (variable, variableId)=>{
-                    if(!variable.replaceWith) return;
-                    variable.searchFor = "[[homey:manager:logic|"+variableId;
-                    variable.searchReplaceWith = "[[homey:manager:logic|" + variable.replaceWith;
-                });
-                _.each(settings.tokensToReplace, (app, appId)=>{
-                    _.each(app.tokens, (token, tokenId)=>{
-                        if(!token.replaceWith) return;
-                        token.searchFor = "[[homey:app:"+appId+"|"+tokenId;
-                        token.searchReplaceWith = "[[homey:app:"+appId+"|"+token.replaceWith;
-                    });
-                });
-                _.each(cards, c=>{
-                    if(c && c.ownerUri) {
-                        _.each(settings.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.ownerUri.indexOf(device.searchFor)>-1)c.ownerUri = c.ownerUri.replaceAll(device.searchFor, device.searchReplaceWith);  });
-                    }
-                    if(c.args) for (const argKey in c.args) {
-                        if (Object.hasOwnProperty.call(c.args, argKey)) {
-                            const argument = c.args[argKey];
-                            switch (typeof(argument)) {
-                                case "string":      
-                                    _.each(settings.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && argument.indexOf("[[" + device.searchFor)>-1)c.args[argKey] = argument.replaceAll("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
-                                    _.each(settings.usersToReplace, (user, userId)=>{ if(user.searchFor && argument.indexOf(user.searchFor)>-1)c.args[argKey] = argument.replaceAll(user.searchFor, user.searchReplaceWith);  });
-                                    _.each(settings.variablesToReplace, (variable, variableId)=>{ if(variable.searchFor && argument.indexOf(variable.searchFor)>-1)c.args[argKey] = argument.replaceAll(variable.searchFor, variable.searchReplaceWith);  });
-                                    _.each(settings.tokensToReplace, (app, appId)=>{ _.each(app.tokens, (token, tokenId)=>{ if(token.searchFor && argument.indexOf(token.searchFor)>-1)c.args[argKey] = argument.replaceAll(token.searchFor, token.searchReplaceWith); }); });
-                                    break;
-                            }
-                        }
-                    }
-                 });
-                _.each(settings.advancedflows, f=>{
-                    apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
-                });
-                return {apiCommand: apiCommand};
+                return await this.updateAdvancedFlowsJSON({exchangerFile});                
             } catch (error) {                
                 this.error(error);
             }
@@ -916,21 +818,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         dev.uncompressed = stringy;
         
         dev.compressedMinified = compressedMinified;
-        dev.uncompressedMinified = devCopyMinified;
+        dev.uncompressedMinified = stringyMinified;
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
 
-    async readAdvancedFlowsJSON({ homey,  json, device }) { 
+    async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         try {
-            let exchangeFile = json;
-            if(typeof(exchangeFile)=='string') {
-                if(exchangeFile.startsWith('H4s')) exchangeFile = JSON.parse(await this.unzip(exchangeFile));
-                else exchangeFile = JSON.parse(exchangeFile);
-            }
-
-            if(typeof(exchangeFile)=='object' && exchangeFile.a) exchangeFile = this.maxifyExchangerFile(exchangeFile);
-                
+            let exchangerFile = await this.getNormalExchangerFile(exchangerFile);
+           
             
             await this.loadStuff();
             // allDevices = allDevices ? allDevices : await this.homey.app.devices;
@@ -946,13 +842,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let _allDevices = allDevices;
 
             let apiCommand = "";
-            let cards = _.flatMap(exchangeFile.advancedflows, f=>_.toArray(f.cards));
-            if(!exchangeFile.devicesToReplace) exchangeFile.devicesToReplace = {};
-            let devicesToReplace = exchangeFile.devicesToReplace;
-            if(device &&!exchangeFile.devicesToReplace[exchangeFile.originalId]) exchangeFile.devicesToReplace[exchangeFile.originalId] = {replaceWith: device.__id};
-            if(device &&!exchangeFile.devicesToReplace[exchangeFile.originalId].replaceWith) exchangeFile.devicesToReplace[exchangeFile.originalId].replaceWith = device.__id;
+            let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
+            if(!exchangerFile.devicesToReplace) exchangerFile.devicesToReplace = {};
+            let devicesToReplace = exchangerFile.devicesToReplace;
+            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId]) exchangerFile.devicesToReplace[exchangerFile.originalId] = {replaceWith: device.__id};
+            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith) exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith = device.__id;
 
-            _.each(exchangeFile.advancedflows, (flow, flowKey)=>{
+            _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
                 _.each(flow.cards, (card, cardKey)=>{
                     let deviceId;
                     if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))) { //!=device.__id) {
@@ -986,29 +882,29 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     d=> { return {id:d.id, name:d.name};});
             });
 
-            _.each(exchangeFile.usersToReplace, (user, userId)=>{
+            _.each(exchangerFile.usersToReplace, (user, userId)=>{
                 user.replacements = _.map(_.filter(allUsers, (u, uKey)=> true), d=> { return {id:d.id, name:d.name, athomId:d.athomId, image:d.avatar};});
             });
-            _.each(exchangeFile.variablesToReplace, (variable, variableId)=>{
+            _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
                 variable.replacements = _.map(_.filter(allVariables, (v, vKey)=> v.type==variable.type ), d=> { return {id:d.id, name:d.name};});
             });
-            _.each(exchangeFile.tokensToReplace, (app, appId)=>{
+            _.each(exchangerFile.tokensToReplace, (app, appId)=>{
                 _.each(app.tokens, (token, tokenId)=>{
                     token.replacements = _.map(_.filter(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), d=> { return {id:d.id, name:d.title};});
                 });
             });
 
-            _.each(exchangeFile.advancedflows, f=>{
+            _.each(exchangerFile.advancedflows, f=>{
                 apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
             });
             
-            return {apiCommand: apiCommand, devicesToReplace, advancedflows: exchangeFile.advancedflows, usersToReplace:exchangeFile.usersToReplace, variablesToReplace:exchangeFile.variablesToReplace, tokensToReplace:exchangeFile.tokensToReplace};
+            return {apiCommand: apiCommand, devicesToReplace, advancedflows: exchangerFile.advancedflows, usersToReplace:exchangerFile.usersToReplace, variablesToReplace:exchangerFile.variablesToReplace, tokensToReplace:exchangerFile.tokensToReplace};
         } catch (error) {
             this.error(error);                
         }
 
     }
-    async updateAdvancedFlowsJSON({ homey,  body: exchangerFile }) { 
+    async updateAdvancedFlowsJSON({ homey,  exchangerFile }) { 
         try {
             let apiCommand = "";
             let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
@@ -1086,7 +982,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         }
     }
 
-    
+    async getNormalExchangerFile(exchangerFile) {
+        if(typeof(exchangerFile)=='string') {
+            if(exchangerFile.startsWith('H4s')) exchangerFile = JSON.parse(await this.unzip(exchangerFile));
+            else exchangerFile = JSON.parse(exchangerFile);
+        }
+
+        if(typeof(exchangerFile)=='object' && exchangerFile.a) exchangerFile = this.maxifyExchangerFile(exchangerFile);
+        return exchangerFile;
+    }
     minifyExchangerFile(json) {
         if(json.devicesToReplace) {json.d=json.devicesToReplace; delete json.devicesToReplace;} 
         _.each(json.d, (device, key)=> {
@@ -1110,7 +1014,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(json.v[key].type!==undefined) json.v[key].t=json.v[key].type; delete json.v[key].type;
         });
         if(json.tokensToReplace) {json.t=json.tokensToReplace; delete json.tokensToReplace;} 
-        _.each(json.t, (app, key)=> { 
+        _.each(json.t, (app, key)=> {
+            if(json.t[key].name!==undefined) json.t[key].n=json.t[key].name; delete json.t[key].name;
             if(json.t[key].tokens) {
                 json.t[key].t=json.t[key].tokens; delete json.t[key].tokens;
                 _.each(json.t[key].t, (token, tokenKey)=> { 
@@ -1144,7 +1049,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         if(json.d) {json.devicesToReplace=json.d; delete json.d;} 
         _.each(json.devicesToReplace, (device, key)=> {
             if(json.devicesToReplace[key].n!==undefined) json.devicesToReplace[key].name=json.devicesToReplace[key].n; delete json.devicesToReplace[key].n;
-            if(json.devicesToReplace[key].c!==undefined) json.devicesToReplace[key].name=json.devicesToReplace[key].c; delete json.devicesToReplace[key].c;
+            if(json.devicesToReplace[key].c!==undefined) json.devicesToReplace[key].class=json.devicesToReplace[key].c; delete json.devicesToReplace[key].c;
             if(json.devicesToReplace[key].t) {
                 json.devicesToReplace[key].tags=json.devicesToReplace[key].t; delete json.devicesToReplace[key].t;
                 _.each(json.devicesToReplace[key].tags, (tag, tagKey)=> {
@@ -1162,8 +1067,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(json.variablesToReplace[key].n!==undefined) json.variablesToReplace[key].name=json.variablesToReplace[key].n; delete json.variablesToReplace[key].n;
             if(json.variablesToReplace[key].t!==undefined) json.variablesToReplace[key].type=json.variablesToReplace[key].t; delete json.variablesToReplace[key].t;
         });
-        if(json.tokensToReplace) {json.t=json.tokensToReplace; delete json.tokensToReplace;} 
-        _.each(json.t, (app, key)=> { 
+        if(json.t) {json.tokensToReplace=json.t; delete json.t;} 
+        _.each(json.t, (app, key)=> {
+            if(json.tokensToReplace[key].n!==undefined) json.tokensToReplace[key].name=json.tokensToReplace[key].n; delete json.tokensToReplace[key].n;
             if(json.tokensToReplace[key].t) {
                 json.tokensToReplace[key].tokens=json.tokensToReplace[key].t; delete json.tokensToReplace[key].t;
                 _.each(json.tokensToReplace[key].t, (token, tokenKey)=> { 
@@ -1224,10 +1130,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         } catch (error) { return null; }
     }
     
-    async unzip(str) {
+    async unzip(str, returnType) {
         var gzippedJson = Buffer.from(str, 'base64');
         var jsonBuffer = await ungzip(gzippedJson, {level:9});
-        return jsonBuffer.toString();
+        return returnType ? jsonBuffer.toString(returnType) : jsonBuffer.toString();
     }
     
     async getIcon(path) {

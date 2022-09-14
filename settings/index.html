@@ -551,7 +551,7 @@
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
 				</div>
 				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" href="#">Homey API Playground</a> to create the Flows!
+					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" >Homey API Playground</a> to create the Flows!
 				</div>
 			</div>
 		</form>
@@ -831,7 +831,7 @@
 
 				$scope.updateFlows = function () {
 					showOverlay();
-					Homey.api('POST', 'updateadvancedflowsJSON', $scope.vars.readflow, function (err, result) {
+					Homey.api('POST', 'updateadvancedflowsJSON',{exchangerFile: $scope.vars.readflow}, function (err, result) {
 						hideOverlay();
 						if (err) {
 							console.log(err);
@@ -885,7 +885,7 @@
 					showOverlay();
 					//$scope.vars.readflow = null;
 
-					Homey.api('POST', 'readadvancedflowsJSON', { json: $scope.vars.textSettings }, function (err, result) {
+					Homey.api('POST', 'readadvancedflowsJSON', { exchangerFile: $scope.vars.textSettings }, function (err, result) {
 						hideOverlay();
 						if (err) {
 							console.log(err);
