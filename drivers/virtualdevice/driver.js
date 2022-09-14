@@ -825,7 +825,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         try {
-            let exchangerFile = await this.getNormalExchangerFile(exchangerFile);
+            exchangerFile = await this.getNormalExchangerFile(exchangerFile);
            
             
             await this.loadStuff();
