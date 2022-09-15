@@ -1008,6 +1008,12 @@ class DeviceSetter extends Homey.App {
 		}).bind(this);
 	}
 
+	async destroyAndRefreshHomeyAPI() {		
+		this.homeyAPI.destroy();
+		this.homeyAPI = null;
+		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+	}
+
 	async refreshHomeyAPI(id) {
 		if (id === undefined && this.homeyAPI) {
 			if(this.refreshDefer) await this.refreshDefer;
@@ -1033,10 +1039,18 @@ class DeviceSetter extends Homey.App {
 			await this.refreshApps();
 			await this.refreshDrivers();
 
+			
+			console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
+			console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
+			console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
+			console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
+			
+
 			// Does this help? Seems a little bit.
-			this.homeyAPI.destroy();
-			this.homeyAPI = null;
-			this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+			await this.destroyAndRefreshHomeyAPI();
+			// this.homeyAPI.destroy();
+			// this.homeyAPI = null;
+			// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
 
 			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
 			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));

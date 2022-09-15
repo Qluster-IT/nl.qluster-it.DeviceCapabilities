@@ -1,0 +1,13 @@
+.scripts/*
+.translation/*
+.vscode/*
+
+userdata/*
+manager/*
+
+todo.js
+bugs.txt
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+README.md
