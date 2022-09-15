@@ -36,41 +36,20 @@ const CUSTOM_ICONS = [
 
 
 let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys;
+let app;
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     
     async onInit() {
+        app = this.homey.app;
         this.log('VirtualDeviceDriver onInit');
-        this.on("virtualdevicesettings_updateFlowCommand", (obj)=> {
-            this.log('virtualdevicesettings_updateFlowCommand');
-        });
-        //return null;
 
-		this.log("Capabilities", Object.keys(this.homey.app.manifest.capabilities).length);
+		this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
 
-        //true || 
-        if(process.env.DEBUG === '1' || this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
-            //if(await this.homey.app.fileExists('./assets/icons/bell.svg')) console.log('bell!!');					
-            let categories = (await this.getCustomIcons()).icons;
-			for(let i=0;i<categories.length;i++)
-			{
-				for(let j=0;j<categories[i].icons.length;j++){
-                    if(categories[i].icons[j].defaultIcon=='') continue;
-					let filePathAssets = './assets/icons/';
-                    let file = categories[i].icons[j].defaultIcon + '.svg';
-                    
-                    let filePath = './userdata/customicons/';
-					let iconName = categories[i].icons[j].file + '.svg';
-
-                    if(await this.homey.app.fileExists(filePathAssets + file) && !await this.homey.app.fileExists(filePath + iconName)){
-                        await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
-                    }
-				}
-			}
-            
-
-            await this.homey.settings.set('Version', this.homey.app.manifest.version);
+        //true || process.env.DEBUG === '1' || 
+        if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
+            await this.homey.settings.set('Version', app.manifest.version);
         } else {
             try {             
                 this.defaultIcons =  await this.homey.settings.get('DefaultIcons');
@@ -79,10 +58,66 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }
         }
 
+        /// Get Compressed Icon File
+        if(false) {
+            let strCompressedFile = '';
+            let _path = './assets/icons/';
+            let filesandfolders = await app.readdir(_path);
+            
+            let f = async (dir, file)=> {
+                let p=_path + file;
+                strCompressedFile+= p + "\r\n";
+                strCompressedFile+= await this.getIconZipped(p) + "\r\n\r\n";
+            };
+
+            for (let i = 0; i < filesandfolders.length; i++) {
+                const faf = filesandfolders[i];
+                let stats = await app.fsstat(path.join(_path,faf));
+                if(stats.isDirectory()) {
+                    let files = await app.readdir(path.join(_path,faf));
+                    for (let j = 0; j < files.length; j++) {
+                        const file = files[j];
+                        let stats = await app.fsstat(path.join(_path,faf, file));
+                        if(stats.isFile() ) await f(faf, path.join(faf, file));
+                    }
+
+                } else if(stats.isFile()) await f('Unsorted', faf); //isFile!                
+            }
+            //const buf = new Buffer(strCompressedFile, 'base64');
+            app.writeFile('./userdata/icons.compressed', strCompressedFile);
+        }
+
+        ///  Load all default icons into a array
         if(!this.defaultIcons) {
+            let defaultPath = app.DEFAULT_ICONS_PATH; 
+            
+            //save all files from compressed icon files first
+            let compressedIcons = await app.readFile('./assets/icons.compressed', 'utf8');
+            let icons = compressedIcons.split('\r\n\r\n');
+            icons.pop();
+            if(!(await app.exists(`${defaultPath}`))) await app.mkdir(`${defaultPath}`);
+                    
+            for (let i = 0; i < icons.length; i++) {
+                const icon = icons[i];
+                if(!icon) continue;
+                let path = icon.split('\r\n')[0];
+                const subpath = path.replace('./assets/icons/', '').split('/')[0];
+                path = path.replace('./assets/icons/', defaultPath);
+                if(!await app.exists(path)) {
+                    try {                        
+                        let unzipped = await this.unzip(icon.split('\r\n')[1]);
+                        if(!(await app.exists(`${defaultPath}${subpath}/`))) await app.mkdir(`${defaultPath}${subpath}/`);
+                        await app.writeFile(path, unzipped);
+                    } catch (error) {
+                        this.error(error);
+                    }
+                }
+            }
+
+
+
             this.defaultIcons = {};
-            var _path = './assets/icons/';
-            let filesandfolders = await this.homey.app.readdir(_path);
+            let filesandfolders = await app.readdir(defaultPath);
             
             let f = (dir, file)=> {
                 if(!this.defaultIcons[dir]) this.defaultIcons[dir] = {title:dir, icons:[]};
@@ -92,18 +127,37 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             for (let i = 0; i < filesandfolders.length; i++) {
                 const faf = filesandfolders[i];
-                let stats = await this.homey.app.fsstat(path.join(_path,faf));
+                let stats = await app.fsstat(path.join(defaultPath,faf));
                 if(stats.isDirectory()) {
-                    let files = await this.homey.app.readdir(path.join(_path,faf));
+                    let files = await app.readdir(path.join(defaultPath,faf));
                     for (let j = 0; j < files.length; j++) {
                         const file = files[j];
-                        let stats = await this.homey.app.fsstat(path.join(_path,faf, file));
+                        let stats = await app.fsstat(path.join(defaultPath,faf, file));
                         if(stats.isFile() ) f(faf, path.join(faf, file));
                     }
 
                 } else if(stats.isFile()) f('Unsorted', faf); //isFile!                
             }
             await this.homey.settings.set('DefaultIcons', this.defaultIcons);
+
+            /// Set custom icons with default if not set yet.
+            let categories = (await this.getCustomIcons()).icons;
+			for(let i=0;i<categories.length;i++)
+			{
+				for(let j=0;j<categories[i].icons.length;j++){
+                    if(categories[i].icons[j].defaultIcon=='') continue;
+					let filePathAssets = this.DEFAULT_ICONS_PATH;
+                    let file = categories[i].icons[j].defaultIcon + '.svg';
+                    
+                    let filePath = './userdata/customicons/';
+					let iconName = categories[i].icons[j].file + '.svg';
+
+                    if(await app.fileExists(filePathAssets + file) && !await app.fileExists(filePath + iconName)){
+                        await app.copyFile(filePathAssets + file, filePath + iconName , filePath);
+                    }
+				}
+			}
+
         }
         
 
@@ -202,7 +256,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 let value = null;
                         
                 if(args.expression!==undefined && args.expression!=='undefined') {
-                    value = this.homey.app.runSandBox(args.expression);                
+                    value = app.runSandBox(args.expression);                
                 }
                 await this.setSecondCapability({ val:value, device:args.device , fieldId});
                     await args.device.setCapabilityValue(cap, value);
@@ -265,7 +319,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
               this.customIconNames = await this.homey.settings.get('customIconNames');
               
             
-            //this.log('Driver size: ', this.homey.app.roughSizeOfObject(this));
+            //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
 
     getTypeFromField(fieldId) {
@@ -403,7 +457,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 r[i].icons[j].customname = this.customIconNames ? this.customIconNames[r[i].icons[j].file] : undefined;
             }
         }
-        return {icons:r, iconnames:this.customIconNames, languagecode:await this.homey.i18n.getLanguage()};
+        return {icons:r, iconnames:this.customIconNames, languagecode:await this.homey.i18n.getLanguage(), homeyId:  await this.homey.cloud.getHomeyId()};
 
       }
 
@@ -412,8 +466,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
       }
 
     getVersionChanged(versionUpdatedTo) {
-        if(this.homey.app.manifest.version!=versionUpdatedTo) {
-			let versionArr = this.homey.app.manifest.version.split(".");
+        if(app.manifest.version!=versionUpdatedTo) {
+			let versionArr = app.manifest.version.split(".");
 			let versionUpdatedToArr = versionUpdatedTo.split(".");
 			return (
 				parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
@@ -636,34 +690,69 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
     }
     
-    async loadStuff() {
-        allDevices = await this.homey.app.devices;
-        allUsers = allUsers ? allUsers : _.mapValues(await this.homey.app.homeyAPI.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
-        allVariables = allVariables ? allVariables : _.mapValues(await this.homey.app.homeyAPI.logic.getVariables(), ({name, type})=>{ return {name, type}; });
-        allTokens = allTokens ? allTokens : _.mapValues(await this.homey.app.homeyAPI.flowToken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
-        
-        actionCards = actionCards ? actionCards : _.map(await this.homey.app.homeyAPI.flow.getFlowCardActions(), ({uri, id})=>{ return {uri, id}; });
-        conditionCards = conditionCards ? conditionCards : _.map(await this.homey.app.homeyAPI.flow.getFlowCardConditions(), ({uri, id})=>{ return {uri, id}; });
-        triggerCards = triggerCards ? triggerCards : _.map(await this.homey.app.homeyAPI.flow.getFlowCardTriggers(), ({uri, id})=>{ return {uri, id}; });
-        
-        
-        await this.homey.app.destroyAndRefreshHomeyAPI();
-        
-		console.log('Size of allUsers:', this.homey.app.roughSizeOfObject(allUsers) );
-		console.log('Size of allVariables:', this.homey.app.roughSizeOfObject(allVariables) );
-		console.log('Size of allTokens:', this.homey.app.roughSizeOfObject(allTokens) );
-		console.log('Size of actionCards:', this.homey.app.roughSizeOfObject(actionCards) );
-		console.log('Size of conditionCards:', this.homey.app.roughSizeOfObject(conditionCards) );
-		console.log('Size of triggerCards:', this.homey.app.roughSizeOfObject(triggerCards) );
 
-        if(!allPrivateKeys) {
-            allPrivateKeys = [this.homey.app.homeyAPI._token, this.homey.app.homeyAPI.session.id, await this.homey.cloud.getHomeyId()];
+    async loadStuff({reload} = {}) {
+        this.log('LoadStuff reload:', reload);
+
+        allDevices = app.devices;
+        let api = app.homeyAPI ;//await app.getDisconnectedHomeyApi(); //app.homeyAPI
+        
+
+        allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
+        allVariables = !reload && allVariables ? allVariables : _.mapValues(await api.logic.getVariables(), ({name, type})=>{ return {name, type}; });
+        allTokens = !reload && allTokens ? allTokens : _.mapValues(await api.flowToken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
+        
+        actionCards = !reload && actionCards ? actionCards : _.map(await api.flow.getFlowCardActions(), ({uri, id})=>{ return {uri, id}; });
+        conditionCards = !reload && conditionCards ? conditionCards : _.map(await api.flow.getFlowCardConditions(), ({uri, id})=>{ return {uri, id}; });
+        triggerCards = !reload && triggerCards ? triggerCards : _.map(await api.flow.getFlowCardTriggers(), ({uri, id})=>{ return {uri, id}; });
+        
+        if(reload || !allPrivateKeys) {
+            allPrivateKeys = [api._token, await this.homey.cloud.getHomeyId()];
+            if(api.session) allPrivateKeys.push(api.session.id);
             _.each(allUsers, u=>allPrivateKeys.push(u.athomId));
         }
+        if(this.loadStuffTimer) clearTimeout(this.loadStuffTimer);
+        this.loadStuffTimer = setTimeout(()=>{
+            this.log('LoadStuff cleared.');
+            allUsers = null;
+            allVariables = null;
+            allTokens = null;
+            actionCards = null;
+            conditionCards = null;
+            triggerCards = null;
+            global.gc();
+        }, 10 * 60000); // clear every 10 minutes
+        this.log('LoadStuff done.');
+        //await app.destroyAndRefreshHomeyAPI();
+        
+		// console.log('Size of allUsers:', app.roughSizeOfObject(allUsers) );
+		// console.log('Size of allVariables:', app.roughSizeOfObject(allVariables) );
+		// console.log('Size of allTokens:', app.roughSizeOfObject(allTokens) );
+		// console.log('Size of actionCards:', app.roughSizeOfObject(actionCards) );
+		// console.log('Size of conditionCards:', app.roughSizeOfObject(conditionCards) );
+		// console.log('Size of triggerCards:', app.roughSizeOfObject(triggerCards) );
+
+        // api = null;
+        // allUsers = null;
+        // allVariables = null;
+        // allTokens = null;
+        // actionCards = null;
+        // conditionCards = null;
+        // triggerCards = null;
+        // allUsers = null;
+        // allUsers = null;
+        // allUsers = null;
+        // allUsers = null;
+
+        if(global && global.gc) 
+            global.gc();
+        
     }
     async getAdvancedFlows({ homey, query }) {
+        //this.loadStuff();
+        //return [];
         let defer = new Defer();
-        defer.then(async ()=> { this.loadStuff(); });
+        defer.then(async ()=> { this.loadStuff({reload:true}); });
 
         var afs = await homey.app.homeyAPI.flow.getAdvancedFlows();
 		var ret = _.map(afs, af => {
@@ -693,13 +782,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         dev = dev || {};
         await this.loadStuff();
 
-        // allDevices = allDevices ? allDevices : await this.homey.app.devices;
-        // allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
-        // allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
-        // allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+        // allDevices = allDevices ? allDevices : await app.devices;
+        // allUsers = allUsers ? allUsers : await app.homeyAPI.users.getUsers();
+        // allVariables = allVariables ? allVariables : await app.homeyAPI.logic.getVariables();
+        // allTokens = allTokens ? allTokens : await app.homeyAPI.flowToken.getFlowTokens();
 
         let advancedflowsselectedKeys = advancedflowsselected ? Object.keys(advancedflowsselected) : 0;
-        let advancedflows = _.filter(await this.homey.app.homeyAPI.flow.getAdvancedFlows(), x=> x.enabled && 
+        let advancedflows = _.filter(await app.homeyAPI.flow.getAdvancedFlows(), x=> x.enabled && 
             ((advancedflowsselectedKeys && advancedflowsselectedKeys.indexOf(x.id)>-1 && advancedflowsselected[x.id]===true) ||
             (device && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id)))
             );// && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
@@ -837,24 +926,24 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
            
             
             await this.loadStuff();
-            // allDevices = allDevices ? allDevices : await this.homey.app.devices;
-            // allUsers = allUsers ? allUsers : await this.homey.app.homeyAPI.users.getUsers();
-            // allVariables = allVariables ? allVariables : await this.homey.app.homeyAPI.logic.getVariables();
-            // allTokens = allTokens ? allTokens : await this.homey.app.homeyAPI.flowToken.getFlowTokens();
+            // allDevices = allDevices ? allDevices : await app.devices;
+            // allUsers = allUsers ? allUsers : await app.homeyAPI.users.getUsers();
+            // allVariables = allVariables ? allVariables : await app.homeyAPI.logic.getVariables();
+            // allTokens = allTokens ? allTokens : await app.homeyAPI.flowToken.getFlowTokens();
             
-            // actionCards = actionCards ? actionCards : await this.homey.app.homeyAPI.flow.getFlowCardActions();
-            // conditionCards = conditionCards ? conditionCards : await this.homey.app.homeyAPI.flow.getFlowCardConditions();
-            // triggerCards = triggerCards ? triggerCards : await this.homey.app.homeyAPI.flow.getFlowCardTriggers();
+            // actionCards = actionCards ? actionCards : await app.homeyAPI.flow.getFlowCardActions();
+            // conditionCards = conditionCards ? conditionCards : await app.homeyAPI.flow.getFlowCardConditions();
+            // triggerCards = triggerCards ? triggerCards : await app.homeyAPI.flow.getFlowCardTriggers();
         
 
             let _allDevices = allDevices;
 
-            let apiCommand = "";
-            let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
+            //let apiCommand = "";
+            //let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
             if(!exchangerFile.devicesToReplace) exchangerFile.devicesToReplace = {};
             let devicesToReplace = exchangerFile.devicesToReplace;
-            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId]) exchangerFile.devicesToReplace[exchangerFile.originalId] = {replaceWith: {id:device.__id, name:device.getName()}};
-            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith) exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith = {id:device.__id, name:device.getName()};
+            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId]) exchangerFile.devicesToReplace[exchangerFile.originalId] = {replaceWith: {id:device.__id, name:device.getName()}, original:true};
+            if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith) exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith = {id:device.__id, name:device.getName(), original:true};
 
             _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
                 _.each(flow.cards, (card, cardKey)=>{
@@ -881,32 +970,43 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let _triggerCards = _.filter(triggerCards, x=> triggerIds.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
             _allDevices = _.filter(_allDevices, (d, dKey)=>_.find(_actionCards, x=>x.uri && x.uri=='homey:device:'+dKey));
             
-            _.each(devicesToReplace, (device, deviceKey)=>{
-                device.replacements = _.map(_.filter(_allDevices, (d, dKey)=> 
+            _.each(exchangerFile.devicesToReplace, (device, deviceKey)=>{
+                device.replacements = _.sortBy(_.map(_.filter(_allDevices, (d, dKey)=> 
                     _.find(_actionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id)) || 
                     _.find(_conditionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id)) || 
                     _.find(_triggerCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id))
                 ),
-                    d=> { return {id:d.id, name:d.name};});
+                    d=> { return {id:d.id, name:d.name};}), 'name');
             });
 
             _.each(exchangerFile.usersToReplace, (user, userId)=>{
-                user.replacements = _.map(_.pickBy(allUsers, (u, uKey)=> true), (x, xKey)=> { return {id:xKey, name:x.name, athomId:x.athomId, image:x.avatar};});
+                user.replacements = _.sortBy(_.map(_.pickBy(allUsers, (u, uKey)=> true), (x, xKey)=> { return {id:xKey, name:x.name, athomId:x.athomId, image:x.avatar};}), 'name');
             });
             _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
-                variable.replacements = _.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};});
+                variable.replacements = _.sortBy(_.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};}), 'name');
             });
             _.each(exchangerFile.tokensToReplace, (app, appId)=>{
                 _.each(app.tokens, (token, tokenId)=>{
-                    token.replacements = _.map(_.pickBy(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), (x, xKey)=> { return {id:xKey, name:x.title};});
+                    token.replacements = _.sortBy(_.map(_.pickBy(allTokens, (v, vKey)=> v.uri=="homey:app:" + appId && v.type==token.type ), (x, xKey)=> { return {id:xKey, name:x.title};}), 'name');
                 });
             });
 
-            _.each(exchangerFile.advancedflows, f=>{
-                apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
-            });
+
+
+            exchangerFile.devicesToReplace = _.map(exchangerFile.devicesToReplace, (x, id)=> { x.id=id;return x; } );
+            exchangerFile.usersToReplace = _.map(exchangerFile.usersToReplace, (x, id)=> { x.id=id;return x; } );
+            exchangerFile.variablesToReplace = _.map(exchangerFile.variablesToReplace, (x, id)=> { x.id=id;return x; } );
+            exchangerFile.tokensToReplace = _.map(exchangerFile.tokensToReplace, (x, id)=> { x.id=id; x.tokens=_.map(x.tokens, (t, tId)=> { t.id=tId;return t; } ); return x; } );
+
             
-            return {apiCommand: apiCommand, devicesToReplace, advancedflows: exchangerFile.advancedflows, usersToReplace:exchangerFile.usersToReplace, variablesToReplace:exchangerFile.variablesToReplace, tokensToReplace:exchangerFile.tokensToReplace};
+            _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
+                flow.id = app.getGuid();
+            });
+            // _.each(exchangerFile.advancedflows, f=>{
+            //     apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
+            // });
+            //apiCommand: apiCommand, 
+            return {devicesToReplace:exchangerFile.devicesToReplace, advancedflows: exchangerFile.advancedflows, usersToReplace:exchangerFile.usersToReplace, variablesToReplace:exchangerFile.variablesToReplace, tokensToReplace:exchangerFile.tokensToReplace};
         } catch (error) {
             this.error(error);                
         }
@@ -917,27 +1017,27 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let apiCommand = "";
             let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
             
-            _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
+            _.each(exchangerFile.devicesToReplace, (device,)=>{
                 if(!device.replaceWith) return;
-                device.searchFor = "homey:device:"+deviceId;
+                device.searchFor = "homey:device:"+device.id;
                 device.searchReplaceWith = "homey:device:" + device.replaceWith.id;
             });
 
-            _.each(exchangerFile.usersToReplace, (user, userId)=>{
+            _.each(exchangerFile.usersToReplace, (user,)=>{
                 if(!user.replaceWith) return;
-                user.searchFor = "[[homey:manager:presence|"+userId;
+                user.searchFor = "[[homey:manager:presence|"+user.id;
                 user.searchReplaceWith = "[[homey:manager:presence|" + user.replaceWith.id;
             });
-            _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
+            _.each(exchangerFile.variablesToReplace, (variable,)=>{
                 if(!variable.replaceWith) return;
-                variable.searchFor = "[[homey:manager:logic|"+variableId;
+                variable.searchFor = "[[homey:manager:logic|"+variable.id;
                 variable.searchReplaceWith = "[[homey:manager:logic|" + variable.replaceWith.id;
             });
-            _.each(exchangerFile.tokensToReplace, (app, appId)=>{
-                _.each(app.tokens, (token, tokenId)=>{
+            _.each(exchangerFile.tokensToReplace, (app)=>{
+                _.each(app.tokens, (token)=>{
                     if(!token.replaceWith) return;
-                    token.searchFor = "homey:app:"+appId+"|"+tokenId;
-                    token.searchReplaceWith = "homey:app:"+appId+"|"+token.replaceWith.id;
+                    token.searchFor = "homey:app:"+app.id+"|"+token.id;
+                    token.searchReplaceWith = "homey:app:"+app.id+"|"+token.replaceWith.id;
                 });
             });
             _.each(cards, c=>{
@@ -984,7 +1084,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             _.each(exchangerFile.advancedflows, f=>{
                 apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
             });
-            return {apiCommand: apiCommand};
+            return {apiCommand: apiCommand, homeyId:this.homeyId};
         } catch (error) {
             this.error(error);
         }
@@ -1189,16 +1289,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             device = devices[0];
             
-            // let filePathAssets = './assets/icons/';
-            // let file = data.icon;// + '.svg';
-            
-            // let filePath = './userdata/virtualdeviceicons/';
-            // let iconName = device.data.id + '.svg';
-
-            // if(await this.homey.app.fileExists(filePathAssets + file) && !await this.homey.app.fileExists(filePath + iconName)){
-            //     await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
-            // }
-            let iconpath = "../../." +(await this.homey.app.setDeviceIconFromDefault({device, icon:icon}));
+            let iconpath = "../../." +(await app.setDeviceIconFromDefault({device, icon:icon}));
             
             //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
             device.data.icon = iconpath;//iconPath;

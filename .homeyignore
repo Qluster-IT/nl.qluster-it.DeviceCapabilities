@@ -2,8 +2,10 @@
 .translation/*
 .vscode/*
 
-userdata/*
+--cannot-be-done-this-way-userdata/*
 manager/*
+assets/not-used/*
+assets/icons/*
 
 todo.js
 bugs.txt

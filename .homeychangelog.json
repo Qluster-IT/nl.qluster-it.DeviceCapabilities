@@ -170,7 +170,10 @@
   "2.3.18" : {
     "en" : "Added: Share Your Device now (can) include flows."
   },
-  "2.4.10" : {
+  "2.4.12" : {
     "en" : "Added: The Flow Exchange(r)."
+  },
+  "2.4.15" : {
+    "en" : "Changd: All default icons are now compressed into one single file and only on an App update, it will extract them and place them in ./userdata/defaulticons/."
   }
 }

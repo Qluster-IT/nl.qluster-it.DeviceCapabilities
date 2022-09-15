@@ -103,7 +103,12 @@
 	.label .fa {
 		float: right;
 	}
-
+	.label.large {
+		width:70%
+	}
+	.label.large + .label, .label.large + .value {
+		width:28%
+	}
 	.value {
 		position: relative;
 		width: 49% !important;
@@ -224,7 +229,11 @@
 	input[type="password"]:not(.hy-nostyle),
 	input[type="email"]:not(.hy-nostyle),
 	.hy-input-text {
-		border-bottom: 1px solid #999;
+		border-bottom: 1px solid #999 !important;
+		border-right: 1px solid #999 !important;
+		border-radius: 0px 0px 5px 0px !important;
+		padding-left: 5px !important;
+		width: calc(100% - 10px) !important;
 	}
 
 	select {

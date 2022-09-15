@@ -327,6 +327,7 @@
 		}
 
 		#theflowexchange ul .checkbox {
+			cursor:pointer;
 			/* display: inline; */
 		}
 
@@ -363,6 +364,12 @@
 			float: right;
 		}
 
+		.label.large {
+		width:70%
+		}
+		.label.large + .label, .label.large + .value {
+			width:28%
+		}
 		.value {
 			position: relative;
 			width: 49% !important;
@@ -428,7 +435,11 @@
 		input[type="password"]:not(.hy-nostyle),
 		input[type="email"]:not(.hy-nostyle),
 		.hy-input-text {
-			border-bottom: 1px solid #999;
+			border-bottom: 1px solid #999 !important;
+			border-right: 1px solid #999 !important;
+			border-radius: 0px 0px 5px 0px !important;
+			padding-left: 5px !important;
+			width: calc(100% - 10px) !important;
 		}
 
 		select {
@@ -463,6 +474,16 @@
 		.pointer {
 			cursor: pointer;
 		}
+
+		.link {
+			font-weight: bold;
+			text-decoration: underline;
+			cursor: pointer;
+			display: inline-block;
+		}
+		.inline-block {
+			display: inline-block!important;
+		}
 	</style>
 
 </head>
@@ -475,7 +496,7 @@
 		<form id="theflowexchange"  name="theflowexchange" ng-show="showtheflowexchange" style="margin-bottom:60px;">
 			<div data-i18n="settings.explain_theflowexchange">Here you can create or read Flow Exchange files.</div>
 			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
-			<input type="text" class="label" ng-model="vars.filter.flow" placeholder="filter"/>
+			<input type="text" class="label margin-bottom" ng-model="vars.filter.flow" placeholder="filter"/>
 			<ul>
 				<li class="flow" ng-repeat="flow in advancedflows |filter:{name:vars.filter.flow} |orderBy:'name'">
 					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]" />
@@ -483,63 +504,75 @@
 				</li>
 
 			</ul>
-			<div class="button" ng-click="getTextSettings();">Create Exchanger File</div>
-			<div class="label">
-				<input type="checkbox" class="checkbox" ng-model="vars.useMinified" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
+			<div>
+				<div class="button" ng-click="getTextSettings();blockTextSettings=false;">Create Exchanger File</div>
+				<div class="value" ng-show="vars.tefCopied">(TEF in clipboard allready)</div>
 			</div>
-			<div class="float-right">
-				<input type="checkbox" class="checkbox" ng-model="vars.useCompressed" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
+			<div class="field" ng-show="!blockTextSettings">
+				<div class="inline-block">
+					<input type="checkbox" class="checkbox" ng-model="vars.useMinified" ng-click="updateCompressed();"/><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
+				</div>
+				<div class="inline-block">
+					<input type="checkbox" class="checkbox" ng-model="vars.useCompressed" ng-click="updateCompressed();"/><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
+				</div>
 			</div>
 			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Or paste an Exchanger File and press Read Flows"></textarea>
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Or paste an Exchanger File and press Read Flows" ng-change="blockTextSettings=true"></textarea>
 			</div>
 			<div class="button margin-top margin-bottom" ng-click="readFlows();">Read Flows</div>
 			<div ng-if="vars.readflow">
-				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
-					want to replace with which of your own in the to create flow(s)(scripts).</div>
-				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
+				<div class="field margin-top margin-bottom">
+					<div class="field">The following flows will be created in the script.</div>
+					<div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
+						<div class="label large"><input class="text" type="text" ng-model="item.name"/></div>
+						<div class="label">{{item.cardlength ? item.cardlength  : (item.cardlength = size(item.cards))}} cards</div>
+					</div>
+				</div>
+				<div class="margin-top" data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
+					want to replace with which of your own in the flow(s) script that is created.</div>
+				<div class="field bold" ng-if="vars.devicesToReplace.length>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
+				<div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
 					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
+				<div class="field bold margin-top" ng-if="vars.usersToReplace.length>0">
 					<div class="label">Users</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.usersToReplace">
+				<div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()" required>
-						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
+					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()" required>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
+				<div class="field bold margin-top" ng-if="vars.variablesToReplace.length>0">
 					<div class="label">Variables</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
+				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
+				<div class="field bold margin-top" ng-if="vars.tokensToReplace.length>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
+				<div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
 					<div class="label">{{app.name}}</div>
-					<div class="field" ng-repeat="(key,item)  in app.tokens">
+					<div class="field" ng-repeat="item  in app.tokens">
 						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="app.tokens[key].replaceWith" ng-change="updateReadFlow()">
+						<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
 							<option value="">Don't change</option>
-							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement">
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement">
 								{{replacement.name}}</option>
 						</select>
 					</div>
@@ -551,8 +584,12 @@
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
 				</div>
 				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" >Homey API Playground</a> to create the Flows!
+					Run this in the <div class="link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" >Homey API Playground</div> to create the Flows!					
+					<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 				</div>
+				<!-- <div class="field margin-top margin-bottom">&nbsp;</div> -->
+				<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
+				
 			</div>
 		</form>
 
@@ -737,7 +774,7 @@
 						{{category.title}}</h1>
 					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
 						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
-							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + defaulticon + ')'}">
+							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
 						</div>
 					</div>
 				</div>
@@ -777,8 +814,8 @@
 				var Homey;
 				$scope.stamp = Date.now();
 				$scope.vars = {
-					advancedflowsselected: {}, readflow: null, devicesToReplaceLength: 0, usersToReplaceLength: 0, variablesToReplaceLength: 0, tokensToReplaceLength: 0, useCompressed: true, useMinified: true
-					, filter: { flow: '' }
+					advancedflowsselected: {}, readflow: null,  useCompressed: true, useMinified: true
+					, filter: { flow: '' }, scriptCopied : false, tefCopied : false, homeyId : null, createdadvancedflows : []
 				};
 				//Homey.ready();
 
@@ -804,6 +841,11 @@
 					} else {
 						Homey.alert(Homey.__('settings.file_api_err'), 'error');
 					}
+					Homey.on('createdadvancedflow', (af)=> {
+						$scope.$apply(function () {
+							$scope.vars.createdadvancedflows.push(af);
+						});
+					});
 
 					// $scope.getIcons();
 					$scope.getAdvancedFlows();
@@ -815,6 +857,11 @@
 
 					console.log('ready done');
 				});
+
+				$scope.size = function(collection) {
+					console.log('size()');
+					return collection===null || collection ===undefined ? 0 : typeof(collection)=='object' ? Object.keys(collection).length : 0;
+				}
 
 				$scope.openUrl = function (url) {
 					Homey.openURL(url);
@@ -839,6 +886,9 @@
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow.apiCommand = result.apiCommand;
+							navigator.clipboard.writeText(result.apiCommand);
+							$scope.vars.scriptCopied = true;
+							$scope.vars.createdadvancedflows.length=0;
 						});
 					});
 				}
@@ -879,11 +929,15 @@
 
 				$scope.updateCompressed = function () {
 					$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
+					navigator.clipboard.writeText($scope.vars.textSettings);					
+					$scope.vars.tefCopied = true;
 				}
 
 				$scope.readFlows = function () {
 					showOverlay();
 					//$scope.vars.readflow = null;
+					if($scope.vars.readflow)$scope.vars.readflow.apiCommand = '';
+					$scope.vars.scriptCopied = false;
 
 					Homey.api('POST', 'readadvancedflowsJSON', { exchangerFile: $scope.vars.textSettings }, function (err, result) {
 						hideOverlay();
@@ -894,10 +948,7 @@
 						$scope.$apply(function () {
 							$scope.vars.readflow = result;
 							$scope.vars.readflow.apiCommand = '';
-							$scope.vars.devicesToReplaceLength = $scope.vars.readflow.devicesToReplace ? Object.keys($scope.vars.readflow.devicesToReplace).length : 0;
-							$scope.vars.usersToReplaceLength = $scope.vars.readflow.usersToReplace ? Object.keys($scope.vars.readflow.usersToReplace).length : 0;
-							$scope.vars.variablesToReplaceLength = $scope.vars.readflow.variablesToReplace ? Object.keys($scope.vars.readflow.variablesToReplace).length : 0;
-							$scope.vars.tokensToReplaceLength = $scope.vars.readflow.tokensToReplace ? Object.keys($scope.vars.readflow.tokensToReplace).length : 0;
+							
 						});
 					});
 
@@ -906,6 +957,7 @@
 
 				$scope.updateReadFlow = function () {
 					$scope.vars.readflow.apiCommand = '';
+					$scope.vars.scriptCopied = false;
 				}
 
 				$scope.getFunctionFromSettings = function () {
@@ -1086,6 +1138,7 @@
 							$scope.customicons = result.icons;
 							$scope.customIconNames = result.iconnames || {};
 							$scope.languagecode = result.languagecode || 'en';
+							$scope.homeyId = result.homeyId;
 							$scope.customIconCount = 0;
 							for (let i = 0; i < result.icons.length; i++) $scope.customIconCount += result.icons[i].icons.length;
 							$scope.customIconLoadIndex = 0;
@@ -1187,6 +1240,11 @@
 					});
 				}
 
+				// $scope.test = function() {
+				// 	console.log('test');
+				// 	$('#playgroundFrame').attr('src', 'https://tools.developer.homey.app/tools/api-playground');
+				// }
+
 
 				// $scope.getIcons = function () {
 				// 	Homey.api('GET', '/geticons/', function (err, result) {
@@ -1258,11 +1316,14 @@
 				};
 			});
 
-		function onHomeyReady(Homey) {
+		function onHomeyReady(Homey) {			
 			console.log('onHomeyReady');
 			var scope = angular.element(document.body).scope();
 			scope.$emit('ready', Homey, $);//, $);
 		}
+		// console.log(navigator);
+		// console.log(navigator.clipboard);
+		// console.log(navigator.clipboard.writeText);
 	</script>
 
 </body>

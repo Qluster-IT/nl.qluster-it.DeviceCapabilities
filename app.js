@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require("crypto");
 
 const Homey = require('homey');
 const { HomeyAPI } = require('athom-api');
@@ -56,13 +57,25 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async onInit() {
-		DeviceSetter.Current = this;        
+		DeviceSetter.Current = this;
+		this.DEFAULT_ICONS_PATH = './userdata/defaulticons/';
         //this.VirtualDevices = {};
 		
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
+		// if (process.env.DEBUG === '1')  {
+		// 	this.testobject = [];
+		// 	for (let i = 0; i < 100000; i++) {
+		// 		this.testobject.push({id:"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"});
+				
+		// 	}
+		// 	console.log('Size of this.testobject:', this.roughSizeOfObject(this.testobject) );
+		// }
 		
+		this.localURL = await this.homey.api.getLocalUrl();
+		this.sessionToken = await this.homey.api.getOwnerApiToken();
+	
 
 		this.log('DeviceSetter is running...');
 		// this.refreshHomeyAPI().then(async api => {
@@ -472,6 +485,7 @@ class DeviceSetter extends Homey.App {
 			} catch (error) {
 				this.log('execute_expression:');
 				this.error(error);
+				return new Error(error);
 			}
 		});
 
@@ -488,6 +502,9 @@ class DeviceSetter extends Homey.App {
 	}
 
 
+	getGuid() {
+		return [8,4,4,4,12].map(n => crypto.randomBytes(n/2).toString("hex")).join("-");
+	}
 	
     async setFunctions() {			  	  
 		this.functions = await this.homey.settings.get('javascript_functions');
@@ -556,7 +573,7 @@ class DeviceSetter extends Homey.App {
 			return await this.setDeviceIconFromDefault({device:{data:{id:deviceicon.id}}, icon:defaulticon});
 		}
 
-		let filePathAssets = './assets/icons/';
+		let filePathAssets = this.DEFAULT_ICONS_PATH;
 		let file = defaulticon;// + '.svg';
 		
 		let filePath = './userdata/customicons/';
@@ -568,7 +585,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async setDeviceIconFromDefault({icon, device}) {
-		let filePathAssets = './assets/icons/';
+		let filePathAssets = this.DEFAULT_ICONS_PATH;
             let file = icon;// + '.svg';
             
             let filePath = './userdata/virtualdeviceicons/';
@@ -599,6 +616,10 @@ class DeviceSetter extends Homey.App {
 		if( !icon ) throw new Error('invalid_icon');
 		return icon;
 	}
+	async writeFile(path, buf) { return await writeFileAsync(path, buf); }
+	async readFile(path, ops) { return await readFileAsync(path, ops); }
+	async exists(path) { return await existsAsync(path); }
+	async mkdir(path, ops) { return await mkdirAsync(path, ops); }
 	
 	async createIcon({ type, name, buffer, id }) {
 		if( !TYPES_MAP[type] )
@@ -1008,6 +1029,20 @@ class DeviceSetter extends Homey.App {
 		}).bind(this);
 	}
 
+	async getDisconnectedHomeyApi() {
+		const api = new HomeyAPI({
+			localUrl: this.localURL,
+			baseUrl: this.localURL,
+			token: this.sessionToken,
+			apiVersion: 2,
+			online: true,
+		}, () => {
+			// called by HomeyAPI on 401 requests
+			api.setToken(this.sessionToken);
+		});
+		return api;
+	}
+	
 	async destroyAndRefreshHomeyAPI() {		
 		this.homeyAPI.destroy();
 		this.homeyAPI = null;
@@ -1040,10 +1075,10 @@ class DeviceSetter extends Homey.App {
 			await this.refreshDrivers();
 
 			
-			console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
-			console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
-			console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
-			console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
+			// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
+			// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
+			// console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
+			// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
 			
 
 			// Does this help? Seems a little bit.
@@ -1064,7 +1099,7 @@ class DeviceSetter extends Homey.App {
 			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			
+			this.homeyAPI.flow.on('advancedflow.create', x=> this.homey.api.realtime('createdadvancedflow', x));
 
 			this.refreshDefer.resolve();
 			this.refreshDefer = null;
