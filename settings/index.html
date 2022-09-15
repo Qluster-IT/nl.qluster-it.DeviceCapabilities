@@ -530,7 +530,7 @@
 				</div>
 				<div class="margin-top" data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
 					want to replace with which of your own in the flow(s) script that is created.</div>
-				<div class="field bold" ng-if="vars.devicesToReplace.length>0">
+				<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
@@ -541,7 +541,7 @@
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.usersToReplace.length>0">
+				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
 					<div class="label">Users</div>
 					<div class="value">Replace with</div>
 				</div>
@@ -551,7 +551,7 @@
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.variablesToReplace.length>0">
+				<div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
 					<div class="label">Variables</div>
 					<div class="value">Replace with</div>
 				</div>
@@ -562,7 +562,7 @@
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
 					</select>
 				</div>
-				<div class="field bold margin-top" ng-if="vars.tokensToReplace.length>0">
+				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
 				</div>

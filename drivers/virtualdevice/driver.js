@@ -981,6 +981,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             _.each(exchangerFile.usersToReplace, (user, userId)=>{
                 user.replacements = _.sortBy(_.map(_.pickBy(allUsers, (u, uKey)=> true), (x, xKey)=> { return {id:xKey, name:x.name, athomId:x.athomId, image:x.avatar};}), 'name');
+                user.replaceWith = _.find(user.replacements, x=>x.id==userId);
             });
             _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
                 variable.replacements = _.sortBy(_.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};}), 'name');
@@ -992,16 +993,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             });
 
 
-
+            //Turn it into arrays
             exchangerFile.devicesToReplace = _.map(exchangerFile.devicesToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.usersToReplace = _.map(exchangerFile.usersToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.variablesToReplace = _.map(exchangerFile.variablesToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.tokensToReplace = _.map(exchangerFile.tokensToReplace, (x, id)=> { x.id=id; x.tokens=_.map(x.tokens, (t, tId)=> { t.id=tId;return t; } ); return x; } );
 
             
-            _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
-                flow.id = app.getGuid();
-            });
+            /// Does not work
+            // _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
+            //     flow.id = app.getGuid();
+            // });
+
             // _.each(exchangerFile.advancedflows, f=>{
             //     apiCommand += "Homey.flow.createAdvancedFlow({advancedflow:" + JSON.stringify(f)  + "});\r\n";
             // });
