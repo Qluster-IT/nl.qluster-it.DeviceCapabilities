@@ -1,0 +1,15 @@
+.scripts/*
+.translation/*
+.vscode/*
+
+--cannot-be-done-this-way-userdata/*
+manager/*
+assets/not-used/*
+assets/icons/*
+
+todo.js
+bugs.txt
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+README.md

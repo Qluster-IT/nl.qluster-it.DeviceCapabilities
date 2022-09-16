@@ -64,7 +64,8 @@ module.exports = class WatchDevice extends Homey.Device {
 		//this.log('Settings', this.Settings);
 		if(this.Settings && !this.Settings.cls) this.Settings.cls = 'other';
 
-		if (process.env.DEBUG === '1' || this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
+		//if (process.env.DEBUG === '1' || 
+		if(this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
 			if(useNewSettings) {
 				for (let i = 1; i <= 10; i++) {
 					if(this.Settings['number'+i+'Decimals']===-1) this.Settings['number'+i+'Decimals'] = undefined;
@@ -74,22 +75,9 @@ module.exports = class WatchDevice extends Homey.Device {
 				delete this.Settings.iconNames;
 			}
 
-			//If it's a new Version, place stuff here
-			// let newSettings = {
-			// 	"labelGeneral": this.homey.__("virtualdevicesettings.labelGeneral"),
-			// 	"labelAlso": this.homey.__("virtualdevicesettings.labelAlso"),
-			// 	"labelCustomIcons": this.homey.__("virtualdevicesettings.labelCustomIcons"),
-			// 	"labelButton1": this.homey.__("virtualdevicesettings.labelButton1"),
-			// 	"labelCamerasRestart": this.homey.__("virtualdevicesettings.labelCamerasRestart"),
-			// 	"labelIcons": this.homey.__("virtualdevicesettings.labelIcons"),
-			// 	"labelStatusIndicator": this.homey.__("virtualdevicesettings.labelStatusIndicator")
-			// };
-			// for (const settingKey in this.Settings)
-			// 	if (settingKey.startsWith("label") && Object.keys(newSettings).indexOf(settingKey) === -1) newSettings[settingKey] = "";
-
 			var a= this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
-			 await this.setSettings({"labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend")});
-			// this.Settings = await this.getSettings();
+			await this.setSettings({"labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend")});
+
 			try {
 				
 				this.setStoreValue('Version', this.homey.app.manifest.version);
@@ -110,19 +98,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			await this.setCameras(this.Settings); //Allready happends in loadFromSettings
 		}
 
-		//var api = await this.homey.app.refreshHomeyAPI();
-		//let apiDevice =  await api.devices.getDevice({ id: this.__id });
-		// let insights = await api.insights.getLogs();
-		// for (let i = 0; i < insights.length; i++) {
-		// 	const insight = insights[i];
-		// 	if(insight.uri==='homey:device:' + this.__id && caps.indexOf(insight.id)===-1) {
-		// 		api.insights.deleteLog(insight);
-		// 	}
-		// }
-
 		
-		//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id });
-
 
 
 		for (let i = 0; i < caps.length; i++) {
@@ -139,31 +115,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		}).bind(this));
 
-		//if(!this.Settings.iconNames) await this.setIconNames();
 	}
-
-	// async setIconNames() {
-	// 	this.customIconNames = await this.homey.settings.get('customIconNames');
-	// 	let languagecode = await this.homey.i18n.getLanguage();
-	// 	let str = "";
-	// 	let customIcons = this.driver.getCustomIcons();
-	// 	for (const key in this.customIconNames) {
-	// 		if (Object.hasOwnProperty.call(this.customIconNames, key)) {
-	// 			const name = this.customIconNames[key];
-	// 			let f = _.find(_.flatMap(customIcons.icons, cat => { return cat.icons; }), icon =>
-	// 				icon.file === key
-	// 			);
-	// 			let originalName = (f ? f.name : key);
-	// 			if(f && f.title) {
-	// 				originalName = f.title[languagecode] || f.title.en;
-	// 			}
-				
-	// 			str += originalName + " = " + name + ", ";
-	// 		}
-	// 	}
-	// 	if (str.length > 1) str = str.substring(0, str.length - 2);
-	// 	await this.setSettings({ iconNames: str });
-	// }
 
 	async setListener({ fieldId, cap, settings }) {
 		if (fieldId.startsWith('button')) {
@@ -239,13 +191,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			this.Cameras[ref].attached = true;
 		}
 	}
-	// async setCamera() {
-
-	// }
-	// async removeCamera() {
-
-	// }
-
+	
 	async loadFromSettings(settings, oldSettings, changedKeys, saved, imported) {
 
 		try {
@@ -281,7 +227,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				}
 				
 				if(settings.customIcons) delete settings.customIcons;
-				delete settings.imported;
+				//delete settings.imported;
 			}
 
 			//let b = JSON.parse(JSON.stringify(settings));
@@ -485,10 +431,20 @@ module.exports = class WatchDevice extends Homey.Device {
 							let step = settings[type + i + 'Step'];
 
 
+							let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
+							let var2= (settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ;
+							let var3= ((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false)) ;
+							let var4= (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false);
+							let var5= (settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status');
+
 							let capOptionsChanged = 
 								opt.title != name || 
-								opt.preventTag!==true || 
-								((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
+								//(opt.preventTag!==true && (settings[type + i + 'SeparateCapabilities']===true || settings[type + i + 'CreateTag']===true)) ||
+								//(opt.preventTag===true && (settings[type + i + 'SeparateCapabilities']!==true && settings[type + i + 'CreateTag']===true)) ||
+								(settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag===settings[type + i + 'CreateTag'] || opt.preventInsights===settings[type + i + 'CreateInsights'])) ||
+								(settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ||
+								//((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false) || 
+								//(opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false)) ||
 										//opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 								(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
 								(opt.decimals != decimals) ||
@@ -505,7 +461,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								let optionValues = {type, i, settings, decimals, min, max, name};
 								if(type=="status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
-								if(settings[type + i + 'SeparateCapabilities']===false) {
+								if(settings[type + i + 'SeparateCapabilities']!==true) {
 									optNew.preventInsights = !settings[type + i + 'CreateInsights'];
 									optNew.preventTag = !settings[type + i + 'CreateTag'];
 								}
@@ -577,8 +533,16 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			await this.setCameras(settings);
 			await this.setStoreValue('Settings', settings);
+
+			
+			if(settings.imported) delete settings.imported;
+			if(settings.flows) delete settings.flows;
+			if(settings.advancedflows) delete settings.advancedflows;
+			if(settings.originalId) delete settings.originalId;
+
+			//if(command=="") command = null;
 			this.Settings = settings;
-			return settings;
+			return settings;//, apiCommand:command};
 			
 		} catch (error) {
 			this.error(error);
@@ -641,13 +605,6 @@ module.exports = class WatchDevice extends Homey.Device {
 	// }
 
 
-	// async onSettings({ oldSettings, newSettings, changedKeys }) {
-
-	// 	await this.loadFromSettings(newSettings, oldSettings, changedKeys);
-	// 	this.Settings = newSettings;
-	// 	// if the settings must not be saved for whatever reason:
-	// 	// throw new Error('Your error message');
-	// }
 
  	capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);

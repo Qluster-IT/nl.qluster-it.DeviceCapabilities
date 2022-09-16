@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require("crypto");
 
 const Homey = require('homey');
 const { HomeyAPI } = require('athom-api');
@@ -56,12 +57,25 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async onInit() {
-		DeviceSetter.Current = this;        
+		DeviceSetter.Current = this;
+		this.DEFAULT_ICONS_PATH = './userdata/defaulticons/';
         //this.VirtualDevices = {};
+		
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
+		// if (process.env.DEBUG === '1')  {
+		// 	this.testobject = [];
+		// 	for (let i = 0; i < 100000; i++) {
+		// 		this.testobject.push({id:"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"});
+				
+		// 	}
+		// 	console.log('Size of this.testobject:', this.roughSizeOfObject(this.testobject) );
+		// }
 		
+		this.localURL = await this.homey.api.getLocalUrl();
+		this.sessionToken = await this.homey.api.getOwnerApiToken();
+	
 
 		this.log('DeviceSetter is running...');
 		// this.refreshHomeyAPI().then(async api => {
@@ -471,6 +485,7 @@ class DeviceSetter extends Homey.App {
 			} catch (error) {
 				this.log('execute_expression:');
 				this.error(error);
+				return new Error(error);
 			}
 		});
 
@@ -487,6 +502,9 @@ class DeviceSetter extends Homey.App {
 	}
 
 
+	getGuid() {
+		return [8,4,4,4,12].map(n => crypto.randomBytes(n/2).toString("hex")).join("-");
+	}
 	
     async setFunctions() {			  	  
 		this.functions = await this.homey.settings.get('javascript_functions');
@@ -531,16 +549,20 @@ class DeviceSetter extends Homey.App {
 			};			
 		});
 		return ret;
-		// ;.getKeys()
-		// 	.filter(key => {
-		// 		return key.indexOf(SETTING_PREFIX) === 0;
-		// 	})
-		// 	.map(key => {
-		// 		return this.getIcon({
-		// 			id: key.substring(SETTING_PREFIX.length),
-		// 		});			
-		// 	});
 	}
+
+	// getAdvancedFlows() {
+	// 	var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+	// 	var ret = devices.map(vd => {
+	// 		return {
+	// 			id: vd.getData().id,
+	// 			name:vd.getName(),
+	// 			icon: vd.getData().icon,
+	// 		};			
+	// 	});
+	// 	return ret;
+	// }
+
 
 	getCustomIcons() {
 		return this.homey.drivers.getDriver('virtualdevice').getCustomIcons();
@@ -551,7 +573,7 @@ class DeviceSetter extends Homey.App {
 			return await this.setDeviceIconFromDefault({device:{data:{id:deviceicon.id}}, icon:defaulticon});
 		}
 
-		let filePathAssets = './assets/icons/';
+		let filePathAssets = this.DEFAULT_ICONS_PATH;
 		let file = defaulticon;// + '.svg';
 		
 		let filePath = './userdata/customicons/';
@@ -563,7 +585,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async setDeviceIconFromDefault({icon, device}) {
-		let filePathAssets = './assets/icons/';
+		let filePathAssets = this.DEFAULT_ICONS_PATH;
             let file = icon;// + '.svg';
             
             let filePath = './userdata/virtualdeviceicons/';
@@ -594,6 +616,10 @@ class DeviceSetter extends Homey.App {
 		if( !icon ) throw new Error('invalid_icon');
 		return icon;
 	}
+	async writeFile(path, buf) { return await writeFileAsync(path, buf); }
+	async readFile(path, ops) { return await readFileAsync(path, ops); }
+	async exists(path) { return await existsAsync(path); }
+	async mkdir(path, ops) { return await mkdirAsync(path, ops); }
 	
 	async createIcon({ type, name, buffer, id }) {
 		if( !TYPES_MAP[type] )
@@ -767,31 +793,35 @@ class DeviceSetter extends Homey.App {
 					const capability = device.capabilities[keys[i]];
 					if (!capability.listener) {
 						var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
-						capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
-							var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
-							if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
-							else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
-							else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
+						try {								
+							capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
+								var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
+								if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
+								else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
+								else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
 
-							if (targetInsight) {
-								var insights, lastOne = null;
-								try {
-									insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
-								} catch (error) {
-									insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+								if (targetInsight) {
+									var insights, lastOne = null;
+									try {
+										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
+									} catch (error) {
+										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+									}
+									if (insights && (lastOne = _.last(insights.values))) {
+										if (lastOne.originUserName) tokens.user = lastOne.originUserName;
+										if (lastOne.originName) tokens.client = lastOne.originName;
+										else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+									}
+									//if(lastOne) tokens
 								}
-								if (insights && (lastOne = _.last(insights.values))) {
-									if (lastOne.originUserName) tokens.user = lastOne.originUserName;
-									if (lastOne.originName) tokens.client = lastOne.originName;
-									else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
-								}
-								//if(lastOne) tokens
-							}
 
 
-							trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
+								trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
 
-						});
+							});
+						} catch (error) {
+							this.log(error);
+						}
 					}
 				}
 			}
@@ -999,6 +1029,26 @@ class DeviceSetter extends Homey.App {
 		}).bind(this);
 	}
 
+	async getDisconnectedHomeyApi() {
+		const api = new HomeyAPI({
+			localUrl: this.localURL,
+			baseUrl: this.localURL,
+			token: this.sessionToken,
+			apiVersion: 2,
+			online: true,
+		}, () => {
+			// called by HomeyAPI on 401 requests
+			api.setToken(this.sessionToken);
+		});
+		return api;
+	}
+	
+	async destroyAndRefreshHomeyAPI() {		
+		this.homeyAPI.destroy();
+		this.homeyAPI = null;
+		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+	}
+
 	async refreshHomeyAPI(id) {
 		if (id === undefined && this.homeyAPI) {
 			if(this.refreshDefer) await this.refreshDefer;
@@ -1024,10 +1074,18 @@ class DeviceSetter extends Homey.App {
 			await this.refreshApps();
 			await this.refreshDrivers();
 
+			
+			// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
+			// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
+			// console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
+			// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
+			
+
 			// Does this help? Seems a little bit.
-			this.homeyAPI.destroy();
-			this.homeyAPI = null;
-			this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+			await this.destroyAndRefreshHomeyAPI();
+			// this.homeyAPI.destroy();
+			// this.homeyAPI = null;
+			// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
 
 			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
 			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));
@@ -1041,7 +1099,7 @@ class DeviceSetter extends Homey.App {
 			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			
+			this.homeyAPI.flow.on('advancedflow.create', x=> this.homey.api.realtime('createdadvancedflow', x));
 
 			this.refreshDefer.resolve();
 			this.refreshDefer = null;

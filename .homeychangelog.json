@@ -156,18 +156,30 @@
     "en" : "Improved: Device Icons are per device and can be changed later."
   },
   "2.2.1" : {
-    "en" : "Improved: Device Repair is the new Device Settings (in development)"
+    "en" : "Improved: Device Repair is the new Device Settings (in development)."
   },
   "2.2.3" : {
-    "en" : "Improved: Device Repair is the new Device Settings (Saving works)"
+    "en" : "Improved: Device Repair is the new Device Settings (Saving works)."
   },
   "2.2.4" : {
-    "en" : "Improved: Device Repair is the new Device Settings (language done)"
+    "en" : "Improved: Device Repair is the new Device Settings (language done)."
   },
   "2.2.11" : {
     "en" : "Improved: Device Repair is the new Device Settings."
   },
-  "2.3.6" : {
-    "en" : "Added: Share Your Device, with Device Icon and Custom Icons."
+  "2.3.18" : {
+    "en" : "Added: Share Your Device now (can) include flows."
+  },
+  "2.4.12" : {
+    "en" : "Added: The Flow Exchange(r)."
+  },
+  "2.4.16" : {
+    "en" : "Changed: All default icons are now compressed into one single file and only on an App update, it will extract them and place them in ./userdata/defaulticons/."
+  },
+  "2.4.20" : {
+    "en" : "Bugfixed."
+  },
+  "2.5.1" : {
+    "en" : "Added: Templates from the Community Forum Topic."
   }
 }

@@ -102,7 +102,7 @@
         name = $('#name').val();
         console.log(name);
       } catch (error) { }
-      Homey.emit('icon_save', {icon:imgBase64, name:name})
+      Homey.emit('icon_save', {image:imgBase64, name:name})
         .then(result => {
           Homey.nextView();
         })
@@ -162,7 +162,7 @@
           <h1  class="category-title">{{cat.title}}</h1>
           <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
             <label for="icon" class="icon-wrap">
-              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/assets/icons/' + item}"  title="{{item}}"></div>
+              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}"  title="{{item}}"></div>
             </label>
           </div>
         </div>

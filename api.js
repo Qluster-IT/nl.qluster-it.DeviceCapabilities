@@ -1,10 +1,28 @@
 "use strict";
 
 const Homey = require('homey');
+const _ = require('lodash-core');
+
+
 module.exports = {
+    async getAdvancedFlows({ homey, query }) {
+        return await homey.drivers.getDriver('virtualdevice').getAdvancedFlows({ homey,  query });
+    },   
+    async getAdvancedFlowsJSON({ homey,  body: { advancedflowsselected } }) {        
+        return await homey.drivers.getDriver('virtualdevice').getAdvancedFlowsJSON({ homey,  advancedflowsselected });
+    },       
+    async readAdvancedFlowsJSON({ homey,  body: { exchangerFile } }) {        
+        return await homey.drivers.getDriver('virtualdevice').readAdvancedFlowsJSON({ homey, exchangerFile   });
+    },        
+    async updateAdvancedFlowsJSON({ homey,  body: {exchangerFile} }) {        
+        return await homey.drivers.getDriver('virtualdevice').updateAdvancedFlowsJSON({ homey,  exchangerFile });
+    }, 
+    async openTemplate({ homey,  body: {template} }) {        
+        return await homey.drivers.getDriver('virtualdevice').openTemplate({ homey,  template });
+    },
     async getDevices({ homey, query }) {
         return await homey.app.getDevices();    
-    },   
+    },
     async getCustomIcons({ homey, query }) {
         return await homey.app.getCustomIcons();    
     },
