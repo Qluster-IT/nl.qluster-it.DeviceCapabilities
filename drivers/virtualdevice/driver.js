@@ -782,9 +782,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     async loadStuff({reload} = {}) {
         this.log('LoadStuff reload:', reload);
-
+        let api = await app.refreshHomeyAPI();
         allDevices = app.devices;
-        let api = app.homeyAPI ;//await app.getDisconnectedHomeyApi(); //app.homeyAPI
+        //await app.getDisconnectedHomeyApi(); //app.homeyAPI
         
 
         allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });

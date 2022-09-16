@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -14306,10 +14306,12 @@
       ],
       "settings": [
         {
-          "id":"labelGotoRepair",
-          "type":"label",
-          "label": { 
-            "en": " ", "nl":" ", "de":" "
+          "id": "labelGotoRepair",
+          "type": "label",
+          "label": {
+            "en": " ",
+            "nl": " ",
+            "de": " "
           },
           "value": " "
         }
