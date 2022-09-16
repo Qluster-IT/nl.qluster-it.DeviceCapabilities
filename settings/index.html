@@ -498,7 +498,7 @@
 			<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
 			<input type="text" class="label margin-bottom" ng-model="vars.filter.flow" placeholder="filter"/>
 			<ul>
-				<li class="flow" ng-repeat="flow in advancedflows |filter:{name:vars.filter.flow} |orderBy:'name'">
+				<li class="flow" ng-repeat="flow in advancedflows |filter:{name:vars.filter.flow}">
 					<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]" />
 					<div class="name pointer" ng-click="vars.advancedflowsselected[flow.id]=!vars.advancedflowsselected[flow.id]">{{flow.name}}</div>
 				</li>
@@ -530,16 +530,37 @@
 				</div>
 				<div class="margin-top" data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
 					want to replace with which of your own in the flow(s) script that is created.</div>
+				<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
+					<div class="label">Flow</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="flow  in vars.readflow.flowsToReplace">
+					<div class="field" ng-repeat="item  in flow.types">
+						<div class="label">{{item.name}} {{item.id!=''? '(' + item.id + ')' : ''}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<!-- <option ng-value="item.id" vars.readflow.>{{Don't change}}</option> -->						
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+						</select>						
+					</div>
+				</div>
 				<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
 					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
+					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
+						<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+						</select>
+					</div> -->
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
 					<div class="label">Users</div>
@@ -547,8 +568,8 @@
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()" required>
-						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);" required>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
@@ -557,9 +578,9 @@
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in item.replacements" ng-value="replacement">{{replacement.name}}</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
@@ -570,9 +591,9 @@
 					<div class="label">{{app.name}}</div>
 					<div class="field" ng-repeat="item  in app.tokens">
 						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="item.replaceWith" ng-change="updateReadFlow()">
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
 							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement">
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
 								{{replacement.name}}</option>
 						</select>
 					</div>
@@ -583,11 +604,13 @@
 				<div class="field">
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
 				</div>
-				<div class="field margin-top">
+				<div class="field margin-top margin-bottom">
 					Run this in the <div class="link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" >Homey API Playground</div> to create the Flows!					
 					<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 				</div>
-				<!-- <div class="field margin-top margin-bottom">&nbsp;</div> -->
+				<div class="field margin-top">
+					Flows that are created will be listed here:
+				</div>
 				<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
 				
 			</div>
@@ -929,8 +952,10 @@
 
 				$scope.updateCompressed = function () {
 					$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
-					navigator.clipboard.writeText($scope.vars.textSettings);					
-					$scope.vars.tefCopied = true;
+					if($scope.vars.textSettings) {
+						navigator.clipboard.writeText($scope.vars.textSettings);					
+						$scope.vars.tefCopied = $scope.vars.textSettings;
+					}
 				}
 
 				$scope.readFlows = function () {
@@ -955,9 +980,11 @@
 				}
 
 
-				$scope.updateReadFlow = function () {
+				$scope.updateReadFlow = function (item) {
 					$scope.vars.readflow.apiCommand = '';
 					$scope.vars.scriptCopied = false;
+					if(!item) return;
+					if(item.replacements) item.replaceWith = item.replacements.find(x=>x.id===item.replaceWithId);
 				}
 
 				$scope.getFunctionFromSettings = function () {
