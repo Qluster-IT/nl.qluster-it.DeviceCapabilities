@@ -174,9 +174,12 @@
     "en" : "Added: The Flow Exchange(r)."
   },
   "2.4.16" : {
-    "en" : "Changd: All default icons are now compressed into one single file and only on an App update, it will extract them and place them in ./userdata/defaulticons/."
+    "en" : "Changed: All default icons are now compressed into one single file and only on an App update, it will extract them and place them in ./userdata/defaulticons/."
   },
-  "2.4.19" : {
+  "2.4.20" : {
     "en" : "Bugfixed."
+  },
+  "2.5." : {
+    "en" : "Added: Templates from the Community Forum Topic."
   }
 }

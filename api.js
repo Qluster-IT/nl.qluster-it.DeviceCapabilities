@@ -17,7 +17,9 @@ module.exports = {
     async updateAdvancedFlowsJSON({ homey,  body: {exchangerFile} }) {        
         return await homey.drivers.getDriver('virtualdevice').updateAdvancedFlowsJSON({ homey,  exchangerFile });
     }, 
-
+    async openTemplate({ homey,  body: {template} }) {        
+        return await homey.drivers.getDriver('virtualdevice').openTemplate({ homey,  template });
+    },
     async getDevices({ homey, query }) {
         return await homey.app.getDevices();    
     },

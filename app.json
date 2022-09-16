@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.4.19",
+  "version": "2.5.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -121,6 +121,10 @@
     "updateAdvancedFlowsJSON": {
       "method": "POST",
       "path": "/updateadvancedflowsjson/"
+    },
+    "openTemplate": {
+      "method": "POST",
+      "path": "/opentemplate/"
     },
     "setFromDefaultIcon": {
       "method": "POST",

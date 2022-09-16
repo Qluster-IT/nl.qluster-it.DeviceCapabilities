@@ -947,7 +947,7 @@
 				scope.hidden = true;
 
 				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
-				tooltipElement.append("<div>" + text.replace('\r\n', '<br/>') + "</div>");
+				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
 
 				element.parent().append(tooltipElement);
 				element

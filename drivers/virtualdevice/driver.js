@@ -5,6 +5,7 @@ const {gzip, ungzip } = require('node-gzip');
 
 const Homey = require('homey');
 const path = require('path');
+const https = require('https');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 const { Defer } = require('../../lib/proto');
@@ -40,10 +41,96 @@ let app;
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
+
+    async httpsGet({url}) {
+        let defer = new Defer();
+        const https = require('https');
+
+        https.get(url, (resp) => {
+            let data = '';
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                defer.resolve(data);
+            });
+
+            }).on("error", (err) => {defer.reject(err);});
+        return defer.promise;
+    }
+    async getTefTemplates() {
+        try {                
+            let topicHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/2'});
+            if(topicHtml) {
+                let tefTemplates = [];
+                topicHtml = _.last(topicHtml.split('href="https://TEF_START_TEMPLATES"'));
+                topicHtml = _.first(topicHtml.split('href="https://TEF_END_TEMPLATES"'));
+                topicHtml = topicHtml.replaceAll('\n', '');
+                let ulTemplates = topicHtml.matchAll(/<ul>(.*?)<\/ul>/gms);
+                if(ulTemplates) {                
+                    let matchesFound = [...ulTemplates];
+                    for (let i = 0; i < matchesFound.length; i++) {
+                        const ulFound = matchesFound[i][1];
+                        let listitems = ulFound.matchAll(/<li>(.*?)<\/li>/gms);
+                        if(listitems) {                
+                            let listitemsFound = [...listitems];
+                            for (let i = 0; i < listitemsFound.length; i++) {
+                                const listItem = listitemsFound[i][1];
+                                let item = listItem.matchAll(/(href="(.*?)">)(.*?)<\/a>/gms);
+                                if(item) {                
+                                    let itemObject = [...item];
+                                    tefTemplates.push({url:itemObject[0][2], caption:itemObject[0][3], postId:_.last(itemObject[0][2].split('/'))});
+                                }
+                            }
+                        }
+                    }
+                }
+                this.tefTemplates = tefTemplates;
+                await this.homey.settings.set('tefTemplates', tefTemplates);
+            }
+        } catch (error) {
+            this.error(error);
+        }
+
+    }
+    async openTemplate({template}) {
+        try {                
+            let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
+            if(templateHtml) {
+                templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
+                templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
+                templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
+                templateHtml = templateHtml.replaceAll('\n', '');
+                templateHtml = templateHtml.trimStart();
+                template.content = templateHtml;
+                let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
+                if(ulTemplates) {                
+                    let matchesFound = [...ulTemplates];
+                    for (let i = 0; i < matchesFound.length; i++) {
+                        template.content = template.content.replace(matchesFound[i][0], '');
+                        template.tef = matchesFound[i][2].trim();
+                        template.updatedOn = Date.now();
+                    }
+                }
+                let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
+                if(t) {
+                    t.content = template.content;
+                    t.tef = template.tef;                    
+                    await this.homey.settings.set('tefTemplates', this.tefTemplates); 
+                }
+                return {template};
+            }
+        } catch (error) {
+            this.error(error);
+        }
+    }
     
     async onInit() {
         app = this.homey.app;
         this.log('VirtualDeviceDriver onInit');
+        this.getTefTemplates();
 
 		this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
 

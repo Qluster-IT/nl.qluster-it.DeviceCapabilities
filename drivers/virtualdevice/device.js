@@ -191,13 +191,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			this.Cameras[ref].attached = true;
 		}
 	}
-	// async setCamera() {
-
-	// }
-	// async removeCamera() {
-
-	// }
-
+	
 	async loadFromSettings(settings, oldSettings, changedKeys, saved, imported) {
 
 		try {
@@ -611,13 +605,6 @@ module.exports = class WatchDevice extends Homey.Device {
 	// }
 
 
-	// async onSettings({ oldSettings, newSettings, changedKeys }) {
-
-	// 	await this.loadFromSettings(newSettings, oldSettings, changedKeys);
-	// 	this.Settings = newSettings;
-	// 	// if the settings must not be saved for whatever reason:
-	// 	// throw new Error('Your error message');
-	// }
 
  	capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
