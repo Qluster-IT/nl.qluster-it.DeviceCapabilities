@@ -1,3 +1,16 @@
+/*
+
+Create a module for easy support of certain Apps.
+Support Zones.
+Support Creation of (default) Variables.
+“Unsupport” HomeyScript cards and replace them with (hidden) dummy DC App cards.
+This to prevent security leaks that only HomeyScript posses.
+Create Template structure for AVD - Share Your Device.
+Topic is allready there, but whats been made for The Flow Exchanger needs to be also setup for AVD - Share Your Device.
+Etc.
+
+
+*/
 // https://emojipedia.org/symbols/
 
 

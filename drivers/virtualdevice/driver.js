@@ -60,6 +60,61 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }).on("error", (err) => {defer.reject(err);});
         return defer.promise;
     }
+
+    
+    async getTefTemplatesFromPosts() {
+        let templates = [];
+        let run = true;
+        const postsPerRun = 20;
+        let runs = 1;
+        while (run) {            
+            let _templates = await this.getTefTemplatesFromPostsById({postId:(runs*postsPerRun) + 1});
+            templates = _.union(templates, _templates.templates);
+            if(_templates.postsFound<postsPerRun) run = false;
+            runs++;
+        }
+        this.tefTemplates = templates;
+        await this.homey.settings.set('tefTemplates', templates);
+        return templates;
+    }
+    async getTefTemplatesFromPostsById({postId}) {
+        try {                
+            let topicHtml = await this.httpsGet({url:`https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/${postId}`});
+            if(topicHtml) {
+                let posts = topicHtml.matchAll(/<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'/gmsi);
+                let matchesFound = posts? [...posts] : [];
+                let templates = [];
+                let postsFound = matchesFound.length;
+                for (let i = 0; i < matchesFound.length; i++) {
+                    const postId = Number.parseInt(matchesFound[i][1]);
+                    let post = matchesFound[i][2];
+                    let tefs = [], header;
+                    
+                    let tefMatches = post.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">.*?(H4s(.*?))<\/code><\/pre>/gmsi);
+                    let tefsFound = tefMatches? [...tefMatches] : [];
+                    for(let j=0;j<tefsFound.length;j++) {
+                        if(tefsFound[j].length>2) {
+                            tefs =tefsFound[j][2];                            
+                            post = post.replace(matchesFound[j][0], '');
+                        }
+                    }
+                    if(tefs.length) {
+                        let headerMatches = post.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
+                        let headersFound = headerMatches? [...headerMatches] : [];
+                        if(headersFound && headersFound.length>0 && headersFound[0].length>2) header =headersFound[0][2].trim();
+                        //console.log(header);
+                        templates.push({postId:postId, post:post, tefs:tefs, header:header});
+                    }
+                }
+                return {templates, postsFound};
+            }
+        } catch (error) {
+            this.error(error);
+        }
+        return {templates:[], postsFound:0};
+    }
+    
+
     async getTefTemplates() {
         try {                
             let topicHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/2'});
@@ -94,7 +149,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             this.error(error);
         }
 
-    }
+    }    
+
     async openTemplate({template}) {
         try {                
             let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
@@ -104,19 +160,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
                 templateHtml = templateHtml.replaceAll('\n', '');
                 templateHtml = templateHtml.trimStart();
-                template.content = templateHtml;
+                template.post = templateHtml;
                 let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
                 if(ulTemplates) {                
                     let matchesFound = [...ulTemplates];
                     for (let i = 0; i < matchesFound.length; i++) {
-                        template.content = template.content.replace(matchesFound[i][0], '');
+                        template.post = template.post.replace(matchesFound[i][0], '');
                         template.tef = matchesFound[i][2].trim();
                         template.updatedOn = Date.now();
                     }
                 }
                 let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
                 if(t) {
-                    t.content = template.content;
+                    t.post = template.post;
                     t.tef = template.tef;                    
                     await this.homey.settings.set('tefTemplates', this.tefTemplates); 
                 }
@@ -130,7 +186,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     async onInit() {
         app = this.homey.app;
         this.log('VirtualDeviceDriver onInit');
-        this.getTefTemplates();
+        //this.getTefTemplatesFromPosts();
 
 		this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
 
@@ -814,7 +870,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             if(global && global.gc) global.gc();
 
-        }, 10 * 60000); // clear every 10 minutes
+        }, 60 * 60000); // clear every 10 minutes
         this.log('LoadStuff done.');
 
         if(global && global.gc) global.gc();
@@ -1477,8 +1533,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
             device.data.icon = iconpath;//iconPath;
-            device.icon = iconpath;//iconPath;
-            device.name = name;
+            device.icon = iconpath;//iconPath;            
+            if(name && name.length>0) device.name = name;
             return device;
             // This is for custom icon picked
             // device = devices[0];

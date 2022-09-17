@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -125,6 +125,10 @@
     "openTemplate": {
       "method": "POST",
       "path": "/opentemplate/"
+    },
+    "refreshTemplates": {
+      "method": "GET",
+      "path": "/refreshtemplates/"
     },
     "setFromDefaultIcon": {
       "method": "POST",

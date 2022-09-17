@@ -20,6 +20,9 @@ module.exports = {
     async openTemplate({ homey,  body: {template} }) {        
         return await homey.drivers.getDriver('virtualdevice').openTemplate({ homey,  template });
     },
+    async refreshTemplates({ homey, query}) {        
+        return await homey.drivers.getDriver('virtualdevice').getTefTemplatesFromPosts();
+    },
     async getDevices({ homey, query }) {
         return await homey.app.getDevices();    
     },

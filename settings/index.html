@@ -44,6 +44,46 @@
 			font-weight: bold !important;
 		}
 
+		#overlay {
+			position:absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			display:none;
+			z-index:900;			
+			/* backdrop-filter: blur(0.1px); */
+		}
+		#overlay.show {
+			display: block;
+			animation-duration: 3s;
+  			animation-name: blur-out;
+			animation-fill-mode: forwards;
+			/* backdrop-filter: blur(3px); */
+			/* transition: backdrop-filter 3s; */
+			
+		}
+		/* #overlay.hide {
+			animation-duration: .3s;
+  			animation-name: blur-out;
+			animation-direction: reverse;
+			animation-fill-mode: forwards;
+			/* transition: display 0s 1s; 
+		} */
+		@keyframes blur-out {
+			0% {
+				/* display:none; */
+				backdrop-filter: blur(0.1px);
+			}
+			/* 1% {
+				display: block;
+			} */
+			100% {
+				backdrop-filter: blur(3px);
+				/* display: block; */
+			}
+		}
+
 		/* html {
 			height:auto!important;
 			} */
@@ -406,8 +446,13 @@
 			position: relative;
 			height:60px;			
 		}
-		.header-buttons .icon-button .active {
-			color:red;
+		.header-buttons .icon-button .fa-icon {
+			font-size: 36px;
+			color: #E8A713;
+			margin-top: 6px;
+		}
+		.header-buttons .icon-button.active .fa-icon {
+			color:#0066A4;
 		}
 
 		.main-buttons {
@@ -416,7 +461,6 @@
 			position: fixed;
 			bottom: 0;
 			text-align: center;
-			/* padding-top:30px; */
 		}
 
 		.button {
@@ -437,9 +481,55 @@
 			/* top: 6px;
 			position: relative;
 			margin: 0px 50px; */
-			margin: 0px 20px;
-
+			margin: 0px 20px;						
+			bottom:0px;
 		}
+		.main-buttons .button:nth-child(1):nth-last-child(1) {
+			margin:0;
+			width: 50%;
+		}
+		.main-buttons .button:nth-child(1):nth-last-child(2){
+			left:0px;
+			position: fixed;
+		} 
+		.main-buttons .button:nth-child(2):nth-last-child(1) {
+			right:0px;
+			position: fixed;
+		}
+		
+		@media screen and (max-width: 350px) {
+			
+			.main-buttons {
+				height: 40px;
+			}
+			.main-buttons .button  {				
+				padding: 8px!important;
+				width: auto !important;
+				display: inline-block;
+				font-size: 18pt!important;
+				cursor: pointer;
+				margin: 0px 5px;
+			}
+			
+		}
+		.fa-sync-alt {
+			font-size:24px;
+		}
+		.spin {
+			animation-name: spin;
+			animation-duration: 3000ms;
+			animation-iteration-count: infinite;
+			animation-timing-function: linear; 
+		}
+		@keyframes spin {
+			from {
+				transform:rotate(0deg);
+			}
+			to {
+				transform:rotate(360deg);
+			}
+		}
+
 		.setting-group {
 			margin-bottom:60px;
 		}
@@ -516,8 +606,8 @@
 			cursor: pointer;
 		}
 
-		.link {
-			font-weight: bold;
+		.link, alinky {
+			font-weight: 500;
 			text-decoration: underline;
 			cursor: pointer;
 			display: inline-block;
@@ -557,6 +647,8 @@
 		form {
 			height:100%;
 		}
+
+		
 	</style>
 
 </head>
@@ -573,11 +665,11 @@
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger" >
-				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-click="view.subid='theflowexchangerexport'">Export</h2>
-				<h2 class="top-button"  data-i18n="settings.title_theflowexchanger_import" ng-click="view.subid='theflowexchangerimport';vars.imported=false;">Import</h2>
-				<h2 class="top-button"  data-i18n="settings.theflowexchanger.click_templates" ng-click="view.subid='theflowexchangertemplates'">Templates</h2>
+				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
+				<h2 class="top-button"  data-i18n="settings.title_theflowexchanger_import" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
+				<h2 class="top-button"  data-i18n="settings.theflowexchanger.click_templates" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
 				<div class="field" ng-show="view.subid=='theflowexchangerexport'">
-					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchange Files.</div>
+					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchanger Files.</div>
 					<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
 					<input type="text" class="label margin-bottom" ng-model="vars.filter.flow" placeholder="filter" />
 					<ul>
@@ -607,7 +699,7 @@
 				<div class="field" ng-show="view.subid=='theflowexchangerimport'">
 					<!-- <div class="link" data-i18n="settings.theflowexchanger.click_templates">Click here for templates</div> -->
 					<div ng-show="!vars.imported">
-						<div data-i18n="settings.explain_theflowexchanger_import">Here you can import a The Exchange File.</div>
+						<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 						<div class="field">
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Flows" ng-change="blockTextSettings=true"></textarea>
 						</div>					
@@ -696,16 +788,15 @@
 						</div>
 						<div class="field">
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
-						</div>
+						</div>						
 						<div class="field margin-top margin-bottom">
-							Run this in the <div class="link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+							Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
 							<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 						</div>
 						<div class="field margin-top">
 							Flows that are created will be listed here:
 						</div>
 						<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
-
 					</div>
 				</div>
 			</form>
@@ -715,7 +806,7 @@
 			<h1 data-i18n="settings.title_virtualdevices"></h1>
 			<div data-i18n="settings.explain_virtualdevices">Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.</div>
 			<div data-i18n="settings.explain_restart">After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
-			<ul id="devices" ng-show="showvirtualdevices">
+			<ul id="devices">
 				<li class="device" ng-repeat="device in devices">
 
 					<div class="name">{{device.name}}</div>
@@ -921,9 +1012,12 @@
 
 	<form ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div class="panel">
-			<h1>Here you can select a template</h1>
+			<div class="field">
+				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+				<h1>Here you can select a template</h1>
+			</div>
 			<div class="field" ng-repeat="template in vars.tefTemplates">
-				<span class="link" ng-click="openTemplate(template)">{{template.caption}}</span>
+				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
 			</div>
 		</div>
 		<div class="main-buttons ">
@@ -931,27 +1025,28 @@
 		</div>
 
 		<div class="template-panel" ng-show="vars.template">
-			<div class="content" ng-bind-html="vars.template.content"></div>
+			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
+			<div class="content"></div>
 			<div class="main-buttons">
 				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-				<button class="button float-right" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tef;vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readFlows();">Import</button>
+				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tef;vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readFlows();">Import</button>
 			</div>
 		</div>
 	</form>
 	<br><br>
 	<br><br>
-	<div id="overlay" style="position:fixed; top:0;left:0;right:0;bottom:0;background-color:#eee;display:none;z-index:200;"></div>
+	<div id="overlay"></div>
 
 
 	<script type="text/javascript">
 
 		angular.module('devicecapabilities', ['smart-table', 'ngSanitize'])
-			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', function ($scope, $rootScope, $timeout) {
+			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', '$sce', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $sce, $sanitize, $compile) {
 				//let $;
 				var Homey;
 				$scope.stamp = Date.now();
 				$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
-				$scope.vars = {
+				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
 					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: []
 				};
@@ -1008,11 +1103,28 @@
 
 				function showOverlay(str) {
 					//let elms=angular.element('#overlay');
-					$('#overlay').css('display', 'block');
+					console.log('showOverlay');
+					$('#overlay').addClass('show');// .css('display', 'block');
 				}
 				function hideOverlay() {
-					$('#overlay').css('display', 'none');
+					console.log('hideOverlay');
+					$('#overlay').removeClass('show');//$('#overlay').css('display', 'none');
 
+				}
+
+
+				
+				$scope.refreshTemplates = function () {
+					vars.templatesRefreshing = true;
+					//showOverlay();
+					Homey.api('GET', 'refreshTemplates', function (err, result) {
+						vars.templatesRefreshing = false;
+						//hideOverlay();
+						if (err) return console.log(err);
+						$scope.$apply(function () {							
+							$scope.vars.tefTemplates = result;
+						});
+					});
 				}
 
 
@@ -1026,7 +1138,24 @@
 				}
 
 				$scope.openTemplate = function (template) {
-					if(template && template.content && template.tef) return $scope.vars.template = template;
+					if(template && template.post && template.tefs) {
+						$scope.vars.template = template;
+
+						console.log(1);
+						template.post = $sanitize(template.post);
+						console.log(2);
+						template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+						//let a = $compile(template.post);
+						console.log(3);
+						$('.content').empty();
+						console.log(4);
+						
+						$('.content').append($compile(template.post)($scope));
+						console.log(5);
+						
+						//$('.content').scrollTop(0);
+						return;
+					}
 
 					showOverlay();
 					Homey.api('POST', 'openTemplate', { template }, function (err, result) {
@@ -1036,7 +1165,7 @@
 							$scope.vars.template = result.template;
 							let t = $scope.vars.tefTemplates.find(_t=>_t.postId==$scope.vars.template.postId);
 							if(t) {								
-								t.content = $scope.vars.template.content;
+								t.post = $scope.vars.template.post;
                     			t.tef = $scope.vars.template.tef;               
 							}
 						});
@@ -1478,6 +1607,20 @@
 			// 		return $sce.trustAsHtml(text);
 			// 	};
 			// }])
+			.directive('alinky', function () {
+				return function (scope, element, attrs) {
+					element.bind('click', function (event) {
+						Homey.openURL(attrs.href);
+					});
+				};
+			})
+			// .directive('a', function () {
+			// 	return function (scope, element, attrs) {
+			// 		element.bind('click', function (event) {
+			// 			Homey.openURL(attrs.href);
+			// 		});
+			// 	};
+			// })
 			.directive('ngEnter', function () {
 				return function (scope, element, attrs) {
 					element.bind('keydown keypress', function (event) {
@@ -1491,7 +1634,7 @@
 						}
 					});
 				};
-			});
+			});;
 
 		function onHomeyReady(Homey) {
 			console.log('onHomeyReady');
