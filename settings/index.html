@@ -1026,10 +1026,10 @@
 
 		<div class="template-panel" ng-show="vars.template">
 			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
-			<div class="content"></div>
+			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
 				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tef;vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readFlows();">Import</button>
+				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tef[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readFlows();">Import</button>
 			</div>
 		</div>
 	</form>
@@ -1138,24 +1138,31 @@
 				}
 
 				$scope.openTemplate = function (template) {
-					if(template && template.post && template.tefs) {
-						$scope.vars.template = template;
+					// try {
+						if(template && template.post && template.tefs) {
+							$scope.vars.template = template;
 
-						console.log(1);
-						template.post = $sanitize(template.post);
-						console.log(2);
-						template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-						//let a = $compile(template.post);
-						console.log(3);
-						$('.content').empty();
-						console.log(4);
-						
-						$('.content').append($compile(template.post)($scope));
-						console.log(5);
-						
-						//$('.content').scrollTop(0);
-						return;
-					}
+							console.log(1);
+							template.post = $sanitize(template.post);
+							console.log(2);
+							template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+							let compiled = $compile(template.post)($scope);
+							console.log(3);
+							$('.content').empty();
+							console.log(4);
+							//$('#overlay').append(compiled);
+							$('.content').append(compiled);
+
+							console.log(5);
+							
+							//$('.content').scrollTop(0);
+							return;
+						}
+					// } catch (error) {
+					// 	console.log('ERROR');
+					// 	console.log(error);
+					// }
+					
 
 					showOverlay();
 					Homey.api('POST', 'openTemplate', { template }, function (err, result) {
@@ -1166,7 +1173,7 @@
 							let t = $scope.vars.tefTemplates.find(_t=>_t.postId==$scope.vars.template.postId);
 							if(t) {								
 								t.post = $scope.vars.template.post;
-                    			t.tef = $scope.vars.template.tef;               
+                    			t.tefs = [$scope.vars.template.tef];
 							}
 						});
 					});

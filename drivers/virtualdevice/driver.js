@@ -88,14 +88,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 for (let i = 0; i < matchesFound.length; i++) {
                     const postId = Number.parseInt(matchesFound[i][1]);
                     let post = matchesFound[i][2];
+                    if(post.startsWith('\n')) post=post.substring(1).trim();
                     let tefs = [], header;
                     
                     let tefMatches = post.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">.*?(H4s(.*?))<\/code><\/pre>/gmsi);
                     let tefsFound = tefMatches? [...tefMatches] : [];
                     for(let j=0;j<tefsFound.length;j++) {
                         if(tefsFound[j].length>2) {
-                            tefs =tefsFound[j][2];                            
-                            post = post.replace(matchesFound[j][0], '');
+                            tefs.push(tefsFound[j][2]);
+                            post = post.replace(tefsFound[j][0], '');
                         }
                     }
                     if(tefs.length) {
