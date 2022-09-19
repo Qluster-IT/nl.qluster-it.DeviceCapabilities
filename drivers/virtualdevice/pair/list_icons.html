@@ -1,3 +1,9 @@
+<script type="text/javascript" src="../repair/angular.js"></script>
+<script type="text/javascript" src="../repair/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="../repair/lodash.js"></script>
+
+<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
+
 <script src='../../../assets/vue.min.js'></script>
 <div class="hy-view visible" data-id="icons">
   <style>
@@ -56,9 +62,225 @@
     margin-top:40px;
   }
 
+
+  
+	[ng-click^="show"], [ng-click^="view"], [ng-click] {
+			cursor: pointer;
+			/* margin-top: 30px; */
+		}
+
+  div[disabled], button[disabled] {
+		color: lightgray !important;
+	}
+
+
+
+  
+	.field {
+		position: relative;
+		display: block;
+		width: 100%;
+		margin-top: 10px;
+	}
+	.label > * {
+		display: inline-block;
+	}
+
+	.label {
+		position: relative;
+		width: 48%;
+		display: inline-block;
+	}
+
+	.label .fa {
+		float: right;
+	}
+	.label.large {
+		width:70%
+	}
+	.label.large + .label, .label.large + .value {
+		width:28%
+	}
+	.value {
+		position: relative;
+		width: 49% !important;
+		display: inline-block;
+	}
+
+
+
+
+
+
+  * {
+
+box-sizing: border-box;
+}
+a {
+display: inline-block;
+}
+.float-right {
+float: right !important;
+z-index:100;
+}
+/* html {
+height:auto!important;
+} */
+
+.fa-icon {
+min-width: 24px;
+min-height: 24px;
+font-size: 20px;
+}
+
+.block {
+display: block !important;
+}
+.margin-top {
+margin-top:10px;
+}
+.margin-bottom {
+margin-bottom:10px;
+}
+
+  .main-buttons {
+	height: 60px;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	text-align: center;
+}
+
+.button {
+	padding: 16px!important;
+	width: auto !important;
+	display: inline-block;
+	font-size: 20pt!important;
+	cursor: pointer;
+}
+.top-button {
+	display: inline-block;
+	margin: 10px;
+	font-size: 16px;
+}
+
+.main-buttons .button {
+	display: inline-block;
+	/* top: 6px;
+	position: relative;
+	margin: 0px 50px; */
+	margin: 0px 20px;						
+	bottom:0px;
+}
+.main-buttons .button:nth-child(1):nth-last-child(1) {
+	margin:0;
+	width: 50%;
+}
+.main-buttons .button:nth-child(1):nth-last-child(2){
+	left:0px;
+	position: fixed;
+} 
+.main-buttons .button:nth-child(2):nth-last-child(1) {
+	right:0px;
+	position: fixed;
+}
+
+@media screen and (max-width: 350px) {
+	
+	.main-buttons {
+		height: 40px;
+	}
+	.main-buttons .button  {				
+		padding: 8px!important;
+		width: auto !important;
+		display: inline-block;
+		font-size: 18pt!important;
+		cursor: pointer;
+		margin: 0px 5px;
+	}
+	
+}
+
+  .fa-sync-alt {
+	font-size:24px;
+}
+.spin {
+	animation-name: spin;
+	animation-duration: 3000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear; 
+}
+@keyframes spin {
+	from {
+		transform:rotate(0deg);
+	}
+	to {
+		transform:rotate(360deg);
+	}
+}
+
+  .pointer {
+	cursor: pointer;
+}
+
+.link, alinky, [ng-click^="openUrl"] {
+	font-weight: 500;
+	text-decoration: underline;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+.template-panel {
+	position: fixed;
+	display: block;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background-color:white;
+	z-index:300;
+	
+}
+.template-panel > .content, .panel {
+	height: calc(100% - 70px);
+	overflow: scroll;
+	margin-bottom: 10px;
+	
+}
+.panel {
+	height: calc(100% - 70px);
+	overflow: auto;
+	margin-bottom: 10px;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	background-color: white;
+}
+	
+
+form {
+	height:100%;
+}
+
+
+.custom-icon {
+		height:24px;
+		width:24px;
+		position: absolute;
+	}
+	.custom-icon + * {
+		position: relative;
+		left:30px;
+	}
+
+
 </style>
 <script>
 
+  let $SCOPE;
     var imgBase64 = '';
     Homey.showLoadingOverlay();
     Homey.setTitle( Homey.__("pair.list_icons.title") );
@@ -67,8 +289,7 @@
 
     Homey.emit('list_icons', null, function (err, result) {
       console.log('list_icons');
-      console.log(result);
-
+      
       new Vue({
             el: '#icon_list',
             data: {
@@ -130,53 +351,264 @@
 
 </script>
 
-
-<div style="margin-top:20px;">
-  <span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>  
-  <input type="text" id="name"/>
-</div>
-<div style="margin-top:20px;">
-  <span data-i18n="pair.list_icons.set_icon_and_customize"></span>  
-  <span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
-</div>
-<div style="margin-top:20px;">
-    <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br/>
-    <div class="form-group" style="margin-top:10px;">
-        <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons">
+  <div ng-show="!view.id">
+    
+    <div style="margin-top:20px;">
+      <h2 class="top-button"  data-i18n="settings.theflowexchanger.click_templates" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';">Choose a Template <i class="fa fa-icon fa-stream"></i></h2>
+      <i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
     </div>
-    <div id="preview-outerframe" style="margin-top:10px;">
-      <div id="preview-innerframe">
-        <img id="preview" />
-      </div>
-    </div>
-    <div class="form-group buttons" style="margin-top:10px;">
-      <button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
-    </div>  
-</div>
+    
+    <div ng-show="vars.selectedtemplate">
+      <div class="field">Template used:</div>
+      <div class="field">{{vars.selectedtemplate.header}}</div>
+      <div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
 
-<div style="margin-top:20px;">
-  <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
-  
-  <ul id="icon_list">
-        <div v-for="(cat, index) in iconCategories" :key="index" class="category">
-          <h1  class="category-title">{{cat.title}}</h1>
-          <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-            <label for="icon" class="icon-wrap">
-              <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}"  title="{{item}}"></div>
-            </label>
-          </div>
+      
+      
+      <div class="field" ng-repeat="tef in vars.selectedtefs">
+        <span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>  
+        <div style="margin-top:20px;" class="field">
+          <input type="text" id="name" ng-model="tef.device.name"/>
         </div>
-  </ul> 
-
-  <!-- <ul id="icon_list">
-    <div v-for="(cat, index) in iconCategories" :key="index" class="category">
-      <h1  class="category-title">{{cat.title}}</h1>
-      <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-        <label for="icon" class="icon-wrap">
-          <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
-          <div class="icon id">{{item.subid}}</div>
-        </label>
+        <div class="field" ng-if="tef.customIcons.length>0">
+          <div class="label">Custom icon</div>
+          <div class="value">Save as</div>
+        </div>
+          <div class="field"  ng-repeat="(key,item)  in tef.customIcons">				
+          <div class="label">
+            <img class="custom-icon" src="{{item}}"></img>
+            <div>{{key}}</div>					
+          </div>
+          <select class="value" ng-model="tef.saveCustomIcons[key]">
+            <option value="">Don't save</option>
+            <option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
+          </select>
+        </div>
       </div>
+
+      <div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-click="useTemplate();">Use this template</button>
+			</div>
     </div>
-  </ul>  -->
-</div> 
+
+    <div ng-show="!vars.selectedtemplate">
+      <div style="margin-top:20px;">
+        <span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>  
+        <input type="text" id="name" ng-model="vars.device.name"/>
+      </div>
+      <div style="margin-top:20px;">
+        <span data-i18n="pair.list_icons.set_icon_and_customize"></span>  
+        <span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
+      </div>
+      <div style="margin-top:20px;">
+          <span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br/>
+          <div class="form-group" style="margin-top:10px;">
+              <input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+          </div>
+          <div id="preview-outerframe" style="margin-top:10px;">
+            <div id="preview-innerframe">
+              <img id="preview" />
+            </div>
+          </div>
+          <div class="form-group buttons" style="margin-top:10px;">
+            <button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
+          </div>  
+      </div>
+
+      <div style="margin-top:20px;">
+        <span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br/>
+        
+        <ul id="icon_list">
+              <div v-for="(cat, index) in iconCategories" :key="index" class="category">
+                <h1  class="category-title">{{cat.title}}</h1>
+                <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
+                  <label for="icon" class="icon-wrap">
+                    <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}"  title="{{item}}"></div>
+                  </label>
+                </div>
+              </div>
+        </ul> 
+
+        <!-- <ul id="icon_list">
+          <div v-for="(cat, index) in iconCategories" :key="index" class="category">
+            <h1  class="category-title">{{cat.title}}</h1>
+            <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
+              <label for="icon" class="icon-wrap">
+                <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
+                <div class="icon id">{{item.subid}}</div>
+              </label>
+            </div>
+          </div>
+        </ul>  -->
+      </div>
+    </div> 
+  </div>
+  <form ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div class="panel">
+			<div class="field">
+				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+				<h1>Here you can select a template</h1>
+			</div>
+			<div class="field" ng-repeat="template in vars.tefTemplates">
+				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+			</div>
+		</div>
+		<div class="main-buttons ">
+			<button class="button" data-i18n="settings.close" ng-click="view.id=undefined; view.subid=undefined;">Close</button>
+		</div>
+
+		<div class="template-panel" ng-show="vars.template">
+			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
+			<div class="content">&nbsp;</div>
+			<div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
+				<button class="button" data-i18n="settings.import" ng-click="vars.imported=true; vars.selectedtemplate=vars.template; vars.template=null; view.id=undefined; view.subid='theflowexchangerimport'; readTextSettings();">Import</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	// let tooltipModule = angular.module('tooltipModule', []);
+	// tooltipModule;
+
+	angular.module('avdicons', ['ngSanitize'])
+		.controller("avdiconsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
+			console.log('controller started');
+      $SCOPE = $scope;
+			scope = $scope;
+			//let Homey = _homey
+			$scope.s = {};
+
+			$scope.view = {id:undefined, subid:undefined};
+			const vars = $scope.vars = {};
+
+
+			
+			$scope.refreshTemplates = function () {
+				vars.templatesRefreshing = true;
+				Homey.emit('refreshAvdTemplates', function (err, result) {
+					vars.templatesRefreshing = false;
+					if (err) return console.log(err);
+					$scope.$apply(function () {							
+						$scope.vars.tefTemplates = result;
+					});
+				});
+			}
+
+      $scope.readTextSettings = function() {
+        showOverlay();
+        Homey.emit('virtualdeviceicons_getTefs', {template:$scope.vars.selectedtemplate, device:$scope.vars.device}, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {							
+							$scope.vars.selectedtefs = result.tefs;							
+						});
+					});
+      }
+
+
+			$scope.getTefTemplates = function () {
+				Homey.emit('getAvdTemplates', function (err, result) {
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result;
+					});
+				});
+			}
+
+			$scope.openTemplate = function (template) {
+				if(template && template.post && template.tefs) {
+					$scope.vars.template = template;
+					
+					/// Sanitize all posts!!
+					template.post = $sanitize(template.post);
+					
+					template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					let compiled = $compile(template.post)($scope);
+					$('.content').empty();
+					
+					$('.content').append(compiled);
+					$timeout(function() {
+						$scope.$apply(function() {							
+							$('.content').scrollTop(0);
+						});
+					}, 1);
+
+					return;
+				}				
+			}
+
+      $scope.useTemplate = function() {
+        Homey.emit('use_template', {template:$scope.vars.selectedtemplate, tefs:$scope.vars.selectedtefs})
+        .then(result => {
+          Homey.nextView();
+        })
+        .catch(error => {
+          Homey.alert(error.message, 'error');
+          Homey.done();
+        });
+      }
+
+
+
+			
+			$scope.size = function (collection) {
+				console.log('size()');
+				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
+			}
+
+			$scope.openUrl = function (url) {
+				try {
+					Homey.popup(url);	
+				} catch (error) {
+					
+				} 
+			}
+			
+
+
+			function showOverlay(str) {				
+				Homey.showLoadingOverlay();
+				$('#hy-overlay-loading-message').html(str || '');
+			}
+			function hideOverlay() {
+				Homey.hideLoadingOverlay();
+			}
+
+
+			// $scope.close = function () {
+			// 	$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};
+			// 	Homey.done();
+			// }
+			$scope.log = function (s) {
+				console.log(s);
+			}
+
+
+			/** Start of program */
+			if (typeof Homey !== 'undefined') {				
+				Homey.emit('virtualdeviceicons_load', null, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result.tefTemplates;		
+            $scope.vars.device = result.device;				
+					});
+				});
+        
+
+
+
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+		}
+  }]);
+</script>

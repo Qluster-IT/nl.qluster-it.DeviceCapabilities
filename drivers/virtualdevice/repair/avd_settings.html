@@ -1,4 +1,5 @@
 <script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="angular-sanitize.min.js"></script>
 <script type="text/javascript" src="lodash.js"></script>
 <script type="text/javascript" src="elif.js"></script>
 <script type="text/javascript" src="avd_settings.js"></script>
@@ -171,32 +172,6 @@
 		width:100%;
 	}
 
-	.main-buttons {
-		height: 60px;
-		width: 100%;
-		position: fixed;
-		bottom: 0;
-		text-align: center;
-		/* padding-top:30px; */
-	}
-
-	.button {
-		padding: 16px;
-		width: auto !important;
-		display: inline-block;
-		font-size: 20pt;
-		cursor: pointer;
-	}
-
-	.main-buttons .button {
-		display: inline-block;
-		/* top: 6px;
-		position: relative;
-		margin: 0px 50px; */
-		margin: 0px 20px;
-
-	}
-
 	.remove-icon {
 		color: black;
 		width: 30px;
@@ -217,7 +192,7 @@
 		text-align: center;
 	}
 
-	div[disabled] {
+	div[disabled], button[disabled] {
 		color: lightgray !important;
 	}
 
@@ -276,9 +251,12 @@
 		left:30px;
 	}
 
-
+	[ng-click^="show"], [ng-click^="view"], [ng-click] {
+			cursor: pointer;
+			/* margin-top: 30px; */
+		}
 	
-	#theflowexchanger {}
+#theflowexchanger {}
 
 #theflowexchanger ul {
 	height: 40vw;
@@ -517,7 +495,7 @@ body {
 	cursor: pointer;
 }
 
-.link, alinky {
+.link, alinky, [ng-click^="openUrl"] {
 	font-weight: 500;
 	text-decoration: underline;
 	cursor: pointer;
@@ -566,13 +544,12 @@ form {
 
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
 
-	<form name="settings" class="main-view" ng-show="!view">
-		<div class="button block margin-top margin-bottom text-center" ng-click="view='editor';">Open Share Your Device</div>
+	<form name="settings" class="main-view" ng-show="!view.id">
+		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';">Open Share Your Device</div>
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
-		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openLink($event)" 
-			href="https://community.homey.app/t/app-pro-device-capabilities-addendum-fully-customisable-advanced-virtual-device-with-unique-text-status-indicator/68198">See
+		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-addendum-fully-customisable-advanced-virtual-device-with-unique-text-status-indicator/68198')">See
 			the Forum Topic for examples, explanations or if you have any questions.</a>
 		<h1 data-i18n="virtualdevicesettings.titleAlso" class="top-labels">Also</h1>
 		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing
@@ -1095,38 +1072,47 @@ form {
 		<br><br>
 		<br><br>
 	</form>
-	<div class="main-buttons" ng-show="!view">
-		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">
-			Save</div>
+	<div class="main-buttons" ng-show="!view.id">
+		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save</div>
 		<div class="button" ng-click="close()">Close</div>
 	</div>
 
-	<form name="theflowexchanger" class="main-view hide" ng-if="view=='editor'">
+	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger'">
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
+		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
 		<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-		<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can copy and paste the whole
-			device settings.</div>
-		<a data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" x-ng-click="openLink($event)" 
-			href="https://community.homey.app/t/advanced-virtual-device-share-your-device/68676">See
-			the Share Your Device Forum Topic for other AVDs</a>
-		<div class="group">
-			<div class="value float-right">
-				<div class="button" ng-click="getTextSettings();">Create JSON</div>
+		<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676')">See the Share Your Device Forum Topic for other AVDs</div>
+	
+		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
+			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
+			<div class="group">
+				<div class="value float-right">
+					<div class="button" ng-click="getTextSettings();">Create TEF</div>
+					<div ng-show="vars.tefCopied">(TEF in clipboard allready)</div>
+				</div>
+				<div class="field">
+					<div>Include icons</div>
+					<input type="checkbox" ng-model="vars.copyWithIcons" />
+				</div>
+				<div class="field">
+					<div>Include flows</div>
+					<input type="checkbox" ng-model="vars.copyWithFlows" />
+				</div>
+				<!-- <div class="field">
+								<div class="button" ng-click="exportTextSettings();">Export</div>
+							</div> -->
+				<div class="field">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Press Create TEF" ng-change="blockTextSettings=true"></textarea>
+				</div>
 			</div>
+		</div>
+		<div class="field" ng-show="view.subid=='theflowexchangerimport'">
 			<div class="field">
-				<div>Include icons</div>
-				<input type="checkbox" ng-model="vars.copyWithIcons"/>
-			</div>
-			<div class="field">
-				<div>Include flows</div>
-				<input type="checkbox" ng-model="vars.copyWithFlows"/>
-			</div>
-			<!-- <div class="field">
-				<div class="button" ng-click="exportTextSettings();">Export</div>
-			</div> -->
-			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5"></textarea>
-			</div>
-			<div class="field">
+				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
+				<div class="field margin-bottom">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Device or Read Flows" ng-change="blockTextSettings=true"></textarea>
+				</div>
 				<div class="button" ng-click="readTextSettings()">Read Device</div>
 				<div class="button" ng-click="readFlows();">Read Flows</div>
 			</div>
@@ -1134,19 +1120,20 @@ form {
 				<div class="label">Custom icon</div>
 				<div class="value">Save as</div>
 			</div>
-			<div class="field"  ng-repeat="(key,item)  in vars.readcopy.customIcons">				
+			<div class="field" ng-repeat="(key,item)  in vars.readcopy.customIcons">
 				<div class="label">
 					<img class="custom-icon" src="{{item}}"></img>
-					<div>{{key}}</div>					
+					<div>{{key}}</div>
 				</div>
 				<select class="value" ng-model="vars.readcopy.saveCustomIcons[key]">
 					<option value="">Don't save</option>
-					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
+					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
 				</select>
 			</div>
 			<div class="field">
-				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readflow.advancedflows || vars.readflow.advancedflows.length>0">Save</div>
-				<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.readflow.advancedflows && vars.readflow.advancedflows.length!=0 && vars.readcopy">Save & Close</div>
+				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readcopy">Save</div>
+				<!-- <div class="button" ng-click="setTextSettings(false);" ng-if="vars.readflow.advancedflows && vars.readflow.advancedflows.length>0 && vars.readcopy">Save</div>
+					<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.readflow.advancedflows && vars.readflow.advancedflows.length!=0 && vars.readcopy">Save & Close</div> -->
 			</div>
 			<div ng-if="vars.readflow">
 				<div class="field margin-top margin-bottom">
@@ -1156,7 +1143,7 @@ form {
 						<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
 					</div>
 				</div>
-				<div class="margin-top" data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
+				<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables or apptokens you
 					want to replace with which of your own in the flow(s) script that is created.</div>
 				<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
 					<div class="label">Flow</div>
@@ -1172,6 +1159,17 @@ form {
 						</select>
 					</div>
 				</div>
+				<div class="field bold" ng-if="vars.readflow.zonesToReplace.length>0">
+					<div class="label">Zones</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="item  in vars.readflow.zonesToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+					</select>
+				</div>
 				<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
@@ -1183,12 +1181,12 @@ form {
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
-						<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
-						</select>
-					</div> -->
+							<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+								<option value="">Don't change</option>
+								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+							</select>
+						</div> -->
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
 					<div class="label">Users</div>
@@ -1207,10 +1205,14 @@ form {
 				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
 					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+						<option ng-value="-1">-- Create --</option>
 						<option value="">Don't change</option>
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
-				</div>
+					<div class="field" ng-if="item.replaceWithId===-1">
+						<input type="text" ng-model="item.replaceWith.name">
+					</div>
+				</div>			
 				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
@@ -1226,70 +1228,66 @@ form {
 						</select>
 					</div>
 				</div>
-				<div class="field">
-					<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
-				</div>
-				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
-				</div>
-				<div class="field margin-top margin-bottom">
-					Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
-					<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
-				</div>
-				<div class="field margin-top">
-					Flows that are created will be listed here:
-				</div>
-				<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
+			</div>
+			<div class="field">
+				<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
+			</div>
+			<div class="field">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+			</div>
+			<div class="field margin-top margin-bottom">
+				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+				<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+			</div>
+			<div class="field margin-top">
+				Flows that are created will be listed here:
+			</div>
+			<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
+		</div>
+	</form>
+	<!-- <div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div> -->
+	<div class="main-buttons" ng-show="view.id">
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;">Close</div>
+	</div>
+	<form ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div class="panel">
+			<div class="field">
+				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+				<h1>Here you can select a template</h1>
+			</div>
+			<div class="field" ng-repeat="template in vars.tefTemplates">
+				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+			</div>
+		</div>
+		<div class="main-buttons ">
+			<button class="button" data-i18n="settings.close" ng-click="view.subid='theflowexchangerimport';">Close</button>
+		</div>
 
+		<div class="template-panel" ng-show="vars.template">
+			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
+			<div class="content">&nbsp;</div>
+			<div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
+				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readTextSettings();">Import</button>
 			</div>
 		</div>
 	</form>
-	<div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div>
-	<div class="main-buttons" ng-show="view=='editor'">
-		<div class="button" ng-click="view=undefined;">Close</div>
-	</div>
 </div>
 
 
 <script type="text/javascript">
-	let tooltipModule = angular.module('tooltipModule', []);
-	tooltipModule.directive('tooltip', function ($compile) {
-		var contentContainer;
-		return {
-			restrict: "A",
-			scope: {
-				myTooltipScope: "="
-			},
-			link: function (scope, element, attrs) {
-				var text = attrs.tooltip;
+	// let tooltipModule = angular.module('tooltipModule', []);
+	// tooltipModule;
 
-				scope.hidden = true;
-
-				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
-				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
-
-				element.parent().append(tooltipElement);
-				element
-					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
-					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
-
-				var toolTipScope = scope.$new(true);
-				angular.extend(toolTipScope, scope.myTooltipScope);
-				$compile(tooltipElement.contents())(toolTipScope);
-				$compile(tooltipElement)(scope);
-			}
-		};
-	});
-
-	// angular.module('app', ['luStyle']);
-	//let _homey = Homey;
-	angular.module('avdsettings', ['smart-table', 'tooltipModule', 'elif'])
-		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', function ($scope, $rootScope, $timeout, $parse) {
+	angular.module('avdsettings', ['smart-table', 'elif', 'ngSanitize']) //tooltipModule
+		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
 			console.log('controller started');
 			scope = $scope;
 			//let Homey = _homey
 			$scope.s = {};
-			//$scope.show = 'editor';
+
+			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
+			$scope.view = {id:undefined, subid:undefined};
 			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: []};
 
@@ -1305,13 +1303,77 @@ form {
 
 
 			
+			$scope.refreshTemplates = function () {
+				vars.templatesRefreshing = true;
+				Homey.emit('refreshAvdTemplates', function (err, result) {
+					vars.templatesRefreshing = false;
+					if (err) return console.log(err);
+					$scope.$apply(function () {							
+						$scope.vars.tefTemplates = result;
+					});
+				});
+			}
+
+
+			$scope.getTefTemplates = function () {
+				Homey.emit('getAvdTemplates', function (err, result) {
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result;
+					});
+				});
+			}
+
+			$scope.openTemplate = function (template) {
+				if(template && template.post && template.tefs) {
+					$scope.vars.template = template;
+					
+					/// Sanitize all posts!!
+					template.post = $sanitize(template.post);
+					
+					template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					let compiled = $compile(template.post)($scope);
+					$('.content').empty();
+					
+					$('.content').append(compiled);
+					$timeout(function() {
+						$scope.$apply(function() {							
+							$('.content').scrollTop(0);
+						});
+					}, 1);
+
+					return;
+				}
+				showOverlay();
+				Homey.emit('openAvdTemplate',  { template }, function (err, result) {
+					hideOverlay();
+					if (err) return console.log(err);
+					$scope.$apply(function () {							
+						$scope.vars.template = result.template;
+						let t = $scope.vars.tefTemplates.find(_t=>_t.postId==$scope.vars.template.postId);
+						if(t) {								
+							t.post = $scope.vars.template.post;
+							t.tefs = [$scope.vars.template.tef];
+						}
+					});
+				});
+			}
+
+
+
+			
 			$scope.size = function (collection) {
 				console.log('size()');
 				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
 			}
 
 			$scope.openUrl = function (url) {
-				window.open(url, '_blank').focus();
+				try {
+					Homey.popup(url);	
+				} catch (error) {
+					
+				} 
+				//.focus();
 				//Homey.openURL(url);
 			}
 			
@@ -1397,8 +1459,8 @@ form {
 				//$scope.vars.devicesToReplace = null;
 				//$scope.vars.apiCommand = null;
 				$scope.vars.copy = null
-				//$scope.vars.readcopy = null;				
-				if ($scope.vars.readflow) $scope.vars.readflow.apiCommand = '';
+				$scope.vars.readcopy = null;				
+				if ($scope.vars.readflow) $scope.vars.readflow = undefined;//.apiCommand = '';
 				$scope.vars.scriptCopied = false;
 
 				if(typeof(Homey)!=='undefined') {
@@ -1464,6 +1526,7 @@ form {
 			$scope.readTextSettings = function () {
 				let o;
 				$scope.vars.readcopy = null;
+				$scope.vars.readflow = null;
 				try {
 					showOverlay();
 					Homey.emit('virtualdevicesettings_getJson', $scope.vars.textSettings, function (err, result) {
@@ -1507,12 +1570,15 @@ form {
 				 $scope.save(function() {
 						if(close) {
 							$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};			
-							$scope.view=undefined;
+							$scope.view.id=undefined;
 						}
 					}, $scope.vars.readcopy.settings);
 				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
+
+
+			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
 				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
@@ -1534,6 +1600,7 @@ form {
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
+						$scope.vars.tefTemplates = result.tefTemplates;						
 					});
 				});
 				// Homey.showLoadingOverlay();
@@ -1549,29 +1616,29 @@ form {
 				$scope.customicons = asv_settings.customicons;
 				$scope.s = asv_settings.exampleSettings;
 				$scope.customIconsAvailable = [
-    'custom_1',  'custom_2',  'custom_3',
-    'custom_4',  'custom_5',  'custom_6',  'custom_7',
-    'custom_8',  'custom_9',  'custom_10', 'custom_11',
-    'custom_12', 'custom_13', 'custom_14', 'custom_15',
-    'custom_16', 'custom_17', 'custom_18', 'custom_19',
-    'custom_20', 'custom_21', 'custom_22', 'custom_23',
-    'custom_24', 'custom_25', 'custom_26', 'custom_27',
-    'custom_28', 'custom_29', 'custom_30', 'custom_31',
-    'custom_32', 'custom_33', 'custom_34', 'custom_35',
-    'custom_36', 'custom_37', 'custom_38', 'custom_39',
-    'custom_40', 'custom_41', 'custom_42', 'custom_43',
-    'custom_44', 'custom_45', 'custom_46', 'custom_47',
-    'custom_48', 'custom_49', 'custom_50', 'custom_51',
-    'custom_52', 'custom_53', 'custom_54', 'custom_55',
-    'custom_56', 'custom_57', 'custom_58', 'custom_59',
-    'custom_60',
-    'custom_61', 'custom_62', 'custom_63',
-    'custom_64', 'custom_65', 'custom_66', 'custom_67',
-    'custom_68', 'custom_69', 'custom_70', 'custom_71',
-    'custom_72', 'custom_73', 'custom_74', 'custom_75',
-    'custom_76', 'custom_77', 'custom_78', 'custom_79',
-    'custom_80'
-  ];
+					'custom_1',  'custom_2',  'custom_3',
+					'custom_4',  'custom_5',  'custom_6',  'custom_7',
+					'custom_8',  'custom_9',  'custom_10', 'custom_11',
+					'custom_12', 'custom_13', 'custom_14', 'custom_15',
+					'custom_16', 'custom_17', 'custom_18', 'custom_19',
+					'custom_20', 'custom_21', 'custom_22', 'custom_23',
+					'custom_24', 'custom_25', 'custom_26', 'custom_27',
+					'custom_28', 'custom_29', 'custom_30', 'custom_31',
+					'custom_32', 'custom_33', 'custom_34', 'custom_35',
+					'custom_36', 'custom_37', 'custom_38', 'custom_39',
+					'custom_40', 'custom_41', 'custom_42', 'custom_43',
+					'custom_44', 'custom_45', 'custom_46', 'custom_47',
+					'custom_48', 'custom_49', 'custom_50', 'custom_51',
+					'custom_52', 'custom_53', 'custom_54', 'custom_55',
+					'custom_56', 'custom_57', 'custom_58', 'custom_59',
+					'custom_60',
+					'custom_61', 'custom_62', 'custom_63',
+					'custom_64', 'custom_65', 'custom_66', 'custom_67',
+					'custom_68', 'custom_69', 'custom_70', 'custom_71',
+					'custom_72', 'custom_73', 'custom_74', 'custom_75',
+					'custom_76', 'custom_77', 'custom_78', 'custom_79',
+					'custom_80'
+				];
 			}
 
 
@@ -1595,6 +1662,33 @@ form {
 				});
 			};
 		})
+		.directive('tooltip', function ($compile) {
+		var contentContainer;
+		return {
+			restrict: "A",
+			scope: {
+				myTooltipScope: "="
+			},
+			link: function (scope, element, attrs) {
+				var text = attrs.tooltip;
+
+				scope.hidden = true;
+
+				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
+
+				element.parent().append(tooltipElement);
+				element
+					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
+					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
+
+				var toolTipScope = scope.$new(true);
+				angular.extend(toolTipScope, scope.myTooltipScope);
+				$compile(tooltipElement.contents())(toolTipScope);
+				$compile(tooltipElement)(scope);
+			}
+		};
+	})
 		// .directive('ng-execute', function ($parse) {
 		// 	return {
 		// 		link: function (scope, element, attrs) {

@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.5.3",
+  "version": "2.6.8",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -629,6 +629,18 @@
           }
         ]
       }
+    
+    
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
     ],
     "conditions": [
       {
@@ -744,6 +756,131 @@
           }
         ]
       }
+
+
+      
+      ,
+      {
+        "deprecated":true,
+        "id":"hs_run",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script",
+          "nl": "Vergang met HomeyScript: Voer een script uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCode",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn true;"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn true;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script with an argument",
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            }
+          }
+        ]
+      }
+      
     ],
     "actions": [
       {
@@ -2261,6 +2398,381 @@
           }
         ]
       }
+
+
+
+      ,
+      {
+        "deprecated":true,
+        "id":"hs_run",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script",
+          "nl": "Vergang met HomeyScript: Voer een script uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCode",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeReturnsBoolean",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Yes/No-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Ja/Nee-tag"
+        },
+        "tokens": [
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn true;"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeReturnsNumber",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Number-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Nummer-tag"
+        },
+        "tokens": [
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn 1;"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeReturnsString",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Text-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Tekst-tag"
+        },
+        "tokens": [
+          {
+            "name": "string",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn 'Hello World!';"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeWithArgReturnsBoolean",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Yes/No-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Ja/Nee-tag"
+        },
+        "tokens": [
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn true;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeWithArgReturnsNumber",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Number-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Nummer-tag"
+        },
+        "tokens": [
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn 1;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runCodeWithArgReturnsString",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Text-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Tekst-tag"
+        },
+        "tokens": [
+          {
+            "name": "string",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn 'Hello World!';"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated":true,
+        "id":"hs_runWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script with an argument",
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            }
+          }
+        ]
+      }
+      
+
+      
+      
+      
     ]
   },
   "capabilities": {

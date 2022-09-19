@@ -35,8 +35,9 @@ const CUSTOM_ICONS = [
     'custom_80'
   ];
 
+const { AppsInfo } = require('../virtualdevice/appinfo');
 
-let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys, allAdvancedFlows;
+let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys, allAdvancedFlows, allZones, allApps;
 let app;
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
@@ -104,7 +105,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         let headersFound = headerMatches? [...headerMatches] : [];
                         if(headersFound && headersFound.length>0 && headersFound[0].length>2) header =headersFound[0][2].trim();
                         //console.log(header);
-                        templates.push({postId:postId, post:post, tefs:tefs, header:header});
+                        if(header && header.length>0) templates.push({postId:postId, post:post, tefs:tefs, header:header});
                     }
                 }
                 return {templates, postsFound};
@@ -115,42 +116,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return {templates:[], postsFound:0};
     }
     
-
-    async getTefTemplates() {
-        try {                
-            let topicHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/2'});
-            if(topicHtml) {
-                let tefTemplates = [];
-                topicHtml = _.last(topicHtml.split('href="https://TEF_START_TEMPLATES"'));
-                topicHtml = _.first(topicHtml.split('href="https://TEF_END_TEMPLATES"'));
-                topicHtml = topicHtml.replaceAll('\n', '');
-                let ulTemplates = topicHtml.matchAll(/<ul>(.*?)<\/ul>/gms);
-                if(ulTemplates) {                
-                    let matchesFound = [...ulTemplates];
-                    for (let i = 0; i < matchesFound.length; i++) {
-                        const ulFound = matchesFound[i][1];
-                        let listitems = ulFound.matchAll(/<li>(.*?)<\/li>/gms);
-                        if(listitems) {                
-                            let listitemsFound = [...listitems];
-                            for (let i = 0; i < listitemsFound.length; i++) {
-                                const listItem = listitemsFound[i][1];
-                                let item = listItem.matchAll(/(href="(.*?)">)(.*?)<\/a>/gms);
-                                if(item) {                
-                                    let itemObject = [...item];
-                                    tefTemplates.push({url:itemObject[0][2], caption:itemObject[0][3], postId:_.last(itemObject[0][2].split('/'))});
-                                }
-                            }
-                        }
-                    }
-                }
-                this.tefTemplates = tefTemplates;
-                await this.homey.settings.set('tefTemplates', tefTemplates);
-            }
-        } catch (error) {
-            this.error(error);
-        }
-
-    }    
 
     async openTemplate({template}) {
         try {                
@@ -182,6 +147,60 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         } catch (error) {
             this.error(error);
         }
+    }
+
+
+    async getAvdTemplatesFromPosts() {
+        let templates = [];
+        let run = true;
+        const postsPerRun = 20;
+        let runs = 1;
+        while (run) {            
+            let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs*postsPerRun) + 1});
+            templates = _.union(templates, _templates.templates);
+            if(_templates.postsFound<postsPerRun) run = false;
+            runs++;
+        }
+        this.avdTemplates = templates;
+        await this.homey.settings.set('avdTemplates', templates);
+        return templates;
+    }
+    async getAvdTemplatesFromPostsById({postId}) {
+        try {                
+            let topicHtml = await this.httpsGet({url:`https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/${postId}`});
+            if(topicHtml) {
+                let posts = topicHtml.matchAll(/<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'/gmsi);
+                let matchesFound = posts? [...posts] : [];
+                let templates = [];
+                let postsFound = matchesFound.length;
+                for (let i = 0; i < matchesFound.length; i++) {
+                    const postId = Number.parseInt(matchesFound[i][1]);
+                    let post = matchesFound[i][2];
+                    if(post.startsWith('\n')) post=post.substring(1).trim();
+                    let tefs = [], header;
+                    
+                    let tefMatches = post.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">.*?(H4s(.*?))<\/code><\/pre>/gmsi);
+                    let tefsFound = tefMatches? [...tefMatches] : [];
+                    for(let j=0;j<tefsFound.length;j++) {
+                        if(tefsFound[j].length>2) {
+                            tefs.push(tefsFound[j][2]);
+                            post = post.replace(tefsFound[j][0], '');
+                        }
+                    }
+                    if(tefs.length) {
+                        let headerMatches = post.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
+                        let headersFound = headerMatches? [...headerMatches] : [];
+                        if(headersFound && headersFound.length>0 && headersFound[0].length>2) header =headersFound[0][2].trim();
+                        //console.log(header);
+                        if(header && header.length>0) templates.push({postId:postId, post:post, tefs:tefs, header:header});
+                    }
+                }
+                return {templates, postsFound};
+            }
+        } catch (error) {
+            this.error(error);
+        }
+        return {templates:[], postsFound:0};
     }
     
     async onInit() {
@@ -603,11 +622,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         }
         return {icons:r, iconnames:this.customIconNames, languagecode:await this.homey.i18n.getLanguage(), homeyId:  await this.homey.cloud.getHomeyId()};
 
-      }
+    }
 
-      getDefaultIcons() {
-        return this.defaultIcons;        
-      }
+    getDefaultIcons() {
+    return this.defaultIcons;        
+    }
 
     getVersionChanged(versionUpdatedTo) {
         if(app.manifest.version!=versionUpdatedTo) {
@@ -685,16 +704,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
-      async onPairListDevices( ) {
-        var index = 0;
-        var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+    async onPairListDevices(deviceName) {//}, withIcon) {
+        let index = 0;
+        let devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
+
         //var count = Object.keys(devices).length;
         for (const key in devices) {
             if (Object.hasOwnProperty.call(devices, key)) {
                 const element = devices[key];
                 try {                    
-                    var _id = element.getData().id;
-                    var nr =Number.parseInt(_id.split('_')[1]);
+                    let _id = element.getData().id;
+                    let nr =Number.parseInt(_id.split('_')[1]);
                     index = Math.max(index,nr);
                 } catch (error) {
                     //index = Math.max(index,nr);
@@ -702,138 +722,27 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             }
         }
-        var id = '_'+(index+1).toString();
-        return [
-              {
-                  name: 'Advanced Virtual Device '+(index+1),
-                  data: {
-                      id: 'DeviceCapabilityVirtualDevice'+id
-                  }
-              }
-          ];
-      }
-
-      async onRepair(session, device) {
-        //let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;
+        if(deviceName) {        
+            let nr =Number.parseInt(deviceName.split('_')[1]);
+            index = Math.max(index,nr);
+        }
+        let id = '_'+(index+1).toString();
         
-
-        // var s = session;
-        // await session.nextView();
-        //console.log(JSON.stringify(await this.getCustomIcons()));
-        ///let data = device.getData();
-
-        session.setHandler('virtualdevicesettings_load', async (data) => {
-            // // emit when devices are still being searched
-            // session.emit('list_devices', devices);
-      
-            // return devices when searching is done
-            
-            return {settings:device.Settings, customicons:await this.getCustomIcons()};
-        });
-        session.setHandler('virtualdevicesettings_save', async (settings) => {
-            //console.log(settings, device.Settings , []);
-            //device.data.icon = "../../../assets/icon.svg";
-            //device.icon = "../../../assets/icon.svg";
-            return await device.loadFromSettings(settings, device.Settings , [], true);
-            
-            //return {settings:device.Settings, customicons:await this.getCustomIcons()};
-        });
-
-        
-        session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
-            
-            let dev = {};
-
-            
-            dev.customIconsAvailable = [];
-            let iconsInUse = {};
-            let devices  = await this.getDevices();
-            for (const deviceId in devices) {
-                if (Object.hasOwnProperty.call(devices, deviceId)) {
-                    const device = devices[deviceId];
-                    await this.executeForAllTypes(device, (type, i )=> {
-                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
-
-                    });
-                }
-            }   
-            let keys = Object.keys(iconsInUse);
-            for (let i = 0; i < CUSTOM_ICONS.length; i++) {
-                const icon = CUSTOM_ICONS[i];
-                if(keys.indexOf(icon)===-1)dev.customIconsAvailable.push(icon);
+        let device = {
+            name: 'Advanced Virtual Device '+(index+1),
+            data: {
+                id: 'DeviceCapabilityVirtualDevice'+id
             }
-
-            for (const iconUsedKey in iconsInUse) {
-                if (Object.hasOwnProperty.call(iconsInUse, iconUsedKey)) {
-                    
-                }
-            }            
-            return dev;
-        });        
-
-        session.setHandler('virtualdevicesettings_getJson', async (str) => {
-            try {                
-                let exchangerFile = await this.getNormalExchangerFile(str);
-                if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
-                if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
-                    if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
-                        if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
-                    }
-                }
-                    //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
-                
-                // await this.executeForAllTypes(device, async (type, i )=> {
-                //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
-                //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
-                //         let b =device.Settings[type+i+"Icon"];
-                //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-                //     }
-                // });
-                return exchangerFile;
-
-                //return JSON.parse(await this.unzip(str));
-            } catch (error) {
-                this.error(error);
-            }
-        });
-
-        session.setHandler('virtualdevicesettings_getTextSettings', async (viewSettings) => {
-            try {
-                
-                let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id, settings:device.Settings};
-                if(viewSettings && viewSettings.copyWithIcons) 
-                    await this.executeForAllTypes(device, async (type, i )=> {
-                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]]){
-                            dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-                        }
-                    });
-                dev = await this.getAdvancedFlowsJSON({dev, device });
-                return dev;
-            } catch (error) {
-                this.error(error);
-                
-            }
-        });
-
-        
-        session.setHandler('virtualdevicesettings_readFlows', async (exchangerFile) => {
-            try {                    
-                return await this.readAdvancedFlowsJSON({exchangerFile, device});
-            } catch (error) {
-                this.error(error);                
-            }
-        });
-
-        session.setHandler('virtualdevicesettings_updateFlowCommand', async (exchangerFile) => {            
-            try {
-                return await this.updateAdvancedFlowsJSON({exchangerFile});                
-            } catch (error) {                
-                this.error(error);
-            }
-            
-        });
+        };
+        if(true) {
+            var iconPath = "../../../userdata/virtualdeviceicons/" + device.data.id + ".svg";    
+            device.data.icon = iconPath;
+            device.icon = iconPath;
+        }
+        return [device];
     }
-    
+
+      
     async loadAdvancedFlows() {
         return _.mapValues(await app.homeyAPI.flow.getAdvancedFlows(), af => { return { id: af.id, name:af.name, cards:_.mapValues(af.cards, card=> {return {ownerUri:card.ownerUri, id:card.id};}) }; });
     }
@@ -841,9 +750,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         this.log('LoadStuff reload:', reload);
         let api = await app.refreshHomeyAPI();
         allDevices = app.devices;
+        allZones = app.zones;
+        allApps = app.apps;
         //await app.getDisconnectedHomeyApi(); //app.homeyAPI
         
-
         allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
         allVariables = !reload && allVariables ? allVariables : _.mapValues(await api.logic.getVariables(), ({name, type})=>{ return {name, type}; });
         allTokens = !reload && allTokens ? allTokens : _.map(await api.flowToken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
@@ -895,15 +805,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let _device = allDevices[deviceId];
             if(devicesToReplace && _device) devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
         }
-
+        function addZoneToReplace(zoneId) {
+            let _zone = allZones[zoneId];
+            if(zonesToReplace && _zone) zonesToReplace[zoneId] = {name:_zone.name};
+        }
         let devicesToReplace = {};
         let usersToReplace = {};
-        let variablesToReplace = {};            
+        let variablesToReplace = {};
         let tokensToReplace = {};
+        let zonesToReplace = {};
         //advancedflowsselected = advancedflowsselected || [];
 
         dev = dev || {};
         await this.loadStuff();
+        if(device && dev) dev.deviceName = device.getName();
 
 
         let advancedflowsselectedKeys = advancedflowsselected ? Object.keys(advancedflowsselected) : 0;
@@ -922,10 +837,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         _.each(advancedflows, (flow, flowKey)=>{
             _.each(flow.cards, (card, cardKey)=>{
-                let deviceId;
-                if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (deviceId=card.ownerUri.substring(13))) {//!=device.__id) {
-                    if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) addDeviceToReplace(deviceId) ;
-                    //if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);
+                let id;
+                if(card.ownerUri && card.ownerUri.startsWith('homey:device:') && (id=card.ownerUri.substring('homey:device:'.length))) {
+                    if( Object.keys(devicesToReplace).indexOf(id)===-1 ) addDeviceToReplace(id) ;
+                } else if(card.ownerUri && card.ownerUri.startsWith('homey:zone:') && (id=card.ownerUri.substring('homey:zone:'.length))) {
+                    if( Object.keys(zonesToReplace).indexOf(id)===-1 ) addZoneToReplace(id) ;
                 }
                 if(card.droptoken) {
                     if(!card.args) card.args = {};
@@ -935,6 +851,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(card.args) for (const argKey in card.args) {
                     if (Object.hasOwnProperty.call(card.args, argKey)) {
                         //const argument = card.args[argKey];
+                        if(card.ownerUri && card.ownerUri.startsWith('homey:app:') && (id=card.ownerUri.substring('homey:app:'.length))) {
+                            if(AppsInfo[id] && AppsInfo[id].canCreateByName({argName:argKey})) 
+                                if(!tokensToReplace[id]) tokensToReplace[id] =  {name:allApps[id].name};
+                                // if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
+                                // if(!tokensToReplace[appId].args[argKey]) tokensToReplace[appId].args[argKey] = {};
+                                // if(!tokensToReplace[appId].args[argKey].name) tokensToReplace[appId].args[argKey].name = card.args[argKey].name;
+                                // if(!tokensToReplace[appId].args[argKey].id) tokensToReplace[appId].args[argKey].valueId = card.args[argKey].id;
+                        }
                         switch (typeof(card.args[argKey])) {
                             case "string":
                                 let a = card.args[argKey].matchAll(/\[\[homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)]]/gm);// || card.args[argKey].matchAll(/^homey:([a-zA-Z]+)[:]?([^:|]+)?[:|]?(.+?)$/gm) ;
@@ -989,6 +913,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                                 if(!tokensToReplace[appIp]) tokensToReplace[appIp] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
                                                 if(!tokensToReplace[appIp].tokens[token.id]) tokensToReplace[appIp].tokens[token.id] =  {name:token.title, type:token.type};
                                                 }
+                                            break;
+                                        case "zone": 
+                                            let zoneId = tokenMatchs[2];
+                                            let zone = _.find(allZones, (zone, zoneKey)=>zoneKey == zoneId );
+                                            if(zone) {
+                                                if(!zonesToReplace[zoneId]) zonesToReplace[zoneId] =  {name:zone.name};
+                                            }
+                                            
                                             break;                                                
                                     }
                                 }
@@ -1010,11 +942,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     }
                                     else if(card.ownerUri.startsWith('homey:app:')) {
                                         
-                                        let appIp = card.ownerUri.substring(10);
-                                        let token = _.find(allTokens, t=>t.uri=='homey:app:' + appIp &&t.id==id );
-                                        if(token) {
-                                            if(!tokensToReplace[appIp]) tokensToReplace[appIp] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
-                                            if(!tokensToReplace[appIp].tokens[token.id]) tokensToReplace[appIp].tokens[token.id] =  {name:token.title, type:token.type};
+                                        let appId = card.ownerUri.substring(10);
+                                        let token, autocomplete;// = _.find(allTokens, t=>t.uri=='homey:app:' + appIp &&t.id==id );
+                                        if((token = _.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id==id ))) {
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
+                                            if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens = {};
+                                            if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
+                                        }
+                                        else {
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                         }
                                     }
                                     
@@ -1025,6 +961,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 }
             });
         });
+        if(Object.keys(zonesToReplace).length>0) dev.zonesToReplace = zonesToReplace;
         if(Object.keys(devicesToReplace).length>0) dev.devicesToReplace = devicesToReplace;
         if(Object.keys(usersToReplace).length>0) dev.usersToReplace = usersToReplace;
         if(Object.keys(variablesToReplace).length>0) dev.variablesToReplace = variablesToReplace;
@@ -1064,11 +1001,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         
 
             let _allDevices = allDevices;
+            let _allApps = allApps;
 
             //let apiCommand = "";
             //let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
             if(!exchangerFile.devicesToReplace) exchangerFile.devicesToReplace = {};
             let devicesToReplace = exchangerFile.devicesToReplace;
+            let tokensToReplace = exchangerFile.tokensToReplace;
             if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId]) exchangerFile.devicesToReplace[exchangerFile.originalId] = {};//replaceWith: {id:device.__id, name:device.getName()}, original:true};
             if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith) exchangerFile.devicesToReplace[exchangerFile.originalId].replaceWith = {id:device.__id, name:device.getName(), original:true};
 
@@ -1080,10 +1019,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                             if( Object.keys(devicesToReplace).indexOf(deviceId)===-1 ) {
                                 devicesToReplace[deviceId] = {replacements: [], actions:[]};
                             }
-                            if(!devicesToReplace[deviceId].replacements)devicesToReplace[deviceId].replacements = [];
-                            if(!devicesToReplace[deviceId].actions)devicesToReplace[deviceId].actions = [];
-                            if(!devicesToReplace[deviceId].triggers)devicesToReplace[deviceId].triggers = [];
-                            if(!devicesToReplace[deviceId].conditions)devicesToReplace[deviceId].conditions = [];
+                            if(!devicesToReplace[deviceId].replacements)devicesToReplace[deviceId].replacements = [];                            
+                            if(!devicesToReplace[deviceId][card.type +'s'])devicesToReplace[deviceId][card.type +'s'] = [];
                             if(devicesToReplace[deviceId][card.type +'s'].indexOf(card.id)===-1) devicesToReplace[deviceId][card.type +'s'].push(card.id);                         
                         }
                         if(card.ownerUri === 'homey:manager:flow' && card.args && card.args.flow && card.args.flow.id) {
@@ -1095,19 +1032,64 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                             else if(card.id.indexOf('_image_tag')>-1) type='image';                            
                             if(!exchangerFile.flowsToReplace[card.args.flow.id]) exchangerFile.flowsToReplace[card.args.flow.id] = {types:{}};
                             if(!exchangerFile.flowsToReplace[card.args.flow.id].types[type]) exchangerFile.flowsToReplace[card.args.flow.id].types[type] = { name:card.args.flow.name, type:card.args.flow.type };
-                        } 
+                        }
+                        if(card.ownerUri.startsWith('homey:app:')) {
+                            _.each(card.args, (arg, argKey)=> {
+                                let appId = card.ownerUri.substring(10);
+                                
+                                if(typeof(card.args[argKey])==='string' && AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey})){
+                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                    if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
+                                    if(!tokensToReplace[appId].args[argKey]) tokensToReplace[appId].args[argKey] = {};
+                                    if(!tokensToReplace[appId].args[argKey].name) tokensToReplace[appId].args[argKey].name = card.args[argKey];                                    
+                                    return;
+                                }
+
+                                if(typeof(card.args[argKey])!=='object') return;
+                                let id = Object.keys(card.args[argKey]).indexOf('id')>-1? card.args[argKey].id : Object.keys(card.args[argKey]).indexOf('name')>-1? card.args[argKey].name : null;
+                                if(!_.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id===id)) {                            
+                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                    if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
+                                    if(!tokensToReplace[appId].args[argKey]) tokensToReplace[appId].args[argKey] = {};
+                                    if(!tokensToReplace[appId].args[argKey].name) tokensToReplace[appId].args[argKey].name = card.args[argKey].name;
+                                    if(!tokensToReplace[appId].args[argKey].id) tokensToReplace[appId].args[argKey].valueId = card.args[argKey].id;
+                                    if(!tokensToReplace[appId].args[argKey][card.type+'s']) tokensToReplace[appId].args[argKey][card.type+'s'] =  {};
+                                    if(!tokensToReplace[appId].args[argKey][card.type+'s'][card.id]) tokensToReplace[appId].args[argKey][card.type+'s'][card.id] =  {name:card.args[argKey].name, valueId:card.args[argKey].id};
+                                }
+                            });
+                        }
                     }
                 });
             });
 
-            let actionIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.actions));
-            let conditionIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.conditions));
-            let triggerIds = _.uniqBy(_.flatMap(devicesToReplace, d=>d.triggers));
+            let actionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.actions));
+            let conditionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.conditions));
+            let triggerIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.triggers));
 
-            let _actionCards = _.filter(actionCards, x=> actionIds.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:device'));
-            let _conditionCards = _.filter(conditionCards, x=> conditionIds.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
-            let _triggerCards = _.filter(triggerCards, x=> triggerIds.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
-            _allDevices = _.filter(_allDevices, (d, dKey)=>_.find(_actionCards, x=>x.uri && x.uri=='homey:device:'+dKey));
+            let _actionCardsDevices = _.filter(actionCards, x=> actionIdsDevices.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:device'));
+            let _conditionCardsDevices = _.filter(conditionCards, x=> conditionIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
+            let _triggerCardsDevices = _.filter(triggerCards, x=> triggerIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
+            
+            _allDevices = _.filter(_allDevices, (d, dKey)=>
+                _.find(_actionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
+                _.find(_conditionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
+                _.find(_triggerCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey)
+            );
+
+
+            // let actionIdsApps = _.uniqBy(_.flatMap(tokensToReplace, d=>d.actions));
+            // let conditionIdsApps = _.uniqBy(_.flatMap(tokensToReplace, d=>d.conditions));
+            // let triggerIdsApps = _.uniqBy(_.flatMap(tokensToReplace, d=>d.triggers));
+
+            // let _actionCardsApps = _.filter(actionCards, x=> actionIdsApps.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:app'));
+            // let _conditionCardsApps = _.filter(conditionCards, x=> conditionIdsApps.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:app'));
+            // let _triggerCardsApps = _.filter(triggerCards, x=> triggerIdsApps.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:app'));
+            
+            // _allApps = _.filter(_allApps, (d, dKey)=>
+            //     _.find(_actionCardsApps, x=>x.uri && x.uri=='homey:app:'+dKey) ||
+            //     _.find(_conditionCardsApps, x=>x.uri && x.uri=='homey:app:'+dKey) ||
+            //     _.find(_triggerCardsApps, x=>x.uri && x.uri=='homey:app:'+dKey)
+            // );
             
             _.each(exchangerFile.flowsToReplace, (flow, flowId)=>{
                 _.each(flow.types, (type, typeId)=>{                        
@@ -1119,12 +1101,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(type.replaceWith) type.replaceWithId = type.replaceWith.id;
                 });
             });
+            _.each(exchangerFile.zonesToReplace, (zone, zoneId)=>{
+                zone.replacements = _.sortBy(_.map(_.pickBy(allZones, ()=> true),
+                    d=> { return {id:d.id, name:d.name};}), 'name');
+                if(!zone.replaceWith) zone.replaceWith = _.find(zone.replacements, x=>x.id==zoneId);
+                if(zone.replaceWith) zone.replaceWithId = zone.replaceWith.id;
+            });
+
             
             _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
                 device.replacements = _.sortBy(_.map(_.filter(_allDevices, (d, dKey)=> 
-                    _.find(_actionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id)) || 
-                    _.find(_conditionCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id)) || 
-                    _.find(_triggerCards, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id))
+                    _.find(_actionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id)) || 
+                    _.find(_conditionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id)) || 
+                    _.find(_triggerCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id))
                 ),
                     d=> { return {id:d.id, name:d.name};}), 'name');
                 if(!device.replaceWith) device.replaceWith = _.find(device.replacements, x=>x.id==deviceId);
@@ -1137,25 +1126,45 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(user.replaceWith) user.replaceWithId = user.replaceWith.id;
             });
             _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
-                variable.replacements = _.sortBy(_.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};}), 'name');
-                variable.replaceWith = _.find(variable.replacements, x=>x.id==variableId);
+                variable.replacements =  _.union( [{"id":-1, "name":"-- Create --", newName:variable.name}], _.sortBy(_.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};}), 'name'));
+                variable.replaceWith =_.find(variable.replacements, x=>x.id==variableId);
                 if(variable.replaceWith) variable.replaceWithId = variable.replaceWith.id;
             });
+            
             _.each(exchangerFile.tokensToReplace, (app, appId)=>{
                 _.each(app.tokens, (token, tokenId)=>{
-                    token.replacements = _.sortBy(_.map(_.filter(allTokens, v=> v.uri=="homey:app:" + appId && v.type==token.type ), x=> { return {id:x.id, name:x.title};}), 'name');                    
+                    token.replacements = _.sortBy(_.map(_.filter(allTokens, t=> t.uri=="homey:app:" + appId && t.type==token.type ), x=> { return {id:x.id, name:x.title};}), 'name');                    
                     token.replaceWith = _.find(token.replacements, x=>x.id==tokenId);
                     if(token.replaceWith) token.replaceWithId = token.replaceWith.id;
+                });
+                _.each(app.args, (arg, argId)=>{
+                    /// Next part is for automatic finding of ID's
+                    // if(!flowcards) flowcards = _.filter(allAdvancedFlows, af=>_.find(af.cards, card=>card.ownerUri && card.ownerUri.startsWith('homey:app:')));
+                    // let t = _.flatMap(_.filter(flowcards, af=>_.find(af.cards, card=>card.ownerUri && card.ownerUri=== 'homey:app:' + appId )), fc=>_.toArray(fc.cards));
+                    // let appCards = _.map(_.filter(
+                    //     _.flatMap(_.filter(flowcards, af=>_.find(af.cards, card=>card.ownerUri && card.ownerUri=== 'homey:app:' + appId )), fc=>_.toArray(fc.cards)),
+                    //     c=>c.args && c.args[argId]),
+                    //     m=>m.args[argId]);
+                    arg.replacements = [];
+                    let appInfo = AppsInfo[appId];
+                    if(appInfo && appInfo.canCreateByName({argName:argId})) arg.replacements.push({"id":-1, "name":"-- Create --", newName:arg.name});
+                    arg.replaceWith = _.find(arg.replacements, x=>x.id==argId);
+                    if(!arg.replaceWith) arg.replaceWith = _.find(arg.replacements, x=>x.id===-1);
+                    if(arg.replaceWith) arg.replaceWithId = arg.replaceWith.id;
                 });
             });
 
 
             //Turn it into arrays
             exchangerFile.flowsToReplace = _.map(exchangerFile.flowsToReplace, (x, id)=> { x.id=id; x.types=_.map(x.types, (t, tId)=> { t.id=tId;return t; } ); return x; } );
+            exchangerFile.zonesToReplace = _.map(exchangerFile.zonesToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.devicesToReplace = _.map(exchangerFile.devicesToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.usersToReplace = _.map(exchangerFile.usersToReplace, (x, id)=> { x.id=id;return x; } );
             exchangerFile.variablesToReplace = _.map(exchangerFile.variablesToReplace, (x, id)=> { x.id=id;return x; } );
-            exchangerFile.tokensToReplace = _.map(exchangerFile.tokensToReplace, (x, id)=> { x.id=id; x.tokens=_.map(x.tokens, (t, tId)=> { t.id=tId;return t; } ); return x; } );
+            exchangerFile.tokensToReplace = _.map(exchangerFile.tokensToReplace, (x, id)=> { x.id=id; 
+                x.tokens=_.map(x.tokens, (t, tId)=> { t.id=tId;return t; } ); 
+                x.args=_.map(x.args, (a, aId)=> { a.id=aId; return a; } ); 
+                return x; } );
 
             
             /// Does not work
@@ -1178,6 +1187,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let apiCommand = "";
             let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
 
+            await this.loadStuff();
             
             // _.each(exchangerFile.flowsToReplace, (flow)=>{
             //     if(!flow.replaceWith) return;
@@ -1185,6 +1195,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //     flow.searchReplaceWith = "homey:flow:" + flow.replaceWith.id;
             // });
 
+            _.each(exchangerFile.zonesToReplace, (zone)=>{
+                if(!zone.replaceWith) return;
+                zone.searchFor = "homey:zone:"+zone.id;
+                zone.searchReplaceWith = "homey:zone:" + zone.replaceWith.id;
+            });
             _.each(exchangerFile.devicesToReplace, (device)=>{
                 if(!device.replaceWith) return;
                 device.searchFor = "homey:device:"+device.id;
@@ -1197,7 +1212,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 user.searchReplaceWith = "homey:manager:presence|" + user.replaceWith.id;
             });
             _.each(exchangerFile.variablesToReplace, (variable)=>{
-                if(!variable.replaceWith) return;
+                if(!variable.replaceWith || variable.replaceWith.id===-1) return;
                 variable.searchFor = "homey:manager:logic|"+variable.id;
                 variable.searchReplaceWith = "homey:manager:logic|" + variable.replaceWith.id;
             });
@@ -1207,59 +1222,98 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     token.searchFor = "homey:app:"+app.id+"|"+token.id;
                     token.searchReplaceWith = "homey:app:"+app.id+"|"+token.replaceWith.id;
                 });
+                _.each(app.args, (arg)=>{
+                    if(!arg.replaceWith) return;
+                    arg.searchFor = "homey:app:"+app.id+"|"+arg.id;
+                    arg.searchReplaceWith = "homey:app:"+app.id+"|"+arg.replaceWith.id;
+                });
             });
-            _.each(cards, c=>{
-                if(c && c.ownerUri) {
-                    //_.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.ownerUri.indexOf(device.searchFor)>-1)c.ownerUri = c.ownerUri.replaceAll(device.searchFor, device.searchReplaceWith);  });
-                    _.each(exchangerFile.devicesToReplace, (device)=>{ if(device.searchFor && c.ownerUri === device.searchFor) c.ownerUri = device.searchReplaceWith;});
+            _.each(cards, card=>{
+                if(card && card.ownerUri) {                    
+                    if(card.ownerUri.startsWith('homey:device:')) _.each(exchangerFile.devicesToReplace, (device)=>{ if(device.searchFor && card.ownerUri === device.searchFor) card.ownerUri = device.searchReplaceWith;});
+                    else if(card.ownerUri.startsWith('homey:zone:')) _.each(exchangerFile.zonesToReplace, (zone)=>{ if(zone.searchFor && card.ownerUri === zone.searchFor) card.ownerUri = zone.searchReplaceWith;});
                 }
-                if(c.args) for (const argKey in c.args) {
-                    if (Object.hasOwnProperty.call(c.args, argKey)) {
+                if(card.args) for (const argKey in card.args) {
+                    if (Object.hasOwnProperty.call(card.args, argKey)) {
                         //const c.args[argKey] = c.args[argKey];
-                        switch (typeof(c.args[argKey])) {
+                        let id;
+                        if(card.ownerUri && card.ownerUri.startsWith('homey:app:') && (id=card.ownerUri.substring('homey:app:'.length))) {
+                            if(AppsInfo[id] && AppsInfo[id].canCreateByName({argName:argKey})) 
+                            _.each(exchangerFile.tokensToReplace, (app)=>{ if(app.id===id) _.each(app.args, (arg, argId)=>{ 
+                                if(arg.searchFor) {
+                                    if(card.args[argKey] === arg.name) card.args[argKey] = arg.replaceWith.newName;
+                                   // else if(card.args[argKey].indexOf("[[" + arg.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + arg.searchFor + "]]", "[[" + arg.searchReplaceWith + "]]");
+                                }
+                             }); });
+                            if(!exchangerFile.tokensToReplace[id]) exchangerFile.tokensToReplace[id] =  {name:allApps[id].name};
+                            // if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
+                            // if(!tokensToReplace[appId].args[argKey]) tokensToReplace[appId].args[argKey] = {};
+                            // if(!tokensToReplace[appId].args[argKey].name) tokensToReplace[appId].args[argKey].name = card.args[argKey].name;
+                            // if(!tokensToReplace[appId].args[argKey].id) tokensToReplace[appId].args[argKey].valueId = card.args[argKey].id;
+                        }
+                        switch (typeof(card.args[argKey])) {
                             case "string":      
+                                _.each(exchangerFile.zonesToReplace, (zone)=>{ 
+                                    if(zone.searchFor) {
+                                        if(card.args[argKey] === zone.searchFor)card.args[argKey] = zone.searchReplaceWith;
+                                        else if(card.args[argKey].indexOf("[[" + zone.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + zone.searchFor + "]]", "[[" + zone.searchReplaceWith + "]]"); 
+                                    } 
+                                });
                                 _.each(exchangerFile.devicesToReplace, (device)=>{ 
                                     if(device.searchFor) {
-                                        if(c.args[argKey] === device.searchFor)c.args[argKey] = device.searchReplaceWith;
-                                        else if(c.args[argKey].indexOf("[[" + device.searchFor + "]]")>-1) c.args[argKey] = c.args[argKey].replaceAll("[[" + device.searchFor + "]]", "[[" + device.searchReplaceWith + "]]"); 
+                                        if(card.args[argKey] === device.searchFor)card.args[argKey] = device.searchReplaceWith;
+                                        else if(card.args[argKey].indexOf("[[" + device.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + device.searchFor + "]]", "[[" + device.searchReplaceWith + "]]"); 
                                     } 
                                 });
                                 _.each(exchangerFile.usersToReplace, (user)=>{ 
                                     if(user.searchFor) {
-                                        if(c.args[argKey] === user.searchFor) c.args[argKey] = user.searchReplaceWith;
-                                        else if(c.args[argKey].indexOf("[[" + user.searchFor + "]]")>-1) c.args[argKey] = c.args[argKey].replaceAll("[[" + user.searchFor + "]]", user.searchReplaceWith + "]]");  
+                                        if(card.args[argKey] === user.searchFor) card.args[argKey] = user.searchReplaceWith;
+                                        else if(card.args[argKey].indexOf("[[" + user.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + user.searchFor + "]]", user.searchReplaceWith + "]]");  
                                     } 
                                 });
                                 _.each(exchangerFile.variablesToReplace, (variable)=>{ 
                                     if(variable.searchFor) {
-                                         if(c.args[argKey] === variable.searchFor) c.args[argKey] = variable.searchReplaceWith;
-                                         else if(c.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) c.args[argKey] = c.args[argKey].replaceAll("[[" + variable.searchFor + "]]", variable.searchReplaceWith + "]]");  
+                                         if(card.args[argKey] === variable.searchFor) card.args[argKey] = variable.searchReplaceWith;
+                                         else if(card.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + variable.searchFor + "]]", variable.searchReplaceWith + "]]");  
                                     }
                                 });
                                 _.each(exchangerFile.tokensToReplace, (app)=>{ _.each(app.tokens, (token, tokenId)=>{ 
                                     if(token.searchFor) {
-                                        if(c.args[argKey] === token.searchFor) c.args[argKey] = token.searchReplaceWith;
-                                        else if(c.args[argKey].indexOf("[[" + token.searchFor + "]]")>-1)c.args[argKey] = c.args[argKey].replaceAll("[[" + token.searchFor + "]]", "[[" + token.searchReplaceWith + "]]");
+                                        if(card.args[argKey] === token.searchFor) card.args[argKey] = token.searchReplaceWith;
+                                        else if(card.args[argKey].indexOf("[[" + token.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + token.searchFor + "]]", "[[" + token.searchReplaceWith + "]]");
                                     }
                                  }); });
                                 break;
                             case "object":      
                                 //_.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.args[argKey].indexOf("[[" + device.searchFor)>-1)c.args[argKey] = c.args[argKey].replaceAll("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
-                                if(c.args[argKey].id && c.ownerUri && (c.ownerUri=='homey:manager:presence' || c.ownerUri=='homey:manager:mobile'))
-                                    _.each(exchangerFile.usersToReplace, (user)=>{ if(c.args[argKey].id==user.id && user.replaceWith) {c.args[argKey].id = user.replaceWith.id ;c.args[argKey].name = user.replaceWith.name;c.args[argKey].athomId = user.replaceWith.athomId;c.args[argKey].image = user.replaceWith.image; }   });
-                                if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(c.args[argKey].id==variable.id && variable.replaceWith) {c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;}  });
+                                if(card.args[argKey].id && card.ownerUri && (card.ownerUri=='homey:manager:presence' || card.ownerUri=='homey:manager:mobile'))
+                                    _.each(exchangerFile.usersToReplace, (user)=>{ if(card.args[argKey].id==user.id && user.replaceWith) {card.args[argKey].id = user.replaceWith.id ;card.args[argKey].name = user.replaceWith.name;card.args[argKey].athomId = user.replaceWith.athomId;card.args[argKey].image = user.replaceWith.image; }   });
+                                if(card.args[argKey].id && card.ownerUri && card.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(card.args[argKey].SearchFor && card.args[argKey].id==variable.id && variable.replaceWith) {card.args[argKey].id = variable.replaceWith.id; card.args[argKey].name = variable.replaceWith.name;}  });
                                 
-                                if((c.args[argKey].id || c.args[argKey].name) && c.ownerUri && c.ownerUri.startsWith('homey:app:')) {
+                                if((card.args[argKey].id || card.args[argKey].name) && card.ownerUri && card.ownerUri.startsWith('homey:app:')) {
                                     _.each(exchangerFile.tokensToReplace, (app)=>{
-                                        if("homey:app:" + app.id!==c.ownerUri) return;
+                                        if("homey:app:" + app.id!==card.ownerUri) return;
                                         _.each(app.tokens, (token)=>{ 
-                                            if(token.searchFor && (c.args[argKey].id===token.id || c.args[argKey].name===token.id)) {
-                                                if(c.args[argKey].id) {
-                                                    c.args[argKey].id = token.replaceWith.id;
-                                                    c.args[argKey].name = token.replaceWith.name;
+                                            if(token.searchFor && (card.args[argKey].id===token.id || card.args[argKey].name===token.id)) {
+                                                if(card.args[argKey].id) {
+                                                    card.args[argKey].id = token.replaceWith.id;
+                                                    card.args[argKey].name = token.replaceWith.name;
                                                 }
-                                                else if(c.args[argKey].name) c.args[argKey].name = token.replaceWith.id;
+                                                else if(card.args[argKey].name) card.args[argKey].name = token.replaceWith.id;
                                             }
+                                        }); 
+                                        _.each(app.args, (arg)=>{ 
+                                            
+                                        let appInfo = AppsInfo[app.id];
+                                        if(appInfo && appInfo.canCreateByName({argName:argKey})) {
+                                            if(arg.searchFor && (card.args[argKey].id===arg.valueId || card.args[argKey].name===arg.name)) {
+                                                if(card.args[argKey].id) {
+                                                    card.args[argKey].id = arg.replaceWith.id;
+                                                    card.args[argKey].name = arg.replaceWith.name;
+                                                }
+                                                else if(card.args[argKey].name) card.args[argKey].name = arg.replaceWith.name;
+                                            }
+                                        }
                                         }); 
                                     });
                                 }
@@ -1277,6 +1331,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     delete card.args._$droptoken$_;
                     if(Object.keys(card.args).length===0) delete card.args;
                 }
+                if(card.ownerUri==='homey:app:com.athom.homeyscript') {
+                    card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
+                    card.id = 'hs_' + card.id;
+                }
             });
 
             
@@ -1293,11 +1351,23 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         });
                     }
                 }
+                for (let i = 0; i < exchangerFile.variablesToReplace.length; i++) {
+                    const variable = exchangerFile.variablesToReplace[i];
+                    if(variable.replaceWithId===-1) {
+                        let val = variable.type=='string' ? '' : variable.type=='boolean' ? false : variable.type=='number' ? 0 : undefined;
+
+                        variable.replaceWith = await Homey.logic.createVariable({ variable: {name:variable.replaceWith.name, type:variable.type, value:val} });
+                        variable.searchFor = "homey:manager:logic|"+variable.id;
+                        variable.searchReplaceWith = "homey:manager:logic|" + variable.replaceWith.id;
+                    }
+                }
+
                 for(let afIndex=0;afIndex<exchangerFile.advancedflows.length;afIndex++) {
                     let update = false;
                     for (const cardKey in exchangerFile.advancedflows[afIndex].cards) {
                         if (Object.hasOwnProperty.call(exchangerFile.advancedflows[afIndex].cards, cardKey)) {
                             const card = exchangerFile.advancedflows[afIndex].cards[cardKey];
+                            const c=card;
                             if(card && card.ownerUri && card.ownerUri==='homey:manager:flow' && card.args && card.args.flow) {                            
                                 for(let i=0;i<exchangerFile.flowsToReplace.length;i++) {
                                     for(let j=0;j<exchangerFile.flowsToReplace[i].types.length;j++) {                                
@@ -1310,7 +1380,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     
                                 }
                             }
+
+                            if(c.args) for (const argKey in c.args) {
+                                if (Object.hasOwnProperty.call(c.args, argKey)) {
+                                    //const c.args[argKey] = c.args[argKey];
+                                    switch (typeof(c.args[argKey])) {
+                                        case "string":      
+                                            _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                                if(variable.searchFor && variable.replaceWithId===-1) {
+                                                    if(c.args[argKey] === variable.searchFor) c.args[argKey] = variable.searchReplaceWith;
+                                                    else if(c.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) c.args[argKey] = c.args[argKey].replaceAll("[[" + variable.searchFor + "]]", variable.searchReplaceWith + "]]");  
+                                                }
+                                            });
+                                            break;
+                                        case "object":      
+                                            if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(variable.replaceWithId===-1 && variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {
+                                                c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
+                                                update = true;
+                                            }  });                                        
+                                            break;
+                                    }
+                                }
+                            }
                         }
+
                         if(update) {
                             exchangerFile.advancedflows[afIndex] = await Homey.flow.updateAdvancedFlow({id: exchangerFile.advancedflows[afIndex].id, advancedflow:
                                 {cards: exchangerFile.advancedflows[afIndex].cards}
@@ -1417,11 +1510,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(json.variablesToReplace[key].t!==undefined) json.variablesToReplace[key].type=json.variablesToReplace[key].t; delete json.variablesToReplace[key].t;
         });
         if(json.t) {json.tokensToReplace=json.t; delete json.t;} 
-        _.each(json.t, (app, key)=> {
+        _.each(json.tokensToReplace, (app, key)=> {
             if(json.tokensToReplace[key].n!==undefined) json.tokensToReplace[key].name=json.tokensToReplace[key].n; delete json.tokensToReplace[key].n;
             if(json.tokensToReplace[key].t) {
                 json.tokensToReplace[key].tokens=json.tokensToReplace[key].t; delete json.tokensToReplace[key].t;
-                _.each(json.tokensToReplace[key].t, (token, tokenKey)=> { 
+                _.each(json.tokensToReplace[key].tokens, (token, tokenKey)=> { 
                     if(json.tokensToReplace[key].tokens[tokenKey].n!==undefined) json.tokensToReplace[key].tokens[tokenKey].name=json.tokensToReplace[key].tokens[tokenKey].n; delete json.tokensToReplace[key].tokens[tokenKey].n;
                     if(json.tokensToReplace[key].tokens[tokenKey].t!==undefined) json.tokensToReplace[key].tokens[tokenKey].type=json.tokensToReplace[key].tokens[tokenKey].t; delete json.tokensToReplace[key].tokens[tokenKey].t;
                 });
@@ -1500,95 +1593,302 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         } catch (error) { return undefined; }
     }
       
-      async onPair(session, arg1) {
+    async onPair(session, arg1) {
+    // var s = session;
+    // await session.nextView();
+    let devices = await this.onPairListDevices();
+    var device;
+    let useTemplate;
+    let tefs;
+
+    session.setHandler('list_devices', async (data) => {
+        // // emit when devices are still being searched
+        // session.emit('list_devices', devices);
+    
+        // return devices when searching is done
+        return devices;
+    });
+    
+    session.setHandler('list_devices_selection', async (selectedDevices) => {
+        device = selectedDevices[0];
+        device.icon = '/icon-default.svg';
+    });
+
+    session.setHandler('virtualdeviceicons_load', async (data) => {
+        return {tefTemplates: await this.homey.settings.get('avdTemplates'), device:devices[0]};
+    });
+
+    session.setHandler('use_template', async (data) => {
+        useTemplate = data.template;
+        tefs = data.tefs;
+        //return this.getCustomIcons();
+        return true;
+    });
+
+
+    session.setHandler('list_icons', async (data) => {
+        //return this.getCustomIcons();
+        return this.getDefaultIcons();
+
+
+    });
+
+    session.setHandler('icon_picked', async ({icon, name}) => {
+
+        device = devices[0];
+        
+        let iconpath = "../../." +(await app.setDeviceIconFromDefault({device, icon:icon}));
+        
+        //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
+        device.data.icon = iconpath;//iconPath;
+        device.icon = iconpath;//iconPath;            
+        if(name && name.length>0) device.name = name;
+        tefs = null;
+        return device;
+        // This is for custom icon picked
+        // device = devices[0];
+        // var iconPath = "../../../userdata/customicons/" + data.icon.file+'.svg';
+        // device.data.icon = iconPath;
+        // device.icon = iconPath;
+        // return device;
+    });
+    
+    session.setHandler('icon_save', async ({image, name})=> {     
+        device = devices[0];       
+        var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
+        var iconPath = "../../." + icon.path;      
+        device.data.icon = iconPath;
+        device.icon = iconPath;
+        if(name && name.length>0) device.name = name;
+        tefs = null;
+        return device;      
+        
+        });
+
+    
+    session.setHandler('virtualdeviceicons_getTefs', async (obj) => {
+        let tefs = [];
+        let template = obj.template;
+        let device = obj.device;
+        for (let i = 0; i < template.tefs.length; i++) {
+            const tef = template.tefs[i];
+            let tefPlain = await this.getAvdTef(tef);
+            //tefs.push();
+            tefs.push({tef:tefPlain, device:i===0?(device?device:devices[0]):await this.onPairListDevices(tefs[i-1].device.data.id)});
+            if(tefPlain.deviceName) _.last(tefs).device.name = tefPlain.deviceName;            
+        }
+        return {tefs};
+    });
+
+
+    session.setHandler('done', async () => {
+        device = devices[0]; 
+        let _devices;
+        if(tefs) {
+            _devices = [];
+            for (let i = 0; i < tefs.length; i++) {
+                const tef = tefs[i];
+                _devices.push(tef.device);        
+                if(tef.tef.deviceIcon) {
+					await this.homey.app.createDeviceIcon({type:"image/svg", id:tef.device.data.id, buffer:tef.tef.deviceIcon });					
+				}         
+            }
+        }
+        return {device, devices:_devices};
+    });
+    session.setHandler('done_finished', async () => {
+        if(tefs) {
+            let devices = await this.getDevices();
+            for (let i = 0; i < tefs.length; i++) {
+                const tef = tefs[i];
+                let device = _.find(devices, d=>d.getData().id===tef.device.data.id);
+                if(device) {
+                    let settings = tefs[i].tef.settings;
+                    
+                    (settings.imported = 2) | 
+					(settings.deviceIcon = tefs[i].tef.deviceIcon) | 
+					(settings.customIcons = tefs[i].tef.customIcons) | 
+					(settings.saveCustomIcons = tefs[i].tef.saveCustomIcons);
+                    await device.ready();
+
+                    await device.loadFromSettings(settings, device.Settings , [], true);
+                }
+                
+            }
+        }
+        return true;
+        //return {device, devices:_devices};
+    });
+
+    session.setHandler('list_icons_selection', async (selectedIcons) => {
+        // device.icon = '../../../userdata/icon.svg';
+    });
+        
+    session.setHandler('add_device', async (device) => {
+        // device.icon = '../../../userdata/icon.svg';
+        console.log('on device added', device);
+        
+    });
+
+    // Show a specific view by ID
+    // await session.showView("my_view");
+
+    // // Show the next view
+    // await session.nextView();
+
+    // // Show the previous view
+    // await session.prevView();
+
+    // // Close the pair session
+    // await session.done();
+
+    // // Received when a view has changed
+    // session.setHandler("showView", async function (viewId) {
+    //   console.log("View: " + viewId);
+    // });
+    }
+
+    async getAvdTef(str) {
+        try {                
+            let exchangerFile = await this.getNormalExchangerFile(str);
+            if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
+            if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
+                if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
+                    if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
+                }
+            }
+                //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
+            
+            // await this.executeForAllTypes(device, async (type, i )=> {
+            //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
+            //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
+            //         let b =device.Settings[type+i+"Icon"];
+            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+            //     }
+            // });
+            return exchangerFile;
+
+            //return JSON.parse(await this.unzip(str));
+        } catch (error) {
+            this.error(error);
+        }
+    }
+
+    async onRepair(session, device) {
+        //let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;
+        
+
         // var s = session;
         // await session.nextView();
-        let devices = await this.onPairListDevices();
-        var device;
+        //console.log(JSON.stringify(await this.getCustomIcons()));
+        ///let data = device.getData();
 
-        session.setHandler('list_devices', async (data) => {
+        session.setHandler('virtualdevicesettings_load', async (data) => {
             // // emit when devices are still being searched
             // session.emit('list_devices', devices);
       
             // return devices when searching is done
-            return devices;
-        });
-      
-        session.setHandler('list_devices_selection', async (selectedDevices) => {
-            device = selectedDevices[0];
-            device.icon = '/icon-default.svg';
-        });
-
-        session.setHandler('list_icons', async (data) => {
-            //return this.getCustomIcons();
-            return this.getDefaultIcons();
-
-
-        });
-
-        session.setHandler('icon_picked', async ({icon, name}) => {
-
-            device = devices[0];
             
-            let iconpath = "../../." +(await app.setDeviceIconFromDefault({device, icon:icon}));
-            
-            //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
-            device.data.icon = iconpath;//iconPath;
-            device.icon = iconpath;//iconPath;            
-            if(name && name.length>0) device.name = name;
-            return device;
-            // This is for custom icon picked
-            // device = devices[0];
-            // var iconPath = "../../../userdata/customicons/" + data.icon.file+'.svg';
-            // device.data.icon = iconPath;
-            // device.icon = iconPath;
-            // return device;
+            return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates')};
         });
+        session.setHandler('virtualdevicesettings_save', async (settings) => {
+            //console.log(settings, device.Settings , []);
+            //device.data.icon = "../../../assets/icon.svg";
+            //device.icon = "../../../assets/icon.svg";
+            return await device.loadFromSettings(settings, device.Settings , [], true);
+            
+            //return {settings:device.Settings, customicons:await this.getCustomIcons()};
+        });
+
         
-        session.setHandler('icon_save', async ({image, name})=> {     
-            device = devices[0];       
-            var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
-            var iconPath = "../../." + icon.path;      
-            device.data.icon = iconPath;
-            device.icon = iconPath;
-            if(name && name.length>0) device.name = name;
-            return device;      
+        session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
             
-          });
+            let dev = {};
 
-        session.setHandler('done', async (data) => {
-            device = devices[0];            
-            //session.nextView();
-            return device;
+            
+            dev.customIconsAvailable = [];
+            let iconsInUse = {};
+            let devices  = await this.getDevices();
+            for (const deviceId in devices) {
+                if (Object.hasOwnProperty.call(devices, deviceId)) {
+                    const device = devices[deviceId];
+                    await this.executeForAllTypes(device, (type, i )=> {
+                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
+
+                    });
+                }
+            }   
+            let keys = Object.keys(iconsInUse);
+            for (let i = 0; i < CUSTOM_ICONS.length; i++) {
+                const icon = CUSTOM_ICONS[i];
+                if(keys.indexOf(icon)===-1)dev.customIconsAvailable.push(icon);
+            }
+
+            for (const iconUsedKey in iconsInUse) {
+                if (Object.hasOwnProperty.call(iconsInUse, iconUsedKey)) {
+                    
+                }
+            }            
+            return dev;
+        });        
+
+        session.setHandler('virtualdevicesettings_getJson', async (str) => {
+            return await this.getAvdTef(str);
         });
 
-        session.setHandler('list_icons_selection', async (selectedIcons) => {
-            // device.icon = '../../../userdata/icon.svg';
+        session.setHandler('virtualdevicesettings_getTextSettings', async (viewSettings) => {
+            try {
+                
+                let dev = {deviceIcon:await this.getDeviceIconZipped(device), customIcons:{}, originalId:device.__id, settings:device.Settings};
+                if(viewSettings && viewSettings.copyWithIcons) 
+                    await this.executeForAllTypes(device, async (type, i )=> {
+                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]]){
+                            dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                        }
+                    });
+                dev = await this.getAdvancedFlowsJSON({dev, device });
+                return dev;
+            } catch (error) {
+                this.error(error);
+                
+            }
         });
-          
-        session.setHandler('add_device', async (device) => {
-            // device.icon = '../../../userdata/icon.svg';
-            console.log('on device added', device);
+
+        
+        session.setHandler('virtualdevicesettings_readFlows', async (exchangerFile) => {
+            try {                    
+                return await this.readAdvancedFlowsJSON({exchangerFile, device});
+            } catch (error) {
+                this.error(error);                
+            }
+        });
+
+        session.setHandler('virtualdevicesettings_updateFlowCommand', async (exchangerFile) => {            
+            try {
+                return await this.updateAdvancedFlowsJSON({exchangerFile});                
+            } catch (error) {                
+                this.error(error);
+            }
             
         });
 
-        // Show a specific view by ID
-        // await session.showView("my_view");
-    
-        // // Show the next view
-        // await session.nextView();
-    
-        // // Show the previous view
-        // await session.prevView();
-    
-        // // Close the pair session
-        // await session.done();
-    
-        // // Received when a view has changed
-        // session.setHandler("showView", async function (viewId) {
-        //   console.log("View: " + viewId);
+        // session.setHandler('getAvdTemplates', async (str) => {
+        //     try {                
+        //         return await this.getAvdTemplatesFromPosts();
+        //     } catch (error) {
+        //         this.error(error);
+        //     }
         // });
-      }
+        session.setHandler('refreshAvdTemplates', async (str) => {
+            try {                
+                return await this.getAvdTemplatesFromPosts();
+            } catch (error) {
+                this.error(error);
+            }
+        });
+
+    }
+    
       capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}

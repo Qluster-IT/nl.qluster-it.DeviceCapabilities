@@ -179,7 +179,10 @@
   "2.4.20" : {
     "en" : "Bugfixed."
   },
-  "2.5.3" : {
+  "2.5.4" : {
     "en" : "Added: Templates from the Community Forum Topic."
+  },
+  "2.6.8" : {
+    "en" : "Added: Templates from the Community Forum Topic for AVDs."
   }
 }
