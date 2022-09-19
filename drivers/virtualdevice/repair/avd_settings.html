@@ -1181,12 +1181,12 @@ form {
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
-							<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-								<option value="">Don't change</option>
-								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
-							</select>
-						</div> -->
+						<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+						</select>
+					</div> -->
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
 					<div class="label">Users</div>
@@ -1205,14 +1205,14 @@ form {
 				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
 					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-						<option ng-value="-1">-- Create --</option>
 						<option value="">Don't change</option>
+						<option ng-value="-1">-- Create --</option>
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<div class="field" ng-if="item.replaceWithId===-1">
-						<input type="text" ng-model="item.replaceWith.name">
+						<input type="text" ng-model="item.replaceWith.newName">
 					</div>
-				</div>			
+				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
 					<div class="label">App Tokens</div>
 					<div class="value">Replace with</div>
@@ -1226,6 +1226,17 @@ form {
 							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
 								{{replacement.name}}</option>
 						</select>
+					</div>
+					<div class="field" ng-repeat="item  in app.args">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+						<div class="field" ng-if="item.replaceWithId===-1">
+							<input type="text" ng-model="item.replaceWith.newName">
+						</div>
 					</div>
 				</div>
 			</div>
