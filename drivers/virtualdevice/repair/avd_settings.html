@@ -538,6 +538,9 @@ form {
 }
 
 
+.padding-left {
+			padding-left: 10px;
+		}
 	/* .tooltip>div {} */
 </style>
 
@@ -1174,12 +1177,20 @@ form {
 					<div class="label">Devices</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
-					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+				<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
+					<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
+					<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
 						<option value="">Don't change</option>
-						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+						<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
+					<div class="field" ng-repeat="item  in device.tags">
+						<div class="label padding-left">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+					</div>
 					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
 						<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
 						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
@@ -1228,6 +1239,17 @@ form {
 						</select>
 					</div>
 					<div class="field" ng-repeat="item  in app.args">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+						<div class="field" ng-if="item.replaceWithId===-1">
+							<input type="text" ng-model="item.replaceWith.newName">
+						</div>
+					</div>
+					<div class="field" ng-repeat="item  in app.types">
 						<div class="label">{{item.name}}</div>
 						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
 							<option value="">Don't change</option>
@@ -1342,8 +1364,8 @@ form {
 					/// Sanitize all posts!!
 					template.post = $sanitize(template.post);
 					
-					template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-					let compiled = $compile(template.post)($scope);
+					template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					let compiled = $compile(template.sanitizedPost)($scope);
 					$('.content').empty();
 					
 					$('.content').append(compiled);
@@ -1659,6 +1681,13 @@ form {
 				return string.charAt(0).toUpperCase() + string.slice(1);
 			}
 		}])
+		.directive('alinky', function () {
+			return function (scope, element, attrs) {
+				element.bind('click', function (event) {
+					Homey.popup(attrs.href);
+				});
+			};
+		})
 		.directive('ngEnter', function () {
 			return function (scope, element, attrs) {
 				element.bind('keydown keypress', function (event) {

@@ -108,12 +108,12 @@ module.exports = class WatchDevice extends Homey.Device {
 			await this.setListener({ fieldId, settings: this.Settings, cap: caps[i] });
 		}
 
-		this.homey.settings.on('set', (async function (settingName, settingValue) {
-			if (settingName == 'customIconNames') {
-				this.setIconNames();
-			}
+		// this.homey.settings.on('set', (async function (settingName, settingValue) {
+		// 	if (settingName == 'customIconNames') {
+		// 		this.setIconNames();
+		// 	}
 
-		}).bind(this));
+		// }).bind(this));
 
 	}
 

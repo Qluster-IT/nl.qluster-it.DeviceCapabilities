@@ -182,7 +182,10 @@
   "2.5.4" : {
     "en" : "Added: Templates from the Community Forum Topic."
   },
-  "2.6.9" : {
+  "2.6.12" : {
     "en" : "Added: Templates from the Community Forum Topic for AVDs."
+  },
+  "2.6.13" : {
+    "en" : "Improved: Template readings."
   }
 }
