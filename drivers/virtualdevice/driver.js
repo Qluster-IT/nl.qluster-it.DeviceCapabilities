@@ -61,6 +61,97 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }).on("error", (err) => {defer.reject(err);});
         return defer.promise;
     }
+    decodeHtml (string) {
+        //var string = new String(this);
+        string = string.replace(/&lt;/g, "<");
+        string = string.replace(/&gt;/g, ">");
+        string = string.replace(/&quot;/g,  "\"");
+        string = string.replace(/&39;/g,  "'");
+        string = string.replace(/&amp;/g, "&");
+        return string;
+    }
+    async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl}) {
+        try {                
+            let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
+            if(topicHtml) {
+
+                let preloaderString = topicHtml.matchAll(/<div class="hidden" id="data-preloaded" data-preloaded="(.*?)"/gmsi);
+                let preloaderFound = preloaderString? [...preloaderString] : [];
+                let preloader;                
+                let templates = [];
+                let postsFound ;
+                
+                if(preloaderFound && preloaderFound.length) {
+                    preloader = this.decodeHtml(preloaderFound[0][1]);
+                    try {
+                        let json = JSON.parse(preloader);
+                        let topicInfo = JSON.parse(json['topic_'+topicId]);
+                        let a=topicInfo;
+                        postsFound = _.size(topicInfo.post_stream.posts);
+                        _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
+                            let postId = post.id;
+                            let postNumber = post.post_number;
+                    
+                            let postCreatedOn = new Date(post.created_at);
+                            let autherName = post.display_username;
+                            let autherId = post.user_id;
+
+                            let postText = post.cooked;
+                            if(postText.startsWith('\n')) postText=postText.substring(1);//.trim();
+                    
+                            let tefs = [], header;
+                            
+                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?(H4s(?:.*?))(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
+                            let tefsFound = tefMatches? [...tefMatches] : [];
+                            for(let j=0;j<tefsFound.length;j++) {
+                                if(tefsFound[j].length>1) {
+                                    tefs.push(tefsFound[j][1]);
+                                    postText = postText.replace(tefsFound[j][0], '');
+                                }
+                            }
+                            if(tefs.length) {
+                                let headerMatches = postText.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
+                                let headersFound = headerMatches? [...headerMatches] : [];
+                                if(headersFound && headersFound.length>0 && headersFound[0].length>2) header = headersFound[0][2].trim();
+                                //console.log(header);
+                                if(header && header.length>0) templates.push({
+                                    id:postId,
+                                    number:postNumber,
+                                    post:postText,
+                                    createdOn:postCreatedOn,
+                                    autherId,
+                                    header,
+                                    tefs
+                                });
+                            }
+                            
+                            
+                        });
+                    } catch (error) {
+                        
+                    }
+                }
+                //if(templates.length) return {templates, postsFound};
+
+                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)/gmsi);
+                let matchesFound = posts? [...posts] : [];
+                postsFound = matchesFound.length;
+                for (let i = 0; i < matchesFound.length; i++) {
+                    const postNumber = Number.parseInt(matchesFound[i][3]);
+                    const likes = matchesFound[i][5] ? Number.parseInt(matchesFound[i][5]) : 0;
+                    //let post = matchesFound[i][4];
+                    //if(post.startsWith('\n')) post=post.substring(1);
+                    let template = _.find(templates, t=>t.number==postNumber);
+                    if(template) template.likes = likes;
+                }
+                return {templates, postsFound};
+            }
+        } catch (error) {
+            this.error(error);
+        }
+        return {templates:[], postsFound:0};
+    }
+
 
     
     async getTefTemplatesFromPosts() {
@@ -79,41 +170,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return templates;
     }
     async getTefTemplatesFromPostsById({postId}) {
-        try {                
-            let topicHtml = await this.httpsGet({url:`https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/${postId}`});
-            if(topicHtml) {
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(https:\/\/community\.homey\.app\/u\/(.*?)\')(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'/gmsi);
-                let matchesFound = posts? [...posts] : [];
-                let templates = [];
-                let postsFound = matchesFound.length;
-                for (let i = 0; i < matchesFound.length; i++) {
-                    const postId = Number.parseInt(matchesFound[i][3]);
-                    let post = matchesFound[i][4];
-                    if(post.startsWith('\n')) post=post.substring(1).trim();
-                    let tefs = [], header;
-                    
-                    let tefMatches = post.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>.{0,2}The Exchanger? File.*?:.{0,2}<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?(H4s(?:.*?))(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
-                    let tefsFound = tefMatches? [...tefMatches] : [];
-                    for(let j=0;j<tefsFound.length;j++) {
-                        if(tefsFound[j].length>1) {
-                            tefs.push(tefsFound[j][1]);
-                            post = post.replace(tefsFound[j][0], '');
-                        }
-                    }
-                    if(tefs.length) {
-                        let headerMatches = post.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
-                        let headersFound = headerMatches? [...headerMatches] : [];
-                        if(headersFound && headersFound.length>0 && headersFound[0].length>2) header =headersFound[0][2].trim();
-                        //console.log(header);
-                        if(header && header.length>0) templates.push({postId:postId, post:post, tefs:tefs, header:header});
-                    }
-                }
-                return {templates, postsFound};
-            }
-        } catch (error) {
-            this.error(error);
-        }
-        return {templates:[], postsFound:0};
+        return await this.getTefTemplatesFromPostsByIdAndTopic({postId, topicId:'68981', topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'});
     }
     
 
@@ -165,42 +222,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         await this.homey.settings.set('avdTemplates', templates);
         return templates;
     }
-    async getAvdTemplatesFromPostsById({postId}) {
-        try {                
-            let topicHtml = await this.httpsGet({url:`https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/${postId}`});
-            if(topicHtml) {
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(https:\/\/community\.homey\.app\/u\/(.*?)\')(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'/gmsi);
-                let matchesFound = posts? [...posts] : [];
-                let templates = [];
-                let postsFound = matchesFound.length;
-                for (let i = 0; i < matchesFound.length; i++) {
-                    const postId = Number.parseInt(matchesFound[i][3]);
-                    let post = matchesFound[i][4];
-                    if(post.startsWith('\n')) post=post.substring(1).trim();
-                    let tefs = [], header;
-                    
-                    let tefMatches = post.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>.{0,2}The Exchanger? File.*?:.{0,2}<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?(H4s(?:.*?))(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
-                    let tefsFound = tefMatches? [...tefMatches] : [];
-                    for(let j=0;j<tefsFound.length;j++) {
-                        if(tefsFound[j].length>1) {
-                            tefs.push(tefsFound[j][1]);
-                            post = post.replace(tefsFound[j][0], '');
-                        }
-                    }
-                    if(tefs.length) {
-                        let headerMatches = post.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
-                        let headersFound = headerMatches? [...headerMatches] : [];
-                        if(headersFound && headersFound.length>0 && headersFound[0].length>2) header =headersFound[0][2].trim();
-                        //console.log(header);
-                        if(header && header.length>0) templates.push({postId:postId, post:post, tefs:tefs, header:header});
-                    }
-                }
-                return {templates, postsFound};
-            }
-        } catch (error) {
-            this.error(error);
-        }
-        return {templates:[], postsFound:0};
+    async getAvdTemplatesFromPostsById({postId}) {        
+        return await this.getTefTemplatesFromPostsByIdAndTopic({postId, topicId:'68676', topicUrl:'https://community.homey.app/t/advanced-virtual-device-share-your-device'});
     }
     
     async onInit() {
@@ -1729,7 +1752,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     });
 
     session.setHandler('virtualdeviceicons_load', async (data) => {
-        return {tefTemplates: await this.homey.settings.get('avdTemplates'), device:devices[0]};
+        return {tefTemplates: await this.homey.settings.get('avdTemplates'), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
     });
 
     session.setHandler('use_template', async (data) => {
@@ -1857,6 +1880,22 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         
     });
 
+    session.setHandler('refreshAvdTemplates', async (str) => {
+        try {                
+            return await this.getAvdTemplatesFromPosts();
+        } catch (error) {
+            this.error(error);
+        }
+    });
+
+        
+    session.setHandler('saveAvdTemplatesFavorites', async (avdTemplateFavorites) => {
+        try {                
+            return await this.homey.settings.set('avdFavoriteTemplates', avdTemplateFavorites);
+        } catch (error) {
+            this.error(error);
+        }
+    });
     // Show a specific view by ID
     // await session.showView("my_view");
 
@@ -1916,7 +1955,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
       
             // return devices when searching is done
             
-            return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates')};
+            return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates'), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
         });
         session.setHandler('virtualdevicesettings_save', async (settings) => {
             //console.log(settings, device.Settings , []);
@@ -2009,6 +2048,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         session.setHandler('refreshAvdTemplates', async (str) => {
             try {                
                 return await this.getAvdTemplatesFromPosts();
+            } catch (error) {
+                this.error(error);
+            }
+        });
+
+        
+        session.setHandler('saveAvdTemplatesFavorites', async (avdTemplateFavorites) => {
+            try {                
+                return await this.homey.settings.set('avdFavoriteTemplates', avdTemplateFavorites);
             } catch (error) {
                 this.error(error);
             }

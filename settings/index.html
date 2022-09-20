@@ -4,11 +4,12 @@
 <head>
 
 	<script type="text/javascript" src="/homey.js" data-origin="settings"></script>
-	<script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script>
-	<script type="text/javascript" src="angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="../assets/js/angular.js"></script>
+	<script type="text/javascript" src="../assets/js/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="../assets/js/lodash.js"></script>
 	<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
-	<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
-	<script type="text/javascript" src="smart-table.min.js"></script>
+	<script type="text/javascript" src="../assets/fontawesome/fontawesome.css"></script>
+	<script type="text/javascript" src="../assets/js/smart-table.min.js"></script>
 
 	<style type="text/css">
 		html {
@@ -668,10 +669,36 @@
 			top: 0;
 			background-color: white;
 		}
-
+		
+		.filter {
+			height: 30px;
+			z-index: 10;
+			right: 0;
+			top: 2px;
+			margin-bottom: 10px;
+			left: 0px;
+			width: auto;
+			position: absolute;
+		}
+		.filter input[type="text"].label {
+			width: 70%!important;
+		}
+		.filter + .panel {	
+			height: calc(100% - 110px);
+			top: 50px;
+			left:0px;
+		}
 
 		form {
-			height: 100%;
+			height:100%;
+			/* top: 0px;
+			position: absolute;
+			width: 100%; */
+		}
+		form.top {
+			top: 0px;
+			position: absolute;
+			width: 100%;
 		}
 		.padding-left {
 			padding-left: 10px;
@@ -681,13 +708,13 @@
 </head>
 
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
-	<div class="header-buttons">
+	<div class="header-buttons" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
 		<div class="icon-button" ng-click="view.id='theflowexchanger'" ng-class="{active:view.id=='theflowexchanger'}" title="The Flow Exchanger"><span class="fa fa-icon fa-cloud-download-alt"></span></div>
 		<div class="icon-button" ng-click="view.id='virtualdevices'" ng-class="{active:view.id=='virtualdevices'}" title="AVD's"><span class="fa fa-icon fa-cogs"></span></div>
 		<div class="icon-button" ng-click="view.id='customicons'" ng-class="{active:view.id=='customicons'}" title="Custom Icons"><span class="fa fa-icon fa-grip-horizontal"></span></div>
 		<div class="icon-button" ng-click="view.id='functions'" ng-class="{active:view.id=='functions'}" title="Functions"><span class="fa fa-icon fa-code"></span></div>
 	</div>
-	<div class="main-panel" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && !showtheflowexchangertemplates">
+	<div class="main-panel" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
 		<!-- The Flow Exchange -->
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
@@ -1082,13 +1109,22 @@
 
 	</div>
 
-	<form ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div class="field filter">
+			<input type="text" class="label" ng-model="filter.header"/>
+			<div class="float-right">
+				<div class="fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=''"></div>
+				<div class="fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes'"></div>
+				<div class="fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite'"></div>
+			</div>			
+		</div>
 		<div class="panel">
-			<div class="field">
+			<div class="field" style="margin-bottom:30px;">
 				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 				<h1>Here you can select a template</h1>
 			</div>
-			<div class="field" ng-repeat="template in vars.tefTemplates">
+			<div class="field" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
+				<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
 			</div>
 		</div>
@@ -1101,7 +1137,7 @@
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
 				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readFlows();">Import</button>
+				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readTextSettings();">Select</button>
 			</div>
 		</div>
 	</form>
@@ -1118,9 +1154,11 @@
 				var Homey;
 				$scope.stamp = Date.now();
 				$scope.view = { id: 'theflowexchanger', subid: 'theflowexchangerimport' };
+				$scope.orderBy = {orderBy:'favorite'};
+				$scope.filter = {header:''};
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
-					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: []
+					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
 				};
 				//Homey.ready();
 
@@ -1159,6 +1197,13 @@
 					$scope.getDefaultIcons();
 					$scope.getFunctionFromSettings();
 					$scope.getTefTemplates();
+					Homey.get('favoriteTemplates', function (err, result) {
+						if (err) return console.log(err);
+						$scope.$apply(function () {
+							$scope.vars.favoriteTemplates = result || {};
+							if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+						});
+					});
 					Homey.ready();
 
 					console.log('ready done');
@@ -1185,6 +1230,22 @@
 				}
 
 
+				$scope.toggleFavorite = function(template) {
+				if(vars.favoriteTemplates[template.number]) {
+					delete vars.favoriteTemplates[template.number];
+					template.favorite = true;
+				}
+				else {
+					vars.favoriteTemplates[template.number]= true;
+					template.favorite = false;
+				}	
+				if(typeof(Homey)!=='undefined') {
+					Homey.set('favoriteTemplates', $scope.vars.favoriteTemplates , function (err, result) {
+						if (err) return console.log(err);
+					});
+				}
+			}
+
 
 				$scope.refreshTemplates = function () {
 					vars.templatesRefreshing = true;
@@ -1205,6 +1266,7 @@
 						if (err) return Homey.alert(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
+							_.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 						});
 					});
 				}
@@ -1304,7 +1366,7 @@
 					}
 				}
 
-				$scope.readFlows = function () {
+				$scope.readFlows = $scope.readTextSettings = function () {
 					showOverlay();
 					//$scope.vars.readflow = null;
 					if ($scope.vars.readflow) $scope.vars.readflow.apiCommand = '';
@@ -1710,7 +1772,34 @@
 						}
 					});
 				};
-			});;
+			})
+			.directive('tooltip', function ($compile) {
+				var contentContainer;
+				return {
+					restrict: "A",
+					scope: {
+						myTooltipScope: "="
+					},
+					link: function (scope, element, attrs) {
+						var text = attrs.tooltip;
+
+						scope.hidden = true;
+
+						var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+						tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
+
+						element.parent().append(tooltipElement);
+						element
+							.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
+							.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
+
+						var toolTipScope = scope.$new(true);
+						angular.extend(toolTipScope, scope.myTooltipScope);
+						$compile(tooltipElement.contents())(toolTipScope);
+						$compile(tooltipElement)(scope);
+					}
+				};
+			});
 
 		function onHomeyReady(Homey) {
 			console.log('onHomeyReady');
