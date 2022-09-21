@@ -1099,7 +1099,11 @@ class DeviceSetter extends Homey.App {
 			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			this.homeyAPI.flow.on('advancedflow.create', x=> this.homey.api.realtime('createdadvancedflow', x));
+			this.homeyAPI.flow.on('advancedflow.create', x=> {
+				this.homey.api.realtime('createdadvancedflow', x);
+				let avdDriver = this.homey.drivers.getDriver('virtualdevice');
+				if(avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
+			});
 
 			this.refreshDefer.resolve();
 			this.refreshDefer = null;

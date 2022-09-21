@@ -1,9 +1,11 @@
 <script type="text/javascript" src="../../../assets/js/angular.js"></script>
 <script type="text/javascript" src="../../../assets/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/lodash.js"></script>
+<script type="text/javascript" src="../assets/js/default.js"></script>
+	
+<link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
-<link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css">
-</link>
+<link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
 <script src='../../../assets/js/vue.min.js'></script>
 
@@ -69,273 +71,6 @@
 		}
 
 
-
-		[ng-click^="show"],
-		[ng-click^="view"],
-		[ng-click] {
-			cursor: pointer;
-			/* margin-top: 30px; */
-		}
-
-		div[disabled],
-		button[disabled] {
-			color: lightgray !important;
-		}
-
-
-
-
-		.field {
-			position: relative;
-			display: block;
-			width: 100%;
-			margin-top: 10px;
-		}
-
-		.label>* {
-			display: inline-block;
-		}
-
-		.label {
-			position: relative;
-			width: 48%;
-			display: inline-block;
-		}
-
-		.label .fa {
-			float: right;
-		}
-
-		.label.large {
-			width: 70%
-		}
-
-		.label.large+.label,
-		.label.large+.value {
-			width: 28%
-		}
-
-		.value {
-			position: relative;
-			width: 49% !important;
-			display: inline-block;
-		}
-
-
-
-
-
-
-		* {
-
-			box-sizing: border-box;
-		}
-
-		a {
-			display: inline-block;
-		}
-
-		.float-right {
-			float: right !important;
-			z-index: 100;
-		}
-
-		/* html {
-height:auto!important;
-} */
-
-		.fa-icon {
-			min-width: 24px;
-			min-height: 24px;
-			font-size: 20px;
-		}
-
-		.block {
-			display: block !important;
-		}
-
-		.margin-top {
-			margin-top: 10px;
-		}
-
-		.margin-bottom {
-			margin-bottom: 10px;
-		}
-
-		.main-buttons {
-			height: 60px;
-			width: 100%;
-			position: fixed;
-			bottom: 0;
-			text-align: center;
-		}
-
-		.button {
-			padding: 16px !important;
-			width: auto !important;
-			display: inline-block;
-			font-size: 20pt !important;
-			cursor: pointer;
-		}
-
-		.top-button {
-			display: inline-block;
-			margin: 10px;
-			font-size: 16px;
-		}
-
-		.main-buttons .button {
-			display: inline-block;
-			/* top: 6px;
-	position: relative;
-	margin: 0px 50px; */
-			margin: 0px 20px;
-			bottom: 0px;
-		}
-
-		.main-buttons .button:nth-child(1):nth-last-child(1) {
-			margin: 0;
-			width: 50%;
-		}
-
-		.main-buttons .button:nth-child(1):nth-last-child(2) {
-			left: 0px;
-			position: fixed;
-		}
-
-		.main-buttons .button:nth-child(2):nth-last-child(1) {
-			right: 0px;
-			position: fixed;
-		}
-
-		@media screen and (max-width: 350px) {
-
-			.main-buttons {
-				height: 40px;
-			}
-
-			.main-buttons .button {
-				padding: 8px !important;
-				width: auto !important;
-				display: inline-block;
-				font-size: 18pt !important;
-				cursor: pointer;
-				margin: 0px 5px;
-			}
-
-		}
-
-		.fa-sync-alt {
-			font-size: 24px;
-		}
-
-		.spin {
-			animation-name: spin;
-			animation-duration: 3000ms;
-			animation-iteration-count: infinite;
-			animation-timing-function: linear;
-		}
-
-		@keyframes spin {
-			from {
-				transform: rotate(0deg);
-			}
-
-			to {
-				transform: rotate(360deg);
-			}
-		}
-
-		.pointer {
-			cursor: pointer;
-		}
-
-		.link,
-		alinky,
-		[ng-click^="openUrl"] {
-			font-weight: 500;
-			text-decoration: underline;
-			cursor: pointer;
-			display: inline-block;
-		}
-
-		.inline-block {
-			display: inline-block !important;
-		}
-
-		.template-panel {
-			position: fixed;
-			display: block;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			background-color: white;
-			z-index: 300;
-
-		}
-
-		.template-panel>.content,
-		.panel {
-			height: calc(100% - 70px);
-			overflow: scroll;
-			margin-bottom: 10px;
-
-		}
-
-		.panel {
-			height: calc(100% - 70px);
-			overflow: auto;
-			margin-bottom: 10px;
-			position: fixed;
-			width: 100%;
-			top: 0;
-			background-color: white;
-		}
-
-		.filter {
-			height: 30px;
-			z-index: 10;
-			right: 0;
-			top: 2px;
-			margin-bottom: 10px;
-			left: 0px;
-			width: auto;
-			position: absolute;
-		}
-		.filter input[type="text"].label {
-			width: 70%!important;
-		}
-		.filter + .panel {	
-			height: calc(100% - 110px);
-			top: 50px;
-			left:0px;
-		}
-
-		form {
-			height: 100%;
-			/* top: 0px;
-	position: absolute;
-	width: 100%; */
-		}
-
-		form.top {
-			top: 0px;
-			position: absolute;
-			width: 100%;
-		}
-
-
-		.custom-icon {
-			height: 24px;
-			width: 24px;
-			position: absolute;
-		}
-
-		.custom-icon+* {
-			position: relative;
-			left: 30px;
-		}
 	</style>
 	<script>
 
@@ -506,11 +241,11 @@ height:auto!important;
 
 		<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 			<div class="field filter">
-				<input type="text" class="label" ng-model="filter.header" />
-				<div class="float-right">
-					<div class="fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=''"></div>
-					<div class="fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes'"></div>
-					<div class="fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite'"></div>
+				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="float-right sorting">
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
 				</div>
 			</div>
 			<div class="panel">
@@ -518,21 +253,20 @@ height:auto!important;
 					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 					<h1>Here you can select a template</h1>
 				</div>
-				<div class="field" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
 				</div>
 			</div>
 			<div class="main-buttons ">
-				<button class="button" data-i18n="settings.close" ng-click="view.id=undefined; view.subid=undefined;">Close</button>
+				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
 			</div>
 	
 			<div class="template-panel" ng-show="vars.template">
-				<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
 				<div class="content">&nbsp;</div>
 				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-					<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.id=null; view.subid='theflowexchangerimport'; readTextSettings();">Select</button>
+					<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+					<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 				</div>
 			</div>
 		</form>
@@ -553,9 +287,17 @@ height:auto!important;
 				$scope.filter = {header:''};
 				const vars = $scope.vars = {};
 
-				$scope.back = function() {
-					$scope.view.id = '';
+				
+				$scope.closeTemplates = function() {
+					view.id=undefined; view.subid=undefined;
 				}
+				$scope.selectTemplates = function() {
+					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				}
+				$scope.backTemplates = function() {
+					vars.template=null;
+				}
+				
 				$scope.toggleFavorite = function (template) {
 					if (vars.favoriteTemplates[template.number]) {
 						delete vars.favoriteTemplates[template.number];

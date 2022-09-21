@@ -7,703 +7,12 @@
 	<script type="text/javascript" src="../assets/js/angular.js"></script>
 	<script type="text/javascript" src="../assets/js/angular-sanitize.min.js"></script>
 	<script type="text/javascript" src="../assets/js/lodash.js"></script>
-	<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
-	<script type="text/javascript" src="../assets/fontawesome/fontawesome.css"></script>
 	<script type="text/javascript" src="../assets/js/smart-table.min.js"></script>
-
-	<style type="text/css">
-		html {
-			overflow-y: hidden !important;
-			height: 100% !important;
-		}
-
-		body {
-			overflow: hidden;
-			/* overflow-x:auto;
-			overflow-y: scroll!important; */
-			height: 100% !important;
-		}
-
-		.main-panel {
-			overflow-x: auto;
-			overflow-y: scroll !important;
-			height: calc(100% - 60px) !important;
-		}
-
-		* {
-
-			box-sizing: border-box;
-		}
-
-		a {
-			display: inline-block;
-		}
-
-		.float-right {
-			float: right !important;
-			z-index: 100;
-		}
-
-		.bold {
-			font-weight: bold !important;
-		}
-
-		#overlay {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			display: none;
-			z-index: 900;
-			/* backdrop-filter: blur(0.1px); */
-		}
-
-		#overlay.show {
-			display: block;
-			animation-duration: 3s;
-			animation-name: blur-out;
-			animation-fill-mode: forwards;
-			/* backdrop-filter: blur(3px); */
-			/* transition: backdrop-filter 3s; */
-
-		}
-
-		/* #overlay.hide {
-			animation-duration: .3s;
-  			animation-name: blur-out;
-			animation-direction: reverse;
-			animation-fill-mode: forwards;
-			/* transition: display 0s 1s; 
-		} */
-		@keyframes blur-out {
-			0% {
-				/* display:none; */
-				backdrop-filter: blur(0.1px);
-			}
-
-			/* 1% {
-				display: block;
-			} */
-			100% {
-				backdrop-filter: blur(3px);
-				/* display: block; */
-			}
-		}
-
-		/* html {
-			height:auto!important;
-			} */
-
-		.fa-icon {
-			min-width: 24px;
-			min-height: 24px;
-			font-size: 20px;
-		}
-
-		.block {
-			display: block !important;
-		}
-
-		.margin-top {
-			margin-top: 10px;
-		}
-
-		.margin-bottom {
-			margin-bottom: 10px;
-		}
-
-		#preview-outerframe {
-			display: none;
-			width: 100%;
-			margin-top: 20px;
-			text-align: center;
-			margin: 0 auto;
-			padding: 10px;
-		}
-
-		#preview-innerframe img {
-			width: 125px;
-			height: 125px;
-			padding: 20px;
-		}
-
-		input {
-			border-radius: 3px;
-		}
-
-		#icons {
-			list-style: none;
-			margin-left: 0;
-		}
-
-		.icon {
-			position: relative;
-			border-bottom: 1px solid #eee;
-			height: 60px;
-		}
-
-		.icon:last-child {
-			border-bottom: none;
-		}
-
-		.icon .name {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.icon .name {
-			position: absolute;
-			left: 50px;
-			top: 10px;
-			bottom: 10px;
-			font-size: 14px;
-			line-height: 40px;
-			font-weight: 400;
-		}
-
-		.icon input.name {
-			top: 15px;
-			bottom: 15px;
-			line-height: 20px;
-		}
-
-		.icon .buttons {
-			position: absolute;
-			right: 10px;
-			top: 16px;
-		}
-
-		.icon button {
-			float: left;
-			box-sizing: border-box;
-			margin-left: 5px;
-		}
-
-		.icon .image {
-			width: 30px;
-			height: 30px;
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center center;
-			-webkit-mask-repeat: no-repeat;
-			background: #333;
-			position: absolute;
-			top: 16px;
-			left: 10px;
-		}
-
-		#defaultIcons .default-icon {
-			position: relative;
-			border: 1px solid #eee;
-			border-radius: 5px;
-			display: inline-block;
-			width: 52px;
-			height: 52px;
-		}
-
-		#defaultIcons .default-icon .image {
-			width: 32px;
-			height: 32px;
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center center;
-			-webkit-mask-repeat: no-repeat;
-			background: #333;
-			position: absolute;
-			top: 10px;
-			left: 10px;
-		}
-
-
-
-
-		#devices {
-			list-style: none;
-			margin-left: 0;
-		}
-
-		.device {
-			position: relative;
-			border-bottom: 1px solid #eee;
-			height: 60px;
-		}
-
-		.device:last-child {
-			border-bottom: none;
-		}
-
-		.device .name {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.device .name {
-			position: relative;
-			left: 10px;
-			top: 10px;
-			bottom: 5px;
-			font-size: 14px;
-			line-height: 40px;
-			font-weight: 400;
-		}
-
-		.device input.name {
-			top: 15px;
-			bottom: 15px;
-			line-height: 20px;
-		}
-
-		.device .buttons {
-			/* display: inline-block; */
-			position: relative;
-			right: 10px;
-			top: 5px;
-			float: right;
-		}
-
-		.device button {
-			float: left;
-			box-sizing: border-box;
-			margin-left: 5px;
-		}
-
-		.device .image {
-			display: inline-block;
-			width: 30px;
-			height: 30px;
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center center;
-			-webkit-mask-repeat: no-repeat;
-			background: #333;
-			position: relative;
-			top: 5px;
-			left: 10px;
-		}
-
-		#editdevice {
-			position: absolute;
-			top: 0px;
-			left: 0px;
-		}
-
-
-
-
-		#customicons {
-			list-style: none;
-			margin-left: 0;
-		}
-
-		.customicon {
-			position: relative;
-			border-bottom: 1px solid #eee;
-			height: 60px;
-		}
-
-		.customicon:last-child {
-			border-bottom: none;
-		}
-
-		.customicon .name {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.customicon .name {
-			position: absolute;
-			left: 50px;
-			top: 10px;
-			bottom: 10px;
-			font-size: 16px;
-			line-height: 20px;
-			font-weight: 400;
-			margin-top: 10px;
-		}
-
-		.customicon input.name {
-			top: 15px;
-			bottom: 15px;
-			line-height: 20px;
-		}
-
-		.customicon .buttons {
-			position: absolute;
-			right: 10px;
-			top: 16px;
-		}
-
-		.customicon button {
-			float: left;
-			box-sizing: border-box;
-			margin-left: 5px;
-		}
-
-		.customicon .image {
-			width: 30px;
-			height: 30px;
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center center;
-			-webkit-mask-repeat: no-repeat;
-			background: #333;
-			position: absolute;
-			top: 16px;
-			left: 10px;
-		}
-
-		#editcustomicon {
-			position: absolute;
-			top: 0px;
-			left: 0px;
-		}
-
-		#preview {
-			width: 50px;
-			height: 50px;
-		}
-
-		.functions-table button {
-			padding-left: 5px !important;
-			padding-right: 5px !important;
-			font-size: 12px !important;
-		}
-
-		[ng-click^="show"],
-		[ng-click^="view"],
-		[ng-click] {
-			cursor: pointer;
-			/* margin-top: 30px; */
-		}
-
-		#theflowexchanger {}
-
-		#theflowexchanger ul {
-			height: 40vw;
-			overflow-y: scroll;
-			list-style: none;
-			margin-left: 0;
-			overflow-x: hidden;
-			white-space: nowrap;
-		}
-
-		#theflowexchanger ul .checkbox {
-			cursor: pointer;
-			/* display: inline; */
-		}
-
-		#theflowexchanger ul li {
-			height: 30px;
-		}
-
-		#theflowexchanger ul .name {
-			display: inline;
-			white-space: nowrap;
-			overflow: hidden;
-		}
-
-
-
-		.field {
-			position: relative;
-			display: block;
-			width: 100%;
-			margin-top: 10px;
-		}
-
-		.label>* {
-			display: inline-block;
-		}
-
-		.label {
-			position: relative;
-			width: 48%;
-			display: inline-block;
-		}
-
-		.label .fa {
-			float: right;
-		}
-
-		.label.large {
-			width: 70%
-		}
-
-		.label.large+.label,
-		.label.large+.value {
-			width: 28%
-		}
-
-		.value {
-			position: relative;
-			width: 49% !important;
-			display: inline-block;
-		}
-
-
-		.header-buttons {
-			height: 60px;
-			width: 100%;
-			position: relative;
-			top: 0;
-			text-align: center;
-			/* padding-top:30px; */
-		}
-
-		.header-buttons .icon-button {
-			width: 24%;
-			display: inline-block;
-			position: relative;
-			height: 60px;
-		}
-
-		.header-buttons .icon-button .fa-icon {
-			font-size: 36px;
-			color: #E8A713;
-			margin-top: 6px;
-		}
-
-		.header-buttons .icon-button.active .fa-icon {
-			color: #0066A4;
-		}
-
-		.main-buttons {
-			height: 60px;
-			width: 100%;
-			position: fixed;
-			bottom: 0;
-			text-align: center;
-		}
-
-		.button {
-			padding: 16px !important;
-			width: auto !important;
-			display: inline-block;
-			font-size: 20pt !important;
-			cursor: pointer;
-		}
-
-		.top-button {
-			display: inline-block;
-			margin: 10px;
-			font-size: 16px;
-		}
-
-		.main-buttons .button {
-			display: inline-block;
-			/* top: 6px;
-			position: relative;
-			margin: 0px 50px; */
-			margin: 0px 20px;
-			bottom: 0px;
-		}
-
-		.main-buttons .button:nth-child(1):nth-last-child(1) {
-			margin: 0;
-			width: 50%;
-		}
-
-		.main-buttons .button:nth-child(1):nth-last-child(2) {
-			left: 0px;
-			position: fixed;
-		}
-
-		.main-buttons .button:nth-child(2):nth-last-child(1) {
-			right: 0px;
-			position: fixed;
-		}
-
-		@media screen and (max-width: 350px) {
-
-			.main-buttons {
-				height: 40px;
-			}
-
-			.main-buttons .button {
-				padding: 8px !important;
-				width: auto !important;
-				display: inline-block;
-				font-size: 18pt !important;
-				cursor: pointer;
-				margin: 0px 5px;
-			}
-
-		}
-
-		.fa-sync-alt {
-			font-size: 24px;
-		}
-
-		.spin {
-			animation-name: spin;
-			animation-duration: 3000ms;
-			animation-iteration-count: infinite;
-			animation-timing-function: linear;
-		}
-
-		@keyframes spin {
-			from {
-				transform: rotate(0deg);
-			}
-
-			to {
-				transform: rotate(360deg);
-			}
-		}
-
-		.setting-group {
-			margin-bottom: 60px;
-		}
-
-		.remove-icon {
-			color: black;
-			width: 30px;
-			height: 30px;
-			display: inline-block;
-			position: absolute;
-			right: 10px;
-			/* border: 1px solid black;
-			border-radius: 3px; */
-			font-size: 24px;
-			/* color: black; */
-			padding-top: 2px;
-			padding-left: 4px;
-			top: -10px;
-		}
-
-		.text-center {
-			text-align: center;
-		}
-
-		div[disabled] {
-			color: lightgray !important;
-		}
-
-		input.ng-invalid {
-			background-color: lightcoral;
-		}
-
-		input[type="text"]:not(.hy-nostyle),
-		input[type="password"]:not(.hy-nostyle),
-		input[type="email"]:not(.hy-nostyle),
-		.hy-input-text {
-			border-bottom: 1px solid #999 !important;
-			border-right: 1px solid #999 !important;
-			border-radius: 0px 0px 5px 0px !important;
-			padding-left: 5px !important;
-			width: calc(100% - 10px) !important;
-		}
-
-		select {
-			padding: 5px;
-		}
-
-		/* @media (hover: none), (pointer: coarse) {
-		body {
-			cursor: pointer;
-		} */
-
-		.tooltip {
-			/* display: block!important; */
-			position: absolute;
-			z-index: 100;
-			background-color: white;
-			display: inline-block;
-			width: 40vw;
-			border: 1px solid grey;
-			border-radius: 3px;
-			padding: 10px;
-			left: 0px;
-			transform: translate(50%, -115%);
-			/* top:-200%; */
-			/* transform: translate(-50%, -25% ); */
-			background-color: #efefef;
-			/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-			box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-		}
-
-		.pointer {
-			cursor: pointer;
-		}
-
-		.link,
-		alinky,
-		[ng-click^="openUrl"] {
-			font-weight: 500;
-			text-decoration: underline;
-			cursor: pointer;
-			display: inline-block;
-		}
-
-		.inline-block {
-			display: inline-block !important;
-		}
-
-		.template-panel {
-			position: fixed;
-			display: block;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			background-color: white;
-			z-index: 300;
-
-		}
-
-		.template-panel>.content,
-		.panel {
-			height: calc(100% - 70px);
-			overflow: scroll;
-			margin-bottom: 10px;
-
-		}
-
-		.panel {
-			height: calc(100% - 70px);
-			overflow: auto;
-			margin-bottom: 10px;
-			position: fixed;
-			width: 100%;
-			top: 0;
-			background-color: white;
-		}
-		
-		.filter {
-			height: 30px;
-			z-index: 10;
-			right: 0;
-			top: 2px;
-			margin-bottom: 10px;
-			left: 0px;
-			width: auto;
-			position: absolute;
-		}
-		.filter input[type="text"].label {
-			width: 70%!important;
-		}
-		.filter + .panel {	
-			height: calc(100% - 110px);
-			top: 50px;
-			left:0px;
-		}
-
-		form {
-			height:100%;
-			/* top: 0px;
-			position: absolute;
-			width: 100%; */
-		}
-		form.top {
-			top: 0px;
-			position: absolute;
-			width: 100%;
-		}
-		.padding-left {
-			padding-left: 10px;
-		}
-	</style>
+	<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
+	<script type="text/javascript" src="../assets/js/default.js"></script>
+	
+	<link rel="stylesheet" href="../assets/fontawesome/fontawesome.css" type="text/css"/>
+	<link rel="stylesheet" href="../assets/css/default.css" type="text/css"/>
 
 </head>
 
@@ -719,9 +28,9 @@
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger">
-				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
-				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
-				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
+				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
+				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
 				<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchanger Files.</div>
 					<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
@@ -757,7 +66,7 @@
 						<div class="field">
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Flows" ng-change="blockTextSettings=true"></textarea>
 						</div>
-						<div class="button margin-top margin-bottom" ng-click="readFlows();">Read Flows</div>
+						<div class="button margin-top margin-bottom" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null">Read Flows</div>
 					</div>
 					<div ng-if="vars.readflow">
 						<div class="field margin-top margin-bottom">
@@ -767,7 +76,7 @@
 								<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
 							</div>
 						</div>
-						<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables or apptokens you
+						<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
 							want to replace with which of your own in the flow(s) script that is created.</div>
 						<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
 							<div class="label">Flow</div>
@@ -882,16 +191,19 @@
 								</div>
 							</div>
 						</div>
+						<div class="field">
+							<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
+						</div>
 					</div>
-					<div class="field">
-						<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
-					</div>
-					<div class="field">
-						<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
-					</div>
-					<div class="field margin-top margin-bottom">
-						Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
-						<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+					
+					<div>
+						<div class="field">
+							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
+						</div>
+						<div class="field margin-top margin-bottom">
+							Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+							<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+						</div>
 					</div>
 					<div class="field margin-top">
 						Flows that are created will be listed here:
@@ -1112,32 +424,31 @@
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div class="field filter">
 			<input type="text" class="label" ng-model="filter.header"/>
-			<div class="float-right">
-				<div class="fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=''"></div>
-				<div class="fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes'"></div>
-				<div class="fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite'"></div>
-			</div>			
+			<div class="float-right sorting">
+				<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+				<div class="icon-button fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+				<div class="icon-button fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+			</div>
 		</div>
 		<div class="panel">
 			<div class="field" style="margin-bottom:30px;">
 				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 				<h1>Here you can select a template</h1>
 			</div>
-			<div class="field" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
+			<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 				<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
 			</div>
 		</div>
 		<div class="main-buttons ">
-			<button class="button" data-i18n="settings.close" ng-click="view.subid='theflowexchangerimport';">Close</button>
+			<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
 		</div>
 
 		<div class="template-panel" ng-show="vars.template">
-			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
-				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readTextSettings();">Select</button>
+				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 			</div>
 		</div>
 	</form>
@@ -1154,13 +465,23 @@
 				var Homey;
 				$scope.stamp = Date.now();
 				$scope.view = { id: 'theflowexchanger', subid: 'theflowexchangerimport' };
-				$scope.orderBy = {orderBy:'favorite'};
+				$scope.orderBy = {orderBy:'favorite', reverse:false};
 				$scope.filter = {header:''};
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
 					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
 				};
 				//Homey.ready();
+
+				$scope.closeTemplates = function() {
+					$scope.view.subid='theflowexchangerimport';
+				}
+				$scope.selectTemplates = function() {
+					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				}
+				$scope.backTemplates = function() {
+					vars.template=null;
+				}
 
 				$scope.icons = [];
 				$scope.customicons = [];
@@ -1256,6 +577,7 @@
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
+							if(vars.favoriteTemplates) _.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 						});
 					});
 				}
@@ -1317,9 +639,9 @@
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow.apiCommand = result.apiCommand;
-							navigator.clipboard.writeText(result.apiCommand);
+							copyTextToClipboard(result.apiCommand);
 							$scope.vars.scriptCopied = true;
-							$scope.vars.createdadvancedflows.length = 0;
+							//$scope.vars.createdadvancedflows.length = 0;
 						});
 					});
 				}
@@ -1361,7 +683,7 @@
 				$scope.updateCompressed = function () {
 					$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
 					if ($scope.vars.textSettings) {
-						navigator.clipboard.writeText($scope.vars.textSettings);
+						copyTextToClipboard($scope.vars.textSettings);
 						$scope.vars.tefCopied = $scope.vars.textSettings;
 					}
 				}
@@ -1806,11 +1128,7 @@
 			var scope = angular.element(document.body).scope();
 			scope.$emit('ready', Homey, $);//, $);
 		}
-		// console.log(navigator);
-		// console.log(navigator.clipboard);
-		// console.log(navigator.clipboard.writeText);
 	</script>
-
 </body>
 
 </html>

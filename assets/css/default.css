@@ -1,0 +1,853 @@
+#hy-views > .hy-view {
+    position: relative!important;
+    width: 100%!important;
+    height: 100%!important;
+  
+}
+
+html {
+    /* overflow-y: hidden !important; */
+    height: 100% !important;
+}
+
+body {
+    /* overflow: hidden; */
+    /* overflow-x:auto;
+    overflow-y: scroll!important; */
+    height: 100% !important;
+    width: calc(100% - 10px);
+}
+
+.main-panel {
+    margin-top:20px;
+    /* overflow-x: auto;
+    overflow-y: scroll !important;
+    height: calc(100% - 60px) !important; */
+}
+
+* {
+
+    box-sizing: border-box;
+}
+
+a {
+    display: inline-block;
+}
+
+.float-right {
+    float: right !important;
+    z-index: 100;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    z-index: 900;
+    /* backdrop-filter: blur(0.1px); */
+}
+
+#overlay.show {
+    display: block;
+    animation-duration: 3s;
+    animation-name: blur-out;
+    animation-fill-mode: forwards;
+    /* backdrop-filter: blur(3px); */
+    /* transition: backdrop-filter 3s; */
+
+}
+
+/* #overlay.hide {
+    animation-duration: .3s;
+      animation-name: blur-out;
+    animation-direction: reverse;
+    animation-fill-mode: forwards;
+    /* transition: display 0s 1s; 
+} */
+@keyframes blur-out {
+    0% {
+        /* display:none; */
+        backdrop-filter: blur(0.1px);
+    }
+
+    /* 1% {
+        display: block;
+    } */
+    100% {
+        backdrop-filter: blur(3px);
+        /* display: block; */
+    }
+}
+
+/* html {
+    height:auto!important;
+    } */
+
+.fa-icon {
+    min-width: 24px;
+    min-height: 24px;
+    font-size: 20px;
+}
+
+.block {
+    display: block !important;
+}
+
+.margin-top {
+    margin-top: 10px;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+#preview-outerframe {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+#preview-innerframe img {
+    width: 125px;
+    height: 125px;
+    padding: 20px;
+}
+
+input {
+    border-radius: 3px;
+}
+
+#icons {
+    list-style: none;
+    margin-left: 0;
+}
+
+.icon {
+    position: relative;
+    border-bottom: 1px solid #eee;
+    height: 60px;
+}
+
+.icon:last-child {
+    border-bottom: none;
+}
+
+.icon .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.icon .name {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    bottom: 10px;
+    font-size: 14px;
+    line-height: 40px;
+    font-weight: 400;
+}
+
+.icon input.name {
+    top: 15px;
+    bottom: 15px;
+    line-height: 20px;
+}
+
+.icon .buttons {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+}
+
+.icon button {
+    float: left;
+    box-sizing: border-box;
+    margin-left: 5px;
+}
+
+.icon .image {
+    width: 30px;
+    height: 30px;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    background: #333;
+    position: absolute;
+    top: 16px;
+    left: 10px;
+}
+
+#defaultIcons .default-icon {
+    position: relative;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    display: inline-block;
+    width: 52px;
+    height: 52px;
+}
+
+#defaultIcons .default-icon .image {
+    width: 32px;
+    height: 32px;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    background: #333;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+
+
+
+#devices {
+    list-style: none;
+    margin-left: 0;
+}
+
+.device {
+    position: relative;
+    border-bottom: 1px solid #eee;
+    height: 60px;
+}
+
+.device:last-child {
+    border-bottom: none;
+}
+
+.device .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.device .name {
+    position: relative;
+    left: 10px;
+    top: 10px;
+    bottom: 5px;
+    font-size: 14px;
+    line-height: 40px;
+    font-weight: 400;
+}
+
+.device input.name {
+    top: 15px;
+    bottom: 15px;
+    line-height: 20px;
+}
+
+.device .buttons {
+    /* display: inline-block; */
+    position: relative;
+    right: 10px;
+    top: 5px;
+    float: right;
+}
+
+.device button {
+    float: left;
+    box-sizing: border-box;
+    margin-left: 5px;
+}
+
+.device .image {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    background: #333;
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
+
+#editdevice {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+
+
+
+#customicons {
+    list-style: none;
+    margin-left: 0;
+}
+
+.customicon {
+    position: relative;
+    border-bottom: 1px solid #eee;
+    height: 60px;
+}
+
+.customicon:last-child {
+    border-bottom: none;
+}
+
+.customicon .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.customicon .name {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    bottom: 10px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+.customicon input.name {
+    top: 15px;
+    bottom: 15px;
+    line-height: 20px;
+}
+
+.customicon .buttons {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+}
+
+.customicon button {
+    float: left;
+    box-sizing: border-box;
+    margin-left: 5px;
+}
+
+.customicon .image {
+    width: 30px;
+    height: 30px;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    background: #333;
+    position: absolute;
+    top: 16px;
+    left: 10px;
+}
+
+#editcustomicon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#preview {
+    width: 50px;
+    height: 50px;
+}
+
+.functions-table button {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    font-size: 12px !important;
+}
+
+[ng-click^="show"],
+[ng-click^="view"],
+[ng-click] {
+    cursor: pointer;
+    /* margin-top: 30px; */
+}
+
+#theflowexchanger {}
+
+#theflowexchanger ul {
+    height: 40vw;
+    overflow-y: scroll;
+    list-style: none;
+    margin-left: 0;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+#theflowexchanger ul .checkbox {
+    cursor: pointer;
+    /* display: inline; */
+}
+
+#theflowexchanger ul li {
+    height: 30px;
+}
+
+#theflowexchanger ul .name {
+    display: inline;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.top-labels {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+h1.top-labels {
+    margin-bottom: 20px;
+}
+
+.group {
+    position: relative;
+    display: block;
+    width: 100%;
+    /* border-bottom: 2px solid black; */
+    padding: 10px;
+    padding-bottom: 20px;
+}
+
+.group.header {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-radius: 20px 20px 0px 0px;
+    font-size: 14pt;
+
+}
+
+.group input[type="text"],
+.group select {
+    background-color: #eee;
+}
+
+.group.odd {
+    background-color: #eee;
+}
+
+.group.odd input[type="text"],
+.group.odd select {
+    background-color: white;
+}
+
+.group.last {
+    /* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
+}
+
+
+.field {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.label>* {
+    display: inline-block;
+}
+
+.label {
+    position: relative;
+    width: 48%;
+    display: inline-block;
+}
+
+.label .fa {
+    float: right;
+}
+
+.label.large {
+    width: 70%
+}
+
+.label.large+.label,
+.label.large+.value {
+    width: 28%
+}
+
+.value {
+    position: relative;
+    width: 49% !important;
+    display: inline-block;
+}
+
+
+.create-button {
+    text-align: center;
+    width: 100%;
+    position: relative;
+    /* margin: 10px 0px;
+    left:-20px; */
+    cursor: pointer;
+}
+
+.color-icon {
+    display: inline-block;
+    ;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.round {
+    border-radius: 25px !important;
+}
+
+.green {
+    background-color: #75D600;
+}
+
+.blue {
+    background-color: #2FB0FF;
+}
+
+.orange {
+    background-color: #FA6400;
+}
+
+.white {
+    background-color: #cecece;
+}
+
+.purple {
+    background-color: purple;
+    color: white;
+}
+
+.color-icon+* {
+    position: relative;
+    left: 25px;
+}
+
+
+
+
+.header-buttons {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    /* padding-top: 30px; */
+    background-color: white;
+    z-index: 100;
+}
+
+.header-buttons .icon-button {
+    width: 24%;
+    display: inline-block;
+    position: relative;
+    height: 60px;
+}
+
+.header-buttons .icon-button .fa-icon {
+    font-size: 36px;
+    color: #E8A713;
+    margin-top: 6px;
+}
+
+.header-buttons .icon-button.active .fa-icon {
+    color: #0066A4;
+}
+
+.button {
+    padding: 12px !important;
+    width: auto !important;
+    display: inline-block;
+    font-size: 20pt !important;
+    cursor: pointer;
+}
+
+.main-buttons {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    background-color: white;
+}
+
+.top-button {
+    display: inline-block;
+    margin: 10px;
+    font-size: 16px;
+}
+
+.top-button .fa-icon {    
+    /* color: #E8A713; */
+}
+
+.top-button.active .fa-icon, .icon-button.active .fa-icon {
+    color: #0066A4;
+}
+
+
+.main-buttons .button {
+    padding: 16px !important;
+    display: inline-block;
+    margin: 0px 20px;
+    bottom: 0px;
+}
+
+.main-buttons .button:nth-child(1):nth-last-child(1) {
+    margin: 0;
+    width: 50%;
+}
+
+.main-buttons .button:nth-child(1):nth-last-child(2) {
+    left: 0px;
+    position: fixed;
+}
+
+.main-buttons .button:nth-child(2):nth-last-child(1) {
+    right: 0px;
+    position: fixed;
+}
+
+@media screen and (max-width: 320px) {
+    .main-buttons {
+        height: 50px;
+    }
+
+    .main-buttons .button {
+        padding: 10px !important;
+        font-size: 20pt !important;
+        margin: 0px 5px;
+    }
+}
+@media screen and (max-width: 340px) {
+    .top-button {
+        font-size: 12px;
+        margin: 5px;
+      }
+}
+@media screen and (max-width: 400px) {
+    .button {
+        padding: 8px !important;
+        font-size: 18pt !important;
+    }
+}
+
+.fa-sync-alt {
+    font-size: 24px;
+}
+
+.spin {
+    animation-name: spin;
+    animation-duration: 3000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.main-view {
+    /* height: calc(100% - 70px);
+    position: fixed;
+    overflow: auto; */
+    padding-right: 10px;
+    width:100%;
+    padding-bottom:30px;
+}
+
+
+.setting-group {
+    margin-bottom: 60px;
+}
+
+.remove-icon {
+    color: black;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    /* border: 1px solid black;
+    border-radius: 3px; */
+    font-size: 24px;
+    /* color: black; */
+    padding-top: 2px;
+    padding-left: 4px;
+    top: -10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+div[disabled], button[disabled] {
+    color: lightgray !important;
+}
+
+input.ng-invalid {
+    background-color: lightcoral;
+}
+
+input[type="text"]:not(.hy-nostyle),
+input[type="password"]:not(.hy-nostyle),
+input[type="email"]:not(.hy-nostyle),
+.hy-input-text {
+    border-bottom: 1px solid #999 !important;
+    border-right: 1px solid #999 !important;
+    border-radius: 0px 0px 5px 0px !important;
+    padding-left: 5px !important;
+    width: calc(100% - 10px) !important;
+}
+
+select {
+    padding: 5px;
+}
+
+/* @media (hover: none), (pointer: coarse) {
+body {
+    cursor: pointer;
+} */
+
+.tooltip {
+    /* display: block!important; */
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    display: inline-block;
+    width: 40vw;
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 10px;
+    left: 0px;
+    transform: translate(50%, -115%);
+    /* top:-200%; */
+    /* transform: translate(-50%, -25% ); */
+    background-color: #efefef;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+
+
+
+.custom-icon {
+    height:24px;
+    width:24px;
+    position: absolute;
+}
+.custom-icon + * {
+    position: relative;
+    left:30px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.link,
+alinky,
+[ng-click^="openUrl"] {
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.inline-block {
+    display: inline-block !important;
+}
+
+.template-panel {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    z-index: 300;
+
+}
+
+.template-panel>.content,
+.panel {
+    height: calc(100% - 70px);
+    overflow: scroll;
+    margin-bottom: 10px;
+
+}
+
+.panel {
+    height: calc(100% - 70px);
+    overflow: auto;
+    margin-bottom: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: white;
+}
+
+.filter {
+    height: 30px;
+    z-index: 10;
+    right: 0;
+    top: 2px;
+    margin-bottom: 10px;
+    left: 0px;
+    width: auto;
+    position: absolute;
+}
+.filter input[type="text"].label {
+    width: 70%!important;
+}
+.filter + .panel {	
+    height: calc(100% - 110px);
+    top: 50px;
+    left:0px;
+}
+
+.filter .sorting .icon-button .fa-icon {
+    color: #E8A713;
+}
+
+.filter .sorting .icon-button.active .fa-icon {
+    color: #0066A4;
+}
+
+form {
+    height:100%;
+    /* top: 0px;
+    position: absolute;
+    width: 100%; */
+}
+form.top {
+    top: 0px;
+    position: absolute;
+    width: 100%;
+}
+.padding-left {
+    padding-left: 10px;
+}
+
+.template-row>.fa-icon {
+    position: absolute;
+}
+
+.template-row>.link {
+    left: 30px;
+    position: relative;
+    width: calc(100% - 30px);
+}

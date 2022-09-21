@@ -185,7 +185,10 @@
   "2.6.12" : {
     "en" : "Added: Templates from the Community Forum Topic for AVDs."
   },
-  "2.6.14" : {
+  "2.6.15" : {
     "en" : "Improved: Template readings."
+  },
+  "2.6.19" : {
+    "en" : "Improved: Templates, AVD Settings and App Settings views."
   }
 }

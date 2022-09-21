@@ -1,575 +1,17 @@
 <script type="text/javascript" src="../../../assets/js/angular.js"></script>
 <script type="text/javascript" src="../../../assets/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/lodash.js"></script>
-<script type="text/javascript" src="../../../assets/js/elif.js"></script>
-<script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
 <script type="text/javascript" src="../../../assets/js/smart-table.min.js"></script>
 <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
-
+<script type="text/javascript" src="../../../assets/js/elif.js"></script>
+<script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
+<script type="text/javascript" src="../../../assets/js/default.js"></script>
+	
 <!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
 <!-- <script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
-<link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"></link>
+<link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
-
-<style type="text/css">
-	* {
-
-		box-sizing: border-box;
-	}
-	a {
-		display: inline-block;
-	}
-.float-right {
-	float: right !important;
-	z-index:100;
-}
-	/* html {
-		height:auto!important;
-	} */
-
-	.fa-icon {
-		min-width: 24px;
-		min-height: 24px;
-		font-size: 20px;
-	}
-
-	.block {
-		display: block !important;
-	}
-	.margin-top {
-		margin-top:10px;
-	}
-	.margin-bottom {
-		margin-bottom:10px;
-	}
-
-	.top-labels {
-		position: relative;
-		margin-bottom: 10px;
-	}
-
-	h1.top-labels {
-		margin-bottom: 20px;
-	}
-
-	.group {
-		position: relative;
-		display: block;
-		width: 100%;
-		/* border-bottom: 2px solid black; */
-		padding: 10px;
-		padding-bottom: 20px;
-	}
-
-	.group.header {
-		padding-top: 20px;
-		margin-top: 20px;
-		border-radius: 20px 20px 0px 0px;
-		font-size: 14pt;
-
-	}
-
-	.group input[type="text"],
-	.group select {
-		background-color: #eee;
-	}
-
-	.group.odd {
-		background-color: #eee;
-	}
-
-	.group.odd input[type="text"],
-	.group.odd select {
-		background-color: white;
-	}
-
-	.group.last {
-		/* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-	}
-
-	.field {
-		position: relative;
-		display: block;
-		width: 100%;
-		margin-top: 10px;
-	}
-	.label > * {
-		display: inline-block;
-	}
-
-	.label {
-		position: relative;
-		width: 48%;
-		display: inline-block;
-	}
-
-	.label .fa {
-		float: right;
-	}
-	.label.large {
-		width:70%
-	}
-	.label.large + .label, .label.large + .value {
-		width:28%
-	}
-	.value {
-		position: relative;
-		width: 49% !important;
-		display: inline-block;
-	}
-
-	.create-button {
-		text-align: center;
-		width: 100%;
-		position: relative;
-		/* margin: 10px 0px;
-		left:-20px; */
-		cursor: pointer;
-	}
-
-	.color-icon {
-		display: inline-block;
-		;
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		border: 1px solid black;
-	}
-
-	.round {
-		border-radius: 25px !important;
-	}
-
-	.green {
-		background-color: #75D600;
-	}
-
-	.blue {
-		background-color: #2FB0FF;
-	}
-
-	.orange {
-		background-color: #FA6400;
-	}
-
-	.white {
-		background-color: #cecece;
-	}
-
-	.purple {
-		background-color: purple;
-		color: white;
-	}
-
-	.color-icon+* {
-		position: relative;
-		left: 25px;
-	}
-
-	.main-view {
-		height: calc(100% - 70px);
-		position: fixed;
-		overflow: auto;
-		padding-right: 10px;
-		width:100%;
-	}
-
-	.remove-icon {
-		color: black;
-		width: 30px;
-		height: 30px;
-		display: inline-block;
-		position: absolute;
-		right: 10px;
-		/* border: 1px solid black;
-		border-radius: 3px; */
-		font-size: 24px;
-		/* color: black; */
-		padding-top: 2px;
-		padding-left: 4px;
-		top: -10px;
-	}
-
-	.text-center {
-		text-align: center;
-	}
-
-	div[disabled], button[disabled] {
-		color: lightgray !important;
-	}
-
-	input.ng-invalid {
-		background-color: lightcoral;
-	}
-
-	input[type="text"]:not(.hy-nostyle),
-	input[type="password"]:not(.hy-nostyle),
-	input[type="email"]:not(.hy-nostyle),
-	.hy-input-text {
-		border-bottom: 1px solid #999 !important;
-		border-right: 1px solid #999 !important;
-		border-radius: 0px 0px 5px 0px !important;
-		padding-left: 5px !important;
-		width: calc(100% - 10px) !important;
-	}
-
-	select {
-		padding: 5px;
-	}
-
-	/* @media (hover: none), (pointer: coarse) {
-    body {
-        cursor: pointer;
-    } */
-
-	.tooltip {
-		/* display: block!important; */
-		position: absolute;
-		z-index: 100;
-		background-color: white;
-		display: inline-block;
-		width: 40vw;
-		border: 1px solid grey;
-		border-radius: 3px;
-		padding: 10px;
-		left: 0px;
-		transform: translate(50%, -115%);
-		/* top:-200%; */
-		/* transform: translate(-50%, -25% ); */
-		background-color: #efefef;
-		/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-	}
-
-
-	.custom-icon {
-		height:24px;
-		width:24px;
-		position: absolute;
-	}
-	.custom-icon + * {
-		position: relative;
-		left:30px;
-	}
-
-	[ng-click^="show"], [ng-click^="view"], [ng-click] {
-			cursor: pointer;
-			/* margin-top: 30px; */
-		}
-	
-#theflowexchanger {}
-
-#theflowexchanger ul {
-	height: 40vw;
-	overflow-y: scroll;
-	list-style: none;
-	margin-left: 0;
-	overflow-x: hidden;
-	white-space: nowrap;
-}
-
-#theflowexchanger ul .checkbox {
-	cursor: pointer;
-	/* display: inline; */
-}
-
-#theflowexchanger ul li {
-	height: 30px;
-}
-
-#theflowexchanger ul .name {
-	display: inline;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-
-
-.field {
-	position: relative;
-	display: block;
-	width: 100%;
-	margin-top: 10px;
-}
-
-.label>* {
-	display: inline-block;
-}
-
-.label {
-	position: relative;
-	width: 48%;
-	display: inline-block;
-}
-
-.label .fa {
-	float: right;
-}
-
-.label.large {
-	width: 70%
-}
-
-.label.large+.label,
-.label.large+.value {
-	width: 28%
-}
-
-.value {
-	position: relative;
-	width: 49% !important;
-	display: inline-block;
-}
-
-
-.header-buttons {
-	height: 60px;
-	width: 100%;
-	position: relative;
-	top: 0;
-	text-align: center;
-	/* padding-top:30px; */
-}
-.header-buttons .icon-button {
-	width:24%;
-	display: inline-block;
-	position: relative;
-	height:60px;			
-}
-.header-buttons .icon-button .fa-icon {
-	font-size: 36px;
-	color: #E8A713;
-	margin-top: 6px;
-}
-.header-buttons .icon-button.active .fa-icon {
-	color:#0066A4;
-}
-
-.main-buttons {
-	height: 60px;
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	text-align: center;
-}
-
-.button {
-	padding: 16px!important;
-	width: auto !important;
-	display: inline-block;
-	font-size: 20pt!important;
-	cursor: pointer;
-}
-.top-button {
-	display: inline-block;
-	margin: 10px;
-	font-size: 16px;
-}
-
-.main-buttons .button {
-	display: inline-block;
-	/* top: 6px;
-	position: relative;
-	margin: 0px 50px; */
-	margin: 0px 20px;						
-	bottom:0px;
-}
-.main-buttons .button:nth-child(1):nth-last-child(1) {
-	margin:0;
-	width: 50%;
-}
-.main-buttons .button:nth-child(1):nth-last-child(2){
-	left:0px;
-	position: fixed;
-} 
-.main-buttons .button:nth-child(2):nth-last-child(1) {
-	right:0px;
-	position: fixed;
-}
-
-@media screen and (max-width: 350px) {
-	
-	.main-buttons {
-		height: 40px;
-	}
-	.main-buttons .button  {				
-		padding: 8px!important;
-		width: auto !important;
-		display: inline-block;
-		font-size: 18pt!important;
-		cursor: pointer;
-		margin: 0px 5px;
-	}
-	
-}
-.fa-sync-alt {
-	font-size:24px;
-}
-.spin {
-	animation-name: spin;
-	animation-duration: 3000ms;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear; 
-}
-@keyframes spin {
-	from {
-		transform:rotate(0deg);
-	}
-	to {
-		transform:rotate(360deg);
-	}
-}
-
-.setting-group {
-	margin-bottom:60px;
-}
-
-.remove-icon {
-	color: black;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	position: absolute;
-	right: 10px;
-	/* border: 1px solid black;
-	border-radius: 3px; */
-	font-size: 24px;
-	/* color: black; */
-	padding-top: 2px;
-	padding-left: 4px;
-	top: -10px;
-}
-
-.text-center {
-	text-align: center;
-}
-
-div[disabled] {
-	color: lightgray !important;
-}
-
-input.ng-invalid {
-	background-color: lightcoral;
-}
-
-input[type="text"]:not(.hy-nostyle),
-input[type="password"]:not(.hy-nostyle),
-input[type="email"]:not(.hy-nostyle),
-.hy-input-text {
-	border-bottom: 1px solid #999 !important;
-	border-right: 1px solid #999 !important;
-	border-radius: 0px 0px 5px 0px !important;
-	padding-left: 5px !important;
-	width: calc(100% - 10px) !important;
-}
-
-select {
-	padding: 5px;
-}
-
-/* @media (hover: none), (pointer: coarse) {
-body {
-	cursor: pointer;
-} */
-
-.tooltip {
-	/* display: block!important; */
-	position: absolute;
-	z-index: 100;
-	background-color: white;
-	display: inline-block;
-	width: 40vw;
-	border: 1px solid grey;
-	border-radius: 3px;
-	padding: 10px;
-	left: 0px;
-	transform: translate(50%, -115%);
-	/* top:-200%; */
-	/* transform: translate(-50%, -25% ); */
-	background-color: #efefef;
-	/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-}
-
-.pointer {
-	cursor: pointer;
-}
-
-.link, alinky, [ng-click^="openUrl"] {
-	font-weight: 500;
-	text-decoration: underline;
-	cursor: pointer;
-	display: inline-block;
-}
-
-.inline-block {
-	display: inline-block !important;
-}
-.template-panel {
-	position: fixed;
-	display: block;
-	top:0;
-	left:0;
-	bottom:0;
-	right:0;
-	background-color:white;
-	z-index:300;
-	
-}
-.template-panel > .content, .panel {
-	height: calc(100% - 70px);
-	overflow: scroll;
-	margin-bottom: 10px;
-	
-}
-.panel {
-	height: calc(100% - 70px);
-	overflow: auto;
-	margin-bottom: 10px;
-	position: fixed;
-	width: 100%;
-	top: 0;
-	background-color: white;
-}
-.filter {
-	height: 30px;
-	z-index: 10;
-	right: 0;
-	top: 2px;
-	margin-bottom: 10px;
-	left: 0px;
-	width: auto;
-	position: absolute;
-}
-.filter input[type="text"].label {
-	width: 70%!important;
-}
-.filter + .panel {	
-	height: calc(100% - 110px);
-	top: 50px;
-	left:0px;
-}
-	
-
-form {
-	height:100%;
-	/* top: 0px;
-	position: absolute;
-	width: 100%; */
-}
-form.top {
-	top: 0px;
-	position: absolute;
-	width: 100%;
-}
-
-.padding-left {
-			padding-left: 10px;
-		}
-	/* .tooltip>div {} */
-</style>
+<link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
 
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
@@ -1103,17 +545,18 @@ form.top {
 		<br><br>
 	</form>
 	<div class="main-buttons" ng-show="!view.id">
-		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save</div>
+		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save Device</div>
 		<div class="button" ng-click="close()">Close</div>
 	</div>
 
 	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
-		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
-		<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-		<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676')">See the Share Your Device Forum Topic for other AVDs</div>
-	
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
+		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
+			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676')">See the Share Your Device Forum Topic for other AVDs</div>	
+		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
 			<div class="group">
@@ -1138,13 +581,15 @@ form.top {
 			</div>
 		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerimport'">
-			<div class="field">
+			<div class="field" ng-show="!vars.imported">
 				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 				<div class="field margin-bottom">
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Device or Read Flows" ng-change="blockTextSettings=true"></textarea>
 				</div>
-				<div class="button" ng-click="readTextSettings()">Read Device</div>
-				<div class="button" ng-click="readFlows();">Read Flows</div>
+			</div>
+			<div class="field">
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readTextSettings() : null">Read Device</div>
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null">Read Flows</div>
 			</div>
 			<div class="field" ng-if="vars.readcopy.customIcons">
 				<div class="label">Custom icon</div>
@@ -1173,7 +618,7 @@ form.top {
 						<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
 					</div>
 				</div>
-				<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables or apptokens you
+				<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
 					want to replace with which of your own in the flow(s) script that is created.</div>
 				<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
 					<div class="label">Flow</div>
@@ -1288,16 +733,16 @@ form.top {
 						</div>
 					</div>
 				</div>
+				<div class="field">
+					<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
+				</div>
 			</div>
+			
 			<div class="field">
-				<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
-			</div>
-			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
-			</div>
-			<div class="field margin-top margin-bottom">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
+			</div>			<div class="field margin-top margin-bottom">
 				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
-				<div class="value" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+				<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 			</div>
 			<div class="field margin-top">
 				Flows that are created will be listed here:
@@ -1312,32 +757,31 @@ form.top {
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div class="field filter">
 			<input type="text" class="label" ng-model="filter.header"/>
-			<div class="float-right">
-				<div class="fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=''"></div>
-				<div class="fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes'"></div>
-				<div class="fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite'"></div>
-			</div>			
+			<div class="float-right sorting">
+				<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+				<div class="icon-button fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+				<div class="icon-button fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+			</div>
 		</div>
 		<div class="panel">
 			<div class="field" style="margin-bottom:30px;">
 				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 				<h1>Here you can select a template</h1>
 			</div>
-			<div class="field" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
+			<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 				<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
 			</div>
 		</div>
 		<div class="main-buttons ">
-			<button class="button" data-i18n="settings.close" ng-click="view.subid='theflowexchangerimport';">Close</button>
+			<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
 		</div>
 
 		<div class="template-panel" ng-show="vars.template">
-			<!-- <div class="content" ng-bind-html="vars.template.post"></div> -->
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
-				<button class="button" data-i18n="settings.back" ng-click="vars.template=null;">Back</button>
-				<button class="button" data-i18n="settings.import" ng-click="vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; view.subid='theflowexchangerimport'; readTextSettings();">Select</button>
+				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 			</div>
 		</div>
 	</form>
@@ -1361,6 +805,18 @@ form.top {
 			$scope.filter = {header:''};
 			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
+
+
+				
+				$scope.closeTemplates = function() {
+					$scope.view.subid='theflowexchangerimport';
+				}
+				$scope.selectTemplates = function() {
+					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				}
+				$scope.backTemplates = function() {
+					vars.template=null;
+				}
 
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
@@ -1398,7 +854,7 @@ form.top {
 						_.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 					});
 				});
-				else $scope.vars.tefTemplates = [{"id":317787,"number":2,"post":"<h1>\n<a name=\"example-on-how-to-use-the-share-your-device-with-flows-1\" class=\"anchor\" href=\"#example-on-how-to-use-the-share-your-device-with-flows-1\"></a>Example on how to use the Share Your Device with Flows.</h1>\n<p>I have created a Advanced Virtual Device (AVD) called Light Switch, containing three lights: Living room, kitchen and Game Room.<br>\n<div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea.jpeg\" data-download-href=\"/uploads/short-url/m0nSDa5QzuSPqW4cg45sxvVOgye.jpeg?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea_2_363x375.jpeg\" alt=\"image\" data-base62-sha1=\"m0nSDa5QzuSPqW4cg45sxvVOgye\" width=\"363\" height=\"375\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea_2_363x375.jpeg, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea_2_544x562.jpeg 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea_2_726x750.jpeg 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/a/9a3af94898c89222660ba0c50a9574ca4bead7ea_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">1120×1156 52.7 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n<p>I also created a flow which controls the status of the buttons and the reactions to the pushing of the buttons:<br>\n<div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f.png\" data-download-href=\"/uploads/short-url/lmLUw0i5jvck6o4x43Z6Ux7BFCv.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f_2_509x499.png\" alt=\"image\" data-base62-sha1=\"lmLUw0i5jvck6o4x43Z6Ux7BFCv\" width=\"509\" height=\"499\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f_2_509x499.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f_2_763x748.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f_2_1018x998.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/9/5/95c0a884d73fadc88bfe1d2318f1f1b8dcabc11f_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">1360×1334 173 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n<p>And</p>\n<p><div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f.png\" data-download-href=\"/uploads/short-url/uLRPnw8DLcRoibj7MQZ4zJsz4yH.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f_2_690x336.png\" alt=\"image\" data-base62-sha1=\"uLRPnw8DLcRoibj7MQZ4zJsz4yH\" width=\"690\" height=\"336\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f_2_690x336.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f_2_1035x504.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f_2_1380x672.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d7aa716bc7ec8bc0a032b32fb0ad116b19de103f_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">2068×1008 242 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n<p>You can copy this Device and its Flows with the The Exchanger File.<br>\nTEF:</p>\n\n<h2>\n<a name=\"how-to-copy-the-device-and-there-flows-and-connect-them-to-your-devices-without-going-into-the-floweditor-2\" class=\"anchor\" href=\"#how-to-copy-the-device-and-there-flows-and-connect-them-to-your-devices-without-going-into-the-floweditor-2\"></a>How to copy the Device and there flows, and connect them to your devices, without going into the floweditor?</h2>\n<h2>\n<a name=\"read-and-create-the-device-3\" class=\"anchor\" href=\"#read-and-create-the-device-3\"></a>Read and create the Device</h2>\n<ul>\n<li>Create a new Advanced Virtual Device, give it a name and a icon. The icon will be replaced later.</li>\n<li>Goto Device Repair.</li>\n<li>Open Share Your Device.</li>\n<li>Paste the TEF or Select on from the Templates, and press Read Device.</li>\n<li>Select if and how you want the custom icons to be saved.</li>\n<li>Press Save.</li>\n</ul>\n<p>The Device is now reconfigured with the three buttons and correct text, etc.</p>\n<h2>\n<a name=\"read-and-create-the-flow-script-and-set-it-to-yours-4\" class=\"anchor\" href=\"#read-and-create-the-flow-script-and-set-it-to-yours-4\"></a>Read and create the Flow script and set it to yours</h2>\n<ul>\n<li><s>Goto Share Your Device Again.</s></li>\n<li><s>Paste the TEF or Select on from the Templates, and</s></li>\n<li>Press Read Flows.</li>\n<li>Set Your Device:<br>\n<div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645.png\" data-download-href=\"/uploads/short-url/uKXCdSZMcwVqsCZUW6o4wK1S06N.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645_2_324x500.png\" alt=\"image\" data-base62-sha1=\"uKXCdSZMcwVqsCZUW6o4wK1S06N\" width=\"324\" height=\"500\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645_2_324x500.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645_2_486x750.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645_2_648x1000.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/d/7/d79034c9da0f8bf705af4de05b356cf1f463f645_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">770×1186 83.9 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div>\n<br>\n(Light switch (other) will be filled with the current/new device name, leave it that way).</li>\n<li>Now press Update Text.</li>\n<li>Run the text given in the textfield in the API Playground (link not working atm?).</li>\n</ul>\n<p>Now you have the AVD and the flows connected to it in your root folder:</p>\n<p><div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b.png\" data-download-href=\"/uploads/short-url/g0sNORtAZJy8OxiaHaeP72xXv5.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b_2_514x500.png\" alt=\"image\" data-base62-sha1=\"g0sNORtAZJy8OxiaHaeP72xXv5\" width=\"514\" height=\"500\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b_2_514x500.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b_2_771x750.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b_2_1028x1000.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/0/1/01cf3abee349b2d70a8c2aabd81b1315323b6c6b_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">1330×1292 168 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div><br>\n<div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67.png\" data-download-href=\"/uploads/short-url/pNaoR5omP3QtELeau4YHEksHiQv.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67_2_690x333.png\" alt=\"image\" data-base62-sha1=\"pNaoR5omP3QtELeau4YHEksHiQv\" width=\"690\" height=\"333\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67_2_690x333.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67_2_1035x499.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67_2_1380x666.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/b/4/b4c52e153bd72dec045f0228a65a749d9e0b4a67_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">2076×1004 243 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n<h2>\n<a name=\"this-can-be-used-to-copy-and-paste-flows-and-devices-on-your-own-homey-also-5\" class=\"anchor\" href=\"#this-can-be-used-to-copy-and-paste-flows-and-devices-on-your-own-homey-also-5\"></a>This can be used to copy and paste flows and devices on your own Homey also!</h2>","createdOn":"2022-09-10T08:44:01.022Z","autherId":5550,"header":"Example on how to use the Share Your Device with Flows.","tefs":["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"],"likes":2},{"id":318786,"number":3,"post":"<h1>\n<a name=\"pushable-device-tile-and-separate-device-status-lightdark-1\" class=\"anchor\" href=\"#pushable-device-tile-and-separate-device-status-lightdark-1\"></a>Pushable Device Tile and Separate Device Status (Light/Dark)</h1>\n<p>This AVD has a Device Tile that you can click, but it flashes back to the state it was in.<br>\nThe Device Tile Status (light/dark) can be set through flowcards, independent of the pusing of the Device Tile.</p>\n<p>In the Flow, you will See a Set Button to Yes and a Set button to no.<br>\nUse them to make the device tile go light or dark.<br>\nThere is also a trigger that will send a notification when the Device Tile button is pushed.</p>\n\n<h2>\n<a name=\"create-the-avd-2\" class=\"anchor\" href=\"#create-the-avd-2\"></a>Create the AVD</h2>\n<ul>\n<li>Create an AVD, pick a name and icon. Icon will be replaced.</li>\n<li>Goto Repair (in Web, richt click repair)</li>\n<li>Goto Open Share Your Device</li>\n<li>Select this Template from the templates or paste the TEF in the field, and press Read Device.</li>\n<li>Press Save.</li>\n</ul>\n<h2>\n<a name=\"create-the-flow-script-3\" class=\"anchor\" href=\"#create-the-flow-script-3\"></a>Create the Flow script</h2>\n<ul>\n<li>Press Read Flows.</li>\n<li>Only replace the user with yourself.</li>\n<li>Press Update Text (it should be copied into your clipboard now).</li>\n<li>Click on the link for the Playground, paste the text into the field and press Run.</li>\n</ul>\n<hr>\n<p><div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548.png\" data-download-href=\"/uploads/short-url/mXVxekb9AJd7Fs6POMmxpdFcLtS.png?dl=1\" title=\"image\" rel=\"noopener nofollow ugc\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548_2_303x499.png\" alt=\"image\" data-base62-sha1=\"mXVxekb9AJd7Fs6POMmxpdFcLtS\" width=\"303\" height=\"499\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548_2_303x499.png, https://global.discourse-cdn.com/business4/uploads/athom/original/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/original/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/a/0/a0f60a883364ce91f436e891412879b5b1dbe548_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">image</span><span class=\"informations\">428×706 34.3 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n<p><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/c/4/c4bfc554946734d582ebca809451294dd593a1fe.png\" alt=\"image\" data-base62-sha1=\"s4wrYNa6nhbkNrEIfVSt6QdTclw\" width=\"585\" height=\"246\"></p>","createdOn":"2022-09-14T09:33:23.810Z","autherId":5550,"header":"Pushable Device Tile and Separate Device Status (Light/Dark)","tefs":["H4sIAAAAAAACA9VUW3OiTBD9KxavCSvDdfCN1eAlaoiajearrdTA9OgYBITBWyr/fQfMJpvdfUjVPn08gHZPT58+fbqfFQo7HkE/ShOlpfTMou+dn7Zn3E9P90575J16czy/PiVXs4PRm/H5cEEW7OCJ/S31bjLmLRcW6yWim+adLFgfdkZYzC/GZb50Wfn1QIbbADsjvbM67LXNfAn3h0C4eeE02RCQr80XlO6DAGXHTjK/7ian3uCg05NRXO/GfMXxYry9mw46dPmNzQbHoDPshg/69Fiu92YfoptUc2fO2t/6Xh7cb9A3MfRZcOHeNmNsEM23kbtIORTRYkK3/Wzm9eOnrt4dDHrWdgn7duBfJajf5fPAz/W77uCweBhfb7N+dgesqQ3ucp5PyXQRx6ObCRuOr2Ykw9l26w3s/nZ38tIHb5N4JZv4qy2frkP/yiTrrJtMuL/K2rdJLxwneGWvrOvlwFmciok+cRaT4kG/dUZU/ttZveCu1/E8be2OlqOABXkyTbRTcGyHNx1HGxIEtwLWi4c5NJHYuKm2vnjQjBKNim+np50+t75ezJsl8jNv6XnKpRKVhUg3VT8LpfX8cqmkOV/yhMR9KhvMGDFAs6kKOjZVMwKqupZLVYaxo4OrIUaIvKQAIXiyrG5QIIF8eXzckbiEx+paQRKhtJIyji+VpNyEkN+wGRyEzyGmMkR7N4/r718cX9M0BpL8zVMKkb450LujTTaQk18iolh+lVSsIJeQwzoOjeUpaT3f8m5u50AE+HG6b5O8imckLuDdvYLoCejv5ilkJJdxbZKRkMdcSCH9cWaV7r0KSFYWq7PtkSeUR0Skv+Dq8IKE8VsK2Rdakfupfshz1XAGbwkaJKGN4hVcY8ZjaEwFEWVR9f+NkxeZpKyCI4yQjhmowBhWTdt1VGxhrDJk2UAQAcdwfibxcg6NwZdGN6VFtCLxU32NxPDfs8Kl3wzD0LUhUommWarJdF0l1NBU4roUqANa6EYSxefxym6JvIQa+LNi6JpmEsNQCaFMNRFFKgGLqsiJMGW2aZqo5uNQK+BYv1OZa5Vu4Ng677LWJ0VelSPkcCwhf9zxXJQkPl/wGP5Uj3g/Uk2FZEHBhk5pZDqqGZqSTE3TVNfQsepGjisdmoZtU/leUybbW6m1+sGr4XuVQkXPbyqlckHlPBO83sJncwNJ6iX3n0p4psTU/0LKhiRE4m9tUilheK27EuujkEP7WiSJ6tyvsMtC1lsJ4gzzT01cngv6lLDk2Y0EUOERIitazSbJ+BciJLovUbppVsmkbUcEqUiuHfWuUmTxNcSWcp2kWUMuJKB5+SRqSYaOQW3qGqqD7UjSoluq6wJWI4QN19Yx0Wn4QSkI/6NWPmpErsiPOvlI4b92XhZ4XpE/F4a0GBED5Fq2qlsGyNnDIMfEsFSiY2QTgyLHxB9K1v+vJVcbQYr/5fvLDyVoIqqhCAAA"],"likes":1},{"id":318882,"number":4,"post":"<h1>\n<a name=\"unique-text-status-indicator-on-device-tile-1\" class=\"anchor\" href=\"#unique-text-status-indicator-on-device-tile-1\"></a>Unique Text Status Indicator on Device Tile</h1>\n<p>This AVD has an Unique Text Status Indicator.</p>\n<p><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/d/d/dd510250acf4bb1b23c7b4f1e42ffa6aa18ebf55.png\" alt=\"image\" data-base62-sha1=\"vzR55nvfy90b9VboEMbXKDOd0mF\" width=\"116\" height=\"121\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/9/f/9f9def2067882b9e2bbba5379ba0f740f2e59892.png\" alt=\"image\" data-base62-sha1=\"mM2hYR28Ia6OSgJxGVgpzbZA0RI\" width=\"368\" height=\"336\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/5/5/5523bb7b071eae436a7d2def3fb5dcaf0e0a7013.png\" alt=\"image\" data-base62-sha1=\"c9b8KIFS8nARx1kH1Aq1h2Os6pJ\" width=\"152\" height=\"158\"><br>\n<a></a><br>\n<a></a><br>\nThere is also a Flow in the TEF for setting the Status field:<br>\n<img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/1/4/148588676bbdd6fee5923b684e4a3ccb710bc625.png\" alt=\"image\" data-base62-sha1=\"2VxDOvYdV27piMsHzc0YpTEepCt\" width=\"285\" height=\"326\"></p>\n<p><a></a><br>\n<a></a><br>\nDon’t forget to select the Status field as Status Indicator in the Mobile App:</p>\n<p><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/3/7/37682c16a34b30151ede870929ecdfaec2a06e92.png\" alt=\"image\" data-base62-sha1=\"7U9rPibRuZO2xVRsgzDZxpBqKA2\" width=\"290\" height=\"186\"></p>\n","createdOn":"2022-09-14T14:07:30.032Z","autherId":5550,"header":"Unique Text Status Indicator on Device Tile","tefs":["H4sIAAAAAAACA81VW7OiyhX+K8anpBiD3GG/gYCCiIIoQiq1q4HmJveLCFPz34N7z5nJqUwq8xheulire7HWd2m+LgP4SHyo+GWxfFvuyFbhP58Nj2PmaNOiwU+cbHc0MBCHPY8wNyKy08O7ggmilJ3HjZQo7OOCKW6wx66JTYUyc8vIJ3FyB0A9KpYYHpnh6FpZVr2AMGtsUw9TDK/FHbFM/Si3KHdKA0BjT6OhtOvD7k4nlL1e7mUVonRddxHe01KtPa5ktMUrPXPTteD4DrHHgzpVB0QrpHM6jcJTaIZ1zrDSsG27MD5seRbEorHR3WiSaHUbCpKsJdZWicyKara8tiU3djjs1acT3ZWH8Uhy83jOvGeWTI3rkaj6OPHmDRgHyz5H8XFMAnEbSHKS9Fd5T147Em7cVKF4fpcSbqqL6pWXseDYosi0xs1tJA9mUmW1pw5QK9zbLT9sjPQOzQTu7tRQTzL70I31obmC6nozPcpn03LdbnumycxH1huuYOthQXpBbyE2nSWn8NahEx5RFD1WaCwKbirbMcO4G/C0LXLfPghXr93K86fq0bHsUckZbDOInej7Dh/x/PLL0u/brsxffLfLt6/fX99x7j/Yxy3LJr2DMcrNqB4wZG9gPCcPKEhs6BtxiqmpVqnSJnje9RNxtjxgWRIec4KRUpwCCgIJ+TF8IreRRa7NgdhFd6FDLmhKh7cS8WhQcGh4w6xnqMWQVncVBanxmtth25d2+7gzOwpD0c3TJAo2vAGvRTQeLZiwwjiUvIjVo9rd87ukBbjAImXugFbd37fiObf21JObZFPi22BbuSCqxMv+Ph5rR3kE9VV83qVcE6zdXrzIgtRI7u5gXdDe9fiGzojDUZCVDJvg0zCxfW15fF/W0hl7jsNNcR0mbFtqFI6No5uOI+umu2EU8+xjjY+NjHhl74xyUuyGCiUFGtskS/EsS1TVuDS3s5iZYLLPxkVT1bNT3y6OKVzyarhI5yIYGNvp5YKX0kxTtw8hiqGWY3s9tvejjSX74yVMazUiTPKieXjospN/rjknX4fk2TmPgpLeop10M7ZSbknqZYMqCV9ibOrtGyQKQEVexoq0SkU67VXDUu1A7tcj95za0trenPT4vDaiPjCzSdv9HYjVPTCbWMq0Vh/JeHePStlgD1fBx6Jer8z1gfTOlhTuJU7Xp7YWb+fI9jPGjBq9cjjFOsexcQvi4ZZikWHVp2RzkHyFv+bi7ZTWMu9KPgeYVOMuzyIiMWW67tOMSsZA7Ik8VIPQZLvTZLOOZZU+gumTiHbOwTgVLdqDoovc6FBzVOEDEUwQMdriVHKnYxYigdY4SDyG/iVt4mOPF7Dpw0YOW1JDdjEUq66KOZXdpD3wELGmIUEZW63HMzbN2bDCL5PmohrLPuLDyUutHEV5eUchEX8SZmMsv31Zlk0SJQXIlGA2DcHhBIaT9ApnQ3pFkhxYAZYhViwL6TDwvTXhrWfbtbDrkiL68BycW4rG9wfIevj+MmI3D7R8K/os+7Is+tyDzTG04LOTE5gF85H1z7D+sf4iIZRlBkHxq0zfdeWvEhuQwwb8W8LP5nVZdjFsXi13oOtbTJ93zdHzx9vPsAj9JAfZ58Hvse9/kZ93ygzW5//lT0UWShEkPujK11eCFyK/BeK8r/h1Df9H19/mL4Ll2z++LpMXNz4WBBRGrwgaBCvSp+ayHMBWFAFonAkZimWC+fh/qTo33DU9/Cj/dYnjHEWBEK58FudWJAu4FaAIYoURHpwtiIMw8F77nh+AjMs3bD2v5Vw6LnM4vn3i8Pabcnl1/0iargfZ58H3WUDvnzC/l1WXlLP+Pnmcd8/iWQL/FVx+jP912c3qed3oMMvKvyz/oHxu7QUQC3HcC7n1CmLsDAvtMyuWgdjcyHpO0QQBiA+0PwQ6V7m0cNHFSbvwQRMsknAxlv1imDW76MpFG5fDIukWZbE4lF6SwcUsinLx1yHp4gVYTLApF0mxCJuy6P729xdZZTbD+7YcX70Nc+AHYvi8DEnQxX94IYZJFP9wxmugouzgS1VrLmBxBidXkGT9Fclw2MrjZo5pDnAeS4fzINSf2CDw/xs2XhSsAYH5IcWtMBDMFOD0TAE1j8PR7CwqHMOJNf4/KSiLbPwVDzb0fuAfgDb+bfzJ3yXg27d/fvsXQJf4/DsKAAA="],"likes":2},{"id":319047,"number":7,"post":"<h1>\n<a name=\"weather-details-on-a-device-tile-1\" class=\"anchor\" href=\"#weather-details-on-a-device-tile-1\"></a>Weather details on a device tile</h1>\n<ul>\n<li>Apps used:</li>\n<li>\n<ul>\n<li><a href=\"https://homey.app/a/nl.qluster-it.DeviceCapabilities/test\">Device Capabilities (test)</a></li>\n</ul>\n</li>\n<li>\n<ul>\n<li><a href=\"https://homey.app/a/nu.baretta.openweathermap/\">Openweathermap</a></li>\n</ul>\n</li>\n<li>\n<ul>\n<li><a href=\"https://store.homey.community/app/nl.qluster-it.HOOP\">H.O.O.P. (Hope)</a></li>\n</ul>\n</li>\n<li>\n<ul>\n<li>\n<a href=\"https://homey.app/a/nl.qluster-it.AdvancedTriggers/\">Advanced Triggers</a><br>\n<a></a><br>\n<a></a>\n</li>\n</ul>\n</li>\n<li>Device tile<br>\n<img src=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/a/7/a723d66682c51478bd7a0d71e56c9645f87bd4e8.gif\" alt=\"Peek 2022-09-15 03-11\" data-base62-sha1=\"nQAwbg78E6p0aLXXtTt3rK0w4uk\" width=\"263\" height=\"136\" class=\"animated\"><br>\n<a></a><br>\n<a></a><br>\n<a></a>\n</li>\n<li>Flow</li>\n</ul>\n<details>\n<summary>\nScreenshot, just to compare (click me)</summary>\n<p><div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52.png\" data-download-href=\"/uploads/short-url/9k4Yfa7LT8ZSCbIXUFZ0XlSHgga.png?dl=1\" title=\"Screenshot from 2022-09-15 03-21-25\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52_2_287x500.png\" alt=\"Screenshot from 2022-09-15 03-21-25\" data-base62-sha1=\"9k4Yfa7LT8ZSCbIXUFZ0XlSHgga\" width=\"287\" height=\"500\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52_2_287x500.png, https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52_2_430x750.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/original/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/4/1/4158a6ebb78ccbea8b95181a50b804b0f25b5a52_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">Screenshot from 2022-09-15 03-21-25</span><span class=\"informations\">546×948 107 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div></p>\n</details>\n<p><a></a><br>\n<a></a></p>\n<ul>\n<li>TEF:</li>\n</ul>\n","createdOn":"2022-09-15T01:36:27.609Z","autherId":12955,"header":"Weather details on a device tile","tefs":["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"],"likes":1},{"id":320180,"number":9,"post":"<h1>\n<a name=\"motion-driven-light-or-any-other-device-1\" class=\"anchor\" href=\"#motion-driven-light-or-any-other-device-1\"></a>Motion Driven Light (or any other device)</h1>\n<p>To prevent the light from turning off, while there’s still motion detected.<br>\nIt uses Homey’s <em><strong>Zone Activity</strong></em><br>\nThis way your motion- &amp; contactsensors become exchangeable and expandable, without having to fix the flow.</p>\n<p>This way, you can add a sensor, remove one (use 1 sensor minimum), use one with another protocol (f.i. zigbee/wifi/z-wave).</p>\n<ul>\n<li>App used (<em>supported by the exchanger file</em>):</li>\n<li>\n<ul>\n<li>\n<a href=\"https://homey.app/a/nl.fellownet.chronograph/\">Chronograph</a><br>\n<a></a><br>\n<a></a>\n</li>\n</ul>\n</li>\n<li>Flow example:<br>\n<div class=\"lightbox-wrapper\"><a class=\"lightbox\" href=\"https://global.discourse-cdn.com/business4/uploads/athom/original/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998.png\" data-download-href=\"/uploads/short-url/jYl12IrV9HRiRhaoztpiZy9w0RO.png?dl=1\" title=\"Screenshot from 2022-09-20 13-41-51\"><img src=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998_2_690x427.png\" alt=\"Screenshot from 2022-09-20 13-41-51\" data-base62-sha1=\"jYl12IrV9HRiRhaoztpiZy9w0RO\" width=\"690\" height=\"427\" srcset=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998_2_690x427.png, https://global.discourse-cdn.com/business4/uploads/athom/original/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998.png 1.5x, https://global.discourse-cdn.com/business4/uploads/athom/original/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998.png 2x\" data-small-upload=\"https://global.discourse-cdn.com/business4/uploads/athom/optimized/3X/8/b/8bfb698ec88d49935cae8e6535f1b17dfa386998_2_10x10.png\"><div class=\"meta\">\n<svg class=\"fa d-icon d-icon-far-image svg-icon\" aria-hidden=\"true\"><use href=\"#far-image\"></use></svg><span class=\"filename\">Screenshot from 2022-09-20 13-41-51</span><span class=\"informations\">970×601 79.1 KB</span><svg class=\"fa d-icon d-icon-discourse-expand svg-icon\" aria-hidden=\"true\"><use href=\"#discourse-expand\"></use></svg>\n</div></a></div>\n</li>\n</ul>\n<p><a></a><br>\n<a></a></p>\n<ul>\n<li>TEF:</li>\n</ul>\n","createdOn":"2022-09-20T12:14:50.401Z","autherId":12955,"header":"Motion Driven Light (or any other device)","tefs":["H4sIAAAAAAACA8VW224jRRD9ldG8AFI66vvFbys2C4iwSLASK1aR1ZfqeNjxjDUeJxuifAbPfAA/xydQPXYWO9pEDiAhRXLcru4659Sp6r6tf+07WL/pf4BV6yPUs9ua+6A8pYJQximRkTJiaebEc2FSzDJ4Jktc55cYX79jp+yi+hY276Gr/vz9j9/qu7uTOpUIamKGmA1RPCkiE2fExcwI98zmTKmju5PwmHO/XFUvfDdAXIz1SR1xbd3H9zBO541TXHuaoW376w7G07gY+q6/HPxqcX/Gl3tLZZOvZ+9u6wZ/MVxyZqQjkBlyUgjH65iJ05RbaRhlKWHScsh8/uJV9V0/Nn1XvRyaK2R13lwuxurzfqh8d1MluGoifIHhSH8cNjCBva2zZCwqqUiiKRIpQBLnuCBReC2kCkx5VeKufLspwr1CIrPqGeli3/YDbryZNMCFD/WMntQ39Yzjx3WTRlSi27TtSb2Acsb9N/yn7voRatSE88wEtY6wrAORJngSokmEcqYlx+JmF/dR/rRARMUkVYCIFa+azscRcZ5U69EPY+WrsVnCUI19NW6GrupzrsYFVO3E4roZFxiSoPU3p9WbRbOurv3NXkDqYV0huL83X5eMGDDAZ2vM0bRtteyvYAndWD2pgrTHyyC54iaGTJIu1lQODRG9R1eoWMwpAndFho+H66Jxjycs+iXczIois6M65WQy4L1q9RbGODSXlzDgtzV6tM7GWSwHI4ppT2SwnFguBPFJCKOZTsnK+gJhHxW4hW30Djg9AO5Xq9mjfbTFOtVzPlV3fsV3iAv8vtsBvph66+MIKGK8Xfa7gLIdF9Fl+GXTNWX3GmLfpfXUlTFwTYEx1FpYIlkWJHgbCQOFHFyWOoYdB8Z3JMxEYjOuNuPZMJT6FwwPWG1OU/PLexhOV34Fwzj4pl3vKH3T4c558iPMC7x5218+5DURKuuz+udi97d7Tvdd2rk8N12zXkCa7boUo9aTdSFN5n2XUdZHm/piOxuTzlom5A4BcFAYHIveSWKdcpLjj4KxA+8Z+c9KeA/206aTAXywWhKugyDSAxo3IirtfNKQsEbU109UulCBZEXyipLEkIXMwRLvcfrxoBPlDrzJ5oAK/3dt9FQTGYXDN+ZMqPMG+SAVZ1gm4IxLKSRGbVHCU7BBOEaYLtkyx6ZX1uIdJQ1F6Z3waeo1AIPbPAqSOEdYKhAnXSRC6KwALzLH6EOf8v/Dp1tRPunI7ihDHqXc4VTZ1vFxottba3bUC2BLfTs7Hk6a46pQynVUXQ9JCH1EtY5ptJXfrOGZg7IIf1QLHmLezoL/VPicP6n8UXN6ahTH8NoBRgTeqvikwGvUSaOJElJ7GoOzHg6eFF+fvX7yImfPeM+wZELyEInLBl9dBQHeiJwoKxj+qewC30/+4vXLvdzDNBwxsbDPT+1RHwsiEQtQHpVoO89Rcm9pVMoHI8IB7zeHvC8HgG6b/b64z8lOFc+6POQivizLk1YTL/Fxy6nJSmR8flq6n/3s/MezveyhrE7JHX9+chdxtFNpUevSlTwKYlVyJCSlmVFaBX6g+vn3Xz1S8Y+j8/j0d3cXd38BAE0Un7kMAAA="]}];
+				else $scope.vars.tefTemplates = [];
 			}
 			if(typeof(Homey)==='undefined') $scope.refreshTemplates();
 
@@ -1532,9 +988,9 @@ form.top {
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow.apiCommand = result.apiCommand;
-							navigator.clipboard.writeText(result.apiCommand);
+							copyTextToClipboard(result.apiCommand);
 							$scope.vars.scriptCopied = true;
-							$scope.vars.createdadvancedflows.length = 0;
+							//$scope.vars.createdadvancedflows.length = 0;
 						});
 					});
 			}
@@ -1570,7 +1026,7 @@ form.top {
 					});
 				}
 				else {
-					let o = {"apiCommand":"Homey.flow.createAdvancedFlow({advancedflow:{\"id\":\"811fd8a6-d299-45ee-abfb-6686b6ded49d\",\"name\":\"Example Light Switch\",\"enabled\":true,\"cards\":{\"4e72bcd1-268c-43e3-b8c2-d56d06921637\":{\"x\":0,\"y\":20,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"030dcc04-bc5f-4730-81cc-e44eab1bbd44\"]},\"030dcc04-bc5f-4730-81cc-e44eab1bbd44\":{\"x\":380,\"y\":20,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"boolean\":true}},\"69b6093f-9b42-46a6-a6b9-3709315619cb\":{\"x\":0,\"y\":140,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9\"]},\"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9\":{\"x\":380,\"y\":140,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"boolean\":false}},\"a308e7a9-841d-4d6e-80dd-f982f7e28c93\":{\"x\":0,\"y\":260,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"82a075b3-f01e-438b-969d-09b8467ef890\"]},\"82a075b3-f01e-438b-969d-09b8467ef890\":{\"x\":380,\"y\":260,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"boolean\":true}},\"ce2a613e-76a3-42ea-aa56-7e5b4a1ac86c\":{\"x\":0,\"y\":380,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"8ac94629-1672-48b6-a407-e214cf154554\"]},\"8ac94629-1672-48b6-a407-e214cf154554\":{\"x\":380,\"y\":380,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"boolean\":false}},\"ca008d69-2d97-41ed-b3c4-e8e257d1c92f\":{\"x\":0,\"y\":500,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"0f2bf21c-6e88-440e-b3a9-f6d7724db876\"]},\"0f2bf21c-6e88-440e-b3a9-f6d7724db876\":{\"x\":380,\"y\":500,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"boolean\":true}},\"d5c70fc8-f1de-483b-974e-5dbc24943e6a\":{\"x\":0,\"y\":620,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"3878783b-72f9-4dbb-b61b-7fe1a397ab81\"]},\"3878783b-72f9-4dbb-b61b-7fe1a397ab81\":{\"x\":380,\"y\":620,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"boolean\":false}},\"bd0f1cb1-f10a-4ce7-8e26-561a0e72775b\":{\"x\":760,\"y\":20,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"2803066e-5ad2-48bc-af92-46c7eceeba1b\"],\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"mode\":\"set\"}},\"2803066e-5ad2-48bc-af92-46c7eceeba1b\":{\"droptoken\":\"trigger::bd0f1cb1-f10a-4ce7-8e26-561a0e72775b::value\",\"x\":1140,\"y\":40,\"outputTrue\":[\"f79a572b-ff6c-40d6-979f-e1336366b785\"],\"outputFalse\":[\"916de3dd-a0d7-4230-af33-3de6cf371eca\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"f79a572b-ff6c-40d6-979f-e1336366b785\":{\"x\":1520,\"y\":0,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"on\",\"type\":\"action\"},\"916de3dd-a0d7-4230-af33-3de6cf371eca\":{\"x\":1520,\"y\":80,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"off\",\"type\":\"action\"},\"d786a25c-0540-4a19-8964-404e2add5ca6\":{\"x\":760,\"y\":200,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"ec9a150b-2089-4cf6-9d49-d993c13e9215\"],\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"mode\":\"set\"}},\"ec9a150b-2089-4cf6-9d49-d993c13e9215\":{\"droptoken\":\"trigger::d786a25c-0540-4a19-8964-404e2add5ca6::value\",\"x\":1140,\"y\":220,\"outputTrue\":[\"6293f7e5-94a9-4d25-8455-89398bfa05ad\"],\"outputFalse\":[\"0a07413d-87f0-41ba-b3cc-7d8697e24335\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"6293f7e5-94a9-4d25-8455-89398bfa05ad\":{\"x\":1520,\"y\":180,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"on\",\"type\":\"action\"},\"0a07413d-87f0-41ba-b3cc-7d8697e24335\":{\"x\":1520,\"y\":260,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"off\",\"type\":\"action\"},\"b4556981-f8e0-487a-8e04-fbe75cc15c1b\":{\"x\":760,\"y\":380,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"1c699c63-8074-49a7-ad59-02f827aede6d\"],\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"mode\":\"set\"}},\"1c699c63-8074-49a7-ad59-02f827aede6d\":{\"droptoken\":\"trigger::b4556981-f8e0-487a-8e04-fbe75cc15c1b::value\",\"x\":1140,\"y\":400,\"outputTrue\":[\"8af9567e-f863-422c-800e-fe5d50fa3f20\"],\"outputFalse\":[\"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"8af9567e-f863-422c-800e-fe5d50fa3f20\":{\"x\":1520,\"y\":360,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"on\",\"type\":\"action\"},\"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0\":{\"x\":1520,\"y\":440,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"off\",\"type\":\"action\"}}}});\r\n","devicesToReplace":{"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad":{"name":"Woonkamer lamp","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]},"8b550c88-a1b5-4832-a6c0-86ac34e76537":{"name":"Light switch","class":"other","replaceWith":{"id":"dd3044c7-c31c-458c-b1d4-9ddf9ba54a00","name":"Test"},"replacements":[{"id":"fd12fb56-c2ff-4aa0-a192-80a6bf1f05ad","name":"DC VD"},{"id":"3679de3f-922f-46e4-acfd-a60930c53f7e","name":"Living room"},{"id":"8cb8c62d-e10d-47c8-95ca-c938526b9b43","name":"DC AVD Stress"},{"id":"15a67cce-96b5-4863-a0a3-bf9cddbd0e9a","name":"Advanced Virtual Device 15"},{"id":"470e638f-7ad8-478d-b526-8e3cf3812111","name":"Thanks Peter"},{"id":"05507935-ab90-45d1-9cc7-87e0e0917013","name":"Kawa Test"},{"id":"ff7065a3-175b-49db-b664-0eaae2906357","name":"Athom Example"},{"id":"8b550c88-a1b5-4832-a6c0-86ac34e76537","name":"Light switch"},{"id":"dd3044c7-c31c-458c-b1d4-9ddf9ba54a00","name":"Test"}],"actions":["virtualdevice_set_button"],"triggers":["trigger_virtualdevice_button"],"conditions":[]},"1cd72718-6734-4fd4-b372-2cff857951e6":{"name":"Hoofdlamp Keuken","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]},"9f26a907-cc1d-49ad-a190-f615c60c485c":{"name":"Hoofdlamp speelkamer","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]}},"advancedflows":[{"id":"811fd8a6-d299-45ee-abfb-6686b6ded49d","name":"Example Light Switch","enabled":true,"cards":{"4e72bcd1-268c-43e3-b8c2-d56d06921637":{"x":0,"y":20,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"onoff_true","type":"trigger","outputSuccess":["030dcc04-bc5f-4730-81cc-e44eab1bbd44"]},"030dcc04-bc5f-4730-81cc-e44eab1bbd44":{"x":380,"y":20,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"boolean":true}},"69b6093f-9b42-46a6-a6b9-3709315619cb":{"x":0,"y":140,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"onoff_false","type":"trigger","outputSuccess":["509c8d6d-7f2b-4250-b5cc-0cf973ab69e9"]},"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9":{"x":380,"y":140,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"boolean":false}},"a308e7a9-841d-4d6e-80dd-f982f7e28c93":{"x":0,"y":260,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"onoff_true","type":"trigger","outputSuccess":["82a075b3-f01e-438b-969d-09b8467ef890"]},"82a075b3-f01e-438b-969d-09b8467ef890":{"x":380,"y":260,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"boolean":true}},"ce2a613e-76a3-42ea-aa56-7e5b4a1ac86c":{"x":0,"y":380,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"onoff_false","type":"trigger","outputSuccess":["8ac94629-1672-48b6-a407-e214cf154554"]},"8ac94629-1672-48b6-a407-e214cf154554":{"x":380,"y":380,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"boolean":false}},"ca008d69-2d97-41ed-b3c4-e8e257d1c92f":{"x":0,"y":500,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"onoff_true","type":"trigger","outputSuccess":["0f2bf21c-6e88-440e-b3a9-f6d7724db876"]},"0f2bf21c-6e88-440e-b3a9-f6d7724db876":{"x":380,"y":500,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"boolean":true}},"d5c70fc8-f1de-483b-974e-5dbc24943e6a":{"x":0,"y":620,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"onoff_false","type":"trigger","outputSuccess":["3878783b-72f9-4dbb-b61b-7fe1a397ab81"]},"3878783b-72f9-4dbb-b61b-7fe1a397ab81":{"x":380,"y":620,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"boolean":false}},"bd0f1cb1-f10a-4ce7-8e26-561a0e72775b":{"x":760,"y":20,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["2803066e-5ad2-48bc-af92-46c7eceeba1b"],"args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"mode":"set"}},"2803066e-5ad2-48bc-af92-46c7eceeba1b":{"droptoken":"trigger::bd0f1cb1-f10a-4ce7-8e26-561a0e72775b::value","x":1140,"y":40,"outputTrue":["f79a572b-ff6c-40d6-979f-e1336366b785"],"outputFalse":["916de3dd-a0d7-4230-af33-3de6cf371eca"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"f79a572b-ff6c-40d6-979f-e1336366b785":{"x":1520,"y":0,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"on","type":"action"},"916de3dd-a0d7-4230-af33-3de6cf371eca":{"x":1520,"y":80,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"off","type":"action"},"d786a25c-0540-4a19-8964-404e2add5ca6":{"x":760,"y":200,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["ec9a150b-2089-4cf6-9d49-d993c13e9215"],"args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"mode":"set"}},"ec9a150b-2089-4cf6-9d49-d993c13e9215":{"droptoken":"trigger::d786a25c-0540-4a19-8964-404e2add5ca6::value","x":1140,"y":220,"outputTrue":["6293f7e5-94a9-4d25-8455-89398bfa05ad"],"outputFalse":["0a07413d-87f0-41ba-b3cc-7d8697e24335"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"6293f7e5-94a9-4d25-8455-89398bfa05ad":{"x":1520,"y":180,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"on","type":"action"},"0a07413d-87f0-41ba-b3cc-7d8697e24335":{"x":1520,"y":260,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"off","type":"action"},"b4556981-f8e0-487a-8e04-fbe75cc15c1b":{"x":760,"y":380,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["1c699c63-8074-49a7-ad59-02f827aede6d"],"args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"mode":"set"}},"1c699c63-8074-49a7-ad59-02f827aede6d":{"droptoken":"trigger::b4556981-f8e0-487a-8e04-fbe75cc15c1b::value","x":1140,"y":400,"outputTrue":["8af9567e-f863-422c-800e-fe5d50fa3f20"],"outputFalse":["9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"8af9567e-f863-422c-800e-fe5d50fa3f20":{"x":1520,"y":360,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"on","type":"action"},"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0":{"x":1520,"y":440,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"off","type":"action"}}}]};
+					let o = null;
 					$scope.vars.readflow = o;
 					if($scope.vars.readflow.devicesToReplace) _.each($scope.vars.readflow.devicesToReplace, d=> {if(d.replaceWith && d.replaceWith.id && (find=_.find(d.replacements, (r)=>r.id==d.replaceWith.id)))d.replaceWith=find;});
 					//$scope.vars.readflow.apiCommand = o.apiCommand;					
@@ -1609,7 +1065,7 @@ form.top {
 			$scope.updateCompressed = function () {
 				$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
 				if ($scope.vars.textSettings) {
-					navigator.clipboard.writeText($scope.vars.textSettings);
+					copyTextToClipboard($scope.vars.textSettings);
 					$scope.vars.tefCopied = $scope.vars.textSettings;
 				}
 			}
@@ -1699,6 +1155,11 @@ form.top {
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
 						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+					});
+				});
+				Homey.on('createdadvancedflow', (af) => {
+					$scope.$apply(function () {
+						$scope.vars.createdadvancedflows.push(af);
 					});
 				});
 				// Homey.showLoadingOverlay();

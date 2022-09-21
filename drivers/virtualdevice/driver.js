@@ -133,7 +133,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 }
                 //if(templates.length) return {templates, postsFound};
 
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)/gmsi);
+                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
                 let matchesFound = posts? [...posts] : [];
                 postsFound = matchesFound.length;
                 for (let i = 0; i < matchesFound.length; i++) {
@@ -1050,6 +1050,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //let apiCommand = "";
             //let cards = _.flatMap(exchangerFile.advancedflows, f=>_.toArray(f.cards));
             if(!exchangerFile.devicesToReplace) exchangerFile.devicesToReplace = {};
+            if(!exchangerFile.tokensToReplace) exchangerFile.tokensToReplace = {};
             let devicesToReplace = exchangerFile.devicesToReplace;
             let tokensToReplace = exchangerFile.tokensToReplace;
             if(device &&!exchangerFile.devicesToReplace[exchangerFile.originalId]) exchangerFile.devicesToReplace[exchangerFile.originalId] = {};//replaceWith: {id:device.__id, name:device.getName()}, original:true};
@@ -1187,9 +1188,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
                 let devices = _.filter(_allDevices, (d, dKey)=> 
-                _.find(_actionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id)) || 
-                _.find(_conditionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id)) || 
-                _.find(_triggerCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id)) );
+                (!_.size(device.actions) || _.find(_actionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id))) && 
+                (!_.size(device.conditions)  || _.find(_conditionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id))) &&
+                (!_.size(device.triggers)  || _.find(_triggerCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id)) ));
                 // if((devices || device.length===0) && _.size(device.tags) ) devices = _.toArray(allDevices);
                 // if(_.size(device.tags)) devices = _.filter(devices, d=>
                 //     _.find(device.tags, (tag, tagKey)=> _.find(allTokens, t=>t.uri=='homey:device:'+d.id && t.id==tagKey)) 
@@ -2061,6 +2062,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 this.error(error);
             }
         });
+        this.onCreatedAdvancedFlows = (af)=> {
+            if(session) session.emit("createdadvancedflow", af);
+        };
 
     }
     
