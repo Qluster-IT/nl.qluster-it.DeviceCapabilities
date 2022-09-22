@@ -1,4 +1,7 @@
-Neu: Vollständig anpassbares virtuelles Gerät mit einzigartiger textueller Statusanzeige!
+Neu: Exportieren und importieren Sie Flows und/oder Advanced Virtual Devices von anderen Homey-Benutzern.
+Importieren Sie über Vorlagen über App-Einstellungen, AVD-Reparatur oder beim Erstellen von AVDs.
+
+Ebenfalls neu: Vollständig anpassbares virtuelles Gerät (AVD) mit einzigartiger textueller Statusanzeige!
 Beispiele finden Sie im entsprechenden Thread im Community Forum.
 
 Erstellen Sie ein Gerät und konfigurieren Sie es selbst:

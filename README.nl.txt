@@ -1,4 +1,7 @@
-Nieuw: Volledig Aanpasbaar Virtueel Apparaat met Unieke Tekst Status Indicator!
+Nieuw: Exporteer en importeer Flows en/of Advanced Virtual Devices van andere Homey gebruikers.
+Importeer via Templates via App Settings, AVD Repair of bij het aanmaken van AVD's.
+
+Ook nieuw: Volledig Aanpasbaar Virtueel Apparaat (AVD) met Unieke Tekst Status Indicator!
 Zie het Forum voor voorbeelden en uitleg.
 
 Maak een apparaat aan en configureer het zelf:
