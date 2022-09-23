@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
 
-<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
+<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
 
 	<form name="settings" class="main-view" ng-show="!view.id">
 		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';">Open Share Your Device</div>
@@ -758,30 +758,32 @@
 	<div class="main-buttons" ng-show="view.id">
 		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;">Close</div>
 	</div>
-	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
-		<div class="field filter">
-			<input type="text" class="label" ng-model="filter.header"/>
-			<div class="float-right sorting">
-				<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-				<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-				<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-				<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
-			</div>
-		</div>
-		<div class="panel">
-			<div class="field" style="margin-bottom:30px;">
-				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
-				<h1>Here you can select a template</h1>
-			</div>
-			<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
-				<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
-			</div>
-		</div>
-		<div class="main-buttons ">
-			<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
-		</div>
 
+	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div ng-show="!vars.template">
+			<div class="field filter">
+				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="float-right sorting">
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="field" style="margin-bottom:30px;">
+					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+					<h1>Here you can select a template</h1>
+				</div>
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
+					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+				</div>
+			</div>
+			<div class="main-buttons ">
+				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+			</div>
+		</div>
 		<div class="template-panel" ng-show="vars.template">
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
@@ -911,7 +913,9 @@ ${vars.textSettings}
 					/// Sanitize all posts!!
 					template.post = $sanitize(template.post);
 					
-					template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+						
 					let compiled = $compile(template.sanitizedPost)($scope);
 					$('.content').empty();
 					

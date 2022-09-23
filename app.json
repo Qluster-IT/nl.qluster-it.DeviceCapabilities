@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.6.33",
+  "version": "2.6.37",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -229,6 +229,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_capability_changed2",
         "title": {
           "en": "Capability listener",
@@ -324,6 +325,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_app_started",
         "title": {
           "en": "App started",
@@ -358,6 +360,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_virtualdevice_text",
         "title": {
           "en": "Text set",
@@ -426,6 +429,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_virtualdevice_number",
         "title": {
           "en": "Number set",
@@ -494,6 +498,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_virtualdevice_boolean",
         "title": {
           "en": "Yes/No set",
@@ -562,6 +567,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_virtualdevice_button",
         "title": {
           "en": "Button pushed",
@@ -630,6 +636,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "trigger_virtualdevice_status",
         "title": {
           "en": "Status set",
@@ -987,6 +994,7 @@
     ],
     "actions": [
       {
+        "highlight":true,
         "id": "set_capability_zone_text",
         "title": {
           "en": "Set text capabilities in a zone",
@@ -1110,6 +1118,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "set_capability_zone_number",
         "title": {
           "en": "Set number capabilities in a zone",
@@ -1238,6 +1247,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "set_capability_zone_percentage",
         "title": {
           "en": "Set percentage capabilities in a zone",
@@ -1371,6 +1381,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "set_capability_zone_boolean",
         "deprecated": true,
         "title": {
@@ -1518,6 +1529,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "set_capability_zone_2_boolean",
         "title": {
           "en": "Set true/false capabilities in a zone",
@@ -1646,6 +1658,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "set_capability_zone_json",
         "title": {
           "en": "Set json as value for capabilities in a zone",
@@ -1774,6 +1787,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "action_capability_log",
         "title": {
           "en": "Retrieve Insight Log Value",
@@ -1879,6 +1893,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_text",
         "title": {
           "en": "Set Text",
@@ -1946,6 +1961,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_number",
         "title": {
           "en": "Set Number",
@@ -2013,6 +2029,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_boolean",
         "title": {
           "en": "Set Yes/No",
@@ -2080,6 +2097,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_button",
         "title": {
           "en": "Set Button",
@@ -2147,6 +2165,7 @@
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_status",
         "title": {
           "en": "Set Status",
@@ -2154,9 +2173,9 @@
           "de": "Status setzen"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]], [[refreshmobilebug]]",
-          "nl": "Zet Status naar [[text]], [[refreshmobilebug]]",
-          "de": "Setze Status auf [[text]], [[refreshmobilebug]]"
+          "en": "Set Status to [[text]], [[refreshmobilebug]] and [[mode]]",
+          "nl": "Zet Status naar [[text]], [[refreshmobilebug]] en [[mode]]",
+          "de": "Setze Status auf [[text]], [[refreshmobilebug]] und [[mode]]"
         },
         "args": [
           {
@@ -2183,10 +2202,39 @@
               "de": "Mobile App optional aktualisieren"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_status_optionalnumber",
         "title": {
           "en": "Set Status with Number",
@@ -2194,9 +2242,9 @@
           "de": "Status mit Nummer setzen"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]] with [[number]], [[refreshmobilebug]]",
-          "nl": "Zet Status naar [[text]] met [[number]], [[refreshmobilebug]]",
-          "de": "Setze Status auf [[text]] mit [[number]], [[refreshmobilebug]]"
+          "en": "Set Status to [[text]] with [[number]], [[refreshmobilebug]] and [[mode]]",
+          "nl": "Zet Status naar [[text]] met [[number]], [[refreshmobilebug]] en [[mode]]",
+          "de": "Setze Status auf [[text]] mit [[number]], [[refreshmobilebug]] und [[mode]]"
         },
         "args": [
           {
@@ -2232,10 +2280,39 @@
               "nl": "Update Mobile App optioneel"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
       {
+        "highlight":true,
         "id": "virtualdevice_set_expression",
         "title": {
           "en": "Set Expression",
@@ -2302,8 +2379,8 @@
           }
         ]
       },
-
       {
+        "highlight":true,
         "id": "virtualdevice_update_capability_name",
         "title": {
           "en": "Set the Name of a field",
@@ -2371,6 +2448,7 @@
           }
         ]
       },
+
       {
         "id": "virtualdevice_set_warning",
         "title": {

@@ -80,6 +80,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 let preloader;                
                 let templates = [];
                 let postsFound ;
+                let lastNumberFound = 0;
                 
                 if(preloaderFound && preloaderFound.length) {
                     preloader = this.decodeHtml(preloaderFound[0][1]);
@@ -91,6 +92,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
                             let postId = post.id;
                             let postNumber = post.post_number;
+                            lastNumberFound = postNumber;
                     
                             let postCreatedOn = new Date(post.created_at);
                             let autherName = post.display_username;
@@ -144,7 +146,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     let template = _.find(templates, t=>t.number==postNumber);
                     if(template) template.likes = likes;
                 }
-                return {templates, postsFound};
+                return {templates, postsFound, lastNumberFound};
             }
         } catch (error) {
             this.error(error);
@@ -158,10 +160,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         let templates = [];
         let run = true;
         const postsPerRun = 20;
-        let runs = 1;
+        let runs = 0;
+        let lastNumber = 0;
         while (run) {            
-            let _templates = await this.getTefTemplatesFromPostsById({postId:(runs*postsPerRun) + 1});
-            templates = _.union(templates, _templates.templates);
+            let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
+            if(lastNumber == _templates.lastNumberFound) run = false;
+            lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
@@ -211,10 +216,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         let templates = [];
         let run = true;
         const postsPerRun = 20;
-        let runs = 1;
+        let runs = 0;
+        let lastNumber = 0;
         while (run) {            
-            let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs*postsPerRun) + 1});
-            templates = _.union(templates, _templates.templates);
+            let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
+            if(lastNumber == _templates.lastNumberFound) run = false;
+            lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
@@ -409,7 +417,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 break;
                         }
                         let statusNumberChanged = false;
+                        let statusNumberSet = false;
                         if(args.device.hasCapability(cap) && !dontUpdateField) {
+                            statusNumberSet = true;
+                            statusNumberChanged = true;
                             await this.setSecondCapability({ val: value, device:args.device , fieldId});
                             await args.device.setCapabilityValue(cap, value);
 							// //Remove logs here
@@ -419,8 +430,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						}
                         if(args.mode==="executewhencards" && triggerCard) {
                             let oldValue = args.device.getStoreValue(fieldId+"Value");
+                            statusNumberChanged = statusNumberChanged && oldValue!==value;
                             if(triggerCard == this.triggerFlowStatus) {
-                                triggerCard.call(this,args.device, args.text , value, { field: { id: fieldId }, changedText:statusTextChanged, changedNumber:statusNumberChanged });
+                                triggerCard.call(this,args.device, args.text , value, { field: { id: fieldId }, textChanged:statusTextChanged, textSet:true, numberChanged:statusNumberChanged, numberSet:statusNumberSet });
                             } else 
                             triggerCard.call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
                         }
@@ -451,10 +463,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     value = app.runSandBox(args.expression);                
                 }
                 await this.setSecondCapability({ val:value, device:args.device , fieldId});
-                    await args.device.setCapabilityValue(cap, value);
-                    await args.device.setStoreValue(fieldId+"Value", value);
+                await args.device.setCapabilityValue(cap, value);
+                await args.device.setStoreValue(fieldId+"Value", value);
+
                 if(args.mode==="executewhencards") {
-                    if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                    if(type=="status")this.triggerFlowStatus(args.device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
+                    else if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
                 }
                 return true;                    
             } catch (error) {
@@ -465,21 +479,24 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         virtualdevice_set_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
 
-        let triggers = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text', 'trigger_virtualdevice_text'];
+        let triggers = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text', 'trigger_virtualdevice_status'];
         triggers.forEach((trigger => {
 			var triggerCard = this.homey.flow.getDeviceTriggerCard(trigger);
             this[trigger]= triggerCard;
 			triggerCard
 				.registerRunListener(async (args, state) => {
                     try {
-					    return ((state.field && args.field.id==state.field.id && (args.mode!="changed" || state.changed)) || 
-                        (state.statusfield && (args.mode!="changed" || state.changed))                            );
+					    let r = ((state.field && args.field && args.field.id==state.field.id && (args.mode!="changed" || state.changed)) || 
+                        ((args.statusfield==='either' || args.statusfield==='text') && ((args.mode!="changed" && state.textSet) ||  state.textChanged)) ||
+                        ((args.statusfield==='either' || args.statusfield==='number') && ((args.mode!="changed" && state.numberSet) ||  state.numberChanged))
+                        ) || false;
+                        return r;
 					} catch (error) {
-						this.log('set_value:');
-						this.log(error);
+						this.error('trigger_virtualdevice_*:');
+						this.error(error);
 					}
 				});
-            triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger));
+            if(!trigger.endsWith('_status')) triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger));
 		}).bind(this));
 
 
@@ -543,6 +560,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             fieldId.startsWith('button') ? 'button' : 
             fieldId.startsWith('status') ? 'status' : 'unknown';
     }
+
+    /**
+     * 
+     * @param {*} param0 
+     * @returns True if value has changed
+     */
     async setSecondCapability({fieldId, device, val, units}={}) {
         var type = fieldId.startsWith('text') ? 'Text' : 
             fieldId.startsWith('number') ? 'Number' : 
@@ -557,6 +580,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(opt.units!=units) {
                     opt.units = units;
                     await device.setCapabilityOptions(cap, opt);
+                    //return true;
                 }
             } else return await device.setCapabilityValue(cap, val);
         }
@@ -754,7 +778,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);
     }
     async triggerFlowStatus(device, text, number, state) {
-        return await this.trigger_virtualdevice_status.trigger(device, {text:text===null?'':text, number:number===null?0:number} , state);
+        return await this.trigger_virtualdevice_status.trigger(device, {text:text===null || text===undefined?'':text, number:number===null || number===undefined?0:number} , state);
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called

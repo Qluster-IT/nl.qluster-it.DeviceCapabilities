@@ -211,5 +211,11 @@
   },
   "2.6.33" : {
     "en" : "Resolved: Issue with the Listener card."
+  },
+  "2.6.34" : {
+    "en" : "Resolved some issues and improved Templates view and filters."
+  },
+  "2.6.37" : {
+    "en" : "Improved settings."
   }
 }

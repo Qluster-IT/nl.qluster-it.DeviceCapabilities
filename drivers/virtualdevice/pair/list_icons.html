@@ -145,7 +145,7 @@
 
 	</script>
 
-	<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons">
+	<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
 		<div ng-show="!view.id">
 
 			<div style="margin-top:20px;">
@@ -240,29 +240,30 @@
 		</div>
 
 		<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
-			<div class="field filter">
-				<input type="text" class="label" ng-model="filter.header"/>
-				<div class="float-right sorting">
-					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+			<div ng-show="!vars.template">
+				<div class="field filter">
+					<input type="text" class="label" ng-model="filter.header"/>
+					<div class="float-right sorting">
+						<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+						<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+						<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+						<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="field" style="margin-bottom:30px;">
+						<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+						<h1>Here you can select a template</h1>
+					</div>
+					<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+						<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
+						<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+					</div>
+				</div>
+				<div class="main-buttons ">
+					<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
 				</div>
 			</div>
-			<div class="panel">
-				<div class="field" style="margin-bottom:30px;">
-					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
-					<h1>Here you can select a template</h1>
-				</div>
-				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
-					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
-				</div>
-			</div>
-			<div class="main-buttons ">
-				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
-			</div>
-	
 			<div class="template-panel" ng-show="vars.template">
 				<div class="content">&nbsp;</div>
 				<div class="main-buttons">
@@ -293,7 +294,7 @@
 					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
 				}
 				$scope.closeTemplates = function() {
-					view.id=undefined; view.subid=undefined;
+					$scope.view.id=undefined; view.subid=undefined;
 				}
 				$scope.selectTemplates = function() {
 					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
@@ -367,8 +368,10 @@
 						/// Sanitize all posts!!
 						template.post = $sanitize(template.post);
 
-						template.post = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-						let compiled = $compile(template.post)($scope);
+						if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+						else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+
+						let compiled = $compile(template.sanitizedPost)($scope);
 						$('.content').empty();
 
 						$('.content').append(compiled);

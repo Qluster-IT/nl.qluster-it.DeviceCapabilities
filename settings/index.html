@@ -16,14 +16,15 @@
 
 </head>
 
-<body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities">
+<body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities"
+ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates') || editFunctionItem || editdeviceicon || setCustomIcon || setDeviceIcon || editcustomicon, 'with-top-bar':view.showMain, 'with-top-bar-small':view.subid=='theflowexchangertemplates' && !vars.template }">
 	<div class="header-buttons" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
 		<div class="icon-button" ng-click="view.id='theflowexchanger'" ng-class="{active:view.id=='theflowexchanger'}" title="The Flow Exchanger"><span class="fa fa-icon fa-cloud-download-alt"></span></div>
 		<div class="icon-button" ng-click="view.id='virtualdevices'" ng-class="{active:view.id=='virtualdevices'}" title="AVD's"><span class="fa fa-icon fa-cogs"></span></div>
 		<div class="icon-button" ng-click="view.id='customicons'" ng-class="{active:view.id=='customicons'}" title="Custom Icons"><span class="fa fa-icon fa-grip-horizontal"></span></div>
 		<div class="icon-button" ng-click="view.id='functions'" ng-class="{active:view.id=='functions'}" title="Functions"><span class="fa fa-icon fa-code"></span></div>
 	</div>
-	<div class="main-panel" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
+	<div class="main-panel" ng-show="view.showMain = (!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates')">
 		<!-- The Flow Exchange -->
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
@@ -331,11 +332,13 @@
 			</div>
 		</div>
 
-		<div id="editFunction" style="width:100%;height:100%;position:fixed;top:0px;background-color: white;" ng-if="editFunctionItem">
+		<div id="editFunction" ng-if="editFunctionItem" style="position: fixed;z-index: 100;top: 0;bottom: 60px;background-color: white;">
 			<input class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
 			<textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
-			<button style="height:40px;" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button>
-			<button style="height:40px;" style="position:relative;float:right;" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
+			<div class="main-buttons">
+				<button class="button" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button>
+				<button class="button" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
+			</div>
 		</div>
 
 
@@ -386,7 +389,7 @@
 		</div>
 	</div>
 
-	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon" style="width:100%;height:100%;position:fixed;top:0px;">
+	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon">
 		<div class="panel">
 			<div ng-repeat="category in defaultIcons">
 				<div ng-if="$index<=defaultCategoryLoadIndex">
@@ -424,29 +427,30 @@
 	</div>
 
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
-		<div class="field filter">
-			<input type="text" class="label" ng-model="filter.header"/>
-			<div class="float-right sorting">
-				<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-				<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-				<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-				<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+		<div ng-show="!vars.template">
+			<div class="field filter">
+				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="float-right sorting">
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="field" style="margin-bottom:30px;">
+					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+					<h1>Here you can select a template</h1>
+				</div>
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
+					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+				</div>
+			</div>
+			<div class="main-buttons ">
+				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
 			</div>
 		</div>
-		<div class="panel">
-			<div class="field" style="margin-bottom:30px;">
-				<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
-				<h1>Here you can select a template</h1>
-			</div>
-			<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
-				<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-				<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
-			</div>
-		</div>
-		<div class="main-buttons ">
-			<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
-		</div>
-
 		<div class="template-panel" ng-show="vars.template">
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
@@ -631,23 +635,30 @@ ${vars.textSettings}
 				}
 
 				$scope.openTemplate = function (template) {
-					if (template && template.post && template.tefs) {
-						$scope.vars.template = template;
+					try {
+							
+						if (template && template.post && template.tefs) {
+							$scope.vars.template = template;
 
-						/// Sanitize all posts!!
-						template.post = $sanitize(template.post);
+							/// Sanitize all posts!!
+							template.post = $sanitize(template.post);
 
-						template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-						let compiled = $compile(template.sanitizedPost)($scope);
-						$('.content').empty();
+							if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+							else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+							let compiled = $compile(template.sanitizedPost)($scope);
+							$('.content').empty();
 
-						$('.content').append(compiled);
-						$timeout(function() {
-							$scope.$apply(function() {							
-								$('.content').scrollTop(0);
-							});
-						}, 1);
+							$('.content').append(compiled);
+							$timeout(function() {
+								$scope.$apply(function() {							
+									$('.content').scrollTop(0);
+								});
+							}, 1);
 
+							return;
+						}
+					} catch (error) {
+						Homey.alert(error);
 						return;
 					}
 					showOverlay();
