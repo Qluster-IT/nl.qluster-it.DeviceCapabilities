@@ -763,8 +763,9 @@
 			<input type="text" class="label" ng-model="filter.header"/>
 			<div class="float-right sorting">
 				<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-				<div class="icon-button fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
-				<div class="icon-button fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+				<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+				<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+				<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
 			</div>
 		</div>
 		<div class="panel">
@@ -785,6 +786,7 @@
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
 				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
 				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 			</div>
 		</div>
@@ -812,29 +814,35 @@
 
 				$scope.gotoTopic = function() {
 					//if(vars.textSettings)
-					let prePost = vars.textSettings ? (`# Header
+					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
 
 Write here what the AVD(s) is/are all about.
 
+[]()
 [[picture]]
 
-### Required:
+[]()
+### Apps used:
 * Which app is required?
 * Other things people need to do to get it working correct?
 
 
 []()
 []()
+
 TEF:
 \`\`\`
 ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-					if(prePost) copyTextToClipboard(prePost);
+				if(prePost) copyTextToClipboard(prePost);
 					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/last');
 				}
 				
+				$scope.gotoLike = function(template) {
+					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+				}
 				$scope.closeTemplates = function() {
 					$scope.view.subid='theflowexchangerimport';
 				}
@@ -879,6 +887,7 @@ ${vars.textSettings}
 					$scope.$apply(function () {							
 						$scope.vars.tefTemplates = result;
 						_.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+						_.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
 					});
 				});
 				else $scope.vars.tefTemplates = [];
@@ -1084,12 +1093,14 @@ ${vars.textSettings}
 						$scope.vars.uncompressed = result.uncompressed;
 						$scope.vars.compressedMinified = result.compressedMinified;
 						$scope.vars.uncompressedMinified = result.uncompressedMinified;
+						vars.flowName = result.flowName;
 						$scope.updateCompressed();						
 					});
 				});
 			}
 			
 			$scope.updateCompressed = function () {
+				console.log('updateCompressed');
 				$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
 				if ($scope.vars.textSettings) {
 					copyTextToClipboard($scope.vars.textSettings);
@@ -1182,6 +1193,7 @@ ${vars.textSettings}
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
 						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
 					});
 				});
 				Homey.on('createdadvancedflow', (af) => {

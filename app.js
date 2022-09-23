@@ -785,8 +785,14 @@ class DeviceSetter extends Homey.App {
 			if (Object.hasOwnProperty.call(hm.Tracking2.devices, deviceKey)) {
 				const device = hm.Tracking2.devices[deviceKey];				
 				if (!device.device) {
-					this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
-					device.device = this.devices[device.id];
+					try {					
+						this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
+						device.device = this.devices[device.id];	
+					} catch (error) {
+						this.error(error);
+						this.log('continueing');
+						continue;
+					}
 				}
 				let keys = Object.keys(device.capabilities);
 				for (let i = 0; i < keys.length; i++) {

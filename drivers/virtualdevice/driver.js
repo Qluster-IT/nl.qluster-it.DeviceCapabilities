@@ -473,8 +473,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 				.registerRunListener(async (args, state) => {
                     try {
 					    return ((state.field && args.field.id==state.field.id && (args.mode!="changed" || state.changed)) || 
-                        (state.statusfield && (args.mode!="changed" || state.changed))
-                            ;
+                        (state.statusfield && (args.mode!="changed" || state.changed))                            );
 					} catch (error) {
 						this.log('set_value:');
 						this.log(error);

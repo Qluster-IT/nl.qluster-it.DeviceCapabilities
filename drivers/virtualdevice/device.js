@@ -227,22 +227,13 @@ module.exports = class WatchDevice extends Homey.Device {
 				}
 				
 				if(settings.customIcons) delete settings.customIcons;
-				//delete settings.imported;
 			}
 
-			//let b = JSON.parse(JSON.stringify(settings));
-			//b.number1Max = 15;
-			//this.setSettings({number1Max:15});
 
 			var button1Reset = false;
-			//var a = this;
-			//var api = await this.homey.app.refreshHomeyAPI();
-			//let apiDevice =  await api.devices.getDevice({ id: this.__id });
 
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
-				//let tt = this.capitalizeFirstLetter(type);
-				//let ttt = settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'];
 				const fieldCount = type=="status" ? 1 : Math.max(settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0, oldSettings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
 
 				for (let i = 1; i <= fieldCount; i++) {
@@ -359,7 +350,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								}
 
 								if (!hide && !capSet) {
-									if (i === 1) {
+									if (i === 1 && !isOnOffButtonTab) {
 										cap = (isOnOff ? 'onoff' : type) + (settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : '');
 									} else {
 										cap = ((isOnOff ? 'onoff_' : '') + (isOnOffButtonTab ? 'onoffbuttontab_' : '') + ("devicecapabilities" + (disabled ? "_disabled" : "") + "_button" + icon + "." + type + i));

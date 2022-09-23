@@ -244,8 +244,9 @@
 				<input type="text" class="label" ng-model="filter.header"/>
 				<div class="float-right sorting">
 					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-					<div class="icon-button fa fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
-					<div class="icon-button fa fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{active:orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
 				</div>
 			</div>
 			<div class="panel">
@@ -266,6 +267,7 @@
 				<div class="content">&nbsp;</div>
 				<div class="main-buttons">
 					<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+					<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
 					<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 				</div>
 			</div>
@@ -287,7 +289,9 @@
 				$scope.filter = {header:''};
 				const vars = $scope.vars = {};
 
-				
+				$scope.gotoLike = function(template) {
+					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+				}
 				$scope.closeTemplates = function() {
 					view.id=undefined; view.subid=undefined;
 				}

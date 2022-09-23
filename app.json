@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.6.22",
+  "version": "2.6.33",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -625,6 +625,109 @@
               "en": "Value",
               "nl": "Waarde",
               "de": "Wert"
+            }
+          }
+        ]
+      },
+      {
+        "id": "trigger_virtualdevice_status",
+        "title": {
+          "en": "Status set",
+          "nl": "Status ingesteld",
+          "de": "Status festgelegt"
+        },
+        "titleFormatted": {
+          "en": "When Status [[statusfield]] [[mode]]",
+          "nl": "Wanneer Status [[statusfield]] [[mode]]",
+          "de": "Wenn Status [[statusfield]] [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "dropdown",
+            "name": "statusfield",
+            "placeholder": {
+              "en": "field",
+              "nl": "veld",
+              "de": "Feld"
+            },
+            "values": [
+              {
+                "id": "text",
+                "label": {
+                  "en": "Text",
+                  "nl": "Tekst",
+                  "de": "Text"
+                }
+              },
+              {
+                "id": "number",
+                "label": {
+                  "en": "Number",
+                  "nl": "Nummer",
+                  "de": "Nummer"
+                }
+              },
+              {
+                "id": "either",
+                "label": {
+                  "en": "Text or Number",
+                  "nl": "Tekst of Nummer",
+                  "de": "Text oder Nummer"
+                }
+              }
+            ]
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
+          }
+        ],
+        "tokens": [
+          {
+            "name": "text",
+            "type": "string",
+            "title": {
+              "en": "Text",
+              "nl": "Tekst",
+              "de": "Text"
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer",
+              "de": "Nummer"
             }
           }
         ]
@@ -2199,6 +2302,45 @@
           }
         ]
       },
+
+      {
+        "id": "virtualdevice_update_capability_name",
+        "title": {
+          "en": "Set the Name of a field",
+          "nl": "Zet de naam van een veld",
+          "de": "Legen Sie den Namen eines Felds fest"
+        },
+        "titleFormatted": {
+          "en": "Set the name of [[field]] to [[name]]",
+          "nl": "Stel de naam van [[field]] in op [[name]]",
+          "de": "Setzen Sie den Namen von [[field]] auf [[name]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Field",
+              "nl": "Veld",
+              "de": "Feld"
+            }
+          },
+          {
+            "type": "text",
+            "name": "name",
+            "placeholder": {
+              "en": "Name",
+              "nl": "Naam",
+              "de": "Naam"
+            }
+          }
+        ]
+      },
       {
         "id": "virtualdevice_set_name",
         "deprecated": true,
@@ -2398,7 +2540,6 @@
           }
         ]
       }
-
 
 
       ,
