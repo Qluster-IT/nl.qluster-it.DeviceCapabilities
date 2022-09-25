@@ -217,5 +217,8 @@
   },
   "2.6.37" : {
     "en" : "Improved settings."
+  },
+  "2.6.39" : {
+    "en" : "Added: Slider to numbers ShowAs."
   }
 }

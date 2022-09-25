@@ -281,12 +281,14 @@ module.exports = class WatchDevice extends Homey.Device {
 								}
 								break;
 							case "number":
-								cap = (settings[type + i + 'CreateFlowCards'] !== true ? '' : 'measure_') + 'devicecapabilities_' + type + icon + '.' + type + i;
+								cap = (settings[type + i + 'CreateFlowCards'] !== true ? '' : 'measure_') + 'devicecapabilities_' + (settings[type + i + 'ShowAs']==='slider' ? 'slider_' : '') + type + 
+								(settings[type + i + 'ShowAs']!=='slider' ? icon : '') + '.' + type + i;
 								switch (settings[type + i + 'ShowAs']) {
 									case undefined:
 									case null:
-									case "": sensor = true; break;
-									case "sensor": sensor = true; break;
+									case "": break;
+									case "sensor": break;
+									case "slider": break;
 									default:
 										capSet = true;
 										break;
@@ -422,11 +424,11 @@ module.exports = class WatchDevice extends Homey.Device {
 							let step = settings[type + i + 'Step'];
 
 
-							let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
-							let var2= (settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ;
-							let var3= ((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false)) ;
-							let var4= (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false);
-							let var5= (settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status');
+							// let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
+							// let var2= (settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ;
+							// let var3= ((opt.preventInsights!==true && settings[type + i + 'SeparateCapabilities']!==false)) ;
+							// let var4= (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false);
+							// let var5= (settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status');
 
 							let capOptionsChanged = 
 								opt.title != name || 
@@ -449,7 +451,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 								//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 							if (capOptionsChanged) {
-								let optionValues = {type, i, settings, decimals, min, max, name};
+								let optionValues = {type, i, settings, decimals, min, max, name, step};
 								if(type=="status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
 								if(settings[type + i + 'SeparateCapabilities']!==true) {
@@ -474,9 +476,9 @@ module.exports = class WatchDevice extends Homey.Device {
 									//(isStatus && )
 									settings[type + i + 'CreateInsights']!=oldSettings[type + i + 'CreateInsights'] || 
 									settings[type + i + 'CreateTag']!=oldSettings[type + i + 'CreateTag']) {
-										let optionValues = {type, i, settings, decimals, min, max, name};
+										let optionValues = {type, i, settings, decimals, min, max, name, step};
 										if(type=="status") optionValues.units = opt.units || name;
-										let optNew = this.getOptions({type, i, settings, decimals, min, max, name});
+										let optNew = this.getOptions({type, i, settings, decimals, min, max, name, step});
 										optNew.preventInsights = settings[type + i + 'CreateInsights']!==true;
 										optNew.preventTag = settings[type + i + 'CreateTag']!==true;
 										//if(settings[type + i + 'CreateInsights']===true)
