@@ -122,6 +122,29 @@ for(var j=0;j<sets1.length;j++) {
 
 
 
+str+='"devicecapabilities_slider_number": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "slider", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n';
+
+str+='"measure_devicecapabilities_slider_number": { \r\n'+
+'      "type": "number", \r\n'+
+'      "title": { \r\n'+
+'        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
+'      }, \r\n'+
+'      "getable": true, \r\n'+
+'      "setable": true, \r\n'+
+'      "uiComponent": "slider", \r\n'+
+'      "insights": true \r\n'+
+'    }, \r\n';
+
+
 /**                      HERE                   */
 for(var i=0;i<icons.length;i++) {
   let header = (icons[i]!='' ? '-'+icons[i] : '');
