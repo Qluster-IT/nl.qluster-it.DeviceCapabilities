@@ -32,6 +32,9 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
 				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
 				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+				<div class="field" ng-show="!view.subid">
+					<a data-i18n="settings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287')">See the Device Capabilities Forum Topic for explanations or if you seek any help with The Exchanger or Templates.</a>
+				</div>
 				<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchanger Files.</div>
 					<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
@@ -58,7 +61,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="Select a flow and press Create" ng-change="blockTextSettings=true"></textarea>
 					</div>
 					<div class="field" ng-show="vars.textSettings">
-						<div class="button" ng-click="gotoTopic();">Goto Topic (to Post)</div>
+						<div class="button field" ng-click="gotoPostTopic();">Post Template</div>
+						<div class="button field" ng-click="gotoHelpTopic();">Ask for help</div>
 						<div class="field">(A pre-typed message will be in your clipboard.)</div>
 					</div>
 				</div>
@@ -162,35 +166,37 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							<div class="value">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
-							<div class="label">{{app.name}}</div>
-							<div class="field" ng-repeat="item  in app.tokens">
-								<div class="label">{{item.name}}</div>
-								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-									<option value="">Don't change</option>
-									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-										{{replacement.name}}</option>
-								</select>
-							</div>
-							<div class="field" ng-repeat="item  in app.args">
-								<div class="label">{{item.name}}</div>
-								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-									<option value="">Don't change</option>
-									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-										{{replacement.name}}</option>
-								</select>
-								<div class="field" ng-if="item.replaceWithId===-1">
-									<input type="text" ng-model="item.replaceWith.newName">
+							<div ng-if="app.tokens.length>0 || app.args.length>0 || app.types.length>0">
+								<div class="label">{{app.name}}</div>
+								<div class="field" ng-repeat="item  in app.tokens">
+									<div class="label">{{item.name}}</div>
+									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+										<option value="">Don't change</option>
+										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+											{{replacement.name}}</option>
+									</select>
 								</div>
-							</div>
-							<div class="field" ng-repeat="item  in app.types">
-								<div class="label">{{item.name}}</div>
-								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-									<option value="">Don't change</option>
-									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-										{{replacement.name}}</option>
-								</select>
-								<div class="field" ng-if="item.replaceWithId===-1">
-									<input type="text" ng-model="item.replaceWith.newName">
+								<div class="field" ng-repeat="item  in app.args">
+									<div class="label">{{item.name}}</div>
+									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+										<option value="">Don't change</option>
+										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+											{{replacement.name}}</option>
+									</select>
+									<div class="field" ng-if="item.replaceWithId===-1">
+										<input type="text" ng-model="item.replaceWith.newName">
+									</div>
+								</div>
+								<div class="field" ng-repeat="item  in app.types">
+									<div class="label">{{item.name}}</div>
+									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+										<option value="">Don't change</option>
+										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+											{{replacement.name}}</option>
+									</select>
+									<div class="field" ng-if="item.replaceWithId===-1">
+										<input type="text" ng-model="item.replaceWith.newName">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -470,7 +476,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				//let $;
 				var Homey;
 				$scope.stamp = Date.now();
-				$scope.view = { id: 'theflowexchanger', subid: 'theflowexchangerimport' };
+				$scope.view = { id: 'theflowexchanger', subid: undefined };
 				$scope.orderBy = {orderBy:'favorite', reverse:false};
 				$scope.filter = {header:''};
 				const vars = $scope.vars = {
@@ -480,8 +486,11 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				//Homey.ready();
 
 
-				$scope.gotoTopic = function() {
+				$scope.gotoPostTopic = function() {
 					//if(vars.textSettings)
+					let appsUsed = '';
+					let tefType = vars.flowName && vars.deviceName ? 'AVD,FLOWS' : vars.flowName ? 'FLOWS' : vars.deviceName ? 'AVD' : 'UNKNOWN';
+					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
 					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
 
 Write here what the flow(s) is/are all about.
@@ -490,9 +499,9 @@ Write here what the flow(s) is/are all about.
 [[picture]]
 
 []()
-### Apps used:
-* Which app is required?
-* Other things people need to do to get it working correct?
+` + ( appsUsed!=='' ? '### Apps used:' + appsUsed + '\n' : '') + `
+
+### Other things people need to do to get it working correct?
 
 
 []()
@@ -506,6 +515,26 @@ ${vars.textSettings}
 
 					if(prePost) copyTextToClipboard(prePost);
 					$scope.openUrl('https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/last');
+				}
+
+				$scope.gotoHelpTopic = function() {
+					//if(vars.textSettings)
+					let prePost = vars.textSettings ? ('## Question about: ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+
+[Write your question here]
+
+
+[]()
+[]()
+
+TEF:
+\`\`\`
+${vars.textSettings}
+\`\`\`
+` ): '';
+
+					if(prePost) copyTextToClipboard(prePost);
+					$scope.openUrl('https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287/last');
 				}
 
 				$scope.gotoLike = function(template) {
@@ -724,6 +753,7 @@ ${vars.textSettings}
 							$scope.vars.compressedMinified = result.compressedMinified;
 							$scope.vars.uncompressedMinified = result.uncompressedMinified;
 							vars.flowName = result.flowName;
+							vars.appsUsed = result.tokensToReplace;
 							$scope.updateCompressed();
 						});
 					});

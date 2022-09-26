@@ -12,7 +12,7 @@
 		"title_virtualdevices": "Uw virtuele apparaten",
 		"title_customicons": "Uw aangepaste pictogrammen",
 		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor velden kunnen worden gebruikt.",
-		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die terug te zien is onderaan de Apparaatinstellingen.",        
+		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die zal worden weergegeven bij het selecteren van pictogrammen.",        
 		"functions":"Functies",
 		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
 		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies, flows, welke die functie gebruiken, kan breken.",
@@ -112,7 +112,7 @@
 		"createCameraField":"Creëer  Camera",
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
-		"labelTopicLink":"Zie het Forum Topic voor voorbeelden, uitleg of als je vragen hebt."
+		"labelTopicLink":"Zie het AVD Forum Topic voor uitleg of als u hulp zoekt bij AVD's of sjablonen."
 	},
 	"pair": {
 		"list_icons":{

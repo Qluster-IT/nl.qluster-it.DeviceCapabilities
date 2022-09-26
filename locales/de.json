@@ -12,7 +12,7 @@
 		"title_virtualdevices": "Ihre virtuellen Geräte",
 		"title_customicons": "Ihre Symbole",
 		"explain_customicons": "Hier können Sie die Ihre Symbole ändern, die für Felder verwendet werden können.",
-		"explain_customicons_doubleclick": "Fügen Sie per Doppelklick auf einem Name einen Beschreibung hinzu, die man unten in den Geräteeinstellungen sehen kann.",
+		"explain_customicons_doubleclick": "Doppelklicken Sie auf einen Namen, um ihm eine Beschreibung zu geben, die bei der Auswahl von Symbolen angezeigt wird.",
 		"functions":"Funktionen",
 		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.",
 		"functions_be_aware":"Beachten Sie, dass das Entfernen von Funktionen Flows beschädigen können, die diese Funktion verwenden.",
@@ -110,7 +110,7 @@
 		"createBooleanField":"Yes/No-Feld erstellen",
 		"createButtonField":"Taste erstellen",
 		"createCameraField":"Kamera erstellen",
-		"labelTopicLink":"Sehen Sie sich das Forum-Thema für Beispiele, Erklärungen oder wenn Sie Fragen haben."
+		"labelTopicLink":"Siehe das Thema des AVD-Forums für Erklärungen oder wenn Sie Hilfe zu AVDs oder Vorlagen benötigen"
 	},
 	"pair": {
 		"list_icons":{

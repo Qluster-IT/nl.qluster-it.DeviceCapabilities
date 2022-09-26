@@ -12,7 +12,7 @@
 		"title_virtualdevices": "Your virtual devices",
 		"title_customicons": "Your custom icons",
 		"explain_customicons": "Here you can change the custom icon's that can be used for fields.",		
-		"explain_customicons_doubleclick": "Double click on a name to give it a description, which can be seen back at the bottom of the Device Settings.",
+		"explain_customicons_doubleclick": "Double click on a name to give it a description, which will be displayed when selecting icons.",
 		"functions":"Functions",
 		"functions_expressions":"These functions can be used within (javascript) expression.",
 		"functions_be_aware":"Be aware that removing functions could corrupt flows that are using that function.",
@@ -111,7 +111,7 @@
 		"createCameraField":"Create Camera",
 		"step":"Step",
 		"stepHint":"The step sets the stepping interval for the Number.",
-		"labelTopicLink":"See the Forum Topic for examples, explanations or if you have any questions."
+		"labelTopicLink":"See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates."
 	},
 	"pair": {
 		"list_icons":{

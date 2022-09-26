@@ -531,7 +531,7 @@ module.exports = class WatchDevice extends Homey.Device {
 			if(settings.imported) delete settings.imported;
 			if(settings.flows) delete settings.flows;
 			if(settings.advancedflows) delete settings.advancedflows;
-			if(settings.originalId) delete settings.originalId;
+			//if(settings.originalId) delete settings.originalId; // Maybe we will use this later?
 
 			//if(command=="") command = null;
 			this.Settings = settings;

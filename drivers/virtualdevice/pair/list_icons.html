@@ -182,7 +182,7 @@
 				</div>
 
 				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-click="useTemplate();">Use this template</button>
+					<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
 				</div>
 			</div>
 
@@ -215,7 +215,7 @@
 
 					<ul id="icon_list">
 						<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-							<h1 class="category-title">{{cat.title}}</h1>
+							<h1 class="category-title" v-html="cat.title"></h1>
 							<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
 								<label for="icon" class="icon-wrap">
 									<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
@@ -291,7 +291,7 @@
 				const vars = $scope.vars = {};
 
 				$scope.gotoLike = function(template) {
-					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+					$scope.openUrl('https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities/68676/' + template.number);
 				}
 				$scope.closeTemplates = function() {
 					$scope.view.id=undefined; view.subid=undefined;

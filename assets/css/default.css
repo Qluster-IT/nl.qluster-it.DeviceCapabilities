@@ -61,6 +61,17 @@ body.with-top-bar.with-main-buttons {
     height: calc(100% - 122px);
 }
 
+h1 {
+    font-size:1.4em;
+}
+
+h2 {
+    font-size:1.2em;
+}
+h3 {
+    font-size:1.1em;
+}
+
 .main-panel {    
     /* margin-top: 60px; */
     display: inline-block;

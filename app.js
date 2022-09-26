@@ -1111,7 +1111,7 @@ class DeviceSetter extends Homey.App {
 				if(avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
 			});
 
-			this.refreshDefer.resolve();
+			this.refreshDefer.resolve(this.homeyAPI);
 			this.refreshDefer = null;
 			//this.log('App size: ', this.roughSizeOfObject(this));
 			return this.homeyAPI;
