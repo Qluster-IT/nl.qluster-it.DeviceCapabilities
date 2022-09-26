@@ -1,4 +1,7 @@
-New: Fully Customisable Virtual Device!
+New: Export and import Flows and/or Advanced Virtual Devices from other Homey users.
+Import via Templates via App Settings, AVD Repair or when creating AVDs.
+
+Also new: Fully Customisable Virtual Device (AVD)!
 See the topic for examples.
 
 Create a device and configure it yourself:

@@ -1,294 +1,27 @@
-<script type="text/javascript" src="angular.js"></script>
-<script type="text/javascript" src="lodash.js"></script>
-<script type="text/javascript" src="elif.js"></script>
-<script type="text/javascript" src="avd_settings.js"></script>
-
-
+<script type="text/javascript" src="../../../assets/js/angular.js"></script>
+<script type="text/javascript" src="../../../assets/js/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="../../../assets/js/lodash.js"></script>
+<script type="text/javascript" src="../../../assets/js/smart-table.min.js"></script>
+<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
+<script type="text/javascript" src="../../../assets/js/elif.js"></script>
+<script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
+<script type="text/javascript" src="../../../assets/js/default.js"></script>
+	
 <!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
-<script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script>
-<script type="text/javascript" src="smart-table.min.js"></script>
+<!-- <script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
+<link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
-<style type="text/css">
-	* {
-
-		box-sizing: border-box;
-	}
-	a {
-		display: inline-block;
-	}
-.float-right {
-	float: right !important;
-	z-index:100;
-}
-	/* html {
-		height:auto!important;
-	} */
-
-	.fa-icon {
-		min-width: 24px;
-		min-height: 24px;
-		font-size: 20px;
-	}
-
-	.block {
-		display: block !important;
-	}
-	.margin-top {
-		margin-top:10px;
-	}
-	.margin-bottom {
-		margin-bottom:10px;
-	}
-
-	.top-labels {
-		position: relative;
-		margin-bottom: 10px;
-	}
-
-	h1.top-labels {
-		margin-bottom: 20px;
-	}
-
-	.group {
-		position: relative;
-		display: block;
-		width: 100%;
-		/* border-bottom: 2px solid black; */
-		padding: 10px;
-		padding-bottom: 20px;
-	}
-
-	.group.header {
-		padding-top: 20px;
-		margin-top: 20px;
-		border-radius: 20px 20px 0px 0px;
-		font-size: 14pt;
-
-	}
-
-	.group input[type="text"],
-	.group select {
-		background-color: #eee;
-	}
-
-	.group.odd {
-		background-color: #eee;
-	}
-
-	.group.odd input[type="text"],
-	.group.odd select {
-		background-color: white;
-	}
-
-	.group.last {
-		/* box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px; */
-	}
-
-	.field {
-		position: relative;
-		display: block;
-		width: 100%;
-		margin-top: 10px;
-	}
-	.label > * {
-		display: inline-block;
-	}
-
-	.label {
-		position: relative;
-		width: 48%;
-		display: inline-block;
-	}
-
-	.label .fa {
-		float: right;
-	}
-	.label.large {
-		width:70%
-	}
-	.label.large + .label, .label.large + .value {
-		width:28%
-	}
-	.value {
-		position: relative;
-		width: 49% !important;
-		display: inline-block;
-	}
-
-	.create-button {
-		text-align: center;
-		width: 100%;
-		position: relative;
-		/* margin: 10px 0px;
-		left:-20px; */
-		cursor: pointer;
-	}
-
-	.color-icon {
-		display: inline-block;
-		;
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		border: 1px solid black;
-	}
-
-	.round {
-		border-radius: 25px !important;
-	}
-
-	.green {
-		background-color: #75D600;
-	}
-
-	.blue {
-		background-color: #2FB0FF;
-	}
-
-	.orange {
-		background-color: #FA6400;
-	}
-
-	.white {
-		background-color: #cecece;
-	}
-
-	.purple {
-		background-color: purple;
-		color: white;
-	}
-
-	.color-icon+* {
-		position: relative;
-		left: 25px;
-	}
-
-	.main-view {
-		height: calc(100% - 70px);
-		position: fixed;
-		overflow: auto;
-		padding-right: 10px;
-		width:100%;
-	}
-
-	.main-buttons {
-		height: 60px;
-		width: 100%;
-		position: fixed;
-		bottom: 0;
-		text-align: center;
-		/* padding-top:30px; */
-	}
-
-	.button {
-		padding: 16px;
-		width: auto !important;
-		display: inline-block;
-		font-size: 20pt;
-		cursor: pointer;
-	}
-
-	.main-buttons .button {
-		display: inline-block;
-		/* top: 6px;
-		position: relative;
-		margin: 0px 50px; */
-		margin: 0px 20px;
-
-	}
-
-	.remove-icon {
-		color: black;
-		width: 30px;
-		height: 30px;
-		display: inline-block;
-		position: absolute;
-		right: 10px;
-		/* border: 1px solid black;
-		border-radius: 3px; */
-		font-size: 24px;
-		/* color: black; */
-		padding-top: 2px;
-		padding-left: 4px;
-		top: -10px;
-	}
-
-	.text-center {
-		text-align: center;
-	}
-
-	div[disabled] {
-		color: lightgray !important;
-	}
-
-	input.ng-invalid {
-		background-color: lightcoral;
-	}
-
-	input[type="text"]:not(.hy-nostyle),
-	input[type="password"]:not(.hy-nostyle),
-	input[type="email"]:not(.hy-nostyle),
-	.hy-input-text {
-		border-bottom: 1px solid #999 !important;
-		border-right: 1px solid #999 !important;
-		border-radius: 0px 0px 5px 0px !important;
-		padding-left: 5px !important;
-		width: calc(100% - 10px) !important;
-	}
-
-	select {
-		padding: 5px;
-	}
-
-	/* @media (hover: none), (pointer: coarse) {
-    body {
-        cursor: pointer;
-    } */
-
-	.tooltip {
-		/* display: block!important; */
-		position: absolute;
-		z-index: 100;
-		background-color: white;
-		display: inline-block;
-		width: 40vw;
-		border: 1px solid grey;
-		border-radius: 3px;
-		padding: 10px;
-		left: 0px;
-		transform: translate(50%, -115%);
-		/* top:-200%; */
-		/* transform: translate(-50%, -25% ); */
-		background-color: #efefef;
-		/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
-		box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
-	}
+<link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
 
-	.custom-icon {
-		height:24px;
-		width:24px;
-		position: absolute;
-	}
-	.custom-icon + * {
-		position: relative;
-		left:30px;
-	}
+<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
 
-	/* .tooltip>div {} */
-</style>
-
-
-<div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings">
-
-	<form name="settings" class="main-view" ng-show="!view">
-		<div class="button block margin-top margin-bottom text-center" ng-click="view='editor';">Open Share Your Device</div>
+	<form name="settings" class="main-view" ng-show="!view.id">
+		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';">Open Share Your Device</div>
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
-		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openLink($event)" 
-			href="https://community.homey.app/t/app-pro-device-capabilities-addendum-fully-customisable-advanced-virtual-device-with-unique-text-status-indicator/68198">See
+		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-addendum-fully-customisable-advanced-virtual-device-with-unique-text-status-indicator/68198')">See
 			the Forum Topic for examples, explanations or if you have any questions.</a>
 		<h1 data-i18n="virtualdevicesettings.titleAlso" class="top-labels">Also</h1>
 		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing
@@ -671,8 +404,9 @@
 						<option ng-repeat="item in buttonShowAsRest" value="{{item.id}}">{{item.label}}</option>
 					</select>
 				</div>
+				<!--  || s['button'+($index+1)+'ShowAs']==='button' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0)  // Removed 17-9-2022 22:11-->
 				<div class="field"
-					ng-if="!(!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button' || s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || s['button'+($index+1)+'ShowAs']==='indicatoronly' || s['button'+($index+1)+'ShowAs']==='pushbutton_indicator' || s['button'+($index+1)+'ShowAs']==='onoff_hide' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0))">
+					ng-if="!(!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || s['button'+($index+1)+'ShowAs']==='indicatoronly' || s['button'+($index+1)+'ShowAs']==='pushbutton_indicator' || s['button'+($index+1)+'ShowAs']==='onoff_hide' )">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow
 							Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
@@ -810,168 +544,317 @@
 		<br><br>
 		<br><br>
 	</form>
-	<div class="main-buttons" ng-show="!view">
-		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">
-			Save</div>
+	<div class="main-buttons" ng-show="!view.id">
+		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save Device</div>
 		<div class="button" ng-click="close()">Close</div>
 	</div>
 
-	<form name="theflowexchange" class="main-view hide" ng-if="view=='editor'">
-		<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-		<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can copy and paste the whole
-			device settings.</div>
-		<a data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" x-ng-click="openLink($event)" 
-			href="https://community.homey.app/t/advanced-virtual-device-share-your-device/68676">See
-			the Share Your Device Forum Topic for other AVDs</a>
-		<div class="group">
-			<div class="value float-right">
-				<div class="button" ng-click="getTextSettings();">Create JSON</div>
+	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
+		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
+			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676')">See the Share Your Device Forum Topic for other AVDs</div>	
+		</div>
+		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
+			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
+			<div class="group">
+				<div class="value float-right">
+					<div class="button" ng-click="getTextSettings();">Create TEF</div>
+					<div ng-show="vars.tefCopied">(TEF in clipboard allready)</div>
+				</div>
+				<div class="field">
+					<div>Include icons</div>
+					<input type="checkbox" ng-model="vars.copyWithIcons" />
+				</div>
+				<div class="field">
+					<div>Include flows</div>
+					<input type="checkbox" ng-model="vars.copyWithFlows" />
+				</div>
+				<!-- <div class="field">
+								<div class="button" ng-click="exportTextSettings();">Export</div>
+							</div> -->
+				<div class="field">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="Press Create TEF" ng-change="blockTextSettings=true"></textarea>
+				</div>				
+				<div class="field" ng-show="vars.textSettings">
+					<div class="button" ng-click="gotoTopic();">Goto Topic (to Post)</div>
+					<div class="field">(A pre-typed message will be in your clipboard.)</div>
+				</div>
+			</div>
+		</div>
+		<div class="field" ng-show="view.subid=='theflowexchangerimport'">
+			<div class="field" ng-show="!vars.imported">
+				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
+				<div class="field margin-bottom">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Device or Read Flows" ng-change="blockTextSettings=true"></textarea>
+				</div>
 			</div>
 			<div class="field">
-				<div>Include icons</div>
-				<input type="checkbox" ng-model="vars.copyWithIcons"/>
-			</div>
-			<div class="field">
-				<div>Include flows</div>
-				<input type="checkbox" ng-model="vars.copyWithFlows"/>
-			</div>
-			<!-- <div class="field">
-				<div class="button" ng-click="exportTextSettings();">Export</div>
-			</div> -->
-			<div class="field">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5"></textarea>
-			</div>
-			<div class="field">
-				<div class="button" ng-click="readTextSettings()">Read Device</div>
-				<div class="button" ng-click="readFlows();">Read Flows</div>
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readTextSettings() : null">Read Device</div>
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null">Read Flows</div>
 			</div>
 			<div class="field" ng-if="vars.readcopy.customIcons">
 				<div class="label">Custom icon</div>
 				<div class="value">Save as</div>
 			</div>
-			<div class="field"  ng-repeat="(key,item)  in vars.readcopy.customIcons">				
+			<div class="field" ng-repeat="(key,item)  in vars.readcopy.customIcons">
 				<div class="label">
 					<img class="custom-icon" src="{{item}}"></img>
-					<div>{{key}}</div>					
+					<div>{{key}}</div>
 				</div>
 				<select class="value" ng-model="vars.readcopy.saveCustomIcons[key]">
 					<option value="">Don't save</option>
-					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}" >{{icon}}</option>
+					<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
 				</select>
 			</div>
 			<div class="field">
-				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readflow.advancedflows || vars.readflow.advancedflows.length>0">Save</div>
-				<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.readflow.advancedflows && vars.readflow.advancedflows.length!=0 && vars.readcopy">Save & Close</div>
+				<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readcopy">Save</div>
+				<!-- <div class="button" ng-click="setTextSettings(false);" ng-if="vars.readflow.advancedflows && vars.readflow.advancedflows.length>0 && vars.readcopy">Save</div>
+					<div class="button" ng-click="setTextSettings(true);" ng-if="!vars.readflow.advancedflows && vars.readflow.advancedflows.length!=0 && vars.readcopy">Save & Close</div> -->
 			</div>
 			<div ng-if="vars.readflow">
-				<div data-i18n="settings.change_missing_items">Here you select what devices, users, variables or apptokens you
-					want to replace with which of your own in the to create flow(s)(scripts).</div>
-				<div class="field bold" ng-if="vars.devicesToReplaceLength>0">
-					<div class="label">Devices</div>
+				<div class="field margin-top margin-bottom">
+					<div class="field">The following flows will be created in the script.</div>
+					<div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
+						<div class="label large"><input class="text" type="text" ng-model="item.name" /></div>
+						<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
+					</div>
+				</div>
+				<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
+					want to replace with which of your own in the flow(s) script that is created.</div>
+				<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
+					<div class="label">Flow</div>
 					<div class="value">Replace with</div>
 				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.devicesToReplace">
-					<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
-					<select class="value" ng-model="vars.readflow.devicesToReplace[key].replaceWith" ng-change="updateReadFlow()">
-						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.devicesToReplace[key].replacements track by $index" ng-value="replacement">{{replacement.name}}</option>
-					</select>
-				</div>
-				<div class="field bold margin-top" ng-if="vars.usersToReplaceLength>0">
-					<div class="label">Users</div>
-					<div class="value">Replace with</div>
-				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.usersToReplace">
-					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.usersToReplace[key].replaceWith" ng-change="updateReadFlow()" required>
-						<option ng-repeat="replacement in vars.readflow.usersToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
-					</select>
-				</div>
-				<div class="field bold margin-top" ng-if="vars.variablesToReplaceLength>0">
-					<div class="label">Variables</div>
-					<div class="value">Replace with</div>
-				</div>
-				<div class="field" ng-repeat="(key,item)  in vars.readflow.variablesToReplace">
-					<div class="label">{{item.name}}</div>
-					<select class="value" ng-model="vars.readflow.variablesToReplace[key].replaceWith" ng-change="updateReadFlow()">
-						<option value="">Don't change</option>
-						<option ng-repeat="replacement in vars.readflow.variablesToReplace[key].replacements" ng-value="replacement">{{replacement.name}}</option>
-					</select>
-				</div>
-				<div class="field bold margin-top" ng-if="vars.tokensToReplaceLength>0">
-					<div class="label">App Tokens</div>
-					<div class="value">Replace with</div>
-				</div>
-				<div class="field" ng-repeat="(appKey,app)  in vars.readflow.tokensToReplace">
-					<div class="label">{{app.name}}</div>
-					<div class="field" ng-repeat="(key,item)  in app.tokens">
-						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="app.tokens[key].replaceWith" ng-change="updateReadFlow()">
+				<div class="field" ng-repeat="flow  in vars.readflow.flowsToReplace">
+					<div class="field" ng-repeat="item  in flow.types">
+						<div class="label">{{item.name}} {{item.id!=''? '(' + item.id + ')' : ''}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
 							<option value="">Don't change</option>
-							<option ng-repeat="replacement in app.tokens[key].replacements" ng-value="replacement">
-								{{replacement.name}}</option>
+							<!-- <option ng-value="item.id" vars.readflow.>{{Don't change}}</option> -->
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 						</select>
 					</div>
 				</div>
-				<div class="field">
-					<div class="button" ng-click="log(theflowexchange); theflowexchange.$valid ? updateFlows() : null" ng-disabled="!theflowexchange.$valid">Update Text</div>
+				<div class="field bold" ng-if="vars.readflow.zonesToReplace.length>0">
+					<div class="label">Zones</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="item  in vars.readflow.zonesToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+					</select>
+				</div>
+				<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
+					<div class="label">Devices</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
+					<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
+					<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
+						<option value="">Don't change</option>
+						<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+					</select>
+					<div class="field" ng-repeat="item  in device.tags">
+						<div class="label padding-left">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+					</div>
+					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
+						<div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+						</select>
+					</div> -->
+				</div>
+				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
+					<div class="label">Users</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);" required>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+					</select>
+				</div>
+				<div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
+					<div class="label">Variables</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
+					<div class="label">{{item.name}}</div>
+					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+						<option value="">Don't change</option>
+						<option ng-value="-1">-- Create --</option>
+						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+					</select>
+					<div class="field" ng-if="item.replaceWithId===-1">
+						<input type="text" ng-model="item.replaceWith.newName">
+					</div>
+				</div>
+				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
+					<div class="label">App Tokens</div>
+					<div class="value">Replace with</div>
+				</div>
+				<div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
+					<div class="label">{{app.name}}</div>
+					<div class="field" ng-repeat="item  in app.tokens">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+					</div>
+					<div class="field" ng-repeat="item  in app.args">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+						<div class="field" ng-if="item.replaceWithId===-1">
+							<input type="text" ng-model="item.replaceWith.newName">
+						</div>
+					</div>
+					<div class="field" ng-repeat="item  in app.types">
+						<div class="label">{{item.name}}</div>
+						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+							<option value="">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+								{{replacement.name}}</option>
+						</select>
+						<div class="field" ng-if="item.replaceWithId===-1">
+							<input type="text" ng-model="item.replaceWith.newName">
+						</div>
+					</div>
 				</div>
 				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5"></textarea>
+					<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
 				</div>
-				<div class="field margin-top">
-					Run this in the <a ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</a> to create the Flows!
+			</div>
+			
+			<div class="field">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
+			</div>			<div class="field margin-top margin-bottom">
+				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+				<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+			</div>
+			<div class="field margin-top">
+				Flows that are created will be listed here:
+			</div>
+			<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
+		</div>
+	</form>
+	<!-- <div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div> -->
+	<div class="main-buttons" ng-show="view.id">
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;">Close</div>
+	</div>
+
+	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div ng-show="!vars.template">
+			<div class="field filter">
+				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="float-right sorting">
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
 				</div>
+			</div>
+			<div class="panel">
+				<div class="field" style="margin-bottom:30px;">
+					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+					<h1>Here you can select a template</h1>
+				</div>
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
+					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+				</div>
+			</div>
+			<div class="main-buttons ">
+				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+			</div>
+		</div>
+		<div class="template-panel" ng-show="vars.template">
+			<div class="content">&nbsp;</div>
+			<div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
+				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 			</div>
 		</div>
 	</form>
-	<div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div>
-	<div class="main-buttons" ng-show="view=='editor'">
-		<div class="button" ng-click="view=undefined;">Close</div>
-	</div>
 </div>
 
 
 <script type="text/javascript">
-	let tooltipModule = angular.module('tooltipModule', []);
-	tooltipModule.directive('tooltip', function ($compile) {
-		var contentContainer;
-		return {
-			restrict: "A",
-			scope: {
-				myTooltipScope: "="
-			},
-			link: function (scope, element, attrs) {
-				var text = attrs.tooltip;
+	// let tooltipModule = angular.module('tooltipModule', []);
+	// tooltipModule;
 
-				scope.hidden = true;
-
-				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
-				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
-
-				element.parent().append(tooltipElement);
-				element
-					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
-					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
-
-				var toolTipScope = scope.$new(true);
-				angular.extend(toolTipScope, scope.myTooltipScope);
-				$compile(tooltipElement.contents())(toolTipScope);
-				$compile(tooltipElement)(scope);
-			}
-		};
-	});
-
-	// angular.module('app', ['luStyle']);
-	//let _homey = Homey;
-	angular.module('avdsettings', ['smart-table', 'tooltipModule', 'elif'])
-		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', function ($scope, $rootScope, $timeout, $parse) {
+	angular.module('avdsettings', ['smart-table', 'elif', 'ngSanitize']) //tooltipModule
+		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
 			console.log('controller started');
 			scope = $scope;
 			//let Homey = _homey
 			$scope.s = {};
-			//$scope.show = 'editor';
-			$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, devicesToReplaceLength: 0, usersToReplaceLength: 0, variablesToReplaceLength: 0, tokensToReplaceLength: 0, useCompressed: true, useMinified: true};
+
+			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
+			$scope.view = {id:undefined, subid:undefined};
+			$scope.orderBy = {orderBy:'favorite'};
+			$scope.filter = {header:''};
+			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
+				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
+
+				$scope.gotoTopic = function() {
+					//if(vars.textSettings)
+					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+
+Write here what the AVD(s) is/are all about.
+
+[]()
+[[picture]]
+
+[]()
+### Apps used:
+* Which app is required?
+* Other things people need to do to get it working correct?
+
+
+[]()
+[]()
+
+TEF:
+\`\`\`
+${vars.textSettings}
+\`\`\`
+` ): '';
+
+				if(prePost) copyTextToClipboard(prePost);
+					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/last');
+				}
+				
+				$scope.gotoLike = function(template) {
+					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+				}
+				$scope.closeTemplates = function() {
+					$scope.view.subid='theflowexchangerimport';
+				}
+				$scope.selectTemplates = function() {
+					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				}
+				$scope.backTemplates = function() {
+					vars.template=null;
+				}
+
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
 
@@ -981,6 +864,103 @@
 			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
 			$scope.deviceClasses = asv_settings.deviceClasses;
 
+
+			$scope.toggleFavorite = function(template) {
+				if(vars.favoriteTemplates[template.number]) {
+					delete vars.favoriteTemplates[template.number];
+					template.favorite = true;
+				}
+				else {
+					vars.favoriteTemplates[template.number]= true;
+					template.favorite = false;
+				}
+				if(typeof(Homey)!=='undefined') {
+					Homey.emit('saveAvdTemplatesFavorites', vars.favoriteTemplates , function (err, result) {
+						if (err) return console.log(err);
+					});
+				}
+			}
+			
+			$scope.refreshTemplates = function () {
+				vars.templatesRefreshing = true;
+				if(typeof(Homey)!=='undefined') Homey.emit('refreshAvdTemplates', function (err, result) {
+					vars.templatesRefreshing = false;
+					if (err) return console.log(err);
+					$scope.$apply(function () {							
+						$scope.vars.tefTemplates = result;
+						_.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+						_.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
+					});
+				});
+				else $scope.vars.tefTemplates = [];
+			}
+			if(typeof(Homey)==='undefined') $scope.refreshTemplates();
+
+
+			$scope.getTefTemplates = function () {
+				Homey.emit('getAvdTemplates', function (err, result) {
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result;
+					});
+				});
+			}
+
+			$scope.openTemplate = function (template) {
+				if(template && template.post && template.tefs) {
+					$scope.vars.template = template;
+					
+					/// Sanitize all posts!!
+					template.post = $sanitize(template.post);
+					
+					if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+						
+					let compiled = $compile(template.sanitizedPost)($scope);
+					$('.content').empty();
+					
+					$('.content').append(compiled);
+					$timeout(function() {
+						$scope.$apply(function() {							
+							$('.content').scrollTop(0);
+						});
+					}, 1);
+
+					return;
+				}
+				showOverlay();
+				Homey.emit('openAvdTemplate',  { template }, function (err, result) {
+					hideOverlay();
+					if (err) return console.log(err);
+					$scope.$apply(function () {							
+						$scope.vars.template = result.template;
+						let t = $scope.vars.tefTemplates.find(_t=>_t.postId==$scope.vars.template.postId);
+						if(t) {								
+							t.post = $scope.vars.template.post;
+							t.tefs = [$scope.vars.template.tef];
+						}
+					});
+				});
+			}
+
+
+
+			
+			$scope.size = function (collection) {
+				console.log('size()');
+				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
+			}
+
+			$scope.openUrl = function (url) {
+				try {
+					Homey.popup(url);	
+				} catch (error) {
+					
+				} 
+				//.focus();
+				//Homey.openURL(url);
+			}
+			
 			$scope.removeAllSettings = function (startName, i, removeNumberOf) {
 				console.log('removeAllSettings', startName, i);
 				let settings = $scope.s;
@@ -1025,8 +1005,12 @@
 				});
 			}
 
-			$scope.close = function () {
-				$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};
+			$scope.close = function () {								
+				vars.copyWithIcons= true;
+				vars.copyWithFlows=false;
+				vars.textSettings= null;
+				vars.readcopy=null;
+				vars.readflow=null;
 				Homey.done();
 			}
 			$scope.log = function (s) {
@@ -1044,12 +1028,18 @@
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow.apiCommand = result.apiCommand;
+							copyTextToClipboard(result.apiCommand);
+							$scope.vars.scriptCopied = true;
+							//$scope.vars.createdadvancedflows.length = 0;
 						});
 					});
 			}
 			
-			$scope.updateReadFlow = function() {
+			$scope.updateReadFlow = function(item) {
 				$scope.vars.readflow.apiCommand = '';
+				$scope.vars.scriptCopied = false;
+				if (!item) return;
+				if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
 			}
 			
 			
@@ -1057,7 +1047,9 @@
 				//$scope.vars.devicesToReplace = null;
 				//$scope.vars.apiCommand = null;
 				$scope.vars.copy = null
-				$scope.vars.readcopy = null;
+				$scope.vars.readcopy = null;				
+				if ($scope.vars.readflow) $scope.vars.readflow = undefined;//.apiCommand = '';
+				$scope.vars.scriptCopied = false;
 
 				if(typeof(Homey)!=='undefined') {
 					showOverlay();
@@ -1069,18 +1061,12 @@
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow = result;
-							$scope.vars.readflow.apiCommand = '';
-							let find;
-							if($scope.vars.readflow.devicesToReplace) _.each($scope.vars.readflow.devicesToReplace, d=> {if(d.replaceWith && d.replaceWith.id && (find=_.find(d.replacements, (r)=>r.id==d.replaceWith.id)))d.replaceWith=find;});
-							$scope.vars.devicesToReplaceLength = $scope.vars.readflow.devicesToReplace ? Object.keys($scope.vars.readflow.devicesToReplace).length : 0;
-							$scope.vars.usersToReplaceLength = $scope.vars.readflow.usersToReplace ? Object.keys($scope.vars.readflow.usersToReplace).length : 0;
-							$scope.vars.variablesToReplaceLength = $scope.vars.readflow.variablesToReplace ? Object.keys($scope.vars.readflow.variablesToReplace).length : 0;
-							$scope.vars.tokensToReplaceLength = $scope.vars.readflow.tokensToReplace ? Object.keys($scope.vars.readflow.tokensToReplace).length : 0;
+							$scope.vars.readflow.apiCommand = '';							
 						});
 					});
 				}
 				else {
-					let o = {"apiCommand":"Homey.flow.createAdvancedFlow({advancedflow:{\"id\":\"811fd8a6-d299-45ee-abfb-6686b6ded49d\",\"name\":\"Example Light Switch\",\"enabled\":true,\"cards\":{\"4e72bcd1-268c-43e3-b8c2-d56d06921637\":{\"x\":0,\"y\":20,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"030dcc04-bc5f-4730-81cc-e44eab1bbd44\"]},\"030dcc04-bc5f-4730-81cc-e44eab1bbd44\":{\"x\":380,\"y\":20,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"boolean\":true}},\"69b6093f-9b42-46a6-a6b9-3709315619cb\":{\"x\":0,\"y\":140,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9\"]},\"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9\":{\"x\":380,\"y\":140,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"boolean\":false}},\"a308e7a9-841d-4d6e-80dd-f982f7e28c93\":{\"x\":0,\"y\":260,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"82a075b3-f01e-438b-969d-09b8467ef890\"]},\"82a075b3-f01e-438b-969d-09b8467ef890\":{\"x\":380,\"y\":260,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"boolean\":true}},\"ce2a613e-76a3-42ea-aa56-7e5b4a1ac86c\":{\"x\":0,\"y\":380,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"8ac94629-1672-48b6-a407-e214cf154554\"]},\"8ac94629-1672-48b6-a407-e214cf154554\":{\"x\":380,\"y\":380,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"boolean\":false}},\"ca008d69-2d97-41ed-b3c4-e8e257d1c92f\":{\"x\":0,\"y\":500,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"onoff_true\",\"type\":\"trigger\",\"outputSuccess\":[\"0f2bf21c-6e88-440e-b3a9-f6d7724db876\"]},\"0f2bf21c-6e88-440e-b3a9-f6d7724db876\":{\"x\":380,\"y\":500,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"boolean\":true}},\"d5c70fc8-f1de-483b-974e-5dbc24943e6a\":{\"x\":0,\"y\":620,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"onoff_false\",\"type\":\"trigger\",\"outputSuccess\":[\"3878783b-72f9-4dbb-b61b-7fe1a397ab81\"]},\"3878783b-72f9-4dbb-b61b-7fe1a397ab81\":{\"x\":380,\"y\":620,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"virtualdevice_set_button\",\"type\":\"action\",\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"boolean\":false}},\"bd0f1cb1-f10a-4ce7-8e26-561a0e72775b\":{\"x\":760,\"y\":20,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"2803066e-5ad2-48bc-af92-46c7eceeba1b\"],\"args\":{\"field\":{\"id\":\"button2\",\"name\":\"Living Room Light\",\"description\":\"Button 2\"},\"mode\":\"set\"}},\"2803066e-5ad2-48bc-af92-46c7eceeba1b\":{\"droptoken\":\"trigger::bd0f1cb1-f10a-4ce7-8e26-561a0e72775b::value\",\"x\":1140,\"y\":40,\"outputTrue\":[\"f79a572b-ff6c-40d6-979f-e1336366b785\"],\"outputFalse\":[\"916de3dd-a0d7-4230-af33-3de6cf371eca\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"f79a572b-ff6c-40d6-979f-e1336366b785\":{\"x\":1520,\"y\":0,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"on\",\"type\":\"action\"},\"916de3dd-a0d7-4230-af33-3de6cf371eca\":{\"x\":1520,\"y\":80,\"ownerUri\":\"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad\",\"id\":\"off\",\"type\":\"action\"},\"d786a25c-0540-4a19-8964-404e2add5ca6\":{\"x\":760,\"y\":200,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"ec9a150b-2089-4cf6-9d49-d993c13e9215\"],\"args\":{\"field\":{\"id\":\"button3\",\"name\":\"Kitchen Light\",\"description\":\"Button 3\"},\"mode\":\"set\"}},\"ec9a150b-2089-4cf6-9d49-d993c13e9215\":{\"droptoken\":\"trigger::d786a25c-0540-4a19-8964-404e2add5ca6::value\",\"x\":1140,\"y\":220,\"outputTrue\":[\"6293f7e5-94a9-4d25-8455-89398bfa05ad\"],\"outputFalse\":[\"0a07413d-87f0-41ba-b3cc-7d8697e24335\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"6293f7e5-94a9-4d25-8455-89398bfa05ad\":{\"x\":1520,\"y\":180,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"on\",\"type\":\"action\"},\"0a07413d-87f0-41ba-b3cc-7d8697e24335\":{\"x\":1520,\"y\":260,\"ownerUri\":\"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6\",\"id\":\"off\",\"type\":\"action\"},\"b4556981-f8e0-487a-8e04-fbe75cc15c1b\":{\"x\":760,\"y\":380,\"ownerUri\":\"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537\",\"id\":\"trigger_virtualdevice_button\",\"type\":\"trigger\",\"outputSuccess\":[\"1c699c63-8074-49a7-ad59-02f827aede6d\"],\"args\":{\"field\":{\"id\":\"button4\",\"name\":\"Game Room Light\",\"description\":\"Button 4\"},\"mode\":\"set\"}},\"1c699c63-8074-49a7-ad59-02f827aede6d\":{\"droptoken\":\"trigger::b4556981-f8e0-487a-8e04-fbe75cc15c1b::value\",\"x\":1140,\"y\":400,\"outputTrue\":[\"8af9567e-f863-422c-800e-fe5d50fa3f20\"],\"outputFalse\":[\"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0\"],\"ownerUri\":\"homey:manager:logic\",\"id\":\"equal_boolean\",\"type\":\"condition\"},\"8af9567e-f863-422c-800e-fe5d50fa3f20\":{\"x\":1520,\"y\":360,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"on\",\"type\":\"action\"},\"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0\":{\"x\":1520,\"y\":440,\"ownerUri\":\"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c\",\"id\":\"off\",\"type\":\"action\"}}}});\r\n","devicesToReplace":{"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad":{"name":"Woonkamer lamp","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]},"8b550c88-a1b5-4832-a6c0-86ac34e76537":{"name":"Light switch","class":"other","replaceWith":{"id":"dd3044c7-c31c-458c-b1d4-9ddf9ba54a00","name":"Test"},"replacements":[{"id":"fd12fb56-c2ff-4aa0-a192-80a6bf1f05ad","name":"DC VD"},{"id":"3679de3f-922f-46e4-acfd-a60930c53f7e","name":"Living room"},{"id":"8cb8c62d-e10d-47c8-95ca-c938526b9b43","name":"DC AVD Stress"},{"id":"15a67cce-96b5-4863-a0a3-bf9cddbd0e9a","name":"Advanced Virtual Device 15"},{"id":"470e638f-7ad8-478d-b526-8e3cf3812111","name":"Thanks Peter"},{"id":"05507935-ab90-45d1-9cc7-87e0e0917013","name":"Kawa Test"},{"id":"ff7065a3-175b-49db-b664-0eaae2906357","name":"Athom Example"},{"id":"8b550c88-a1b5-4832-a6c0-86ac34e76537","name":"Light switch"},{"id":"dd3044c7-c31c-458c-b1d4-9ddf9ba54a00","name":"Test"}],"actions":["virtualdevice_set_button"],"triggers":["trigger_virtualdevice_button"],"conditions":[]},"1cd72718-6734-4fd4-b372-2cff857951e6":{"name":"Hoofdlamp Keuken","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]},"9f26a907-cc1d-49ad-a190-f615c60c485c":{"name":"Hoofdlamp speelkamer","class":"light","replacements":[{"id":"65dd698f-1307-49df-bdda-9e5f47916796","name":"Buitenlamp Deur Arie"},{"id":"2d209601-4ebc-467d-8225-7f3439441f19","name":"Christmaslights 3"},{"id":"751c7cb6-b54a-47a5-86c9-ebdb0cc09a2a","name":"Christmaslights 2"},{"id":"cb980522-8e9e-48f6-96fa-8e61a457e0a6","name":"Christmaslights 1"},{"id":"478e29ec-973a-41f9-afc5-f0b02ef2ace1","name":"Kerstboom verlichting"},{"id":"31b38999-ef48-4d8e-94c6-1d8b8bf0a52e","name":"Schuifpui lamp"},{"id":"0356e7fb-ceae-4ff7-94e7-35900d29d49b","name":"Lamp achter"},{"id":"f52a8145-d555-4438-922f-908fc4eeb691","name":"TV"},{"id":"e357e322-b7de-4412-91b4-bcba46292f78","name":"Garage lamp"},{"id":"47b90d41-f796-4347-a49d-7a51b1011f59","name":"Voorportaal lamp"},{"id":"cbe5e1d8-973c-47f8-bc3d-511a95a4fc58","name":"Lamp Voor"},{"id":"bc622efc-e9c9-4549-9eb4-9a37f30ce3b2","name":"Frame"},{"id":"45584862-0d49-44f1-8807-0d486d35237f","name":"Keukendeur lamp"},{"id":"a8ce8afa-c89e-480b-88c2-e3f00abeb853","name":"Oven"},{"id":"73440e0b-0b90-40bf-91b6-479bfb50fa1e","name":"Koffieapparaat"},{"id":"2c216d11-fc2e-440f-9843-1008844c32a9","name":"Bedlamp"},{"id":"7606d47b-24c7-48f2-b66f-b366c6758c65","name":"PC stekker"},{"id":"4d4a9630-436d-4899-8ba0-d119759027e8","name":"Wasmachine stekker"},{"id":"443a313f-1c9a-4afe-92ee-ea6a805ebc40","name":"Wasdroger stekker"},{"id":"2afe18c4-9283-4ecf-960a-b3af80a0650f","name":"Diepvries stekker"},{"id":"709ec5f1-5467-4c1f-add9-a8c41d3ec647","name":"Vaatwasser stekker"},{"id":"4f560cc0-e54f-4048-8c80-25bf78a44a01","name":"Koelkast stekker"},{"id":"23d3ac38-7089-4980-b8c9-ee2dc6eb7b21","name":"Media stekker"},{"id":"f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","name":"Woonkamer lamp"},{"id":"84e4591a-176b-4f8f-b44b-81874b6f49a7","name":"Onze Lamp"},{"id":"ab0edfed-bc37-4b59-9466-0567798bb6cf","name":"Hoofdlamp Femke"},{"id":"23c3d008-3019-40e4-b217-c7607c84a009","name":"Hoofdlamp Jongens"},{"id":"4a7d0fe5-27cc-4bdd-aa94-e821c8dbd876","name":"Hoofdlamp Elise"},{"id":"bf6174bd-e2b4-4fcc-b752-83bd1eeadf7b","name":"Overloop lamp"},{"id":"0e384e45-0acb-410e-891d-32cb5aad5dda","name":"Hoofdlamp Tweeling"},{"id":"bd24eb78-bd94-4f99-acb5-8cf889576329","name":"Eetkamer lamp"},{"id":"6ae4bc74-0f6f-4180-b520-834bd3f2a103","name":"Hoofdlamp badkamer"},{"id":"9f26a907-cc1d-49ad-a190-f615c60c485c","name":"Hoofdlamp speelkamer"},{"id":"45290aa6-7b82-4f44-a519-006867d10e6a","name":"Verlichting Kantoor"},{"id":"84d44ff1-d079-4aef-8ab2-495d8e477922","name":"Rechter Schakelaar (S2/Q2)"},{"id":"1cd72718-6734-4fd4-b372-2cff857951e6","name":"Hoofdlamp Keuken"},{"id":"865cdfed-4537-4818-8f3f-09073fb846f4","name":"Trap Lamp"},{"id":"210c1aea-1eac-43aa-98ec-63490fb8db0c","name":"Trap Schakelaar (S2)"},{"id":"92c31ae6-9895-44f4-94a3-ad8773e58a02","name":"Voordeur lamp"},{"id":"3713803e-d671-47e1-a6eb-6299e0576988","name":"Voordeur Schakelaar (S2)"},{"id":"6859d24b-6d26-4c9d-8b32-92734f381bff","name":"CV Woning stekker"},{"id":"4c82a599-d6cf-4162-a1d8-85f2abcba30f","name":"Kapstok lamp"},{"id":"d5c330c9-2563-4d7c-a2d5-27f133addc12","name":"Vloerverwarming Stekker"},{"id":"c30637f7-0d71-4850-ac87-feea23a2407b","name":"XBOX"},{"id":"75a47df1-b737-4131-99ff-ce9c260fcedf","name":"Synology DiskStation - DS716+II"},{"id":"b535222d-61b5-42e5-850b-a516eb59cf4a","name":"Overig < Groep >"}],"actions":["on","off"],"triggers":["onoff_true","onoff_false"],"conditions":[]}},"advancedflows":[{"id":"811fd8a6-d299-45ee-abfb-6686b6ded49d","name":"Example Light Switch","enabled":true,"cards":{"4e72bcd1-268c-43e3-b8c2-d56d06921637":{"x":0,"y":20,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"onoff_true","type":"trigger","outputSuccess":["030dcc04-bc5f-4730-81cc-e44eab1bbd44"]},"030dcc04-bc5f-4730-81cc-e44eab1bbd44":{"x":380,"y":20,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"boolean":true}},"69b6093f-9b42-46a6-a6b9-3709315619cb":{"x":0,"y":140,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"onoff_false","type":"trigger","outputSuccess":["509c8d6d-7f2b-4250-b5cc-0cf973ab69e9"]},"509c8d6d-7f2b-4250-b5cc-0cf973ab69e9":{"x":380,"y":140,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"boolean":false}},"a308e7a9-841d-4d6e-80dd-f982f7e28c93":{"x":0,"y":260,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"onoff_true","type":"trigger","outputSuccess":["82a075b3-f01e-438b-969d-09b8467ef890"]},"82a075b3-f01e-438b-969d-09b8467ef890":{"x":380,"y":260,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"boolean":true}},"ce2a613e-76a3-42ea-aa56-7e5b4a1ac86c":{"x":0,"y":380,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"onoff_false","type":"trigger","outputSuccess":["8ac94629-1672-48b6-a407-e214cf154554"]},"8ac94629-1672-48b6-a407-e214cf154554":{"x":380,"y":380,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"boolean":false}},"ca008d69-2d97-41ed-b3c4-e8e257d1c92f":{"x":0,"y":500,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"onoff_true","type":"trigger","outputSuccess":["0f2bf21c-6e88-440e-b3a9-f6d7724db876"]},"0f2bf21c-6e88-440e-b3a9-f6d7724db876":{"x":380,"y":500,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"boolean":true}},"d5c70fc8-f1de-483b-974e-5dbc24943e6a":{"x":0,"y":620,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"onoff_false","type":"trigger","outputSuccess":["3878783b-72f9-4dbb-b61b-7fe1a397ab81"]},"3878783b-72f9-4dbb-b61b-7fe1a397ab81":{"x":380,"y":620,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"virtualdevice_set_button","type":"action","args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"boolean":false}},"bd0f1cb1-f10a-4ce7-8e26-561a0e72775b":{"x":760,"y":20,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["2803066e-5ad2-48bc-af92-46c7eceeba1b"],"args":{"field":{"id":"button2","name":"Living Room Light","description":"Button 2"},"mode":"set"}},"2803066e-5ad2-48bc-af92-46c7eceeba1b":{"droptoken":"trigger::bd0f1cb1-f10a-4ce7-8e26-561a0e72775b::value","x":1140,"y":40,"outputTrue":["f79a572b-ff6c-40d6-979f-e1336366b785"],"outputFalse":["916de3dd-a0d7-4230-af33-3de6cf371eca"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"f79a572b-ff6c-40d6-979f-e1336366b785":{"x":1520,"y":0,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"on","type":"action"},"916de3dd-a0d7-4230-af33-3de6cf371eca":{"x":1520,"y":80,"ownerUri":"homey:device:f83a36f2-c028-46cb-8a1c-80db1dcfc5ad","id":"off","type":"action"},"d786a25c-0540-4a19-8964-404e2add5ca6":{"x":760,"y":200,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["ec9a150b-2089-4cf6-9d49-d993c13e9215"],"args":{"field":{"id":"button3","name":"Kitchen Light","description":"Button 3"},"mode":"set"}},"ec9a150b-2089-4cf6-9d49-d993c13e9215":{"droptoken":"trigger::d786a25c-0540-4a19-8964-404e2add5ca6::value","x":1140,"y":220,"outputTrue":["6293f7e5-94a9-4d25-8455-89398bfa05ad"],"outputFalse":["0a07413d-87f0-41ba-b3cc-7d8697e24335"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"6293f7e5-94a9-4d25-8455-89398bfa05ad":{"x":1520,"y":180,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"on","type":"action"},"0a07413d-87f0-41ba-b3cc-7d8697e24335":{"x":1520,"y":260,"ownerUri":"homey:device:1cd72718-6734-4fd4-b372-2cff857951e6","id":"off","type":"action"},"b4556981-f8e0-487a-8e04-fbe75cc15c1b":{"x":760,"y":380,"ownerUri":"homey:device:8b550c88-a1b5-4832-a6c0-86ac34e76537","id":"trigger_virtualdevice_button","type":"trigger","outputSuccess":["1c699c63-8074-49a7-ad59-02f827aede6d"],"args":{"field":{"id":"button4","name":"Game Room Light","description":"Button 4"},"mode":"set"}},"1c699c63-8074-49a7-ad59-02f827aede6d":{"droptoken":"trigger::b4556981-f8e0-487a-8e04-fbe75cc15c1b::value","x":1140,"y":400,"outputTrue":["8af9567e-f863-422c-800e-fe5d50fa3f20"],"outputFalse":["9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0"],"ownerUri":"homey:manager:logic","id":"equal_boolean","type":"condition"},"8af9567e-f863-422c-800e-fe5d50fa3f20":{"x":1520,"y":360,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"on","type":"action"},"9a21ac67-0ac1-4e4b-9ae1-a17575dd6cf0":{"x":1520,"y":440,"ownerUri":"homey:device:9f26a907-cc1d-49ad-a190-f615c60c485c","id":"off","type":"action"}}}]};
+					let o = null;
 					$scope.vars.readflow = o;
 					if($scope.vars.readflow.devicesToReplace) _.each($scope.vars.readflow.devicesToReplace, d=> {if(d.replaceWith && d.replaceWith.id && (find=_.find(d.replacements, (r)=>r.id==d.replaceWith.id)))d.replaceWith=find;});
 					//$scope.vars.readflow.apiCommand = o.apiCommand;					
@@ -1107,15 +1093,30 @@
 						return;
 					}
 					$scope.$apply(function () {
-						$scope.vars.textSettings = result.compressedMinified;						
+						$scope.vars.compressed = result.compressed;
+						$scope.vars.uncompressed = result.uncompressed;
+						$scope.vars.compressedMinified = result.compressedMinified;
+						$scope.vars.uncompressedMinified = result.uncompressedMinified;
+						vars.flowName = result.flowName;
+						$scope.updateCompressed();						
 					});
 				});
+			}
+			
+			$scope.updateCompressed = function () {
+				console.log('updateCompressed');
+				$scope.vars.textSettings = $scope.vars[($scope.vars.useCompressed ? '' : 'un') + 'compressed' + ($scope.vars.useMinified ? 'Minified' : '')];
+				if ($scope.vars.textSettings) {
+					copyTextToClipboard($scope.vars.textSettings);
+					$scope.vars.tefCopied = $scope.vars.textSettings;
+				}
 			}
 
 
 			$scope.readTextSettings = function () {
 				let o;
 				$scope.vars.readcopy = null;
+				$scope.vars.readflow = null;
 				try {
 					showOverlay();
 					Homey.emit('virtualdevicesettings_getJson', $scope.vars.textSettings, function (err, result) {
@@ -1158,13 +1159,20 @@
 					($scope.vars.readcopy.settings.saveCustomIcons = $scope.vars.readcopy.saveCustomIcons) | 
 				 $scope.save(function() {
 						if(close) {
-							$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};			
-							$scope.view=undefined;
+							vars.copyWithIcons= true;
+							vars.copyWithFlows=false;
+							vars.textSettings= null;
+							vars.readcopy=null;
+							vars.readflow=null;
+							$scope.view.id=undefined;
 						}
 					}, $scope.vars.readcopy.settings);
 				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
+
+
+			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
 				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
@@ -1186,6 +1194,15 @@
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
+						$scope.vars.tefTemplates = result.tefTemplates;
+						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
+						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
+					});
+				});
+				Homey.on('createdadvancedflow', (af) => {
+					$scope.$apply(function () {
+						$scope.vars.createdadvancedflows.push(af);
 					});
 				});
 				// Homey.showLoadingOverlay();
@@ -1201,29 +1218,29 @@
 				$scope.customicons = asv_settings.customicons;
 				$scope.s = asv_settings.exampleSettings;
 				$scope.customIconsAvailable = [
-    'custom_1',  'custom_2',  'custom_3',
-    'custom_4',  'custom_5',  'custom_6',  'custom_7',
-    'custom_8',  'custom_9',  'custom_10', 'custom_11',
-    'custom_12', 'custom_13', 'custom_14', 'custom_15',
-    'custom_16', 'custom_17', 'custom_18', 'custom_19',
-    'custom_20', 'custom_21', 'custom_22', 'custom_23',
-    'custom_24', 'custom_25', 'custom_26', 'custom_27',
-    'custom_28', 'custom_29', 'custom_30', 'custom_31',
-    'custom_32', 'custom_33', 'custom_34', 'custom_35',
-    'custom_36', 'custom_37', 'custom_38', 'custom_39',
-    'custom_40', 'custom_41', 'custom_42', 'custom_43',
-    'custom_44', 'custom_45', 'custom_46', 'custom_47',
-    'custom_48', 'custom_49', 'custom_50', 'custom_51',
-    'custom_52', 'custom_53', 'custom_54', 'custom_55',
-    'custom_56', 'custom_57', 'custom_58', 'custom_59',
-    'custom_60',
-    'custom_61', 'custom_62', 'custom_63',
-    'custom_64', 'custom_65', 'custom_66', 'custom_67',
-    'custom_68', 'custom_69', 'custom_70', 'custom_71',
-    'custom_72', 'custom_73', 'custom_74', 'custom_75',
-    'custom_76', 'custom_77', 'custom_78', 'custom_79',
-    'custom_80'
-  ];
+					'custom_1',  'custom_2',  'custom_3',
+					'custom_4',  'custom_5',  'custom_6',  'custom_7',
+					'custom_8',  'custom_9',  'custom_10', 'custom_11',
+					'custom_12', 'custom_13', 'custom_14', 'custom_15',
+					'custom_16', 'custom_17', 'custom_18', 'custom_19',
+					'custom_20', 'custom_21', 'custom_22', 'custom_23',
+					'custom_24', 'custom_25', 'custom_26', 'custom_27',
+					'custom_28', 'custom_29', 'custom_30', 'custom_31',
+					'custom_32', 'custom_33', 'custom_34', 'custom_35',
+					'custom_36', 'custom_37', 'custom_38', 'custom_39',
+					'custom_40', 'custom_41', 'custom_42', 'custom_43',
+					'custom_44', 'custom_45', 'custom_46', 'custom_47',
+					'custom_48', 'custom_49', 'custom_50', 'custom_51',
+					'custom_52', 'custom_53', 'custom_54', 'custom_55',
+					'custom_56', 'custom_57', 'custom_58', 'custom_59',
+					'custom_60',
+					'custom_61', 'custom_62', 'custom_63',
+					'custom_64', 'custom_65', 'custom_66', 'custom_67',
+					'custom_68', 'custom_69', 'custom_70', 'custom_71',
+					'custom_72', 'custom_73', 'custom_74', 'custom_75',
+					'custom_76', 'custom_77', 'custom_78', 'custom_79',
+					'custom_80'
+				];
 			}
 
 
@@ -1233,6 +1250,13 @@
 				return string.charAt(0).toUpperCase() + string.slice(1);
 			}
 		}])
+		.directive('alinky', function () {
+			return function (scope, element, attrs) {
+				element.bind('click', function (event) {
+					Homey.popup(attrs.href);
+				});
+			};
+		})
 		.directive('ngEnter', function () {
 			return function (scope, element, attrs) {
 				element.bind('keydown keypress', function (event) {
@@ -1247,6 +1271,33 @@
 				});
 			};
 		})
+		.directive('tooltip', function ($compile) {
+		var contentContainer;
+		return {
+			restrict: "A",
+			scope: {
+				myTooltipScope: "="
+			},
+			link: function (scope, element, attrs) {
+				var text = attrs.tooltip;
+
+				scope.hidden = true;
+
+				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
+
+				element.parent().append(tooltipElement);
+				element
+					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
+					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
+
+				var toolTipScope = scope.$new(true);
+				angular.extend(toolTipScope, scope.myTooltipScope);
+				$compile(tooltipElement.contents())(toolTipScope);
+				$compile(tooltipElement)(scope);
+			}
+		};
+	})
 		// .directive('ng-execute', function ($parse) {
 		// 	return {
 		// 		link: function (scope, element, attrs) {

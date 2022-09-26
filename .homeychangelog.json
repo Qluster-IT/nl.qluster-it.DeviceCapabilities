@@ -179,7 +179,46 @@
   "2.4.20" : {
     "en" : "Bugfixed."
   },
-  "2.5.1" : {
+  "2.5.4" : {
     "en" : "Added: Templates from the Community Forum Topic."
+  },
+  "2.6.12" : {
+    "en" : "Added: Templates from the Community Forum Topic for AVDs."
+  },
+  "2.6.15" : {
+    "en" : "Improved: Template readings."
+  },
+  "2.6.22" : {
+    "en" : "Improved: Templates, AVD Settings and App Settings views."
+  },
+  "2.6.23" : {
+    "en" : "Bugfix."
+  },
+  "2.6.25" : {
+    "en" : "Improved Goto Topic text."
+  },
+  "2.6.26" : {
+    "en" : "Improved Goto Topic text."
+  },
+  "2.6.27" : {
+    "en" : "Added like button to templates."
+  },
+  "2.6.30" : {
+    "en" : "Added Flow Card: Set Name of Field."
+  },
+  "2.6.32" : {
+    "en" : "Resolved: Creating AVD from templates was sometimes not activating the creation of fields."
+  },
+  "2.6.33" : {
+    "en" : "Resolved: Issue with the Listener card."
+  },
+  "2.6.34" : {
+    "en" : "Resolved some issues and improved Templates view and filters."
+  },
+  "2.6.37" : {
+    "en" : "Improved settings."
+  },
+  "2.6.39" : {
+    "en" : "Added: Slider to numbers ShowAs."
   }
 }

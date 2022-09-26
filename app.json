@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.5.1",
+  "version": "2.6.39",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -126,6 +126,10 @@
       "method": "POST",
       "path": "/opentemplate/"
     },
+    "refreshTemplates": {
+      "method": "GET",
+      "path": "/refreshtemplates/"
+    },
     "setFromDefaultIcon": {
       "method": "POST",
       "path": "/setFromDefaultIcon/"
@@ -225,6 +229,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_capability_changed2",
         "title": {
           "en": "Capability listener",
@@ -320,6 +325,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_app_started",
         "title": {
           "en": "App started",
@@ -354,6 +360,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_virtualdevice_text",
         "title": {
           "en": "Text set",
@@ -422,6 +429,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_virtualdevice_number",
         "title": {
           "en": "Number set",
@@ -490,6 +498,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_virtualdevice_boolean",
         "title": {
           "en": "Yes/No set",
@@ -558,6 +567,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "trigger_virtualdevice_button",
         "title": {
           "en": "Button pushed",
@@ -621,6 +631,110 @@
               "en": "Value",
               "nl": "Waarde",
               "de": "Wert"
+            }
+          }
+        ]
+      },
+      {
+        "highlight": true,
+        "id": "trigger_virtualdevice_status",
+        "title": {
+          "en": "Status set",
+          "nl": "Status ingesteld",
+          "de": "Status festgelegt"
+        },
+        "titleFormatted": {
+          "en": "When Status [[statusfield]] [[mode]]",
+          "nl": "Wanneer Status [[statusfield]] [[mode]]",
+          "de": "Wenn Status [[statusfield]] [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "dropdown",
+            "name": "statusfield",
+            "placeholder": {
+              "en": "field",
+              "nl": "veld",
+              "de": "Feld"
+            },
+            "values": [
+              {
+                "id": "text",
+                "label": {
+                  "en": "Text",
+                  "nl": "Tekst",
+                  "de": "Text"
+                }
+              },
+              {
+                "id": "number",
+                "label": {
+                  "en": "Number",
+                  "nl": "Nummer",
+                  "de": "Nummer"
+                }
+              },
+              {
+                "id": "either",
+                "label": {
+                  "en": "Text or Number",
+                  "nl": "Tekst of Nummer",
+                  "de": "Text oder Nummer"
+                }
+              }
+            ]
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
+          }
+        ],
+        "tokens": [
+          {
+            "name": "text",
+            "type": "string",
+            "title": {
+              "en": "Text",
+              "nl": "Tekst",
+              "de": "Text"
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer",
+              "de": "Nummer"
             }
           }
         ]
@@ -739,10 +853,131 @@
             }
           }
         ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_run",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script",
+          "nl": "Vergang met HomeyScript: Voer een script uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCode",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn true;"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn true;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script with an argument",
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            }
+          }
+        ]
       }
     ],
     "actions": [
       {
+        "highlight": true,
         "id": "set_capability_zone_text",
         "title": {
           "en": "Set text capabilities in a zone",
@@ -866,6 +1101,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "set_capability_zone_number",
         "title": {
           "en": "Set number capabilities in a zone",
@@ -994,6 +1230,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "set_capability_zone_percentage",
         "title": {
           "en": "Set percentage capabilities in a zone",
@@ -1127,6 +1364,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "set_capability_zone_boolean",
         "deprecated": true,
         "title": {
@@ -1274,6 +1512,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "set_capability_zone_2_boolean",
         "title": {
           "en": "Set true/false capabilities in a zone",
@@ -1402,6 +1641,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "set_capability_zone_json",
         "title": {
           "en": "Set json as value for capabilities in a zone",
@@ -1530,6 +1770,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "action_capability_log",
         "title": {
           "en": "Retrieve Insight Log Value",
@@ -1635,6 +1876,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_text",
         "title": {
           "en": "Set Text",
@@ -1702,6 +1944,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_number",
         "title": {
           "en": "Set Number",
@@ -1769,6 +2012,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_boolean",
         "title": {
           "en": "Set Yes/No",
@@ -1836,6 +2080,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_button",
         "title": {
           "en": "Set Button",
@@ -1903,6 +2148,7 @@
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_status",
         "title": {
           "en": "Set Status",
@@ -1910,9 +2156,9 @@
           "de": "Status setzen"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]], [[refreshmobilebug]]",
-          "nl": "Zet Status naar [[text]], [[refreshmobilebug]]",
-          "de": "Setze Status auf [[text]], [[refreshmobilebug]]"
+          "en": "Set Status to [[text]], [[refreshmobilebug]] and [[mode]]",
+          "nl": "Zet Status naar [[text]], [[refreshmobilebug]] en [[mode]]",
+          "de": "Setze Status auf [[text]], [[refreshmobilebug]] und [[mode]]"
         },
         "args": [
           {
@@ -1939,10 +2185,39 @@
               "de": "Mobile App optional aktualisieren"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_status_optionalnumber",
         "title": {
           "en": "Set Status with Number",
@@ -1950,9 +2225,9 @@
           "de": "Status mit Nummer setzen"
         },
         "titleFormatted": {
-          "en": "Set Status to [[text]] with [[number]], [[refreshmobilebug]]",
-          "nl": "Zet Status naar [[text]] met [[number]], [[refreshmobilebug]]",
-          "de": "Setze Status auf [[text]] mit [[number]], [[refreshmobilebug]]"
+          "en": "Set Status to [[text]] with [[number]], [[refreshmobilebug]] and [[mode]]",
+          "nl": "Zet Status naar [[text]] met [[number]], [[refreshmobilebug]] en [[mode]]",
+          "de": "Setze Status auf [[text]] mit [[number]], [[refreshmobilebug]] und [[mode]]"
         },
         "args": [
           {
@@ -1988,10 +2263,39 @@
               "nl": "Update Mobile App optioneel"
             },
             "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
           }
         ]
       },
       {
+        "highlight": true,
         "id": "virtualdevice_set_expression",
         "title": {
           "en": "Set Expression",
@@ -2055,6 +2359,45 @@
               }
             ],
             "required": false
+          }
+        ]
+      },
+      {
+        "highlight": true,
+        "id": "virtualdevice_update_capability_name",
+        "title": {
+          "en": "Set the Name of a field",
+          "nl": "Zet de naam van een veld",
+          "de": "Legen Sie den Namen eines Felds fest"
+        },
+        "titleFormatted": {
+          "en": "Set the name of [[field]] to [[name]]",
+          "nl": "Stel de naam van [[field]] in op [[name]]",
+          "de": "Setzen Sie den Namen von [[field]] auf [[name]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Field",
+              "nl": "Veld",
+              "de": "Feld"
+            }
+          },
+          {
+            "type": "text",
+            "name": "name",
+            "placeholder": {
+              "en": "Name",
+              "nl": "Naam",
+              "de": "Naam"
+            }
           }
         ]
       },
@@ -2256,6 +2599,372 @@
             }
           }
         ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_run",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script",
+          "nl": "Vergang met HomeyScript: Voer een script uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCode",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeReturnsBoolean",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Yes/No-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Ja/Nee-tag"
+        },
+        "tokens": [
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn true;"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeReturnsNumber",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Number-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Nummer-tag"
+        },
+        "tokens": [
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn 1;"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeReturnsString",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] and return Text-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Tekst-tag"
+        },
+        "tokens": [
+          {
+            "name": "string",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nreturn 'Hello World!';"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+        },
+        "advanced": true,
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeWithArgReturnsBoolean",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Yes/No-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Ja/Nee-tag"
+        },
+        "tokens": [
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn true;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeWithArgReturnsNumber",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Number-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Nummer-tag"
+        },
+        "tokens": [
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn 1;"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runCodeWithArgReturnsString",
+        "title": {
+          "en": "Replace with HomeyScript: Run code",
+          "nl": "Vergang met HomeyScript: Voer code uit"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Text-tag",
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Tekst-tag"
+        },
+        "tokens": [
+          {
+            "name": "string",
+            "type": "string",
+            "title": {
+              "en": "Result",
+              "nl": "Resultaat"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "code",
+            "type": "code",
+            "language": "homeyscript",
+            "title": {
+              "en": "Code",
+              "nl": "Code"
+            },
+            "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn 'Hello World!';"
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "value": "MyArg"
+          }
+        ]
+      },
+      {
+        "deprecated": true,
+        "id": "hs_runWithArg",
+        "title": {
+          "en": "Replace with HomeyScript: Run a script with an argument",
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+        },
+        "titleFormatted": {
+          "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+        },
+        "args": [
+          {
+            "name": "script",
+            "type": "autocomplete",
+            "title": {
+              "en": "Script",
+              "nl": "Script"
+            }
+          },
+          {
+            "name": "argument",
+            "type": "text",
+            "title": {
+              "en": "Argument",
+              "nl": "Argument"
+            },
+            "placeholder": {
+              "en": "Argument",
+              "nl": "Argument"
+            }
+          }
+        ]
       }
     ]
   },
@@ -2365,6 +3074,30 @@
       "uiComponent": null,
       "insights": true,
       "uiQuickAction": true
+    },
+    "devicecapabilities_slider_number": {
+      "type": "number",
+      "title": {
+        "en": "Number",
+        "nl": "Nummer",
+        "de": "Nummer"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider",
+      "insights": true
+    },
+    "measure_devicecapabilities_slider_number": {
+      "type": "number",
+      "title": {
+        "en": "Number",
+        "nl": "Nummer",
+        "de": "Nummer"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider",
+      "insights": true
     },
     "devicecapabilities_text": {
       "type": "string",

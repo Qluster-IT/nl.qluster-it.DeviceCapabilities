@@ -785,8 +785,14 @@ class DeviceSetter extends Homey.App {
 			if (Object.hasOwnProperty.call(hm.Tracking2.devices, deviceKey)) {
 				const device = hm.Tracking2.devices[deviceKey];				
 				if (!device.device) {
-					this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
-					device.device = this.devices[device.id];
+					try {					
+						this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
+						device.device = this.devices[device.id];	
+					} catch (error) {
+						this.error(error);
+						this.log('continueing');
+						continue;
+					}
 				}
 				let keys = Object.keys(device.capabilities);
 				for (let i = 0; i < keys.length; i++) {
@@ -1099,7 +1105,11 @@ class DeviceSetter extends Homey.App {
 			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			this.homeyAPI.flow.on('advancedflow.create', x=> this.homey.api.realtime('createdadvancedflow', x));
+			this.homeyAPI.flow.on('advancedflow.create', x=> {
+				this.homey.api.realtime('createdadvancedflow', x);
+				let avdDriver = this.homey.drivers.getDriver('virtualdevice');
+				if(avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
+			});
 
 			this.refreshDefer.resolve();
 			this.refreshDefer = null;

@@ -6,6 +6,11 @@ const asv_settings = {
           "order": 0
         },
         {
+          "id": "slider",
+          "label": "Slider",
+          "order": 0
+        },
+        {
           "id": "target_temperature",
           "label": "Temperature (Target)",
           "order": 1

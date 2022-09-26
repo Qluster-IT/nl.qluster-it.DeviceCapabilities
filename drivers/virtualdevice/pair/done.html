@@ -32,16 +32,32 @@
 
     $('#hy-overlay-loading-message').html( Homey.__("pair.done.creating_device") );
 
-    Homey.emit('done', null, function (err, device) {
-        Homey.createDevice(device, (err, res) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
+    Homey.emit('done', null, function (err, obj) {
+        if(obj.devices) {
 
-        Homey.done();
-        });
+            let promises = [];
+
+            let devices = obj.devices;
+            let devicesCreated = 0;
+            for (let i = 0; i < devices.length; i++) {                
+                Homey.createDevice(devices[i], (err, res) => {
+                    if (err) return console.log(err);
+                    devicesCreated+=1;
+                    if(devicesCreated===devices.length) Homey.emit('done_finished', null, function (err, obj) {
+                    if (err) return console.log(err);
+                    Homey.done(devices);
+                });
+                });
+            }
+        }else {
+            Homey.createDevice(obj.device, (err, res) => {
+                if (err) return console.log(err);
+                Homey.done();
+            });
+        }
     });
+
+    
 </script>
 
 <div id="all-icons"  data-i18n="pair.done.done">Done!</div>
