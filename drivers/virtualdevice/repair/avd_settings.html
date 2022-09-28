@@ -305,7 +305,7 @@
 					</select>
 				</div>				
 				<div class="field"
-					ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
+					ng-if="temp['boolean'+($index+1)+'CreateFlowCards'] = !(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow
 							Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
@@ -314,7 +314,7 @@
 				</div>				
 				<div ng-else execute="s['boolean'+($index+1)+'CreateFlowCards']=false" ></div>
 				<div class="field"
-					ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff') && (s['boolean'+($index+1)+'ShowAs']==='alarm_motion' || s['boolean'+($index+1)+'ShowAs']==='alarm_contact')">
+					ng-if="temp['boolean'+($index+1)+'CreateFlowCards'] && s['boolean'+($index+1)+'CreateFlowCards'] && (s['boolean'+($index+1)+'ShowAs']==='alarm_motion' || s['boolean'+($index+1)+'ShowAs']==='alarm_contact')">
 					<div class="label"><span>{{__('virtualdevicesettings.disableZoneActivity') || 'Disable Zone Activity'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.disableZoneActivityHint') || 'When selected wil disable zone activity for this field.'}}"></span>
 					</div>
@@ -819,7 +819,7 @@
 			scope = $scope;
 			//let Homey = _homey
 			$scope.s = {};
-
+			$scope.temp = {};
 			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
 			$scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
