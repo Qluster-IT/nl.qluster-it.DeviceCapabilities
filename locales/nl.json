@@ -112,7 +112,9 @@
 		"createCameraField":"Creëer  Camera",
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
-		"labelTopicLink":"Zie het AVD Forum Topic voor uitleg of als u hulp zoekt bij AVD's of sjablonen."
+		"labelTopicLink":"Zie het AVD Forum Topic voor uitleg of als u hulp zoekt bij AVD's of sjablonen.",
+
+		
 	},
 	"pair": {
 		"list_icons":{
