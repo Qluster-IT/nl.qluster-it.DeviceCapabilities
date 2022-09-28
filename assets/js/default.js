@@ -1,3 +1,43 @@
+const TOPICS = {
+    tfe : {
+        German:{
+            topicId:69584,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+        },
+        English:{
+            topicId:68981,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+        },    
+        HCS:{
+            topicId:69556,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+        }
+    },
+    avd: {
+        German:{
+            topicId:69583,
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+        },
+        English:{
+            topicId:68676,
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+        },
+        HCS:{
+            topicId:69558,
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
 function iosCopyToClipboard(el) {
     var oldContentEditable = el.contentEditable,
         oldReadOnly = el.readOnly,

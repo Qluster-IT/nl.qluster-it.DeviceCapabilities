@@ -435,7 +435,11 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div ng-show="!vars.template">
 			<div class="field filter">
-				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
+				<div class="source-popup" ng-class="{active:view.showlanguage}">
+					<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
+				</div>
+				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
 				<div class="float-right sorting">
 					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
 					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
@@ -450,7 +454,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				</div>
 				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 				</div>
 			</div>
 			<div class="main-buttons ">
@@ -479,6 +483,11 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				$scope.view = { id: 'theflowexchanger', subid: undefined };
 				$scope.orderBy = {orderBy:'favorite', reverse:false};
 				$scope.filter = {header:''};
+				$scope.topics = TOPICS.tfe;
+				$scope.topicsArray = TOPICS.tfe;
+				_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+				$scope.topicsArray = _.toArray($scope.topics);
+				
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
 					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
@@ -514,7 +523,7 @@ ${vars.textSettings}
 ` ): '';
 
 					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/last');
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
 				}
 
 				$scope.gotoHelpTopic = function() {
@@ -538,7 +547,7 @@ ${vars.textSettings}
 				}
 
 				$scope.gotoLike = function(template) {
-					$scope.openUrl('https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.number);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 				}
 				$scope.closeTemplates = function() {
 					$scope.view.subid='theflowexchangerimport';
@@ -560,6 +569,14 @@ ${vars.textSettings}
 				$scope.messages = '';
 				$scope.selected = {};
 
+				$scope.setSource = function(source) {
+					$scope.vars.activeTfeSource = source || 'English';
+					$scope.vars.activeTopic = TOPICS.tfe[$scope.vars.activeTfeSource];
+					Homey.set('activeTfeSource', source, function (err, result) {
+						if (err) return console.log(err);
+					});
+					$scope.getTefTemplates();
+				}
 
 				$scope.$on('ready', function ($e, Homey_) {
 					Homey = Homey_;
@@ -584,7 +601,14 @@ ${vars.textSettings}
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
 					$scope.getFunctionFromSettings();
-					$scope.getTefTemplates();
+					Homey.get('activeTfeSource', function (err, result) {
+						if (err) return console.log(err);
+						$scope.$apply(function () { 
+							$scope.vars.activeTfeSource = result || 'English';
+							$scope.vars.activeTopic = TOPICS.tfe[$scope.vars.activeTfeSource];
+							$scope.getTefTemplates();
+						});
+					});
 					Homey.get('favoriteTemplates', function (err, result) {
 						if (err) return console.log(err);
 						$scope.$apply(function () {
@@ -645,20 +669,20 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							if(vars.favoriteTemplates) _.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-							_.each(result, t=>t.favorite=t.favorite==true);
+							if(vars.favoriteTemplates) _.each($scope.vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+							_.each($scope.vars.tefTemplates, t=>t.favorite=t.favorite==true);
 						});
 					});
 				}
 
 
-				$scope.getTefTemplates = function () {
-					Homey.get('tefTemplates', function (err, result) {
+				$scope.getTefTemplates = function () {					
+					Homey.get('tefTemplates' + ($scope.vars.activeTfeSource=='English'?'':'_'+$scope.vars.activeTfeSource), function (err, result) {
 						if (err) return Homey.alert(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							_.each(result, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-							_.each(result, t=>t.favorite=t.favorite==true);
+							_.each($scope.vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+							_.each($scope.vars.tefTemplates, t=>t.favorite=t.favorite==true);
 						});
 					});
 				}
@@ -730,8 +754,6 @@ ${vars.textSettings}
 						if (err) return Homey.alert(err, 'error');
 						$scope.$apply(function () {
 							$scope.advancedflows = result;
-							console.log('advancedflows', result);
-
 						});
 					});
 				}

@@ -303,7 +303,7 @@
 					<select class="value" ng-model="s['boolean'+($index+1)+'ShowAs']">
 						<option ng-repeat="item in booleanShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
-				</div>
+				</div>				
 				<div class="field"
 					ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow
@@ -311,8 +311,16 @@
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateFlowCards']" />
-				</div>
+				</div>				
 				<div ng-else execute="s['boolean'+($index+1)+'CreateFlowCards']=false" ></div>
+				<div class="field"
+					ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff') && (s['boolean'+($index+1)+'ShowAs']==='alarm_motion' || s['boolean'+($index+1)+'ShowAs']==='alarm_contact')">
+					<div class="label"><span>{{__('virtualdevicesettings.disableZoneActivity') || 'Disable Zone Activity'}}</span> <span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.disableZoneActivityHint') || 'When selected wil disable zone activity for this field.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'DisableZoneActivity']" />
+				</div>
+				<div ng-else execute="_delete(s, 'boolean'+($index+1)+'DisableZoneActivity')" ></div>
 				<div class="field"
 					ng-if="!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
@@ -554,7 +562,7 @@
 		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities/68676')">See the Share Your Device Forum Topic for other AVDs</div>	
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId')">See the Share Your Device Forum Topic for other AVDs</div>	
 		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
@@ -763,7 +771,11 @@
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div ng-show="!vars.template">
 			<div class="field filter">
-				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
+				<div class="source-popup" ng-class="{active:view.showlanguage}">
+					<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
+				</div>
+				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
 				<div class="float-right sorting">
 					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
 					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
@@ -778,7 +790,7 @@
 				</div>
 				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 				</div>
 			</div>
 			<div class="main-buttons ">
@@ -812,6 +824,12 @@
 			$scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
 			$scope.filter = {header:''};
+			
+			$scope.topics = TOPICS.avd;
+			$scope.topicsArray = TOPICS.avd;
+			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+			$scope.topicsArray = _.toArray($scope.topics);
+			
 			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
@@ -843,7 +861,7 @@ ${vars.textSettings}
 ` ): '';
 
 					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities/68676/last');
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
 				}
 
 				$scope.gotoHelpTopic = function() {
@@ -867,7 +885,7 @@ ${vars.textSettings}
 				}
 				
 				$scope.gotoLike = function(template) {
-					$scope.openUrl('https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities/68676/' + template.number);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 				}
 				$scope.closeTemplates = function() {
 					$scope.view.subid='theflowexchangerimport';
@@ -888,6 +906,9 @@ ${vars.textSettings}
 			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
 			$scope.deviceClasses = asv_settings.deviceClasses;
 
+			$scope._delete = function(o,s) {
+				delete o[s];
+			}
 
 			$scope.toggleFavorite = function(template) {
 				if(vars.favoriteTemplates[template.number]) {
@@ -1196,7 +1217,16 @@ ${vars.textSettings}
 				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
-
+			
+			
+			$scope.setSource = function(source) {
+					$scope.vars.activeAvdSource = source || 'English';
+					$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+					Homey.emit('set:activeAvdSource', source, function (err, result) {
+						if (err) return console.log(err);
+						$scope.getTefTemplates();
+					});
+				}
 
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
@@ -1220,8 +1250,12 @@ ${vars.textSettings}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
+						
+						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
+						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+
 						$scope.vars.tefTemplates = result.tefTemplates;
-						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
+						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
 						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
 					});

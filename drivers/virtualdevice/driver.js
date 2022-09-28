@@ -40,6 +40,37 @@ const { AppsInfo } = require('../virtualdevice/appinfo');
 let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys, allAdvancedFlows, allZones, allApps;
 let app;
 
+const TOPICS = {
+    tfe : {
+        German:{
+            topicId:69584,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+        },
+        English:{
+            topicId:68981,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+        },    
+        HCS:{
+            topicId:69556,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+        }
+    },
+    avd: {
+        German:{
+            topicId:69583,
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+        },
+        English:{
+            topicId:68676,
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+        },
+        HCS:{
+            topicId:69558,
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+        }
+    }
+};
+
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
 
@@ -127,7 +158,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     createdOn:postCreatedOn,
                                     autherId,
                                     header,
-                                    tefs
+                                    tefs,
+                                    topicId
                                 });
                             }
                         });
@@ -165,55 +197,58 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const postsPerRun = 20;
         let runs = 0;
         let lastNumber = 0;
+        let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
+        
         while (run) {            
             //let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
-            let _templates = await this.getTefTemplatesFromPostsById({postId:lastNumber+1});
+            let _templates = await this.getTefTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
             templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
             if(lastNumber == _templates.lastNumberFound) run = false;
             lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
-        this.tefTemplates = templates;
-        await this.homey.settings.set('tefTemplates', templates);
+        let settingName = !this.activeTfeSource || this.activeTfeSource==='English' ? '' : '_'+  this.activeTfeSource;
+        this['tefTemplates'+settingName] = templates;
+        await this.homey.settings.set('tefTemplates'+settingName, templates);
         return templates;
     }
-    async getTefTemplatesFromPostsById({postId}) {
-        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'flows', postId, topicId:'68981', topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'});
+    async getTefTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'flows', postId, topicId:topicId, topicUrl:topicUrl});
     }
     
 
-    async openTemplate({template}) {
-        try {                
-            let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
-            if(templateHtml) {
-                templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
-                templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
-                templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
-                templateHtml = templateHtml.replaceAll('\n', '');
-                templateHtml = templateHtml.trimStart();
-                template.post = templateHtml;
-                let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
-                if(ulTemplates) {                
-                    let matchesFound = [...ulTemplates];
-                    for (let i = 0; i < matchesFound.length; i++) {
-                        template.post = template.post.replace(matchesFound[i][0], '');
-                        template.tef = matchesFound[i][2].trim();
-                        template.updatedOn = Date.now();
-                    }
-                }
-                let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
-                if(t) {
-                    t.post = template.post;
-                    t.tef = template.tef;                    
-                    await this.homey.settings.set('tefTemplates', this.tefTemplates); 
-                }
-                return {template};
-            }
-        } catch (error) {
-            this.error(error);
-        }
-    }
+    // async openTemplate({template}) {
+    //     try {                
+    //         let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
+    //         if(templateHtml) {
+    //             templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
+    //             templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
+    //             templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
+    //             templateHtml = templateHtml.replaceAll('\n', '');
+    //             templateHtml = templateHtml.trimStart();
+    //             template.post = templateHtml;
+    //             let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
+    //             if(ulTemplates) {                
+    //                 let matchesFound = [...ulTemplates];
+    //                 for (let i = 0; i < matchesFound.length; i++) {
+    //                     template.post = template.post.replace(matchesFound[i][0], '');
+    //                     template.tef = matchesFound[i][2].trim();
+    //                     template.updatedOn = Date.now();
+    //                 }
+    //             }
+    //             let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
+    //             if(t) {
+    //                 t.post = template.post;
+    //                 t.tef = template.tef;                    
+    //                 await this.homey.settings.set('tefTemplates', this.tefTemplates); 
+    //             }
+    //             return {template};
+    //         }
+    //     } catch (error) {
+    //         this.error(error);
+    //     }
+    // }
 
 
     async getAvdTemplatesFromPosts() {
@@ -222,21 +257,27 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const postsPerRun = 20;
         let runs = 0;
         let lastNumber = 0;
+        let topic = TOPICS.avd[this.activeAvdSource] || TOPICS.avd.English;
+        
         while (run) {            
             //let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
-            let _templates = await this.getAvdTemplatesFromPostsById({postId:lastNumber+1});
+            let _templates = await this.getAvdTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
             templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
             if(lastNumber == _templates.lastNumberFound) run = false;
             lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
-        this.avdTemplates = templates;
-        await this.homey.settings.set('avdTemplates', templates);
+        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+        this['avdTemplates'+ settingName] = templates;
+        await this.homey.settings.set('avdTemplates'+ settingName, templates);
         return templates;
     }
-    async getAvdTemplatesFromPostsById({postId}) {        
-        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'avd', postId, topicId:'68676', topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'});
+    async getAvdTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'avd', postId, topicId:topicId, topicUrl:topicUrl});
+    }
+    async getTopics() {
+        return TOPICS;
     }
     
     async onInit() {
@@ -244,8 +285,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         this.log('VirtualDeviceDriver onInit');
         //this.getTefTemplatesFromPosts();
 
-		this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
-
+		//this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
+        this.activeAvdSource = await this.homey.settings.get('activeAvdSource');
+        this.activeTfeSource = await this.homey.settings.get('activeTfeSource');
+        this.homey.settings.on('set', async (settingName)=> {
+            // if(settingName=='activeAvdSource') {
+            //     this.activeAvdSource = await this.homey.settings.get('activeAvdSource');
+            // } else 
+            if(settingName=='activeTfeSource') {
+                this.activeTfeSource = await this.homey.settings.get('activeTfeSource');
+            }           
+        });
+        
         //true || process.env.DEBUG === '1' || 
         if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
             await this.homey.settings.set('Version', app.manifest.version);
@@ -1848,7 +1899,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     });
 
     session.setHandler('virtualdeviceicons_load', async (data) => {
-        return {tefTemplates: await this.homey.settings.get('avdTemplates'), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
+        
+        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;        
+        return {tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
     });
 
     session.setHandler('use_template', async (data) => {
@@ -1857,8 +1910,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //return this.getCustomIcons();
         return true;
     });
-
-
+    session.setHandler('getAvdTemplates', async (str) => {
+        try {
+            let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+            return await this.homey.settings.get('avdTemplates'+settingName);
+        } catch (error) {
+            this.error(error);
+        }
+    });
+    session.setHandler('set:activeAvdSource', async (source) => {
+        await this.homey.settings.set('activeAvdSource', source);
+        this.activeAvdSource = source;
+    });
     session.setHandler('list_icons', async (data) => {
         //return this.getCustomIcons();
         return this.getDefaultIcons();
@@ -1924,6 +1987,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(tefPlain && tefPlain.settings) {
                     tefPlain.settings.postNumber = template.number;
                     tefPlain.settings.postId = template.id;
+                    tefPlain.settings.topicId = template.topicId;
                 }
                 tefs.push({tef:tefPlain, device:i===0?(device?device:devices[0]):await this.onPairListDevices(tefs[i-1].device.data.id)});
                 if(tefPlain.deviceName) _.last(tefs).device.name = tefPlain.deviceName;
@@ -2084,7 +2148,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let defer = new Defer();
             defer.then(async ()=> { this.loadStuff({reload:true}); });
             setTimeout(()=> { defer.resolve(); }, 1);
-            return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates'), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
+            let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+        return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
 
         });
         session.setHandler('virtualdevicesettings_save', async (settings) => {
@@ -2095,7 +2160,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             //return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
-
+        session.setHandler('set:activeAvdSource', async (source) => {
+            await this.homey.settings.set('activeAvdSource', source);
+            this.activeAvdSource = source;
+        });
         
         session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
             
@@ -2168,13 +2236,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
         });
 
-        // session.setHandler('getAvdTemplates', async (str) => {
-        //     try {                
-        //         return await this.getAvdTemplatesFromPosts();
-        //     } catch (error) {
-        //         this.error(error);
-        //     }
-        // });
+        session.setHandler('getAvdTemplates', async (str) => {
+            try {
+                let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+                return await this.homey.settings.get('avdTemplates'+settingName);
+            } catch (error) {
+                this.error(error);
+            }
+        });
         session.setHandler('refreshAvdTemplates', async (str) => {
             try {                
                 return await this.getAvdTemplatesFromPosts();

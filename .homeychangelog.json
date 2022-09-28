@@ -274,5 +274,26 @@
   },
   "2.6.60" : {
     "en" : "Changed: Flows by default selected as include for AVDs export."
+  },
+  "2.6.61" : {
+    "en" : "Changed: Startup."
+  },
+  "2.6.62" : {
+    "en" : "Added: AVD created from template remembers the template id and topic."
+  },
+  "2.6.63" : {
+    "en" : "Added: You can choose a source for Templates."
+  },
+  "2.6.64" : {
+    "en" : "Added: Templates source: HCS."
+  },
+  "2.6.65" : {
+    "en" : "Added: Templates source: German/Deutch."
+  },
+  "2.6.66" : {
+    "en" : "Added: Templates source: German/Deutch."
+  },
+  "2.6.67" : {
+    "en" : "Added: Templates source AVD and TFE: German/Deutch."
   }
 }

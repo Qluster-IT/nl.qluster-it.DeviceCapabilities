@@ -111,7 +111,12 @@
 		"createCameraField":"Create Camera",
 		"step":"Step",
 		"stepHint":"The step sets the stepping interval for the Number.",
-		"labelTopicLink":"See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates."
+		"labelTopicLink":"See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates.",
+
+		"disableZoneActivity":"Disable Zone Activity",
+		"disableZoneActivityHint":"When selected wil disable zone activity for this field.",
+		"":"",
+		"":""
 	},
 	"pair": {
 		"list_icons":{

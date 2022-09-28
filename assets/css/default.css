@@ -865,7 +865,7 @@ alinky,
     top:0px;
 }
 .filter input[type="text"].label {
-    width: 70%!important;
+    width: 65%!important;
 }
 
 
@@ -874,6 +874,30 @@ alinky,
 }
 
 .filter .sorting .icon-button.active .fa-icon {
+    color: #0066A4;
+}
+.filter .source-popup {
+    display: none;
+    position:fixed;
+    top:32px;
+    left:0px;
+    width:60%;
+    height:auto;
+    z-index:10;
+    background-color: white;
+    border:1px solid grey;
+    border-left:none;
+    border-top:none;
+    padding-bottom:5px;
+    
+}
+.filter .source-popup.active {
+    display: block;
+}
+.language {
+    padding: 5px;
+}
+.language.active {
     color: #0066A4;
 }
 
@@ -921,7 +945,7 @@ form.top {
 
 @media screen and (max-width: 375px) {    
     .filter input[type="text"].label {
-        width: 65%!important;
+        width: 60%!important;
     }
 }
 
@@ -931,7 +955,7 @@ form.top {
         margin: 5px;
     }
     .filter input[type="text"].label {
-        width: 60%!important;
+        width: 58%!important;
     }
 }
 

@@ -437,6 +437,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							let max = settings[type + i + 'Max'];///max = max===1?undefined:null;
 							let min = settings[type + i + 'Min'];///min = min===1?undefined:null;
 							let step = settings[type + i + 'Step'];
+							let disableZoneActivity = settings[type + i + 'DisableZoneActivity'];
 
 
 							// let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
@@ -456,6 +457,7 @@ module.exports = class WatchDevice extends Homey.Device {
 										//opt.preventInsights != settings[type + i + 'PreventInsights'] ||
 								(settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status') ||
 								(opt.decimals != decimals) ||
+								disableZoneActivity  != oldSettings[type + i + 'DisableZoneActivity'] ||
 								(opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue']  && settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue']!='')|| 
 								(opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse']  && settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse']!='') ||
 								values ||
@@ -466,7 +468,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 								//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 							if (capOptionsChanged) {
-								let optionValues = {type, i, settings, decimals, min, max, name, step};
+								let optionValues = {type, i, settings, decimals, min, max, name, step, disableZoneActivity};
 								if(type=="status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
 								if(settings[type + i + 'SeparateCapabilities']!==true) {
@@ -493,7 +495,7 @@ module.exports = class WatchDevice extends Homey.Device {
 									settings[type + i + 'CreateTag']!=oldSettings[type + i + 'CreateTag']) {
 										let optionValues = {type, i, settings, decimals, min, max, name, step};
 										if(type=="status") optionValues.units = opt.units || name;
-										let optNew = this.getOptions({type, i, settings, decimals, min, max, name, step});
+										let optNew = this.getOptions({type, i, settings, decimals, min, max, name, step, disableZoneActivity});
 										optNew.preventInsights = settings[type + i + 'CreateInsights']!==true;
 										optNew.preventTag = settings[type + i + 'CreateTag']!==true;
 										//if(settings[type + i + 'CreateInsights']===true)
@@ -623,7 +625,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		
 	}
 
-	getOptions({type, i, settings, decimals, min, max, name, units, step}) {
+	getOptions({type, i, settings, decimals, min, max, name, units, step, disableZoneActivity}) {
 		let optNew = {
 			title: name,
 			preventInsights: true,
@@ -639,6 +641,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		if (min!==undefined) optNew.min = min;
 		if (max!==undefined) optNew.max = max;
 		if (step!==undefined) optNew.step = step;
+		if(disableZoneActivity===true) optNew.zoneActivity=false;
 		return optNew;
 	}
 };

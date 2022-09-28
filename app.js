@@ -78,6 +78,12 @@ class DeviceSetter extends Homey.App {
 	
 
 		this.log('DeviceSetter is running...');
+
+		// if(!await this.homey.settings.get('notification_petition_zerodash')) {
+		// 	this.homey.notifications.createNotification({excerpt : "For everyone who wants a Text Status Indicator (as Device Tile) without a zero or dash in front of it, please go to the Device Capability Homey Forum Topic, click on the petition link at the top or bottom of the topic and hit that Like!\n\n The target is 61 likes, we are almost there!\n Your Like counts!" });  
+		// 	this.homey.settings.set('notification_petition_zerodash', true);
+		// }
+
 		// this.refreshHomeyAPI().then(async api => {
 		// 	this.Tracking.homeyAPIStatic = api;
 		// });
