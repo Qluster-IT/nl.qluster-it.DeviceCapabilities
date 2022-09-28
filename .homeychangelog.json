@@ -268,5 +268,11 @@
   },
   "2.6.58" : {
     "en" : "Improved TEF files."
+  },
+  "2.6.59" : {
+    "en" : "Improved: TEF files."
+  },
+  "2.6.60" : {
+    "en" : "Changed: Flows by default selected as include for AVDs export."
   }
 }

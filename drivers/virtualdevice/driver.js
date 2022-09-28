@@ -889,7 +889,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
 
-    async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device }) {        
+    async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device, copyWithFlows=true }) {        
         function addDeviceToReplace(deviceId) {
             let _device = allDevices[deviceId];
             if(devicesToReplace && _device) devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
@@ -911,7 +911,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
 
         let advancedflowsselectedKeys = advancedflowsselected ? Object.keys(advancedflowsselected) : 0;
-        let advancedflows = _.filter(await api.flow.getAdvancedFlows(), x=> 
+        let advancedflows = !copyWithFlows ? [] : _.filter(await api.flow.getAdvancedFlows(), x=> 
             ((advancedflowsselectedKeys && advancedflowsselectedKeys.indexOf(x.id)>-1 && advancedflowsselected[x.id]===true) ||
             (x.enabled && device && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id)))
             );// && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
@@ -1088,6 +1088,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const stringyMinified = this.removeKeys(JSON.stringify(devCopyMinified));        
         const compressed = Buffer.from(await gzip(stringy, {level:9} )).toString('base64');                
         const compressedMinified = Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64');
+        dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;
         let tefType = dev.flowName && dev.deviceName ? 'AVD,FLOWS' : dev.flowName ? 'FLOWS' : dev.deviceName ? 'AVD' : 'UNKNOWN';					
         let s = "[TEF:" + tefType + ":" ;
         dev.compressed = s + compressed + "]";
@@ -1095,7 +1096,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         
         dev.compressedMinified = s + compressedMinified + "]";
         dev.uncompressedMinified = s + stringyMinified + "]";
-        dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;;
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
@@ -2142,7 +2142,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                             dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
                         }
                     });
-                dev = await this.getAdvancedFlowsJSON({dev, device });
+                dev = await this.getAdvancedFlowsJSON({dev, device, copyWithFlows:viewSettings.copyWithFlows });
                 return dev;
             } catch (error) {
                 this.error(error);

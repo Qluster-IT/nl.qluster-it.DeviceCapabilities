@@ -812,7 +812,7 @@
 			$scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
 			$scope.filter = {header:''};
-			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
+			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
 				$scope.gotoPostTopic = function() {
@@ -1031,7 +1031,7 @@ ${vars.textSettings}
 
 			$scope.close = function () {								
 				vars.copyWithIcons= true;
-				vars.copyWithFlows=false;
+				vars.copyWithFlows=true;
 				vars.textSettings= null;
 				vars.readcopy=null;
 				vars.readflow=null;
@@ -1186,7 +1186,7 @@ ${vars.textSettings}
 				 $scope.save(function() {
 						if(close) {
 							vars.copyWithIcons= true;
-							vars.copyWithFlows=false;
+							vars.copyWithFlows=true;
 							vars.textSettings= null;
 							vars.readcopy=null;
 							vars.readflow=null;
