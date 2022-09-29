@@ -908,14 +908,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             allUsers = null;
             allVariables = null;
             allTokens = null;
+            allAdvancedFlows = null;
             actionCards = null;
             conditionCards = null;
             triggerCards = null;
-            allAdvancedFlows = null;
             
             if(global && global.gc) global.gc();
 
-        }, 60 * 60000); // clear every 10 minutes
+        }, 10 * 60000); // clear every 10 minutes 
         this.log('LoadStuff done.');
 
         if(global && global.gc) global.gc();

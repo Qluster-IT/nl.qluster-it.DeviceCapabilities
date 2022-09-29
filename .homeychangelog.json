@@ -298,5 +298,8 @@
   },
   "2.6.68" : {
     "en" : "Added to AVD: Disable Zone Activity."
+  },
+  "2.6.69" : {
+    "en" : "Memory improvement."
   }
 }

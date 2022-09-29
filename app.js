@@ -1093,8 +1093,10 @@ class DeviceSetter extends Homey.App {
 			// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
 			
 
-			// Does this help? Seems a little bit.
-			await this.destroyAndRefreshHomeyAPI();
+			//// Does this help? Seems a little bit.
+			//await this.destroyAndRefreshHomeyAPI();
+
+
 			// this.homeyAPI.destroy();
 			// this.homeyAPI = null;
 			// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
