@@ -28,8 +28,7 @@
 		"function_exists":"Funktion bereits vorhanden.",
 		"delete_all_confirm":"Sind Sie sicher, dass Sie ALLE Funktionen löschen möchten?",
 		"delete_confirm":"Sind Sie sicher, dass Sie die Funktion __functionName__ löschen möchten?",
-		"search_for_name":"Nach Namen suchen",
-		
+		"search_for_name":"Nach Namen suchen",		
 		"close":"Schließen",
 		"explain_virtualdevices": "Hier können Sie das Symbol für Advanced Virtual Devices bearbeiten, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus den Vorlagen auswählen.",
 		"explain_restart":"Nach dem Ändern eines Symbols muss die App neu gestartet werden, bevor das/die neue(n) Symbol(e) übernommen wird/werden."
@@ -45,8 +44,6 @@
 		"labelStatusIndicator":"Vergessen Sie nicht, das Statusfeld in der Mobile App als Status-Indikator einzustellen.",
 		"devicecapabilities_starttext":"Beginnen Sie",
 		"devicecapabilities_starttextend":"mit den Gerätewartung/reparatur",
-		
-		
 		"title_repair":"Geräteeinstellungen",
 		"device_saving":"Das Gerät wird gespeichert",
 		"titleGeneral":"Allgemein",
@@ -122,7 +119,6 @@
 			"select_device_icon":"Oder wählen Sie eines aus der Liste.",
 			"set_icon_and_customize":"Hier können Sie ein Symbol für die Advanced Virtual Devices festlegen, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus der Standardliste auswählen.",
 			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern.",
-
 			"set_name":"Hier können Sie den Namen für das Gerät festlegen:"
 		},
 

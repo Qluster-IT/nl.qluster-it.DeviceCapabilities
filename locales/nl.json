@@ -28,8 +28,7 @@
 		"function_exists":"Functie bestaat al.",
 		"delete_all_confirm":"Weet u zeker dat u ALLE functies wilt verwijderen?",
 		"delete_confirm":"Weet u zeker dat u de functie __functionName__ wilt verwijderen?",
-		"search_for_name":"zoek op naam",
-		
+		"search_for_name":"zoek op naam",		
 		"close":"Sluiten",
 		"explain_virtualdevices": "Hier kunt u het pictogram voor Geavanceerde Virtuele Apparaten bewerken door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
 		"explain_restart":"Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd."
@@ -45,8 +44,6 @@
 		"labelStatusIndicator":"Vergeet niet om het statusveld in te stellen als Status Indicator in de Mobiele App.",		
 		"devicecapabilities_starttext":"Begin",
 		"devicecapabilities_starttextend":"door naar apparaat Onderhoud/Repareren te gaan",
-		
-		
 		"title_repair":"Apparaat instellingen",
 		"device_saving":"Het apparaat wordt opgeslagen",
 		"titleGeneral":"Algemeen",
@@ -124,7 +121,6 @@
 			"select_device_icon":"Of kies er een uit de lijst.",
 			"set_icon_and_customize":"Hier kunt u een pictogram voor het Geavanceerde Virtuele Apparaten instellen, door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
 			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
-
 			"set_name":"Hier kunt u de naam van het apparaat instellen:"
 		},
 

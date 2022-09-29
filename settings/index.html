@@ -29,9 +29,9 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger">
-				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
-				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
-				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+				<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 				<div class="field" ng-show="!view.subid">
 					<a data-i18n="settings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287')">See the Device Capabilities Forum Topic for explanations or if you seek any help with The Exchanger or Templates.</a>
 				</div>
@@ -46,24 +46,24 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						</li>
 					</ul>
 					<div>
-						<div class="button" ng-click="getTextSettings();blockTextSettings=false;">Create Exchanger File</div>
-						<div class="field" ng-show="vars.tefCopied">(TEF in clipboard allready)</div>
+						<div class="button" ng-click="getTextSettings();blockTextSettings=false;" data-i18n="settings.createExchangerFile">Create Exchanger File</div>
+						<div class="field" ng-show="vars.tefCopied" data-i18n="settings.tefInClipboard">(TEF in clipboard allready)</div>
 					</div>
 					<div class="field" ng-show="!blockTextSettings">
 						<div class="inline-block">
-							<input type="checkbox" class="checkbox" ng-model="vars.useMinified" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();">Minified</span>
+							<input type="checkbox" class="checkbox" ng-model="vars.useMinified" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useMinified=!vars.useMinified; updateCompressed();"><span data-i18n="settings.minified">Minified</span></span>
 						</div>
 						<div class="inline-block">
-							<input type="checkbox" class="checkbox" ng-model="vars.useCompressed" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();">Compressed</span>
+							<input type="checkbox" class="checkbox" ng-model="vars.useCompressed" ng-click="updateCompressed();" /><span class="pointer" ng-click="vars.useCompressed=!vars.useCompressed; updateCompressed();"><span data-i18n="settings.compressed">Compressed</span></span>
 						</div>
 					</div>
 					<div class="field">
 						<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="Select a flow and press Create" ng-change="blockTextSettings=true"></textarea>
 					</div>
 					<div class="field" ng-show="vars.textSettings">
-						<div class="button field" ng-click="gotoPostTopic();">Post Template</div>
-						<div class="button field" ng-click="gotoHelpTopic();">Ask for help</div>
-						<div class="field">(A pre-typed message will be in your clipboard.)</div>
+						<div class="button field" ng-click="gotoPostTopic();" data-i18n="settings.postTemplate">Post Template</div>
+						<div class="button field" ng-click="gotoHelpTopic();" data-i18n="settings.askForHelp">Ask for help</div>
+						<div class="field" data-i18n="settings.preTypedMessageClipboard">(A pre-typed message will be in your clipboard.)</div>
 					</div>
 				</div>
 
@@ -74,7 +74,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						<div class="field">
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Flows" ng-change="blockTextSettings=true"></textarea>
 						</div>
-						<div class="button margin-top margin-bottom" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null">Read Flows</div>
+						<div class="button margin-top margin-bottom" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null" data-i18n="settings.readFlows">Read Flows</div>
 					</div>
 					<div ng-if="vars.readflow">
 						<div class="field margin-top margin-bottom">
@@ -87,46 +87,44 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
 							want to replace with which of your own in the flow(s) script that is created.</div>
 						<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
-							<div class="label">Flow</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.flow">Flow</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="flow  in vars.readflow.flowsToReplace">
 							<div class="field" ng-repeat="item  in flow.types">
 								<div class="label">{{item.name}} {{item.id!=''? '(' + item.id + ')' : ''}}</div>
 								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-									<option value="">Don't change</option>
-									<!-- <option ng-value="item.id" vars.readflow.>{{Don't change}}</option> -->
+									<option value="" data-i18n="settings.dontChange">Don't change</option>
 									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 								</select>
 							</div>
 						</div>
 						<div class="field bold" ng-if="vars.readflow.zonesToReplace.length>0">
-							<div class="label">Zones</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.zones">Zones</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="item  in vars.readflow.zonesToReplace">
 							<div class="label">{{item.name}}</div>
 							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-								<option value="">Don't change</option>
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
 								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 							</select>
 						</div>
 						<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
-							<div class="label">Devices</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.devices">Devices</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
 							<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
 							<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-								<option value="">Don't change</option>
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
 								<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 							</select>
 							<div class="field" ng-repeat="item  in device.tags">
 								<div class="label padding-left">{{item.name}}</div>
 								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-									<option value="">Don't change</option>
-									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-										{{replacement.name}}</option>
+									<option value="" data-i18n="settings.dontChange">Don't change</option>
+									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 								</select>
 							</div>
 							<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
@@ -138,8 +136,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							</div> -->
 						</div>
 						<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
-							<div class="label">Users</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.users">Users</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
 							<div class="label">{{item.name}}</div>
@@ -148,13 +146,13 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							</select>
 						</div>
 						<div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
-							<div class="label">Variables</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.variables">Variables</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 							<div class="label">{{item.name}}</div>
 							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-								<option value="">Don't change</option>
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
 								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 							</select>
 							<div class="field" ng-if="item.replaceWithId===-1">
@@ -162,8 +160,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							</div>
 						</div>
 						<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
-							<div class="label">App Tokens</div>
-							<div class="value">Replace with</div>
+							<div class="label" data-i18n="settings.appTokens">App Tokens</div>
+							<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 						</div>
 						<div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
 							<div ng-if="app.tokens.length>0 || app.args.length>0 || app.types.length>0">
@@ -171,7 +169,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 								<div class="field" ng-repeat="item  in app.tokens">
 									<div class="label">{{item.name}}</div>
 									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-										<option value="">Don't change</option>
+										<option value="" data-i18n="settings.dontChange">Don't change</option>
 										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
 											{{replacement.name}}</option>
 									</select>
@@ -179,7 +177,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 								<div class="field" ng-repeat="item  in app.args">
 									<div class="label">{{item.name}}</div>
 									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-										<option value="">Don't change</option>
+										<option value="" data-i18n="settings.dontChange">Don't change</option>
 										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
 											{{replacement.name}}</option>
 									</select>
@@ -190,7 +188,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 								<div class="field" ng-repeat="item  in app.types">
 									<div class="label">{{item.name}}</div>
 									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-										<option value="">Don't change</option>
+										<option value="" data-i18n="settings.dontChange">Don't change</option>
 										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
 											{{replacement.name}}</option>
 									</select>
@@ -201,7 +199,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							</div>
 						</div>
 						<div class="field">
-							<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
+							<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid" data-i18n="settings.updateText">Update Text</div>
 						</div>
 					</div>
 					
@@ -211,12 +209,10 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						</div>
 						<div class="field margin-top margin-bottom">
 							Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
-							<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+							<div class="field block" ng-show="vars.scriptCopied" data-i18n="settings.textInClipboard">(Text in clipboard allready)</div>
 						</div>
 					</div>
-					<div class="field margin-top">
-						Flows that are created will be listed here:
-					</div>
+					<div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
 					<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
 				</div>
 			</form>
@@ -439,7 +435,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				<div class="source-popup" ng-class="{active:view.showlanguage}">
 					<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
 				</div>
-				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
+				<input type="text" class="label" ng-model="filter.header" data-i18n="[placeholder]settings.filter" />
 				<div class="float-right sorting">
 					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
 					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
@@ -450,7 +446,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 			<div class="panel">
 				<div class="field" style="margin-bottom:30px;">
 					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
-					<h1>Here you can select a template</h1>
+					<!-- <h1>Here you can select a template</h1> -->
 				</div>
 				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
