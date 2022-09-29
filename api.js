@@ -23,6 +23,9 @@ module.exports = {
     async refreshTemplates({ homey, query}) {        
         return await homey.drivers.getDriver('virtualdevice').getTefTemplatesFromPosts();
     },
+    // async getTopics({ homey, query}) {        
+    //     return await homey.drivers.getDriver('virtualdevice').getTopics();
+    // },
     async getDevices({ homey, query }) {
         return await homey.app.getDevices();    
     },

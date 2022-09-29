@@ -21,8 +21,7 @@
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
-		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-addendum-fully-customisable-advanced-virtual-device-with-unique-text-status-indicator/68198')">See
-			the Forum Topic for examples, explanations or if you have any questions.</a>
+		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198')">See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates.</a>
 		<h1 data-i18n="virtualdevicesettings.titleAlso" class="top-labels">Also</h1>
 		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing
 			save, might be hard for Homey and could take a while.</div>
@@ -304,16 +303,24 @@
 					<select class="value" ng-model="s['boolean'+($index+1)+'ShowAs']">
 						<option ng-repeat="item in booleanShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
-				</div>
+				</div>				
 				<div class="field"
-					ng-if="!(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
+					ng-if="temp['boolean'+($index+1)+'CreateFlowCards'] = !(!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff')">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow
 							Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'CreateFlowCards']" />
-				</div>
+				</div>				
 				<div ng-else execute="s['boolean'+($index+1)+'CreateFlowCards']=false" ></div>
+				<div class="field"
+					ng-if="temp['boolean'+($index+1)+'CreateFlowCards'] && s['boolean'+($index+1)+'CreateFlowCards'] && (s['boolean'+($index+1)+'ShowAs']==='alarm_motion' || s['boolean'+($index+1)+'ShowAs']==='alarm_contact')">
+					<div class="label"><span>{{__('virtualdevicesettings.disableZoneActivity') || 'Disable Zone Activity'}}</span> <span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.disableZoneActivityHint') || 'When selected wil disable zone activity for this field.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['boolean'+($index+1)+'DisableZoneActivity']" />
+				</div>
+				<div ng-else execute="_delete(s, 'boolean'+($index+1)+'DisableZoneActivity')" ></div>
 				<div class="field"
 					ng-if="!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
@@ -555,7 +562,7 @@
 		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676')">See the Share Your Device Forum Topic for other AVDs</div>	
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId')">See the Share Your Device Forum Topic for other AVDs</div>	
 		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
@@ -569,7 +576,7 @@
 					<input type="checkbox" ng-model="vars.copyWithIcons" />
 				</div>
 				<div class="field">
-					<div>Include flows</div>
+					<div>Include flows (enabled only)</div>
 					<input type="checkbox" ng-model="vars.copyWithFlows" />
 				</div>
 				<!-- <div class="field">
@@ -579,7 +586,8 @@
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="Press Create TEF" ng-change="blockTextSettings=true"></textarea>
 				</div>				
 				<div class="field" ng-show="vars.textSettings">
-					<div class="button" ng-click="gotoTopic();">Goto Topic (to Post)</div>
+					<div class="button field" ng-click="gotoPostTopic();">Post Template</div>
+					<div class="button field" ng-click="gotoHelpTopic();">Ask for help</div>
 					<div class="field">(A pre-typed message will be in your clipboard.)</div>
 				</div>
 			</div>
@@ -593,7 +601,7 @@
 			</div>
 			<div class="field">
 				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readTextSettings() : null">Read Device</div>
-				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null">Read Flows</div>
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null" data-i18n="settings.readFlows">Read Flows</div>
 			</div>
 			<div class="field" ng-if="vars.readcopy.customIcons">
 				<div class="label">Custom icon</div>
@@ -625,46 +633,44 @@
 				<div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
 					want to replace with which of your own in the flow(s) script that is created.</div>
 				<div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
-					<div class="label">Flow</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.flow">Flow</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="flow  in vars.readflow.flowsToReplace">
 					<div class="field" ng-repeat="item  in flow.types">
 						<div class="label">{{item.name}} {{item.id!=''? '(' + item.id + ')' : ''}}</div>
 						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<!-- <option ng-value="item.id" vars.readflow.>{{Don't change}}</option> -->
+							<option value="" data-i18n="settings.dontChange">Don't change</option>
 							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 						</select>
 					</div>
 				</div>
 				<div class="field bold" ng-if="vars.readflow.zonesToReplace.length>0">
-					<div class="label">Zones</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.zones">Zones</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.zonesToReplace">
 					<div class="label">{{item.name}}</div>
 					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-						<option value="">Don't change</option>
+						<option value="" data-i18n="settings.dontChange">Don't change</option>
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 				</div>
 				<div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
-					<div class="label">Devices</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.devices">Devices</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
 					<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
 					<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-						<option value="">Don't change</option>
+						<option value="" data-i18n="settings.dontChange">Don't change</option>
 						<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<div class="field" ng-repeat="item  in device.tags">
 						<div class="label padding-left">{{item.name}}</div>
 						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-								{{replacement.name}}</option>
+							<option value="" data-i18n="settings.dontChange">Don't change</option>
+							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 						</select>
 					</div>
 					<!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
@@ -676,8 +682,8 @@
 					</div> -->
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
-					<div class="label">Users</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.users">Users</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
 					<div class="label">{{item.name}}</div>
@@ -686,14 +692,13 @@
 					</select>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
-					<div class="label">Variables</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.variables">Variables</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
 					<div class="label">{{item.name}}</div>
 					<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-						<option value="">Don't change</option>
-						<option ng-value="-1">-- Create --</option>
+						<option value="" data-i18n="settings.dontChange">Don't change</option>
 						<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<div class="field" ng-if="item.replaceWithId===-1">
@@ -701,44 +706,46 @@
 					</div>
 				</div>
 				<div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
-					<div class="label">App Tokens</div>
-					<div class="value">Replace with</div>
+					<div class="label" data-i18n="settings.appTokens">App Tokens</div>
+					<div class="value" data-i18n="settings.replaceWith">Replace with</div>
 				</div>
 				<div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
-					<div class="label">{{app.name}}</div>
-					<div class="field" ng-repeat="item  in app.tokens">
-						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-								{{replacement.name}}</option>
-						</select>
-					</div>
-					<div class="field" ng-repeat="item  in app.args">
-						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-								{{replacement.name}}</option>
-						</select>
-						<div class="field" ng-if="item.replaceWithId===-1">
-							<input type="text" ng-model="item.replaceWith.newName">
+					<div ng-if="app.tokens.length>0 || app.args.length>0 || app.types.length>0">
+						<div class="label">{{app.name}}</div>
+						<div class="field" ng-repeat="item  in app.tokens">
+							<div class="label">{{item.name}}</div>
+							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
+								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+									{{replacement.name}}</option>
+							</select>
 						</div>
-					</div>
-					<div class="field" ng-repeat="item  in app.types">
-						<div class="label">{{item.name}}</div>
-						<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-							<option value="">Don't change</option>
-							<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-								{{replacement.name}}</option>
-						</select>
-						<div class="field" ng-if="item.replaceWithId===-1">
-							<input type="text" ng-model="item.replaceWith.newName">
+						<div class="field" ng-repeat="item  in app.args">
+							<div class="label">{{item.name}}</div>
+							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
+								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+									{{replacement.name}}</option>
+							</select>
+							<div class="field" ng-if="item.replaceWithId===-1">
+								<input type="text" ng-model="item.replaceWith.newName">
+							</div>
+						</div>
+						<div class="field" ng-repeat="item  in app.types">
+							<div class="label">{{item.name}}</div>
+							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+								<option value="" data-i18n="settings.dontChange">Don't change</option>
+								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+									{{replacement.name}}</option>
+							</select>
+							<div class="field" ng-if="item.replaceWithId===-1">
+								<input type="text" ng-model="item.replaceWith.newName">
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="field">
-					<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid">Update Text</div>
+					<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid" data-i18n="settings.updateText">Update Text</div>
 				</div>
 			</div>
 			
@@ -762,7 +769,11 @@
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div ng-show="!vars.template">
 			<div class="field filter">
-				<input type="text" class="label" ng-model="filter.header"/>
+				<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
+				<div class="source-popup" ng-class="{active:view.showlanguage}">
+					<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
+				</div>
+				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
 				<div class="float-right sorting">
 					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
 					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
@@ -777,7 +788,7 @@
 				</div>
 				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-					<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 				</div>
 			</div>
 			<div class="main-buttons ">
@@ -806,17 +817,26 @@
 			scope = $scope;
 			//let Homey = _homey
 			$scope.s = {};
-
+			$scope.temp = {};
 			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
 			$scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
 			$scope.filter = {header:''};
-			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
+			
+			$scope.topics = TOPICS.avd;
+			$scope.topicsArray = TOPICS.avd;
+			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+			$scope.topicsArray = _.toArray($scope.topics);
+			
+			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
-				$scope.gotoTopic = function() {
+				$scope.gotoPostTopic = function() {
 					//if(vars.textSettings)
-					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+					let appsUsed = '';
+					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
+
+					let prePost = vars.textSettings ? ('# ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
 
 Write here what the AVD(s) is/are all about.
 
@@ -824,9 +844,9 @@ Write here what the AVD(s) is/are all about.
 [[picture]]
 
 []()
-### Apps used:
-* Which app is required?
-* Other things people need to do to get it working correct?
+` + ( appsUsed!=='' ? '### Apps used:' + appsUsed + '\n' : '') + `
+
+### Other things people need to do to get it working correct?
 
 
 []()
@@ -838,12 +858,32 @@ ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-				if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/last');
+					if(prePost) copyTextToClipboard(prePost);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
+				}
+
+				$scope.gotoHelpTopic = function() {
+					//if(vars.textSettings)
+					let prePost = vars.textSettings ? ('## Question about: ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
+
+[Write your question here]
+
+
+[]()
+[]()
+
+TEF:
+\`\`\`
+${vars.textSettings}
+\`\`\`
+` ): '';
+
+					if(prePost) copyTextToClipboard(prePost);
+					$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
 				}
 				
 				$scope.gotoLike = function(template) {
-					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 				}
 				$scope.closeTemplates = function() {
 					$scope.view.subid='theflowexchangerimport';
@@ -864,6 +904,9 @@ ${vars.textSettings}
 			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
 			$scope.deviceClasses = asv_settings.deviceClasses;
 
+			$scope._delete = function(o,s) {
+				delete o[s];
+			}
 
 			$scope.toggleFavorite = function(template) {
 				if(vars.favoriteTemplates[template.number]) {
@@ -1007,7 +1050,7 @@ ${vars.textSettings}
 
 			$scope.close = function () {								
 				vars.copyWithIcons= true;
-				vars.copyWithFlows=false;
+				vars.copyWithFlows=true;
 				vars.textSettings= null;
 				vars.readcopy=null;
 				vars.readflow=null;
@@ -1097,7 +1140,9 @@ ${vars.textSettings}
 						$scope.vars.uncompressed = result.uncompressed;
 						$scope.vars.compressedMinified = result.compressedMinified;
 						$scope.vars.uncompressedMinified = result.uncompressedMinified;
+						vars.deviceName = result.deviceName;
 						vars.flowName = result.flowName;
+						vars.appsUsed = result.tokensToReplace;						
 						$scope.updateCompressed();						
 					});
 				});
@@ -1160,7 +1205,7 @@ ${vars.textSettings}
 				 $scope.save(function() {
 						if(close) {
 							vars.copyWithIcons= true;
-							vars.copyWithFlows=false;
+							vars.copyWithFlows=true;
 							vars.textSettings= null;
 							vars.readcopy=null;
 							vars.readflow=null;
@@ -1170,7 +1215,16 @@ ${vars.textSettings}
 				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
-
+			
+			
+			$scope.setSource = function(source) {
+					$scope.vars.activeAvdSource = source || 'English';
+					$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+					Homey.emit('set:activeAvdSource', source, function (err, result) {
+						if (err) return console.log(err);
+						$scope.getTefTemplates();
+					});
+				}
 
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
@@ -1194,8 +1248,12 @@ ${vars.textSettings}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
+						
+						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
+						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+
 						$scope.vars.tefTemplates = result.tefTemplates;
-						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
+						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
 						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
 					});

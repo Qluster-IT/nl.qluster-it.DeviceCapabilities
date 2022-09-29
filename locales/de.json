@@ -12,7 +12,7 @@
 		"title_virtualdevices": "Ihre virtuellen Geräte",
 		"title_customicons": "Ihre Symbole",
 		"explain_customicons": "Hier können Sie die Ihre Symbole ändern, die für Felder verwendet werden können.",
-		"explain_customicons_doubleclick": "Fügen Sie per Doppelklick auf einem Name einen Beschreibung hinzu, die man unten in den Geräteeinstellungen sehen kann.",
+		"explain_customicons_doubleclick": "Doppelklicken Sie auf einen Namen, um ihm eine Beschreibung zu geben, die bei der Auswahl von Symbolen angezeigt wird.",
 		"functions":"Funktionen",
 		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.",
 		"functions_be_aware":"Beachten Sie, dass das Entfernen von Funktionen Flows beschädigen können, die diese Funktion verwenden.",
@@ -28,8 +28,7 @@
 		"function_exists":"Funktion bereits vorhanden.",
 		"delete_all_confirm":"Sind Sie sicher, dass Sie ALLE Funktionen löschen möchten?",
 		"delete_confirm":"Sind Sie sicher, dass Sie die Funktion __functionName__ löschen möchten?",
-		"search_for_name":"Nach Namen suchen",
-		
+		"search_for_name":"Nach Namen suchen",		
 		"close":"Schließen",
 		"explain_virtualdevices": "Hier können Sie das Symbol für Advanced Virtual Devices bearbeiten, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus den Vorlagen auswählen.",
 		"explain_restart":"Nach dem Ändern eines Symbols muss die App neu gestartet werden, bevor das/die neue(n) Symbol(e) übernommen wird/werden."
@@ -45,8 +44,6 @@
 		"labelStatusIndicator":"Vergessen Sie nicht, das Statusfeld in der Mobile App als Status-Indikator einzustellen.",
 		"devicecapabilities_starttext":"Beginnen Sie",
 		"devicecapabilities_starttextend":"mit den Gerätewartung/reparatur",
-		
-		
 		"title_repair":"Geräteeinstellungen",
 		"device_saving":"Das Gerät wird gespeichert",
 		"titleGeneral":"Allgemein",
@@ -110,7 +107,9 @@
 		"createBooleanField":"Yes/No-Feld erstellen",
 		"createButtonField":"Taste erstellen",
 		"createCameraField":"Kamera erstellen",
-		"labelTopicLink":"Sehen Sie sich das Forum-Thema für Beispiele, Erklärungen oder wenn Sie Fragen haben."
+		"labelTopicLink":"Siehe das Thema des AVD-Forums für Erklärungen oder wenn Sie Hilfe zu AVDs oder Vorlagen benötigen"
+
+
 	},
 	"pair": {
 		"list_icons":{
@@ -120,7 +119,6 @@
 			"select_device_icon":"Oder wählen Sie eines aus der Liste.",
 			"set_icon_and_customize":"Hier können Sie ein Symbol für die Advanced Virtual Devices festlegen, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus der Standardliste auswählen.",
 			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern.",
-
 			"set_name":"Hier können Sie den Namen für das Gerät festlegen:"
 		},
 

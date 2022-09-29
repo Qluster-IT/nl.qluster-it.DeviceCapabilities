@@ -206,7 +206,7 @@ const asv_settings = {
         },
         {
           "id": "alarm",
-          "label": "Alarm",
+          "label": "Alarm (Custom)",
           "order": 1
         },
         {

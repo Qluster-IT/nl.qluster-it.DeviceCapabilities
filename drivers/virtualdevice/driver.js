@@ -40,6 +40,37 @@ const { AppsInfo } = require('../virtualdevice/appinfo');
 let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys, allAdvancedFlows, allZones, allApps;
 let app;
 
+const TOPICS = {
+    tfe : {
+        German:{
+            topicId:69584,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+        },
+        English:{
+            topicId:68981,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+        },    
+        HCS:{
+            topicId:69556,
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+        }
+    },
+    avd: {
+        German:{
+            topicId:69583,
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+        },
+        English:{
+            topicId:68676,
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+        },
+        HCS:{
+            topicId:69558,
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+        }
+    }
+};
+
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
 
@@ -70,7 +101,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         string = string.replace(/&amp;/g, "&");
         return string;
     }
-    async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl}) {
+    async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl, type}) {
         try {                
             let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
             if(topicHtml) {
@@ -88,7 +119,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         let json = JSON.parse(preloader);
                         let topicInfo = JSON.parse(json['topic_'+topicId]);
                         let a=topicInfo;
-                        postsFound = _.size(topicInfo.post_stream.posts);
+                        postsFound = _.filter(topicInfo.post_stream.posts, p=>p.post_number>=postId).length;
                         _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
                             let postId = post.id;
                             let postNumber = post.post_number;
@@ -103,11 +134,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     
                             let tefs = [], header;
                             
-                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?(H4s(?:.*?))(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
+                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?((?:\[TEF:){1}(.+):)??(H4s(?:.*?))(?:])?(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
                             let tefsFound = tefMatches? [...tefMatches] : [];
                             for(let j=0;j<tefsFound.length;j++) {
                                 if(tefsFound[j].length>1) {
-                                    tefs.push(tefsFound[j][1]);
+                                    if(tefsFound[j][2]) {
+                                        if(type==='avd' && tefsFound[j][2].indexOf('AVD')===-1) continue;
+                                        if(type==='flows' && (tefsFound[j][2].indexOf('FLOWS')===-1 || tefsFound[j][2].indexOf('AVD')>-1)) continue;
+                                    }
+                                    tefs.push(tefsFound[j][3]);
                                     postText = postText.replace(tefsFound[j][0], '');
                                 }
                             }
@@ -123,12 +158,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     createdOn:postCreatedOn,
                                     autherId,
                                     header,
-                                    tefs
+                                    tefs,
+                                    topicId
                                 });
                             }
-                            
-                            
                         });
+                        
                     } catch (error) {
                         
                     }
@@ -137,7 +172,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
                 let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
                 let matchesFound = posts? [...posts] : [];
-                postsFound = matchesFound.length;
+                postsFound = postsFound===undefined ? matchesFound.length : postsFound;
                 for (let i = 0; i < matchesFound.length; i++) {
                     const postNumber = Number.parseInt(matchesFound[i][3]);
                     const likes = matchesFound[i][5] ? Number.parseInt(matchesFound[i][5]) : 0;
@@ -162,54 +197,58 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const postsPerRun = 20;
         let runs = 0;
         let lastNumber = 0;
+        let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
+        
         while (run) {            
-            let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            //let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            let _templates = await this.getTefTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
             templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
             if(lastNumber == _templates.lastNumberFound) run = false;
             lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
-        this.tefTemplates = templates;
-        await this.homey.settings.set('tefTemplates', templates);
+        let settingName = !this.activeTfeSource || this.activeTfeSource==='English' ? '' : '_'+  this.activeTfeSource;
+        this['tefTemplates'+settingName] = templates;
+        await this.homey.settings.set('tefTemplates'+settingName, templates);
         return templates;
     }
-    async getTefTemplatesFromPostsById({postId}) {
-        return await this.getTefTemplatesFromPostsByIdAndTopic({postId, topicId:'68981', topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'});
+    async getTefTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'flows', postId, topicId:topicId, topicUrl:topicUrl});
     }
     
 
-    async openTemplate({template}) {
-        try {                
-            let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
-            if(templateHtml) {
-                templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
-                templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
-                templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
-                templateHtml = templateHtml.replaceAll('\n', '');
-                templateHtml = templateHtml.trimStart();
-                template.post = templateHtml;
-                let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
-                if(ulTemplates) {                
-                    let matchesFound = [...ulTemplates];
-                    for (let i = 0; i < matchesFound.length; i++) {
-                        template.post = template.post.replace(matchesFound[i][0], '');
-                        template.tef = matchesFound[i][2].trim();
-                        template.updatedOn = Date.now();
-                    }
-                }
-                let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
-                if(t) {
-                    t.post = template.post;
-                    t.tef = template.tef;                    
-                    await this.homey.settings.set('tefTemplates', this.tefTemplates); 
-                }
-                return {template};
-            }
-        } catch (error) {
-            this.error(error);
-        }
-    }
+    // async openTemplate({template}) {
+    //     try {                
+    //         let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
+    //         if(templateHtml) {
+    //             templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
+    //             templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
+    //             templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
+    //             templateHtml = templateHtml.replaceAll('\n', '');
+    //             templateHtml = templateHtml.trimStart();
+    //             template.post = templateHtml;
+    //             let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
+    //             if(ulTemplates) {                
+    //                 let matchesFound = [...ulTemplates];
+    //                 for (let i = 0; i < matchesFound.length; i++) {
+    //                     template.post = template.post.replace(matchesFound[i][0], '');
+    //                     template.tef = matchesFound[i][2].trim();
+    //                     template.updatedOn = Date.now();
+    //                 }
+    //             }
+    //             let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
+    //             if(t) {
+    //                 t.post = template.post;
+    //                 t.tef = template.tef;                    
+    //                 await this.homey.settings.set('tefTemplates', this.tefTemplates); 
+    //             }
+    //             return {template};
+    //         }
+    //     } catch (error) {
+    //         this.error(error);
+    //     }
+    // }
 
 
     async getAvdTemplatesFromPosts() {
@@ -218,20 +257,27 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const postsPerRun = 20;
         let runs = 0;
         let lastNumber = 0;
+        let topic = TOPICS.avd[this.activeAvdSource] || TOPICS.avd.English;
+        
         while (run) {            
-            let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            //let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            let _templates = await this.getAvdTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
             templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
             if(lastNumber == _templates.lastNumberFound) run = false;
             lastNumber = _templates.lastNumberFound;
             if(_templates.postsFound<postsPerRun) run = false;
             runs++;
         }
-        this.avdTemplates = templates;
-        await this.homey.settings.set('avdTemplates', templates);
+        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+        this['avdTemplates'+ settingName] = templates;
+        await this.homey.settings.set('avdTemplates'+ settingName, templates);
         return templates;
     }
-    async getAvdTemplatesFromPostsById({postId}) {        
-        return await this.getTefTemplatesFromPostsByIdAndTopic({postId, topicId:'68676', topicUrl:'https://community.homey.app/t/advanced-virtual-device-share-your-device'});
+    async getAvdTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'avd', postId, topicId:topicId, topicUrl:topicUrl});
+    }
+    async getTopics() {
+        return TOPICS;
     }
     
     async onInit() {
@@ -239,8 +285,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         this.log('VirtualDeviceDriver onInit');
         //this.getTefTemplatesFromPosts();
 
-		this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
-
+		//this.log("Capabilities", Object.keys(app.manifest.capabilities).length);
+        this.activeAvdSource = await this.homey.settings.get('activeAvdSource');
+        this.activeTfeSource = await this.homey.settings.get('activeTfeSource');
+        this.homey.settings.on('set', async (settingName)=> {
+            // if(settingName=='activeAvdSource') {
+            //     this.activeAvdSource = await this.homey.settings.get('activeAvdSource');
+            // } else 
+            if(settingName=='activeTfeSource') {
+                this.activeTfeSource = await this.homey.settings.get('activeTfeSource');
+            }           
+        });
+        
         //true || process.env.DEBUG === '1' || 
         if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
             await this.homey.settings.set('Version', app.manifest.version);
@@ -340,7 +396,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 			{
 				for(let j=0;j<categories[i].icons.length;j++){
                     if(categories[i].icons[j].defaultIcon=='') continue;
-					let filePathAssets = this.DEFAULT_ICONS_PATH;
+					let filePathAssets = app.DEFAULT_ICONS_PATH;
                     let file = categories[i].icons[j].defaultIcon + '.svg';
                     
                     let filePath = './userdata/customicons/';
@@ -822,20 +878,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
       
     async loadAdvancedFlows() {
-        return _.mapValues(await app.homeyAPI.flow.getAdvancedFlows(), af => { return { id: af.id, name:af.name, cards:_.mapValues(af.cards, card=> {return {ownerUri:card.ownerUri, id:card.id};}) }; });
+        let api = await app.refreshHomeyAPI();
+        return _.mapValues(await api.flow.getAdvancedFlows(), af => { return { id: af.id, name:af.name, cards:_.mapValues(af.cards, card=> {return {ownerUri:card.ownerUri, id:card.id};}) }; });
     }
-    async loadStuff({reload} = {}) {
+    async loadStuff({reload, reloadAf} = {}) {
         this.log('LoadStuff reload:', reload);
         let api = await app.refreshHomeyAPI();
         allDevices = app.devices;
         allZones = app.zones;
         allApps = app.apps;
-        //await app.getDisconnectedHomeyApi(); //app.homeyAPI
         
         allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
         allVariables = !reload && allVariables ? allVariables : _.mapValues(await api.logic.getVariables(), ({name, type})=>{ return {name, type}; });
         allTokens = !reload && allTokens ? allTokens : _.map(await api.flowToken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
-        allAdvancedFlows = !reload && allAdvancedFlows ? allAdvancedFlows : await this.loadAdvancedFlows();
+        allAdvancedFlows = (!reload || reloadAf===false) && allAdvancedFlows ? allAdvancedFlows : await this.loadAdvancedFlows();
         
         actionCards = !reload && actionCards ? actionCards : _.map(await api.flow.getFlowCardActions(), ({uri, id})=>{ return {uri, id}; });
         conditionCards = !reload && conditionCards ? conditionCards : _.map(await api.flow.getFlowCardConditions(), ({uri, id})=>{ return {uri, id}; });
@@ -852,33 +908,39 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             allUsers = null;
             allVariables = null;
             allTokens = null;
+            allAdvancedFlows = null;
             actionCards = null;
             conditionCards = null;
             triggerCards = null;
-            allAdvancedFlows = null;
             
             if(global && global.gc) global.gc();
 
-        }, 60 * 60000); // clear every 10 minutes
+        }, 10 * 60000); // clear every 10 minutes 
         this.log('LoadStuff done.');
 
         if(global && global.gc) global.gc();
-        
+        return api;
     }
     async getAdvancedFlows({ homey, query }) {
-        //this.loadStuff();
-        //return [];
-        let defer = new Defer();
-        defer.then(async ()=> { this.loadStuff({reload:true}); });
+        try {
+                
+            //this.loadStuff();
+            //return [];
+            let defer = new Defer();
+            defer.then(async ()=> { this.loadStuff({reload:true, reloadAf:false}); });
 
-        allAdvancedFlows = await this.loadAdvancedFlows();
-        setTimeout(()=> { defer.resolve(); }, 1);
-        return _.sortBy(allAdvancedFlows, x=> (x.name.startsWith() ? '1.' :'0.') + x.name );
+            allAdvancedFlows = await this.loadAdvancedFlows();
+            setTimeout(()=> { defer.resolve(); }, 1);
+            return _.sortBy(allAdvancedFlows, x=> x.name );
+            //return _.sortBy(allAdvancedFlows, x=> (x.name.startsWith() ? '1.' :'0.') + x.name );
 
+        } catch (error) {
+            this.error(error);
+        }
     }
 
 
-    async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device }) {        
+    async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device, copyWithFlows=true }) {        
         function addDeviceToReplace(deviceId) {
             let _device = allDevices[deviceId];
             if(devicesToReplace && _device) devicesToReplace[deviceId] = {name:_device.name, class:_device.class};
@@ -895,12 +957,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //advancedflowsselected = advancedflowsselected || [];
 
         dev = dev || {};
-        await this.loadStuff();
+        let api =await this.loadStuff();
         if(device && dev) dev.deviceName = device.getName();
 
 
         let advancedflowsselectedKeys = advancedflowsselected ? Object.keys(advancedflowsselected) : 0;
-        let advancedflows = _.filter(await app.homeyAPI.flow.getAdvancedFlows(), x=> 
+        let advancedflows = !copyWithFlows ? [] : _.filter(await api.flow.getAdvancedFlows(), x=> 
             ((advancedflowsselectedKeys && advancedflowsselectedKeys.indexOf(x.id)>-1 && advancedflowsselected[x.id]===true) ||
             (x.enabled && device && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id)))
             );// && _.find(x.cards, c=>c.ownerUri=='homey:device:' + device.__id));
@@ -930,12 +992,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if (Object.hasOwnProperty.call(card.args, argKey)) {
                         //const argument = card.args[argKey];
                         if(card.ownerUri && card.ownerUri.startsWith('homey:app:') && (id=card.ownerUri.substring('homey:app:'.length))) {
-                            if(AppsInfo[id] && AppsInfo[id].canCreateByName({argName:argKey})) 
+                            if(AppsInfo[id] && AppsInfo[id].canCreateByName({argName:argKey}))  {
                                 if(!tokensToReplace[id]) tokensToReplace[id] =  {name:allApps[id].name};
-                                // if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
-                                // if(!tokensToReplace[appId].args[argKey]) tokensToReplace[appId].args[argKey] = {};
-                                // if(!tokensToReplace[appId].args[argKey].name) tokensToReplace[appId].args[argKey].name = card.args[argKey].name;
-                                // if(!tokensToReplace[appId].args[argKey].id) tokensToReplace[appId].args[argKey].valueId = card.args[argKey].id;
+                            }
+                            if(!tokensToReplace[id]) tokensToReplace[id] =  {name:allApps[id].name}; // Add an App always so whe now which apps are used.
                         }
                         switch (typeof(card.args[argKey])) {
                             case "string":
@@ -1010,6 +1070,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                                         if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                                     }
                                                 }
+                                                
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                             break;
                                         case "zone": 
                                             let zoneId = tokenMatchs[2];
@@ -1041,13 +1103,16 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                         
                                         let appId = card.ownerUri.substring(10);
                                         let token, autocomplete;// = _.find(allTokens, t=>t.uri=='homey:app:' + appIp &&t.id==id );
-                                        if(AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey}))
-                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                        
+                                        if(AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey})) {
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                        }
                                         else if((token = _.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id==id ))) {
                                             if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
                                             if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens = {};
                                             if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                         }
+                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                         // else {
                                         //     if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                         // }
@@ -1073,13 +1138,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const stringy = this.removeKeys(JSON.stringify(dev));        
         const stringyMinified = this.removeKeys(JSON.stringify(devCopyMinified));        
         const compressed = Buffer.from(await gzip(stringy, {level:9} )).toString('base64');                
-        const compressedMinified = Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64');                
-        dev.compressed = compressed;
-        dev.uncompressed = stringy;
+        const compressedMinified = Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64');
+        dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;
+        let tefType = dev.flowName && dev.deviceName ? 'AVD,FLOWS' : dev.flowName ? 'FLOWS' : dev.deviceName ? 'AVD' : 'UNKNOWN';					
+        let s = "[TEF:" + tefType + ":" ;
+        dev.compressed = s + compressed + "]";
+        dev.uncompressed = s + stringy + "]";
         
-        dev.compressedMinified = compressedMinified;
-        dev.uncompressedMinified = stringyMinified;
-        dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;;
+        dev.compressedMinified = s + compressedMinified + "]";
+        dev.uncompressedMinified = s + stringyMinified + "]";
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
@@ -1089,15 +1156,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             exchangerFile = await this.getNormalExchangerFile(exchangerFile);
            
             
-            await this.loadStuff();
+            let api = await this.loadStuff();
             // allDevices = allDevices ? allDevices : await app.devices;
-            // allUsers = allUsers ? allUsers : await app.homeyAPI.users.getUsers();
-            // allVariables = allVariables ? allVariables : await app.homeyAPI.logic.getVariables();
-            // allTokens = allTokens ? allTokens : await app.homeyAPI.flowToken.getFlowTokens();
+            // allUsers = allUsers ? allUsers : await api.users.getUsers();
+            // allVariables = allVariables ? allVariables : await api.logic.getVariables();
+            // allTokens = allTokens ? allTokens : await api.flowToken.getFlowTokens();
             
-            // actionCards = actionCards ? actionCards : await app.homeyAPI.flow.getFlowCardActions();
-            // conditionCards = conditionCards ? conditionCards : await app.homeyAPI.flow.getFlowCardConditions();
-            // triggerCards = triggerCards ? triggerCards : await app.homeyAPI.flow.getFlowCardTriggers();
+            // actionCards = actionCards ? actionCards : await api.flow.getFlowCardActions();
+            // conditionCards = conditionCards ? conditionCards : await api.flow.getFlowCardConditions();
+            // triggerCards = triggerCards ? triggerCards : await api.flow.getFlowCardTriggers();
         
 
             let _allDevices = allDevices;
@@ -1270,6 +1337,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             _.each(exchangerFile.variablesToReplace, (variable, variableId)=>{
                 variable.replacements =  _.union( [{"id":-1, "name":"-- Create --", newName:variable.name}], _.sortBy(_.map(_.pickBy(allVariables, (v, vKey)=> v.type==variable.type ), (x, xKey)=> { return {id:xKey, name:x.name};}), 'name'));
                 variable.replaceWith =_.find(variable.replacements, x=>x.id==variableId);
+                if(!variable.replaceWith) variable.replaceWith = _.find(variable.replacements, x=>x.name===variable.name);
                 if(!variable.replaceWith) variable.replaceWith = _.find(variable.replacements, x=>x.id===-1);
                 if(variable.replaceWith) variable.replaceWithId = variable.replaceWith.id;
             });
@@ -1444,7 +1512,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 _.each(exchangerFile.variablesToReplace, (variable)=>{ 
                                     if(variable.searchFor) {
                                          if(card.args[argKey] === variable.searchFor) card.args[argKey] = variable.searchReplaceWith;
-                                         else if(card.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + variable.searchFor + "]]", variable.searchReplaceWith + "]]");  
+                                         else if(card.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + variable.searchFor + "]]", "[[" + variable.searchReplaceWith + "]]");  
                                     }
                                 });
                                 _.each(exchangerFile.tokensToReplace, (app)=>{ 
@@ -1552,7 +1620,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         variable.replaceWith = await Homey.logic.createVariable({ variable: {name:variable.replaceWith.id===-1?variable.replaceWith.newName : variable.replaceWith.name, type:variable.type, value:val} });
                         variable.searchFor = "homey:manager:logic|"+variable.id;
                         variable.searchReplaceWith = "homey:manager:logic|" + variable.replaceWith.id;
-                    }
+                    }  else exchangerFile.variablesToReplace[i] = null;
                 }
 
                 for(let afIndex=0;afIndex<exchangerFile.advancedflows.length;afIndex++) {
@@ -1579,24 +1647,35 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     //const c.args[argKey] = c.args[argKey];
                                     switch (typeof(c.args[argKey])) {
                                         case "string":      
-                                            _.each(exchangerFile.variablesToReplace, (variable)=>{ 
-                                                if(variable.searchFor && variable.replaceWithId===-1) {
+                                            _.each(exchangerFile.variablesToReplace, (variable)=>{
+                                                if(!variable) return;
+                                                if(variable.searchFor) {
                                                     if(c.args[argKey] === variable.searchFor) 
                                                     { c.args[argKey] = variable.searchReplaceWith; update = true; }
                                                     else if(c.args[argKey].indexOf("[[" + variable.searchFor + "]]")>-1) 
-                                                    { c.args[argKey] = c.args[argKey].replaceAll("[[" + variable.searchFor + "]]", variable.searchReplaceWith + "]]");  update = true; }
-                                                }
+                                                    { c.args[argKey] = c.args[argKey].replaceAll("[[" + variable.searchFor + "]]", "[[" +variable.searchReplaceWith + "]]");  update = true; }
+                                                } 
                                             });
                                             break;
                                         case "object":      
-                                            if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(variable.replaceWithId===-1 && variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {
-                                                c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
-                                                update = true;
-                                            }  });                                        
+                                            if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                                if(!variable) return;
+                                                if(variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {                                                
+                                                    c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
+                                                    update = true;
+                                                }  
+                                            });                                        
                                             break;
                                     }
                                 }
                             }
+                            if(c.droptoken) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                if(!variable) return;
+                                if(variable.searchFor && c.droptoken==variable.searchFor && variable.replaceWith) {                                                
+                                    c.droptoken = variable.searchReplaceWith;
+                                    update = true;
+                                }  
+                            }); 
                         }
 
                         if(update) {
@@ -1621,6 +1700,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async getNormalExchangerFile(exchangerFile) {
         if(typeof(exchangerFile)=='string') {
+            if(exchangerFile.startsWith('[TEF:'))  {
+                exchangerFile = exchangerFile.replace(/^(?:\[TEF:(.*?):)/, '');
+                exchangerFile = exchangerFile.substring(0, exchangerFile.length-1);
+            }
             if(exchangerFile.startsWith('H4s')) exchangerFile = JSON.parse(await this.unzip(exchangerFile));
             else exchangerFile = JSON.parse(exchangerFile);
         }
@@ -1674,7 +1757,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(json.a[afKey].c[cardKey].id!==undefined) json.a[afKey].c[cardKey].i=json.a[afKey].c[cardKey].id; delete json.a[afKey].c[cardKey].id;
                     if(json.a[afKey].c[cardKey].type!==undefined) json.a[afKey].c[cardKey].t=json.a[afKey].c[cardKey].type; delete json.a[afKey].c[cardKey].type;
                     if(json.a[afKey].c[cardKey].outputSuccess!==undefined) json.a[afKey].c[cardKey].s=json.a[afKey].c[cardKey].outputSuccess; delete json.a[afKey].c[cardKey].outputSuccess;
+                    if(json.a[afKey].c[cardKey].outputTrue!==undefined) json.a[afKey].c[cardKey].ot=json.a[afKey].c[cardKey].outputTrue; delete json.a[afKey].c[cardKey].outputTrue;
+                    if(json.a[afKey].c[cardKey].outputFalse!==undefined) json.a[afKey].c[cardKey].of=json.a[afKey].c[cardKey].outputFalse; delete json.a[afKey].c[cardKey].outputFalse;
                     if(json.a[afKey].c[cardKey].args!==undefined) json.a[afKey].c[cardKey].a=json.a[afKey].c[cardKey].args; delete json.a[afKey].c[cardKey].args;
+                    if(json.a[afKey].c[cardKey].inverted!==undefined) json.a[afKey].c[cardKey].r=json.a[afKey].c[cardKey].inverted; delete json.a[afKey].c[cardKey].inverted;
                 });
             }
         });
@@ -1728,7 +1814,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(json.advancedflows[afKey].cards[cardKey].i!==undefined) json.advancedflows[afKey].cards[cardKey].id=json.advancedflows[afKey].cards[cardKey].i; delete json.advancedflows[afKey].cards[cardKey].i;
                     if(json.advancedflows[afKey].cards[cardKey].t!==undefined) json.advancedflows[afKey].cards[cardKey].type=json.advancedflows[afKey].cards[cardKey].t; delete json.advancedflows[afKey].cards[cardKey].t;
                     if(json.advancedflows[afKey].cards[cardKey].s!==undefined) json.advancedflows[afKey].cards[cardKey].outputSuccess=json.advancedflows[afKey].cards[cardKey].s; delete json.advancedflows[afKey].cards[cardKey].s;
+                    if(json.advancedflows[afKey].cards[cardKey].ot!==undefined) json.advancedflows[afKey].cards[cardKey].outputTrue=json.advancedflows[afKey].cards[cardKey].ot; delete json.advancedflows[afKey].cards[cardKey].ot;
+                    if(json.advancedflows[afKey].cards[cardKey].of!==undefined) json.advancedflows[afKey].cards[cardKey].outputFalse=json.advancedflows[afKey].cards[cardKey].of; delete json.advancedflows[afKey].cards[cardKey].of;
                     if(json.advancedflows[afKey].cards[cardKey].a!==undefined) json.advancedflows[afKey].cards[cardKey].args=json.advancedflows[afKey].cards[cardKey].a; delete json.advancedflows[afKey].cards[cardKey].a;
+                    if(json.advancedflows[afKey].cards[cardKey].r!==undefined) json.advancedflows[afKey].cards[cardKey].inverted=json.advancedflows[afKey].cards[cardKey].r; delete json.advancedflows[afKey].cards[cardKey].r;
                 });
             }
         });
@@ -1810,7 +1899,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     });
 
     session.setHandler('virtualdeviceicons_load', async (data) => {
-        return {tefTemplates: await this.homey.settings.get('avdTemplates'), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
+        
+        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;        
+        return {tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
     });
 
     session.setHandler('use_template', async (data) => {
@@ -1819,8 +1910,18 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //return this.getCustomIcons();
         return true;
     });
-
-
+    session.setHandler('getAvdTemplates', async (str) => {
+        try {
+            let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+            return await this.homey.settings.get('avdTemplates'+settingName);
+        } catch (error) {
+            this.error(error);
+        }
+    });
+    session.setHandler('set:activeAvdSource', async (source) => {
+        await this.homey.settings.set('activeAvdSource', source);
+        this.activeAvdSource = source;
+    });
     session.setHandler('list_icons', async (data) => {
         //return this.getCustomIcons();
         return this.getDefaultIcons();
@@ -1882,8 +1983,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             const tef = template.tefs[i];
             let tefPlain = await this.getAvdTef(tef);
             //tefs.push();
-            tefs.push({tef:tefPlain, device:i===0?(device?device:devices[0]):await this.onPairListDevices(tefs[i-1].device.data.id)});
-            if(tefPlain.deviceName) _.last(tefs).device.name = tefPlain.deviceName;            
+            if(tefPlain.originalId) {
+                if(tefPlain && tefPlain.settings) {
+                    tefPlain.settings.postNumber = template.number;
+                    tefPlain.settings.postId = template.id;
+                    tefPlain.settings.topicId = template.topicId;
+                }
+                tefs.push({tef:tefPlain, device:i===0?(device?device:devices[0]):await this.onPairListDevices(tefs[i-1].device.data.id)});
+                if(tefPlain.deviceName) _.last(tefs).device.name = tefPlain.deviceName;
+            }
         }
         return {tefs};
     });
@@ -2037,8 +2145,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             // session.emit('list_devices', devices);
       
             // return devices when searching is done
-            
-            return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates'), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates')};
+            let defer = new Defer();
+            defer.then(async ()=> { this.loadStuff({reload:true}); });
+            setTimeout(()=> { defer.resolve(); }, 1);
+            let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+        return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
+
         });
         session.setHandler('virtualdevicesettings_save', async (settings) => {
             //console.log(settings, device.Settings , []);
@@ -2048,7 +2160,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             //return {settings:device.Settings, customicons:await this.getCustomIcons()};
         });
-
+        session.setHandler('set:activeAvdSource', async (source) => {
+            await this.homey.settings.set('activeAvdSource', source);
+            this.activeAvdSource = source;
+        });
         
         session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
             
@@ -2095,7 +2210,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                             dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
                         }
                     });
-                dev = await this.getAdvancedFlowsJSON({dev, device });
+                dev = await this.getAdvancedFlowsJSON({dev, device, copyWithFlows:viewSettings.copyWithFlows });
                 return dev;
             } catch (error) {
                 this.error(error);
@@ -2121,13 +2236,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
         });
 
-        // session.setHandler('getAvdTemplates', async (str) => {
-        //     try {                
-        //         return await this.getAvdTemplatesFromPosts();
-        //     } catch (error) {
-        //         this.error(error);
-        //     }
-        // });
+        session.setHandler('getAvdTemplates', async (str) => {
+            try {
+                let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+                return await this.homey.settings.get('avdTemplates'+settingName);
+            } catch (error) {
+                this.error(error);
+            }
+        });
         session.setHandler('refreshAvdTemplates', async (str) => {
             try {                
                 return await this.getAvdTemplatesFromPosts();

@@ -41,6 +41,33 @@ I use these for every status card.
 
 
 
+    
+// "devicecapabilities_2_dropdown": {
+//     "type": "enum",
+//     "title": {
+//       "en": "DropDown",
+//       "nl": "DropDown",
+//       "de": "DropDown"
+//     },
+//     "getable": true,
+//     "setable": true,
+//     "uiComponent": "picker",
+//     "insights": true,
+//     "icon": "/assets/virtual_device.svg",
+//     "value": "1",
+//     "values" : [
+//       {
+//         "id":"1",
+//         "title":"Test 1"
+//       },
+//       {
+//         "id":"2",
+//         "title":"Test 2"
+//       }
+//     ]
+//   },
+
+
 
 
 

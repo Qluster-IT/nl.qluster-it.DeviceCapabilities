@@ -1,7 +1,7 @@
 <script type="text/javascript" src="../../../assets/js/angular.js"></script>
 <script type="text/javascript" src="../../../assets/js/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="../../../assets/js/lodash.js"></script>
-<script type="text/javascript" src="../assets/js/default.js"></script>
+<script type="text/javascript" src="../../../assets/js/default.js"></script>
 	
 <link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
@@ -182,7 +182,7 @@
 				</div>
 
 				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-click="useTemplate();">Use this template</button>
+					<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
 				</div>
 			</div>
 
@@ -215,7 +215,7 @@
 
 					<ul id="icon_list">
 						<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-							<h1 class="category-title">{{cat.title}}</h1>
+							<h1 class="category-title" v-html="cat.title"></h1>
 							<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
 								<label for="icon" class="icon-wrap">
 									<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
@@ -242,7 +242,11 @@
 		<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 			<div ng-show="!vars.template">
 				<div class="field filter">
-					<input type="text" class="label" ng-model="filter.header"/>
+					<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
+					<div class="source-popup" ng-class="{active:view.showlanguage}">
+						<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
+					</div>
+					<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
 					<div class="float-right sorting">
 						<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
 						<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
@@ -257,7 +261,7 @@
 					</div>
 					<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
 						<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-						<span class="link" ng-click="openTemplate(template)">{{template.header}}</span>
+						<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 					</div>
 				</div>
 				<div class="main-buttons ">
@@ -288,10 +292,16 @@
 				$scope.s = {};
 				$scope.orderBy = {orderBy:'favorite'};
 				$scope.filter = {header:''};
+				
+				$scope.topics = TOPICS.avd;
+				$scope.topicsArray = TOPICS.avd;
+				_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+				$scope.topicsArray = _.toArray($scope.topics);
+
 				const vars = $scope.vars = {};
 
 				$scope.gotoLike = function(template) {
-					$scope.openUrl('https://community.homey.app/t/advanced-virtual-device-share-your-device/68676/' + template.number);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 				}
 				$scope.closeTemplates = function() {
 					$scope.view.id=undefined; view.subid=undefined;
@@ -329,6 +339,14 @@
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
 							_.each(result, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						});
+					});
+				}
+				$scope.getTefTemplates = function () {
+					Homey.emit('getAvdTemplates', function (err, result) {
+						if (err) return Homey.alert(err);
+						$scope.$apply(function () {
+							$scope.vars.tefTemplates = result;
 						});
 					});
 				}
@@ -431,6 +449,15 @@
 					console.log(s);
 				}
 
+				$scope.setSource = function(source) {
+					$scope.vars.activeAvdSource = source || 'English';
+					$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+					Homey.emit('set:activeAvdSource', source, function (err, result) {
+						if (err) return console.log(err);
+						$scope.getTefTemplates();
+					});
+				}
+				
 
 				/** Start of program */
 				if (typeof Homey !== 'undefined') {
@@ -440,7 +467,11 @@
 							return;
 						}
 						$scope.$apply(function () {
-							$scope.vars.device = result.device;
+							$scope.vars.device = result.device;							
+							
+							$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
+							$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+							
 							$scope.vars.tefTemplates = result.tefTemplates;
 							$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
 							_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
