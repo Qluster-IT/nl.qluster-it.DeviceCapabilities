@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.6.74",
+  "version": "2.6.80",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -1064,6 +1064,42 @@
           }
         ]
       },
+      {
+        "id": "condition_app_devices_available",
+        "title": {
+          "en": "All devices are available",
+          "nl": "Alle apparaten zijn beschikbaar",
+          "de": "Alle Geräte sind vorhanden"
+        },
+        "titleFormatted": {
+          "en": "All devices are !{{|un}}available ([[brand]], [[devicetype]])",
+          "nl": "Alle Apparaat zijn !{{|niet}} beschikbaar ([[brand]], [[devicetype]])",
+          "de": "Alle Geräte sind !{{|nicht}} vorhanden ([[brand]], [[devicetype]])"
+        },
+        "args": [          
+          {
+            "type": "autocomplete",
+            "name": "brand",
+            "required": false,
+            "placeholder": {
+              "en": "optional: Brand",
+              "nl": "optioneel: Merk",
+              "de": "optional: Hersteller"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "devicetype",
+            "required": false,
+            "placeholder": {
+              "en": "optional: Device Type",
+              "nl": "optioneel: Apparaat Type",
+              "de": "optional: Gerätetyp"
+            }
+          }
+        ]
+      },
+
       {
         "deprecated": true,
         "id": "hs_run",

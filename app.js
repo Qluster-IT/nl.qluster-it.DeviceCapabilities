@@ -520,6 +520,24 @@ class DeviceSetter extends Homey.App {
 		this.trigger_app_device_available.getArgument('brand').registerAutocompleteListener(this.autocompleteApp());
 		this.trigger_app_device_available.getArgument('devicetype').registerAutocompleteListener(this.autocompleteDeviceType());
 
+		this.condition_app_devices_available = this.homey.flow.getConditionCard('condition_app_devices_available');
+		this.condition_app_devices_available.registerRunListener(async (args, state) => {
+			try {
+				let devices = _.toArray(this.devices);
+				if(args.brand && args.brand.id) devices = _.filter(devices, d=>d.driverUri==='homey:app:' + args.brand.id);
+				if(args.devicetype && args.devicetype.id) devices = _.filter(devices, d=>d.driverId===args.devicetype.id);
+				let t = _.every(devices, d=>d.available===args.inverted!=true);
+				let tt = _.filter(devices, d=>d.available===(args.inverted!=true));
+				return _.every(devices, d=>d.available===(args.inverted!=true));
+				
+			} catch (error) {
+				this.log('condition_app_devices_available:'); this.error(error); return new Error(error);
+			}
+		});
+		this.condition_app_devices_available.getArgument('brand').registerAutocompleteListener(this.autocompleteApp());
+		this.condition_app_devices_available.getArgument('devicetype').registerAutocompleteListener(this.autocompleteDeviceType());
+
+
 		this.homey.settings.on('set', (async function (settingName) {
 			if (settingName == 'javascript_functions') {
 				this.setFunctions();
@@ -1185,14 +1203,19 @@ class DeviceSetter extends Homey.App {
 			case 'update':
 				if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
 					let zone = this.zones[device.zone];
-					this.trigger_app_device_available.trigger({
-						deviceName: device.name,
-						deviceId: device.id,
-						available: device.available,
-						unavailableMessage: device.unavailableMessage || '',
-						zoneName: zone.name,
-						zoneId: zone.id
-					}, { available: device.available, brand:device.driverUri, devicetype:device.driverId });
+					try {
+							
+						this.trigger_app_device_available.trigger({
+							deviceName: device.name,
+							deviceId: device.id,
+							available: !!device.available,
+							unavailableMessage: device.unavailableMessage || '',
+							zoneName: zone.name,
+							zoneId: zone.id
+						}, { available: !!device.available, brand:device.driverUri, devicetype:device.driverId });
+					} catch (error) {
+						this.error(error);
+					}
 				}
 				if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
 				else this.devices[device.id] = this.getReducedDevice(device);

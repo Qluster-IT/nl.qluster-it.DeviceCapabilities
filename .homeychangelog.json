@@ -310,5 +310,20 @@
   },
   "2.6.74" : {
     "en" : "Added: Device available changed (Any device became un/available)."
+  },
+  "2.6.75" : {
+    "en" : "Added: Condition: All devices are !{{|un}}available ([[brand]], [[devicetype]])."
+  },
+  "2.6.76" : {
+    "en" : "Improved: Device replacement filtering."
+  },
+  "2.6.77" : {
+    "en" : "Added: TEFs can be imported through text while creating a new AVD."
+  },
+  "2.6.79" : {
+    "en" : "Bugfixed: Import of TEF."
+  },
+  "2.6.80" : {
+    "en" : "Bugfixed."
   }
 }
