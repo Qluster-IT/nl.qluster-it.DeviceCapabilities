@@ -496,6 +496,37 @@ class DeviceSetter extends Homey.App {
 			}
 		});
 
+		var action_app_writeindiagnostic = this.homey.flow.getActionCard('action_app_writeindiagnostic').registerRunListener(async (args, state) => {
+			try {
+				if(args.avd && args.avd.id) {
+					var avds = this.homey.drivers.getDriver('virtualdevice').getDevices();
+					var avd = _.find(avds, dv => dv.__id == args.avd.id);
+					let dev = {
+						id:avd.__id,
+						name:avd.getName(),
+						available:avd.getAvailable(),
+						capabilities:avd.getCapabilities(),
+						class:avd.getClass(),
+						data:avd.getData(),
+						energy:avd.getEnergy(),
+						settings:avd.getSettings(),
+						store:avd.getStore(),
+						state:avd.getState()
+					};
+					//let b = dev;
+					this.log("DIAGNOSTIC App Device: ", JSON.stringify(dev));
+					this.log("DIAGNOSTIC Web Device: ", JSON.stringify(this.devices[dev.id]));
+				}
+				return true;
+			} catch (error) {
+				this.log('action_virtualdevice_set_name:');
+				this.error(error);
+			}
+		});
+		action_app_writeindiagnostic.getArgument('avd').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
+		
+
+
 
 		this.trigger_app_zone_activated = this.homey.flow.getTriggerCard('trigger_app_zone_activated');
 		this.trigger_app_zone_activated.registerRunListener(async (args, state) => {

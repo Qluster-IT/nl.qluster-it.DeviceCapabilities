@@ -325,5 +325,8 @@
   },
   "2.6.80" : {
     "en" : "Bugfixed."
+  },
+  "2.6.81" : {
+    "en" : "Added: Write [avd] in diagnostic."
   }
 }
