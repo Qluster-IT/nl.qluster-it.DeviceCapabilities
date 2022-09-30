@@ -84,8 +84,8 @@ I use these for every status card.
 //           "nl" : "Zet capabilities naar waarde in een ruimte inclusief (of niet) subzones (Percentage)"
 //         },
 //         "titleFormatted": {
-//           "en":"Set [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-//           "nl" : "Zet [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])"
+//           "en":"Set [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+//           "nl" : "Zet [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])"
 //         },
 //         "args": [
 //           {

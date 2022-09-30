@@ -301,5 +301,14 @@
   },
   "2.6.69" : {
     "en" : "Memory improvement."
+  },
+  "2.6.71" : {
+    "en" : "Added: App Trigger Card: Zone in/activated, with Zone ID, Name and status."
+  },
+  "2.6.72" : {
+    "en" : "Added: More Dutch translations."
+  },
+  "2.6.74" : {
+    "en" : "Added: Device available changed (Any device became un/available)."
   }
 }

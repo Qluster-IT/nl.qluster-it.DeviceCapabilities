@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.6.69",
+  "version": "2.6.74",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -359,6 +359,216 @@
           }
         ]
       },
+      {
+        "highlight": true,
+        "id": "trigger_app_zone_activated",
+        "title": {
+          "en": "Zone active changed",
+          "nl": "Zone actief gewijzigd",
+          "de": "Zone aktiv geändert"
+        },
+        "titleFormatted": {
+          "en": "Zone became [[active]]",
+          "nl": "Ruimte werd [[active]]",
+          "de": "Zone wurde [[active]]"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "required": false,
+            "name": "active",
+            "placeholder": {
+              "en": "active or inactive",
+              "nl": "actief of inactief",
+              "de": "aktiv oder inaktiv"
+            },
+            "values": [
+              {
+                "id": "both",
+                "label": {
+                  "en": "active or inactive",
+                  "nl": "actief of inactief",
+                  "de": "aktiv oder inaktiv"
+                }
+              },
+              {
+                "id": "active",
+                "label": {
+                  "en": "active",
+                  "nl": "actief",
+                  "de": "aktiv"
+                }
+              },
+              {
+                "id": "inactive",
+                "label": {
+                  "en": "inactive",
+                  "nl": "inactief",
+                  "de": "inaktiv"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [          
+          {
+            "name": "zoneId",
+            "type": "string",
+            "title": {
+              "en": "Zone ID",
+              "nl": "Ruimte ID",
+              "de": "Raum-ID"
+            }
+          },
+          {
+            "name": "zoneName",
+            "type": "string",
+            "title": {
+              "en": "Zone Name",
+              "nl": "Ruimte naam",
+              "de": "Raumname"
+            }
+          },
+          {
+            "name": "active",
+            "type": "boolean",
+            "title": {
+              "en": "Active",
+              "nl": "Actief",
+              "de": "Aktiv"
+            }
+          }
+        ]
+      },      
+      {
+        "highlight": true,
+        "id": "trigger_app_device_available",
+        "title": {
+          "en": "Device available changed",
+          "nl": "Apparaat beschikbaar gewijzigd",
+          "de": "Geräte available geändert"
+        },
+        "titleFormatted": {
+          "en": "Device became [[available]] ([[brand]], [[devicetype]])",
+          "nl": "Apparaat werd [[available]] ([[brand]], [[devicetype]])",
+          "de": "Geräte wurde [[available]] ([[brand]], [[devicetype]])"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "required": false,
+            "name": "available",
+            "placeholder": {
+              "en": "available or unavailable",
+              "nl": "beschikbaar of niet beschikbaar",
+              "de": "available or unavailable"
+            },
+            "values": [
+              {
+                "id": "both",
+                "label": {
+                  "en": "available or unavailable",
+                  "nl": "beschikbaar of niet beschikbaar",
+                  "de": "available or unavailable"
+                }
+              },
+              {
+                "id": "available",
+                "label": {
+                  "en": "available",
+                  "nl": "beschikbaar",
+                  "de": "available"
+                }
+              },
+              {
+                "id": "unavailable",
+                "label": {
+                  "en": "unavailable",
+                  "nl": "niet beschikbaar",
+                  "de": "unavailable"
+                }
+              }
+            ]
+          },
+          {
+            "type": "autocomplete",
+            "name": "brand",
+            "required": false,
+            "placeholder": {
+              "en": "optional: Brand",
+              "nl": "optioneel: Merk",
+              "de": "optional: Hersteller"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "devicetype",
+            "required": false,
+            "placeholder": {
+              "en": "optional: Device Type",
+              "nl": "optioneel: Apparaat Type",
+              "de": "optional: Gerätetyp"
+            }
+          }
+        ],
+        "tokens": [          
+          {
+            "name": "deviceId",
+            "type": "string",
+            "title": {
+              "en": "Device ID",
+              "nl": "Apparaat ID",
+              "de": "Geräte ID"
+            }
+          },
+          {
+            "name": "deviceName",
+            "type": "string",
+            "title": {
+              "en": "Device Name",
+              "nl": "Apparaat naam",
+              "de": "Gerätename"
+            }
+          },
+          {
+            "name": "available",
+            "type": "boolean",
+            "title": {
+              "en": "Available",
+              "nl": "Beschikbaar",
+              "de": "Available"
+            }
+          },
+          {
+            "name": "unavailableMessage",
+            "type": "string",
+            "title": {
+              "en": "Unavailable Message",
+              "nl": "Niet beschikbaar bericht",
+              "de": "Nachricht nicht verfügbar"
+            }
+          },
+          {
+            "name": "zoneId",
+            "type": "string",
+            "title": {
+              "en": "Zone ID",
+              "nl": "Ruimte ID",
+              "de": "Raum-ID"
+            }
+          },
+          {
+            "name": "zoneName",
+            "type": "string",
+            "title": {
+              "en": "Zone Name",
+              "nl": "Ruimte naam",
+              "de": "Raumname"
+            }
+          }
+        ]
+      },
+
       {
         "highlight": true,
         "id": "trigger_virtualdevice_text",
@@ -985,9 +1195,9 @@
           "de": "Text-Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] einschließlich Unterzonen ([[subzones]])"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] einschließlich Unterzonen ([[subzones]])"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain text.",
@@ -1054,6 +1264,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1064,6 +1275,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -1109,9 +1334,9 @@
           "de": "Nummern-Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] inschließlich Unterzonen ([[subzones]]) fest"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain number.",
@@ -1183,6 +1408,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1193,6 +1419,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -1238,9 +1478,9 @@
           "de": "Prozentuale-Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] inschließlich Unterzonen ([[subzones]]) fest"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to a certain percentage.",
@@ -1317,6 +1557,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1327,6 +1568,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -1373,9 +1628,9 @@
           "de": "Wahr/Unwahr-Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] inschließlich Unterzonen ([[subzones]]) fest"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
@@ -1465,6 +1720,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1475,6 +1731,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -1520,9 +1790,9 @@
           "de": "Ja/Nein-Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] inschließlich Unterzonen ([[subzones]]) fest"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability to Yes or No.",
@@ -1594,6 +1864,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1604,6 +1875,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -1649,9 +1934,9 @@
           "de": "JSON als Wert für Fähigkeiten in einer Zone festlegen"
         },
         "titleFormatted": {
-          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]] including subzones ([[subzones]])",
-          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]] inclusief subzones ([[subzones]])",
-          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]] inschließlich Unterzonen ([[subzones]]) fest"
+          "en": "Set from [[deviceclass]] ([[brand]], [[devicetype]]) for [[capability]] to [[value]] in [[zone]]/[[zonebytag]] including subzones ([[subzones]])",
+          "nl": "Zet van [[deviceclass]] ([[brand]], [[devicetype]]) voor [[capability]] naar [[value]] in [[zone]]/[[zonebytag]] inclusief subzones ([[subzones]])",
+          "de": "Lege von [[deviceclass]] ([[brand]], [[devicetype]]) für [[capability]] auf [[value]] in [[zone]]/[[zonebytag]] inschließlich Unterzonen ([[subzones]]) fest"
         },
         "hint": {
           "en": "Set from all devices in a zone, optionally all subzones, of a particulier class (light/curtain/etc), optionally filter by brand and devicetype, the capability value as a JSON value.\r\n\"text\", 0.25 or true.\r\nMind the double quotes for text.",
@@ -1723,6 +2008,7 @@
           },
           {
             "type": "autocomplete",
+            "required": false,
             "name": "zone",
             "title": {
               "en": "Zone",
@@ -1733,6 +2019,20 @@
               "en": "Zone",
               "nl": "Ruimte",
               "de": "Zone"
+            }
+          },
+          {
+            "type": "text",
+            "required": false,
+            "name": "zonebytag",
+            "placeholder": {
+              "en": "Or use a Zone ID Tag",
+              "nl": "Of gebruik een Ruimte ID Tag"
+            },
+            "title": {
+              "en": "Tag",
+              "nl": "Tag",
+              "de": "Tag"
             }
           },
           {
@@ -3107,7 +3407,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -3119,7 +3419,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -3131,7 +3431,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true
     },
@@ -3243,7 +3543,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -3256,7 +3556,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -3269,7 +3569,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
@@ -3390,7 +3690,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -3403,7 +3703,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -3416,7 +3716,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
@@ -3537,7 +3837,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -3550,7 +3850,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -3563,7 +3863,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
@@ -3684,7 +3984,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -3697,7 +3997,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -3710,7 +4010,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
@@ -3831,7 +4131,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -3844,7 +4144,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -3857,7 +4157,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
@@ -3978,7 +4278,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -3991,7 +4291,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -4004,7 +4304,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
@@ -4125,7 +4425,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -4138,7 +4438,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -4151,7 +4451,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
@@ -4272,7 +4572,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -4285,7 +4585,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -4298,7 +4598,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
@@ -4419,7 +4719,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -4432,7 +4732,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -4445,7 +4745,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
@@ -4566,7 +4866,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -4579,7 +4879,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -4592,7 +4892,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
@@ -4713,7 +5013,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -4726,7 +5026,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -4739,7 +5039,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
@@ -4860,7 +5160,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -4873,7 +5173,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -4886,7 +5186,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
@@ -5007,7 +5307,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -5020,7 +5320,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -5033,7 +5333,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
@@ -5154,7 +5454,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -5167,7 +5467,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -5180,7 +5480,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
@@ -5301,7 +5601,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -5314,7 +5614,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -5327,7 +5627,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
@@ -5448,7 +5748,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -5461,7 +5761,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -5474,7 +5774,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
@@ -5595,7 +5895,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -5608,7 +5908,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -5621,7 +5921,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
@@ -5742,7 +6042,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -5755,7 +6055,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -5768,7 +6068,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
@@ -5889,7 +6189,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -5902,7 +6202,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -5915,7 +6215,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
@@ -6036,7 +6336,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -6049,7 +6349,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -6062,7 +6362,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
@@ -6183,7 +6483,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -6196,7 +6496,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -6209,7 +6509,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
@@ -6330,7 +6630,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -6343,7 +6643,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -6356,7 +6656,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
@@ -6477,7 +6777,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -6490,7 +6790,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -6503,7 +6803,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
@@ -6624,7 +6924,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -6637,7 +6937,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -6650,7 +6950,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
@@ -6771,7 +7071,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -6784,7 +7084,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -6797,7 +7097,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
@@ -6918,7 +7218,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -6931,7 +7231,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -6944,7 +7244,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
@@ -7065,7 +7365,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -7078,7 +7378,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -7091,7 +7391,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
@@ -7212,7 +7512,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -7225,7 +7525,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -7238,7 +7538,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
@@ -7359,7 +7659,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -7372,7 +7672,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -7385,7 +7685,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
@@ -7506,7 +7806,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -7519,7 +7819,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -7532,7 +7832,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
@@ -7653,7 +7953,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -7666,7 +7966,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -7679,7 +7979,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
@@ -7800,7 +8100,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -7813,7 +8113,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -7826,7 +8126,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
@@ -7947,7 +8247,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -7960,7 +8260,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -7973,7 +8273,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
@@ -8094,7 +8394,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -8107,7 +8407,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -8120,7 +8420,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
@@ -8241,7 +8541,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -8254,7 +8554,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -8267,7 +8567,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
@@ -8388,7 +8688,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -8401,7 +8701,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -8414,7 +8714,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
@@ -8535,7 +8835,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -8548,7 +8848,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -8561,7 +8861,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
@@ -8682,7 +8982,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -8695,7 +8995,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -8708,7 +9008,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
@@ -8829,7 +9129,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -8842,7 +9142,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -8855,7 +9155,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
@@ -8976,7 +9276,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -8989,7 +9289,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -9002,7 +9302,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
@@ -9123,7 +9423,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -9136,7 +9436,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -9149,7 +9449,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
@@ -9270,7 +9570,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -9283,7 +9583,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -9296,7 +9596,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
@@ -9417,7 +9717,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -9430,7 +9730,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -9443,7 +9743,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
@@ -9564,7 +9864,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -9577,7 +9877,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -9590,7 +9890,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
@@ -9711,7 +10011,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -9724,7 +10024,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -9737,7 +10037,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
@@ -9858,7 +10158,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -9871,7 +10171,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -9884,7 +10184,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
@@ -10005,7 +10305,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -10018,7 +10318,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -10031,7 +10331,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
@@ -10152,7 +10452,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -10165,7 +10465,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -10178,7 +10478,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
@@ -10299,7 +10599,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -10312,7 +10612,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -10325,7 +10625,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
@@ -10446,7 +10746,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -10459,7 +10759,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -10472,7 +10772,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
@@ -10593,7 +10893,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -10606,7 +10906,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -10619,7 +10919,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
@@ -10740,7 +11040,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -10753,7 +11053,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -10766,7 +11066,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
@@ -10887,7 +11187,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -10900,7 +11200,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -10913,7 +11213,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
@@ -11034,7 +11334,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -11047,7 +11347,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -11060,7 +11360,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
@@ -11181,7 +11481,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -11194,7 +11494,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -11207,7 +11507,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
@@ -11328,7 +11628,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -11341,7 +11641,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -11354,7 +11654,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
@@ -11475,7 +11775,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -11488,7 +11788,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -11501,7 +11801,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
@@ -11622,7 +11922,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -11635,7 +11935,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -11648,7 +11948,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
@@ -11769,7 +12069,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -11782,7 +12082,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -11795,7 +12095,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
@@ -11916,7 +12216,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -11929,7 +12229,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -11942,7 +12242,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
@@ -12063,7 +12363,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_61.svg"
@@ -12076,7 +12376,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_61.svg"
@@ -12089,7 +12389,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_61.svg"
@@ -12210,7 +12510,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_62.svg"
@@ -12223,7 +12523,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_62.svg"
@@ -12236,7 +12536,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_62.svg"
@@ -12357,7 +12657,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_63.svg"
@@ -12370,7 +12670,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_63.svg"
@@ -12383,7 +12683,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_63.svg"
@@ -12504,7 +12804,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_64.svg"
@@ -12517,7 +12817,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_64.svg"
@@ -12530,7 +12830,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_64.svg"
@@ -12651,7 +12951,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_65.svg"
@@ -12664,7 +12964,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_65.svg"
@@ -12677,7 +12977,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_65.svg"
@@ -12798,7 +13098,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_66.svg"
@@ -12811,7 +13111,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_66.svg"
@@ -12824,7 +13124,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_66.svg"
@@ -12945,7 +13245,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_67.svg"
@@ -12958,7 +13258,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_67.svg"
@@ -12971,7 +13271,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_67.svg"
@@ -13092,7 +13392,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_68.svg"
@@ -13105,7 +13405,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_68.svg"
@@ -13118,7 +13418,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_68.svg"
@@ -13239,7 +13539,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_69.svg"
@@ -13252,7 +13552,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_69.svg"
@@ -13265,7 +13565,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_69.svg"
@@ -13386,7 +13686,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_70.svg"
@@ -13399,7 +13699,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_70.svg"
@@ -13412,7 +13712,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_70.svg"
@@ -13533,7 +13833,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_71.svg"
@@ -13546,7 +13846,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_71.svg"
@@ -13559,7 +13859,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_71.svg"
@@ -13680,7 +13980,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_72.svg"
@@ -13693,7 +13993,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_72.svg"
@@ -13706,7 +14006,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_72.svg"
@@ -13827,7 +14127,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_73.svg"
@@ -13840,7 +14140,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_73.svg"
@@ -13853,7 +14153,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_73.svg"
@@ -13974,7 +14274,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_74.svg"
@@ -13987,7 +14287,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_74.svg"
@@ -14000,7 +14300,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_74.svg"
@@ -14121,7 +14421,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_75.svg"
@@ -14134,7 +14434,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_75.svg"
@@ -14147,7 +14447,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_75.svg"
@@ -14268,7 +14568,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_76.svg"
@@ -14281,7 +14581,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_76.svg"
@@ -14294,7 +14594,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_76.svg"
@@ -14415,7 +14715,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_77.svg"
@@ -14428,7 +14728,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_77.svg"
@@ -14441,7 +14741,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_77.svg"
@@ -14562,7 +14862,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_78.svg"
@@ -14575,7 +14875,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_78.svg"
@@ -14588,7 +14888,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_78.svg"
@@ -14709,7 +15009,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_79.svg"
@@ -14722,7 +15022,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_79.svg"
@@ -14735,7 +15035,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_79.svg"
@@ -14856,7 +15156,7 @@
         "de": "Text"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_80.svg"
@@ -14869,7 +15169,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_80.svg"
@@ -14882,7 +15182,7 @@
         "de": "Nummer"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/userdata/customicons/custom_80.svg"

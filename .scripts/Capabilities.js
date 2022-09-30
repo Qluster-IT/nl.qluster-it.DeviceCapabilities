@@ -158,7 +158,7 @@ str+='"devicecapabilities_text'+header+'": { \r\n'+
 '        "en": "Text", "nl":"Tekst", "de":"Text" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": false, \r\n'+
+'      "setable": true, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
@@ -170,7 +170,7 @@ str+='"devicecapabilities_number'+header+'": { \r\n'+
 '        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": false, \r\n'+
+'      "setable": true, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
@@ -182,7 +182,7 @@ str+='"measure_devicecapabilities_number'+header+'": { \r\n'+
 '        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n'+
 '      }, \r\n'+
 '      "getable": true, \r\n'+
-'      "setable": false, \r\n'+
+'      "setable": true, \r\n'+
 '      "uiComponent": "sensor", \r\n'+
 '      "insights": true \r\n'+
         icon+
