@@ -301,5 +301,35 @@
   },
   "2.6.69" : {
     "en" : "Memory improvement."
+  },
+  "2.6.71" : {
+    "en" : "Added: App Trigger Card: Zone in/activated, with Zone ID, Name and status."
+  },
+  "2.6.72" : {
+    "en" : "Added: More Dutch translations."
+  },
+  "2.6.74" : {
+    "en" : "Added: Device available changed (Any device became un/available)."
+  },
+  "2.6.75" : {
+    "en" : "Added: Condition: All devices are !{{|un}}available ([[brand]], [[devicetype]])."
+  },
+  "2.6.76" : {
+    "en" : "Improved: Device replacement filtering."
+  },
+  "2.6.77" : {
+    "en" : "Added: TEFs can be imported through text while creating a new AVD."
+  },
+  "2.6.79" : {
+    "en" : "Bugfixed: Import of TEF."
+  },
+  "2.6.80" : {
+    "en" : "Bugfixed."
+  },
+  "2.6.81" : {
+    "en" : "Added: Write [avd] in diagnostic."
+  },
+  "2.6.82" : {
+    "en" : "Temp Fix: Longer titles for Device Setting/Creation views to have Tablets show a normal view."
   }
 }

@@ -18,7 +18,7 @@ const sandbox = require('./lib/sandbox');
 
 const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
-	'image/svg': 'svg',	
+	'image/svg': 'svg',
 	'image/svg+xml': 'svg'
 };
 
@@ -35,8 +35,8 @@ const statAsync = promisify(stat);
 
 class DeviceSetter extends Homey.App {
 	/**@type {DeviceSetter} */
-    static get Current() {return this._current; }
-    static set Current(v) { this._current = v; }
+	static get Current() { return this._current; }
+	static set Current(v) { this._current = v; }
 
 	Triggers = {
 		triggercapabilitychanged: { List: [], Card: null },
@@ -59,8 +59,8 @@ class DeviceSetter extends Homey.App {
 	async onInit() {
 		DeviceSetter.Current = this;
 		this.DEFAULT_ICONS_PATH = './userdata/defaulticons/';
-        //this.VirtualDevices = {};
-		
+		//this.VirtualDevices = {};
+
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
@@ -68,14 +68,14 @@ class DeviceSetter extends Homey.App {
 		// 	this.testobject = [];
 		// 	for (let i = 0; i < 100000; i++) {
 		// 		this.testobject.push({id:"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"});
-				
+
 		// 	}
 		// 	console.log('Size of this.testobject:', this.roughSizeOfObject(this.testobject) );
 		// }
-		
+
 		this.localURL = await this.homey.api.getLocalUrl();
 		this.sessionToken = await this.homey.api.getOwnerApiToken();
-	
+
 
 		this.log('DeviceSetter is running...');
 
@@ -97,7 +97,8 @@ class DeviceSetter extends Homey.App {
 				}).bind(this))
 				.registerRunListener((async (args, state) => {
 					try {
-						if (!args || !args.zone || !args.zone.id) return Promise.resolve(false);
+						if (!args || (!args.zone || !args.zone.id) && (!args.zonebytag)) return Promise.reject(new Error('Zone must be zet.'));
+						let zoneId = args.zone && args.zone.id ? args.zone.id : args.zonebytag;
 						var defer = new Defer();
 						var devices = this.devices;
 						var zones = this.zones;
@@ -105,7 +106,7 @@ class DeviceSetter extends Homey.App {
 						var cls = args.deviceclass ? args.deviceclass.id : args.capability.id.split('.')[0];
 						var capability = args.deviceclass ? args.capability.id : args.capability.id.substr(args.capability.id.indexOf('.') + 1);
 						var devicesToSet = [];
-						setZone(args.zone.id);
+						setZone(zoneId);
 						var val = args.value;
 						if (action.endsWith('_boolean')) val = val === 'true' || val === true;
 						if (action.endsWith('_json')) val = JSON.parse(val);// === 'true' || val ===true;
@@ -113,8 +114,8 @@ class DeviceSetter extends Homey.App {
 						var values = null;//capability.values;
 						for (let i = 0; i < devicesToSet.length; i++) {
 							let d = devicesToSet[i];
-							if(d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && !d.setCapabilityValue) {
-								this.devices[d.id] = await this.homeyAPI.devices.getDevice({id:d.id, $skipCache:true });
+							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && !d.setCapabilityValue) {
+								this.devices[d.id] = await this.homeyAPI.devices.getDevice({ id: d.id, $skipCache: true });
 								d = this.devices[d.id];
 							}
 							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && d.setCapabilityValue) {
@@ -136,11 +137,11 @@ class DeviceSetter extends Homey.App {
 						return defer.promise;
 
 						function setZone(zoneId) {
-							var devs = _.filter(devices, d => 
-								d.zone == zoneId && 
-								(!args.brand || !args.brand.id || d.driverUri===args.brand.id) && 
-								(!args.devicetype || !args.devicetype.id || (d.driverUri===args.devicetype.brandUri && d.driverId===args.devicetype.id )) && 
-								(d.class == cls || d.virtualClass == cls) && 
+							var devs = _.filter(devices, d =>
+								d.zone == zoneId &&
+								(!args.brand || !args.brand.id || d.driverUri === args.brand.id) &&
+								(!args.devicetype || !args.devicetype.id || (d.driverUri === args.devicetype.brandUri && d.driverId === args.devicetype.id)) &&
+								(d.class == cls || d.virtualClass == cls) &&
 								d.capabilities && d.capabilities.indexOf(capability) > -1);
 							_.forEach(devs, d => devicesToSet.push(d));
 							if (args.subzones == 'yes') _.forEach(zones, z => {
@@ -172,7 +173,7 @@ class DeviceSetter extends Homey.App {
 				if (!args.deviceclass || !args.deviceclass.id) throw new Error("First select Device Class.");
 				return await this.getDeviceclassDeviceTypes(action, query, args);
 			});
-			
+
 			set_capability_zone.getArgument('capability').registerAutocompleteListener((query, args) => {
 				if (!args.deviceclass || !args.deviceclass.id) return Promise.reject(new Error("First select Device Class."));
 				var defer = new Defer(10000);
@@ -388,13 +389,13 @@ class DeviceSetter extends Homey.App {
 
 						let targetInsight;
 
-						if(args.capability.uri) {
-							targetInsight = {uri:args.capability.uri, id:args.capability.id};
+						if (args.capability.uri) {
+							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
 							var device = this.devices[args.device.id];
-							if(device) targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
+							if (device) targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
 						}
-						
+
 						if (targetInsight) {
 							var insights, lastOne = null;
 							try {
@@ -433,16 +434,16 @@ class DeviceSetter extends Homey.App {
 						this.log('set_capability-error:');
 						this.log(error);
 					}
-					
-					if(!tokens.user) tokens.user = '';
-					if(!tokens.client) tokens.client = '';
+
+					if (!tokens.user) tokens.user = '';
+					if (!tokens.client) tokens.client = '';
 					return tokens;
-					
+
 				}).bind(this));
 
 
 			set_capability_log.getArgument('device')
-				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log', insights:true }));
+				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log', insights: true }));
 			set_capability_log.getArgument('capability')
 				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log', insights: true }));
 		}).bind(this));
@@ -451,7 +452,7 @@ class DeviceSetter extends Homey.App {
 		var virtualdevice_set_available = this.homey.flow.getActionCard('virtualdevice_set_available').registerRunListener(async (args, state) => {
 			try {
 				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
-				var device = _.find(devices, dv=> dv.__id==args.device.id);
+				var device = _.find(devices, dv => dv.__id == args.device.id);
 				device.setAvailable();
 				//args.device.setAvailable();
 			} catch (error) {
@@ -459,35 +460,35 @@ class DeviceSetter extends Homey.App {
 				this.error(error);
 			}
 		});
-		virtualdevice_set_available.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
-		
+		virtualdevice_set_available.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
+
 		var virtualdevice_set_unavailable = this.homey.flow.getActionCard('virtualdevice_set_unavailable').registerRunListener(async (args, state) => {
 			try {
 				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
-				var device = _.find(devices, dv=> dv.__id==args.device.id);
+				var device = _.find(devices, dv => dv.__id == args.device.id);
 				device.setUnavailable(args.text);
 			} catch (error) {
 				this.log('action_virtualdevice_set_name:');
 				this.error(error);
 			}
 		});
-		virtualdevice_set_unavailable.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:'+this.id}));
+		virtualdevice_set_unavailable.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
 
 
 		this.homey.flow.getActionCard('execute_expression').registerRunListener(async (args, state) => {
-			try {				
-                if(args.expression!==undefined && args.expression!=='undefined') {
-                    let value = this.runSandBox(args.expression);
-					let tokens = {text:'', number:0, boolean:false};
-					switch (typeof(value)) {
-						case "string":tokens.text = value; break;					
-						case "number":tokens.number = value; break;					
-						case "boolean":tokens.boolean = value; break;					
+			try {
+				if (args.expression !== undefined && args.expression !== 'undefined') {
+					let value = this.runSandBox(args.expression);
+					let tokens = { text: '', number: 0, boolean: false };
+					switch (typeof (value)) {
+						case "string": tokens.text = value; break;
+						case "number": tokens.number = value; break;
+						case "boolean": tokens.boolean = value; break;
 						default:
 							break;
 					}
 					return tokens;
-                }
+				}
 			} catch (error) {
 				this.log('execute_expression:');
 				this.error(error);
@@ -495,64 +496,136 @@ class DeviceSetter extends Homey.App {
 			}
 		});
 
-		
-		this.homey.settings.on('set', (async function(settingName) {
-			if(settingName=='javascript_functions') {
-			  this.setFunctions();
+		var action_app_writeindiagnostic = this.homey.flow.getActionCard('action_app_writeindiagnostic').registerRunListener(async (args, state) => {
+			try {
+				if(args.avd && args.avd.id) {
+					var avds = this.homey.drivers.getDriver('virtualdevice').getDevices();
+					var avd = _.find(avds, dv => dv.__id == args.avd.id);
+					let dev = {
+						id:avd.__id,
+						name:avd.getName(),
+						available:avd.getAvailable(),
+						capabilities:avd.getCapabilities(),
+						class:avd.getClass(),
+						data:avd.getData(),
+						energy:avd.getEnergy(),
+						settings:avd.getSettings(),
+						store:avd.getStore(),
+						state:avd.getState()
+					};
+					//let b = dev;
+					this.log("DIAGNOSTIC App Device: ", JSON.stringify(dev));
+					this.log("DIAGNOSTIC Web Device: ", JSON.stringify(this.devices[dev.id]));
+				}
+				return true;
+			} catch (error) {
+				this.log('action_virtualdevice_set_name:');
+				this.error(error);
 			}
-		  }).bind(this));
-		  
-		  await this.setFunctions();
-		  
+		});
+		action_app_writeindiagnostic.getArgument('avd').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
 		
+
+
+
+		this.trigger_app_zone_activated = this.homey.flow.getTriggerCard('trigger_app_zone_activated');
+		this.trigger_app_zone_activated.registerRunListener(async (args, state) => {
+			try {
+				return ((args.active === 'active' && state.active === true) || (args.active === 'inactive' && state.active === false) || args.active === 'both' || args.active === 'undefined' || !args.active);
+			} catch (error) {
+				this.log('trigger_app_zone_activated:'); this.error(error); return new Error(error);
+			}
+		});
+
+
+		this.trigger_app_device_available = this.homey.flow.getTriggerCard('trigger_app_device_available');
+		this.trigger_app_device_available.registerRunListener(async (args, state) => {
+			try {
+				return ((args.available === 'available' && state.available === true) || (args.available === 'unavailable' && state.available === false) || args.available === 'both' || args.available === 'undefined' || !args.available) &&
+				(!args.brand || args.brand === 'undefined' || args.brand.id === "homey:app:" + state.brand) &&
+				(!args.devicetype || args.devicetype === 'undefined' || args.devicetype.id === state.devicetype) ;
+			} catch (error) {
+				this.log('trigger_app_device_available:'); this.error(error); return new Error(error);
+			}
+		});
+		this.trigger_app_device_available.getArgument('brand').registerAutocompleteListener(this.autocompleteApp());
+		this.trigger_app_device_available.getArgument('devicetype').registerAutocompleteListener(this.autocompleteDeviceType());
+
+		this.condition_app_devices_available = this.homey.flow.getConditionCard('condition_app_devices_available');
+		this.condition_app_devices_available.registerRunListener(async (args, state) => {
+			try {
+				let devices = _.toArray(this.devices);
+				if(args.brand && args.brand.id) devices = _.filter(devices, d=>d.driverUri==='homey:app:' + args.brand.id);
+				if(args.devicetype && args.devicetype.id) devices = _.filter(devices, d=>d.driverId===args.devicetype.id);
+				let t = _.every(devices, d=>d.available===args.inverted!=true);
+				let tt = _.filter(devices, d=>d.available===(args.inverted!=true));
+				return _.every(devices, d=>d.available===(args.inverted!=true));
+				
+			} catch (error) {
+				this.log('condition_app_devices_available:'); this.error(error); return new Error(error);
+			}
+		});
+		this.condition_app_devices_available.getArgument('brand').registerAutocompleteListener(this.autocompleteApp());
+		this.condition_app_devices_available.getArgument('devicetype').registerAutocompleteListener(this.autocompleteDeviceType());
+
+
+		this.homey.settings.on('set', (async function (settingName) {
+			if (settingName == 'javascript_functions') {
+				this.setFunctions();
+			}
+		}).bind(this));
+
+		await this.setFunctions();
+
+
 	}
 
 
 	getGuid() {
-		return [8,4,4,4,12].map(n => crypto.randomBytes(n/2).toString("hex")).join("-");
+		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
 	}
-	
-    async setFunctions() {			  	  
+
+	async setFunctions() {
 		this.functions = await this.homey.settings.get('javascript_functions');
 		//this.log('this.functions', typeof(this.functions), this.functions);
 		this.context = {
-			_:_
+			_: _
 		};
-		if(this.functions && this.functions.length>0) for (let i = 0; i < this.functions.length; i++) {
-			try {          
-			const funcObj = this.functions[i];
-			
-			let func = funcObj.value.parseFunction();
-			//func.bind(this.context);
-			this.log('func', func);
-			this.context[funcObj.name] = func;
+		if (this.functions && this.functions.length > 0) for (let i = 0; i < this.functions.length; i++) {
+			try {
+				const funcObj = this.functions[i];
+
+				let func = funcObj.value.parseFunction();
+				//func.bind(this.context);
+				this.log('func', func);
+				this.context[funcObj.name] = func;
 			} catch (error) {
-			this.log('Error creating function ' + this.functions[i].name);
-			this.error(error);
+				this.log('Error creating function ' + this.functions[i].name);
+				this.error(error);
 			}
 		}
 	}
-		
 
-	
-    runSandBox(code) {
-        var context = this.context;
-        //this.log('this.context', this.context);
-        //try {
-          return sandbox(code, context);
-        //} catch (error) {
-          
-        //} 
-      }
+
+
+	runSandBox(code) {
+		var context = this.context;
+		//this.log('this.context', this.context);
+		//try {
+		return sandbox(code, context);
+		//} catch (error) {
+
+		//} 
+	}
 
 	getDevices() {
 		var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
 		var ret = devices.map(vd => {
 			return {
 				id: vd.getData().id,
-				name:vd.getName(),
+				name: vd.getName(),
 				icon: vd.getData().icon,
-			};			
+			};
 		});
 		return ret;
 	}
@@ -575,32 +648,32 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async setFromDefaultIcon({ customicon, defaulticon, deviceicon }) {
-		if(deviceicon) {
-			return await this.setDeviceIconFromDefault({device:{data:{id:deviceicon.id}}, icon:defaulticon});
+		if (deviceicon) {
+			return await this.setDeviceIconFromDefault({ device: { data: { id: deviceicon.id } }, icon: defaulticon });
 		}
 
 		let filePathAssets = this.DEFAULT_ICONS_PATH;
 		let file = defaulticon;// + '.svg';
-		
+
 		let filePath = './userdata/customicons/';
 		let iconName = customicon.file + '.svg';
-		
-		if(await this.homey.app.fileExists(filePathAssets + file) ){
-			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
+
+		if (await this.homey.app.fileExists(filePathAssets + file)) {
+			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName, filePath);
 		}
 	}
 
-	async setDeviceIconFromDefault({icon, device}) {
+	async setDeviceIconFromDefault({ icon, device }) {
 		let filePathAssets = this.DEFAULT_ICONS_PATH;
-            let file = icon;// + '.svg';
-            
-            let filePath = './userdata/virtualdeviceicons/';
-            let iconName = device.data.id + '.svg';
+		let file = icon;// + '.svg';
 
-            if(await this.homey.app.fileExists(filePathAssets + file)) {// && !await this.homey.app.fileExists(filePath + iconName)){
-                await this.homey.app.copyFile(filePathAssets + file, filePath + iconName , filePath);
-            }
-			return filePath + iconName;
+		let filePath = './userdata/virtualdeviceicons/';
+		let iconName = device.data.id + '.svg';
+
+		if (await this.homey.app.fileExists(filePathAssets + file)) {// && !await this.homey.app.fileExists(filePath + iconName)){
+			await this.homey.app.copyFile(filePathAssets + file, filePath + iconName, filePath);
+		}
+		return filePath + iconName;
 	}
 
 
@@ -612,38 +685,38 @@ class DeviceSetter extends Homey.App {
 			.map(key => {
 				return this.getIcon({
 					id: key.substring(SETTING_PREFIX.length),
-				});			
+				});
 			});
 	}
 
-	
+
 	getIcon({ id }) {
 		const icon = this.homey.settings.get(`${SETTING_PREFIX}${id}`);
-		if( !icon ) throw new Error('invalid_icon');
+		if (!icon) throw new Error('invalid_icon');
 		return icon;
 	}
 	async writeFile(path, buf) { return await writeFileAsync(path, buf); }
 	async readFile(path, ops) { return await readFileAsync(path, ops); }
 	async exists(path) { return await existsAsync(path); }
 	async mkdir(path, ops) { return await mkdirAsync(path, ops); }
-	
+
 	async createIcon({ type, name, buffer, id }) {
-		if( !TYPES_MAP[type] )
+		if (!TYPES_MAP[type])
 			throw new Error(`invalid_type:${type}`);
-			
+
 		const buf = new Buffer(buffer, 'base64');
-		if( !Buffer.isBuffer(buf) )
+		if (!Buffer.isBuffer(buf))
 			throw new Error("invalid_buffer");
-			
+
 		id = id || randomBytes(12).toString('hex');
 		const ext = this.getExtByType(type);
 		const path = `./userdata/icons/${id}${ext}`;
 
-		if(!(await existsAsync('./userdata/icons/'))) await mkdirAsync('./userdata/icons/');
-		
+		if (!(await existsAsync('./userdata/icons/'))) await mkdirAsync('./userdata/icons/');
+
 
 		await writeFileAsync(path, buf);
-		
+
 		await this.homey.settings.set(`${SETTING_PREFIX}${id}`, {
 			id,
 			type,
@@ -655,7 +728,7 @@ class DeviceSetter extends Homey.App {
 	async createDeviceIcon({ type, buffer, id }) {
 		return await this._createIcon({ type, buffer, id, subpath: 'virtualdeviceicons' });
 	}
-	async createCustomIcon({ type,  buffer, id }) {
+	async createCustomIcon({ type, buffer, id }) {
 		return await this._createIcon({ type, buffer, id, subpath: 'customicons' });
 	}
 
@@ -664,12 +737,12 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async copyFile(from, to, toPath) {
-		if(await existsAsync(from)) {
-			if(!(await existsAsync(toPath))) await mkdirAsync(toPath);
-			await copyFile(from, to, fs.constants.COPYFILE_FICLONE, function(err) {
-				 if (err) console.log('error',err);//throw err;
+		if (await existsAsync(from)) {
+			if (!(await existsAsync(toPath))) await mkdirAsync(toPath);
+			await copyFile(from, to, fs.constants.COPYFILE_FICLONE, function (err) {
+				if (err) console.log('error', err);//throw err;
 				// console.log('source.txt was copied to destination.txt');
-			  } );
+			});
 		}
 	}
 	async readdir(dir) {
@@ -679,26 +752,26 @@ class DeviceSetter extends Homey.App {
 		return await statAsync(file);
 	}
 	async _createIcon({ type, buffer, id, subpath }) {
-		if( !TYPES_MAP[type] )
+		if (!TYPES_MAP[type])
 			throw new Error(`invalid_type:${type}`);
-			
+
 		const base64 = buffer.replace("data:image/svg+xml;base64,", '');
-		
+
 		const buf = new Buffer(base64, 'base64');
-		if( !Buffer.isBuffer(buf) )
+		if (!Buffer.isBuffer(buf))
 			throw new Error("invalid_buffer");
-			
+
 		id = id;
 		const ext = this.getExtByType(type);
 		const path = `./userdata/${subpath}/${id}${ext}`;
-		
-		if(!(await existsAsync(`./userdata/${subpath}/`))) await mkdirAsync(`./userdata/${subpath}/`);
-		if(await existsAsync(path)) await unlinkAsync(path);
+
+		if (!(await existsAsync(`./userdata/${subpath}/`))) await mkdirAsync(`./userdata/${subpath}/`);
+		if (await existsAsync(path)) await unlinkAsync(path);
 		await writeFileAsync(path, buf);
 
 		// var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
 		// var device = devices.filter(d=>d);
-		
+
 		return {
 			id,
 			type,
@@ -706,39 +779,39 @@ class DeviceSetter extends Homey.App {
 		};
 	}
 
-	
+
 	async updateIcon({ id, name, path }) {
 		const icon = await this.getIcon({ id });
-		
-		if( typeof name === 'string' )
+
+		if (typeof name === 'string')
 			icon.name = name;
-			
-		if( typeof path === 'string' )
+
+		if (typeof path === 'string')
 			icon.path = path;
-		
+
 		await this.homey.settings.set(`${SETTING_PREFIX}${id}`, icon);
-		
+
 		return this.getIcon({ id });
-		
+
 	}
-	
+
 	async deleteIcon({ id }) {
 		const icon = await this.getIcon({ id });
 		try {
 			await unlinkAsync(icon.path);
-		} catch( err ) {
+		} catch (err) {
 			this.error(err);
 		}
 		await this.homey.settings.unset(`${SETTING_PREFIX}${id}`);
-		
+
 	}
-	
+
 	getExtByType(type) {
-	  const typeSimple = TYPES_MAP[type];
-	  if(!typeSimple)
-  		throw new Error('unsupported_type');
-  		
-    return `.${typeSimple}`;		
+		const typeSimple = TYPES_MAP[type];
+		if (!typeSimple)
+			throw new Error('unsupported_type');
+
+		return `.${typeSimple}`;
 	}
 
 
@@ -753,7 +826,7 @@ class DeviceSetter extends Homey.App {
 		//var devices = null;
 		_.each(hm.Tracking.devices, async device => {
 			if (!device.device) {
-				this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
+				this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
 				device.device = this.devices[device.id];
 			}
 			//let realDevice;
@@ -789,11 +862,11 @@ class DeviceSetter extends Homey.App {
 		//var devices = null;
 		for (const deviceKey in hm.Tracking2.devices) {
 			if (Object.hasOwnProperty.call(hm.Tracking2.devices, deviceKey)) {
-				const device = hm.Tracking2.devices[deviceKey];				
+				const device = hm.Tracking2.devices[deviceKey];
 				if (!device.device) {
-					try {					
-						this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:device.id, $skipCache:true });
-						device.device = this.devices[device.id];	
+					try {
+						this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
+						device.device = this.devices[device.id];
 					} catch (error) {
 						this.error(error);
 						this.log('continueing');
@@ -805,7 +878,7 @@ class DeviceSetter extends Homey.App {
 					const capability = device.capabilities[keys[i]];
 					if (!capability.listener) {
 						var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
-						try {								
+						try {
 							capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
 								var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
 								if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
@@ -838,7 +911,7 @@ class DeviceSetter extends Homey.App {
 				}
 			}
 		}
-		
+
 		// console.log('Size of hm.Tracking:', this.roughSizeOfObject(hm.Tracking) );
 		// console.log('Size of hm.Tracking2:', this.roughSizeOfObject(hm.Tracking2) );
 		// console.log('Size of hm:', this.roughSizeOfObject(hm) );
@@ -850,33 +923,32 @@ class DeviceSetter extends Homey.App {
 		this.updateTracking2.call(this, true, trigger);
 	}
 
-	roughSizeOfObject( object ) {
+	roughSizeOfObject(object) {
 
 		var objectList = [];
-		var stack = [ object ];
+		var stack = [object];
 		var bytes = 0;
-	
-		while ( stack.length ) {
+
+		while (stack.length) {
 			var value = stack.pop();
-	
-			if ( typeof value === 'boolean' ) {
+
+			if (typeof value === 'boolean') {
 				bytes += 4;
 			}
-			else if ( typeof value === 'string' ) {
+			else if (typeof value === 'string') {
 				bytes += value.length * 2;
 			}
-			else if ( typeof value === 'number' ) {
+			else if (typeof value === 'number') {
 				bytes += 8;
 			}
 			else if
-			(
-				typeof value === 'object' && objectList.indexOf( value ) === -1
-			)
-			{
-				objectList.push( value );
-	
-				for( var i in value ) {
-					stack.push( value[ i ] );
+				(
+				typeof value === 'object' && objectList.indexOf(value) === -1
+			) {
+				objectList.push(value);
+
+				for (var i in value) {
+					stack.push(value[i]);
 				}
 			}
 		}
@@ -884,42 +956,42 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async getDeviceclasss(action, query, args) {
-		var all = await this.getDeviceclasssAndCapabilities({action:action, queryDeviceclass:query});
+		var all = await this.getDeviceclasssAndCapabilities({ action: action, queryDeviceclass: query });
 		all = _.sortBy(_.filter(all, dt => Object.keys(dt.capabilities).length), 'name');
 		return all.length == 0 ? [] : _.map(all, x => { return { id: x.name, name: x.name }; });// all;//_.map(all, x=> x.id.split('.')[0]);
 	}
 	async getDeviceclassBrands(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		var all = await this.getDeviceclasssAndCapabilities({action:action, deviceclass: args.deviceclass.id});
+		var all = await this.getDeviceclasssAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
 		all = _.filter(all, dt => Object.keys(dt.capabilities).length);
 		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
 		all = _.uniqBy(all, 'id');
-		if(query && query.length>0) all = _.filter(all, cls => cls.name.toLowerCase().indexOf(query.toLowerCase())>-1);
+		if (query && query.length > 0) all = _.filter(all, cls => cls.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
 		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name }; });
 	}
 	async getDeviceclassDeviceTypes(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		var all = await this.getDeviceclasssAndCapabilities({action:action,deviceclass: args.deviceclass.id});
+		var all = await this.getDeviceclasssAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
 		all = _.filter(all, dt => Object.keys(dt.capabilities).length);
 		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
 		if (args.brand && args.brand.id) all = _.filter(all, x => x.id === args.brand.id);
-		all = _.flatMap(all, x => { return _.map(x.devicetypes, dt => { var d=_.find(this.drivers, _d=>_d.id==dt.id && _d.uri==x.id); return {id:dt.id, name:d?d.name:dt.name, brandUri:x.id, brandName:x.name}; }); });
-		all = _.uniqBy(all, x=>x.brandUri + ':' + x.id);
-		if(query && query.length>0) all = _.filter(all, dt => dt.name.toLowerCase().indexOf(query.toLowerCase())>-1);
-		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name, description: x.brandName, brandUri:x.brandUri }; });
+		all = _.flatMap(all, x => { return _.map(x.devicetypes, dt => { var d = _.find(this.drivers, _d => _d.id == dt.id && _d.uri == x.id); return { id: dt.id, name: d ? d.name : dt.name, brandUri: x.id, brandName: x.name }; }); });
+		all = _.uniqBy(all, x => x.brandUri + ':' + x.id);
+		if (query && query.length > 0) all = _.filter(all, dt => dt.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
+		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name, description: x.brandName, brandUri: x.brandUri }; });
 	}
 	async getDeviceclassCapabilities(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		var all = await this.getDeviceclasssAndCapabilities({action:action,queryCapability:query, deviceclass:args.deviceclass.id});
-		all = _.filter(all, dt => _.countBy(dt.capabilities,1));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+		var all = await this.getDeviceclasssAndCapabilities({ action: action, queryCapability: query, deviceclass: args.deviceclass.id });
+		all = _.filter(all, dt => _.countBy(dt.capabilities, 1));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
 		all = all[0].capabilities;
-		if(args.brand && args.brand.id) all = _.filter(all, cap => _.find(cap.brands,(b)=>b.id===args.brand.id));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
-		if(args.devicetype && args.devicetype.id) all = _.filter(all, cap => _.find(cap.brands,(b)=>_.find(b.devicetypes,(dt)=>dt.id===args.devicetype.id)));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+		if (args.brand && args.brand.id) all = _.filter(all, cap => _.find(cap.brands, (b) => b.id === args.brand.id));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
+		if (args.devicetype && args.devicetype.id) all = _.filter(all, cap => _.find(cap.brands, (b) => _.find(b.devicetypes, (dt) => dt.id === args.devicetype.id)));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
 
 		return all.length == 0 ? [] : _.map(_.sortBy(all, "id"), x => { return { id: x.id, name: x.id }; });
 	}
 
-	async getDeviceclasssAndCapabilities({action, queryDeviceclass, queryCapability, deviceclass}={}) {
+	async getDeviceclasssAndCapabilities({ action, queryDeviceclass, queryCapability, deviceclass } = {}) {
 		//let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
 		var devices = this.devices;
@@ -986,12 +1058,12 @@ class DeviceSetter extends Homey.App {
 
 			var devices = this.devices;
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
-			if(app) list = _.filter(list, device => device.driverUri==app);
-			if(insights) {
-				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l=>l.uriObj.type=='manager'), 'uri'), l=> { return {uri:l.uri, uriName:'Manager - ' + l.uriObj.name} ;});
-				_.each(logs,l=> list.push({id:l.uri, name:l.uriName}));
+			if (app) list = _.filter(list, device => device.driverUri == app);
+			if (insights) {
+				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l => l.uriObj.type == 'manager'), 'uri'), l => { return { uri: l.uri, uriName: 'Manager - ' + l.uriObj.name }; });
+				_.each(logs, l => list.push({ id: l.uri, name: l.uriName }));
 			}
-			if(query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+			if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
 			list = _.orderBy(list, 'name');
 			var array = _.map(list, device => { return { id: device.id, name: device.name }; });
 			return Promise.resolve(array);
@@ -1005,22 +1077,22 @@ class DeviceSetter extends Homey.App {
 			var defer = new Defer();
 			this.refreshHomeyAPI().then((async api => {
 				var list = [];
-				if(query) query = query.toLowerCase();
+				if (query) query = query.toLowerCase();
 				if (!args || !args.device || !args.device.id) return defer.resolve(list);
-				if(args.device.id.startsWith('homey:manager:') && insights) {
-					list = _.map(_.filter(await api.insights.getLogs(), l=>l.uri==args.device.id), l=> { return {uri:l.uri, id:l.id, name:l.title} ;});
+				if (args.device.id.startsWith('homey:manager:') && insights) {
+					list = _.map(_.filter(await api.insights.getLogs(), l => l.uri == args.device.id), l => { return { uri: l.uri, id: l.id, name: l.title }; });
 				} else {
 					var device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
 					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
-					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });					
-					
+					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return insight.id == cap.id; })) === insights; });
+
 				}
-				if(query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+				if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
 				list = _.orderBy(list, 'name');
-				defer.resolve(list);	
+				defer.resolve(list);
 			}).bind(this));
 			return defer.promise;
 		}).bind(this);
@@ -1040,7 +1112,21 @@ class DeviceSetter extends Homey.App {
 			return defer.promise;
 		}).bind(this);
 	}
+	autocompleteDeviceType({ api } = {}) {
+		return ((query, args) => {
+			query = query.toLowerCase();
+			var queries = query.split(' ');
+			var defer = new Defer(10000);
 
+			var drivers = this.drivers;
+			var list = _.filter(drivers, driver => _.every(queries, q => driver.name.toLowerCase().indexOf(q) > -1) && (!args.brand || args.brand === 'undefined' || driver.uri === 'homey:app:' + args.brand.id));
+			list = _.orderBy(list, 'name');
+			var array = _.map(list, driver => { return { id: driver.id, name: driver.name }; });
+			defer.resolve(array);
+
+			return defer.promise;
+		}).bind(this);
+	}
 	async getDisconnectedHomeyApi() {
 		const api = new HomeyAPI({
 			localUrl: this.localURL,
@@ -1054,8 +1140,8 @@ class DeviceSetter extends Homey.App {
 		});
 		return api;
 	}
-	
-	async destroyAndRefreshHomeyAPI() {		
+
+	async destroyAndRefreshHomeyAPI() {
 		this.homeyAPI.destroy();
 		this.homeyAPI = null;
 		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
@@ -1063,7 +1149,7 @@ class DeviceSetter extends Homey.App {
 
 	async refreshHomeyAPI(id) {
 		if (id === undefined && this.homeyAPI) {
-			if(this.refreshDefer) await this.refreshDefer;
+			if (this.refreshDefer) await this.refreshDefer;
 			return this.homeyAPI;
 		}
 		if (!id) {
@@ -1079,19 +1165,19 @@ class DeviceSetter extends Homey.App {
 			////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
 			////this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
 			////this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
-			
-			
+
+
 			await this.refreshDevices();
 			await this.refreshZones();
 			await this.refreshApps();
 			await this.refreshDrivers();
 
-			
+
 			// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
 			// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
 			// console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
 			// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
-			
+
 
 			//// Does this help? Seems a little bit.
 			//await this.destroyAndRefreshHomeyAPI();
@@ -1113,10 +1199,10 @@ class DeviceSetter extends Homey.App {
 			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			this.homeyAPI.flow.on('advancedflow.create', x=> {
+			this.homeyAPI.flow.on('advancedflow.create', x => {
 				this.homey.api.realtime('createdadvancedflow', x);
 				let avdDriver = this.homey.drivers.getDriver('virtualdevice');
-				if(avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
+				if (avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
 			});
 
 			this.refreshDefer.resolve(this.homeyAPI);
@@ -1138,16 +1224,32 @@ class DeviceSetter extends Homey.App {
 	async refreshDevices(device, type) {
 		this.log('refreshDevices');
 		//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-		if(!this.devices || !type) {
+		if (!this.devices || !type) {
 			this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-			_.each(this.devices, (d,key)=>this.devices[key] = this.getReducedDevice(d));
+			_.each(this.devices, (d, key) => this.devices[key] = this.getReducedDevice(d));
 		}
 		//this.log('refreshDevices size', this.roughSizeOfObject(this.devices));
 		switch (type) {
 			case 'create':
 			case 'update':
-				if(this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({id:this.devices[device.id].id, $skipCache:true });
-				else this.devices[device.id] = this.getReducedDevice(device);				
+				if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
+					let zone = this.zones[device.zone];
+					try {
+							
+						this.trigger_app_device_available.trigger({
+							deviceName: device.name,
+							deviceId: device.id,
+							available: !!device.available,
+							unavailableMessage: device.unavailableMessage || '',
+							zoneName: zone.name,
+							zoneId: zone.id
+						}, { available: !!device.available, brand:device.driverUri, devicetype:device.driverId });
+					} catch (error) {
+						this.error(error);
+					}
+				}
+				if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
+				else this.devices[device.id] = this.getReducedDevice(device);
 				break;
 			case 'delete':
 				delete this.devices[device.id];
@@ -1156,24 +1258,26 @@ class DeviceSetter extends Homey.App {
 	}
 	getReducedDevice(d) {
 		return {
-			id:d.id,
-			capabilities:d.capabilities,
-			capabilitiesObj:d.capabilitiesObj,
-			class:d.class,
-			driverId:d.driverId,
-			driverUri:d.driverUri,
-			insights:d.insights,
-			name:d.name,
-			zone:d.zone,
-			virtualClass:d.virtualClass
+			available: d.available,
+			unavailableMessage: d.unavailableMessage,
+			id: d.id,
+			capabilities: d.capabilities,
+			capabilitiesObj: d.capabilitiesObj,
+			class: d.class,
+			driverId: d.driverId,
+			driverUri: d.driverUri,
+			insights: d.insights,
+			name: d.name,
+			zone: d.zone,
+			virtualClass: d.virtualClass
 		};
 	}
 	async refreshDrivers(driver, type) {
 		this.log('refreshDrivers');
 		//this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
-		if(!this.drivers || !type) {
-			this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });			
-			_.each(this.drivers, (d,key)=>this.drivers[key] = this.getReducedDriver(d));
+		if (!this.drivers || !type) {
+			this.drivers = await this.homeyAPI.drivers.getDrivers({ $skipCache: true });
+			_.each(this.drivers, (d, key) => this.drivers[key] = this.getReducedDriver(d));
 		}
 		//this.log('refreshDrivers size', this.roughSizeOfObject(this.drivers));
 		switch (type) {
@@ -1188,27 +1292,22 @@ class DeviceSetter extends Homey.App {
 	}
 	getReducedDriver(d) {
 		return {
-			id:d.id,
-			uri:d.uri,
-			name:d.name
-			// ,
-			// class:d.class,
-			// driverId:d.driverId,
-			// driverUri:d.driverUri,
-			// insights:d.insights,
-			// name:d.name,
-			// zone:d.zone,
-			// virtualClass:d.virtualClass
+			id: d.id,
+			uri: d.uri,
+			name: d.name
 		};
 	}
 	async refreshZones(zone, type) {
 		//this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
-		if(!this.zones || !type) this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
+		if (!this.zones || !type) this.zones = await this.homeyAPI.zones.getZones({ $skipCache: true });
 		//this.log('refreshZones size', this.roughSizeOfObject(this.zones));
 		switch (type) {
 			case 'create':
 			case 'update':
-				this.zones[zone.id] = zone;				
+				if (this.zones[zone.id] && this.zones[zone.id].active !== zone.active) {
+					this.trigger_app_zone_activated.trigger({ zoneName: zone.name, zoneId: zone.id, active: zone.active }, { active: zone.active });
+				}
+				this.zones[zone.id] = zone;
 				break;
 			case 'delete':
 				delete this.zones[zone.id];
@@ -1249,7 +1348,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async watchAppState(appId) {
-		try {			
+		try {
 			if (!this.apps || appId === this.manifest.id || !this.apps[appId]) return;
 			const app = this.apps[appId];
 			if (this.Watchers[appId]) {
@@ -1259,7 +1358,7 @@ class DeviceSetter extends Homey.App {
 			}
 			this.watchAppStateUpdate(app);
 		} catch (error) {
-			
+
 		}
 	}
 	async watchAppStateUpdate(app) {

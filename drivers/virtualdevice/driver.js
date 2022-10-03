@@ -1,5 +1,4 @@
 ﻿"use strict";
-const {gzip, ungzip } = require('node-gzip');
 
 //const zlib = require('zlip');
 
@@ -8,7 +7,7 @@ const path = require('path');
 const https = require('https');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
-const { Defer } = require('../../lib/proto');
+const { Defer, gzip, ungzip } = require('../../lib/proto');
 const TYPES = ['status', 'text', 'number', 'button', 'boolean'];
 const CUSTOM_ICONS = [
     'custom_1',  'custom_2',  'custom_3',
@@ -419,83 +418,101 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 				.registerRunListener((async (args, state) => {
                     if (!args || !args.device) return false;
                     let fieldId = args.field? args.field.id : 'status1';
-                    let cap = args.device.getStoreValue(fieldId);
-                    if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
-                    let dontUpdateField = false;
+                    let fieldIds = [fieldId];
                     try {
-                        let value;
-                        let triggerCard;
-                        let statusTextChanged = false;
-                        switch (action) {
-                            case 'virtualdevice_set_text':
-                                if(args.text!==undefined && args.text!=='undefined') value = args.text;
-                                else value = null;
-                                triggerCard = this.triggerFlowText;
-                                break;
-                            case 'virtualdevice_set_number':
-                                if(args.number!==undefined && args.number!=='undefined') value = args.number;                                
-                                else value = null;
-                                triggerCard = this.triggerFlowNumber;
-                                break;
-                            case 'virtualdevice_set_boolean':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
-                                else value = null;
-                                triggerCard = this.triggerFlowBoolean;
-                                break;
-                            case 'virtualdevice_set_button':
-                                if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
-                                else value = null;
-                                triggerCard = this.triggerFlowButton;
-                                break;
-                            case 'virtualdevice_set_status':
-                            case 'virtualdevice_set_status_optionalnumber':                                
-                                triggerCard = this.triggerFlowStatus;
-                                if(args.text!==undefined && args.text!=='undefined') {
-                                    var opt = args.device.getCapabilityOptions(cap);
-					                if (!opt) opt = {};
-                                    if(opt.units!=args.text) {
-                                        statusTextChanged = true;
-                                        //await args.device.setUnavailable('Updating');
-                                        opt.units = args.text;
-                                        await args.device.setCapabilityOptions(cap, opt);
-                                        //await args.device.setAvailable();
-                                    }
-                                    await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
-                                    
-                                }
-                                if(args.number!==undefined && args.number!=='undefined') value = args.number;
-                                else if(action=="virtualdevice_set_status_optionalnumber") value = null;
-                                else dontUpdateField = true;
-                                if(args.refreshmobilebug===true) {
-                                    await args.device.setUnavailable('Updating');
-                                    await args.device.setAvailable();
-                                }
-                                break;
+                        if(fieldId.startsWith('set_all_')) {
+                            fieldIds.length=0;
+                            let type = fieldId.split('_')[2];
+                            const fieldCount = args.device.settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                            for(var i=1;i<=fieldCount;i++){
+                                if(args.device.settings[type+i+'Name'] && args.device.settings[type+i+'Name'].length>0)
+                                fieldIds.push(type+i);
+                            }
                         }
-                        let statusNumberChanged = false;
-                        let statusNumberSet = false;
-                        if(args.device.hasCapability(cap) && !dontUpdateField) {
-                            statusNumberSet = true;
-                            statusNumberChanged = true;
-                            await this.setSecondCapability({ val: value, device:args.device , fieldId});
-                            await args.device.setCapabilityValue(cap, value);
-							// //Remove logs here
-							// let a = await this.homey.insights.getLogs();
-							// let b = a;
-							// //await this.homey.insights.deleteLog({id:secondCap});
-						}
-                        if(args.mode==="executewhencards" && triggerCard) {
-                            let oldValue = args.device.getStoreValue(fieldId+"Value");
-                            statusNumberChanged = statusNumberChanged && oldValue!==value;
-                            if(triggerCard == this.triggerFlowStatus) {
-                                triggerCard.call(this,args.device, args.text , value, { field: { id: fieldId }, textChanged:statusTextChanged, textSet:true, numberChanged:statusNumberChanged, numberSet:statusNumberSet });
-                            } else 
-                            triggerCard.call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        for (let fieldIdIndex = 0; fieldIdIndex < fieldIds.length; fieldIdIndex++) {
+                            const fieldId = fieldIds[fieldIdIndex];
+                            let cap = args.device.getStoreValue(fieldId);
+                            if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
+                            try {                             
+                                let dontUpdateField = false;
+                                let value;
+                                let triggerCard;
+                                let statusTextChanged = false;
+                                switch (action) {
+                                    case 'virtualdevice_set_text':
+                                        if(args.text!==undefined && args.text!=='undefined') value = args.text;
+                                        else value = null;
+                                        triggerCard = this.triggerFlowText;
+                                        break;
+                                    case 'virtualdevice_set_number':
+                                        if(args.number!==undefined && args.number!=='undefined') value = args.number;                                
+                                        else value = null;
+                                        triggerCard = this.triggerFlowNumber;
+                                        break;
+                                    case 'virtualdevice_set_boolean':
+                                        if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                        else value = null;
+                                        triggerCard = this.triggerFlowBoolean;
+                                        break;
+                                    case 'virtualdevice_set_button':
+                                        if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
+                                        else value = null;
+                                        triggerCard = this.triggerFlowButton;
+                                        break;
+                                    case 'virtualdevice_set_status':
+                                    case 'virtualdevice_set_status_optionalnumber':                                
+                                        triggerCard = this.triggerFlowStatus;
+                                        if(args.text!==undefined && args.text!=='undefined') {
+                                            var opt = args.device.getCapabilityOptions(cap);
+                                            if (!opt) opt = {};
+                                            if(opt.units!=args.text) {
+                                                statusTextChanged = true;
+                                                //await args.device.setUnavailable('Updating');
+                                                opt.units = args.text;
+                                                await args.device.setCapabilityOptions(cap, opt);
+                                                //await args.device.setAvailable();
+                                            }
+                                            await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
+                                            
+                                        }
+                                        if(args.number!==undefined && args.number!=='undefined') value = args.number;
+                                        else if(action=="virtualdevice_set_status_optionalnumber") value = null;
+                                        else dontUpdateField = true;
+                                        if(args.refreshmobilebug===true) {
+                                            await args.device.setUnavailable('Updating');
+                                            await args.device.setAvailable();
+                                        }
+                                        break;
+                                }
+                                let statusNumberChanged = false;
+                                let statusNumberSet = false;
+                                if(args.device.hasCapability(cap) && !dontUpdateField) {
+                                    statusNumberSet = true;
+                                    statusNumberChanged = true;
+                                    await this.setSecondCapability({ val: value, device:args.device , fieldId});
+                                    await args.device.setCapabilityValue(cap, value);
+                                    // //Remove logs here
+                                    // let a = await this.homey.insights.getLogs();
+                                    // let b = a;
+                                    // //await this.homey.insights.deleteLog({id:secondCap});
+                                }
+                                if(args.mode==="executewhencards" && triggerCard) {
+                                    let oldValue = args.device.getStoreValue(fieldId+"Value");
+                                    statusNumberChanged = statusNumberChanged && oldValue!==value;
+                                    if(triggerCard == this.triggerFlowStatus) {
+                                        triggerCard.call(this,args.device, args.text , value, { field: { id: fieldId }, textChanged:statusTextChanged, textSet:true, numberChanged:statusNumberChanged, numberSet:statusNumberSet });
+                                    } else 
+                                    triggerCard.call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                                }
+                                await args.device.setStoreValue(fieldId+"Value", value);
+                            
+                            } catch (innerError) {
+                                throw new Error(innerError.message.replaceAll(cap.split('.')[0]+' ', ''));
+                            }   
                         }
-                        await args.device.setStoreValue(fieldId+"Value", value);
                         return true;
 					} catch (error) {
-                        throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+                        throw new Error(error);
 					}
 				}).bind(this));
                 if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) 
@@ -772,18 +789,23 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return false;
     }
 
+    getTypeFromAction(action) {
+        return action.split('_')[2];
+    }
 
 
     registerAutocompleteField(action) {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
+            var type = this.getTypeFromAction(action);// action.split('_')[2];
             var ret = [];
-            var type = action.split('_')[2];            
+            let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
             for(var i=1;i<=fieldCount;i++){
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
+                    if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
@@ -1311,9 +1333,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
             _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
                 let devices = _.filter(_allDevices, (d, dKey)=> 
-                (!_.size(device.actions) || _.find(_actionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.actions, a=>a==ac.id))) && 
-                (!_.size(device.conditions)  || _.find(_conditionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.conditions, a=>a==ac.id))) &&
-                (!_.size(device.triggers)  || _.find(_triggerCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.find(device.triggers, a=>a==ac.id)) ));
+                (!_.size(device.actions) || _.every(device.actions, a=>_.find(_actionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && ac.id===a) )) && 
+                (!_.size(device.conditions)  || _.every(device.conditions, c=>_.find(_conditionCardsDevices, cc=> cc.uri=='homey:device:' + d.id && cc.id===c) )) && //_.find(_conditionCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.every(device.conditions, a=>a==ac.id))) &&
+                (!_.size(device.triggers)  || _.every(device.triggers, t=>_.find(_triggerCardsDevices, tc=> tc.uri=='homey:device:' + d.id && tc.id===t) ))); //_.find(_triggerCardsDevices, ac=> ac.uri=='homey:device:' + d.id && _.every(device.triggers, a=>a==ac.id)) ));
                 // if((devices || device.length===0) && _.size(device.tags) ) devices = _.toArray(allDevices);
                 // if(_.size(device.tags)) devices = _.filter(devices, d=>
                 //     _.find(device.tags, (tag, tagKey)=> _.find(allTokens, t=>t.uri=='homey:device:'+d.id && t.id==tagKey)) 
@@ -1499,8 +1521,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                         }
                                     });
                                     if(device.searchFor) {
-                                        if(card.args[argKey] === device.searchFor)card.args[argKey] = device.searchReplaceWith;
-                                        else if(card.args[argKey].indexOf("[[" + device.searchFor + "]]")>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + device.searchFor + "]]", "[[" + device.searchReplaceWith + "]]"); 
+                                        if(card.args[argKey] === device.searchFor) card.args[argKey] = device.searchReplaceWith;
+                                        else if(card.args[argKey].startsWith(device.searchFor + "|")>-1) card.args[argKey] = card.args[argKey].replaceAll(device.searchFor + "|", device.searchReplaceWith + "|"); 
+                                        else if(card.args[argKey].indexOf("[[" + device.searchFor)>-1) card.args[argKey] = card.args[argKey].replaceAll("[[" + device.searchFor , "[[" + device.searchReplaceWith ); 
                                     }
                                 });
                                 _.each(exchangerFile.usersToReplace, (user)=>{ 
@@ -1534,7 +1557,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 //_.each(exchangerFile.devicesToReplace, (device, deviceId)=>{ if(device.searchFor && c.args[argKey].indexOf("[[" + device.searchFor)>-1)c.args[argKey] = c.args[argKey].replaceAll("[[" + device.searchFor, "[[" + device.searchReplaceWith);  });
                                 if(card.args[argKey].id && card.ownerUri && (card.ownerUri=='homey:manager:presence' || card.ownerUri=='homey:manager:mobile'))
                                     _.each(exchangerFile.usersToReplace, (user)=>{ if(card.args[argKey].id==user.id && user.replaceWith) {card.args[argKey].id = user.replaceWith.id ;card.args[argKey].name = user.replaceWith.name;card.args[argKey].athomId = user.replaceWith.athomId;card.args[argKey].image = user.replaceWith.image; }   });
-                                if(card.args[argKey].id && card.ownerUri && card.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(card.args[argKey].SearchFor && card.args[argKey].id==variable.id && variable.replaceWith) {card.args[argKey].id = variable.replaceWith.id; card.args[argKey].name = variable.replaceWith.name;}  });
+                                if(card.args[argKey].id && card.ownerUri && card.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ if(variable.searchFor && card.args[argKey].id==variable.id && variable.replaceWith) {card.args[argKey].id = variable.replaceWith.id; card.args[argKey].name = variable.replaceWith.name;}  });
                                 
                                 if((card.args[argKey].id || card.args[argKey].name) && card.ownerUri && card.ownerUri.startsWith('homey:app:')) {
                                     _.each(exchangerFile.tokensToReplace, (app)=>{
@@ -1882,7 +1905,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     // await session.nextView();
     let devices = await this.onPairListDevices();
     var device;
-    let useTemplate;
+    //let useTemplate;
     let tefs;
 
     session.setHandler('list_devices', async (data) => {
@@ -1905,8 +1928,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     });
 
     session.setHandler('use_template', async (data) => {
-        useTemplate = data.template;
+        ///useTemplate = data.template;
         tefs = data.tefs;
+        //return this.getCustomIcons();
+        return true;
+    });
+    session.setHandler('use_tef', async (data) => {
+        ///useTemplate = data.template;
+        let tef = await this.getAvdTef(data.tef);
+        let device = devices[0];
+        if(tef.deviceName) device.name = tef.deviceName;
+        tefs = [{tef, device}];
         //return this.getCustomIcons();
         return true;
     });

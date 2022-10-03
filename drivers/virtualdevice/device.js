@@ -169,6 +169,14 @@ module.exports = class WatchDevice extends Homey.Device {
 				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
+		if (fieldId.startsWith('text')) {
+			this.registerCapabilityListener(cap, (async (value, options) => {
+				let oldValue = this.getStoreValue(fieldId+"Value");
+				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
+				await this.setStoreValue(fieldId+"Value", value);
+				this.driver.triggerFlowText(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
+			}).bind(this));
+		}
 	}
 
 

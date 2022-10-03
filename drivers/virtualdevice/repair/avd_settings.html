@@ -17,7 +17,7 @@
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
 
 	<form name="settings" class="main-view" ng-show="!view.id">
-		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';">Open Share Your Device</div>
+		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';" data-i18n="virtualdevicesettings.openShareYourDevice">Open Share Your Device</div>
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
@@ -552,14 +552,14 @@
 		<br><br>
 	</form>
 	<div class="main-buttons" ng-show="!view.id">
-		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid">Save Device</div>
-		<div class="button" ng-click="close()">Close</div>
+		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid"  data-i18n="virtualdevicesettings.saveDevice">Save Device</div>
+		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.close">Close</div>
 	</div>
 
 	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> Export</h2>
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> Import</h2>
-		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> Templates</h2>
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
 			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId')">See the Share Your Device Forum Topic for other AVDs</div>	
@@ -568,27 +568,27 @@
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
 			<div class="group">
 				<div class="value float-right">
-					<div class="button" ng-click="getTextSettings();">Create TEF</div>
-					<div ng-show="vars.tefCopied">(TEF in clipboard allready)</div>
+					<div class="button" ng-click="getTextSettings();" data-i18n="virtualdevicesettings.createTEF">Create TEF</div>
+					<div ng-show="vars.tefCopied" data-i18n="settings.tefInClipboard">(TEF in clipboard allready)</div>
 				</div>
 				<div class="field">
-					<div>Include icons</div>
+					<div data-i18n="virtualdevicesettings.includeIcons">Include icons</div>
 					<input type="checkbox" ng-model="vars.copyWithIcons" />
 				</div>
 				<div class="field">
-					<div>Include flows (enabled only)</div>
+					<div data-i18n="virtualdevicesettings.includeFlows">Include flows (enabled only)</div>
 					<input type="checkbox" ng-model="vars.copyWithFlows" />
 				</div>
 				<!-- <div class="field">
 								<div class="button" ng-click="exportTextSettings();">Export</div>
 							</div> -->
 				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="Press Create TEF" ng-change="blockTextSettings=true"></textarea>
-				</div>				
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2"  placeholder="{{__('virtualdevicesettings.pressCreateTEF') || 'Press Create TEF'}}" ng-change="blockTextSettings=true"></textarea>
+				</div>		
 				<div class="field" ng-show="vars.textSettings">
-					<div class="button field" ng-click="gotoPostTopic();">Post Template</div>
-					<div class="button field" ng-click="gotoHelpTopic();">Ask for help</div>
-					<div class="field">(A pre-typed message will be in your clipboard.)</div>
+					<div class="button field" ng-click="gotoPostTopic();" data-i18n="settings.postTemplate">Post Template</div>
+					<div class="button field" ng-click="gotoHelpTopic();" data-i18n="settings.askForHelp">Ask for help</div>
+					<div class="field" data-i18n="settings.preTypedMessageClipboard">(A pre-typed message will be in your clipboard.)</div>
 				</div>
 			</div>
 		</div>
@@ -596,16 +596,16 @@
 			<div class="field" ng-show="!vars.imported">
 				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 				<div class="field margin-bottom">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="Paste The Exchanger File and press Read Device or Read Flows" ng-change="blockTextSettings=true"></textarea>
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
 				</div>
 			</div>
 			<div class="field">
-				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readTextSettings() : null">Read Device</div>
+				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readTextSettings() : null" data-i18n="virtualdevicesettings.readDevice">Read Device</div>
 				<div class="button" ng-disabled="!vars.textSettings" ng-click="vars.textSettings ? readFlows() : null" data-i18n="settings.readFlows">Read Flows</div>
 			</div>
 			<div class="field" ng-if="vars.readcopy.customIcons">
-				<div class="label">Custom icon</div>
-				<div class="value">Save as</div>
+				<div class="label" data-i18n="virtualdevicesettings.customIcon">Custom icon</div>
+				<div class="value" data-i18n="virtualdevicesettings.saveAs">Save as</div>
 			</div>
 			<div class="field" ng-repeat="(key,item)  in vars.readcopy.customIcons">
 				<div class="label">
@@ -755,9 +755,7 @@
 				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
 				<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 			</div>
-			<div class="field margin-top">
-				Flows that are created will be listed here:
-			</div>
+			<div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
 			<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
 		</div>
 	</form>
@@ -831,12 +829,12 @@
 			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
-				$scope.gotoPostTopic = function() {
-					//if(vars.textSettings)
-					let appsUsed = '';
-					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
+			$scope.gotoPostTopic = function() {
+				//if(vars.textSettings)
+				let appsUsed = '';
+				_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
 
-					let prePost = vars.textSettings ? ('# ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
+				let prePost = vars.textSettings ? ('# ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
 
 Write here what the AVD(s) is/are all about.
 
@@ -858,13 +856,13 @@ ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
-				}
+				if(prePost) copyTextToClipboard(prePost);
+				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
+			}
 
-				$scope.gotoHelpTopic = function() {
-					//if(vars.textSettings)
-					let prePost = vars.textSettings ? ('## Question about: ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
+			$scope.gotoHelpTopic = function() {
+				//if(vars.textSettings)
+				let prePost = vars.textSettings ? ('## Question about: ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
 
 [Write your question here]
 
@@ -878,22 +876,22 @@ ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
-				}
-				
-				$scope.gotoLike = function(template) {
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
-				}
-				$scope.closeTemplates = function() {
-					$scope.view.subid='theflowexchangerimport';
-				}
-				$scope.selectTemplates = function() {
-					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
-				}
-				$scope.backTemplates = function() {
-					vars.template=null;
-				}
+				if(prePost) copyTextToClipboard(prePost);
+				$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
+			}
+			
+			$scope.gotoLike = function(template) {
+				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
+			}
+			$scope.closeTemplates = function() {
+				$scope.view.subid='theflowexchangerimport';
+			}
+			$scope.selectTemplates = function() {
+				vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+			}
+			$scope.backTemplates = function() {
+				vars.template=null;
+			}
 
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
@@ -1229,7 +1227,8 @@ ${vars.textSettings}
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
-				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				//Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
 				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
 					if (err) {
 						console.log(err);
@@ -1263,10 +1262,7 @@ ${vars.textSettings}
 						$scope.vars.createdadvancedflows.push(af);
 					});
 				});
-				// Homey.showLoadingOverlay();
-				// Homey.setTitle( Homey.__("pair.list_icons.title") );
 
-				// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
 
 				console.log('ready');
 				$scope.__ = Homey.__;
