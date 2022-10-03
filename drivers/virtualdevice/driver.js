@@ -43,29 +43,35 @@ const TOPICS = {
     tfe : {
         German:{
             topicId:69584,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus',
+            helpTopicUrl:"https://community.homey.app/t/the-flow-exchange-r-helfen-und-fragen-stellen/69807"
         },
         English:{
             topicId:68981,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         },    
         HCS:{
             topicId:69556,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         }
     },
     avd: {
         German:{
             topicId:69583,
-            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten',
+            helpTopicUrl:"https://community.homey.app/t/app-pro-erweitertes-virtuelles-gerat-device-capabilities-app-mit-eindeutiger-textstatus-anzeige/69806"
         },
         English:{
             topicId:68676,
-            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         },
         HCS:{
             topicId:69558,
-            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         }
     }
 };
@@ -1307,15 +1313,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 });
             });
 
-            let actionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.actions));
-            let conditionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.conditions));
-            let triggerIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.triggers));
+            let actionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.actions), x=>x));
+            let conditionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.conditions), x=>x));
+            let triggerIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.triggers), x=>x));
 
             let _actionCardsDevices = _.filter(actionCards, x=> actionIdsDevices.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:device'));
             let _conditionCardsDevices = _.filter(conditionCards, x=> conditionIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
             let _triggerCardsDevices = _.filter(triggerCards, x=> triggerIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
-            
-            _allDevices = _.filter(_allDevices, (d, dKey)=>
+            //if(actionIdsDevices.length || conditionIdsDevices.length || triggerIdsDevices.length)
+            _allDevices =  _.filter(_allDevices, (d, dKey)=>
                 _.find(_actionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
                 _.find(_conditionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
                 _.find(_triggerCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey)
@@ -1925,6 +1931,40 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             return Buffer.from(await gzip(contents, {level:9})).toString('base64');
         } catch (error) { return undefined; }
     }
+    
+    sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+    async getAvdTef(str) {
+        try {                
+            let exchangerFile = await this.getNormalExchangerFile(str);
+            if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
+            if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
+                if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
+                    if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
+                }
+            }
+                //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
+            
+            // await this.executeForAllTypes(device, async (type, i )=> {
+            //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
+            //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
+            //         let b =device.Settings[type+i+"Icon"];
+            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+            //     }
+            // });
+            return exchangerFile;
+
+            //return JSON.parse(await this.unzip(str));
+        } catch (error) {
+            this.error(error);
+        }
+    }
+
+    
       
     async onPair(session, arg1) {
     // var s = session;
@@ -2080,6 +2120,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             for (let i = 0; i < tefs.length; i++) {
                 const tef = tefs[i];
                 let device = _.find(devices, d=>d.getData().id===tef.device.data.id);
+                tef.realDevice = device;
                 if(!device) {                    
                     let tries = 3;
                     let _try =1;
@@ -2091,25 +2132,34 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         _try++;
                     }
                 }
-                console.log('done_finished device');
                 if(device) {
-                console.log('done_finished device found');
-                let settings = tefs[i].tef.settings;
-                    
+                    let settings = tefs[i].tef.settings;                    
                     settings.imported = 2;
 					settings.deviceIcon = tefs[i].tef.deviceIcon; 
 					settings.customIcons = tefs[i].tef.customIcons;
 					settings.saveCustomIcons = tefs[i].tef.saveCustomIcons;
                     await device.ready();
 
-                    console.log('sleep done');
                     await device.loadFromSettings(settings, device.Settings , [], true);
                 }
                 
             }
         }
-        return true;
+        if(tefs && tefs.length) {
+            await this.loadStuff({reload:true, reloadAf:false});
+            return await this.readAdvancedFlowsJSON({exchangerFile:tefs[0].tef, device:tefs[0].realDevice});
+        }
+        return  null;
         //return {device, devices:_devices};
+    });
+
+    session.setHandler('virtualdevicesettings_updateFlowCommand', async (exchangerFile) => {            
+        try {
+            return await this.updateAdvancedFlowsJSON({exchangerFile});                
+        } catch (error) {                
+            this.error(error);
+        }
+        
     });
 
     session.setHandler('list_icons_selection', async (selectedIcons) => {
@@ -2156,38 +2206,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     // });
     }
 
-
-    sleep(ms) {
-        return new Promise((resolve) => {
-          setTimeout(resolve, ms);
-        });
-      }
-
-    async getAvdTef(str) {
-        try {                
-            let exchangerFile = await this.getNormalExchangerFile(str);
-            if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
-            if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
-                if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
-                    if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
-                }
-            }
-                //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
-            
-            // await this.executeForAllTypes(device, async (type, i )=> {
-            //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
-            //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
-            //         let b =device.Settings[type+i+"Icon"];
-            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-            //     }
-            // });
-            return exchangerFile;
-
-            //return JSON.parse(await this.unzip(str));
-        } catch (error) {
-            this.error(error);
-        }
-    }
 
     async onRepair(session, device) {
         //let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;

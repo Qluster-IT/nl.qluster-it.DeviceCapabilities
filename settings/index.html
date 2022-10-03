@@ -35,7 +35,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 				</div>
 				<div class="field" ng-show="!view.subid">
-					<a data-i18n="settings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287')">See the Device Capabilities Forum Topic for explanations or if you seek any help with The Exchanger or Templates.</a>
+					<a data-i18n="settings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl(vars.activeTopic.helpTopicUrl)">See the Device Capabilities Forum Topic for explanations or if you seek any help with The Exchanger or Templates.</a>
 				</div>
 				<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchanger Files.</div>
@@ -541,7 +541,7 @@ ${vars.textSettings}
 ` ): '';
 
 					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287/last');
+					$scope.openUrl(vars.activeTopic.helpTopicUrl + '/last');
 				}
 
 				$scope.gotoLike = function(template) {

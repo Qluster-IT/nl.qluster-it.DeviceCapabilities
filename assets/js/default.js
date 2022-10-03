@@ -2,29 +2,35 @@ const TOPICS = {
     tfe : {
         German:{
             topicId:69584,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus',
+            helpTopicUrl:"https://community.homey.app/t/the-flow-exchange-r-helfen-und-fragen-stellen/69807"
         },
         English:{
             topicId:68981,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         },    
         HCS:{
             topicId:69556,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         }
     },
     avd: {
         German:{
             topicId:69583,
-            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten',
+            helpTopicUrl:"https://community.homey.app/t/app-pro-erweitertes-virtuelles-gerat-device-capabilities-app-mit-eindeutiger-textstatus-anzeige/69806"
         },
         English:{
             topicId:68676,
-            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         },
         HCS:{
             topicId:69558,
-            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         }
     }
 };

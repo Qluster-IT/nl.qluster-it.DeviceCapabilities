@@ -182,7 +182,10 @@
 		"done":{
 			"title":"One moment please",
 			"creating_device":"Your New Virtual Device is Being Created.",
-			"done":"Done!"
+			"done":"Done!",
+
+			"avds_are_created":"The AVD(s) have been created!",
+			"flow_available_in_template":"There are flows in the template that was used, you can create a script for it here now."
 		},
 		"buttons":{
 			"save_use":"Save & use"

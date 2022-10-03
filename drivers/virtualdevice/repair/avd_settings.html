@@ -21,7 +21,7 @@
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
-		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198')">See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates.</a>
+		<a data-i18n="virtualdevicesettings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl(vars.activeTopic.helpTopicUrl)">See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates.</a>
 		<h1 data-i18n="virtualdevicesettings.titleAlso" class="top-labels">Also</h1>
 		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing
 			save, might be hard for Homey and could take a while.</div>
@@ -877,7 +877,7 @@ ${vars.textSettings}
 ` ): '';
 
 				if(prePost) copyTextToClipboard(prePost);
-				$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
+				$scope.openUrl(vars.activeTopic.helpTopicUrl + '/last');
 			}
 			
 			$scope.gotoLike = function(template) {
@@ -1102,7 +1102,7 @@ ${vars.textSettings}
 						}
 						$scope.$apply(function () {
 							$scope.vars.readflow = result;
-							$scope.vars.readflow.apiCommand = '';							
+							$scope.vars.readflow.apiCommand = '';
 						});
 					});
 				}

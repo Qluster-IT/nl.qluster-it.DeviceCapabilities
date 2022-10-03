@@ -145,20 +145,21 @@
 
 </script>
 
-<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
+<div id="avdiconsCtrl" ng-app="avdcreate" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
 	<div ng-show="!view.id">
-		<div class="field">
-			<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
-			<div class="field margin-bottom">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+		<div class="field" ng-show="!vars.imported">
+			<div class="field">
+				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
+				<div class="field margin-bottom">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+				</div>
+			</div>
+			<div class="field alert" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
+				
+			<div class="field">
+				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
 			</div>
 		</div>
-		<div class="field alert" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
-			
-		<div class="field">
-			<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
-		</div>
-
 		<div style="margin-top:20px;">
 			<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';">Choose a Template <i class="fa fa-icon fa-stream"></i></h2>
 			<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
@@ -294,7 +295,7 @@
 	// let tooltipModule = angular.module('tooltipModule', []);
 	// tooltipModule;
 
-	angular.module('avdicons', ['ngSanitize'])
+	angular.module('avdcreate', ['ngSanitize'])
 		.controller("avdiconsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
 			console.log('controller started');
 			$SCOPE = $scope;
