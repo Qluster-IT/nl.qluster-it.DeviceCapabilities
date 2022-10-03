@@ -9,504 +9,502 @@
 
 <script src='../../../assets/js/vue.min.js'></script>
 
-<div class="hy-view visible" data-id="icons">
-	<style>
-		[v-cloak] {
-			display: none;
-		}
+<style>
+	[v-cloak] {
+		display: none;
+	}
 
 
-		#icons-list {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			background-color: white;
-		}
+	#icons-list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		background-color: white;
+	}
 
-		.icon.tile {
-			display: inline-block;
-			height: 100%;
-			align-items: center;
-			justify-content: center;
-			margin: 2.5px;
-		}
+	.icon.tile {
+		display: inline-block;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		margin: 2.5px;
+	}
 
-		.icon.tile .icon.bg {
-			width: 6.5em;
-			height: 4.5em;
-			-webkit-mask-size: contain;
-			-webkit-mask-position: center center;
-			-webkit-mask-repeat: no-repeat;
-			background: #333;
-			vertical-align: middle;
-			flex: 0 0 auto;
-			margin-left: auto;
-			margin-right: auto;
-		}
+	.icon.tile .icon.bg {
+		width: 6.5em;
+		height: 4.5em;
+		-webkit-mask-size: contain;
+		-webkit-mask-position: center center;
+		-webkit-mask-repeat: no-repeat;
+		background: #333;
+		vertical-align: middle;
+		flex: 0 0 auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-		.icon.tile .icon.id {
-			text-align: center;
-			font-size: 20px;
-			margin-top: 10px;
+	.icon.tile .icon.id {
+		text-align: center;
+		font-size: 20px;
+		margin-top: 10px;
 
-		}
+	}
 
-		#preview-outerframe {
-			display: none;
-			width: 100%;
-			margin-top: 20px;
-			text-align: center;
-			margin: 0 auto;
-			padding: 10px;
-		}
+	#preview-outerframe {
+		display: none;
+		width: 100%;
+		margin-top: 20px;
+		text-align: center;
+		margin: 0 auto;
+		padding: 10px;
+	}
 
-		#preview-innerframe img {
-			width: 125px;
-			height: 125px;
-			padding: 20px;
-		}
+	#preview-innerframe img {
+		width: 125px;
+		height: 125px;
+		padding: 20px;
+	}
 
-		.category {
-			margin-top: 40px;
-		}
+	.category {
+		margin-top: 40px;
+	}
 
 
-	</style>
-	<script>
+</style>
+<script>
 
-		let $SCOPE;
-		var imgBase64 = '';
-		Homey.showLoadingOverlay();
-		Homey.setTitle(Homey.__("pair.list_icons.title"));
+	let $SCOPE;
+	var imgBase64 = '';
+	Homey.showLoadingOverlay();
+	Homey.setTitle(Homey.__("pair.list_icons.title"));
 
-		$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
+	$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
 
-		Homey.emit('list_icons', null, function (err, result) {
-			console.log('list_icons');
+	Homey.emit('list_icons', null, function (err, result) {
+		console.log('list_icons');
 
-			new Vue({
-				el: '#icon_list',
-				data: {
-					iconCategories: result,
-				},
-				mounted() {
-					Homey.hideLoadingOverlay();
-				},
-				methods: {
-					setIcon(icon) {
-						let name = undefined;
-						try {
-							name = $('#name').val();
-							console.log(name);
-						} catch (error) { }
-						Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
-							if (err) {
-								console.log(err);
-								return;
-							}
-							Homey.nextView();
-						});
-					}
+		new Vue({
+			el: '#icon_list',
+			data: {
+				iconCategories: result,
+			},
+			mounted() {
+				Homey.hideLoadingOverlay();
+			},
+			methods: {
+				setIcon(icon) {
+					let name = undefined;
+					try {
+						name = $('#name').val();
+						console.log(name);
+					} catch (error) { }
+					Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
+						if (err) {
+							console.log(err);
+							return;
+						}
+						Homey.nextView();
+					});
 				}
+			}
+		});
+	});
+
+	$('#save-icon').click(function () {
+		let name = undefined;
+		try {
+			name = $('#name').val();
+			console.log(name);
+		} catch (error) { }
+		Homey.emit('icon_save', { image: imgBase64, name: name })
+			.then(result => {
+				Homey.nextView();
+			})
+			.catch(error => {
+				Homey.alert(error.message, 'error');
+				Homey.done()
 			});
-		});
-
-		$('#save-icon').click(function () {
-			let name = undefined;
-			try {
-				name = $('#name').val();
-				console.log(name);
-			} catch (error) { }
-			Homey.emit('icon_save', { image: imgBase64, name: name })
-				.then(result => {
-					Homey.nextView();
-				})
-				.catch(error => {
-					Homey.alert(error.message, 'error');
-					Homey.done()
-				});
-		});
+	});
 
 
-		function loadIcon(event) {
-			const img = event.target.files[0];
-			const preview = document.getElementById('preview');
-			const reader = new FileReader();
-			reader.readAsDataURL(img);
-			reader.onload = () => {
-				imgBase64 = reader.result;
-				preview.src = imgBase64;
-				if (imgBase64.length > 1048000) return Homey.alert(Homey.__("imagetolarge", "Image size is too large"), 'error');
-				$("#preview-outerframe").show();
-				$('#save-icon').prop('disabled', false);
-				return;
-			};
-		}
+	function loadIcon(event) {
+		const img = event.target.files[0];
+		const preview = document.getElementById('preview');
+		const reader = new FileReader();
+		reader.readAsDataURL(img);
+		reader.onload = () => {
+			imgBase64 = reader.result;
+			preview.src = imgBase64;
+			if (imgBase64.length > 1048000) return Homey.alert(Homey.__("imagetolarge", "Image size is too large"), 'error');
+			$("#preview-outerframe").show();
+			$('#save-icon').prop('disabled', false);
+			return;
+		};
+	}
 
-	</script>
+</script>
 
-	<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
-		<div ng-show="!view.id">
-			<div class="field">
-				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
-				<div class="field margin-bottom">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
+	<div ng-show="!view.id">
+		<div class="field">
+			<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
+			<div class="field margin-bottom">
+				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+			</div>
+		</div>
+		<div class="field alert" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
+			
+		<div class="field">
+			<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
+		</div>
+
+		<div style="margin-top:20px;">
+			<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';">Choose a Template <i class="fa fa-icon fa-stream"></i></h2>
+			<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
+		</div>
+
+		<div ng-show="vars.selectedtemplate">
+			<div class="field">Template used:</div>
+			<div class="field">{{vars.selectedtemplate.header}}</div>
+			<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
+
+
+
+			<div class="field" ng-repeat="tef in vars.selectedtefs">
+				<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
+				<div style="margin-top:20px;" class="field">
+					<input type="text" id="name" ng-model="tef.device.name" />
 				</div>
-			</div>
-			<div class="field alert" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
-				
-			<div class="field">
-				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
-			</div>
-
-			<div style="margin-top:20px;">
-				<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';">Choose a Template <i class="fa fa-icon fa-stream"></i></h2>
-				<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
-			</div>
-
-			<div ng-show="vars.selectedtemplate">
-				<div class="field">Template used:</div>
-				<div class="field">{{vars.selectedtemplate.header}}</div>
-				<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
-
-
-
-				<div class="field" ng-repeat="tef in vars.selectedtefs">
-					<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
-					<div style="margin-top:20px;" class="field">
-						<input type="text" id="name" ng-model="tef.device.name" />
-					</div>
-					<div class="field" ng-if="tef.customIcons.length>0">
-						<div class="label">Custom icon</div>
-						<div class="value">Save as</div>
-					</div>
-					<div class="field" ng-repeat="(key,item)  in tef.customIcons">
-						<div class="label">
-							<img class="custom-icon" src="{{item}}"></img>
-							<div>{{key}}</div>
-						</div>
-						<select class="value" ng-model="tef.saveCustomIcons[key]">
-							<option value="">Don't save</option>
-							<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
-						</select>
-					</div>
+				<div class="field" ng-if="tef.customIcons.length>0">
+					<div class="label">Custom icon</div>
+					<div class="value">Save as</div>
 				</div>
-
-				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
+				<div class="field" ng-repeat="(key,item)  in tef.customIcons">
+					<div class="label">
+						<img class="custom-icon" src="{{item}}"></img>
+						<div>{{key}}</div>
+					</div>
+					<select class="value" ng-model="tef.saveCustomIcons[key]">
+						<option value="">Don't save</option>
+						<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
+					</select>
 				</div>
 			</div>
 
-			<div ng-show="!vars.selectedtemplate">
-				<div style="margin-top:20px;">
-					<span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>
-					<input type="text" id="name" ng-model="vars.device.name" />
-				</div>
-				<div style="margin-top:20px;">
-					<span data-i18n="pair.list_icons.set_icon_and_customize"></span>
-					<span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
-				</div>
-				<div style="margin-top:20px;">
-					<span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br />
-					<div class="form-group" style="margin-top:10px;">
-						<input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
-					</div>
-					<div id="preview-outerframe" style="margin-top:10px;">
-						<div id="preview-innerframe">
-							<img id="preview" />
-						</div>
-					</div>
-					<div class="form-group buttons" style="margin-top:10px;">
-						<button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
-					</div>
-				</div>
-
-				<div style="margin-top:20px;">
-					<span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br />
-
-					<ul id="icon_list">
-						<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-							<h1 class="category-title" v-html="cat.title"></h1>
-							<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-								<label for="icon" class="icon-wrap">
-									<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
-								</label>
-							</div>
-						</div>
-					</ul>
-
-					<!-- <ul id="icon_list">
-          <div v-for="(cat, index) in iconCategories" :key="index" class="category">
-            <h1  class="category-title">{{cat.title}}</h1>
-            <div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-              <label for="icon" class="icon-wrap">
-                <div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
-                <div class="icon id">{{item.subid}}</div>
-              </label>
-            </div>
-          </div>
-        </ul>  -->
-				</div>
+			<div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
 			</div>
 		</div>
 
-		<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
-			<div ng-show="!vars.template">
-				<div class="field filter">
-					<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
-					<div class="source-popup" ng-class="{active:view.showlanguage}">
-						<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
-					</div>
-					<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
-					<div class="float-right sorting">
-						<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-						<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-						<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-						<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+		<div ng-show="!vars.selectedtemplate">
+			<div style="margin-top:20px;">
+				<span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>
+				<input type="text" id="name" ng-model="vars.device.name" />
+			</div>
+			<div style="margin-top:20px;">
+				<span data-i18n="pair.list_icons.set_icon_and_customize"></span>
+				<span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
+			</div>
+			<div style="margin-top:20px;">
+				<span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br />
+				<div class="form-group" style="margin-top:10px;">
+					<input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+				</div>
+				<div id="preview-outerframe" style="margin-top:10px;">
+					<div id="preview-innerframe">
+						<img id="preview" />
 					</div>
 				</div>
-				<div class="panel">
-					<div class="field" style="margin-bottom:30px;">
-						<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
-						<h1>Here you can select a template</h1>
-					</div>
-					<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
-						<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
-						<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
-					</div>
-				</div>
-				<div class="main-buttons ">
-					<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+				<div class="form-group buttons" style="margin-top:10px;">
+					<button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
 				</div>
 			</div>
-			<div class="template-panel" ng-show="vars.template">
-				<div class="content">&nbsp;</div>
-				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
-					<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
-					<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
-				</div>
+
+			<div style="margin-top:20px;">
+				<span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br />
+
+				<ul id="icon_list">
+					<div v-for="(cat, index) in iconCategories" :key="index" class="category">
+						<h1 class="category-title" v-html="cat.title"></h1>
+						<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
+							<label for="icon" class="icon-wrap">
+								<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
+							</label>
+						</div>
+					</div>
+				</ul>
+
+				<!-- <ul id="icon_list">
+		<div v-for="(cat, index) in iconCategories" :key="index" class="category">
+		<h1  class="category-title">{{cat.title}}</h1>
+		<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
+			<label for="icon" class="icon-wrap">
+			<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
+			<div class="icon id">{{item.subid}}</div>
+			</label>
+		</div>
+		</div>
+	</ul>  -->
 			</div>
-		</form>
+		</div>
 	</div>
 
-	<script type="text/javascript">
-		// let tooltipModule = angular.module('tooltipModule', []);
-		// tooltipModule;
+	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+		<div ng-show="!vars.template">
+			<div class="field filter">
+				<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
+				<div class="source-popup" ng-class="{active:view.showlanguage}">
+					<div class="field language" ng-repeat="topic in topicsArray" ng-click="setSource(topic.key);view.showlanguage=false;" ng-class="{active:vars.activeTopic.key==topic.key}">{{topic.key}}</div>
+				</div>
+				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
+				<div class="float-right sorting">
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+				</div>
+			</div>
+			<div class="panel">
+				<div class="field" style="margin-bottom:30px;">
+					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
+					<h1>Here you can select a template</h1>
+				</div>
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
+					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
+				</div>
+			</div>
+			<div class="main-buttons ">
+				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+			</div>
+		</div>
+		<div class="template-panel" ng-show="vars.template">
+			<div class="content">&nbsp;</div>
+			<div class="main-buttons">
+				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
+				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
+			</div>
+		</div>
+	</form>
+</div>
 
-		angular.module('avdicons', ['ngSanitize'])
-			.controller("avdiconsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
-				console.log('controller started');
-				$SCOPE = $scope;
-				scope = $scope;
-				//let Homey = _homey
-				$scope.s = {};
-				$scope.orderBy = {orderBy:'favorite'};
-				$scope.filter = {header:''};
-				
-				$scope.topics = TOPICS.avd;
-				$scope.topicsArray = TOPICS.avd;
-				_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
-				$scope.topicsArray = _.toArray($scope.topics);
+<script type="text/javascript">
+	// let tooltipModule = angular.module('tooltipModule', []);
+	// tooltipModule;
 
-				const vars = $scope.vars = { textSettings:undefined};
-				$scope.temp = {};
+	angular.module('avdicons', ['ngSanitize'])
+		.controller("avdiconsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
+			console.log('controller started');
+			$SCOPE = $scope;
+			scope = $scope;
+			//let Homey = _homey
+			$scope.s = {};
+			$scope.orderBy = {orderBy:'favorite'};
+			$scope.filter = {header:''};
+			
+			$scope.topics = TOPICS.avd;
+			$scope.topicsArray = TOPICS.avd;
+			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+			$scope.topicsArray = _.toArray($scope.topics);
 
-				$scope.gotoLike = function(template) {
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
+			const vars = $scope.vars = { textSettings:undefined};
+			$scope.temp = {};
+
+			$scope.gotoLike = function(template) {
+				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
+			}
+			$scope.closeTemplates = function() {
+				$scope.view.id=undefined; view.subid=undefined;
+			}
+			$scope.selectTemplates = function() {
+				vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+			}
+			$scope.backTemplates = function() {
+				vars.template=null;
+			}
+			
+			$scope.toggleFavorite = function (template) {
+				if (vars.favoriteTemplates[template.number]) {
+					delete vars.favoriteTemplates[template.number];
+					template.favorite = true;
 				}
-				$scope.closeTemplates = function() {
-					$scope.view.id=undefined; view.subid=undefined;
+				else {
+					vars.favoriteTemplates[template.number] = true;
+					template.favorite = false;
 				}
-				$scope.selectTemplates = function() {
-					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
-				}
-				$scope.backTemplates = function() {
-					vars.template=null;
-				}
-				
-				$scope.toggleFavorite = function (template) {
-					if (vars.favoriteTemplates[template.number]) {
-						delete vars.favoriteTemplates[template.number];
-						template.favorite = true;
-					}
-					else {
-						vars.favoriteTemplates[template.number] = true;
-						template.favorite = false;
-					}
-					if (typeof (Homey) !== 'undefined') {
-						Homey.emit('saveAvdTemplatesFavorites', vars.favoriteTemplates, function (err, result) {
-							if (err) return console.log(err);
-						});
-					}
-				}
-
-
-
-				$scope.refreshTemplates = function () {
-					vars.templatesRefreshing = true;
-					Homey.emit('refreshAvdTemplates', function (err, result) {
-						vars.templatesRefreshing = false;
+				if (typeof (Homey) !== 'undefined') {
+					Homey.emit('saveAvdTemplatesFavorites', vars.favoriteTemplates, function (err, result) {
 						if (err) return console.log(err);
-						$scope.$apply(function () {
-							$scope.vars.tefTemplates = result;
-							_.each(result, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
-						});
 					});
 				}
-				$scope.getTefTemplates = function () {
-					Homey.emit('getAvdTemplates', function (err, result) {
-						if (err) return Homey.alert(err);
-						$scope.$apply(function () {
-							$scope.vars.tefTemplates = result;
-						});
+			}
+
+
+
+			$scope.refreshTemplates = function () {
+				vars.templatesRefreshing = true;
+				Homey.emit('refreshAvdTemplates', function (err, result) {
+					vars.templatesRefreshing = false;
+					if (err) return console.log(err);
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result;
+						_.each(result, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
 					});
-				}
-
-				$scope.readTextSettings = function () {
-					$scope.view.id = '';
-					showOverlay();
-					Homey.emit('virtualdeviceicons_getTefs', { template: $scope.vars.selectedtemplate, device: $scope.vars.device }, function (err, result) {
-						hideOverlay();
-						if (err) {
-							console.log(err);
-							return;
-						}
-						$scope.$apply(function () {
-							$scope.vars.selectedtefs = result.tefs;
-						});
+				});
+			}
+			$scope.getTefTemplates = function () {
+				Homey.emit('getAvdTemplates', function (err, result) {
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						$scope.vars.tefTemplates = result;
 					});
-				}
+				});
+			}
 
-
-				// $scope.getTefTemplates = function () {
-				// 	Homey.emit('getAvdTemplates', function (err, result) {
-				// 		if (err) return Homey.alert(err);
-				// 		$scope.$apply(function () {
-				// 			$scope.vars.tefTemplates = result.tefTemplates;
-				// 			$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
-				// 			_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-				// 		});
-				// 	});
-				// }
-
-				$scope.openTemplate = function (template) {
-					vars.selectedtemplate = template;
-					if (template && template.post && template.tefs) {
-						$scope.vars.template = template;
-
-						/// Sanitize all posts!!
-						template.post = $sanitize(template.post);
-
-						if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-						else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
-
-						let compiled = $compile(template.sanitizedPost)($scope);
-						$('.content').empty();
-
-						$('.content').append(compiled);
-						$timeout(function () {
-							$scope.$apply(function () {
-								$('.content').scrollTop(0);
-							});
-						}, 1);
-
+			$scope.readTextSettings = function () {
+				$scope.view.id = '';
+				showOverlay();
+				Homey.emit('virtualdeviceicons_getTefs', { template: $scope.vars.selectedtemplate, device: $scope.vars.device }, function (err, result) {
+					hideOverlay();
+					if (err) {
+						console.log(err);
 						return;
 					}
-				}
-
-				$scope.useTemplate = function () {
-					Homey.emit('use_template', { template: $scope.vars.selectedtemplate, tefs: $scope.vars.selectedtefs })
-						.then(result => {
-							Homey.nextView();
-						})
-						.catch(error => {
-							Homey.alert(error.message, 'error');
-							Homey.done();
-						});
-				}
-				$scope.useTEF = function () {
-					Homey.emit('use_tef', { tef: vars.textSettings })
-						.then(result => {
-							Homey.nextView();
-						})
-						.catch(error => {
-							Homey.alert(error.message, 'error');
-							Homey.done();
-						});
-				}
-
-
-
-
-				$scope.size = function (collection) {
-					console.log('size()');
-					return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
-				}
-
-				$scope.openUrl = function (url) {
-					try {
-						Homey.popup(url);
-					} catch (error) {
-
-					}
-				}
-
-
-
-				function showOverlay(str) {
-					Homey.showLoadingOverlay();
-					$('#hy-overlay-loading-message').html(str || '');
-				}
-				function hideOverlay() {
-					Homey.hideLoadingOverlay();
-				}
-
-
-				// $scope.close = function () {
-				// 	$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};
-				// 	Homey.done();
-				// }
-				$scope.log = function (s) {
-					console.log(s);
-				}
-
-				$scope.setSource = function(source) {
-					$scope.vars.activeAvdSource = source || 'English';
-					$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
-					Homey.emit('set:activeAvdSource', source, function (err, result) {
-						if (err) return console.log(err);
-						$scope.getTefTemplates();
+					$scope.$apply(function () {
+						$scope.vars.selectedtefs = result.tefs;
 					});
-				}
-				
+				});
+			}
 
-				/** Start of program */
-				if (typeof Homey !== 'undefined') {
-					Homey.emit('virtualdeviceicons_load', null, function (err, result) {
-						if (err) {
-							console.log(err);
-							return;
-						}
+
+			// $scope.getTefTemplates = function () {
+			// 	Homey.emit('getAvdTemplates', function (err, result) {
+			// 		if (err) return Homey.alert(err);
+			// 		$scope.$apply(function () {
+			// 			$scope.vars.tefTemplates = result.tefTemplates;
+			// 			$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
+			// 			_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+			// 		});
+			// 	});
+			// }
+
+			$scope.openTemplate = function (template) {
+				vars.selectedtemplate = template;
+				if (template && template.post && template.tefs) {
+					$scope.vars.template = template;
+
+					/// Sanitize all posts!!
+					template.post = $sanitize(template.post);
+
+					if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+					else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+
+					let compiled = $compile(template.sanitizedPost)($scope);
+					$('.content').empty();
+
+					$('.content').append(compiled);
+					$timeout(function () {
 						$scope.$apply(function () {
-							$scope.vars.device = result.device;							
-							
-							$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
-							$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
-							
-							$scope.vars.tefTemplates = result.tefTemplates;
-							$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
-							_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+							$('.content').scrollTop(0);
 						});
-					});
+					}, 1);
 
-
-
-
-					function capitalizeFirstLetter(string) {
-						return string.charAt(0).toUpperCase() + string.slice(1);
-					}
+					return;
 				}
-			}]);
-	</script>
-</div>
+			}
+
+			$scope.useTemplate = function () {
+				Homey.emit('use_template', { template: $scope.vars.selectedtemplate, tefs: $scope.vars.selectedtefs })
+					.then(result => {
+						Homey.nextView();
+					})
+					.catch(error => {
+						Homey.alert(error.message, 'error');
+						Homey.done();
+					});
+			}
+			$scope.useTEF = function () {
+				Homey.emit('use_tef', { tef: vars.textSettings })
+					.then(result => {
+						Homey.nextView();
+					})
+					.catch(error => {
+						Homey.alert(error.message, 'error');
+						Homey.done();
+					});
+			}
+
+
+
+
+			$scope.size = function (collection) {
+				console.log('size()');
+				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
+			}
+
+			$scope.openUrl = function (url) {
+				try {
+					Homey.popup(url);
+				} catch (error) {
+
+				}
+			}
+
+
+
+			function showOverlay(str) {
+				Homey.showLoadingOverlay();
+				$('#hy-overlay-loading-message').html(str || '');
+			}
+			function hideOverlay() {
+				Homey.hideLoadingOverlay();
+			}
+
+
+			// $scope.close = function () {
+			// 	$scope.vars = {copyWithIcons : true, copyWithFlows : false, textSettings: null, readcopy:null, readflow:null};
+			// 	Homey.done();
+			// }
+			$scope.log = function (s) {
+				console.log(s);
+			}
+
+			$scope.setSource = function(source) {
+				$scope.vars.activeAvdSource = source || 'English';
+				$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+				Homey.emit('set:activeAvdSource', source, function (err, result) {
+					if (err) return console.log(err);
+					$scope.getTefTemplates();
+				});
+			}
+			
+
+			/** Start of program */
+			if (typeof Homey !== 'undefined') {
+				Homey.emit('virtualdeviceicons_load', null, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					$scope.$apply(function () {
+						$scope.vars.device = result.device;							
+						
+						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
+						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
+						
+						$scope.vars.tefTemplates = result.tefTemplates;
+						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
+						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+					});
+				});
+
+
+
+
+				function capitalizeFirstLetter(string) {
+					return string.charAt(0).toUpperCase() + string.slice(1);
+				}
+			}
+		}]);
+</script>
