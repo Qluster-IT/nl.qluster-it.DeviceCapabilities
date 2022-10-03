@@ -76,7 +76,9 @@
 	let $SCOPE;
 	var imgBase64 = '';
 	Homey.showLoadingOverlay();
-	Homey.setTitle(Homey.__("pair.list_icons.title"));
+	//Homey.setTitle(Homey.__("pair.list_icons.title"));
+	//Homey.setTitle('Apparaat pictogram');
+	Homey.setTitle('______________________ '+Homey.__("pair.list_icons.title")+' ______________________');
 
 	$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
 
@@ -125,7 +127,6 @@
 				Homey.done()
 			});
 	});
-
 
 	function loadIcon(event) {
 		const img = event.target.files[0];

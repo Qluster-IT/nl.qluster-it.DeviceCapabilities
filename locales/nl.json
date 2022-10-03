@@ -64,7 +64,7 @@
 		"flowsThatAreCreated":"Flows die worden gemaakt, worden hier weergegeven:",
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Selecteer een flow en druk op Maken",
-		"pasteTEFReadFlows":"Plak The Exchanger Fileen druk op Lees Flows"
+		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",

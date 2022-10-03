@@ -328,5 +328,8 @@
   },
   "2.6.81" : {
     "en" : "Added: Write [avd] in diagnostic."
+  },
+  "2.6.82" : {
+    "en" : "Temp Fix: Longer titles for Device Setting/Creation views to have Tablets show a normal view."
   }
 }

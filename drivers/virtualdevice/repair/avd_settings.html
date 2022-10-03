@@ -829,12 +829,12 @@
 			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
-				$scope.gotoPostTopic = function() {
-					//if(vars.textSettings)
-					let appsUsed = '';
-					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
+			$scope.gotoPostTopic = function() {
+				//if(vars.textSettings)
+				let appsUsed = '';
+				_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
 
-					let prePost = vars.textSettings ? ('# ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
+				let prePost = vars.textSettings ? ('# ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
 
 Write here what the AVD(s) is/are all about.
 
@@ -856,13 +856,13 @@ ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
-				}
+				if(prePost) copyTextToClipboard(prePost);
+				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
+			}
 
-				$scope.gotoHelpTopic = function() {
-					//if(vars.textSettings)
-					let prePost = vars.textSettings ? ('## Question about: ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
+			$scope.gotoHelpTopic = function() {
+				//if(vars.textSettings)
+				let prePost = vars.textSettings ? ('## Question about: ' + (vars.deviceName ? vars.deviceName : 'Header' ) +`
 
 [Write your question here]
 
@@ -876,22 +876,22 @@ ${vars.textSettings}
 \`\`\`
 ` ): '';
 
-					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
-				}
-				
-				$scope.gotoLike = function(template) {
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
-				}
-				$scope.closeTemplates = function() {
-					$scope.view.subid='theflowexchangerimport';
-				}
-				$scope.selectTemplates = function() {
-					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
-				}
-				$scope.backTemplates = function() {
-					vars.template=null;
-				}
+				if(prePost) copyTextToClipboard(prePost);
+				$scope.openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198/last');
+			}
+			
+			$scope.gotoLike = function(template) {
+				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
+			}
+			$scope.closeTemplates = function() {
+				$scope.view.subid='theflowexchangerimport';
+			}
+			$scope.selectTemplates = function() {
+				vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+			}
+			$scope.backTemplates = function() {
+				vars.template=null;
+			}
 
 			$scope.numberShowAs = asv_settings.numberShowAs;
 			$scope.textShowAs = asv_settings.textShowAs;
@@ -1227,7 +1227,8 @@ ${vars.textSettings}
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
-				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				//Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
 				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
 					if (err) {
 						console.log(err);
@@ -1261,10 +1262,7 @@ ${vars.textSettings}
 						$scope.vars.createdadvancedflows.push(af);
 					});
 				});
-				// Homey.showLoadingOverlay();
-				// Homey.setTitle( Homey.__("pair.list_icons.title") );
 
-				// $('#hy-overlay-loading-message').html( Homey.__("pair.list_icons.loading") );
 
 				console.log('ready');
 				$scope.__ = Homey.__;
