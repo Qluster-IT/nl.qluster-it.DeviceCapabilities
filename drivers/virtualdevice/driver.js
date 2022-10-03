@@ -309,6 +309,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         /// Get Compressed Icon File
         if(false) {
+            //Dont forget to add and remove the Icons to the App
+            // and get it from: 
             let strCompressedFile = '';
             let _path = './assets/icons/';
             let filesandfolders = await app.readdir(_path);
@@ -334,6 +336,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }
             //const buf = new Buffer(strCompressedFile, 'base64');
             app.writeFile('./userdata/icons.compressed', strCompressedFile);
+            let zipped = await gzip(strCompressedFile);
+            app.writeFile('./userdata/icons.zipped', zipped);
         }
 
         ///  Load all default icons into a array
@@ -341,7 +345,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
             
             //save all files from compressed icon files first
-            let compressedIcons = await app.readFile('./assets/icons.compressed', 'utf8');
+            let zippedIcons = await app.readFile('./assets/icons.zipped');
+            let compressedIcons = (await ungzip(zippedIcons)).toString('utf8');
             let icons = compressedIcons.split('\r\n\r\n');
             icons.pop();
             if(!(await app.exists(`${defaultPath}`))) await app.mkdir(`${defaultPath}`);
@@ -423,9 +428,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         if(fieldId.startsWith('set_all_')) {
                             fieldIds.length=0;
                             let type = fieldId.split('_')[2];
-                            const fieldCount = args.device.settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                            const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
                             for(var i=1;i<=fieldCount;i++){
-                                if(args.device.settings[type+i+'Name'] && args.device.settings[type+i+'Name'].length>0)
+                                if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0)
                                 fieldIds.push(type+i);
                             }
                         }
@@ -522,32 +527,49 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         var virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
-            let fieldId = args.field.id;
-            let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
-            if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
-            cap = args.device.getStoreValue(fieldId) || cap;
-            let type = this.getTypeFromField(fieldId);
-            //let  energy = args.device.getEnergy();
+            let _fieldId = args.field ? args.field.id : undefined;
+            let fieldIds = [_fieldId];
             try {
-                let oldValue = args.device.getStoreValue(fieldId+"Value");
-                let value = null;
-                        
-                if(args.expression!==undefined && args.expression!=='undefined') {
-                    value = app.runSandBox(args.expression);                
+                if(_fieldId.startsWith('set_all_')) {
+                    fieldIds.length=0;
+                    let type = _fieldId.split('_')[2];
+                    const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                    for(var i=1;i<=fieldCount;i++){
+                        if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0)
+                        fieldIds.push(type+i);
+                    }
                 }
-                await this.setSecondCapability({ val:value, device:args.device , fieldId});
-                await args.device.setCapabilityValue(cap, value);
-                await args.device.setStoreValue(fieldId+"Value", value);
+                for (let fieldIdIndex = 0; fieldIdIndex < fieldIds.length; fieldIdIndex++) {
+                    let fieldId = fieldIds[fieldIdIndex];
+                    
+                    let cap = fieldId && fieldId.indexOf('.')>-1 ? fieldId : args.device.getStoreValue(fieldId);
+                    if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
+                    
+                    cap = args.device.getStoreValue(fieldId) || cap;
+                    let type = this.getTypeFromField(fieldId);
+                    //let  energy = args.device.getEnergy();
+                    try {
+                        let oldValue = args.device.getStoreValue(fieldId+"Value");
+                        let value = null;
+                                
+                        if(args.expression!==undefined && args.expression!=='undefined') {
+                            value = app.runSandBox(args.expression);                
+                        }
+                        await this.setSecondCapability({ val:value, device:args.device , fieldId});
+                        await args.device.setCapabilityValue(cap, value);
+                        await args.device.setStoreValue(fieldId+"Value", value);
 
-                if(args.mode==="executewhencards") {
-                    if(type=="status")this.triggerFlowStatus(args.device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
-                    else if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        if(args.mode==="executewhencards") {
+                            if(type=="status")this.triggerFlowStatus(args.device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
+                            else if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        }                   
+                    } catch (error) {
+                        throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+                    }
                 }
-                return true;                    
-            } catch (error) {
-                //this.log('action_virtualdevice_set_name:');
-                //this.error(error);
-                throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+                return true; 
+            } catch(err) {                
+                throw new Error(err);
             }
         });
         virtualdevice_set_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
@@ -611,7 +633,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
             }
         });
-        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
+        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false}));
 
 
             this.homey.settings.on('set', (async function(settingName) {
@@ -813,26 +835,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
           return ret;
         };
     }
-    registerAutocompleteFieldExpression() {
+    registerAutocompleteFieldExpression({useSetAll} = {}) {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
             let ret = [];
+            let retSetAll = [];
             let caps = args.device.getCapabilities();
             let types = ['status', 'text', 'number', 'boolean', 'button'];
             for (let k = 0; k < types.length; k++) {
-                const type = types[k];
+                const type = types[k];                
+                let actionAllSet = false;
                 const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
                 for(let i=1;i<=fieldCount;i++){
                     let cap = args.device.getStoreValue(type + i);
                     if(cap) {
+                        if(!actionAllSet && useSetAll!==false && type!=='status') actionAllSet = retSetAll.push | retSetAll.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
+                    
                         var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : 'unknown';
                         ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
                     
                 }
             }
-            
+            if(retSetAll.length) ret = _.union(retSetAll, ret);
           return ret;
         };
     }

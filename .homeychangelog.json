@@ -331,5 +331,11 @@
   },
   "2.6.82" : {
     "en" : "Temp Fix: Longer titles for Device Setting/Creation views to have Tablets show a normal view."
+  },
+  "2.6.83" : {
+    "en" : "Added: Set All Field/Fields to all Set cards (set Number has an All Numbers, etc.)."
+  },
+  "2.6.84" : {
+    "en" : "Reducced: Default Icons file further reduced."
   }
 }
