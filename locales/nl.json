@@ -64,7 +64,10 @@
 		"flowsThatAreCreated":"Flows die worden gemaakt, worden hier weergegeven:",
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Selecteer een flow en druk op Maken",
-		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows"
+		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",
+		
+		"no_avd_in_tef":"TEF bevat geen AVD.",
+		"flows_will_be_created":"De volgende flows worden in het script aangemaakt."
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",
@@ -158,7 +161,8 @@
 		"pressCreateTEF":"Druk op TEF aanmaken",
 		"readDevice":"Lees Apparaat",
 		"saveAs":"Opslaan als",
-		"customIcon":"Aangepast pictogram"
+		"customIcon":"Aangepast pictogram",
+		"finish":"Gereed"
 
 
 	},
@@ -170,13 +174,20 @@
 			"select_device_icon":"Of kies er een uit de lijst.",
 			"set_icon_and_customize":"Hier kunt u een pictogram voor het Geavanceerde Virtuele Apparaten instellen, door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
 			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
-			"set_name":"Hier kunt u de naam van het apparaat instellen:"
+
+			"set_name":"Hier kunt u de naam van het apparaat instellen:",			
+			"create_device_self":"Of maak zelf een apparaat aan",
+			"choose_template":"Of kies een sjabloon"
 		},
 
 		"done":{
 			"title":"Een ogenblik alstublieft",
 			"creating_device":"Uw nieuwe virtuele apparaat wordt aangemaakt.",
-			"done":"Gereed!"
+			"done":"Gereed!",
+
+			"avds_are_created":"De AVD('s) zijn aangemaakt!",
+			"flow_available_in_template":"Er zijn flows in de sjabloon die werd gebruikt, u kunt hier nu een script voor aanmaken.",
+			"title_flows":"Flow script aanmaken"
 		},
 		"buttons":{
 			"save_use":"Opslaan en gebruiken"

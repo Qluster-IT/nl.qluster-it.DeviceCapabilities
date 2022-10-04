@@ -9,7 +9,7 @@
         </div>
         <div ng-if="vars.readflow">
             <div class="field margin-top margin-bottom">
-                <div class="field">The following flows will be created in the script.</div>
+                <div class="field" data-i18n="settings.flows_will_be_created">The following flows will be created in the script.</div>
                 <div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
                     <div class="label large"><input class="text" type="text" ng-model="item.name" /></div>
                     <div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
@@ -144,7 +144,7 @@
         <div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
     </form>
     <div class="main-buttons">
-		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.close">Close</div>
+		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.finish">Finish</div>
 	</div>
 </div>
 

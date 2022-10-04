@@ -30,9 +30,9 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger">
 				<div class="field text-center">
-					<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
-					<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
-					<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 				</div>
 				<div class="field" ng-show="!view.subid">
 					<a data-i18n="settings.labelTopicLink" class="top-labels margin-bottom" ng-click="openUrl(vars.activeTopic.helpTopicUrl)">See the Device Capabilities Forum Topic for explanations or if you seek any help with The Exchanger or Templates.</a>
@@ -70,7 +70,6 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				</div>
 
 				<div class="field" ng-show="view.subid=='theflowexchangerimport'">
-					<!-- <div class="link" data-i18n="settings.theflowexchanger.click_templates">Click here for templates</div> -->
 					<div ng-show="!vars.imported">
 						<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 						<div class="field">
@@ -80,7 +79,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					</div>
 					<div ng-if="vars.readflow">
 						<div class="field margin-top margin-bottom">
-							<div class="field">The following flows will be created in the script.</div>
+							<div class="field" data-i18n="settings.flows_will_be_created">The following flows will be created in the script.</div>
 							<div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
 								<div class="label large"><input class="text" type="text" ng-model="item.name" /></div>
 								<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>

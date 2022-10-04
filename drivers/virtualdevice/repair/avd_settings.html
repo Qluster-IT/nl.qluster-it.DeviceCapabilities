@@ -557,9 +557,9 @@
 	</div>
 
 	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_export" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
-		<h2 class="top-button" data-i18n="settings.title_theflowexchanger_import" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
-		<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
+		<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+		<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+		<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
 			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId')">See the Share Your Device Forum Topic for other AVDs</div>	
@@ -624,7 +624,7 @@
 			</div>
 			<div ng-if="vars.readflow">
 				<div class="field margin-top margin-bottom">
-					<div class="field">The following flows will be created in the script.</div>
+					<div class="field" data-i18n="settings.flows_will_be_created">The following flows will be created in the script.</div>
 					<div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
 						<div class="label large"><input class="text" type="text" ng-model="item.name" /></div>
 						<div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>

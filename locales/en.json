@@ -65,9 +65,9 @@
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Select a flow and press Create",
 		"pasteTEFReadFlows":"Paste The Exchanger File and press Read Flows",
-		"":"",
-		"":"",
-		"":"",
+		
+		"no_avd_in_tef":"TEF does not contains an AVD.",
+		"flows_will_be_created":"The following flows will be created in the script.",
 		"":""
 	},
 	"virtualdevicesettings":{
@@ -162,7 +162,7 @@
 		"readDevice":"Read Device",
 		"saveAs":"Save as",
 		"customIcon":"Custom icon",
-		"":"",
+		"finish":"Finish",
 		"":"",
 		"":"",
 		"":""
@@ -176,7 +176,12 @@
 			"set_icon_and_customize":"Here you can pick an icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
 			"set_icon_and_customize_change" : "You can change the icon later through App Settings.",
 
-			"set_name":"Here you can set the name for the device:"
+			"set_name":"Here you can set the name for the device:",
+			"create_device_self":"Or create a device yourself",
+			"choose_template":"Or choose a Template",
+			"":"",
+			"":"",
+			"":""
 		},
 
 		"done":{
@@ -185,7 +190,8 @@
 			"done":"Done!",
 
 			"avds_are_created":"The AVD(s) have been created!",
-			"flow_available_in_template":"There are flows in the template that was used, you can create a script for it here now."
+			"flow_available_in_template":"There are flows in the template that was used, you can create a script for it here now.",
+			"title_flows":"Create Flow Script"
 		},
 		"buttons":{
 			"save_use":"Save & use"
