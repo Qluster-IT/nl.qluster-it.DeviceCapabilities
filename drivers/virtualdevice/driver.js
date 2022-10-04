@@ -43,29 +43,35 @@ const TOPICS = {
     tfe : {
         German:{
             topicId:69584,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-tauschen-sie-ihre-flows-mit-anderen-aus',
+            helpTopicUrl:"https://community.homey.app/t/the-flow-exchange-r-helfen-und-fragen-stellen/69807"
         },
         English:{
             topicId:68981,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         },    
         HCS:{
             topicId:69556,
-            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others'
+            topicUrl:'https://community.homey.app/t/the-flow-exchange-r-hcs-edition-exchange-your-flows-with-others',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-device-capabilities-enhance-the-capabilities-of-devices/43287'
         }
     },
     avd: {
         German:{
             topicId:69583,
-            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten'
+            topicUrl:'https://community.homey.app/t/teilen-sie-ihr-gerat-erweiterte-virtuelle-gerate-aus-den-geratefahigkeiten',
+            helpTopicUrl:"https://community.homey.app/t/app-pro-erweitertes-virtuelles-gerat-device-capabilities-app-mit-eindeutiger-textstatus-anzeige/69806"
         },
         English:{
             topicId:68676,
-            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         },
         HCS:{
             topicId:69558,
-            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities'
+            topicUrl:'https://community.homey.app/t/share-your-device-hcs-edition-advanced-virtual-devices-from-device-capabilities',
+            helpTopicUrl:'https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198'
         }
     }
 };
@@ -309,6 +315,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         /// Get Compressed Icon File
         if(false) {
+            //Dont forget to add and remove the Icons to the App
+            // and get it from: 
             let strCompressedFile = '';
             let _path = './assets/icons/';
             let filesandfolders = await app.readdir(_path);
@@ -334,6 +342,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }
             //const buf = new Buffer(strCompressedFile, 'base64');
             app.writeFile('./userdata/icons.compressed', strCompressedFile);
+            let zipped = await gzip(strCompressedFile);
+            app.writeFile('./userdata/icons.zipped', zipped);
         }
 
         ///  Load all default icons into a array
@@ -341,7 +351,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
             
             //save all files from compressed icon files first
-            let compressedIcons = await app.readFile('./assets/icons.compressed', 'utf8');
+            let zippedIcons = await app.readFile('./assets/icons.zipped');
+            let compressedIcons = (await ungzip(zippedIcons)).toString('utf8');
             let icons = compressedIcons.split('\r\n\r\n');
             icons.pop();
             if(!(await app.exists(`${defaultPath}`))) await app.mkdir(`${defaultPath}`);
@@ -423,9 +434,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         if(fieldId.startsWith('set_all_')) {
                             fieldIds.length=0;
                             let type = fieldId.split('_')[2];
-                            const fieldCount = args.device.settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                            const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
                             for(var i=1;i<=fieldCount;i++){
-                                if(args.device.settings[type+i+'Name'] && args.device.settings[type+i+'Name'].length>0)
+                                if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0)
                                 fieldIds.push(type+i);
                             }
                         }
@@ -522,32 +533,49 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         var virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
-            let fieldId = args.field.id;
-            let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
-            if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
-            cap = args.device.getStoreValue(fieldId) || cap;
-            let type = this.getTypeFromField(fieldId);
-            //let  energy = args.device.getEnergy();
+            let _fieldId = args.field ? args.field.id : undefined;
+            let fieldIds = [_fieldId];
             try {
-                let oldValue = args.device.getStoreValue(fieldId+"Value");
-                let value = null;
-                        
-                if(args.expression!==undefined && args.expression!=='undefined') {
-                    value = app.runSandBox(args.expression);                
+                if(_fieldId.startsWith('set_all_')) {
+                    fieldIds.length=0;
+                    let type = _fieldId.split('_')[2];
+                    const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                    for(var i=1;i<=fieldCount;i++){
+                        if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0)
+                        fieldIds.push(type+i);
+                    }
                 }
-                await this.setSecondCapability({ val:value, device:args.device , fieldId});
-                await args.device.setCapabilityValue(cap, value);
-                await args.device.setStoreValue(fieldId+"Value", value);
+                for (let fieldIdIndex = 0; fieldIdIndex < fieldIds.length; fieldIdIndex++) {
+                    let fieldId = fieldIds[fieldIdIndex];
+                    
+                    let cap = fieldId && fieldId.indexOf('.')>-1 ? fieldId : args.device.getStoreValue(fieldId);
+                    if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
+                    
+                    cap = args.device.getStoreValue(fieldId) || cap;
+                    let type = this.getTypeFromField(fieldId);
+                    //let  energy = args.device.getEnergy();
+                    try {
+                        let oldValue = args.device.getStoreValue(fieldId+"Value");
+                        let value = null;
+                                
+                        if(args.expression!==undefined && args.expression!=='undefined') {
+                            value = app.runSandBox(args.expression);                
+                        }
+                        await this.setSecondCapability({ val:value, device:args.device , fieldId});
+                        await args.device.setCapabilityValue(cap, value);
+                        await args.device.setStoreValue(fieldId+"Value", value);
 
-                if(args.mode==="executewhencards") {
-                    if(type=="status")this.triggerFlowStatus(args.device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
-                    else if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        if(args.mode==="executewhencards") {
+                            if(type=="status")this.triggerFlowStatus(args.device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
+                            else if(this['triggerFlow'+this.capitalizeFirstLetter(type)]) this['triggerFlow'+this.capitalizeFirstLetter(type)].call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
+                        }                   
+                    } catch (error) {
+                        throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+                    }
                 }
-                return true;                    
-            } catch (error) {
-                //this.log('action_virtualdevice_set_name:');
-                //this.error(error);
-                throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+                return true; 
+            } catch(err) {                
+                throw new Error(err);
             }
         });
         virtualdevice_set_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
@@ -611,7 +639,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
             }
         });
-        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
+        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false}));
 
 
             this.homey.settings.on('set', (async function(settingName) {
@@ -813,26 +841,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
           return ret;
         };
     }
-    registerAutocompleteFieldExpression() {
+    registerAutocompleteFieldExpression({useSetAll} = {}) {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
             let ret = [];
+            let retSetAll = [];
             let caps = args.device.getCapabilities();
             let types = ['status', 'text', 'number', 'boolean', 'button'];
             for (let k = 0; k < types.length; k++) {
-                const type = types[k];
+                const type = types[k];                
+                let actionAllSet = false;
                 const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
                 for(let i=1;i<=fieldCount;i++){
                     let cap = args.device.getStoreValue(type + i);
                     if(cap) {
+                        if(!actionAllSet && useSetAll!==false && type!=='status') actionAllSet = retSetAll.push | retSetAll.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
+                    
                         var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : 'unknown';
                         ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
                     
                 }
             }
-            
+            if(retSetAll.length) ret = _.union(retSetAll, ret);
           return ret;
         };
     }
@@ -1281,15 +1313,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 });
             });
 
-            let actionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.actions));
-            let conditionIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.conditions));
-            let triggerIdsDevices = _.uniqBy(_.flatMap(devicesToReplace, d=>d.triggers));
+            let actionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.actions), x=>x));
+            let conditionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.conditions), x=>x));
+            let triggerIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.triggers), x=>x));
 
             let _actionCardsDevices = _.filter(actionCards, x=> actionIdsDevices.indexOf(x.id)>-1 && x.uri && x.uri.startsWith('homey:device'));
             let _conditionCardsDevices = _.filter(conditionCards, x=> conditionIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
             let _triggerCardsDevices = _.filter(triggerCards, x=> triggerIdsDevices.indexOf(x.id)>-1 &&  x.uri && x.uri.startsWith('homey:device'));
-            
-            _allDevices = _.filter(_allDevices, (d, dKey)=>
+            //if(actionIdsDevices.length || conditionIdsDevices.length || triggerIdsDevices.length)
+            _allDevices =  _.filter(_allDevices, (d, dKey)=>
                 _.find(_actionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
                 _.find(_conditionCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey) ||
                 _.find(_triggerCardsDevices, x=>x.uri && x.uri=='homey:device:'+dKey)
@@ -1899,6 +1931,40 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             return Buffer.from(await gzip(contents, {level:9})).toString('base64');
         } catch (error) { return undefined; }
     }
+    
+    sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+    async getAvdTef(str) {
+        try {                
+            let exchangerFile = await this.getNormalExchangerFile(str);
+            if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
+            if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
+                if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
+                    if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
+                }
+            }
+                //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
+            
+            // await this.executeForAllTypes(device, async (type, i )=> {
+            //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
+            //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
+            //         let b =device.Settings[type+i+"Icon"];
+            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+            //     }
+            // });
+            return exchangerFile;
+
+            //return JSON.parse(await this.unzip(str));
+        } catch (error) {
+            this.error(error);
+        }
+    }
+
+    
       
     async onPair(session, arg1) {
     // var s = session;
@@ -2054,6 +2120,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             for (let i = 0; i < tefs.length; i++) {
                 const tef = tefs[i];
                 let device = _.find(devices, d=>d.getData().id===tef.device.data.id);
+                tef.realDevice = device;
                 if(!device) {                    
                     let tries = 3;
                     let _try =1;
@@ -2065,25 +2132,34 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         _try++;
                     }
                 }
-                console.log('done_finished device');
                 if(device) {
-                console.log('done_finished device found');
-                let settings = tefs[i].tef.settings;
-                    
+                    let settings = tefs[i].tef.settings;                    
                     settings.imported = 2;
 					settings.deviceIcon = tefs[i].tef.deviceIcon; 
 					settings.customIcons = tefs[i].tef.customIcons;
 					settings.saveCustomIcons = tefs[i].tef.saveCustomIcons;
                     await device.ready();
 
-                    console.log('sleep done');
                     await device.loadFromSettings(settings, device.Settings , [], true);
                 }
                 
             }
         }
-        return true;
+        if(tefs && tefs.length) {
+            await this.loadStuff({reload:true, reloadAf:false});
+            return await this.readAdvancedFlowsJSON({exchangerFile:tefs[0].tef, device:tefs[0].realDevice});
+        }
+        return  null;
         //return {device, devices:_devices};
+    });
+
+    session.setHandler('virtualdevicesettings_updateFlowCommand', async (exchangerFile) => {            
+        try {
+            return await this.updateAdvancedFlowsJSON({exchangerFile});                
+        } catch (error) {                
+            this.error(error);
+        }
+        
     });
 
     session.setHandler('list_icons_selection', async (selectedIcons) => {
@@ -2130,38 +2206,6 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     // });
     }
 
-
-    sleep(ms) {
-        return new Promise((resolve) => {
-          setTimeout(resolve, ms);
-        });
-      }
-
-    async getAvdTef(str) {
-        try {                
-            let exchangerFile = await this.getNormalExchangerFile(str);
-            if(exchangerFile.deviceIcon && exchangerFile.deviceIcon.startsWith('H4s')) exchangerFile.deviceIcon = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.deviceIcon, 'base64');
-            if(exchangerFile.customIcons)  for (const customKey in exchangerFile.customIcons) {
-                if (Object.hasOwnProperty.call(exchangerFile.customIcons, customKey)) {
-                    if(exchangerFile.customIcons[customKey] && exchangerFile.customIcons[customKey].startsWith("H4s")) exchangerFile.customIcons[customKey] = "data:image/svg+xml;base64," + await this.unzip(exchangerFile.customIcons[customKey], 'base64');
-                }
-            }
-                //exchangerFile.deviceIcon = this.unzip(exchangerFile.deviceIcon);
-            
-            // await this.executeForAllTypes(device, async (type, i )=> {
-            //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
-            //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
-            //         let b =device.Settings[type+i+"Icon"];
-            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
-            //     }
-            // });
-            return exchangerFile;
-
-            //return JSON.parse(await this.unzip(str));
-        } catch (error) {
-            this.error(error);
-        }
-    }
 
     async onRepair(session, device) {
         //let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens;

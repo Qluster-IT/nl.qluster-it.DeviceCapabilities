@@ -1,63 +1,264 @@
-<div class="hy-view visible" data-id="icons"><style>
-    [v-cloak] {
-        display: none;
-    }
 
 
-    #icons-list {
-        display:flex;
-        flex-wrap:wrap;
-        justify-content: center;
-        background-color:white;
-    }
-    .icon.tile {
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: center;
-        margin: 2.5px;
-    }
+<div id="avddoneCtrl" ng-app="avdcreate" ng-controller="avddoneCtrl as avddone" class="non-setting-view">
+    <form name="theflowexchanger"  id="theflowexchanger" class="main-view" ng-show="view.subid=='theflowexchangerimport'">        
+        <div class="field">
+            <span  data-i18n="pair.done.avds_are_created">The AVD(s) have been created!</span><br/>
+            <br/>
+            <span  data-i18n="pair.done.flow_available_in_template">There are flows in the template that was used, you can create a script for it here now.</span>
+        </div>
+        <div ng-if="vars.readflow">
+            <div class="field margin-top margin-bottom">
+                <div class="field" data-i18n="settings.flows_will_be_created">The following flows will be created in the script.</div>
+                <div class="field" ng-repeat="(key,item)  in vars.readflow.advancedflows">
+                    <div class="label large"><input class="text" type="text" ng-model="item.name" /></div>
+                    <div class="label">{{item.cardlength ? item.cardlength : (item.cardlength = size(item.cards))}} cards</div>
+                </div>
+            </div>
+            <div class="margin-top" data-i18n="settings.change_missing_items">Select which flows, zones, devices, users, variables, tags or apptokens you
+                want to replace with which of your own in the flow(s) script that is created.</div>
+            <div class="field bold" ng-if="vars.readflow.flowsToReplace.length>0">
+                <div class="label" data-i18n="settings.flow">Flow</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="flow  in vars.readflow.flowsToReplace">
+                <div class="field" ng-repeat="item  in flow.types">
+                    <div class="label">{{item.name}} {{item.id!=''? '(' + item.id + ')' : ''}}</div>
+                    <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                        <option value="" data-i18n="settings.dontChange">Don't change</option>
+                        <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field bold" ng-if="vars.readflow.zonesToReplace.length>0">
+                <div class="label" data-i18n="settings.zones">Zones</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="item  in vars.readflow.zonesToReplace">
+                <div class="label">{{item.name}}</div>
+                <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                    <option value="" data-i18n="settings.dontChange">Don't change</option>
+                    <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                </select>
+            </div>
+            <div class="field bold" ng-if="vars.readflow.devicesToReplace.length>0">
+                <div class="label" data-i18n="settings.devices">Devices</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
+                <div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
+                <select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
+                    <option value="" data-i18n="settings.dontChange">Don't change</option>
+                    <option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                </select>
+                <div class="field" ng-repeat="item  in device.tags">
+                    <div class="label padding-left">{{item.name}}</div>
+                    <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                        <option value="" data-i18n="settings.dontChange">Don't change</option>
+                        <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                    </select>
+                </div>
+                <!-- <div class="field" ng-repeat="item  in vars.readflow.devicesToReplace">
+                    <div class="label">{{item && item.name ? (item.name + ' (' + item.class + ')') : key}}</div>
+                    <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                        <option value="">Don't change</option>
+                        <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                    </select>
+                </div> -->
+            </div>
+            <div class="field bold margin-top" ng-if="vars.readflow.usersToReplace.length>0">
+                <div class="label" data-i18n="settings.users">Users</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="item  in vars.readflow.usersToReplace">
+                <div class="label">{{item.name}}</div>
+                <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);" required>
+                    <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                </select>
+            </div>
+            <div class="field bold margin-top" ng-if="vars.readflow.variablesToReplace.length>0">
+                <div class="label" data-i18n="settings.variables">Variables</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="item  in vars.readflow.variablesToReplace">
+                <div class="label">{{item.name}}</div>
+                <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                    <option value="" data-i18n="settings.dontChange">Don't change</option>
+                    <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">{{replacement.name}}</option>
+                </select>
+                <div class="field" ng-if="item.replaceWithId===-1">
+                    <input type="text" ng-model="item.replaceWith.newName">
+                </div>
+            </div>
+            <div class="field bold margin-top" ng-if="vars.readflow.tokensToReplace.length>0">
+                <div class="label" data-i18n="settings.appTokens">App Tokens</div>
+                <div class="value" data-i18n="settings.replaceWith">Replace with</div>
+            </div>
+            <div class="field" ng-repeat="app  in vars.readflow.tokensToReplace">
+                <div ng-if="app.tokens.length>0 || app.args.length>0 || app.types.length>0">
+                    <div class="label">{{app.name}}</div>
+                    <div class="field" ng-repeat="item  in app.tokens">
+                        <div class="label">{{item.name}}</div>
+                        <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                            <option value="" data-i18n="settings.dontChange">Don't change</option>
+                            <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+                                {{replacement.name}}</option>
+                        </select>
+                    </div>
+                    <div class="field" ng-repeat="item  in app.args">
+                        <div class="label">{{item.name}}</div>
+                        <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                            <option value="" data-i18n="settings.dontChange">Don't change</option>
+                            <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+                                {{replacement.name}}</option>
+                        </select>
+                        <div class="field" ng-if="item.replaceWithId===-1">
+                            <input type="text" ng-model="item.replaceWith.newName">
+                        </div>
+                    </div>
+                    <div class="field" ng-repeat="item  in app.types">
+                        <div class="label">{{item.name}}</div>
+                        <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                            <option value="" data-i18n="settings.dontChange">Don't change</option>
+                            <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+                                {{replacement.name}}</option>
+                        </select>
+                        <div class="field" ng-if="item.replaceWithId===-1">
+                            <input type="text" ng-model="item.replaceWith.newName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid" data-i18n="settings.updateText">Update Text</div>
+            </div>
+        </div>
+        
+        <div class="field">
+            <textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
+        </div>			<div class="field margin-top margin-bottom">
+            Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+            <div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
+        </div>
+        <div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
+        <div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
+    </form>
+    <div class="main-buttons">
+		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.finish">Finish</div>
+	</div>
+</div>
 
-    .icon.tile .icon.bg {
-        width: 5em;
-        height: 5em;
-    }
 
+<script type="text/javascript">
+    console.log('angular starting');
+    angular.module('avdcreate') //tooltipModule
+		.controller("avddoneCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
+			console.log('AVD done Controller started');
+			scope = $scope;
+			$scope.s = {};
+			$scope.temp = {};
+			$scope.view = {id:undefined, subid:undefined};
+						
+			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
+				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
-</style>
-<script>
+            Homey.setTitle( Homey.__("pair.done.title") );            
+            showOverlay(Homey.__("pair.done.creating_device"));
+            
+            
+            Homey.emit('done', null, function (err, obj) {
+                if(obj.devices) {
 
-    Homey.showLoadingOverlay();
-    Homey.setTitle( Homey.__("pair.done.title") );
+                    let promises = [];
 
-    $('#hy-overlay-loading-message').html( Homey.__("pair.done.creating_device") );
+                    let devices = obj.devices;
+                    let devicesCreated = 0;
+                    for (let i = 0; i < devices.length; i++) {                
+                        Homey.createDevice(devices[i], (err, res) => {
+                            if (err) return console.log(err);
+                            devicesCreated+=1;
+                            if(devicesCreated===devices.length) Homey.emit('done_finished', null, function (err, result) {
+                                if (err) return console.log(err);
+                                $scope.view.subid='theflowexchangerimport';
+                                Homey.setTitle( Homey.__("pair.done.title_flows") );
+				                Homey.hideLoadingOverlay();
+                                $scope.$apply(function () {
+                                    $scope.vars.readflow = result;
+                                    $scope.vars.readflow.apiCommand = '';
+                                });
+                                //Homey.done(devices);
+                            });
+                        });
+                    }
+                }else {
+                    Homey.createDevice(obj.device, (err, res) => {
+                        if (err) return console.log(err);
+                        Homey.done();
+                    });
+                }
 
-    Homey.emit('done', null, function (err, obj) {
-        if(obj.devices) {
-
-            let promises = [];
-
-            let devices = obj.devices;
-            let devicesCreated = 0;
-            for (let i = 0; i < devices.length; i++) {                
-                Homey.createDevice(devices[i], (err, res) => {
-                    if (err) return console.log(err);
-                    devicesCreated+=1;
-                    if(devicesCreated===devices.length) Homey.emit('done_finished', null, function (err, obj) {
-                    if (err) return console.log(err);
-                    Homey.done(devices);
-                });
-                });
-            }
-        }else {
-            Homey.createDevice(obj.device, (err, res) => {
-                if (err) return console.log(err);
-                Homey.done();
             });
-        }
+
+
+            $scope.updateFlows = function() {
+				if(typeof(Homey)!=='undefined') 
+					showOverlay();
+					Homey.emit('virtualdevicesettings_updateFlowCommand', $scope.vars.readflow, function (err, result) {
+						hideOverlay();
+						if (err) {
+							console.log(err);
+							return;
+						}
+						$scope.$apply(function () {
+							$scope.vars.readflow.apiCommand = result.apiCommand;
+							copyTextToClipboard(result.apiCommand);
+							$scope.vars.scriptCopied = true;
+							//$scope.vars.createdadvancedflows.length = 0;
+						});
+					});
+			}
+
+            $scope.updateReadFlow = function(item) {
+				$scope.vars.readflow.apiCommand = '';
+				$scope.vars.scriptCopied = false;
+				if (!item) return;
+				if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+			}
+			
+
+			$scope.size = function (collection) {
+				console.log('size()');
+				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
+			}
+
+			$scope.openUrl = function (url) {
+				try {
+					Homey.popup(url);	
+				} catch (error) {
+					
+				} 
+				//.focus();
+				//Homey.openURL(url);
+			}
+			$scope.log = function (s) {
+				console.log(s);
+			}
+            $scope.close = function () {
+				Homey.done();
+			}
+            
+			function showOverlay(str) {
+				Homey.showLoadingOverlay();
+				$('#hy-overlay-loading-message').html(str || '');
+			}
+			function hideOverlay() {
+				Homey.hideLoadingOverlay();
+			}
+            
+    }]);
+
+    angular.element(function() {
+      angular.bootstrap(document.getElementById('avddoneCtrl'), ['avdcreate']);
     });
 
-    
 </script>
-
-<div id="all-icons"  data-i18n="pair.done.done">Done!</div>

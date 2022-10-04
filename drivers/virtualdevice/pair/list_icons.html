@@ -78,7 +78,8 @@
 	Homey.showLoadingOverlay();
 	//Homey.setTitle(Homey.__("pair.list_icons.title"));
 	//Homey.setTitle('Apparaat pictogram');
-	Homey.setTitle('______________________ '+Homey.__("pair.list_icons.title")+' ______________________');
+	
+	//Homey.setTitle('______________________ '+Homey.__("pair.list_icons.title")+' ______________________');
 
 	$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
 
@@ -145,59 +146,66 @@
 
 </script>
 
-<div id="avdiconsCtrl" ng-app="avdicons" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
+<div id="avdiconsCtrl" ng-app="avdcreate" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
 	<div ng-show="!view.id">
-		<div class="field">
-			<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
-			<div class="field margin-bottom">
-				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+		<div class="field border-line padding-bottom" ng-show="!vars.imported">
+			<div class="field">
+				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
+				<div class="field margin-bottom">
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" ng-attr-placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+				</div>
+			</div>
+			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
+				
+			<div class="field">
+				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
 			</div>
 		</div>
-		<div class="field alert" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
-			
-		<div class="field">
-			<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
-		</div>
+		<div class="double-margin-top padding-bottom">
+			<div>
+				<h2 class="top-button" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';"><span data-i18n="pair.list_icons.choose_template">Or choose a Template</span> <i class="fa fa-icon fa-stream"></i></h2>
+				<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
+			</div>
 
-		<div style="margin-top:20px;">
-			<h2 class="top-button" data-i18n="settings.theflowexchanger.click_templates" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';">Choose a Template <i class="fa fa-icon fa-stream"></i></h2>
-			<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
-		</div>
-
-		<div ng-show="vars.selectedtemplate">
-			<div class="field">Template used:</div>
-			<div class="field">{{vars.selectedtemplate.header}}</div>
-			<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
+			<div ng-show="vars.selectedtemplate">
+				<div class="field">Template used:</div>
+				<div class="field">{{vars.selectedtemplate.header}}</div>
+				<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
 
 
 
-			<div class="field" ng-repeat="tef in vars.selectedtefs">
-				<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
-				<div style="margin-top:20px;" class="field">
-					<input type="text" id="name" ng-model="tef.device.name" />
-				</div>
-				<div class="field" ng-if="tef.customIcons.length>0">
-					<div class="label">Custom icon</div>
-					<div class="value">Save as</div>
-				</div>
-				<div class="field" ng-repeat="(key,item)  in tef.customIcons">
-					<div class="label">
-						<img class="custom-icon" src="{{item}}"></img>
-						<div>{{key}}</div>
+				<div class="field" ng-repeat="tef in vars.selectedtefs">
+					<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
+					<div style="margin-top:20px;" class="field">
+						<input type="text" id="name" ng-model="tef.device.name" />
 					</div>
-					<select class="value" ng-model="tef.saveCustomIcons[key]">
-						<option value="">Don't save</option>
-						<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
-					</select>
+					<div class="field" ng-if="tef.customIcons.length>0">
+						<div class="label">Custom icon</div>
+						<div class="value">Save as</div>
+					</div>
+					<div class="field" ng-repeat="(key,item)  in tef.customIcons">
+						<div class="label">
+							<img class="custom-icon" src="{{item}}"></img>
+							<div>{{key}}</div>
+						</div>
+						<select class="value" ng-model="tef.saveCustomIcons[key]">
+							<option value="">Don't save</option>
+							<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="main-buttons">
+					<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
 				</div>
 			</div>
-
-			<div class="main-buttons">
-				<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
-			</div>
 		</div>
+		<div class="border-line" ng-show="!vars.selectedtemplate"></div>
 
 		<div ng-show="!vars.selectedtemplate">
+			<div style="margin-top:20px;">
+				<span data-i18n="pair.list_icons.create_device_self">Or create a device yourself</span>
+			</div>			
 			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>
 				<input type="text" id="name" ng-model="vars.device.name" />
@@ -294,9 +302,11 @@
 	// let tooltipModule = angular.module('tooltipModule', []);
 	// tooltipModule;
 
-	angular.module('avdicons', ['ngSanitize'])
+	angular.module('avdcreate', ['ngSanitize'])
 		.controller("avdiconsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
 			console.log('controller started');
+			
+			$scope.__ = Homey.__;
 			$SCOPE = $scope;
 			scope = $scope;
 			//let Homey = _homey

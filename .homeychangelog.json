@@ -331,5 +331,26 @@
   },
   "2.6.82" : {
     "en" : "Temp Fix: Longer titles for Device Setting/Creation views to have Tablets show a normal view."
+  },
+  "2.6.83" : {
+    "en" : "Added: Set All Field/Fields to all Set cards (set Number has an All Numbers, etc.)."
+  },
+  "2.6.84" : {
+    "en" : "Reduced: Default Icons file further reduced."
+  },
+  "2.6.85" : {
+    "en" : "Added: German Help/Question Topics for AVD and for The Flow Exchange(r)."
+  },
+  "2.6.86" : {
+    "en" : "Improved: German Help/Question Topics for AVD and for The Flow Exchange(r)."
+  },
+  "2.7.0" : {
+    "en" : "Improved: Flow Script creation at the end of AVD creation from template."
+  },
+  "2.7.1" : {
+    "en" : "Bugfixed."
+  },
+  "2.7.2" : {
+    "en" : "Improved: Translations."
   }
 }

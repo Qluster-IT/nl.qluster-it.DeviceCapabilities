@@ -171,8 +171,17 @@ a {
     margin-top: 10px;
 }
 
+.double-margin-top {
+    margin-top: 20px;
+}
 .margin-bottom {
     margin-bottom: 10px;
+}
+.padding-bottom {   
+    padding-bottom: 10px!important;
+}
+.border-line {
+    border-bottom:1px solid grey;
 }
 
 #preview-outerframe {
