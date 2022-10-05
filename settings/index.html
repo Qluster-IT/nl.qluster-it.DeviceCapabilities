@@ -498,6 +498,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					let tefType = vars.flowName && vars.deviceName ? 'AVD,FLOWS' : vars.flowName ? 'FLOWS' : vars.deviceName ? 'AVD' : 'UNKNOWN';
 					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
 					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+[]()
+[]()
 
 Write here what the flow(s) is/are all about.
 
