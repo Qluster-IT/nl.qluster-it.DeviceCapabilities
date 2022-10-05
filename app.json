@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.3",
+  "version": "2.7.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2962,6 +2962,94 @@
               "en": "Advanced Virtual Device",
               "nl": "Geadvanceerd Virtueel Apparaat",
               "de": "Erweitertes Virtuelles Gerät"
+            }
+          }
+        ]
+      },      
+      {
+        "id": "action_app_get_flows_containing",
+        "title": {
+          "en": "Get Flows containing any objects",
+          "nl": "Schrijf in diagnostisch rapport",
+          "de": "Write in Diagnostic"
+        },
+        "titleFormatted": {
+          "en": "Get Flows containing [[objecttype]], filtered: [[filter]]",
+          "nl": "Get Flows containing [[objecttype]], filtered: [[filter]]",
+          "de": "Get Flows containing [[objecttype]], filtered: [[filter]]"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "objecttype",
+            "title": {
+              "en": "Object Type",
+              "nl": "Geadvanceerd Virtueel Apparaat",
+              "de": "Erweitertes Virtuelles Gerät"
+            },
+            "placeholder": {
+              "en": "object type",
+              "nl": "object type",
+              "de": "object type"
+            },
+            "values": [
+              {
+                "id": "devices",
+                "label": {
+                  "en": "Devices",
+                  "nl": "Apparaten",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "apps",
+                "label": {
+                  "en": "Apps",
+                  "nl": "Apps",
+                  "de": "Apps"
+                }
+              },
+              {
+                "id": "variables",
+                "label": {
+                  "en": "Variables",
+                  "nl": "Variabelen",
+                  "de": "Variables"
+                }
+              },
+              {
+                "id": "zones",
+                "label": {
+                  "en": "Zones",
+                  "nl": "Ruimten",
+                  "de": "Zones"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "name": "filter",
+            "required":false,
+            "title": {
+              "en": "Filter",
+              "nl": "Filter",
+              "de": "Filter"
+            },
+            "placeholder": {
+              "en": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
+              "nl": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
+              "de": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "flows",
+            "type": "string",
+            "title": {
+              "en": "Flows (json)",
+              "nl": "Flows (json)"
             }
           }
         ]
