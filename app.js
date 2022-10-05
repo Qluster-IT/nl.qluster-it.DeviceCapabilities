@@ -14,6 +14,7 @@ const { promisify } = require('util');
 const fs = require('fs');
 
 const sandbox = require('./lib/sandbox');
+const FindObject = require("./lib/TheFindObjectsinFlowsScript");
 
 
 const SETTING_PREFIX = 'icons_';
@@ -525,6 +526,19 @@ class DeviceSetter extends Homey.App {
 		});
 		action_app_writeindiagnostic.getArgument('avd').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
 		
+
+		var action_app_get_flows_containing = this.homey.flow.getActionCard('action_app_get_flows_containing').registerRunListener(async (args, state) => {
+			try {
+				let filter = args.filter;
+				if(filter && ((filter.startsWith('{') && filter.endsWith('}')) || (filter.startsWith('[') && filter.endsWith(']')))) filter = JSON.parse(filter);
+				return {flows:JSON.stringify(await FindObject(args.objecttype, filter, this.homeyAPI))};
+			} catch (error) {
+				this.log('action_app_get_flows_containing:');
+				this.error(error);
+			}
+		});
+		
+
 
 
 

@@ -162,10 +162,7 @@
 		"readDevice":"Gerät einlesen",
 		"saveAs":"Speichern unter",
 		"customIcon":"Eigenes Symbol",
-		"finish":"Fertig",
-		"":"",
-		"":"",
-		"":""
+		"finish":"Fertig"
     },
 	"pair": {
 		"list_icons":{
@@ -178,10 +175,7 @@
 
 			"set_name":"Hier können Sie den Namen für das Gerät festlegen:",
 			"create_device_self":"Oder ein Gerät selber erstellen",
-			"choose_template":"Oder eine Vorlage auswählen",
-			"":"",
-			"":"",
-			"":""
+			"choose_template":"Oder eine Vorlage auswählen"
 		},
 
 		"done":{

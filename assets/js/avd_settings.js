@@ -3,17 +3,17 @@ const asv_settings = {
         {
           "id": "sensor",
           "label": "Sensor (Default)",
-          "order": 0
+          "order": -2
         },
         {
           "id": "slider",
           "label": "Slider",
-          "order": 0
+          "order": -1
         },
         {
           "id": "target_temperature",
           "label": "Temperature (Target)",
-          "order": 1
+          "order": 0
         },
         {
           "id": "measure_temperature",

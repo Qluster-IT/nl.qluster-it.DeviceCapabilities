@@ -352,5 +352,20 @@
   },
   "2.7.2" : {
     "en" : "Improved: Translations."
+  },
+  "2.7.3" : {
+    "en" : "Improved: Minor UX changes."
+  },
+  "2.7.4" : {
+    "en" : "Improved: More German translation."
+  },
+  "2.7.5" : {
+    "en" : "Added: Get Flows with All (devices/zones/apps/variables) in it, fitlered by names or IDs."
+  },
+  "2.7.6" : {
+    "en" : "Added: Get Flows with All (devices/zones/apps/variables) in it, fitlered by names or IDs."
+  },
+  "2.7.7" : {
+    "en" : "Added: Get Flows with All (devices/zones/apps/variables) in it, fitlered by names or IDs."
   }
 }
