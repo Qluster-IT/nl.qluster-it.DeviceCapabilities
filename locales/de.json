@@ -11,8 +11,8 @@
 		"file_api_err": "Die Datei-APIs werden in diesem Browser nicht vollständig unterstützt.",
 		"title_virtualdevices": "Ihre virtuellen Geräte",
 		"title_customicons": "Ihre Symbole",
-		"explain_customicons": "Hier können Sie die Ihre Symbole ändern, die für Felder verwendet werden können.",
-		"explain_customicons_doubleclick": "Doppelklicken Sie auf einen Namen, um ihm eine Beschreibung zu geben, die bei der Auswahl von Symbolen angezeigt wird.",
+		"explain_customicons": "Hier können Sie Ihre Symbole ändern, die für Felder verwendet werden können.",
+		"explain_customicons_doubleclick": "Doppelklicken Sie auf einen Namen, um ihm eine Beschreibung zu geben, welche bei der Auswahl von Symbolen angezeigt werden soll.",
 		"functions":"Funktionen",
 		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.",
 		"functions_be_aware":"Beachten Sie, dass das Entfernen von Funktionen Flows beschädigen können, die diese Funktion verwenden.",
@@ -30,9 +30,46 @@
 		"delete_confirm":"Sind Sie sicher, dass Sie die Funktion __functionName__ löschen möchten?",
 		"search_for_name":"Nach Namen suchen",		
 		"close":"Schließen",
-		"explain_virtualdevices": "Hier können Sie das Symbol für Advanced Virtual Devices bearbeiten, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus den Vorlagen auswählen.",
-		"explain_restart":"Nach dem Ändern eines Symbols muss die App neu gestartet werden, bevor das/die neue(n) Symbol(e) übernommen wird/werden."
-	},
+		"explain_virtualdevices": "Hier können Sie das Symbol für das Advanced Virtual Device bearbeiten, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus den Vorlagen auswählen.",
+		"explain_restart":"Nach dem Ändern eines Symbols muss die App neu gestartet werden, bevor das/die neue(n) Symbol(e) übernommen wird/werden.",
+
+
+        "title_theflowexchanger":"The Flow Exchanger",
+		"templates":"Vorlagen",
+		"import":"Import",
+		"export":"Export",
+		"explain_theflowexchanger_export":"Hier können Sie The Exchanger Files erstellen.",
+		"select_advancedflows":"Wählen Sie die Flows aus, die Sie in The Exchanger Files aufnehmen möchten.",
+		"labelTopicLink":"Besuchen Sie das Forum für weitere Erklärungen zu Device Capabilities, oder wenn Sie Hilfe zu The Flow Exchanger oder Vorlagen benötigen.",
+		"createExchangerFile":"Exchanger File erstellen",
+		"tefInClipboard":"(TEF ist bereits in der Zwischenablage)",
+		"minified":"Verkürzte Version",
+		"compressed":"Komprimiert",
+		"postTemplate":"Vorlage posten",
+		"askForHelp":"Um Hilfe bitten",
+		"preTypedMessageClipboard":"(Eine vorgefertigte Nachricht befindet Sich in der Zwischenablage)",
+		"explain_theflowexchanger_import":"Hier können Sie The Exchanger File importieren.",
+		"change_missing_items":"Wählen Sie im erstellten Flow-Skript aus, welche Flows, Zonen, Geräte, Benutzer, Variablen, Tags oder App-Token Sie durch Ihre eigenen ersetzen möchten.",
+		"flow":"Flow",
+		"replaceWith":"Ersetzen durch",
+		"dontChange":"Nicht verändern",
+		"zones":"Zonen",
+		"devices":"Geräte",
+		"users":"Benutzer",
+		"variables":"Variables",
+		"appTokens":"App-Token",
+		"updateText":"Text aktualisieren",
+		"readFlows":"Flows einlesen",
+		"textInClipboard":"(Text ist bereits in der Zwischenablage)",
+		"flowsThatAreCreated":"Die erstellten Flows werden hier aufgelistet:",
+		"filter":"Filter",		
+		"selectFlowAndPressCreate":"Wählen Sie einen Flow und drücken Sie Erstellen",
+		"pasteTEFReadFlows":"The Exchanger File einfügen und Flows einlesen drücken",
+		
+		"no_avd_in_tef":"TEF enthält kein AVD.",
+		"flows_will_be_created":"Die folgenden Flows werden in dem Skript erstellt.",
+		"":""
+    },
 	"virtualdevicesettings":{
 		"labelButton1":"Taste 1 ist ein Sonderfall und bleibt die erste und somit die Haupttaste und -anzeige des Geräts.",
         "labelGeneralOld":"Bei der Verwendung von Insights oder Tags werden standardmäßig verborgene Felder erstellt, was bedeutet, dass man in Insights nicht erkennen kann, wodurch diese geändert wurden. Bei Schaltflächen ist das aber möglicherweise interessant. In diesem Fall deaktivieren Sie sie. Wenn diese Funktion jedoch deaktiviert ist, führt eine Änderung des Symbols, der Option 'Anzeigen als' oder der Option 'Flows erstellen' dazu, dass die Tag-IDs geändert und somit die Flows unterbrochen und neue Insights erstellt werden.",
@@ -107,10 +144,29 @@
 		"createBooleanField":"Yes/No-Feld erstellen",
 		"createButtonField":"Taste erstellen",
 		"createCameraField":"Kamera erstellen",
-		"labelTopicLink":"Siehe das Thema des AVD-Forums für Erklärungen oder wenn Sie Hilfe zu AVDs oder Vorlagen benötigen"
+        "step":"Schritt",
+        "stepHint":"Der Schritt legt das Intervall für die Zahl fest.",
+		"labelTopicLink":"Besuchen Sie das Forum für weitere Erklärungen oder wenn Sie Hilfe zu AVDs oder Vorlagen benötigen.",
 
-
-	},
+		"disableZoneActivity":"Aktivität der Zone deaktivieren",
+		"disableZoneActivityHint":"Wenn diese Option ausgewählt ist, wird die Aktivität der Zone für dieses Feld deaktiviert.",
+		"openShareYourDevice":"Öffne Teile Dein Gerät",
+		"saveDevice":"Gerät speichern",
+		"close":"Schließen",
+		"titleShareYourDevice":"Teile Dein Gerät",
+		"labelShareYourDevice":"Hier können Sie das The Exchanger File für dieses Gerät erstellen, einschließlich der Flows.",
+		"createTEF":"TEF erstellen",
+		"includeIcons":"Symbole einbeziehen",
+		"includeFlows":"Flows einbeziehen (nur aktivierte)",
+		"pressCreateTEF":"Drücke TEF erstellen",
+		"readDevice":"Gerät einlesen",
+		"saveAs":"Speichern unter",
+		"customIcon":"Eigenes Symbol",
+		"finish":"Fertig",
+		"":"",
+		"":"",
+		"":""
+    },
 	"pair": {
 		"list_icons":{
 			"title":"Gerätesymbol",
@@ -119,13 +175,23 @@
 			"select_device_icon":"Oder wählen Sie eines aus der Liste.",
 			"set_icon_and_customize":"Hier können Sie ein Symbol für die Advanced Virtual Devices festlegen, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus der Standardliste auswählen.",
 			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern.",
-			"set_name":"Hier können Sie den Namen für das Gerät festlegen:"
+
+			"set_name":"Hier können Sie den Namen für das Gerät festlegen:",
+			"create_device_self":"Oder ein Gerät selber erstellen",
+			"choose_template":"Oder eine Vorlage auswählen",
+			"":"",
+			"":"",
+			"":""
 		},
 
 		"done":{
 			"title":"Einen Moment bitte",
 			"creating_device":"Ihr neues Advanced Virtual Device wird erstellt.",
-			"done":"Erledigt!"
+			"done":"Erledigt!",
+
+            "avds_are_created":"Das/Die AVD(s) wurde(n) erstellt!",
+			"flow_available_in_template":"In der verwendeten Vorlage gibt es Flows, für die Sie hier nun ein Skript erstellen können.",
+			"title_flows":"Flow Skript erstellen"
 		},
 		"buttons":{
 			"save_use":"Speichern & verwenden"
