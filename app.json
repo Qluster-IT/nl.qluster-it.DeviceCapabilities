@@ -417,7 +417,7 @@
             "title": {
               "en": "Zone ID",
               "nl": "Ruimte ID",
-              "de": "Raum-ID"
+              "de": "Zonen-ID"
             }
           },
           {
@@ -426,7 +426,7 @@
             "title": {
               "en": "Zone Name",
               "nl": "Ruimte naam",
-              "de": "Raumname"
+              "de": "Zonen-Name"
             }
           },
           {
@@ -446,12 +446,12 @@
         "title": {
           "en": "Device available changed",
           "nl": "Apparaat beschikbaar gewijzigd",
-          "de": "Geräte available geändert"
+          "de": "Gerät verfügbar geändert"
         },
         "titleFormatted": {
           "en": "Device became [[available]] ([[brand]], [[devicetype]])",
           "nl": "Apparaat werd [[available]] ([[brand]], [[devicetype]])",
-          "de": "Geräte wurde [[available]] ([[brand]], [[devicetype]])"
+          "de": "Gerät wurde [[available]] ([[brand]], [[devicetype]])"
         },
         "args": [
           {
@@ -461,7 +461,7 @@
             "placeholder": {
               "en": "available or unavailable",
               "nl": "beschikbaar of niet beschikbaar",
-              "de": "available or unavailable"
+              "de": "verfügbar oder nicht verfügbar"
             },
             "values": [
               {
@@ -469,7 +469,7 @@
                 "label": {
                   "en": "available or unavailable",
                   "nl": "beschikbaar of niet beschikbaar",
-                  "de": "available or unavailable"
+                  "de": "verfügbar oder nicht verfügbar"
                 }
               },
               {
@@ -477,7 +477,7 @@
                 "label": {
                   "en": "available",
                   "nl": "beschikbaar",
-                  "de": "available"
+                  "de": "verfügbar"
                 }
               },
               {
@@ -485,7 +485,7 @@
                 "label": {
                   "en": "unavailable",
                   "nl": "niet beschikbaar",
-                  "de": "unavailable"
+                  "de": "nicht verfügbar"
                 }
               }
             ]
@@ -536,7 +536,7 @@
             "title": {
               "en": "Available",
               "nl": "Beschikbaar",
-              "de": "Available"
+              "de": "Verfügbar"
             }
           },
           {
@@ -554,7 +554,7 @@
             "title": {
               "en": "Zone ID",
               "nl": "Ruimte ID",
-              "de": "Raum-ID"
+              "de": "Zonen-ID"
             }
           },
           {
@@ -563,7 +563,7 @@
             "title": {
               "en": "Zone Name",
               "nl": "Ruimte naam",
-              "de": "Raumname"
+              "de": "Zonen-Name"
             }
           }
         ]
@@ -1105,11 +1105,13 @@
         "id": "hs_run",
         "title": {
           "en": "Replace with HomeyScript: Run a script",
-          "nl": "Vergang met HomeyScript: Voer een script uit"
+          "nl": "Vergang met HomeyScript: Voer een script uit",
+          "de": "Ersetzen durch HomeyScript: Ein Script ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[script]]",
-          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit",
+          "de": "Ersetzen durch HomeyScript: [[script]] ausführen"
         },
         "args": [
           {
@@ -1117,7 +1119,8 @@
             "type": "autocomplete",
             "title": {
               "en": "Script",
-              "nl": "Script"
+              "nl": "Script",
+              "de": "Script"
             }
           }
         ]
@@ -1127,11 +1130,13 @@
         "id": "hs_runCode",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]]",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit",
+          "de": "Ersetzen durch HomeyScript: [[code]] ausführen"
         },
         "advanced": true,
         "args": [
@@ -1141,7 +1146,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nreturn true;"
           }
@@ -1152,11 +1158,13 @@
         "id": "hs_runCodeWithArg",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]",
+          "de": "Ersetzen durch HomeyScript: [[code]] mit [[argument]] ausführen"
         },
         "advanced": true,
         "args": [
@@ -1166,7 +1174,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nconsole.log(args[0]);\n\nreturn true;"
           },
@@ -1176,11 +1185,13 @@
             "required": false,
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "value": "MyArg"
           }
@@ -1191,11 +1202,13 @@
         "id": "hs_runWithArg",
         "title": {
           "en": "Replace with HomeyScript: Run a script with an argument",
-          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument",
+          "de": "Ersetzen durch HomeyScript: Ein Script mit Argument ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
-          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]",
+          "de": "Ersetzen durch HomeyScript: [[script]] mit [[argument]] ausführen"
         },
         "args": [
           {
@@ -1203,7 +1216,8 @@
             "type": "autocomplete",
             "title": {
               "en": "Script",
-              "nl": "Script"
+              "nl": "Script",
+              "de": "Script"
             }
           },
           {
@@ -1211,11 +1225,13 @@
             "type": "text",
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             }
           }
         ]
@@ -1775,7 +1791,8 @@
             "name": "zonebytag",
             "placeholder": {
               "en": "Or use a Zone ID Tag",
-              "nl": "Of gebruik een Ruimte ID Tag"
+              "nl": "Of gebruik een Ruimte ID Tag",
+              "de": "Oder ein Zonen-ID Tag benutzen"
             },
             "title": {
               "en": "Tag",
@@ -1919,7 +1936,8 @@
             "name": "zonebytag",
             "placeholder": {
               "en": "Or use a Zone ID Tag",
-              "nl": "Of gebruik een Ruimte ID Tag"
+              "nl": "Of gebruik een Ruimte ID Tag",
+              "de": "Oder ein Zonen-ID Tag benutzen"
             },
             "title": {
               "en": "Tag",
@@ -2063,7 +2081,8 @@
             "name": "zonebytag",
             "placeholder": {
               "en": "Or use a Zone ID Tag",
-              "nl": "Of gebruik een Ruimte ID Tag"
+              "nl": "Of gebruik een Ruimte ID Tag",
+              "de": "Oder ein Zonen-ID Tag benutzen"
             },
             "title": {
               "en": "Tag",
@@ -2596,7 +2615,8 @@
             "name": "refreshmobilebug",
             "placeholder": {
               "en": "Optionally Update Mobile App",
-              "nl": "Update Mobile App optioneel"
+              "nl": "Update Mobile App optioneel",
+              "de": "Mobile App optional aktualisieren"
             },
             "required": false
           },
@@ -2732,7 +2752,7 @@
             "placeholder": {
               "en": "Name",
               "nl": "Naam",
-              "de": "Naam"
+              "de": "Name"
             }
           }
         ]
@@ -2941,12 +2961,12 @@
         "title": {
           "en": "Write in Diagnostic",
           "nl": "Schrijf in diagnostisch rapport",
-          "de": "Write in Diagnostic"
+          "de": "In Diagnosebericht eintragen"
         },
         "titleFormatted": {
           "en": "Write [[avd]] in Diagnostic",
           "nl": "Schrijf [[avd]] in diagnostisch rapport",
-          "de": "Schrijf [[avd]] in diagnostic"
+          "de": "[[avd]] in Diagnosebericht eintragen"
         },
         "args": [
           {
@@ -2971,12 +2991,12 @@
         "title": {
           "en": "Get Flows containing any objects",
           "nl": "Schrijf in diagnostisch rapport",
-          "de": "Write in Diagnostic"
+          "de": "In Diagnosebericht eintragen"
         },
         "titleFormatted": {
           "en": "Get Flows containing [[objecttype]], filtered: [[filter]]",
           "nl": "Get Flows containing [[objecttype]], filtered: [[filter]]",
-          "de": "Get Flows containing [[objecttype]], filtered: [[filter]]"
+          "de": "Flows mit [[objecttype]] erhalten, gefiltert: [[filter]]"
         },
         "args": [
           {
@@ -2985,12 +3005,12 @@
             "title": {
               "en": "Object Type",
               "nl": "Geadvanceerd Virtueel Apparaat",
-              "de": "Erweitertes Virtuelles Gerät"
+              "de": "Objekt Typ"
             },
             "placeholder": {
               "en": "object type",
               "nl": "object type",
-              "de": "object type"
+              "de": "Objekt Typ"
             },
             "values": [
               {
@@ -3014,7 +3034,7 @@
                 "label": {
                   "en": "Variables",
                   "nl": "Variabelen",
-                  "de": "Variables"
+                  "de": "Variablen"
                 }
               },
               {
@@ -3022,7 +3042,7 @@
                 "label": {
                   "en": "Zones",
                   "nl": "Ruimten",
-                  "de": "Zones"
+                  "de": "Zonen"
                 }
               }
             ]
@@ -3039,7 +3059,7 @@
             "placeholder": {
               "en": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
               "nl": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
-              "de": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]"
+              "de": "Um zu filtern kannst Du: 'test' ODER 'c31ecacc-26fe-448e-ab00-d109618c8382' ODER 'Device Cap*' ODER [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ] benutzen"
             }
           }
         ],
@@ -3049,7 +3069,8 @@
             "type": "string",
             "title": {
               "en": "Flows (json)",
-              "nl": "Flows (json)"
+              "nl": "Flows (json)",
+              "de": "Flows (json)"
             }
           }
         ]
@@ -3061,11 +3082,13 @@
         "id": "hs_run",
         "title": {
           "en": "Replace with HomeyScript: Run a script",
-          "nl": "Vergang met HomeyScript: Voer een script uit"
+          "nl": "Vergang met HomeyScript: Voer een script uit",
+          "de": "Ersetzen durch HomeyScript: Ein Script ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[script]]",
-          "nl": "Vergang met HomeyScript: Voer [[script]] uit"
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit",
+          "de": "Ersetzen durch HomeyScript: [[script]] ausführen"
         },
         "args": [
           {
@@ -3073,7 +3096,8 @@
             "type": "autocomplete",
             "title": {
               "en": "Script",
-              "nl": "Script"
+              "nl": "Script",
+              "de": "Script"
             }
           }
         ]
@@ -3083,11 +3107,13 @@
         "id": "hs_runCode",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]]",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit",
+          "de": "Ersetzen durch HomeyScript: [[code]] ausführen"
         },
         "advanced": true,
         "args": [
@@ -3097,7 +3123,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code"
           }
@@ -3108,11 +3135,13 @@
         "id": "hs_runCodeReturnsBoolean",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] and return Yes/No-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Ja/Nee-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Ja/Nee-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] ausführen und Ja/Nein-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3120,7 +3149,8 @@
             "type": "boolean",
             "title": {
               "en": "Result",
-              "nl": "Resultaat"
+              "nl": "Resultaat",
+              "de": "Ergebnis"
             }
           }
         ],
@@ -3131,7 +3161,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nreturn true;"
           }
@@ -3142,11 +3173,13 @@
         "id": "hs_runCodeReturnsNumber",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] and return Number-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Nummer-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Nummer-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] ausführen und Nummern-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3154,7 +3187,8 @@
             "type": "number",
             "title": {
               "en": "Result",
-              "nl": "Resultaat"
+              "nl": "Resultaat",
+              "de": "Ergebnis"
             }
           }
         ],
@@ -3165,7 +3199,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nreturn 1;"
           }
@@ -3176,11 +3211,13 @@
         "id": "hs_runCodeReturnsString",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] and return Text-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Tekst-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit en return Tekst-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] ausführen und Text-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3188,7 +3225,8 @@
             "type": "string",
             "title": {
               "en": "Result",
-              "nl": "Resultaat"
+              "nl": "Resultaat",
+              "de": "Ergebnis"
             }
           }
         ],
@@ -3199,7 +3237,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nreturn 'Hello World!';"
           }
@@ -3210,11 +3249,13 @@
         "id": "hs_runCodeWithArg",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] with [[argument]]",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]]",
+          "de": "Ersetzen durch HomeyScript: [[code]] mit [[argument]] ausführen"
         },
         "advanced": true,
         "args": [
@@ -3224,7 +3265,8 @@
             "language": "homeyscript",
             "title": {
               "en": "Code",
-              "nl": "Code"
+              "nl": "Code",
+              "de": "Code"
             },
             "value": "// My Code\n\nconsole.log(args[0]);"
           },
@@ -3234,11 +3276,13 @@
             "required": false,
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "value": "MyArg"
           }
@@ -3249,11 +3293,13 @@
         "id": "hs_runCodeWithArgReturnsBoolean",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Yes/No-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Ja/Nee-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Ja/Nee-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] mit [[argument]] ausführen und Ja/Nein-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3282,11 +3328,13 @@
             "required": false,
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "value": "MyArg"
           }
@@ -3297,11 +3345,13 @@
         "id": "hs_runCodeWithArgReturnsNumber",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Number-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Nummer-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Nummer-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] mit [[argument]] ausführen und Nummern-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3330,11 +3380,13 @@
             "required": false,
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "value": "MyArg"
           }
@@ -3345,11 +3397,13 @@
         "id": "hs_runCodeWithArgReturnsString",
         "title": {
           "en": "Replace with HomeyScript: Run code",
-          "nl": "Vergang met HomeyScript: Voer code uit"
+          "nl": "Vergang met HomeyScript: Voer code uit",
+          "de": "Ersetzen durch HomeyScript: Code ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[code]] with [[argument]] and return Text-tag",
-          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Tekst-tag"
+          "nl": "Vergang met HomeyScript: Voer [[code]] uit met [[argument]] en return Tekst-tag",
+          "de": "Ersetzen durch HomeyScript: [[code]] mit [[argument]] ausführen und Text-Tag zurückgeben"
         },
         "tokens": [
           {
@@ -3378,11 +3432,13 @@
             "required": false,
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "value": "MyArg"
           }
@@ -3393,11 +3449,13 @@
         "id": "hs_runWithArg",
         "title": {
           "en": "Replace with HomeyScript: Run a script with an argument",
-          "nl": "Vergang met HomeyScript: Voer een script uit met een argument"
+          "nl": "Vergang met HomeyScript: Voer een script uit met een argument",
+          "de": "Ersetzen durch HomeyScript: Ein Script mit Argument ausführen"
         },
         "titleFormatted": {
           "en": "Replace with HomeyScript: Run [[script]] with argument [[argument]]",
-          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]"
+          "nl": "Vergang met HomeyScript: Voer [[script]] uit met argument [[argument]]",
+          "de": "Ersetzen durch HomeyScript: [[script]] mit [[argument]] ausführen"
         },
         "args": [
           {
@@ -3405,7 +3463,8 @@
             "type": "autocomplete",
             "title": {
               "en": "Script",
-              "nl": "Script"
+              "nl": "Script",
+              "de": "Script"
             }
           },
           {
@@ -3413,11 +3472,13 @@
             "type": "text",
             "title": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             },
             "placeholder": {
               "en": "Argument",
-              "nl": "Argument"
+              "nl": "Argument",
+              "de": "Argument"
             }
           }
         ]
@@ -3430,7 +3491,7 @@
       "title": {
         "en": "goto Device Maintainance/Repair",
         "nl": "door naar apparaat Onderhoud/Repareren te gaan",
-        "de": "mit den Gerätewartung/reparatur"
+        "de": "weiter zu Gerätewartung/Reparatur"
       },
       "getable": true,
       "setable": false,
