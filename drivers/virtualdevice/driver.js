@@ -603,14 +603,23 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
             
 
-            this.homey.flow.getActionCard('virtualdevice_clear_warning').registerRunListener(async (args, state) => {
-                try {
-                    args.device.unsetWarning();                    
-                } catch (error) {
-                    this.log('action_virtualdevice_set_name:');
-                    this.error(error);
-                }
-            });
+        this.homey.flow.getActionCard('virtualdevice_set_warning').registerRunListener(async (args, state) => {
+            try {
+                args.device.setWarning(args.text);                    
+            } catch (error) {
+                this.log('action_virtualdevice_set_name:');
+                this.error(error);
+            }
+        });
+    
+        this.homey.flow.getActionCard('virtualdevice_clear_warning').registerRunListener(async (args, state) => {
+            try {
+                args.device.unsetWarning();                    
+            } catch (error) {
+                this.log('action_virtualdevice_set_name:');
+                this.error(error);
+            }
+        });
 		
 
         var virtualdevice_update_capability_name = this.homey.flow.getActionCard('virtualdevice_update_capability_name');
@@ -642,14 +651,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false}));
 
 
-            this.homey.settings.on('set', (async function(settingName) {
-                if(settingName=='customIconNames') {
-                    this.customIconNames = await this.homey.settings.get('customIconNames');
-                  }                
-          
-              }).bind(this));
-              this.customIconNames = await this.homey.settings.get('customIconNames');
-              
+        this.homey.settings.on('set', (async function(settingName) {
+            if(settingName=='customIconNames') {
+                this.customIconNames = await this.homey.settings.get('customIconNames');
+                }                
+        
+        }).bind(this));
+        this.customIconNames = await this.homey.settings.get('customIconNames');
+        
             
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }

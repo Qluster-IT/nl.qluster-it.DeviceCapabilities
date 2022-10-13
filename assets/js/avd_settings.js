@@ -279,17 +279,17 @@ const asv_settings = {
         {
           "id": "button",
           "label": "Push Button (Default)",
-          "order": 0
+          "order": -1
         },
         {
           "id": "indicatoronly",
           "label": "Indicator Only",
-          "order": 1
+          "order": 0
         },
         {
           "id": "pushbutton_indicator",
           "label": "Pushbutton and separate Indicator",
-          "order": 1
+          "order": 0
         },
         {
           "id": "onoff_hide",

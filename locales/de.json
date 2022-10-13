@@ -193,6 +193,7 @@
 	},
 	"icons":{
 		"Alarms":"Alarm",
+		"Athom":"Athom",
 		"Buttons":"Tasten",
 		"Devices":"Geräte",
 		"Flows":"Flows",

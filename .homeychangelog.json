@@ -370,5 +370,14 @@
   },
   "2.7.8" : {
     "en" : "Improved: More German translation."
+  },
+  "2.7.9" : {
+    "en" : "Improved: Added default icons and some bugfixes."
+  },
+  "2.7.10" : {
+    "en" : "Improved: Added default icons and some bugfixes."
+  },
+  "2.7.11" : {
+    "en" : "Bugfixed: Watchers."
   }
 }
