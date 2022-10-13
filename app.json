@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.11",
+  "version": "2.7.12",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",

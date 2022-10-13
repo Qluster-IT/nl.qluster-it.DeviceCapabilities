@@ -379,5 +379,8 @@
   },
   "2.7.11" : {
     "en" : "Bugfixed: Watchers."
+  },
+  "2.7.12" : {
+    "en" : "Improved: Reduced install size with about 10%."
   }
 }
