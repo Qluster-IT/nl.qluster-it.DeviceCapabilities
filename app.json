@@ -2652,6 +2652,26 @@
       },
       {
         "highlight": true,
+        "id": "virtualdevice_set_camera_image",
+        "title": {
+          "en": "Set Camera Image",
+          "nl": "Stel camera afbeelding in"
+        },
+        "titleFormatted": {
+          "en": "Set the Camera Image to [[droptoken]]",
+          "nl": "Stel camera afbeelding in op [[droptoken]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          }
+        ],
+        "droptoken": ["image"]
+      },
+      {
+        "highlight": true,
         "id": "virtualdevice_set_expression",
         "title": {
           "en": "Set Expression",
