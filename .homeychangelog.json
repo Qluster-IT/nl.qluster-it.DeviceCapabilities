@@ -382,5 +382,8 @@
   },
   "2.7.12" : {
     "en" : "Improved: Reduced install size with about 10%."
+  },
+  "2.7.13" : {
+    "en" : "Bugfixed."
   }
 }

@@ -1258,6 +1258,7 @@ class DeviceSetter extends Homey.App {
 			case 'create':
 			case 'update':
 				if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
+					if(device.unavailableMessage && typeof(device.unavailableMessage)==='object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage );
 					let zone = this.zones[device.zone];
 					try {
 							
@@ -1265,7 +1266,7 @@ class DeviceSetter extends Homey.App {
 							deviceName: device.name,
 							deviceId: device.id,
 							available: !!device.available,
-							unavailableMessage: device.unavailableMessage || '',
+							unavailableMessage: (device.unavailableMessage || '').toString(),
 							zoneName: zone.name,
 							zoneId: zone.id
 						}, { available: !!device.available, brand:device.driverUri, devicetype:device.driverId });
