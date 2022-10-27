@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.14",
+  "version": "2.7.15",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2658,8 +2658,8 @@
           "nl": "Stel camera afbeelding in"
         },
         "titleFormatted": {
-          "en": "Set [[field]] Image to [[droptoken]]",
-          "nl": "Stel [[field]] afbeelding in op [[droptoken]]"
+          "en": "Set the image of [[field]] to [[droptoken]]",
+          "nl": "Stel de afbeelding van [[field]] in op [[droptoken]]"
         },
         "args": [
           {

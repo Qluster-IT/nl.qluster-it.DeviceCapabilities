@@ -388,5 +388,8 @@
   },
   "2.7.14" : {
     "en" : "Added: A new Actioncard (Then-card) to set a Camera Image from a Image (drop)token / tag."
+  },
+  "2.7.15" : {
+    "en" : "Improved: Flowcard descriptions."
   }
 }
