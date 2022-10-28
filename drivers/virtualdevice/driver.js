@@ -1478,6 +1478,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(appInfo && appInfo.canCreateByName()) type.replacements.push({"id":-1, "name":"-- Create --", newName:type.name});
                     if(appInfo && appInfo.byToken && appInfo.byToken()) type.replacements = _.union(type.replacements, _.sortBy(_.map(_.filter(allTokens, t=> t.uri=="homey:app:" + appId ), x=> { return {id:x.id, name:x.title};}), 'name'));
                     
+                    //if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===type.name);
+                    if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.name===type.name || x.id===type.name); //Can this go wrong?
                     if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===-1);
                     if(type.replaceWith) type.replaceWithId = type.replaceWith.id;
                 });
