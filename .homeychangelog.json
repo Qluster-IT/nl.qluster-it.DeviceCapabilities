@@ -391,5 +391,8 @@
   },
   "2.7.15" : {
     "en" : "Improved: Flowcard descriptions."
+  },
+  "2.7.16" : {
+    "en" : "Added: Countdown (create new during import) support for TEFs."
   }
 }
