@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.8",
+  "version": "2.7.16",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2649,6 +2649,35 @@
             "required": false
           }
         ]
+      },
+      {
+        "highlight": true,
+        "id": "virtualdevice_set_camera_image",
+        "title": {
+          "en": "Set Camera Image",
+          "nl": "Stel camera afbeelding in"
+        },
+        "titleFormatted": {
+          "en": "Set the image of [[field]] to [[droptoken]]",
+          "nl": "Stel de afbeelding van [[field]] in op [[droptoken]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Camera",
+              "nl": "Camera",
+              "de": "Kamera"
+            }
+          }
+        ],
+        "droptoken": ["image"]
       },
       {
         "highlight": true,

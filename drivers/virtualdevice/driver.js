@@ -420,6 +420,35 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         }
         
+        var set_camera_image = this.homey.flow.getActionCard('virtualdevice_set_camera_image');
+			set_camera_image
+            .registerRunListener(async (args, state) => {
+                if (!args || !args.device) return false;
+                    let fieldId = args.field? args.field.id : 'status1';
+                    let fieldIds = [fieldId];
+                    try {
+                        if(fieldId.startsWith('set_all_')) {
+                            fieldIds.length=0;
+                            let type = fieldId.split('_')[2];
+                            const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
+                            for(var i=1;i<=fieldCount;i++){
+                                if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0) fieldIds.push(type+i);
+                            }
+                        }
+                        for (let fieldIdIndex = 0; fieldIdIndex < fieldIds.length; fieldIdIndex++) {
+                            const fieldId = fieldIds[fieldIdIndex];
+                            if(args.device.Cameras[fieldId]) {
+                                args.device.Cameras[fieldId].imageByFlow = args.droptoken;                                
+                                await args.device.setCameraImageFromRef(fieldId);
+                            }
+                        }
+                        return true;
+					} catch (error) {
+                        throw new Error(error);
+					}
+            });
+            set_camera_image.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldFromName('virtualdevice_set_camera_image', true));
+                
 
         
         var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
@@ -527,7 +556,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 					}
 				}).bind(this));
                 if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) 
-                    set_value.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action));
+                    set_value.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action, true));
                 
 		}).bind(this));
 
@@ -597,20 +626,29 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 						this.error(error);
 					}
 				});
-            if(!trigger.endsWith('_status')) triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger));
+            if(!trigger.endsWith('_status')) triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger, false));
 		}).bind(this));
 
 
             
 
-            this.homey.flow.getActionCard('virtualdevice_clear_warning').registerRunListener(async (args, state) => {
-                try {
-                    args.device.unsetWarning();                    
-                } catch (error) {
-                    this.log('action_virtualdevice_set_name:');
-                    this.error(error);
-                }
-            });
+        this.homey.flow.getActionCard('virtualdevice_set_warning').registerRunListener(async (args, state) => {
+            try {
+                args.device.setWarning(args.text);                    
+            } catch (error) {
+                this.log('action_virtualdevice_set_name:');
+                this.error(error);
+            }
+        });
+    
+        this.homey.flow.getActionCard('virtualdevice_clear_warning').registerRunListener(async (args, state) => {
+            try {
+                args.device.unsetWarning();                    
+            } catch (error) {
+                this.log('action_virtualdevice_set_name:');
+                this.error(error);
+            }
+        });
 		
 
         var virtualdevice_update_capability_name = this.homey.flow.getActionCard('virtualdevice_update_capability_name');
@@ -642,14 +680,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false}));
 
 
-            this.homey.settings.on('set', (async function(settingName) {
-                if(settingName=='customIconNames') {
-                    this.customIconNames = await this.homey.settings.get('customIconNames');
-                  }                
-          
-              }).bind(this));
-              this.customIconNames = await this.homey.settings.get('customIconNames');
-              
+        this.homey.settings.on('set', (async function(settingName) {
+            if(settingName=='customIconNames') {
+                this.customIconNames = await this.homey.settings.get('customIconNames');
+                }                
+        
+        }).bind(this));
+        this.customIconNames = await this.homey.settings.get('customIconNames');
+        
             
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
@@ -821,8 +859,30 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return action.split('_')[2];
     }
 
+    
 
-    registerAutocompleteField(action) {
+    registerAutocompleteFieldFromName(action, useAll) {
+        return async( query, args ) => {
+            let settings = args.device.Settings;
+            if(!settings) return;
+            var type = this.getTypeFromAction(action);// action.split('_')[2];
+            var ret = [];
+            let actionAllSet = false;
+            const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
+            for(var i=1;i<=fieldCount;i++){
+                let name = settings['camera' + i + 'Name'];
+                if(name) {
+                    if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
+                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
+                    ret.push({'id':type + i, 'name':name || typeText, description:typeText});
+                }
+            }
+          return ret;
+        };
+    }
+
+
+    registerAutocompleteField(action, useAll) {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
@@ -834,7 +894,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
-                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i : 'unknown';
+                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
             }
@@ -1418,6 +1478,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(appInfo && appInfo.canCreateByName()) type.replacements.push({"id":-1, "name":"-- Create --", newName:type.name});
                     if(appInfo && appInfo.byToken && appInfo.byToken()) type.replacements = _.union(type.replacements, _.sortBy(_.map(_.filter(allTokens, t=> t.uri=="homey:app:" + appId ), x=> { return {id:x.id, name:x.title};}), 'name'));
                     
+                    //if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===type.name);
+                    if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.name===type.name || x.id===type.name); //Can this go wrong?
                     if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===-1);
                     if(type.replaceWith) type.replaceWithId = type.replaceWith.id;
                 });

@@ -459,13 +459,17 @@
 					</div>
 					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateTag']" />
 				</div>
-				<div class="field">
+				<div class="field" ng-if="s['button'+($index+1)+'ShowAs'] && s['button'+($index+1)+'ShowAs']!=='button' && s['button'+($index+1)+'ShowAs']!=='speaker_next'  && s['button'+($index+1)+'ShowAs']!=='speaker_prev'
+						&& s['button'+($index+1)+'ShowAs']!=='volume_up' && s['button'+($index+1)+'ShowAs']!=='volume_down' && s['button'+($index+1)+'ShowAs']!=='channel_up' && s['button'+($index+1)+'ShowAs']!=='channel_down'
+						&& s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_up' && s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_down'
+				">
 					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span>
 						<span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateInsights']" />
-				</div>
+				</div>				
+				<div ng-else execute="_delete(s, 'button'+($index+1)+'CreateInsights')" ></div>
 				<div class="field"
 					ng-if="s['button'+($index+1)+'CreateTag'] || s['button'+($index+1)+'CreateInsights']">
 					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden

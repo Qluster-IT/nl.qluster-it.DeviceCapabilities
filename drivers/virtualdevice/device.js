@@ -184,8 +184,13 @@ module.exports = class WatchDevice extends Homey.Device {
 		if (!this.Cameras) this.Cameras = {};
 		for (let i = 1; i <= settings.numberOfCameraFields || 0; i++) {
 			const ref = "camera" + i;
-			if (settings[ref + "Name"] && settings[ref + "Url"] && settings[ref + "Name"] != "" && settings[ref + "Url"] != "") {
+			//if (settings[ref + "Name"] && settings[ref + "Url"] && settings[ref + "Name"] != "" && settings[ref + "Url"] != "") {
+			if (settings[ref + "Name"] && settings[ref + "Name"] != "" ) {
 				if (!this.Cameras[ref]) this.Cameras[ref] = { id: ref, image: await this.homey.images.createImage(), url: settings[ref + "Url"], name: settings[ref + "Name"] };
+				else {
+					this.Cameras[ref].url = settings[ref + "Url"];
+					this.Cameras[ref].name = settings[ref + "Name"];					
+				}
 				if (this.Cameras[ref].interval) clearInterval(this.Cameras[ref].interval);
 				if (settings[ref + "Interval"] && settings[ref + "Interval"] !== 0) this.Cameras[ref].interval = setInterval(() => {
 					this.setCameraImageFromRef(ref);
@@ -207,12 +212,28 @@ module.exports = class WatchDevice extends Homey.Device {
 	}
 	async setCameraImageFromRef(ref, name) {
 		if (!this.Cameras[ref]) return;
-		this.Cameras[ref].image.setUrl(this.Cameras[ref].url);
-		await this.Cameras[ref].image.update();
-		if (!this.Cameras[ref].attached) {
+
+		let attach = async ()=> {
 			await this.setCameraImage(ref, this.Cameras[ref].name, this.Cameras[ref].image);
 			this.Cameras[ref].attached = true;
+		};
+		
+		if(this.Cameras[ref].imageByFlow) {
+			const image = this.Cameras[ref].imageByFlow;			
+			delete this.Cameras[ref].imageByFlow;
+
+			this.Cameras[ref].image.setStream(async (stream)=> {
+				return image.pipe(stream);
+			});
+			
+			await this.Cameras[ref].image.update();
+		} 
+		else if(this.Cameras[ref].url && this.Cameras[ref].url.length) {
+			this.Cameras[ref].image.setUrl(this.Cameras[ref].url);
+			await this.Cameras[ref].image.update();
 		}
+		
+		if (!this.Cameras[ref].attached) await attach();
 	}
 	
 	async loadFromSettings(settings, oldSettings, changedKeys, saved, imported) {

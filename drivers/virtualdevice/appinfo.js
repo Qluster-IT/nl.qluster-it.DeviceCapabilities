@@ -14,12 +14,12 @@ module.exports = {
                     cardId.indexOf('stopwatch')>-1 ? "stopwatch" : 
                     cardId.indexOf('transition')>-1 ? "transition" : undefined;
             }
+        },
+        "nl.bevlogenheid.countdown" :{
+            canCreateByName: function({argName}={}) {return argName==="variable" || argName===undefined; },
+            getType: function() {return "countdown"; },
+            byToken: function() {return true; }
         }
-        // ,"nl.bevlogenheid.countdown" :{
-        //     canCreateByName: function({argName}={}) {return argName==="variable" || argName===undefined; },
-        //     getType: function() {return "timer"; },
-        //     byToken: function() {return true; }
-        // }
 
         // ,"net.i-dev.betterlogic" :{
         //     canCreateByName: function({argName}={}) {return argName==="variable" || argName===undefined; },

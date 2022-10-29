@@ -426,7 +426,7 @@ class DeviceSetter extends Homey.App {
 								if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
 								else if (typeof (lastOne.v) == typeof (tokens.number)) {
 									tokens.number = lastOne.v;
-									if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(lastOne.v.toFixed(targetInsight.decimals));
+									if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
 								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
 							}
@@ -873,6 +873,7 @@ class DeviceSetter extends Homey.App {
 			hm.Tracking2.homeyAPI = true;
 			hm.Tracking2.homeyAPI = await hm.refreshHomeyAPI();//'tracker2');
 		}
+		
 		//var devices = null;
 		for (const deviceKey in hm.Tracking2.devices) {
 			if (Object.hasOwnProperty.call(hm.Tracking2.devices, deviceKey)) {
@@ -891,12 +892,15 @@ class DeviceSetter extends Homey.App {
 				for (let i = 0; i < keys.length; i++) {
 					const capability = device.capabilities[keys[i]];
 					if (!capability.listener) {
-						var targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
 						try {
 							capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
+								let targetInsight = device.device && device.device.insights ? _.find(device.device.insights, x => { return x.id == capability.id; }) : null;
 								var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
 								if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
-								else if (typeof (value) == typeof (tokens.number1)) tokens.number1 = value;
+								else if (typeof (value) == typeof (tokens.number1)) {
+									tokens.number1 = value;
+									//if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
+								}
 								else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
 
 								if (targetInsight) {
@@ -910,6 +914,13 @@ class DeviceSetter extends Homey.App {
 										if (lastOne.originUserName) tokens.user = lastOne.originUserName;
 										if (lastOne.originName) tokens.client = lastOne.originName;
 										else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+										
+										// if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
+										// else if (typeof (lastOne.v) == typeof (tokens.number)) {
+										// 	tokens.number = lastOne.v;
+										// 	if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(lastOne.v.toFixed(targetInsight.decimals));
+										// }
+										// else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
 									}
 									//if(lastOne) tokens
 								}
@@ -1247,6 +1258,7 @@ class DeviceSetter extends Homey.App {
 			case 'create':
 			case 'update':
 				if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
+					if(device.unavailableMessage && typeof(device.unavailableMessage)==='object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage );
 					let zone = this.zones[device.zone];
 					try {
 							
@@ -1254,7 +1266,7 @@ class DeviceSetter extends Homey.App {
 							deviceName: device.name,
 							deviceId: device.id,
 							available: !!device.available,
-							unavailableMessage: device.unavailableMessage || '',
+							unavailableMessage: (device.unavailableMessage || '').toString(),
 							zoneName: zone.name,
 							zoneId: zone.id
 						}, { available: !!device.available, brand:device.driverUri, devicetype:device.driverId });

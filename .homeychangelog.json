@@ -370,5 +370,29 @@
   },
   "2.7.8" : {
     "en" : "Improved: More German translation."
+  },
+  "2.7.9" : {
+    "en" : "Improved: Added default icons and some bugfixes."
+  },
+  "2.7.10" : {
+    "en" : "Improved: Added default icons and some bugfixes."
+  },
+  "2.7.11" : {
+    "en" : "Bugfixed: Watchers."
+  },
+  "2.7.12" : {
+    "en" : "Improved: Reduced install size with about 10%."
+  },
+  "2.7.13" : {
+    "en" : "Bugfixed."
+  },
+  "2.7.14" : {
+    "en" : "Added: A new Actioncard (Then-card) to set a Camera Image from a Image (drop)token / tag."
+  },
+  "2.7.15" : {
+    "en" : "Improved: Flowcard descriptions."
+  },
+  "2.7.16" : {
+    "en" : "Added: Countdown (create new during import) support for TEFs."
   }
 }
