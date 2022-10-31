@@ -369,7 +369,7 @@ module.exports = class WatchDevice extends Homey.Device {
 									case "":
 									case "picker":
 									case "ternary":
-										cap = settings[type+i+'PrefixedList'] || (settings[type + i + 'ShowAs']=='ternary'? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
+										cap = settings[type+i+'PrefixedList'] && settings[type+i+'PrefixedList'].length ? settings[type+i+'PrefixedList'] : (settings[type + i + 'ShowAs']=='ternary'? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
 										break;
 									default:
 										capSet = true;
