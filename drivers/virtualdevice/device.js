@@ -4,7 +4,7 @@ const Homey = require('homey');
 const Homeyman = require('../../app');
 
 const _ = require('lodash-core');
-const types = ['status', 'text', 'number', 'button', 'boolean'];
+const types = ['status', 'text', 'number', 'button', 'boolean', 'list'];
 			
 module.exports = class WatchDevice extends Homey.Device {
 
@@ -70,10 +70,17 @@ module.exports = class WatchDevice extends Homey.Device {
 			settings.numberOfButtonFields = 0;
 			for (let i = 1; i <= 10; i++) 
 				if(settings['button'+i+'Name'] && settings['button'+i+'Name']!='') settings.numberOfButtonFields=i;else this.removeAllSettings(settings, 'button'+i);
+			
 			settings.numberOfCameraFields = 0;
 			for (let i = 1; i <= 10; i++) 
 				if(settings['camera'+i+'Name'] && settings['camera'+i+'Name']!='') settings.numberOfCameraFields=i;else this.removeAllSettings(settings, 'camera'+i);
 			await this.setStoreValue('Settings', settings);	
+		}
+		if(this.Settings.numberOfListFields===undefined) {
+			this.Settings.numberOfListFields = 0;
+			for (let i = 1; i <= 10; i++) 
+				if(this.Settings['list'+i+'Name'] && this.Settings['list'+i+'Name']!='') this.Settings.numberOfListFields=i;else this.removeAllSettings(this.Settings, 'list'+i);
+				await this.setStoreValue('Settings', this.Settings);	
 		}
 
 		//this.log('Settings', this.Settings);
@@ -175,6 +182,14 @@ module.exports = class WatchDevice extends Homey.Device {
 				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
 				await this.setStoreValue(fieldId+"Value", value);
 				this.driver.triggerFlowText(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
+			}).bind(this));
+		}
+		if (fieldId.startsWith('list')) {
+			this.registerCapabilityListener(cap, (async (value, options) => {
+				let oldValue = this.getStoreValue(fieldId+"Value");
+				await this.driver.setSecondCapability({ val:value, device:this , fieldId});
+				await this.setStoreValue(fieldId+"Value", value);
+				this.driver.triggerFlowList(this, value, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
 	}
@@ -346,6 +361,25 @@ module.exports = class WatchDevice extends Homey.Device {
 							case "status":
 								if(createSecondCap) cap = 'devicecapabilities_number' + icon + '.' + type + i;
 								else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
+								break;
+							case "list":
+								switch (settings[type + i + 'ShowAs']) {
+									case undefined:
+									case null:
+									case "":
+									case "picker":
+									case "ternary":
+										cap = settings[type+i+'PrefixedList'] || (settings[type + i + 'ShowAs']=='ternary'? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
+										break;
+									default:
+										capSet = true;
+										break;
+								}
+								if (capSet) {
+									let caps = this.getCaps(type, i, settings, oldCap);
+									cap = caps.cap;
+									oldCap = caps.oldCap;
+								}
 								break;
 							case "boolean":
 								let isAlarm, quickAction;

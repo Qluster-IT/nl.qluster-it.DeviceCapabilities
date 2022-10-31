@@ -104,6 +104,127 @@ str+='"measure_Status": { \r\n'+
 '      "value": "" \r\n'+
 '    }, \r\n';
 
+
+
+str+=`"devicecapabilities_ternary-up-idle-down_list": {
+  "title": {
+    "en": "Up, Idle, Down"
+  },
+  "type": "enum",
+  "values": [
+    {
+      "id": "up",
+      "title": {
+        "en": "Up",
+        "nl": "Omhoog",
+        "de": "Oben",
+        "fr": "Haut",
+        "it": "Alzate",
+        "sv": "Upp",
+        "no": "Opp",
+        "es": "Arriba",
+        "da": "Oppe",
+        "ru": "Наверх",
+        "pl": "Rozchylone"
+      }
+    },
+    {
+      "id": "idle",
+      "title": {
+        "en": "Idle",
+        "nl": "Stil",
+        "de": "Inaktiv",
+        "fr": "Inactif",
+        "it": "Socchiuse",
+        "sv": "Inaktiv",
+        "no": "Ikke aktiv",
+        "es": "Inactivos",
+        "da": "Inaktiv",
+        "ru": "В ожидании",
+        "pl": "W spoczynku"
+      }
+    },
+    {
+      "id": "down",
+      "title": {
+        "en": "Down",
+        "nl": "Omlaag",
+        "de": "Unten",
+        "fr": "Bas",
+        "it": "Abbassate",
+        "sv": "Ned",
+        "no": "Ned",
+        "es": "Abajo",
+        "da": "Nede",
+        "ru": "Вниз",
+        "pl": "Zasunięte"
+      }
+    }
+  ],
+  "getable": true,
+  "setable": true,
+  "uiComponent": "ternary"
+  },`;
+str+=`"devicecapabilities_picker-up-idle-down_list": {
+  "title": {
+    "en": "Up, Idle, Down"
+  },
+  "type": "enum",
+  "values": [
+    {
+      "id": "up",
+      "title": {
+        "en": "Up",
+        "nl": "Omhoog",
+        "de": "Oben",
+        "fr": "Haut",
+        "it": "Alzate",
+        "sv": "Upp",
+        "no": "Opp",
+        "es": "Arriba",
+        "da": "Oppe",
+        "ru": "Наверх",
+        "pl": "Rozchylone"
+      }
+    },
+    {
+      "id": "idle",
+      "title": {
+        "en": "Idle",
+        "nl": "Stil",
+        "de": "Inaktiv",
+        "fr": "Inactif",
+        "it": "Socchiuse",
+        "sv": "Inaktiv",
+        "no": "Ikke aktiv",
+        "es": "Inactivos",
+        "da": "Inaktiv",
+        "ru": "В ожидании",
+        "pl": "W spoczynku"
+      }
+    },
+    {
+      "id": "down",
+      "title": {
+        "en": "Down",
+        "nl": "Omlaag",
+        "de": "Unten",
+        "fr": "Bas",
+        "it": "Abbassate",
+        "sv": "Ned",
+        "no": "Ned",
+        "es": "Abajo",
+        "da": "Nede",
+        "ru": "Вниз",
+        "pl": "Zasunięte"
+      }
+    }
+  ],
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker"
+  },`;
+
 var sets1 = ['_hide', '_onoff_hide'];
 for(var j=0;j<sets1.length;j++) {
   var val = sets1[j];

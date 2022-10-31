@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.16",
+  "version": "2.7.19",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -410,7 +410,7 @@
             ]
           }
         ],
-        "tokens": [          
+        "tokens": [
           {
             "name": "zoneId",
             "type": "string",
@@ -439,7 +439,7 @@
             }
           }
         ]
-      },      
+      },
       {
         "highlight": true,
         "id": "trigger_app_device_available",
@@ -511,7 +511,7 @@
             }
           }
         ],
-        "tokens": [          
+        "tokens": [
           {
             "name": "deviceId",
             "type": "string",
@@ -568,7 +568,6 @@
           }
         ]
       },
-
       {
         "highlight": true,
         "id": "trigger_virtualdevice_text",
@@ -847,6 +846,75 @@
       },
       {
         "highlight": true,
+        "id": "trigger_virtualdevice_list",
+        "title": {
+          "en": "List set",
+          "nl": "Lijst ingesteld",
+          "de": "Aufführen festgelegt"
+        },
+        "titleFormatted": {
+          "en": "When [[field]] [[mode]]",
+          "nl": "Wanneer [[field]] [[mode]]",
+          "de": "Wenn [[field]] [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "List",
+              "nl": "Lijst",
+              "de": "Aufführen"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "is set",
+              "nl": "is ingesteld",
+              "de": "festgelegt ist"
+            },
+            "values": [
+              {
+                "id": "set",
+                "label": {
+                  "en": "is set",
+                  "nl": "is ingesteld",
+                  "de": "festgelegt ist"
+                }
+              },
+              {
+                "id": "changed",
+                "label": {
+                  "en": "is changed",
+                  "nl": "is veranderd",
+                  "de": "geändert wird"
+                }
+              }
+            ],
+            "required": false
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "string",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde",
+              "de": "Wert"
+            }
+          }
+        ]
+      },
+      {
+        "highlight": true,
         "id": "trigger_virtualdevice_status",
         "title": {
           "en": "Status set",
@@ -1076,7 +1144,7 @@
           "nl": "Alle Apparaat zijn !{{|niet}} beschikbaar ([[brand]], [[devicetype]])",
           "de": "Alle Geräte sind !{{|nicht}} vorhanden ([[brand]], [[devicetype]])"
         },
-        "args": [          
+        "args": [
           {
             "type": "autocomplete",
             "name": "brand",
@@ -1099,7 +1167,6 @@
           }
         ]
       },
-
       {
         "deprecated": true,
         "id": "hs_run",
@@ -2504,6 +2571,73 @@
       },
       {
         "highlight": true,
+        "id": "virtualdevice_set_list",
+        "title": {
+          "en": "Set List",
+          "nl": "Zet Lijst",
+          "de": "Aufführen setzen"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[value]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[value]] en [[mode]]",
+          "de": "Setze [[field]] auf [[value]] und [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "List",
+              "nl": "Lijst",
+              "de": "Aufführen"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "value",
+            "placeholder": {
+              "en": "Value",
+              "nl": "Waarde",
+              "de": "Wert"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
+          }
+        ]
+      },
+      {
+        "highlight": true,
         "id": "virtualdevice_set_status",
         "title": {
           "en": "Set Status",
@@ -2677,7 +2811,9 @@
             }
           }
         ],
-        "droptoken": ["image"]
+        "droptoken": [
+          "image"
+        ]
       },
       {
         "highlight": true,
@@ -2984,7 +3120,7 @@
             }
           }
         ]
-      },      
+      },
       {
         "id": "action_app_writeindiagnostic",
         "title": {
@@ -3014,7 +3150,7 @@
             }
           }
         ]
-      },      
+      },
       {
         "id": "action_app_get_flows_containing",
         "title": {
@@ -3079,7 +3215,7 @@
           {
             "type": "text",
             "name": "filter",
-            "required":false,
+            "required": false,
             "title": {
               "en": "Filter",
               "nl": "Filter",
@@ -3104,8 +3240,6 @@
           }
         ]
       },
-
-
       {
         "deprecated": true,
         "id": "hs_run",
@@ -3520,7 +3654,7 @@
       "title": {
         "en": "goto Device Maintainance/Repair",
         "nl": "door naar apparaat Onderhoud/Repareren te gaan",
-        "de": "weiter zu Gerätewartung/Reparatur"
+        "de": "mit den Gerätewartung/reparatur"
       },
       "getable": true,
       "setable": false,
@@ -3594,6 +3728,124 @@
       "uiQuickAction": false,
       "insights": true,
       "value": ""
+    },
+    "devicecapabilities_ternary-up-idle-down_list": {
+      "title": {
+        "en": "Up, Idle, Down"
+      },
+      "type": "enum",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Up",
+            "nl": "Omhoog",
+            "de": "Oben",
+            "fr": "Haut",
+            "it": "Alzate",
+            "sv": "Upp",
+            "no": "Opp",
+            "es": "Arriba",
+            "da": "Oppe",
+            "ru": "Наверх",
+            "pl": "Rozchylone"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Idle",
+            "nl": "Stil",
+            "de": "Inaktiv",
+            "fr": "Inactif",
+            "it": "Socchiuse",
+            "sv": "Inaktiv",
+            "no": "Ikke aktiv",
+            "es": "Inactivos",
+            "da": "Inaktiv",
+            "ru": "В ожидании",
+            "pl": "W spoczynku"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Down",
+            "nl": "Omlaag",
+            "de": "Unten",
+            "fr": "Bas",
+            "it": "Abbassate",
+            "sv": "Ned",
+            "no": "Ned",
+            "es": "Abajo",
+            "da": "Nede",
+            "ru": "Вниз",
+            "pl": "Zasunięte"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary"
+    },
+    "devicecapabilities_picker-up-idle-down_list": {
+      "title": {
+        "en": "Up, Idle, Down"
+      },
+      "type": "enum",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Up",
+            "nl": "Omhoog",
+            "de": "Oben",
+            "fr": "Haut",
+            "it": "Alzate",
+            "sv": "Upp",
+            "no": "Opp",
+            "es": "Arriba",
+            "da": "Oppe",
+            "ru": "Наверх",
+            "pl": "Rozchylone"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Idle",
+            "nl": "Stil",
+            "de": "Inaktiv",
+            "fr": "Inactif",
+            "it": "Socchiuse",
+            "sv": "Inaktiv",
+            "no": "Ikke aktiv",
+            "es": "Inactivos",
+            "da": "Inaktiv",
+            "ru": "В ожидании",
+            "pl": "W spoczynku"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Down",
+            "nl": "Omlaag",
+            "de": "Unten",
+            "fr": "Bas",
+            "it": "Abbassate",
+            "sv": "Ned",
+            "no": "Ned",
+            "es": "Abajo",
+            "da": "Nede",
+            "ru": "Вниз",
+            "pl": "Zasunięte"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
     },
     "devicecapabilities_hide_button": {
       "type": "boolean",

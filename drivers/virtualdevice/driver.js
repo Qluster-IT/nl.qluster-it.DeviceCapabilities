@@ -8,7 +8,7 @@ const https = require('https');
 const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 const { Defer, gzip, ungzip } = require('../../lib/proto');
-const TYPES = ['status', 'text', 'number', 'button', 'boolean'];
+const TYPES = ['status', 'text', 'number', 'button', 'boolean', 'list'];
 const CUSTOM_ICONS = [
     'custom_1',  'custom_2',  'custom_3',
     'custom_4',  'custom_5',  'custom_6',  'custom_7',
@@ -78,213 +78,6 @@ const TOPICS = {
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
-
-    async httpsGet({url}) {
-        let defer = new Defer();
-        const https = require('https');
-
-        https.get(url, (resp) => {
-            let data = '';
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                defer.resolve(data);
-            });
-
-            }).on("error", (err) => {defer.reject(err);});
-        return defer.promise;
-    }
-    decodeHtml (string) {
-        //var string = new String(this);
-        string = string.replace(/&lt;/g, "<");
-        string = string.replace(/&gt;/g, ">");
-        string = string.replace(/&quot;/g,  "\"");
-        string = string.replace(/&39;/g,  "'");
-        string = string.replace(/&amp;/g, "&");
-        return string;
-    }
-    async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl, type}) {
-        try {                
-            let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
-            if(topicHtml) {
-
-                let preloaderString = topicHtml.matchAll(/<div class="hidden" id="data-preloaded" data-preloaded="(.*?)"/gmsi);
-                let preloaderFound = preloaderString? [...preloaderString] : [];
-                let preloader;                
-                let templates = [];
-                let postsFound ;
-                let lastNumberFound = 0;
-                
-                if(preloaderFound && preloaderFound.length) {
-                    preloader = this.decodeHtml(preloaderFound[0][1]);
-                    try {
-                        let json = JSON.parse(preloader);
-                        let topicInfo = JSON.parse(json['topic_'+topicId]);
-                        let a=topicInfo;
-                        postsFound = _.filter(topicInfo.post_stream.posts, p=>p.post_number>=postId).length;
-                        _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
-                            let postId = post.id;
-                            let postNumber = post.post_number;
-                            lastNumberFound = postNumber;
-                    
-                            let postCreatedOn = new Date(post.created_at);
-                            let autherName = post.display_username;
-                            let autherId = post.user_id;
-
-                            let postText = post.cooked;
-                            if(postText.startsWith('\n')) postText=postText.substring(1);//.trim();
-                    
-                            let tefs = [], header;
-                            
-                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.*?((?:\[TEF:){1}(.+):)??(H4s(?:.*?))(?:])?(?:(?:\s)+.*?)<\/code><\/pre>/gmsi);
-                            let tefsFound = tefMatches? [...tefMatches] : [];
-                            for(let j=0;j<tefsFound.length;j++) {
-                                if(tefsFound[j].length>1) {
-                                    if(tefsFound[j][2]) {
-                                        if(type==='avd' && tefsFound[j][2].indexOf('AVD')===-1) continue;
-                                        if(type==='flows' && (tefsFound[j][2].indexOf('FLOWS')===-1 || tefsFound[j][2].indexOf('AVD')>-1)) continue;
-                                    }
-                                    tefs.push(tefsFound[j][3]);
-                                    postText = postText.replace(tefsFound[j][0], '');
-                                }
-                            }
-                            if(tefs.length) {
-                                let headerMatches = postText.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
-                                let headersFound = headerMatches? [...headerMatches] : [];
-                                if(headersFound && headersFound.length>0 && headersFound[0].length>2) header = headersFound[0][2].trim();
-                                //console.log(header);
-                                if(header && header.length>0) templates.push({
-                                    id:postId,
-                                    number:postNumber,
-                                    post:postText,
-                                    createdOn:postCreatedOn,
-                                    autherId,
-                                    header,
-                                    tefs,
-                                    topicId
-                                });
-                            }
-                        });
-                        
-                    } catch (error) {
-                        
-                    }
-                }
-                //if(templates.length) return {templates, postsFound};
-
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
-                let matchesFound = posts? [...posts] : [];
-                postsFound = postsFound===undefined ? matchesFound.length : postsFound;
-                for (let i = 0; i < matchesFound.length; i++) {
-                    const postNumber = Number.parseInt(matchesFound[i][3]);
-                    const likes = matchesFound[i][5] ? Number.parseInt(matchesFound[i][5]) : 0;
-                    //let post = matchesFound[i][4];
-                    //if(post.startsWith('\n')) post=post.substring(1);
-                    let template = _.find(templates, t=>t.number==postNumber);
-                    if(template) template.likes = likes;
-                }
-                return {templates, postsFound, lastNumberFound};
-            }
-        } catch (error) {
-            this.error(error);
-        }
-        return {templates:[], postsFound:0};
-    }
-
-
-    
-    async getTefTemplatesFromPosts() {
-        let templates = [];
-        let run = true;
-        const postsPerRun = 20;
-        let runs = 0;
-        let lastNumber = 0;
-        let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
-        
-        while (run) {            
-            //let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
-            let _templates = await this.getTefTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
-            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
-            if(lastNumber == _templates.lastNumberFound) run = false;
-            lastNumber = _templates.lastNumberFound;
-            if(_templates.postsFound<postsPerRun) run = false;
-            runs++;
-        }
-        let settingName = !this.activeTfeSource || this.activeTfeSource==='English' ? '' : '_'+  this.activeTfeSource;
-        this['tefTemplates'+settingName] = templates;
-        await this.homey.settings.set('tefTemplates'+settingName, templates);
-        return templates;
-    }
-    async getTefTemplatesFromPostsById({topicId, topicUrl, postId}) {
-        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'flows', postId, topicId:topicId, topicUrl:topicUrl});
-    }
-    
-
-    // async openTemplate({template}) {
-    //     try {                
-    //         let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
-    //         if(templateHtml) {
-    //             templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
-    //             templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
-    //             templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
-    //             templateHtml = templateHtml.replaceAll('\n', '');
-    //             templateHtml = templateHtml.trimStart();
-    //             template.post = templateHtml;
-    //             let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
-    //             if(ulTemplates) {                
-    //                 let matchesFound = [...ulTemplates];
-    //                 for (let i = 0; i < matchesFound.length; i++) {
-    //                     template.post = template.post.replace(matchesFound[i][0], '');
-    //                     template.tef = matchesFound[i][2].trim();
-    //                     template.updatedOn = Date.now();
-    //                 }
-    //             }
-    //             let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
-    //             if(t) {
-    //                 t.post = template.post;
-    //                 t.tef = template.tef;                    
-    //                 await this.homey.settings.set('tefTemplates', this.tefTemplates); 
-    //             }
-    //             return {template};
-    //         }
-    //     } catch (error) {
-    //         this.error(error);
-    //     }
-    // }
-
-
-    async getAvdTemplatesFromPosts() {
-        let templates = [];
-        let run = true;
-        const postsPerRun = 20;
-        let runs = 0;
-        let lastNumber = 0;
-        let topic = TOPICS.avd[this.activeAvdSource] || TOPICS.avd.English;
-        
-        while (run) {            
-            //let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
-            let _templates = await this.getAvdTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
-            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
-            if(lastNumber == _templates.lastNumberFound) run = false;
-            lastNumber = _templates.lastNumberFound;
-            if(_templates.postsFound<postsPerRun) run = false;
-            runs++;
-        }
-        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
-        this['avdTemplates'+ settingName] = templates;
-        await this.homey.settings.set('avdTemplates'+ settingName, templates);
-        return templates;
-    }
-    async getAvdTemplatesFromPostsById({topicId, topicUrl, postId}) {
-        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'avd', postId, topicId:topicId, topicUrl:topicUrl});
-    }
-    async getTopics() {
-        return TOPICS;
-    }
-    
     async onInit() {
         app = this.homey.app;
         this.log('VirtualDeviceDriver onInit');
@@ -451,7 +244,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 
 
         
-        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
+        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
 			var set_value = this.homey.flow.getActionCard(action);
 			set_value
@@ -498,6 +291,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                         if(args.boolean!==undefined && args.boolean!=='undefined') value = args.boolean;
                                         else value = null;
                                         triggerCard = this.triggerFlowButton;
+                                        break;                                        
+                                    case 'virtualdevice_set_list':
+                                        if(args.value!==undefined && args.value!=='undefined') value = args.value?args.value.id:'';
+                                        else value = null;
+                                        triggerCard = this.triggerFlowList;
                                         break;
                                     case 'virtualdevice_set_status':
                                     case 'virtualdevice_set_status_optionalnumber':                                
@@ -555,8 +353,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         throw new Error(error);
 					}
 				}).bind(this));
-                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button')) 
+                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button') || action.endsWith('_list')) 
                     set_value.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action, true));
+                if(action.endsWith('_list')) 
+                    set_value.getArgument('value').registerAutocompleteListener(this.registerAutocompleteListValue(action));
                 
 		}).bind(this));
 
@@ -609,7 +409,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         virtualdevice_set_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
 
-        let triggers = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text', 'trigger_virtualdevice_status'];
+        let triggers = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text', 'trigger_virtualdevice_status', 'trigger_virtualdevice_list'];
         triggers.forEach((trigger => {
 			var triggerCard = this.homey.flow.getDeviceTriggerCard(trigger);
             this[trigger]= triggerCard;
@@ -692,11 +492,219 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
 
+    async httpsGet({url}) {
+        let defer = new Defer();
+        const https = require('https');
+
+        https.get(url, (resp) => {
+            let data = '';
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                defer.resolve(data);
+            });
+
+            }).on("error", (err) => {defer.reject(err);});
+        return defer.promise;
+    }
+    decodeHtml (string) {
+        //var string = new String(this);
+        string = string.replace(/&lt;/g, "<");
+        string = string.replace(/&gt;/g, ">");
+        string = string.replace(/&quot;/g,  "\"");
+        string = string.replace(/&39;/g,  "'");
+        string = string.replace(/&amp;/g, "&");
+        return string;
+    }
+    async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl, type}) {
+        try {                
+            let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
+            if(topicHtml) {
+
+                let preloaderString = topicHtml.matchAll(/<div class="hidden" id="data-preloaded" data-preloaded="(.*?)"/gmsi);
+                let preloaderFound = preloaderString? [...preloaderString] : [];
+                let preloader;                
+                let templates = [];
+                let postsFound ;
+                let lastNumberFound = 0;
+                
+                if(preloaderFound && preloaderFound.length) {
+                    preloader = this.decodeHtml(preloaderFound[0][1]);
+                    try {
+                        let json = JSON.parse(preloader);
+                        let topicInfo = JSON.parse(json['topic_'+topicId]);
+                        let a=topicInfo;
+                        postsFound = _.filter(topicInfo.post_stream.posts, p=>p.post_number>=postId).length;
+                        _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
+                            let postId = post.id;
+                            let postNumber = post.post_number;
+                            lastNumberFound = postNumber;
+                    
+                            let postCreatedOn = new Date(post.created_at);
+                            let autherName = post.display_username;
+                            let autherId = post.user_id;
+
+                            let postText = post.cooked;
+                            if(postText.startsWith('\n')) postText=postText.substring(1);//.trim();
+                    
+                            let tefs = [], header;
+                            
+                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.{0,10}((?:\[TEF:){1}(.+):)??(H4s(?:.*?))(?:])?(?:(?:\s)+.*?)?<\/code><\/pre>/gmsi);
+                            let tefsFound = tefMatches? [...tefMatches] : [];
+                            for(let j=0;j<tefsFound.length;j++) {
+                                if(tefsFound[j].length>1) {
+                                    if(tefsFound[j][2]) {
+                                        if(type==='avd' && tefsFound[j][2].indexOf('AVD')===-1) continue;
+                                        if(type==='flows' && (tefsFound[j][2].indexOf('FLOWS')===-1 || tefsFound[j][2].indexOf('AVD')>-1)) continue;
+                                    }
+                                    tefs.push(tefsFound[j][3]);
+                                    postText = postText.replace(tefsFound[j][0], '');
+                                }
+                            }
+                            if(tefs.length) {
+                                let headerMatches = postText.matchAll(/<h1>.*?(<a.*?<\/a>)!?(.*?)<\/h1>/gmsi);
+                                let headersFound = headerMatches? [...headerMatches] : [];
+                                if(headersFound && headersFound.length>0 && headersFound[0].length>2) header = headersFound[0][2].trim();
+                                //console.log(header);
+                                if(header && header.length>0) templates.push({
+                                    id:postId,
+                                    number:postNumber,
+                                    post:postText,
+                                    createdOn:postCreatedOn,
+                                    autherId,
+                                    header,
+                                    tefs,
+                                    topicId
+                                });
+                            }
+                        });
+                        
+                    } catch (error) {
+                        
+                    }
+                }
+                //if(templates.length) return {templates, postsFound};
+
+                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                let matchesFound = posts? [...posts] : [];
+                postsFound = postsFound===undefined ? matchesFound.length : postsFound;
+                for (let i = 0; i < matchesFound.length; i++) {
+                    const postNumber = Number.parseInt(matchesFound[i][3]);
+                    const likes = matchesFound[i][5] ? Number.parseInt(matchesFound[i][5]) : 0;
+                    //let post = matchesFound[i][4];
+                    //if(post.startsWith('\n')) post=post.substring(1);
+                    let template = _.find(templates, t=>t.number==postNumber);
+                    if(template) template.likes = likes;
+                }
+                return {templates, postsFound, lastNumberFound};
+            }
+        } catch (error) {
+            this.error(error);
+        }
+        return {templates:[], postsFound:0};
+    }
+
+
+    
+    async getTefTemplatesFromPosts() {
+        let templates = [];
+        let run = true;
+        const postsPerRun = 20;
+        let runs = 0;
+        let lastNumber = 0;
+        let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
+        
+        while (run) {            
+            //let _templates = await this.getTefTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            let _templates = await this.getTefTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
+            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
+            if(lastNumber == _templates.lastNumberFound) run = false;
+            lastNumber = _templates.lastNumberFound;
+            if(_templates.postsFound<postsPerRun) run = false;
+            runs++;
+        }
+        let settingName = !this.activeTfeSource || this.activeTfeSource==='English' ? '' : '_'+  this.activeTfeSource;
+        this['tefTemplates'+settingName] = templates;
+        await this.homey.settings.set('tefTemplates'+settingName, templates);
+        return templates;
+    }
+    async getTefTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'flows', postId, topicId:topicId, topicUrl:topicUrl});
+    }
+    
+
+    // async openTemplate({template}) {
+    //     try {                
+    //         let templateHtml = await this.httpsGet({url:'https://community.homey.app/t/the-flow-exchange-r-exchange-your-flows-with-others/68981/' + template.postId});
+    //         if(templateHtml) {
+    //             templateHtml = _.last(templateHtml.split('<span itemprop=\'position\'>#'+template.postId+'</span>'));
+    //             templateHtml = templateHtml.split('<div class=\'post\' itemprop=\'articleBody\'>')[1];
+    //             templateHtml = _.first(templateHtml.split('<meta itemprop=\'headline\''));
+    //             templateHtml = templateHtml.replaceAll('\n', '');
+    //             templateHtml = templateHtml.trimStart();
+    //             template.post = templateHtml;
+    //             let ulTemplates = templateHtml.matchAll(/(<p>TEF:<\/p>)?<pre><code class="lang-auto">(.*?)<\/code><\/pre>/gms);
+    //             if(ulTemplates) {                
+    //                 let matchesFound = [...ulTemplates];
+    //                 for (let i = 0; i < matchesFound.length; i++) {
+    //                     template.post = template.post.replace(matchesFound[i][0], '');
+    //                     template.tef = matchesFound[i][2].trim();
+    //                     template.updatedOn = Date.now();
+    //                 }
+    //             }
+    //             let t = _.find(this.tefTemplates, _t=>_t.postId==template.postId);
+    //             if(t) {
+    //                 t.post = template.post;
+    //                 t.tef = template.tef;                    
+    //                 await this.homey.settings.set('tefTemplates', this.tefTemplates); 
+    //             }
+    //             return {template};
+    //         }
+    //     } catch (error) {
+    //         this.error(error);
+    //     }
+    // }
+
+
+    async getAvdTemplatesFromPosts() {
+        let templates = [];
+        let run = true;
+        const postsPerRun = 20;
+        let runs = 0;
+        let lastNumber = 0;
+        let topic = TOPICS.avd[this.activeAvdSource] || TOPICS.avd.English;
+        
+        while (run) {            
+            //let _templates = await this.getAvdTemplatesFromPostsById({postId:(runs===0?0:runs*postsPerRun) + 1});
+            let _templates = await this.getAvdTemplatesFromPostsById({postId:lastNumber+1, topicId:topic.topicId, topicUrl:topic.topicUrl});
+            templates = _.union(templates, _.filter(_templates.templates, _t=>!_.find(templates, t=>t.number==_t.number)));
+            if(lastNumber == _templates.lastNumberFound) run = false;
+            lastNumber = _templates.lastNumberFound;
+            if(_templates.postsFound<postsPerRun) run = false;
+            runs++;
+        }
+        let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+        this['avdTemplates'+ settingName] = templates;
+        await this.homey.settings.set('avdTemplates'+ settingName, templates);
+        return templates;
+    }
+    async getAvdTemplatesFromPostsById({topicId, topicUrl, postId}) {
+        return await this.getTefTemplatesFromPostsByIdAndTopic({type:'avd', postId, topicId:topicId, topicUrl:topicUrl});
+    }
+    async getTopics() {
+        return TOPICS;
+    }
+    
+
     getTypeFromField(fieldId) {
        return fieldId.startsWith('text') ? 'text' : 
             fieldId.startsWith('number') ? 'number' : 
             fieldId.startsWith('boolean') ? 'boolean' : 
             fieldId.startsWith('button') ? 'button' : 
+            fieldId.startsWith('list') ? 'list' : 
             fieldId.startsWith('status') ? 'status' : 'unknown';
     }
 
@@ -710,6 +718,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             fieldId.startsWith('number') ? 'Number' : 
             fieldId.startsWith('boolean') ? 'Boolean' : 
             fieldId.startsWith('button') ? 'Button' : 
+            fieldId.startsWith('list') ? 'List' : 
             fieldId.startsWith('status') ? 'measure_Status' : 'unknown';
         let cap = type+"."+fieldId;
         if(device.hasCapability(cap)) {
@@ -873,7 +882,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 let name = settings['camera' + i + 'Name'];
                 if(name) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
-                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
+                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':name || typeText, description:typeText});
                 }
             }
@@ -894,7 +903,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
-                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
+                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i : type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
             }
@@ -908,7 +917,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let ret = [];
             let retSetAll = [];
             let caps = args.device.getCapabilities();
-            let types = ['status', 'text', 'number', 'boolean', 'button'];
+            let types = ['status', 'text', 'number', 'boolean', 'button', 'list'];
             for (let k = 0; k < types.length; k++) {
                 const type = types[k];                
                 let actionAllSet = false;
@@ -918,7 +927,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     if(cap) {
                         if(!actionAllSet && useSetAll!==false && type!=='status') actionAllSet = retSetAll.push | retSetAll.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     
-                        var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : 'unknown';
+                        var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : type=='list' ? 'List' : 'unknown';
                         ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
                     
@@ -926,6 +935,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             }
             if(retSetAll.length) ret = _.union(retSetAll, ret);
           return ret;
+        };
+    }
+
+    registerAutocompleteListValue(action) {
+        return async( query, args ) => {
+            let settings = args.device.Settings;
+            if(!settings) return;            
+            let cap = args.device.getStoreValue(args.field.id);
+            let dev = this.homey.app.devices[args.device.__id];
+            let values = dev==null?null : dev.capabilitiesObj && dev.capabilitiesObj[cap] ?  dev.capabilitiesObj[cap].values : undefined;
+            return values;
+            //let a = 0;
+            //var type = this.getTypeFromAction(action);
         };
     }
 
@@ -946,6 +968,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
     async triggerFlowText(device, value, state) {
         return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);
+    }
+    async triggerFlowList(device, value, state) {
+        return await this.trigger_virtualdevice_list.trigger(device, {value:value===null?'':value} , state);
     }
     async triggerFlowStatus(device, text, number, state) {
         return await this.trigger_virtualdevice_status.trigger(device, {text:text===null || text===undefined?'':text, number:number===null || number===undefined?0:number} , state);
