@@ -64,8 +64,7 @@
 		"flowsThatAreCreated":"Flows that are created will be listed here:",
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Select a flow and press Create",
-		"pasteTEFReadFlows":"Paste The Exchanger File and press Read Flows",
-		
+		"pasteTEFReadFlows":"Paste The Exchanger File and press Read Flows",		
 		"no_avd_in_tef":"TEF does not contains an AVD.",
 		"flows_will_be_created":"The following flows will be created in the script.",
 		"":""
@@ -116,6 +115,7 @@
 		"showAsNumberHint":"Select how the number must be displayed.",
 		"showAsBooleanHint":"Select how the Yes/No must be displayed.",
 		"showAsButtonHint":"Select how the button must be displayed.",
+		"showAsListHint":"Select how the list must be displayed.",
 		"createFlowCards":"Create Flow Cards",
 		"createFlowCardsHint":"When selected Default Flow Cards will be created for this capability.",
 		"units":"Units",
@@ -147,7 +147,6 @@
 		"step":"Step",
 		"stepHint":"The step sets the stepping interval for the Number.",
 		"labelTopicLink":"See the AVD Forum Topic for explanations or if you seek any help with AVDs or Templates.",
-
 		"disableZoneActivity":"Disable Zone Activity",
 		"disableZoneActivityHint":"When selected will disable zone activity for this field.",
 		"openShareYourDevice":"Open Share Your Device",
@@ -163,9 +162,14 @@
 		"saveAs":"Save as",
 		"customIcon":"Custom icon",
 		"finish":"Finish",
-		"":"",
-		"":"",
-		"":""
+		
+
+		
+		"listFields":"Lists",
+		"listFieldI":"List __i__",
+		"createListField":"Create List",		
+		"prefixedList":"Prefixed list",		
+		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!"
 	},
 	"pair": {
 		"list_icons":{
@@ -175,10 +179,11 @@
 			"select_device_icon":"Or select one from the list.",
 			"set_icon_and_customize":"Here you can pick an icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
 			"set_icon_and_customize_change" : "You can change the icon later through App Settings.",
-
 			"set_name":"Here you can set the name for the device:",
 			"create_device_self":"Or create a device yourself",
 			"choose_template":"Or choose a Template",
+
+
 			"":"",
 			"":"",
 			"":""
@@ -188,7 +193,6 @@
 			"title":"One moment please",
 			"creating_device":"Your New Virtual Device is Being Created.",
 			"done":"Done!",
-
 			"avds_are_created":"The AVD(s) have been created!",
 			"flow_available_in_template":"There are flows in the template that was used, you can create a script for it here now.",
 			"title_flows":"Create Flow Script"

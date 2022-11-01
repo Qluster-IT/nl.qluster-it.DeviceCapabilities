@@ -394,5 +394,23 @@
   },
   "2.7.16" : {
     "en" : "Added: Countdown (create new during import) support for TEFs."
+  },
+  "2.7.17" : {
+    "en" : "Bugfixed."
+  },
+  "2.7.18" : {
+    "en" : "Added. Lists/Pickers/Dropdowns fields can now be added. With default lists like Alarm State (for Heimdall)."
+  },
+  "2.7.19" : {
+    "en" : "Bufixed."
+  },
+  "2.7.20" : {
+    "en" : "Bugfixed and Improvements."
+  },
+  "2.7.21": {
+    "en": "Added: Contribution options: Patreon and GithubSponsors (with PayPal already available)."
+  },
+  "2.7.22": {
+    "en": "Added: Picker: Schedule, Until, Manual, Off Until, Off."
   }
 }

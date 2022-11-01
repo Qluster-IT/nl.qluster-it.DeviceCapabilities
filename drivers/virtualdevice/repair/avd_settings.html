@@ -37,12 +37,12 @@
 				<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
 			</select>
 		</div>
-		<div class="group header purple text-center">
+		<div class="group header white text-center">
 			{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}
 		</div>
 		<div class="group">
 			<div class="field" ng-if="true">
-				<div class="label"><span class="color-icon purple"></span>
+				<div class="label"><span class="color-icon white"></span>
 					<span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div>
 				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true);"></span>
 			</div>
@@ -389,7 +389,7 @@
 			ng-repeat="x in [].constructor(s.numberOfButtonFields) track by $index">
 			<div class="field">
 				<div class="label"><span class="color-icon orange round"></span>
-					<span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1} || 'Button ' + ($index+1))}}</span>
+					<span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1}) || 'Button ' + ($index+1)}}</span>
 				</div>
 				<span class="remove-icon fa fa-icon fa-trash"
 					ng-click="removeAllSettings('button', ($index+1), true);"></span>
@@ -461,8 +461,7 @@
 				</div>
 				<div class="field" ng-if="s['button'+($index+1)+'ShowAs'] && s['button'+($index+1)+'ShowAs']!=='button' && s['button'+($index+1)+'ShowAs']!=='speaker_next'  && s['button'+($index+1)+'ShowAs']!=='speaker_prev'
 						&& s['button'+($index+1)+'ShowAs']!=='volume_up' && s['button'+($index+1)+'ShowAs']!=='volume_down' && s['button'+($index+1)+'ShowAs']!=='channel_up' && s['button'+($index+1)+'ShowAs']!=='channel_down'
-						&& s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_up' && s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_down'
-				">
+						&& s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_up' && s['button'+($index+1)+'ShowAs']!=='windowcoverings_tilt_down'">
 					<div class="label"><span>{{__('virtualdevicesettings.createInsights') || 'Create Insights'}}</span>
 						<span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createInsightsHint') || 'When selected Insights will be created.'}}"></span>
@@ -503,7 +502,76 @@
 				value="{{__('virtualdevicesettings.createButtonField') || 'Create Button'}}" />
 		</div>
 
-		<div class="group header white text-center">
+		
+		<div class="group header green round text-center">
+			{{__('virtualdevicesettings.listFields') || 'Lists'}}
+		</div>
+		<div class="group" ng-class="{odd:$odd}"
+			ng-repeat="x in [].constructor(s.numberOfListFields) track by $index">
+			<div class="field">
+				<div class="label"><span class="color-icon green round"></span>
+					<span>{{__('virtualdevicesettings.listFieldI', {i:$index+1}) || 'List ' + ($index+1)}}</span>
+				</div>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('list', ($index+1), true);"></span>
+			</div>
+			<div class="field">
+				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
+				<input class="value" type="text" ng-model="s['list'+($index+1)+'Name']" />
+			</div>
+			<div ng-if="s['list'+($index+1)+'Name']">
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.showAs') || 'Show as'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.showAsListHint') || 'Select how the list must be displayed.'}}"></span>
+					</div>
+					<select class="value" ng-model="s['list'+($index+1)+'ShowAs']">
+						<option ng-repeat="item in listShowAs" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>				
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.prefixedListHint') || 'Currently, only pre-fixed lists are available. Goto the Forum to request your own!'}}"></span>
+					</div>
+					<select class="value" ng-model="s['list'+($index+1)+'PrefixedList']">
+						<option ng-repeat="item in listPrefixedLists | filter:{'showAs':s['list'+($index+1)+'ShowAs']}" value="{{item.id}}">{{item.label}}</option>
+					</select>
+				</div>
+				<div class="field"
+					ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker'">
+					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'CreateFlowCards']" />
+				</div>
+				<div ng-else execute="s['list'+($index+1)+'CreateFlowCards'] = false;" ></div>
+
+				<div class="field">
+					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.createTagHint') || 'When selected a Tag will be created.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'CreateTag']" />
+				</div>
+				
+				<div class="field" ng-if="s['list'+($index+1)+'CreateTag']">
+					<div class="label"><span>{{__('virtualdevicesettings.createSeparateCapabilities') || 'Create Hidden
+							Fields'}}</span> <span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.createSeparateCapabilitiesListHint') || 'When selected will create hidden fields for the Insights and Tag, which will not unlink when settings are changed.\r\nBut it costs more resources and you cannot know Who pushed the list.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'SeparateCapabilities']" />
+				</div>
+				<div ng-else execute="s['list'+($index+1)+'SeparateCapabilities'] = false;" ></div>				
+			</div>
+			<div ng-else execute="removeAllSettings('list', ($index+1))" ></div>
+		</div>
+		<div class="create-button group last">
+			<input type="button" class="button" ng-click="s.numberOfListFields=s.numberOfListFields+1;"
+				value="{{__('virtualdevicesettings.createListField') || 'Create List'}}" />
+		</div>
+
+		
+		<div class="group header purple text-center">
 			<span>{{__('virtualdevicesettings.cameraFields') || 'Cameras'}}</span>
 		</div>
 		<div class="group">
@@ -514,7 +582,7 @@
 		<div class="group" ng-class="{odd:$odd}"
 			ng-repeat="x in [].constructor(s.numberOfCameraFields) track by $index">
 			<div class="field">
-				<div class="label"><span class="color-icon white"></span>
+				<div class="label"><span class="color-icon purple"></span>
 					<span>{{__('virtualdevicesettings.cameraFieldI', {i:$index+1}) || 'Camera ' + ($index+1)}}</span>
 				</div>
 				<span class="remove-icon fa fa-icon fa-trash"
@@ -522,7 +590,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
-				<input class="value" type="camera" ng-model="s['camera'+($index+1)+'Name']" />
+				<input class="value" type="text" ng-model="s['camera'+($index+1)+'Name']" />
 			</div>
 			<div ng-if="s['camera'+($index+1)+'Name']">
 				<div class="field">
@@ -530,7 +598,7 @@
 							class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.cameraUrlHint', {i:($index+1)}) || ('The Url for Camera '+($index+1)+'. The Url has to be accessable through Homey\'s network.')}}"></span>
 					</div>
-					<input class="value" type="camera" ng-model="s['camera'+($index+1)+'Url']" />
+					<textarea class="value" ng-model="s['camera'+($index+1)+'Url']"></textarea>
 				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.cameraInterval') || 'Interval in
@@ -566,7 +634,7 @@
 		<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId')">See the Share Your Device Forum Topic for other AVDs</div>	
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId)">See the Share Your Device Forum Topic for other AVDs</div>	
 		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
@@ -906,7 +974,15 @@ ${vars.textSettings}
 
 			$scope.buttonShowAs1 = asv_settings.buttonShowAs1;
 			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
+			$scope.listShowAs = asv_settings.listShowAs;
+
 			$scope.deviceClasses = asv_settings.deviceClasses;
+			$scope.listPrefixedLists = asv_settings.listPrefixedLists;
+
+			// $scope.setListShowAs = function(listId) {
+			// 	$scope.s[listId+'ShowAs'] = _.find($scope.listPrefixedLists, x=> x.id===$scope.s[listId+'PrefixedList']).showAs;
+			// }
+
 
 			$scope._delete = function(o,s) {
 				delete o[s];
