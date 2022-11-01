@@ -658,6 +658,12 @@ const asv_settings = {
       "label": "Up, Idle, Down",
       "showAs":'picker',
       "order": 0
+    },
+    {
+      "id": "devicecapabilities_picker-schedule-until-manual-offuntil-off_list",
+      "label": "Schedule, Until, Manual, Off Until, Off",
+      "showAs":'picker',
+      "order": 1
     }
   ],
 

@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.21",
+  "version": "2.7.22",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -80,19 +80,19 @@
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
-	"contributing": {
-		"donate": {
-			"paypal": {
-				"username": "QlusterIT"
-			},
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "QlusterIT"
+      },
       "patreon": {
-				"username": "QlusterIT"
-			},
+        "username": "QlusterIT"
+      },
       "githubSponsors": {
         "username": "XeroxQ"
       }
-		}
-	},
+    }
+  },
   "author": {
     "name": "Arie J. Godschalk",
     "email": "arie@qluster-it.nl"
@@ -3734,124 +3734,6 @@
       "uiQuickAction": false,
       "insights": true,
       "value": ""
-    },
-    "devicecapabilities_ternary-up-idle-down_list": {
-      "title": {
-        "en": "Up, Idle, Down"
-      },
-      "type": "enum",
-      "values": [
-        {
-          "id": "up",
-          "title": {
-            "en": "Up",
-            "nl": "Omhoog",
-            "de": "Oben",
-            "fr": "Haut",
-            "it": "Alzate",
-            "sv": "Upp",
-            "no": "Opp",
-            "es": "Arriba",
-            "da": "Oppe",
-            "ru": "Наверх",
-            "pl": "Rozchylone"
-          }
-        },
-        {
-          "id": "idle",
-          "title": {
-            "en": "Idle",
-            "nl": "Stil",
-            "de": "Inaktiv",
-            "fr": "Inactif",
-            "it": "Socchiuse",
-            "sv": "Inaktiv",
-            "no": "Ikke aktiv",
-            "es": "Inactivos",
-            "da": "Inaktiv",
-            "ru": "В ожидании",
-            "pl": "W spoczynku"
-          }
-        },
-        {
-          "id": "down",
-          "title": {
-            "en": "Down",
-            "nl": "Omlaag",
-            "de": "Unten",
-            "fr": "Bas",
-            "it": "Abbassate",
-            "sv": "Ned",
-            "no": "Ned",
-            "es": "Abajo",
-            "da": "Nede",
-            "ru": "Вниз",
-            "pl": "Zasunięte"
-          }
-        }
-      ],
-      "getable": true,
-      "setable": true,
-      "uiComponent": "ternary"
-    },
-    "devicecapabilities_picker-up-idle-down_list": {
-      "title": {
-        "en": "Up, Idle, Down"
-      },
-      "type": "enum",
-      "values": [
-        {
-          "id": "up",
-          "title": {
-            "en": "Up",
-            "nl": "Omhoog",
-            "de": "Oben",
-            "fr": "Haut",
-            "it": "Alzate",
-            "sv": "Upp",
-            "no": "Opp",
-            "es": "Arriba",
-            "da": "Oppe",
-            "ru": "Наверх",
-            "pl": "Rozchylone"
-          }
-        },
-        {
-          "id": "idle",
-          "title": {
-            "en": "Idle",
-            "nl": "Stil",
-            "de": "Inaktiv",
-            "fr": "Inactif",
-            "it": "Socchiuse",
-            "sv": "Inaktiv",
-            "no": "Ikke aktiv",
-            "es": "Inactivos",
-            "da": "Inaktiv",
-            "ru": "В ожидании",
-            "pl": "W spoczynku"
-          }
-        },
-        {
-          "id": "down",
-          "title": {
-            "en": "Down",
-            "nl": "Omlaag",
-            "de": "Unten",
-            "fr": "Bas",
-            "it": "Abbassate",
-            "sv": "Ned",
-            "no": "Ned",
-            "es": "Abajo",
-            "da": "Nede",
-            "ru": "Вниз",
-            "pl": "Zasunięte"
-          }
-        }
-      ],
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker"
     },
     "devicecapabilities_hide_button": {
       "type": "boolean",
@@ -15798,6 +15680,175 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_80.svg"
+    },
+    "devicecapabilities_ternary-up-idle-down_list": {
+      "title": {
+        "en": "Up, Idle, Down"
+      },
+      "type": "enum",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Up",
+            "nl": "Omhoog",
+            "de": "Oben",
+            "fr": "Haut",
+            "it": "Alzate",
+            "sv": "Upp",
+            "no": "Opp",
+            "es": "Arriba",
+            "da": "Oppe",
+            "ru": "Наверх",
+            "pl": "Rozchylone"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Idle",
+            "nl": "Stil",
+            "de": "Inaktiv",
+            "fr": "Inactif",
+            "it": "Socchiuse",
+            "sv": "Inaktiv",
+            "no": "Ikke aktiv",
+            "es": "Inactivos",
+            "da": "Inaktiv",
+            "ru": "В ожидании",
+            "pl": "W spoczynku"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Down",
+            "nl": "Omlaag",
+            "de": "Unten",
+            "fr": "Bas",
+            "it": "Abbassate",
+            "sv": "Ned",
+            "no": "Ned",
+            "es": "Abajo",
+            "da": "Nede",
+            "ru": "Вниз",
+            "pl": "Zasunięte"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "ternary"
+    },
+    "devicecapabilities_picker-up-idle-down_list": {
+      "title": {
+        "en": "Up, Idle, Down"
+      },
+      "type": "enum",
+      "values": [
+        {
+          "id": "up",
+          "title": {
+            "en": "Up",
+            "nl": "Omhoog",
+            "de": "Oben",
+            "fr": "Haut",
+            "it": "Alzate",
+            "sv": "Upp",
+            "no": "Opp",
+            "es": "Arriba",
+            "da": "Oppe",
+            "ru": "Наверх",
+            "pl": "Rozchylone"
+          }
+        },
+        {
+          "id": "idle",
+          "title": {
+            "en": "Idle",
+            "nl": "Stil",
+            "de": "Inaktiv",
+            "fr": "Inactif",
+            "it": "Socchiuse",
+            "sv": "Inaktiv",
+            "no": "Ikke aktiv",
+            "es": "Inactivos",
+            "da": "Inaktiv",
+            "ru": "В ожидании",
+            "pl": "W spoczynku"
+          }
+        },
+        {
+          "id": "down",
+          "title": {
+            "en": "Down",
+            "nl": "Omlaag",
+            "de": "Unten",
+            "fr": "Bas",
+            "it": "Abbassate",
+            "sv": "Ned",
+            "no": "Ned",
+            "es": "Abajo",
+            "da": "Nede",
+            "ru": "Вниз",
+            "pl": "Zasunięte"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
+    },
+    "devicecapabilities_picker-schedule-until-manual-offuntil-off_list": {
+      "title": {
+        "en": "Schedule, Until, Manual, Off Until, Off"
+      },
+      "type": "enum",
+      "values": [
+        {
+          "id": "smartschedule",
+          "title": {
+            "en": "Follow Smart Schedule",
+            "nl": "Volg slim schema",
+            "de": "Dem intelligenten Zeitplan folgen"
+          }
+        },
+        {
+          "id": "untilnextblock",
+          "title": {
+            "en": "Until next time block",
+            "nl": "Tot aan volgend tijdsblok",
+            "de": "Bis zum nächsten Zeitblock"
+          }
+        },
+        {
+          "id": "manual",
+          "title": {
+            "en": "Manual",
+            "nl": "Handmatig",
+            "de": "Manuell"
+          }
+        },
+        {
+          "id": "offuntilnextblock",
+          "title": {
+            "en": "Off until next time block",
+            "nl": "Uit tot aan volgend tijdsblok",
+            "de": "Aus bis zum nächsten Zeitblock"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
     }
   },
   "drivers": [

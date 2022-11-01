@@ -409,5 +409,8 @@
   },
   "2.7.21": {
     "en": "Added: Contribution options: Patreon and GithubSponsors (with PayPal already available)."
+  },
+  "2.7.22": {
+    "en": "Added: Picker: Schedule, Until, Manual, Off Until, Off."
   }
 }

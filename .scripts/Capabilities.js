@@ -106,125 +106,6 @@ str+='"measure_Status": { \r\n'+
 
 
 
-str+=`"devicecapabilities_ternary-up-idle-down_list": {
-  "title": {
-    "en": "Up, Idle, Down"
-  },
-  "type": "enum",
-  "values": [
-    {
-      "id": "up",
-      "title": {
-        "en": "Up",
-        "nl": "Omhoog",
-        "de": "Oben",
-        "fr": "Haut",
-        "it": "Alzate",
-        "sv": "Upp",
-        "no": "Opp",
-        "es": "Arriba",
-        "da": "Oppe",
-        "ru": "Наверх",
-        "pl": "Rozchylone"
-      }
-    },
-    {
-      "id": "idle",
-      "title": {
-        "en": "Idle",
-        "nl": "Stil",
-        "de": "Inaktiv",
-        "fr": "Inactif",
-        "it": "Socchiuse",
-        "sv": "Inaktiv",
-        "no": "Ikke aktiv",
-        "es": "Inactivos",
-        "da": "Inaktiv",
-        "ru": "В ожидании",
-        "pl": "W spoczynku"
-      }
-    },
-    {
-      "id": "down",
-      "title": {
-        "en": "Down",
-        "nl": "Omlaag",
-        "de": "Unten",
-        "fr": "Bas",
-        "it": "Abbassate",
-        "sv": "Ned",
-        "no": "Ned",
-        "es": "Abajo",
-        "da": "Nede",
-        "ru": "Вниз",
-        "pl": "Zasunięte"
-      }
-    }
-  ],
-  "getable": true,
-  "setable": true,
-  "uiComponent": "ternary"
-  },`;
-str+=`"devicecapabilities_picker-up-idle-down_list": {
-  "title": {
-    "en": "Up, Idle, Down"
-  },
-  "type": "enum",
-  "values": [
-    {
-      "id": "up",
-      "title": {
-        "en": "Up",
-        "nl": "Omhoog",
-        "de": "Oben",
-        "fr": "Haut",
-        "it": "Alzate",
-        "sv": "Upp",
-        "no": "Opp",
-        "es": "Arriba",
-        "da": "Oppe",
-        "ru": "Наверх",
-        "pl": "Rozchylone"
-      }
-    },
-    {
-      "id": "idle",
-      "title": {
-        "en": "Idle",
-        "nl": "Stil",
-        "de": "Inaktiv",
-        "fr": "Inactif",
-        "it": "Socchiuse",
-        "sv": "Inaktiv",
-        "no": "Ikke aktiv",
-        "es": "Inactivos",
-        "da": "Inaktiv",
-        "ru": "В ожидании",
-        "pl": "W spoczynku"
-      }
-    },
-    {
-      "id": "down",
-      "title": {
-        "en": "Down",
-        "nl": "Omlaag",
-        "de": "Unten",
-        "fr": "Bas",
-        "it": "Abbassate",
-        "sv": "Ned",
-        "no": "Ned",
-        "es": "Abajo",
-        "da": "Nede",
-        "ru": "Вниз",
-        "pl": "Zasunięte"
-      }
-    }
-  ],
-  "getable": true,
-  "setable": true,
-  "uiComponent": "picker"
-  },`;
-
 var sets1 = ['_hide', '_onoff_hide'];
 for(var j=0;j<sets1.length;j++) {
   var val = sets1[j];
@@ -382,6 +263,190 @@ for(var j=0;j<sets1.length;j++) {
 }
 
 }
+
+
+
+
+
+
+
+str+=`"devicecapabilities_ternary-up-idle-down_list": {
+  "title": {
+    "en": "Up, Idle, Down"
+  },
+  "type": "enum",
+  "values": [
+    {
+      "id": "up",
+      "title": {
+        "en": "Up",
+        "nl": "Omhoog",
+        "de": "Oben",
+        "fr": "Haut",
+        "it": "Alzate",
+        "sv": "Upp",
+        "no": "Opp",
+        "es": "Arriba",
+        "da": "Oppe",
+        "ru": "Наверх",
+        "pl": "Rozchylone"
+      }
+    },
+    {
+      "id": "idle",
+      "title": {
+        "en": "Idle",
+        "nl": "Stil",
+        "de": "Inaktiv",
+        "fr": "Inactif",
+        "it": "Socchiuse",
+        "sv": "Inaktiv",
+        "no": "Ikke aktiv",
+        "es": "Inactivos",
+        "da": "Inaktiv",
+        "ru": "В ожидании",
+        "pl": "W spoczynku"
+      }
+    },
+    {
+      "id": "down",
+      "title": {
+        "en": "Down",
+        "nl": "Omlaag",
+        "de": "Unten",
+        "fr": "Bas",
+        "it": "Abbassate",
+        "sv": "Ned",
+        "no": "Ned",
+        "es": "Abajo",
+        "da": "Nede",
+        "ru": "Вниз",
+        "pl": "Zasunięte"
+      }
+    }
+  ],
+  "getable": true,
+  "setable": true,
+  "uiComponent": "ternary"
+  },`;
+str+=`"devicecapabilities_picker-up-idle-down_list": {
+  "title": {
+    "en": "Up, Idle, Down"
+  },
+  "type": "enum",
+  "values": [
+    {
+      "id": "up",
+      "title": {
+        "en": "Up",
+        "nl": "Omhoog",
+        "de": "Oben",
+        "fr": "Haut",
+        "it": "Alzate",
+        "sv": "Upp",
+        "no": "Opp",
+        "es": "Arriba",
+        "da": "Oppe",
+        "ru": "Наверх",
+        "pl": "Rozchylone"
+      }
+    },
+    {
+      "id": "idle",
+      "title": {
+        "en": "Idle",
+        "nl": "Stil",
+        "de": "Inaktiv",
+        "fr": "Inactif",
+        "it": "Socchiuse",
+        "sv": "Inaktiv",
+        "no": "Ikke aktiv",
+        "es": "Inactivos",
+        "da": "Inaktiv",
+        "ru": "В ожидании",
+        "pl": "W spoczynku"
+      }
+    },
+    {
+      "id": "down",
+      "title": {
+        "en": "Down",
+        "nl": "Omlaag",
+        "de": "Unten",
+        "fr": "Bas",
+        "it": "Abbassate",
+        "sv": "Ned",
+        "no": "Ned",
+        "es": "Abajo",
+        "da": "Nede",
+        "ru": "Вниз",
+        "pl": "Zasunięte"
+      }
+    }
+  ],
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker"
+  },`;
+
+
+
+  str+=`"devicecapabilities_picker-schedule-until-manual-offuntil-off_list": {
+    "title": {
+      "en": "Schedule, Until, Manual, Off Until, Off"
+    },
+    "type": "enum",
+    "values": [
+      {
+        "id": "smartschedule",
+        "title": {
+          "en": "Follow Smart Schedule",
+          "nl": "Volg slim schema",
+          "de": "Dem intelligenten Zeitplan folgen"
+        }
+      },
+      {
+        "id": "untilnextblock",
+        "title": {
+          "en": "Until next time block",
+          "nl": "Tot aan volgend tijdsblok",
+          "de": "Bis zum nächsten Zeitblock"
+        }
+      },
+      {
+        "id": "manual",
+        "title": {
+          "en": "Manual",
+          "nl": "Handmatig",
+          "de": "Manuell"
+        }
+      },
+      {
+        "id": "offuntilnextblock",
+        "title": {
+          "en": "Off until next time block",
+          "nl": "Uit tot aan volgend tijdsblok",
+          "de": "Aus bis zum nächsten Zeitblock"
+        }
+      },
+      {
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }
+    ],
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker"
+    },`;
+
+
+
+
+
 
 console.log(str);
 
