@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.20",
+  "version": "2.7.21",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -80,13 +80,19 @@
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
-  "contributing": {
-    "donate": {
-      "paypal": {
-        "username": "QlusterIT"
+	"contributing": {
+		"donate": {
+			"paypal": {
+				"username": "QlusterIT"
+			},
+      "patreon": {
+				"username": "QlusterIT"
+			},
+      "githubSponsors": {
+        "username": "XeroxQ"
       }
-    }
-  },
+		}
+	},
   "author": {
     "name": "Arie J. Godschalk",
     "email": "arie@qluster-it.nl"

@@ -406,5 +406,8 @@
   },
   "2.7.20" : {
     "en" : "Bugfixed and Improvements."
+  },
+  "2.7.21": {
+    "en": "Added: Contribution options: Patreon and GithubSponsors (with PayPal already available)."
   }
 }
