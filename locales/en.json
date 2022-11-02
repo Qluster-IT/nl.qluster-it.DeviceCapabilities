@@ -202,6 +202,7 @@
 		}
 	},
 	"icons":{
+		"Apps":"Apps",
 		"Alarms":"Alarms",
 		"Athom":"Athom",
 		"Buttons":"Buttons",
@@ -211,6 +212,7 @@
 		"Media":"Media",
 		"Gauges_and_meters":"Gauges & Meters",
 		"Other":"Other",
+		"Virtual_devices":"Virtual Devices",
 		"Weather":"Weather"
 	}
 }

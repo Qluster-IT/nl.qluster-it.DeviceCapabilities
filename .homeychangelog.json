@@ -412,5 +412,8 @@
   },
   "2.7.22": {
     "en": "Added: Picker: Schedule, Until, Manual, Off Until, Off."
+  },
+  "2.7.23": {
+    "en": "Added: App icons and icons from the Virtual Devices App."
   }
 }
