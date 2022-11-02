@@ -1194,12 +1194,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                         case "app": 
                                             let appId = tokenMatchs[2];
                                             let tokenId = tokenMatchs[3];
-                                                if(AppsInfo[appId] && AppsInfo[appId].byToken && AppsInfo[appId].byToken()){
-                                                    let type = AppsInfo[appId].getType({argName:argKey, cardId:card.id});                                                    
+                                                if(AppsInfo[appId] && AppsInfo[appId].byToken && AppsInfo[appId].byToken()){ //NOT IN USE!
+                                                    let type = AppsInfo[appId].getType({argName:argKey, cardId:card.id});
                                                     if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                                     if(!tokensToReplace[appId].types) tokensToReplace[appId].types = {};
-                                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = {};
-                                                    if(!tokensToReplace[appId].types[type].name) tokensToReplace[appId].types[type].name = tokenId;                                    
+                                                    
+                                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = [];
+                                                    if(!_.find(tokensToReplace[appId].types[type], x=>x.name===tokenId)) tokensToReplace[appId].types[type].push({name:tokenId});    
                                                     
                                                 } else {
                                                     let token = _.find(allTokens, t=>t.uri=='homey:app:' + tokenMatchs[2] &&t.id == tokenId );                                            
@@ -1346,11 +1347,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 
                                 if(typeof(card.args[argKey])==='string' && AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey})){
                                     let type = AppsInfo[appId].getType({argName:argKey, cardId:card.id});
-                                    
-                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                                                     
+                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].names};
                                     if(!tokensToReplace[appId].types) tokensToReplace[appId].types = {};
-                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = {};
-                                    if(!tokensToReplace[appId].types[type].name) tokensToReplace[appId].types[type].name = card.args[argKey];                                    
+                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = [];
+                                    if(!_.find(tokensToReplace[appId].types[type], x=>x.name===card.args[argKey].name)) tokensToReplace[appId].types[type].push({name:card.args[argKey].name});
+
                                     return;
                                 }
                                 // if(typeof(card.args[argKey])==='string' && (!AppsInfo[appId] || !AppsInfo[appId].canCreateByName({argName:argKey}))){
@@ -1377,11 +1379,11 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                 //!_.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id===id) && 
                                 if(AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey}))
                                 {
-                                    let type = AppsInfo[appId].getType({argName:argKey, cardId:cardKey});                                    
-                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
+                                    let type = AppsInfo[appId].getType({argName:argKey, cardId:cardKey});
+                                    if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].names};
                                     if(!tokensToReplace[appId].types) tokensToReplace[appId].types = {};
-                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = {};
-                                    if(!tokensToReplace[appId].types[type].name) tokensToReplace[appId].types[type].name = card.args[argKey].name;     
+                                    if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = [];
+                                    if(!_.find(tokensToReplace[appId].types[type], x=>x.name===card.args[argKey].name)) tokensToReplace[appId].types[type].push({name:card.args[argKey].name});
                                 }
                                 // if(typeof(card.args[argKey])==='string' && AppsInfo[appId] && AppsInfo[appId].canCreateByName({argName:argKey})){
                                 //     let type = AppsInfo[appId].getType({argName:argKey, cardId:cardKey});
@@ -1496,17 +1498,19 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 //     //     c=>c.args && c.args[argId]),
                 //     //     m=>m.args[argId]);
                 // });
-                _.each(app.types, (type, typeId)=>{       //this runs Always/only for supported Apps            
-                    type.replacements = [];
-                    let appInfo = AppsInfo[appId];
-                    let a = _.filter(allTokens, t=> t.uri=="homey:app:" + appId );
-                    if(appInfo && appInfo.canCreateByName()) type.replacements.push({"id":-1, "name":"-- Create --", newName:type.name});
-                    if(appInfo && appInfo.byToken && appInfo.byToken()) type.replacements = _.union(type.replacements, _.sortBy(_.map(_.filter(allTokens, t=> t.uri=="homey:app:" + appId ), x=> { return {id:x.id, name:x.title};}), 'name'));
-                    
-                    //if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===type.name);
-                    if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.name===type.name || x.id===type.name); //Can this go wrong?
-                    if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===-1);
-                    if(type.replaceWith) type.replaceWithId = type.replaceWith.id;
+                _.each(app.types, (type, typeId)=>{       //this runs Always/only for supported Apps
+                    _.each(type, (name, typeId)=>{       
+                        name.replacements = [];
+                        let appInfo = AppsInfo[appId];
+                        let a = _.filter(allTokens, t=> t.uri=="homey:app:" + appId );
+                        if(appInfo && appInfo.canCreateByName()) name.replacements.push({"id":-1, "name":"-- Create --", newName:name.name});
+                        if(appInfo && appInfo.byToken && appInfo.byToken()) name.replacements = _.union(name.replacements, _.sortBy(_.map(_.filter(allTokens, t=> t.uri=="homey:app:" + appId ), x=> { return {id:x.id, name:x.title};}), 'name'));
+                        
+                        //if(!type.replaceWith) type.replaceWith = _.find(type.replacements, x=>x.id===type.name);
+                        if(!name.replaceWith) name.replaceWith = _.find(name.replacements, x=>x.name===name.name || x.id===name.name); //Can this go wrong?
+                        if(!name.replaceWith) name.replaceWith = _.find(name.replacements, x=>x.id===-1);
+                        if(name.replaceWith) name.replaceWithId = name.replaceWith.id;
+                    });
                 });
             });
 
@@ -1592,10 +1596,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 //     arg.searchFor = "homey:app:"+app.id+"|"+arg.id;
                 //     arg.searchReplaceWith = "homey:app:"+app.id+"|"+arg.replaceWith.id;
                 // });
-                _.each(app.types, (type)=>{
-                    if(!type.replaceWith) return;
-                    type.searchFor = "homey:app:"+app.id+"|"+type.name;
-                    type.searchReplaceWith = "homey:app:"+app.id+"|"+ (type.replaceWith.id===-1?type.replaceWith.newName : type.replaceWith.name);
+                _.each(app.types, (type)=>{                    
+                    _.each(type, (name, typeId)=>{       
+                        if(!name.replaceWith) return;
+                        name.searchFor = "homey:app:"+app.id+"|"+name.name;
+                        name.searchReplaceWith = "homey:app:"+app.id+"|"+ (name.replaceWith.id===-1?name.replaceWith.newName : name.replaceWith.name);
+                    });
                 });
             });
             _.each(cards, card=>{
@@ -1609,13 +1615,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         let id;
                         if(card.ownerUri && card.ownerUri.startsWith('homey:app:') && (id=card.ownerUri.substring('homey:app:'.length))) {
                             if(AppsInfo[id] && AppsInfo[id].canCreateByName({argName:argKey})) 
-                            _.each(exchangerFile.tokensToReplace, (app)=>{ if(app.id===id) _.each(app.types, (type, typeId)=>{ 
-                                if(type.searchFor) {
-                                    if(card.args[argKey] === type.name) card.args[argKey] = type.replaceWith.id===-1?type.replaceWith.newName : type.replaceWith.name;
-                                    else if(card.args[argKey].name === type.name) card.args[argKey].name = type.replaceWith.id===-1?type.replaceWith.newName : type.replaceWith.name;
-                                    // else if(card.args[argKey].indexOf("[[" + arg.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + arg.searchFor + "]]", "[[" + arg.searchReplaceWith + "]]");
-                                }
+                            _.each(exchangerFile.tokensToReplace, (app)=>{ if(app.id===id) _.each(app.types, (type, typeId)=>{ _.each(type, (name)=>{ 
+                                    if(name.searchFor) {
+                                        if(card.args[argKey] === name.name) card.args[argKey] = name.replaceWith.id===-1?name.replaceWith.newName : name.replaceWith.name;
+                                        else if(card.args[argKey].name === name.name) card.args[argKey].name = name.replaceWith.id===-1?name.replaceWith.newName : name.replaceWith.name;
+                                        // else if(card.args[argKey].indexOf("[[" + arg.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + arg.searchFor + "]]", "[[" + arg.searchReplaceWith + "]]");
+                                    }
                                 }); 
+                            }); 
                             });
                             //if(!exchangerFile.tokensToReplace[id]) exchangerFile.tokensToReplace[id] =  {name:allApps[id].name};
                             // if(!tokensToReplace[appId].args) tokensToReplace[appId].args = {};
@@ -1664,11 +1671,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                             else if(card.args[argKey].indexOf("[[" + token.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + token.searchFor + "]]", "[[" + token.searchReplaceWith + "]]");
                                         }
                                     });
-                                    _.each(app.types, (type, typeId)=>{                                         
-                                        if(type.searchFor) {
-                                            if(card.args[argKey] === type.searchFor) card.args[argKey] = type.searchReplaceWith;
-                                            else if(card.args[argKey].indexOf("[[" + type.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + type.searchFor + "]]", "[[" + type.searchReplaceWith + "]]");
-                                        }
+                                    _.each(app.types, (type, typeId)=>{
+                                        _.each(type, (name)=>{ 
+                                            if(name.searchFor) {
+                                                if(card.args[argKey] === name.searchFor) card.args[argKey] = name.searchReplaceWith;
+                                                else if(card.args[argKey].indexOf("[[" + name.searchFor + "]]")>-1)card.args[argKey] = card.args[argKey].replaceAll("[[" + name.searchFor + "]]", "[[" + name.searchReplaceWith + "]]");
+                                            }
+                                        });
                                     });
                                 });
                                 break;

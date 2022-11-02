@@ -186,15 +186,17 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 										<input type="text" ng-model="item.replaceWith.newName">
 									</div>
 								</div>
-								<div class="field" ng-repeat="item  in app.types">
-									<div class="label">{{item.name}}</div>
-									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-										<option value="" data-i18n="settings.dontChange">Don't change</option>
-										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-											{{replacement.name}}</option>
-									</select>
-									<div class="field" ng-if="item.replaceWithId===-1">
-										<input type="text" ng-model="item.replaceWith.newName">
+								<div class="field" ng-repeat="type  in app.types">
+									<div class="field" ng-repeat="item  in type">
+										<div class="label">{{item.name}}</div>
+										<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+											<option value="" data-i18n="settings.dontChange">Don't change</option>
+											<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+												{{replacement.name}}</option>
+										</select>
+										<div class="field" ng-if="item.replaceWithId===-1">
+											<input type="text" ng-model="item.replaceWith.newName">
+										</div>
 									</div>
 								</div>
 							</div>

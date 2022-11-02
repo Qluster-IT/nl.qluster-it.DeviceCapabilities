@@ -848,10 +848,15 @@ class DeviceSetter extends Homey.App {
 			for (let i = 0; i < keys.length; i++) {
 				const capability = device.capabilities[keys[i]];
 				if (!capability.listener) {
-					capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
-						//if(trigger==hm.Triggers.triggercapabilitychanged)  // Only ever this one
-						trigger.Card.trigger({ "value": value.toString ? value.toString() : value }, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
-					});
+					try {
+							
+						capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
+							//if(trigger==hm.Triggers.triggercapabilitychanged)  // Only ever this one
+							trigger.Card.trigger({ "value": value.toString ? value.toString() : value }, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
+						});
+					} catch (error) {
+						this.error(error);
+					}
 				}
 			}
 		});
