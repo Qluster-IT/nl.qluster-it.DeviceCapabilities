@@ -421,5 +421,8 @@
   },
   "2.7.25": {
     "en": "Improved: The Flow Exchange(r) and added support for BetterLogic and Countdown."
+  },
+  "2.7.26": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
   }
 }

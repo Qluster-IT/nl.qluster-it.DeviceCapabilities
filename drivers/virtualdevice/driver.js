@@ -1277,8 +1277,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         const stringy = this.removeKeys(JSON.stringify(dev));        
         const stringyMinified = this.removeKeys(JSON.stringify(devCopyMinified));        
-        const compressed = Buffer.from(await gzip(stringy, {level:9} )).toString('base64');                
-        const compressedMinified = Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64');
+        const compressed = this.getReplacedZippedForForum(Buffer.from(await gzip(stringy, {level:9} )).toString('base64'));
+        const compressedMinified = this.getReplacedZippedForForum(Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64'));
         dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;
         let tefType = dev.flowName && dev.deviceName ? 'AVD,FLOWS' : dev.flowName ? 'FLOWS' : dev.deviceName ? 'AVD' : 'UNKNOWN';					
         let s = "[TEF:" + tefType + ":" ;
@@ -1855,12 +1855,22 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 exchangerFile = exchangerFile.replace(/^(?:\[TEF:(.*?):)/, '');
                 exchangerFile = exchangerFile.substring(0, exchangerFile.length-1);
             }
-            if(exchangerFile.startsWith('H4s')) exchangerFile = JSON.parse(await this.unzip(exchangerFile));
+            if(exchangerFile.startsWith('H4s')) {
+                exchangerFile = this.getNormalZippedForForum(exchangerFile);
+                exchangerFile = JSON.parse(await this.unzip(exchangerFile));
+            }
             else exchangerFile = JSON.parse(exchangerFile);
         }
 
         if(typeof(exchangerFile)=='object' && exchangerFile.a) exchangerFile = this.maxifyExchangerFile(exchangerFile);
         return exchangerFile;
+    }
+
+    getNormalZippedForForum(str) {
+        return str.replaceAll('/\\t', '/t').replaceAll('/\\o', '/o').replaceAll('/\\c', '/c');
+    }
+    getReplacedZippedForForum(str) {
+        return str.replaceAll('/t', '/\\t').replaceAll('/o', '/\\o').replaceAll('/c', '/\\c');
     }
     minifyExchangerFile(json) {
         if(json.devicesToReplace) {json.d=json.devicesToReplace; delete json.devicesToReplace;} 
