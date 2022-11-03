@@ -552,7 +552,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     
                             let tefs = [], header;
                             
-                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.{0,10}((?:\[TEF:){1}(.+):)??(H4s(?:.*?))(?:])?(?:(?:\s)+.*?)?<\/code><\/pre>/gmsi);
+                            let tefMatches = postText.matchAll(/(?:<p>.{0,2}TEF.{0,2}:.{0,2}<\/p>.{0,2})?(?:<p>.{0,2}THE Exchanger? File.*?:.{0,2}<\/p>.{0,2})?(?:<ul>.{0,2}<li>(?:.{0,2}The Exchanger? File.*?:.{0,2})?(?:.{0,2}TEF.*?:.{0,2})?<\/li>.{0,2}<\/ul>.{0,2})?<pre><code class="lang-auto">.{0,10}((?:\[TEF:){1}(.+):(?:")?)??(H4s(?:.*?))(?:")?(?:])?(?:\/TEF])?(?:(?:\s)+.*?)?<\/code><\/pre>/gmsi);
                             let tefsFound = tefMatches? [...tefMatches] : [];
                             for(let j=0;j<tefsFound.length;j++) {
                                 if(tefsFound[j].length>1) {
@@ -1281,12 +1281,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         const compressedMinified = this.getReplacedZippedForForum(Buffer.from(await gzip(stringyMinified, {level:9})).toString('base64'));
         dev.flowName = advancedflows && advancedflows.length ? _.first(advancedflows).name : null;
         let tefType = dev.flowName && dev.deviceName ? 'AVD,FLOWS' : dev.flowName ? 'FLOWS' : dev.deviceName ? 'AVD' : 'UNKNOWN';					
-        let s = "[TEF:" + tefType + ":" ;
-        dev.compressed = s + compressed + "]";
-        dev.uncompressed = s + stringy + "]";
+        let s = "[tef:" + tefType + ":\"" ;
+        dev.compressed = s + compressed + "\":/tef]";
+        dev.uncompressed = s + stringy + "\":/tef]";
         
-        dev.compressedMinified = s + compressedMinified + "]";
-        dev.uncompressedMinified = s + stringyMinified + "]";
+        dev.compressedMinified = s + compressedMinified + "\":/tef]";
+        dev.uncompressedMinified = s + stringyMinified + "\":/tef]";
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
@@ -1851,9 +1851,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async getNormalExchangerFile(exchangerFile) {
         if(typeof(exchangerFile)=='string') {
-            if(exchangerFile.startsWith('[TEF:'))  {
-                exchangerFile = exchangerFile.replace(/^(?:\[TEF:(.*?):)/, '');
+            if(exchangerFile.startsWith('[tef:') && exchangerFile.endsWith(':/tef]'))  {
+                exchangerFile = exchangerFile.replace(/^(?:\[tef:(.*?):(?:")?)/, '');
+                exchangerFile = exchangerFile.substring(0, exchangerFile.length-6);
+                if(exchangerFile.endsWith('"')) exchangerFile.substring(0, exchangerFile.length-1);
+            } else if(exchangerFile.startsWith('[TEF:'))  {
+                exchangerFile = exchangerFile.replace(/^(?:\[TEF:(.*?):(?:")?)/, '');
                 exchangerFile = exchangerFile.substring(0, exchangerFile.length-1);
+                if(exchangerFile.endsWith('"')) exchangerFile.substring(0, exchangerFile.length-1);
             }
             if(exchangerFile.startsWith('H4s')) {
                 exchangerFile = this.getNormalZippedForForum(exchangerFile);
@@ -1867,10 +1872,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
     getNormalZippedForForum(str) {
-        return str.replaceAll('/\\t', '/t').replaceAll('/\\o', '/o').replaceAll('/\\c', '/c');
+        return str.replaceAll('|', '/');//.replaceAll('/\\t', '/t').replaceAll('/\\o', '/o').replaceAll('/\\c', '/c').replaceAll('/\\v', '/v');
     }
     getReplacedZippedForForum(str) {
-        return str.replaceAll('/t', '/\\t').replaceAll('/o', '/\\o').replaceAll('/c', '/\\c');
+        return str.replaceAll('/', '|');//str.replaceAll('/t', '/\\t').replaceAll('/o', '/\\o').replaceAll('/c', '/\\c').replaceAll('/v', '/\\v');
     }
     minifyExchangerFile(json) {
         if(json.devicesToReplace) {json.d=json.devicesToReplace; delete json.devicesToReplace;} 

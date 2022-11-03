@@ -155,10 +155,10 @@
 					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" ng-attr-placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
 				</div>
 			</div>
-			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
+			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.toUpperCase().startsWith('[TEF:') && !vars.textSettings.toUpperCase().startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
 				
 			<div class="field">
-				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
+				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.toUpperCase().startsWith('[TEF:') || vars.textSettings.toUpperCase().startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
 			</div>
 		</div>
 		<div class="double-margin-top padding-bottom">
