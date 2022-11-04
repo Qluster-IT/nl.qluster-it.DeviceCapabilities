@@ -439,5 +439,8 @@
   },
   "2.8.2": {
     "en": "Improved: Remove device icon after removal."
+  },
+  "2.8.3": {
+    "en": "Added: Duration and ChangedOn tags to Retrieve Insights flowcard."
   }
 }

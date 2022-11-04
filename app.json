@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2215,7 +2215,6 @@
           "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd.",
           "de": "Ruft den Wert aus dem Einblicke-Protokoll (und OnOff) von x Minuten zuvor ab. Wenn der Wert auf null (0) Minuten eingestellt ist, wird der zuletzt geänderte Wert abgerufen.\r\nEnthält Token für den Benutzer und den Client, der den Wert geändert hat."
         },
-        "highlight": true,
         "args": [
           {
             "type": "autocomplete",
@@ -2299,6 +2298,30 @@
               "en": "Yes/No",
               "nl": "Ja/Nee",
               "de": "Ja/Nein"
+            }
+          },
+          {
+            "name": "changedon",
+            "type": "string",
+            "title": {
+              "en": "Changed on (UTC)",
+              "nl": "Aangepast op (UTC)"
+            }
+          },
+          {
+            "name": "changedonms",
+            "type": "number",
+            "title": {
+              "en": "Changed on (UTC tick)",
+              "nl": "Aangepast op (UTC tick)"
+            }
+          },
+          {
+            "name": "durationtillnow",
+            "type": "number",
+            "title": {
+              "en": "Duration till now (Milliseconds)",
+              "nl": "Duur tot nu (Milliseconden)"
             }
           }
         ]

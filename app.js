@@ -372,7 +372,7 @@ class DeviceSetter extends Homey.App {
 			set_capability_log
 				.on('update', (() => { this.clearHomeyAPI(action); }).bind(this))
 				.registerRunListener((async (args, state) => {
-					var tokens = { text: '', number: 0, boolean: false, user: '', client: '' };
+					var tokens = { text: '', number: 0, boolean: false, user: '', client: '', changedon:'', changedonms:0 };
 					try {
 						if (!args || !args.device || !args.capability) return false;
 
@@ -429,6 +429,12 @@ class DeviceSetter extends Homey.App {
 									if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
 								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
+								if(insights.end) {
+									let end = new Date(insights.end);
+									tokens.changedon = insights.end;
+									tokens.changedonms = end.getTime();
+									tokens.durationtillnow = new Date().getTime() - end.getTime();
+								}
 							}
 						}
 					} catch (error) {
