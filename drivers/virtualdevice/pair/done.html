@@ -181,6 +181,7 @@
                             devicesCreated+=1;
                             if(devicesCreated===devices.length) Homey.emit('done_finished', null, function (err, result) {
                                 if (err) return console.log(err);
+                                if(result && result.advancedflows && !result.advancedflows.length) return Homey.done();
                                 $scope.view.subid='theflowexchangerimport';
                                 Homey.setTitle( Homey.__("pair.done.title_flows") );
 				                Homey.hideLoadingOverlay();

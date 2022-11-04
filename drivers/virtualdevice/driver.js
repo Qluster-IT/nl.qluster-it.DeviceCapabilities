@@ -1872,10 +1872,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
     getNormalZippedForForum(str) {
-        return str.replaceAll('|', '/');//.replaceAll('/\\t', '/t').replaceAll('/\\o', '/o').replaceAll('/\\c', '/c').replaceAll('/\\v', '/v');
+        return str;//.replaceAll('|', '/');//.replaceAll('/\\t', '/t').replaceAll('/\\o', '/o').replaceAll('/\\c', '/c').replaceAll('/\\v', '/v');
     }
     getReplacedZippedForForum(str) {
-        return str.replaceAll('/', '|');//str.replaceAll('/t', '/\\t').replaceAll('/o', '/\\o').replaceAll('/c', '/\\c').replaceAll('/v', '/\\v');
+        return str;//.replaceAll('/', '|');//str.replaceAll('/t', '/\\t').replaceAll('/o', '/\\o').replaceAll('/c', '/\\c').replaceAll('/v', '/\\v');
     }
     minifyExchangerFile(json) {
         if(json.devicesToReplace) {json.d=json.devicesToReplace; delete json.devicesToReplace;} 
