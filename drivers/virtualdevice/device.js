@@ -11,6 +11,9 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	onDeleted() {
 		//delete Homeyman.Current.VirtualDevices[this.getName()];
+		if( typeof this.getData().icon !== 'undefined' && this.getData().icon !== null && this.getData().icon.startsWith("../../../userdata"))
+      		this.homey.app.deleteFile(this.getData().icon.substring(8));
+
 	}
 	// this method is called when the Device is inited
 	async onInit() {

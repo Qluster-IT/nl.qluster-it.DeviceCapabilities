@@ -820,6 +820,16 @@ class DeviceSetter extends Homey.App {
 
 	}
 
+	
+	async deleteFile(path) {
+		try {
+			await unlinkAsync(path);
+		} catch (err) {
+			this.error(err);
+		}
+
+	}
+
 	getExtByType(type) {
 		const typeSimple = TYPES_MAP[type];
 		if (!typeSimple)
