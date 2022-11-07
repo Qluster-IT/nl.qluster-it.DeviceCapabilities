@@ -203,6 +203,9 @@
 		"Gauges_and_meters":"Anzeigen",
 		"Other":"Andere",
 		"Virtual_devices":"Virtuelle Geräte",
-		"Weather":"Wetter"
+		"Weather":"Wetter",
+		"Font_awesome_regular":". Font Awesome Regular",
+		"Font_awesome_brands":". Font Awesome Brands",
+		"Font_awesome_solid":". Font Awesome Solid"
 	}
 }

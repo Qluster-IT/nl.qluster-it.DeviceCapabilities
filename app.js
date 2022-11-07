@@ -162,7 +162,11 @@ class DeviceSetter extends Homey.App {
 					var defer = new Defer(10000);
 					this.getDeviceclasss(action, query, args).then((r) => {
 						defer.resolve(r);
-					}).catch(err => { defer.reject(err); });
+					}).catch(err => { 
+						this.error(action + '.deviceclass error:');
+						this.error(err);
+						defer.reject(err); 
+					});
 					return defer.promise;
 				});
 			set_capability_zone.getArgument('brand').registerAutocompleteListener(async (query, args) => {
@@ -1045,7 +1049,7 @@ class DeviceSetter extends Homey.App {
 		var actionType = _.last(action.split('_'));
 
 		_(devices).forEach(d => {
-			if ((!queryDeviceclass || queryDeviceclass == '' || d.class.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.class == deviceclass) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: {} };
+			if ((!queryDeviceclass || queryDeviceclass == '' || (d.class && d.class.indexOf(queryDeviceclass.toLowerCase()) > -1)) && (!deviceclass || d.class == deviceclass) && Object.keys(classes).indexOf(d.class) == -1 && !d.virtualClass) classes[d.class] = { name: d.class, capabilities: {} };
 			if (d.virtualClass && (!queryDeviceclass || queryDeviceclass == '' || d.virtualClass.indexOf(queryDeviceclass.toLowerCase()) > -1) && (!deviceclass || d.virtualClass == deviceclass) && Object.keys(classes).indexOf(d.virtualClass) == -1) classes[d.virtualClass] = { name: d.virtualClass, capabilities: {} };
 		});
 		_(classes).forEach((cls, key) => {
