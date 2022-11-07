@@ -259,7 +259,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				can be seen back at the bottom of the Device Settings.</div>
 
 			<div>
-				<div ng-repeat="category in customicons" style="margin-top:30px;">
+				<div class="category" ng-repeat="category in customicons" style="margin-top:30px;">
 					<h1 class="name">{{category.title}}</h1>
 					<ul id="customicons">
 						<li class="customicon" ng-repeat="customicon in category.icons">
