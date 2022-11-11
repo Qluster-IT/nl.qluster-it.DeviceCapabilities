@@ -451,5 +451,8 @@
   },
   "2.8.6": {
     "en": "Bugfixing: Watch not loading autocomplete/list."
+  },
+  "2.8.7": {
+    "en": "Added: DeviceName and DeviceID tags to the Watch cards."
   }
 }

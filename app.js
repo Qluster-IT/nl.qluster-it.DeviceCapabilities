@@ -948,6 +948,10 @@ class DeviceSetter extends Homey.App {
 									//if(lastOne) tokens
 								}
 
+								tokens.deviceName = device.name;
+								tokens.deviceId = device.id;
+								
+
 
 								trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
 
