@@ -444,7 +444,6 @@ input {
 [ng-click^="view"],
 [ng-click] {
     cursor: pointer;
-    /* margin-top: 30px; */
 }
 
 #theflowexchanger {}

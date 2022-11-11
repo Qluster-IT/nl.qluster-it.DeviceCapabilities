@@ -2247,6 +2247,7 @@
           {
             "type": "number",
             "name": "numberof",
+            "value":0,
             "placeholder": {
               "en": "Minutes ago",
               "nl": "Minuten geleden",

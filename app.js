@@ -65,14 +65,9 @@ class DeviceSetter extends Homey.App {
 		//return null;
 
 		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
-		// if (process.env.DEBUG === '1')  {
-		// 	this.testobject = [];
-		// 	for (let i = 0; i < 100000; i++) {
-		// 		this.testobject.push({id:"1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"});
+		//require('inspector').open(9222, '0.0.0.0', process.env.DEBUG === '1');
 
-		// 	}
-		// 	console.log('Size of this.testobject:', this.roughSizeOfObject(this.testobject) );
-		// }
+		
 
 		this.localURL = await this.homey.api.getLocalUrl();
 		this.sessionToken = await this.homey.api.getOwnerApiToken();
