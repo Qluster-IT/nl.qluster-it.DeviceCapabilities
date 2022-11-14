@@ -149,7 +149,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					let oldValue = this.getStoreValue(fieldId+"Value");
 					if (settings[fieldId + 'ShowAs'] === "pushbutton_indicator") {
 						let val = this.getStoreValue(fieldId + "Value") === true;
-						await this.setCapabilityValue(cap, val);
+						await this.setCapabilityValue(cap, val); //Why twice?
 						return setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
 							this.driver.triggerFlowButton(this, !val, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
