@@ -345,34 +345,6 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				<button class="button" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
 			</div>
 		</div>
-
-
-
-
-		<!-- <p ng-show="icons.length < 1">
-			<span data-i18n="settings.no_icons"></span>
-		</p>
-
-		<h1 data-i18n="settings.title_icons"></h1>
-
-		<ul id="icons">
-			<li class="icon" ng-repeat="icon in icons">
-				<div class="image"
-					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + icon.path.substr(1) + ')'}">
-				</div>
-				<div ng-show="!icon.updating" class="name" ng-dblclick="icon.updating = true;">{{icon.name}}</div>
-				<input ng-show="icon.updating" class="name" type="text" ng-model="icon.name"
-					ng-enter="updateIcon(icon)" />
-
-				<div class="buttons">
-					<button class="remove" ng-click="deleteIcon(icon)"><i class="fa fa-trash"></i></button>
-				</div>
-
-			</li>
-		</ul>
-
-		<h1 data-i18n="settings.title_upload">Upload a .svg</h1>
-		<input type="file" id="files" name="files[]" multiple /> -->
 	</div>
 
 	<div id="editdevice" ng-show="editdeviceicon">
@@ -498,7 +470,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					//if(vars.textSettings)
 					let appsUsed = '';
 					let tefType = vars.flowName && vars.deviceName ? 'AVD,FLOWS' : vars.flowName ? 'FLOWS' : vars.deviceName ? 'AVD' : 'UNKNOWN';
-					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
+					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/a/'+appKey+')');
 					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
 []()
 []()
@@ -865,7 +837,9 @@ ${vars.textSettings}
 					}
 				};
 				$scope.deleteAll = function () {
-					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, () => {
+					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, (err, val) => {
+					if(err) return Homey.alert(err);
+					if(!val) return;
 						$scope.$apply(function () {
 							$scope.functions = [];
 							$scope.storeFunction();
@@ -873,7 +847,9 @@ ${vars.textSettings}
 					})
 				}
 				$scope.removeFunction = function (row) {
-					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, () => {
+					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, (err, val) => {
+						if(err) return Homey.alert(err);
+						if(!val) return;
 						var index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);

@@ -23,7 +23,8 @@ module.exports = {
         "net.i-dev.betterlogic" :{
             canCreateByName: function({argName}={}) {return argName==="variable" || argName===undefined; },
             getType: function({cardId}={}) {
-                return cardId.indexOf('trigger')>-1 ? "trigger" :
+                return cardId == 'execute_bl_expression_tag' ? undefined :
+                cardId.indexOf('trigger')>-1 ? "trigger" :
                 cardId.indexOf('expression')>-1  || cardId.indexOf('if_variable_changed')>-1  || cardId.indexOf('if_variable_set')>-1 ? "any" : 
                 cardId.indexOf('boolean')>-1 ? "boolean" : 
                 cardId.indexOf('number')>-1 || cardId.indexOf('_than')>-1 ? "number" : 
