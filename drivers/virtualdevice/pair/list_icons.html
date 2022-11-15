@@ -232,7 +232,7 @@
 				<span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br />
 
 				<div class="panel" id="defaultIcons">
-					<div class="inline-block" style="width:100%;"><input type="text" ng-model="vars.filter.defaultIcon" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
+					<div class="inline-block" style="width:100%;"><input type="text" ng-model="vars.filter.defaultIcon" ng-model-options="{ debounce: 300 }" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
 					<div ng-repeat="category in defaultIcons">
 						<div ng-if="$index<=defaultCategoryLoadIndex">
 							<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">

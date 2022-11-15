@@ -460,5 +460,8 @@
   },
   "2.8.9": {
     "en": "Added: Filter the default icons (wait till the are all loaded!)."
+  },
+  "2.8.10": {
+    "en": "Added: Filter the default icons (wait till the are all loaded!), debounce added."
   }
 }
