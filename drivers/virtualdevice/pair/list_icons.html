@@ -7,7 +7,6 @@
 
 <link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
-<script src='../../../assets/js/vue.min.js'></script>
 
 <style>
 	[v-cloak] {
@@ -83,35 +82,35 @@
 
 	$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
 
-	Homey.emit('list_icons', null, function (err, result) {
-		console.log('list_icons');
+	// Homey.emit('list_icons', null, function (err, result) {
+	// 	console.log('list_icons');
 
-		new Vue({
-			el: '#icon_list',
-			data: {
-				iconCategories: result,
-			},
-			mounted() {
-				Homey.hideLoadingOverlay();
-			},
-			methods: {
-				setIcon(icon) {
-					let name = undefined;
-					try {
-						name = $('#name').val();
-						console.log(name);
-					} catch (error) { }
-					Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
-						if (err) {
-							console.log(err);
-							return;
-						}
-						Homey.nextView();
-					});
-				}
-			}
-		});
-	});
+	// 	new Vue({
+	// 		el: '#icon_list',
+	// 		data: {
+	// 			iconCategories: result,
+	// 		},
+	// 		mounted() {
+	// 			Homey.hideLoadingOverlay();
+	// 		},
+	// 		methods: {
+	// 			setIcon(icon) {
+	// 				let name = undefined;
+	// 				try {
+	// 					name = $('#name').val();
+	// 					console.log(name);
+	// 				} catch (error) { }
+	// 				Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
+	// 					if (err) {
+	// 						console.log(err);
+	// 						return;
+	// 					}
+	// 					Homey.nextView();
+	// 				});
+	// 			}
+	// 		}
+	// 	});
+	// });
 
 	$('#save-icon').click(function () {
 		let name = undefined;
@@ -232,28 +231,21 @@
 			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br />
 
-				<ul id="icon_list">
-					<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-						<h1 class="category-title" v-html="cat.title"></h1>
-						<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-							<label for="icon" class="icon-wrap">
-								<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
-							</label>
+				<div class="panel" id="defaultIcons">
+					<div class="inline-block" style="width:100%;"><input type="text" ng-model="vars.filter.defaultIcon" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
+					<div ng-repeat="category in defaultIcons">
+						<div ng-if="$index<=defaultCategoryLoadIndex">
+							<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
+								{{category.title}}</h1>
+							<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
+								<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+									ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
+								</div>
+							</div>
 						</div>
 					</div>
-				</ul>
+				</div>
 
-				<!-- <ul id="icon_list">
-		<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-		<h1  class="category-title">{{cat.title}}</h1>
-		<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-			<label for="icon" class="icon-wrap">
-			<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
-			<div class="icon id">{{item.subid}}</div>
-			</label>
-		</div>
-		</div>
-	</ul>  -->
 			</div>
 		</div>
 	</div>
@@ -319,9 +311,9 @@
 			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
 			$scope.topicsArray = _.toArray($scope.topics);
 
-			const vars = $scope.vars = { textSettings:undefined};
+			const vars = $scope.vars = { textSettings:undefined, filter:{defaultIcon:''}, };
 			$scope.temp = {};
-
+			
 			$scope.gotoLike = function(template) {
 				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 			}
@@ -489,6 +481,37 @@
 					$scope.getTefTemplates();
 				});
 			}
+
+			$scope.setIcon = function(icon) {
+				let name = undefined;
+				try {
+					name = $('#name').val();
+					console.log(name);
+				} catch (error) { }
+				Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					Homey.nextView();
+				});
+			};
+
+			$scope.loadDefaultIcons = function () {
+				$scope.dedaultLoadInterval = setInterval(function () {
+					$scope.$apply(() => {
+						let catKeys = Object.keys($scope.defaultIcons);
+						let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
+						if (!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+						if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 10;
+						else if ($scope.defaultCategoryLoadIndex < catKeys.length) {
+							$scope.defaultCategoryLoadIndex++;
+							$scope.defaultIconLoadIndex = 0.0;
+						} else return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+					});
+					//Homey.alert('test');
+				}, 100);
+			}
 			
 
 			/** Start of program */
@@ -507,6 +530,13 @@
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
 						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						
+						$scope.defaultIcons = result.defaultIcons;
+						$scope.defaultCategoryLoadIndex = 0;
+						$scope.defaultIconLoadIndex = 0.0;
+
+						$scope.loadDefaultIcons();
+						Homey.hideLoadingOverlay();
 					});
 				});
 

@@ -2101,7 +2101,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     session.setHandler('virtualdeviceicons_load', async (data) => {
         
         let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;        
-        return {tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), device:devices[0], favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
+        return {tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), device:devices[0], 
+            favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource,
+            defaultIcons: this.getDefaultIcons()
+        };
     });
 
     session.setHandler('use_template', async (data) => {
@@ -2131,12 +2134,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         await this.homey.settings.set('activeAvdSource', source);
         this.activeAvdSource = source;
     });
-    session.setHandler('list_icons', async (data) => {
-        //return this.getCustomIcons();
-        return this.getDefaultIcons();
+    // session.setHandler('list_icons', async (data) => {
+    //     //return this.getCustomIcons();
+    //     return this.getDefaultIcons();
 
 
-    });
+    // });
 
     session.setHandler('icon_picked', async ({icon, name}) => {
         try {

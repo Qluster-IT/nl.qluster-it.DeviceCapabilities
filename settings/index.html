@@ -368,11 +368,12 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 
 	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon">
 		<div class="panel">
+			<div class="inline-block" style="width:100%;"><input type="text" ng-model="vars.filter.defaultIcon" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
 			<div ng-repeat="category in defaultIcons">
 				<div ng-if="$index<=defaultCategoryLoadIndex">
 					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
 						{{category.title}}</h1>
-					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
+					<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
 						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
 							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
 						</div>
@@ -461,7 +462,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
-					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
+					, filter: { flow: '', defaultIcon:'' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
 				};
 				//Homey.ready();
 
@@ -955,7 +956,7 @@ ${vars.textSettings}
 							let catKeys = Object.keys($scope.defaultIcons);
 							let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
 							if (!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
-							if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 5;
+							if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 10;
 							else if ($scope.defaultCategoryLoadIndex < catKeys.length) {
 								$scope.defaultCategoryLoadIndex++;
 								$scope.defaultIconLoadIndex = 0.0;

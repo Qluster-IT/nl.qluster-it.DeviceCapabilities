@@ -457,5 +457,8 @@
   },
   "2.8.8": {
     "en": "Changed: The automaticly generated Store Urls for Used apps in topic posts are now international."
+  },
+  "2.8.9": {
+    "en": "Added: Filter the default icons (wait till the are all loaded!)."
   }
 }
