@@ -463,5 +463,8 @@
   },
   "2.8.10": {
     "en": "Added: Filter the default icons (wait till the are all loaded!), debounce added."
+  },
+  "2.8.11": {
+    "en": "Bugfixed: Negative duration in Retrieve insights card for number-insights."
   }
 }

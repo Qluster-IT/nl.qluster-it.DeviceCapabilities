@@ -392,46 +392,62 @@ class DeviceSetter extends Homey.App {
 
 						let targetInsight;
 
+						var device = this.devices[args.device.id];
 						if (args.capability.uri) {
 							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
-							var device = this.devices[args.device.id];
 							if (device) targetInsight = _.find(device.insights, x => { return x.id == args.capability.id; });
 						}
 
 						if (targetInsight) {
 							var insights, lastOne = null;
-							try {
-								var resolution = undefined;
-								if (args.numberof <= 60) resolution = 'lastHour';
-								else if (args.numberof <= 60 * 6) resolution = 'last6Hours';
-								else if (args.numberof <= 60 * 24) resolution = 'last24Hours';
-								else if (args.numberof <= 60 * 24 * 3) resolution = 'last3Days';
-								else if (args.numberof <= 60 * 24 * 7) resolution = 'last7Days';
-								else if (args.numberof <= 60 * 24 * 14) resolution = 'last14Days';
-								else if (args.numberof <= 60 * 24 * 31) resolution = 'last31Days';
-								else if (args.numberof <= 60 * 24 * 30 * 3) resolution = 'last3Months';
-								else if (args.numberof <= 60 * 24 * 30 * 6) resolution = 'last6Months';
-								else if (args.numberof <= 60 * 24 * 365 * 2) resolution = 'last2Years';
-								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: resolution });//, resolution: 'lastHour' });
-							} catch (error) {
-								insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
-							}
+							// if(args.numberof==0) {
+							// 	insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+							// } else {
+								try {
+									var resolution = undefined;
+									if (args.numberof <= 60) resolution = 'lastHour';
+									else if (args.numberof <= 60 * 6) resolution = 'last6Hours';
+									else if (args.numberof <= 60 * 24) resolution = 'last24Hours';
+									else if (args.numberof <= 60 * 24 * 3) resolution = 'last3Days';
+									else if (args.numberof <= 60 * 24 * 7) resolution = 'last7Days';
+									else if (args.numberof <= 60 * 24 * 14) resolution = 'last14Days';
+									else if (args.numberof <= 60 * 24 * 31) resolution = 'last31Days';
+									else if (args.numberof <= 60 * 24 * 30 * 3) resolution = 'last3Months';
+									else if (args.numberof <= 60 * 24 * 30 * 6) resolution = 'last6Months';
+									else if (args.numberof <= 60 * 24 * 365 * 2) resolution = 'last2Years';
+									insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: resolution });//, resolution: 'lastHour' });
+								} catch (error) {
+									insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+								}
+							//}
 							var now = new Date();
 							now.setMinutes(now.getMinutes() - args.numberof);
-							insights.values = _.filter(insights.values, i => { return new Date(i.t) < now && (i.v !== null && i.v !== undefined); });
+							insights.values = _.filter(insights.values, i => { return new Date(i.t) <= now && (i.v !== null && i.v !== undefined); });
 							if (insights && (lastOne = _.last(insights.values))) {
 								if (lastOne.originUserName) tokens.user = lastOne.originUserName;
 								if (lastOne.originName) tokens.client = lastOne.originName;
 								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
-
+								let v = lastOne.v;
+								if(args.numberof==0) {
+									v = device.capabilitiesObj[args.capability.id].value;
+								}
 								if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
 								else if (typeof (lastOne.v) == typeof (tokens.number)) {
 									tokens.number = lastOne.v;
 									if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
 								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
-								if(insights.end) {
+
+								if(insights.step) {
+									let endD = device.capabilitiesObj[args.capability.id].lastUpdated;
+									let end = new Date(endD);
+									tokens.changedon = endD;
+									tokens.changedonms = end.getTime();
+									tokens.durationtillnow = new Date().getTime() - end.getTime();
+
+								}
+								else if(insights.end) {
 									let end = new Date(insights.end);
 									tokens.changedon = insights.end;
 									tokens.changedonms = end.getTime();
