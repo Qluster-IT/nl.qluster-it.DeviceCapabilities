@@ -466,5 +466,8 @@
   },
   "2.8.11": {
     "en": "Bugfixed: Negative duration in Retrieve insights card for number-insights."
+  },
+  "2.8.12": {
+    "en": "Bugfixed: Insight for 0 minutes duration was not updated correctly."
   }
 }

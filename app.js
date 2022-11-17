@@ -430,6 +430,8 @@ class DeviceSetter extends Homey.App {
 								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
 								let v = lastOne.v;
 								if(args.numberof==0) {
+									this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });									
+									device = this.devices[args.device.id];
 									v = device.capabilitiesObj[args.capability.id].value;
 								}
 								if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
@@ -439,7 +441,8 @@ class DeviceSetter extends Homey.App {
 								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
 
-								if(insights.step) {
+								if(insights.step && args.numberof==0) {
+									
 									let endD = device.capabilitiesObj[args.capability.id].lastUpdated;
 									let end = new Date(endD);
 									tokens.changedon = endD;
