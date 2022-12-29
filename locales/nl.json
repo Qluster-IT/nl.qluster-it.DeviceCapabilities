@@ -31,9 +31,7 @@
 		"search_for_name":"zoek op naam",		
 		"close":"Sluiten",
 		"explain_virtualdevices": "Hier kunt u het pictogram voor Geavanceerde Virtuele Apparaten bewerken door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
-		"explain_restart":"Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",
-		
-		
+		"explain_restart":"Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",		
 		"title_theflowexchanger":"The Flow Exchanger",
 		"templates":"Sjablonen",
 		"import":"Importeren",
@@ -64,8 +62,7 @@
 		"flowsThatAreCreated":"Flows die worden gemaakt, worden hier weergegeven:",
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Selecteer een flow en druk op Maken",
-		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",
-		
+		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",		
 		"no_avd_in_tef":"TEF bevat geen AVD.",
 		"flows_will_be_created":"De volgende flows worden in het script aangemaakt."
 	},
@@ -146,8 +143,6 @@
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
 		"labelTopicLink":"Zie het AVD Forum Topic voor uitleg of als u hulp zoekt bij AVD's of sjablonen.",
-		
-
 		"disableZoneActivity":"Zoneactiviteit uitschakelen",
 		"disableZoneActivityHint":"Indien geselecteerd, wordt zoneactiviteit voor dit veld uitgeschakeld.",
 		"openShareYourDevice":"Open Deel uw apparaat",
@@ -162,9 +157,13 @@
 		"readDevice":"Lees Apparaat",
 		"saveAs":"Opslaan als",
 		"customIcon":"Aangepast pictogram",
-		"finish":"Gereed"
-
-
+		"finish":"Gereed",		
+		"listFields":"Lijsten",
+		"listFieldI":"Lijst __i__",
+		"createListField":"Lijst maken",		
+		"prefixedList":"Vooraf ingestelde lijst",		
+		"prefixedListHint":"Momenteel zijn alleen vooraf vastgestelde lijsten beschikbaar. Ga naar het forum om je eigen aan te vragen!",
+		"cumulative":"Cumulatief"
 	},
 	"pair": {
 		"list_icons":{
@@ -174,7 +173,6 @@
 			"select_device_icon":"Of kies er een uit de lijst.",
 			"set_icon_and_customize":"Hier kunt u een pictogram voor het Geavanceerde Virtuele Apparaten instellen, door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
 			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
-
 			"set_name":"Hier kunt u de naam van het apparaat instellen:",			
 			"create_device_self":"Of maak zelf een apparaat aan",
 			"choose_template":"Of kies een sjabloon"
@@ -184,7 +182,6 @@
 			"title":"Een ogenblik alstublieft",
 			"creating_device":"Uw nieuwe virtuele apparaat wordt aangemaakt.",
 			"done":"Gereed!",
-
 			"avds_are_created":"De AVD('s) zijn aangemaakt!",
 			"flow_available_in_template":"Er zijn flows in de sjabloon die werd gebruikt, u kunt hier nu een script voor aanmaken.",
 			"title_flows":"Flow script aanmaken"

@@ -161,15 +161,13 @@
 		"readDevice":"Read Device",
 		"saveAs":"Save as",
 		"customIcon":"Custom icon",
-		"finish":"Finish",
-		
-
-		
+		"finish":"Finish",		
 		"listFields":"Lists",
 		"listFieldI":"List __i__",
 		"createListField":"Create List",		
 		"prefixedList":"Prefixed list",		
-		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!"
+		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!",
+		"cumulative":"Cumulative"
 	},
 	"pair": {
 		"list_icons":{

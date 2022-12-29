@@ -429,7 +429,7 @@ class DeviceSetter extends Homey.App {
 								if (lastOne.originName) tokens.client = lastOne.originName;
 								else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
 								let v = lastOne.v;
-								if(args.numberof==0) {
+								if(args.numberof==0 && device) {
 									this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });									
 									device = this.devices[args.device.id];
 									v = device.capabilitiesObj[args.capability.id].value;
@@ -443,7 +443,16 @@ class DeviceSetter extends Homey.App {
 
 								if(insights.step && args.numberof==0) {
 									
-									let endD = device.capabilitiesObj[args.capability.id].lastUpdated;
+									let endD = device ? device.capabilitiesObj[args.capability.id].lastUpdated : new Date().toISOString();
+									let end = new Date(endD);
+									tokens.changedon = endD;
+									tokens.changedonms = end.getTime();
+									tokens.durationtillnow = new Date().getTime() - end.getTime();
+
+								}
+								else if(insights.end && args.numberof==0) {
+									
+									let endD = device ? device.capabilitiesObj[args.capability.id].lastUpdated : new Date().toISOString();
 									let end = new Date(endD);
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -451,8 +460,8 @@ class DeviceSetter extends Homey.App {
 
 								}
 								else if(insights.end) {
-									let end = new Date(insights.end);
-									tokens.changedon = insights.end;
+									let end = new Date(insights.start);
+									tokens.changedon = insights.start;
 									tokens.changedonms = end.getTime();
 									tokens.durationtillnow = new Date().getTime() - end.getTime();
 								}

@@ -469,5 +469,8 @@
   },
   "2.8.12": {
     "en": "Bugfixed: Insight for 0 minutes duration was not updated correctly."
+  },
+  "2.8.13": {
+    "en": "Bugfixed: Resolved various reported bugs."
   }
 }

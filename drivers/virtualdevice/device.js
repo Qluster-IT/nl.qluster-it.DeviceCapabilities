@@ -293,7 +293,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 			var button1Reset = false;
-
+			let energyCumulative = false;
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
 				const fieldCount = type=="status" ? 1 : Math.max(settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0, oldSettings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
@@ -585,11 +585,12 @@ module.exports = class WatchDevice extends Homey.Device {
 							// 	let b = a;
 							// 	//await this.homey.insights.deleteLog({id:secondCap});
 							// }
-							
+							if(type == 'number' && cap==='measure_power' && settings[type + i + 'EnergyCumulative']) energyCumulative=true;
 
 							if (type == 'button' && disabled && !pushbutton) {
 								await this.setCapabilityValue(cap, checked);
 							}
+							
 						} else if (this.hasCapability(cap)) 
 							await this.removeCapability(cap);
 					}
@@ -598,6 +599,12 @@ module.exports = class WatchDevice extends Homey.Device {
 					}
 
 				}
+			}
+
+			let energy = await this.getEnergy();
+
+			if (energyCumulative!=energy.cumulative) {
+				await this.setEnergy({cumulative:energyCumulative});
 			}
 
 			// if(settings.batteries != oldSettings.batteries) {

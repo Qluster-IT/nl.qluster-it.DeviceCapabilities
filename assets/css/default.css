@@ -32,6 +32,7 @@ body {
     display: inline-block;
     overflow: auto !important;
     position: relative;
+    min-height:auto!important;
 }
 
 
@@ -552,6 +553,9 @@ h1.top-labels {
     position: relative;
     width: 49% !important;
     display: inline-block;
+}
+.value[type=checkbox] {
+    width: 20px !important;
 }
 
 

@@ -30,8 +30,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger">
 				<div class="field text-center">
-					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
-					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'; loadStuff();"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false; loadStuff();"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
 					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 				</div>
 				<div class="field" ng-show="!view.subid">
@@ -570,7 +570,8 @@ ${vars.textSettings}
 					});
 
 					// $scope.getIcons();
-					$scope.getAdvancedFlows();
+					//$scope.getAdvancedFlows();
+					
 					$scope.getDevices();
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
@@ -596,6 +597,12 @@ ${vars.textSettings}
 					console.log('ready done');
 				});
 
+				let loadedStuff = false;
+				$scope.loadStuff = function() {
+					if(loadedStuff) return;
+					loadedStuff = true;
+					$scope.getAdvancedFlows();					
+				}
 				$scope.size = function (collection) {
 					console.log('size()');
 					return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;

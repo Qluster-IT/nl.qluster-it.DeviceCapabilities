@@ -2329,15 +2329,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         // await session.nextView();
         //console.log(JSON.stringify(await this.getCustomIcons()));
         ///let data = device.getData();
+        session.setHandler('virtualdevicesettings_loadStuff', async (data) => {
+            await this.loadStuff({reload:true});
+            return true;
+        });
 
         session.setHandler('virtualdevicesettings_load', async (data) => {
             // // emit when devices are still being searched
             // session.emit('list_devices', devices);
       
             // return devices when searching is done
-            let defer = new Defer();
-            defer.then(async ()=> { this.loadStuff({reload:true}); });
-            setTimeout(()=> { defer.resolve(); }, 1);
+            // let defer = new Defer();
+            // defer.then(async ()=> { this.loadStuff({reload:true}); });
+            // setTimeout(()=> { defer.resolve(); }, 1);
+
             let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
         return {settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName), favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource};
 

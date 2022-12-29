@@ -17,7 +17,7 @@
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
 
 	<form name="settings" class="main-view" ng-show="!view.id">
-		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';" data-i18n="virtualdevicesettings.openShareYourDevice">Open Share Your Device</div>
+		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';loadStuff();" data-i18n="virtualdevicesettings.openShareYourDevice">Open Share Your Device</div>
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
@@ -209,7 +209,13 @@
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 					</select>
 				</div>
-				<div ng-else execute="s['number'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulative']" />
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulative']=undefined;" ></div>
+
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.units' || 'Units')}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -1004,6 +1010,15 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 					});
 				}
+			}
+
+			let loadedStuff = false;
+			$scope.loadStuff = function() {
+				if(loadedStuff) return;
+				loadedStuff = true;
+				Homey.emit('virtualdevicesettings_loadStuff', vars.favoriteTemplates , function (err, result) {
+						if (err) return console.log(err);
+					});
 			}
 			
 			$scope.refreshTemplates = function () {
