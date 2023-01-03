@@ -472,5 +472,11 @@
   },
   "2.8.13": {
     "en": "Bugfixed: Resolved various reported bugs."
+  },
+  "2.8.14": {
+    "en": "Bugfixed: Importing TEF's with Chronograph."
+  },
+  "2.9.0": {
+    "en": "Added: API call to change value from AVDs through HS/Api: await dcApp.apiPost('setvalue', {device:'Day-number', field:'number1', value:20})."
   }
 }

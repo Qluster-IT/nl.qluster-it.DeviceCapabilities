@@ -1,3 +1,5 @@
+Nieuw: API-oproep om AVD-velden bij te werken.
+
 Nieuw: Exporteer en importeer Flows en/of Advanced Virtual Devices van andere Homey gebruikers.
 Importeer via Templates via App Settings, AVD Repair of bij het aanmaken van AVD's.
 

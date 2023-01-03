@@ -13,13 +13,16 @@ module.exports = class WatchDevice extends Homey.Device {
 		//delete Homeyman.Current.VirtualDevices[this.getName()];
 		if( typeof this.getData().icon !== 'undefined' && this.getData().icon !== null && this.getData().icon.startsWith("../../../userdata"))
       		this.homey.app.deleteFile(this.getData().icon.substring(8));
-
+	}
+	onUninit() {
+		this.homey.app._getDevices=null;	
 	}
 	// this method is called when the Device is inited
 	async onInit() {
 		this.log('Device init');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
+		this.homey.app._getDevices=null;
 
 		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', this.homey.__("virtualdevicesettings.devicecapabilities_starttext") || "To start");//"Goto Device Settings");
 

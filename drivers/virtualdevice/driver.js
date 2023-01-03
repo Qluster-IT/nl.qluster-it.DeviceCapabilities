@@ -1351,7 +1351,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].names};
                                     if(!tokensToReplace[appId].types) tokensToReplace[appId].types = {};
                                     if(!tokensToReplace[appId].types[type]) tokensToReplace[appId].types[type] = [];
-                                    if(!_.find(tokensToReplace[appId].types[type], x=>x.name===card.args[argKey].name)) tokensToReplace[appId].types[type].push({name:card.args[argKey].name});
+                                    if(!_.find(tokensToReplace[appId].types[type], x=>x.name===card.args[argKey])) tokensToReplace[appId].types[type].push({name:card.args[argKey]});
 
                                     return;
                                 }

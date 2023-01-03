@@ -64,7 +64,7 @@ class DeviceSetter extends Homey.App {
 
 		//return null;
 
-		if (process.env.DEBUG === '1') require('inspector').open(9222, '0.0.0.0', true);
+		if (process.env.DEBUG === '1') require('inspector').open(9219, '0.0.0.0', true);
 		//require('inspector').open(9222, '0.0.0.0', process.env.DEBUG === '1');
 
 		
@@ -669,14 +669,17 @@ class DeviceSetter extends Homey.App {
 	}
 
 	getDevices() {
+		if(this._getDevices) return this._getDevices;
 		var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
 		var ret = devices.map(vd => {
 			return {
 				id: vd.getData().id,
 				name: vd.getName(),
 				icon: vd.getData().icon,
+				apiId:vd.__id
 			};
 		});
+		this._getDevices = ret;
 		return ret;
 	}
 
