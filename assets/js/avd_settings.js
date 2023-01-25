@@ -664,6 +664,12 @@ const asv_settings = {
       "label": "Schedule, Until, Manual, Off Until, Off",
       "showAs":'picker',
       "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-EVCC_list",
+      "label": "EVCC.io",
+      "showAs":'picker',
+      "order": 1
     }
   ],
 

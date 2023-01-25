@@ -478,5 +478,8 @@
   },
   "2.9.0": {
     "en": "Added: API call to change value from AVDs through HS/Api: await dcApp.apiPost('setvalue', {device:'Day-number', field:'number1', value:20})."
+  },
+  "2.9.1": {
+    "en": "Added: Picker: EVCC.io."
   }
 }
