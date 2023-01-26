@@ -481,5 +481,8 @@
   },
   "2.9.1": {
     "en": "Added: Picker: EVCC.io."
+  },
+  "2.9.2": {
+    "en": "Fixed: Values for Picker: EVCC.io."
   }
 }
