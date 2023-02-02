@@ -484,5 +484,8 @@
   },
   "2.9.2": {
     "en": "Fixed: Values for Picker: EVCC.io."
+  },
+  "2.9.3": {
+    "en": "Fixed: Solar Value for Picker: EVCC.io."
   }
 }

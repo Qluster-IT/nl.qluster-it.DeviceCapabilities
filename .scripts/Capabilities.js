@@ -445,6 +445,56 @@ str+=`"devicecapabilities_picker-up-idle-down_list": {
 
 
 
+  str+=`"devicecapabilities_picker-EVCC_list": {
+      "title": {
+        "en": "EVCC.io"
+      },
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          },
+          "value": "off"
+        },
+        {
+          "id": "pv",
+          "title": {
+            "en": "Solar",
+            "nl": "Zonne",
+            "de": "Solar"
+          },
+          "value": "solar"
+        },
+        {
+          "id": "minpv",
+          "title": {
+            "en": "Min+Solar",
+            "nl": "Min+Zonne",
+            "de": "Min+Solar"
+          },
+          "value": "minpv"
+        },
+        {
+          "id": "now",
+          "title": {
+            "en": "Fast",
+            "nl": "Snel",
+            "de": "Schnell"
+          },
+          "value": "now"
+        }
+      ]
+    },`;
+
+
+
 
 
 

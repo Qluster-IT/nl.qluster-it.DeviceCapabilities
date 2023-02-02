@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -15915,7 +15915,7 @@
           "value": "off"
         },
         {
-          "id": "solar",
+          "id": "pv",
           "title": {
             "en": "Solar",
             "nl": "Zonne",
