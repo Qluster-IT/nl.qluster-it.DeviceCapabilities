@@ -14,7 +14,7 @@ const { promisify } = require('util');
 const fs = require('fs');
 
 const sandbox = require('./lib/sandbox');
-const FindObject = require("./lib/TheFindObjectsinFlowsScript");
+const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 
 
 const SETTING_PREFIX = 'icons_';
@@ -64,9 +64,10 @@ class DeviceSetter extends Homey.App {
 
 		//return null;
 
-		if (process.env.DEBUG === '1') require('inspector').open(9219, '0.0.0.0', true);
+		if (process.env.DEBUG === '1' && this.homey.platform=='local' && this.homey.platformVersion==1) require('inspector').open(9219, '0.0.0.0', true);
 		//require('inspector').open(9222, '0.0.0.0', process.env.DEBUG === '1');
 
+        this.appPath = this.homey.platform=='local' && this.homey.platformVersion==1 ? '/' : '/app/';
 		
 
 		this.localURL = await this.homey.api.getLocalUrl();

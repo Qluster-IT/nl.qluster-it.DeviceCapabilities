@@ -239,7 +239,7 @@
 								{{category.title}}</h1>
 							<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
 								<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
-									ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
+									ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/defaulticons/' + defaulticon + ')'}">
 								</div>
 							</div>
 						</div>

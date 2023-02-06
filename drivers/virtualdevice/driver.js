@@ -77,7 +77,11 @@ const TOPICS = {
 };
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
-
+    async sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
     async onInit() {
         app = this.homey.app;
         this.log('VirtualDeviceDriver onInit');
@@ -105,13 +109,16 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 
             }
         }
+        await this.sleep(1000);
+        // let filesandfolders1 = await app.readdir('/');
+        // let filesandfoldersApp = await app.readdir('/app');
 
         /// Get Compressed Icon File
         if(false) {
             //Dont forget to add and remove the Icons to the App
             // and get it from: 
             let strCompressedFile = '';
-            let _path = './assets/icons/';
+            let _path = this.homey.app.appPath+ 'icons/';
             let filesandfolders = await app.readdir(_path);
             
             let f = async (dir, file)=> {
@@ -139,12 +146,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             app.writeFile('/userdata/icons.zipped', zipped);
         }
 
+        
         ///  Load all default icons into a array
-        if(!this.defaultIcons) {
+        if(!this.defaultIcons ) {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
-            
+        //let filesandfolders1 = await app.readdir(defaultPath);
+    
             //save all files from compressed icon files first
-            let zippedIcons = await app.readFile('./assets/icons.zipped');
+            let zippedIcons = await app.readFile(this.homey.app.appPath+ 'assets/icons.zipped');
             let compressedIcons = (await ungzip(zippedIcons)).toString('utf8');
             let icons = compressedIcons.split('\r\n\r\n');
             icons.pop();

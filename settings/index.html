@@ -230,7 +230,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 
 					<div class="name">{{device.name}}</div>
 					<div ng-if="device.icon.substr(8).startsWith('/userdata/virtualdeviceicons/')">
-						<div class="image" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
+						<div class="image" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
 						</div>
 						<div class="buttons">
 							<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i class="fa fa-upload"></i></button>
@@ -263,7 +263,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					<h1 class="name">{{category.title}}</h1>
 					<ul id="customicons">
 						<li class="customicon" ng-repeat="customicon in category.icons">
-							<div class="image" ng-if="$index<customIconLoadIndex" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
+							<div class="image" ng-if="$index<customIconLoadIndex" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
 							</div>
 							<div>
 								<div ng-show="!customicon.updating" class="name">
@@ -375,7 +375,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						{{category.title}}</h1>
 					<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
 						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
-							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
+							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/defaulticons/' + defaulticon + ')'}">
 						</div>
 					</div>
 				</div>
