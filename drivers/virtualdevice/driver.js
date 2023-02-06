@@ -134,9 +134,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 } else if(stats.isFile()) await f('Unsorted', faf); //isFile!                
             }
             //const buf = new Buffer(strCompressedFile, 'base64');
-            app.writeFile('./userdata/icons.compressed', strCompressedFile);
+            app.writeFile('/userdata/icons.compressed', strCompressedFile);
             let zipped = await gzip(strCompressedFile);
-            app.writeFile('./userdata/icons.zipped', zipped);
+            app.writeFile('/userdata/icons.zipped', zipped);
         }
 
         ///  Load all default icons into a array
@@ -202,7 +202,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 					let filePathAssets = app.DEFAULT_ICONS_PATH;
                     let file = categories[i].icons[j].defaultIcon + '.svg';
                     
-                    let filePath = './userdata/customicons/';
+                    let filePath = '/userdata/customicons/';
 					let iconName = categories[i].icons[j].file + '.svg';
 
                     if(await app.fileExists(filePathAssets + file) && !await app.fileExists(filePath + iconName)){
@@ -588,12 +588,21 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 }
                 //if(templates.length) return {templates, postsFound};
 
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>#([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                //Crashes - Above
+                //let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\')(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+
                 let matchesFound = posts? [...posts] : [];
                 postsFound = postsFound===undefined ? matchesFound.length : postsFound;
                 for (let i = 0; i < matchesFound.length; i++) {
                     const postNumber = Number.parseInt(matchesFound[i][3]);
-                    const likes = matchesFound[i][5] ? Number.parseInt(matchesFound[i][5]) : 0;
+                    const likes = matchesFound[i][2] ? Number.parseInt(matchesFound[i][2]) : 0;
+                    
+                    // const matchText = matchesFound[i][1];                    
+                    // let postsData = matchText.matchAll(/(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>([\d]*)/gmsi);
+                    // let postsNumberMatchesFound = postsData? [...postsData] : [];                    
+                    // const postNumber = Number.parseInt(postsNumberMatchesFound[0][3]);
+
                     //let post = matchesFound[i][4];
                     //if(post.startsWith('\n')) post=post.substring(1);
                     let template = _.find(templates, t=>t.number==postNumber);
@@ -2064,7 +2073,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //     if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !exchangerFile.customIcons[device.Settings[type+i+"Icon"]]){
             //         let a =exchangerFile.customIcons[device.Settings[type+i+"Icon"]];
             //         let b =device.Settings[type+i+"Icon"];
-            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+            //         //exchangerFile.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("/userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
             //     }
             // });
             return exchangerFile;
@@ -2402,7 +2411,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(viewSettings && viewSettings.copyWithIcons) 
                     await this.executeForAllTypes(device, async (type, i )=> {
                         if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].startsWith('custom') && !dev.customIcons[device.Settings[type+i+"Icon"]]){
-                            dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("./userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
+                            dev.customIcons[device.Settings[type+i+"Icon"]] = await this.getIconZipped("/userdata/customicons/" + device.Settings[type+i+"Icon"] + ".svg");
                         }
                     });
                 dev = await this.getAdvancedFlowsJSON({dev, device, copyWithFlows:viewSettings.copyWithFlows });

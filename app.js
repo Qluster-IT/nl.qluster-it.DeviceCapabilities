@@ -59,7 +59,7 @@ class DeviceSetter extends Homey.App {
 
 	async onInit() {
 		DeviceSetter.Current = this;
-		this.DEFAULT_ICONS_PATH = './userdata/defaulticons/';
+		this.DEFAULT_ICONS_PATH = '/userdata/defaulticons/';
 		//this.VirtualDevices = {};
 
 		//return null;
@@ -708,7 +708,7 @@ class DeviceSetter extends Homey.App {
 		let filePathAssets = this.DEFAULT_ICONS_PATH;
 		let file = defaulticon;// + '.svg';
 
-		let filePath = './userdata/customicons/';
+		let filePath = '/userdata/customicons/';
 		let iconName = customicon.file + '.svg';
 
 		if (await this.homey.app.fileExists(filePathAssets + file)) {
@@ -720,7 +720,7 @@ class DeviceSetter extends Homey.App {
 		let filePathAssets = this.DEFAULT_ICONS_PATH;
 		let file = icon;// + '.svg';
 
-		let filePath = './userdata/virtualdeviceicons/';
+		let filePath = '/userdata/virtualdeviceicons/';
 		let iconName = device.data.id + '.svg';
 
 		if (await this.homey.app.fileExists(filePathAssets + file)) {// && !await this.homey.app.fileExists(filePath + iconName)){
@@ -765,7 +765,7 @@ class DeviceSetter extends Homey.App {
 		const ext = this.getExtByType(type);
 		const path = `./userdata/icons/${id}${ext}`;
 
-		if (!(await existsAsync('./userdata/icons/'))) await mkdirAsync('./userdata/icons/');
+		if (!(await existsAsync('/userdata/icons/'))) await mkdirAsync('/userdata/icons/');
 
 
 		await writeFileAsync(path, buf);
@@ -905,6 +905,7 @@ class DeviceSetter extends Homey.App {
 						});
 					} catch (error) {
 						this.error(error);
+						this.error("capability: " + capability.id);
 					}
 				}
 			}

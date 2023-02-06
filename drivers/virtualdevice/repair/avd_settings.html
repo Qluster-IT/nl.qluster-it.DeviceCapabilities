@@ -1326,8 +1326,8 @@ ${vars.textSettings}
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
-				//Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
-				Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
+				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				//Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
 				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
 					if (err) {
 						console.log(err);

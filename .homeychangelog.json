@@ -487,5 +487,8 @@
   },
   "2.9.3": {
     "en": "Fixed: Solar Value for Picker: EVCC.io."
+  },
+  "2.9.4": {
+    "en": "Resolved: Loading Templates from Forum made the App hang and crash. Also resolved Settings/Repair layout issues."
   }
 }

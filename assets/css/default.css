@@ -746,8 +746,8 @@ h1.top-labels {
 }
 .non-setting-view .top {
     overflow:auto;
-    height: calc(100% - 32px);
-    margin-top: 32px;
+    height: calc(100% - 38px);
+    margin-top: 0px;
 }
 
 .setting-group {
@@ -880,7 +880,7 @@ alinky,
 }
 
 .field.filter {
-    height: 32px;
+    height: 38px;
     z-index: 10;
     right: 0;
     margin-bottom: 10px;
@@ -890,6 +890,7 @@ alinky,
     margin:0px;
     background-color:white;
     top:0px;
+    padding:5px;
 }
 .filter input[type="text"].label {
     /* width: 65%!important;
