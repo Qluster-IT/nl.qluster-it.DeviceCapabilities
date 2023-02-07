@@ -67,6 +67,9 @@
 		"pasteTEFReadFlows":"Paste The Exchanger File and press Read Flows",		
 		"no_avd_in_tef":"TEF does not contains an AVD.",
 		"flows_will_be_created":"The following flows will be created in the script.",
+
+		
+		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
 		"":""
 	},
 	"virtualdevicesettings":{
