@@ -3221,7 +3221,7 @@
             "name": "objecttype",
             "title": {
               "en": "Object Type",
-              "nl": "Geadvanceerd Virtueel Apparaat",
+              "nl": "Object type",
               "de": "Objekt Typ"
             },
             "placeholder": {
