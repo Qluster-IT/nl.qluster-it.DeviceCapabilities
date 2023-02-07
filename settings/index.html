@@ -675,10 +675,12 @@ ${vars.textSettings}
 							$scope.vars.template = template;
 
 							/// Sanitize all posts!!
-							template.post = $sanitize(template.post);
+							if(!template.sanitizedPost) {
+								template.post = $sanitize(template.post);
 
-							if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-							else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+								if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+								else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+							}
 							let compiled = $compile(template.sanitizedPost)($scope);
 							$('.content').empty();
 

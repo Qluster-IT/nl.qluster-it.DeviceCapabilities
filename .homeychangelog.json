@@ -496,5 +496,11 @@
   },
   "2.9.6": {
     "en": "Bugfixed: 2.9.5 had a new bug that would not save icons."
+  },
+  "2.9.7": {
+    "en": "Improved: Creation AVD UI."
+  },
+  "2.9.8": {
+    "en": "Improved: Creation AVD UI."
   }
 }
