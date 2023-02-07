@@ -490,5 +490,11 @@
   },
   "2.9.4": {
     "en": "Resolved: Loading Templates from Forum made the App hang and crash. Also resolved Settings/Repair layout issues."
+  },
+  "2.9.5": {
+    "en": "Bugfixed: Create new AVD wouldn't save fields sometimes."
+  },
+  "2.9.6": {
+    "en": "Bugfixed: 2.9.5 had a new bug that would not save icons."
   }
 }

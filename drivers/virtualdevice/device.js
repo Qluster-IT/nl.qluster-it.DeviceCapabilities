@@ -606,7 +606,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 			let energy = await this.getEnergy();
 
-			if (energyCumulative!=energy.cumulative) {
+			if (energy && energyCumulative!=energy.cumulative) {
 				await this.setEnergy({cumulative:energyCumulative});
 			}
 

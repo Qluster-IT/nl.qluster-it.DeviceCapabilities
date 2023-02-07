@@ -764,7 +764,7 @@ class DeviceSetter extends Homey.App {
 
 		id = id || randomBytes(12).toString('hex');
 		const ext = this.getExtByType(type);
-		const path = `./userdata/icons/${id}${ext}`;
+		const path = `/userdata/icons/${id}${ext}`;
 
 		if (!(await existsAsync('/userdata/icons/'))) await mkdirAsync('/userdata/icons/');
 
@@ -817,9 +817,9 @@ class DeviceSetter extends Homey.App {
 
 		id = id;
 		const ext = this.getExtByType(type);
-		const path = `./userdata/${subpath}/${id}${ext}`;
+		const path = `/userdata/${subpath}/${id}${ext}`;
 
-		if (!(await existsAsync(`./userdata/${subpath}/`))) await mkdirAsync(`./userdata/${subpath}/`);
+		if (!(await existsAsync(`/userdata/${subpath}/`))) await mkdirAsync(`/userdata/${subpath}/`);
 		if (await existsAsync(path)) await unlinkAsync(path);
 		await writeFileAsync(path, buf);
 

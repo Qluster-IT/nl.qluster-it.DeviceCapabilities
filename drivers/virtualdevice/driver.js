@@ -2164,7 +2164,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 
             device = devices[0];
             
-            let iconpath = "../../." +(await app.setDeviceIconFromDefault({device, icon:icon}));
+            let iconpath = "../../.." +(await app.setDeviceIconFromDefault({device, icon:icon}));
             
             //var iconPath = "../../../userdata/virtualdeviceicons/"  + iconName;
             device.data.icon = iconpath;//iconPath;
@@ -2191,7 +2191,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         {
             device = devices[0];       
             var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
-            var iconPath = "../../." + icon.path;      
+            var iconPath = "../../.." + icon.path;      
             device.data.icon = iconPath;
             device.icon = iconPath;
             if(name && name.length>0) device.name = name;
