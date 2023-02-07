@@ -228,7 +228,7 @@
 		</div>
 
 		<div ng-show="view.subid=='new_avd'">
-			<div style="margin-top:20px;">
+			<div>
 				<span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>
 				<input type="text" id="name" ng-model="vars.device.name" />
 			</div>
@@ -236,7 +236,7 @@
 				<span data-i18n="pair.list_icons.set_icon_and_customize"></span>
 				<span data-i18n="pair.list_icons.set_icon_and_customize_change"></span>
 			</div>
-			<div style="margin-top:20px;">
+			<div style="margin-top:20px;" class="border-line">
 				<span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br />
 				<div class="form-group" style="margin-top:10px;">
 					<input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
