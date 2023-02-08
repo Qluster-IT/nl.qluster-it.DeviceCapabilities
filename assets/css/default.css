@@ -874,7 +874,9 @@ alinky,
     display: inline-block;
     height:100%;
     width:100%;
-
+}
+.template-panel pre code {
+    user-select: all;
 }
 
 /* .template-panel>.content {
@@ -1001,8 +1003,21 @@ form.top {
 .pair-main-flex>* {
     flex-grow: 1;
 }
-.pair-main-flex>* .button {
+/* .pair-main-flex>* .button {
     padding: 20px !important;
+} */
+
+.info-view {
+    position: fixed;
+    z-index: 1100;
+    display: inline-block;
+    top:0;
+    bottom:60px;
+    left:0;
+    Right:0;
+    padding:20px;
+    background-color:white;
+    overflow-y:auto;
 }
 
 

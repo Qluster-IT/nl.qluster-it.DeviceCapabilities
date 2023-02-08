@@ -502,5 +502,8 @@
   },
   "2.9.8": {
     "en": "Improved: Creation AVD UI."
+  },
+  "2.9.9": {
+    "en": "Improved: Creation of an AVD UI."
   }
 }

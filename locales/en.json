@@ -32,8 +32,6 @@
 		"close":"Close",
 		"explain_virtualdevices": "Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
 		"explain_restart":"After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.",
-
-
 		"title_theflowexchanger":"The Flow Exchanger",
 		"templates":"Templates",
 		"import":"Import",
@@ -70,6 +68,11 @@
 
 		
 		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
+		"back":"Back",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
 		"":""
 	},
 	"virtualdevicesettings":{
@@ -185,6 +188,27 @@
 			"choose_template":"Or choose a Template",
 
 
+			"what_is_a_tef":"What is a TEF?",
+			"TEF_contains_AVD_flows":"A TEF, or The Exchanger File, is a text-string, or textfile, containing an AVD, Flows or Both.",
+			"":"",
+
+			
+			"what_is_a_template":"What is a Template?",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+
+			"empty":"Empty?",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
+			"":"",
 			"":"",
 			"":"",
 			"":""
