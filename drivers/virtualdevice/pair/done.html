@@ -1,7 +1,15 @@
 
 
-<div id="avddoneCtrl" ng-app="avdcreate" ng-controller="avddoneCtrl as avddone" class="non-setting-view">
-    <form name="theflowexchanger"  id="theflowexchanger" class="main-view" ng-show="view.subid=='theflowexchangerimport'">        
+<style>
+    .hy-header {
+        display: none !important;
+    }
+    .theflowexchangerimport {
+        height: calc(100vh - 130px);
+    }
+</style>
+<div id="avddoneCtrl" ng-app="avdcreate" ng-controller="avddoneCtrl as avddone" class="non-setting-view theflowexchangerimport">
+    <form name="theflowexchanger"  id="theflowexchanger" class="main-view " ng-show="view.subid=='theflowexchangerimport'">        
         <div class="field">
             <span  data-i18n="pair.done.avds_are_created">The AVD(s) have been created!</span><br/>
             <br/>

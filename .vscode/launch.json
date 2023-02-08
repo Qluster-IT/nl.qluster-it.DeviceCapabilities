@@ -1,21 +1,3 @@
-// {
-//     // Use IntelliSense to learn about possible attributes.
-//     // Hover to view descriptions of existing attributes.
-//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-//     "version": "0.2.0",
-//     "configurations": [
-//         {
-//             "type": "node",
-//             "request": "attach",
-//             "restart": true,
-//             "name": "Attach to Homey",
-//             "address": "192.168.1.17",
-//             "port": 9219,
-//             "localRoot": "${workspaceFolder}",
-//             "remoteRoot": "/"
-//         } ]
-// }
-
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -27,10 +9,28 @@
             "request": "attach",
             "restart": true,
             "name": "Attach to Homey",
-            // "address": "192.168.1.239",
-            "port": 9229,
+            "address": "192.168.1.17",
+            "port": 9219,
             "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/app",            
-        }
-    ]
+            "remoteRoot": "/"
+        } ]
 }
+
+// {
+//     // Use IntelliSense to learn about possible attributes.
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "type": "node",
+//             "request": "attach",
+//             "restart": true,
+//             "name": "Attach to Homey",
+//             // "address": "192.168.1.239",
+//             "port": 9229,
+//             "localRoot": "${workspaceFolder}",
+//             "remoteRoot": "/app",            
+//         }
+//     ]
+// }

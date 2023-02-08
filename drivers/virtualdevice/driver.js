@@ -1308,20 +1308,25 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
-    async getAPIV3() {
+    getAPIV3() {
         if(this.apiV3!==undefined) return this.apiV3;
-        this.apiV3 = this.homey.version.split('.')[0] >= 10;
+        return (this.apiV3 = this.homey.version.split('.')[0] >= 10);
     }
     async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         try {
             exchangerFile = await this.getNormalExchangerFile(exchangerFile);
-            if(this. getAPIV3()) {
+            
                 _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
                     _.each(flow.cards, (card, cardKey)=>{
-                        if(!card.id.startsWith(card.id.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
+                        if(!card.id) return;
+                        if(this.getAPIV3()) {
+                            if(!card.id.startsWith(card.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
+                        } else {
+                            if(card.id.startsWith(card.ownerUri+':')) card.id = card.id.substring((card.ownerUri+':').length);
+                        }
                     });
                 });
-            }
+            
             
             let api = await this.loadStuff();
             // allDevices = allDevices ? allDevices : await app.devices;
@@ -1633,8 +1638,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             });
             _.each(cards, card=>{
                 if(card && card.ownerUri) {                    
-                    if(card.ownerUri.startsWith('homey:device:')) _.each(exchangerFile.devicesToReplace, (device)=>{ if(device.searchFor && card.ownerUri === device.searchFor) card.ownerUri = device.searchReplaceWith;});
-                    else if(card.ownerUri.startsWith('homey:zone:')) _.each(exchangerFile.zonesToReplace, (zone)=>{ if(zone.searchFor && card.ownerUri === zone.searchFor) card.ownerUri = zone.searchReplaceWith;});
+                    if(card.ownerUri.startsWith('homey:device:')) _.each(exchangerFile.devicesToReplace, (device)=>{ if(device.searchFor && card.ownerUri === device.searchFor) {if(this.getAPIV3()) card.id=device.searchReplaceWith + ':' + card.id.substring((card.ownerUri+':').length); card.ownerUri = device.searchReplaceWith;}});
+                    else if(card.ownerUri.startsWith('homey:zone:')) _.each(exchangerFile.zonesToReplace, (zone)=>{ if(zone.searchFor && card.ownerUri === zone.searchFor) {if(this.getAPIV3()) card.id=zone.searchReplaceWith + ':' + card.id.substring((card.ownerUri+':').length); card.ownerUri = zone.searchReplaceWith;}});
                 }
                 if(card.args) for (const argKey in card.args) {
                     if (Object.hasOwnProperty.call(card.args, argKey)) {
@@ -1773,6 +1778,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(card.ownerUri==='homey:app:com.athom.homeyscript') {
                     card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
                     card.id = 'hs_' + card.id;
+                    if(this.getAPIV3()) card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:' + card.id;
                 }
             });
 
