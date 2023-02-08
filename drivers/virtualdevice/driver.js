@@ -1308,11 +1308,20 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //dev.doublecompressedMinified = Buffer.from(await gzip(compressedMinified)).toString('base64'); 
         return dev;
     }
-
+    async getAPIV3() {
+        if(this.apiV3!==undefined) return this.apiV3;
+        this.apiV3 = this.homey.version.split('.')[0] >= 10;
+    }
     async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         try {
             exchangerFile = await this.getNormalExchangerFile(exchangerFile);
-           
+            if(this. getAPIV3()) {
+                _.each(exchangerFile.advancedflows, (flow, flowKey)=>{
+                    _.each(flow.cards, (card, cardKey)=>{
+                        if(!card.id.startsWith(card.id.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
+                    });
+                });
+            }
             
             let api = await this.loadStuff();
             // allDevices = allDevices ? allDevices : await app.devices;
@@ -2093,7 +2102,33 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         }
     }
 
-    
+    async getCustomIconsAvailable() {    
+        let dev = {};
+        dev.customIconsAvailable = [];
+        let iconsInUse = {};
+        let devices  = await this.getDevices();
+        for (const deviceId in devices) {
+            if (Object.hasOwnProperty.call(devices, deviceId)) {
+                const device = devices[deviceId];
+                await this.executeForAllTypes(device, (type, i )=> {
+                    if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
+
+                });
+            }
+        }   
+        let keys = Object.keys(iconsInUse);
+        for (let i = 0; i < CUSTOM_ICONS.length; i++) {
+            const icon = CUSTOM_ICONS[i];
+            if(keys.indexOf(icon)===-1)dev.customIconsAvailable.push(icon);
+        }
+
+        for (const iconUsedKey in iconsInUse) {
+            if (Object.hasOwnProperty.call(iconsInUse, iconUsedKey)) {
+                
+            }
+        }            
+        return dev;
+    }
       
     async onPair(session, arg1) {
     // var s = session;
@@ -2138,8 +2173,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         if(tef.deviceName) device.name = tef.deviceName;
         tefs = [{tef, device}];
         //return this.getCustomIcons();
-        return true;
+        return {tef, device};
     });
+    
+    session.setHandler('virtualdeviceicons_setTextSettings', async (data) => {
+        try {            
+            tefs[0].tef = data.tef;  
+        } catch (error) {                
+            this.error(error);
+        }
+    });  
+
     session.setHandler('getAvdTemplates', async (str) => {
         try {
             let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
@@ -2294,6 +2338,15 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         
     });
 
+    session.setHandler('virtualdeviceicons_getCustomIconsAvailable', async () => {
+        try {            
+            return this.getCustomIconsAvailable();           
+        } catch (error) {                
+            this.error(error);
+        }
+    });  
+    
+
     session.setHandler('list_icons_selection', async (selectedIcons) => {
         // device.icon = '../../../userdata/icon.svg';
     });
@@ -2379,34 +2432,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         });
         
         session.setHandler('virtualdevicesettings_getCustomIconsAvailable', async () => {
-            
-            let dev = {};
-
-            
-            dev.customIconsAvailable = [];
-            let iconsInUse = {};
-            let devices  = await this.getDevices();
-            for (const deviceId in devices) {
-                if (Object.hasOwnProperty.call(devices, deviceId)) {
-                    const device = devices[deviceId];
-                    await this.executeForAllTypes(device, (type, i )=> {
-                        if(device.Settings[type+i+"Icon"] && device.Settings[type+i+"Icon"].length>0 && !iconsInUse[device.Settings[type+i+"Icon"]]) iconsInUse[device.Settings[type+i+"Icon"]] = true;
-
-                    });
-                }
-            }   
-            let keys = Object.keys(iconsInUse);
-            for (let i = 0; i < CUSTOM_ICONS.length; i++) {
-                const icon = CUSTOM_ICONS[i];
-                if(keys.indexOf(icon)===-1)dev.customIconsAvailable.push(icon);
-            }
-
-            for (const iconUsedKey in iconsInUse) {
-                if (Object.hasOwnProperty.call(iconsInUse, iconUsedKey)) {
-                    
-                }
-            }            
-            return dev;
+            return this.getCustomIconsAvailable();
         });        
 
         session.setHandler('virtualdevicesettings_getJson', async (str) => {

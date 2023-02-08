@@ -2,6 +2,7 @@
 const crypto = require("crypto");
 
 const Homey = require('homey');
+// const { HomeyAPIApp } = require('homey-api');
 const { HomeyAPI } = require('athom-api');
 const _ = require('lodash-core');
 
@@ -1213,24 +1214,24 @@ class DeviceSetter extends Homey.App {
 			return defer.promise;
 		}).bind(this);
 	}
-	async getDisconnectedHomeyApi() {
-		const api = new HomeyAPI({
-			localUrl: this.localURL,
-			baseUrl: this.localURL,
-			token: this.sessionToken,
-			apiVersion: 2,
-			online: true,
-		}, () => {
-			// called by HomeyAPI on 401 requests
-			api.setToken(this.sessionToken);
-		});
-		return api;
-	}
+	// async getDisconnectedHomeyApi() {
+	// 	const api = new HomeyAPIApp({
+	// 		localUrl: this.localURL,
+	// 		baseUrl: this.localURL,
+	// 		token: this.sessionToken,
+	// 		apiVersion: 2,
+	// 		online: true,
+	// 	}, () => {
+	// 		// called by HomeyAPI on 401 requests
+	// 		api.setToken(this.sessionToken);
+	// 	});
+	// 	return api;
+	// }
 
 	async destroyAndRefreshHomeyAPI() {
 		this.homeyAPI.destroy();
 		this.homeyAPI = null;
-		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+		this.homeyAPI = await HomeyAPIApp.forCurrentHomey(this.homey);
 	}
 
 	async refreshHomeyAPI(id) {
@@ -1242,63 +1243,69 @@ class DeviceSetter extends Homey.App {
 			this.log('refreshHomeyAPI', id);
 			this.refreshDefer = new Defer();
 
-			// if(id!==null && this.homeyAPI) return this.homeyAPI;
-			// if (true || !id) {
-			this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
-			this.homeyAPI.then(x => this.homeyAPI = x);
-			await this.homeyAPI;
+			try {					
+				//this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // Refresh
+				
+				this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
+				this.homeyAPI.then(x => this.homeyAPI = x);
+				await this.homeyAPI;
 
-			////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
-			////this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
-			////this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
-
-
-			await this.refreshDevices();
-			await this.refreshZones();
-			await this.refreshApps();
-			await this.refreshDrivers();
+				////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
+				////this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
+				////this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
 
 
-			// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
-			// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
-			// console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
-			// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
+				await this.refreshDevices();
+				await this.refreshZones();
+				await this.refreshApps();
+				await this.refreshDrivers();
 
 
-			//// Does this help? Seems a little bit.
-			//await this.destroyAndRefreshHomeyAPI();
+				// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
+				// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
+				// console.log('Size of this.apps:', this.homey.app.roughSizeOfObject(this.apps) );
+				// console.log('Size of this.drivers:', this.homey.app.roughSizeOfObject(this.drivers) );
 
 
-			// this.homeyAPI.destroy();
-			// this.homeyAPI = null;
-			// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+				//// Does this help? Seems a little bit.
+				//await this.destroyAndRefreshHomeyAPI();
 
-			this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
-			this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));
-			this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x, 'update'));
-			this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x, 'create'));
-			this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x, 'delete'));
-			this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x, 'update'));
-			this.homeyAPI.apps.on('app.create', x => this.refreshApps(x, 'create'));
-			this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x, 'delete'));
-			this.homeyAPI.apps.on('app.update', x => this.refreshApps(x, 'update'));
-			this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
-			this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
-			this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
-			this.homeyAPI.flow.on('advancedflow.create', x => {
-				this.homey.api.realtime('createdadvancedflow', x);
-				let avdDriver = this.homey.drivers.getDriver('virtualdevice');
-				if (avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
-			});
 
-			this.refreshDefer.resolve(this.homeyAPI);
-			this.refreshDefer = null;
-			//this.log('App size: ', this.roughSizeOfObject(this));
-			return this.homeyAPI;
+				// this.homeyAPI.destroy();
+				// this.homeyAPI = null;
+				// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+
+				this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
+				this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));
+				this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x, 'update'));
+				this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x, 'create'));
+				this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x, 'delete'));
+				this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x, 'update'));
+				this.homeyAPI.apps.on('app.create', x => this.refreshApps(x, 'create'));
+				this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x, 'delete'));
+				this.homeyAPI.apps.on('app.update', x => this.refreshApps(x, 'update'));
+				this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
+				this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
+				this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
+				this.homeyAPI.flow.on('advancedflow.create', x => {
+					this.homey.api.realtime('createdadvancedflow', x);
+					let avdDriver = this.homey.drivers.getDriver('virtualdevice');
+					if (avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
+				});
+
+				this.refreshDefer.resolve(this.homeyAPI);
+				this.refreshDefer = null;
+				//this.log('App size: ', this.roughSizeOfObject(this));
+				return this.homeyAPI;
+			} catch (error) {
+				this.error(error);				
+				this.refreshDefer = null;
+			}
 		}
 		if (!this.apis) this.apis = {};
 		if (!this.apis[id]) {
 			this.log('refreshHomeyAPI id:', id);
+			//this.apis[id] = new HomeyAPIApp({homey:this.homey}); 
 			this.apis[id] = await HomeyAPI.forCurrentHomey(this.homey);
 		}
 		return this.apis[id];
