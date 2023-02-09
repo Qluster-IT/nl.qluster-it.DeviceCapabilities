@@ -1244,15 +1244,26 @@ class DeviceSetter extends Homey.App {
 			this.refreshDefer = new Defer();
 
 			try {					
-				//this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // Refresh
-				
+				//this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // SET THE CONNECTS
+				// SET THE CONNECTS
+				// SET THE CONNECTS
+				// SET THE CONNECTS
+
 				this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
 				this.homeyAPI.then(x => this.homeyAPI = x);
 				await this.homeyAPI;
 
+				// this.homeyAPI.devices.connect();
+				// this.homeyAPI.zones.connect();
+				// this.homeyAPI.apps.connect();
+				// this.homeyAPI.drivers.connect();
+				// this.homeyAPI.flow.connect();
+
 				////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
 				////this.homeyAPI.zones.on(['zone.create', 'zone.delete', 'zone.update'], x => { this.refreshZones(x); });
 				////this.homeyAPI.apps.on(['app.create', 'app.delete', 'app.update'], x => { this.refreshApps(x); });			
+
+				
 
 
 				await this.refreshDevices();
@@ -1275,18 +1286,23 @@ class DeviceSetter extends Homey.App {
 				// this.homeyAPI = null;
 				// this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
 
+				
 				this.homeyAPI.devices.on('device.create', x => this.refreshDevices(x, 'create'));
 				this.homeyAPI.devices.on('device.delete', x => this.refreshDevices(x, 'delete'));
 				this.homeyAPI.devices.on('device.update', x => this.refreshDevices(x, 'update'));
+				
 				this.homeyAPI.zones.on('zone.create', x => this.refreshZones(x, 'create'));
 				this.homeyAPI.zones.on('zone.delete', x => this.refreshZones(x, 'delete'));
 				this.homeyAPI.zones.on('zone.update', x => this.refreshZones(x, 'update'));
+				
 				this.homeyAPI.apps.on('app.create', x => this.refreshApps(x, 'create'));
 				this.homeyAPI.apps.on('app.delete', x => this.refreshApps(x, 'delete'));
 				this.homeyAPI.apps.on('app.update', x => this.refreshApps(x, 'update'));
+				
 				this.homeyAPI.drivers.on('driver.create', x => this.refreshDrivers(x, 'create'));
 				this.homeyAPI.drivers.on('driver.delete', x => this.refreshDrivers(x, 'delete'));
 				this.homeyAPI.drivers.on('driver.update', x => this.refreshDrivers(x, 'update'));
+				
 				this.homeyAPI.flow.on('advancedflow.create', x => {
 					this.homey.api.realtime('createdadvancedflow', x);
 					let avdDriver = this.homey.drivers.getDriver('virtualdevice');
