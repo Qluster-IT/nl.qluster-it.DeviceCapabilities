@@ -64,7 +64,14 @@
 		"selectFlowAndPressCreate":"Wählen Sie einen Flow und drücken Sie Erstellen",
 		"pasteTEFReadFlows":"The Exchanger File einfügen und Flows einlesen drücken",		
 		"no_avd_in_tef":"TEF enthält kein AVD.",
-		"flows_will_be_created":"Die folgenden Flows werden in dem Skript erstellt.",
+		"flows_will_be_created":"Die folgenden Flows werden in dem Skript erstellt.",		
+
+		
+		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
+		"back":"Back",
+		"use_this_template":"Use this template",
+		"":"",
+		"":"",
 		"":""
     },
 	"virtualdevicesettings":{
@@ -177,7 +184,34 @@
 
 			"set_name":"Hier können Sie den Namen für das Gerät festlegen:",
 			"create_device_self":"Oder ein Gerät selber erstellen",
-			"choose_template":"Oder eine Vorlage auswählen"
+			"choose_template":"Oder eine Vorlage auswählen",
+			
+			"create_avd_by":"Create an Advanced Virtual Device by",
+			"creating_empty_avd":"Creating an empty AVD",
+			"selecting_template":"Selecting from a Template",
+			"importing_tef":"Importing a TEF",
+			"empty":"Empty?",
+			"when_creating_empty_avd":"When you create a new empty AVD, you will be able to enter a name and either upload an icon or select one from a long list of default icons.",
+			"both_alter":"Both the name and icon can be alter after the AVD has been created.",
+			"no_fields":"When the AVD is created, it will not contain any fields or properties yet.",
+			"modify_repair":"To start modifying the newly created AVD, go to device repair.",
+			"configure_avd":"There you can alter the AVD by adding fields and configuring them, just the way you want!",
+			"goto_avd_topic":"Go to the AVD Forum Topic",
+			"what_is_a_template":"What is a Template?",
+			"templates_are_posts":"Templates are posts on the Athom Community Forum, on specific topics, that contain TEFs and are accompanied by descriptions, examples and/or images.",
+			"basicly_topics":"Basicly, there are two kind of topics:The Flow Exchange(r) topics, which contains templates with only flows, and Share Your Device topics, which contains templates with an AVD and optionally may contain flows.",
+			"template_avd_source":"Templates you can select during the creation of a new AVD always come from the Share Your Device topics and will contain at least one AVD.",
+			"templates_multiple":"Templates, however, can contain multiple AVDs and flows.",
+			"goto_syd_topic":"Go to the Share Your Device Forum Topic",
+			"note_templates_flows_settings":"Note: If you want to see the Templates that only contains flows, go to the App Settings.",
+			"what_is_a_tef":"What is a TEF?",
+			"TEF_contains_AVD_flows":"A TEF, or The Exchanger File, is a text-string, or textfile, containing an AVD, Flows or both.",
+			"example_tef":"Here is an example of a TEF containing both an AVD and a flow.",
+			"tef_contains_avd":"A TEF that contains an AVD, can be used to create that AVD.",
+			"tef_contains_icons":"The TEF (may) contain the device icon and also the field icons.",
+			"tef_flows_screen":"After creation of an AVD from an TEF, if the TEF also contains (a) flow(s), an importscreen will be shown, in which you can set your own devices, zones, variables, etc. for use within that flow. You than can generate a script to be executed in the API Playground, that will create that flow based on your own configuration, devices, etc.",
+			"note_tef_flows_settings":"Note: If you want to import a TEF that only contains flows, go to the App Settings.",
+			"import_tef_template_settings":"If you want to import a TEF or see Templates that only contain flows, go to the App Settings."
 		},
 
 		"done":{
