@@ -569,7 +569,8 @@ class DeviceSetter extends Homey.App {
 			try {
 				let filter = args.filter;
 				if(filter && ((filter.startsWith('{') && filter.endsWith('}')) || (filter.startsWith('[') && filter.endsWith(']')))) filter = JSON.parse(filter);
-				return {flows:JSON.stringify(await FindObject(args.objecttype, filter, this.homeyAPI))};
+				var api = await this.refreshHomeyAPI();
+				return {flows:JSON.stringify(await FindObject(args.objecttype, filter, api))};
 			} catch (error) {
 				this.log('action_app_get_flows_containing:');
 				this.error(error);
