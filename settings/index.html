@@ -117,8 +117,9 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						</div>
 						<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
 							<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
-							<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-								<option value="" data-i18n="settings.dontChange">Don't change</option>
+							<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length" required>
+								<option value="" ng-if="!device.replaceWithId"></option>
+								<option value="--[NULL]--" data-i18n="settings.dontChange">Don't change</option>
 								<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 							</select>
 							<div class="field" ng-repeat="item  in device.tags">
@@ -798,11 +799,9 @@ ${vars.textSettings}
 					$scope.vars.readflow.apiCommand = '';
 					$scope.vars.scriptCopied = false;
 					if (!item) return;
-					// if (item.replaceWithId === -1) {
-					// 	item.replaceWith = { id: -1, name: item.name };
-					// }
-					//else 
-					if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+					if(item.replaceWithId=='--[NULL]--') item.replaceWith = null;
+					else if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+					else item.replaceWith = null;
 				}
 
 				$scope.getFunctionFromSettings = function () {
