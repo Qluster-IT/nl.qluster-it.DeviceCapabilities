@@ -65,8 +65,15 @@ class DeviceSetter extends Homey.App {
 
 		//return null;
 
-		if (process.env.DEBUG === '1' && this.homey.platform=='local' && this.homey.platformVersion==1) require('inspector').open(9219, '0.0.0.0', true);
-		//require('inspector').open(9222, '0.0.0.0', process.env.DEBUG === '1');
+		// if (process.env.DEBUG === '1' && this.homey.platform=='local' && this.homey.platformVersion==1) require('inspector').open(9219, '0.0.0.0', true);
+		if (process.env.DEBUG === '1'){
+			try{ 
+				require('inspector').waitForDebugger();
+			}
+			catch(error){
+				require('inspector').open(9219, '0.0.0.0', true);
+			}
+		}
 
         this.appPath = this.homey.platform=='local' && this.homey.platformVersion==1 ? '/' : '/app/';
 		

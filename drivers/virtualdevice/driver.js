@@ -109,7 +109,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 
             }
         }
-        await this.sleep(1000);
+        //await this.sleep(1000);
         // let filesandfolders1 = await app.readdir('/');
         // let filesandfoldersApp = await app.readdir('/app');
 
@@ -148,6 +148,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         
         ///  Load all default icons into a array
+        //this.log('this.defaultIcons', this.defaultIcons);
         if(!this.defaultIcons ) {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
         //let filesandfolders1 = await app.readdir(defaultPath);

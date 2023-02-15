@@ -36,7 +36,7 @@
 			"name": "Attach to Homey",
 			"type": "node",
 			"request": "attach",
-			"address": "192.168.1.98",
+			"address": "192.168.1.17",
 			"port": 9222,
 			"localRoot": "${workspaceFolder}",
 			"remoteRoot": "/"
@@ -55,15 +55,16 @@
 				"action": "startDebugging",
 				"name": "Attach to Homey"
 			},
-			"localRoot": "${workspaceFolder}",
-			"remoteRoot": "/app/"
+			//"localRoot": "${workspaceFolder}",
+			//"localRoot": "D:/Qlustrator/Local Visual Code/nl.qluster-it.DeviceCapabilities",
+			//"remoteRoot": "/app/"
 		},
 		{
 			"name": "Attach to Homey Pro Early 2023",
 			"type": "node",
 			"request": "attach",
-			//"address": "192.168.1.239",
-			"port": 9229,
+			"address": "192.168.1.239",
+			"port": 9219,
 			"localRoot": "${workspaceFolder}",
 			"remoteRoot": "/app/"
 		}
