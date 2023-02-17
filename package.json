@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "homey-api": "^3.0.0-rc.7",
+    "homey-api": "^1.10.18",
     "lodash-core": "^4.17.19"
   },
   "devDependencies": {},

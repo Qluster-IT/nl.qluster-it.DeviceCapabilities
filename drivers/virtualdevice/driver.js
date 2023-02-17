@@ -1056,8 +1056,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
         allVariables = !reload && allVariables ? allVariables : _.mapValues(await api.logic.getVariables(), ({name, type})=>{ return {name, type}; });
         allAdvancedFlows = (!reload || reloadAf===false) && allAdvancedFlows ? allAdvancedFlows : await this.loadAdvancedFlows();
-        if(false) {
-            this.log(JSON.stringify(await api.flowtoken.getFlowTokens()));
+        if(true) {
+            //this.log(JSON.stringify(await api.flowtoken.getFlowTokens()));
             if(this.apiV3()) 
                 allTokens = !reload && allTokens ? allTokens : _.map(await api.flowtoken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
             else 

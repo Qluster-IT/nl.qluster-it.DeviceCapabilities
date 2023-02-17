@@ -523,5 +523,8 @@
   },
   "2.9.15": {
     "en": "Bugfixed: Icons."
+  },
+  "2.9.16": {
+    "en": "Bugfixed: Back to the old homey-api."
   }
 }

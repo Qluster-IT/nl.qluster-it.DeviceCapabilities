@@ -2,7 +2,8 @@
 const crypto = require("crypto");
 
 const Homey = require('homey');
-const { HomeyAPI } = require('homey-api');
+//const { HomeyAPI } = require('homey-api');
+const { HomeyAPIApp } = require('homey-api');
 //const { HomeyAPI } = require('athom-api');
 const _ = require('lodash-core');
 
@@ -899,7 +900,11 @@ class DeviceSetter extends Homey.App {
 		//var devices = null;
 		_.each(hm.Tracking.devices, async device => {
 			if (!device.device) {
-				this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
+				try {					
+					this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
+				} catch (error) {
+					return;
+				}
 				device.device = this.devices[device.id];
 			}
 			//let realDevice;
@@ -1242,9 +1247,12 @@ class DeviceSetter extends Homey.App {
 		//this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
 		//this.homeyAPI = new HomeyAPI(this.homey);
 
-		this.homeyAPI = await HomeyAPI.createAppAPI({
-			homey: this.homey,
-		  });
+		
+		this.homeyAPI = new HomeyAPIApp({homey:this.homey});
+
+		// this.homeyAPI = await HomeyAPI.createAppAPI({
+		// 	homey: this.homey,
+		//   });
 	}
 
 	async refreshHomeyAPI(id) {
@@ -1258,18 +1266,19 @@ class DeviceSetter extends Homey.App {
 			this.refreshDefer = new Defer();
 
 			try {					
-				//this.homeyAPI = new HomeyAPI({homey:this.homey}); // SET THE CONNECTS
-				this.homeyAPI = HomeyAPI.createAppAPI({
-					homey: this.homey,
-				  });
-				this.homeyAPI.then(x => this.homeyAPI = x);
-				await this.homeyAPI;
+				this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // SET THE CONNECTS
+				
+				// this.homeyAPI = HomeyAPI.createAppAPI({
+				// 	homey: this.homey,
+				//   });
+				// this.homeyAPI.then(x => this.homeyAPI = x);
+				// await this.homeyAPI;
 
-				this.homeyAPI.devices.connect();
-				this.homeyAPI.zones.connect();
-				this.homeyAPI.apps.connect();
-				this.homeyAPI.drivers.connect();
-				this.homeyAPI.flow.connect();
+				// this.homeyAPI.devices.connect();
+				// this.homeyAPI.zones.connect();
+				// this.homeyAPI.apps.connect();
+				// this.homeyAPI.drivers.connect();
+				// this.homeyAPI.flow.connect();
 
 				// SET THE CONNECTS
 				// SET THE CONNECTS
@@ -1343,10 +1352,11 @@ class DeviceSetter extends Homey.App {
 		if (!this.apis) this.apis = {};
 		if (!this.apis[id]) {
 			this.log('refreshHomeyAPI id:', id);
-			//this.apis[id] = new HomeyAPIApp({homey:this.homey}); 
-			this.homeyAPI = await HomeyAPI.createAppAPI({
-				homey: this.homey,
-			  });
+			this.apis[id] = new HomeyAPIApp({homey:this.homey}); 
+			
+			// this.apis[id] = await HomeyAPI.createAppAPI({
+			// 	homey: this.homey,
+			//   });
 			// this.apis[id] = await HomeyAPI.forCurrentHomey(this.homey);
 		}
 		return this.apis[id];
