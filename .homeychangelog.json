@@ -514,5 +514,8 @@
   },
   "2.9.12": {
     "en": "Improved: Translations and further HP2023 support (TEF)."
+  },
+  "2.9.13": {
+    "en": "Changed: Get Flows returns an array instead of object (for use with npm's jsonpath)."
   }
 }
