@@ -395,7 +395,6 @@ str+=`"devicecapabilities_picker-up-idle-down_list": {
     "title": {
       "en": "Schedule, Until, Manual, Off Until, Off"
     },
-    "type": "enum",
     "values": [
       {
         "id": "smartschedule",
@@ -438,6 +437,7 @@ str+=`"devicecapabilities_picker-up-idle-down_list": {
         }
       }
     ],
+    "type": "enum",
     "getable": true,
     "setable": true,
     "uiComponent": "picker"
