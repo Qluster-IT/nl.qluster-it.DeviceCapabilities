@@ -154,7 +154,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //let filesandfolders1 = await app.readdir(defaultPath);
     
             //save all files from compressed icon files first
-            let zippedIcons = await app.readFile(this.homey.app.appPath+ 'assets/icons.zipped');
+            let zippedIcons;
+            try {
+                zippedIcons = await app.readFile(this.homey.app.appPath+ 'assets/icons.zipped');    
+            } catch (error) {
+                zippedIcons = await app.readFile('./assets/icons.zipped');
+            }
+            
             let compressedIcons = (await ungzip(zippedIcons)).toString('utf8');
             let icons = compressedIcons.split('\r\n\r\n');
             icons.pop();

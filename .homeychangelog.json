@@ -520,5 +520,8 @@
   },
   "2.9.14": {
     "en": "Added: Picker: Auto, Low, Medium, High, Turbo."
+  },
+  "2.9.15": {
+    "en": "Bugfixed: Icons."
   }
 }
