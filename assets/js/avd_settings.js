@@ -666,6 +666,12 @@ const asv_settings = {
       "order": 1
     },
     {
+      "id": "devicecapabilities_picker-auto-low-medium-high-turbo_list",
+      "label": "Auto, Low, Medium, High, Turbo",
+      "showAs":'picker',
+      "order": 1
+    },
+    {
       "id": "devicecapabilities_picker-EVCC_list",
       "label": "EVCC.io",
       "showAs":'picker',

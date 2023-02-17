@@ -517,5 +517,8 @@
   },
   "2.9.13": {
     "en": "Changed: Get Flows returns an array instead of object (for use with npm's jsonpath)."
+  },
+  "2.9.14": {
+    "en": "Added: Picker: Auto, Low, Medium, High, Turbo."
   }
 }

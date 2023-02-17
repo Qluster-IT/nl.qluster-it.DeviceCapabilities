@@ -495,6 +495,62 @@ str+=`"devicecapabilities_picker-up-idle-down_list": {
 
 
 
+  str+=`"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, Low, Medium, High, Turbo",        
+        "nl": "Auto, Laag, Medium, Hoog, Turbo",        
+        "de": "Auto, Niedrig, Mittel, Hoch, Turbo"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Auto",
+            "de": "Auto"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Laag",
+            "de": "Niedrig"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Medium",
+            "de": "Mittel"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Hoog",
+            "de": "Hoch"
+          }
+        },
+        {
+          "id": "turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo",
+            "de": "Turbo"
+          }
+        }
+      ]
+    },`;
+
+
+
 
 
 
