@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.9.16",
+  "version": "2.9.17",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -15992,6 +15992,43 @@
             "en": "Turbo",
             "nl": "Turbo",
             "de": "Turbo"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-automatic-on-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, On, Off",
+        "nl": "Auto, Aan, Uit",
+        "de": "Auto, Eingeschaltet, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "Automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "On",
+          "title": {
+            "en": "On",
+            "nl": "Aan",
+            "de": "Eingeschaltet"
+          }
+        },
+        {
+          "id": "Off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
           }
         }
       ]

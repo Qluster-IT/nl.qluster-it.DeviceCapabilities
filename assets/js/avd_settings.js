@@ -666,6 +666,12 @@ const asv_settings = {
       "order": 1
     },
     {
+      "id": "devicecapabilities_picker-automatic-on-off_list",
+      "label": "Auto, On, Off",
+      "showAs":'picker',
+      "order": 1
+    },
+    {
       "id": "devicecapabilities_picker-auto-low-medium-high-turbo_list",
       "label": "Auto, Low, Medium, High, Turbo",
       "showAs":'picker',

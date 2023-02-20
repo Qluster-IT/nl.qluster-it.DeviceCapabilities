@@ -526,5 +526,8 @@
   },
   "2.9.16": {
     "en": "Bugfixed: Back to the old homey-api."
+  },
+  "2.9.17": {
+    "en": "Added: Picker: Automatic, On, Off."
   }
 }
