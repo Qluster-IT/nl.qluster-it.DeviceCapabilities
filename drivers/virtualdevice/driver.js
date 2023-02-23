@@ -1059,9 +1059,9 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         if(true) {
             //this.log(JSON.stringify(await api.flowtoken.getFlowTokens()));
             if(this.getAPIV3()) 
-                allTokens = !reload && allTokens ? allTokens : _.map(await api.flowtoken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
+                allTokens = !reload && allTokens ? allTokens : _.map(await (api.flowtoken||api.flowToken).getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
             else 
-                allTokens = !reload && allTokens ? allTokens : _.map(await api.flowToken.getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
+                allTokens = !reload && allTokens ? allTokens : _.map(await (api.flowtoken||api.flowToken).getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
         }
         
         actionCards = !reload && actionCards ? actionCards : _.map(await api.flow.getFlowCardActions(), ({uri, id})=>{ return {uri, id}; });

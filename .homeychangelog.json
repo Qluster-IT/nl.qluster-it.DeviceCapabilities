@@ -538,5 +538,8 @@
   },
   "2.9.20": {
     "en": "Bugfixed: Autocomplete Apps showed empty lists."
+  },
+  "2.9.21": {
+    "en": "Bugfixed: Resolved issues with TEFs not loading at all."
   }
 }
