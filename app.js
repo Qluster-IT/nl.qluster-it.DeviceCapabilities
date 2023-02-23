@@ -3,8 +3,8 @@ const crypto = require("crypto");
 
 const Homey = require('homey');
 //const { HomeyAPI } = require('homey-api');
-const { HomeyAPIApp } = require('homey-api');
-//const { HomeyAPI } = require('athom-api');
+//const { HomeyAPIApp } = require('homey-api');
+const { HomeyAPI } = require('athom-api');
 const _ = require('lodash-core');
 
 const { Defer } = require('./lib/proto');
@@ -1246,11 +1246,11 @@ class DeviceSetter extends Homey.App {
 	async destroyAndRefreshHomeyAPI() {
 		this.homeyAPI.destroy();
 		this.homeyAPI = null;
-		//this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
 		//this.homeyAPI = new HomeyAPI(this.homey);
 
 		
-		this.homeyAPI = new HomeyAPIApp({homey:this.homey});
+		//this.homeyAPI = new HomeyAPIApp({homey:this.homey});
 
 		// this.homeyAPI = await HomeyAPI.createAppAPI({
 		// 	homey: this.homey,
@@ -1268,13 +1268,15 @@ class DeviceSetter extends Homey.App {
 			this.refreshDefer = new Defer();
 
 			try {					
-				this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // SET THE CONNECTS
+				//this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // SET THE CONNECTS
 				
 				// this.homeyAPI = HomeyAPI.createAppAPI({
 				// 	homey: this.homey,
 				//   });
 				// this.homeyAPI.then(x => this.homeyAPI = x);
 				// await this.homeyAPI;
+
+				
 
 				// this.homeyAPI.devices.connect();
 				// this.homeyAPI.zones.connect();
@@ -1286,9 +1288,9 @@ class DeviceSetter extends Homey.App {
 				// SET THE CONNECTS
 				// SET THE CONNECTS
 
-				// this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
-				// this.homeyAPI.then(x => this.homeyAPI = x);
-				// await this.homeyAPI;
+				this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
+				this.homeyAPI.then(x => this.homeyAPI = x);
+				await this.homeyAPI;
 
 
 				////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });

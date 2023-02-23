@@ -541,5 +541,8 @@
   },
   "2.9.21": {
     "en": "Bugfixed: Resolved issues with TEFs not loading at all."
+  },
+  "2.9.22": {
+    "en": "Bugfixed (everything works again): Back to Athom-api to resolve the issues of Homey-api."
   }
 }

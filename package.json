@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "homey-api": "^1.10.18",
+    "athom-api": "^3.8.2",
     "lodash-core": "^4.17.19"
   },
   "devDependencies": {},
