@@ -529,5 +529,14 @@
   },
   "2.9.17": {
     "en": "Added: Picker: Automatic, On, Off."
+  },
+  "2.9.18": {
+    "en": "Bugfixed: AVD."
+  },
+  "2.9.19": {
+    "en": "Bugfixed: Autocomplete Devices showed empty lists."
+  },
+  "2.9.20": {
+    "en": "Bugfixed: Autocomplete Apps showed empty lists."
   }
 }

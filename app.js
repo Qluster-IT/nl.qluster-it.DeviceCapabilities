@@ -67,14 +67,14 @@ class DeviceSetter extends Homey.App {
 		//return null;
 
 		// if (process.env.DEBUG === '1' && this.homey.platform=='local' && this.homey.platformVersion==1) require('inspector').open(9219, '0.0.0.0', true);
-		if (process.env.DEBUG === '1'){
-			try{ 
-				require('inspector').waitForDebugger();
+		if (process.env.DEBUG === '1' || false) {
+			try {
+			  require('inspector').waitForDebugger();
 			}
-			catch(error){
-				require('inspector').open(9219, '0.0.0.0', true);
+			catch (error) {
+			  require('inspector').open(9219, '0.0.0.0', true);
 			}
-		}
+		  } 
 
         this.appPath = this.homey.platform=='local' && this.homey.platformVersion==1 ? '/' : '/app/';
 		
@@ -1151,16 +1151,17 @@ class DeviceSetter extends Homey.App {
 	}
 
 	autocompleteDevice({ api, app, insights } = {}) {
+		
 		return (async (query, args, a, b, c,) => {
 			query = query.toLowerCase();
 			var queries = query.split(' ');
 			//var defer = new Defer(10000);
-
+			let api = await this.refreshHomeyAPI();
 			var devices = this.devices;
 			var list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
 			if (app) list = _.filter(list, device => device.driverUri == app);
 			if (insights) {
-				var logs = _.map(_.uniqBy(_.filter(await (await this.refreshHomeyAPI()).insights.getLogs(), l => l.uriObj.type == 'manager'), 'uri'), l => { return { uri: l.uri, uriName: 'Manager - ' + l.uriObj.name }; });
+				var logs = _.map(_.uniqBy(_.filter(await (api).insights.getLogs(), l => l.uriObj.type == 'manager'), 'uri'), l => { return { uri: l.uri, uriName: 'Manager - ' + l.uriObj.name }; });
 				_.each(logs, l => list.push({ id: l.uri, name: l.uriName }));
 			}
 			if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
@@ -1198,18 +1199,19 @@ class DeviceSetter extends Homey.App {
 		}).bind(this);
 	}
 	autocompleteApp({ api } = {}) {
-		return ((query, args) => {
+		return (async (query, args) => {
 			query = query.toLowerCase();
 			var queries = query.split(' ');
-			var defer = new Defer(10000);
-
+			//var defer = new Defer(10000);
+			let api = await this.refreshHomeyAPI();
 			var apps = this.apps;
 			var list = _.filter(apps, app => _.every(queries, q => app.name.toLowerCase().indexOf(q) > -1));
 			list = _.orderBy(list, 'name');
 			var array = _.map(list, app => { return { id: app.id, name: app.name }; });
-			defer.resolve(array);
+			return array;
+			//defer.resolve(array);
 
-			return defer.promise;
+			//return defer.promise;
 		}).bind(this);
 	}
 	autocompleteDeviceType({ api } = {}) {
