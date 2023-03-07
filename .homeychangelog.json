@@ -544,5 +544,8 @@
   },
   "2.9.22": {
     "en": "Bugfixed (everything works again): Back to Athom-api to resolve the issues of Homey-api."
+  },
+  "2.9.23": {
+    "en": "Added: 2 Pickers: Heating, Cooling, Off and Automatic, Electricity, Gas, Off. Also, one breaking change for picker Auto, On, Off: The values are now all lowercase."
   }
 }

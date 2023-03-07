@@ -563,7 +563,7 @@ str += `"devicecapabilities_picker-automatic-on-off_list": {
       },
       "values": [
         {
-        "id": "Automatic",
+        "id": "automatic",
         "title": {
         "en": "Automatic",
         "nl": "Automatisch",
@@ -571,7 +571,7 @@ str += `"devicecapabilities_picker-automatic-on-off_list": {
         }
         },
         {
-        "id": "On",
+        "id": "on",
         "title": {
         "en": "On",
         "nl": "Aan",
@@ -579,7 +579,7 @@ str += `"devicecapabilities_picker-automatic-on-off_list": {
         }
         },
         {
-        "id": "Off",
+        "id": "off",
         "title": {
         "en": "Off",
         "nl": "Uit",
@@ -587,6 +587,91 @@ str += `"devicecapabilities_picker-automatic-on-off_list": {
         }
         }
         ]
+    },`;
+
+
+str += `"devicecapabilities_picker-heating-cooling-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Heating, Cooling, Off",
+        "nl": "Verwarmen, Koelen, Uit",
+        "de": "Heizen, Kuehlen, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "heating",
+          "title": {
+            "en": "Heating",
+            "nl": "Verwarmen",
+            "de": "Heizen"
+          }
+        },
+        {
+          "id": "cooling",
+          "title": {
+            "en": "Cooling",
+            "nl": "Koelen",
+            "de": "Kuehlen"
+          }
+        },      
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
+    },`;
+
+    str += `"devicecapabilities_picker-automatic-electricity-gas-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Electricity, Gas, Off",
+        "nl": "Automatisch, Electrisch, Gas, Uit",
+        "de": "Automatisch, Elektrisch, Gas, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "electricity",
+          "title": {
+            "en": "Electric",
+            "nl": "Electrisch",
+            "de": "Elektrisch"
+          }
+        },      
+        {
+          "id": "gas",
+          "title": {
+            "en": "Natural Gas",
+            "nl": "Aardgas",
+            "de": "Erdgas"
+          }
+        },        
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
     },`;
 
 

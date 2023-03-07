@@ -672,6 +672,18 @@ const asv_settings = {
       "order": 1
     },
     {
+      "id": "devicecapabilities_picker-heating-cooling-off_list",
+      "label": "Heating, Cooling, Off",
+      "showAs":'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-automatic-electricity-gas-off_list",
+      "label": "Automatic, Electricity, Gas, Off",
+      "showAs":'picker',
+      "order": 1
+    },
+    {
       "id": "devicecapabilities_picker-auto-low-medium-high-turbo_list",
       "label": "Auto, Low, Medium, High, Turbo",
       "showAs":'picker',
@@ -2226,7 +2238,7 @@ const asv_settings = {
     
 };
 
-let arr = ['booleanShowAs', 'buttonShowAs1', 'buttonShowAsRest', 'numberShowAs', 'textShowAs', 'listShowAs'];
+let arr = ['booleanShowAs', 'buttonShowAs1', 'buttonShowAsRest', 'numberShowAs', 'textShowAs', 'listShowAs', 'deviceClasses', 'listPrefixedLists'];
 for (let i = 0; i < arr.length; i++)     
     asv_settings[arr[i]] = _.sortBy(asv_settings[arr[i]], function(x){ return x.order + x.label;});
     
