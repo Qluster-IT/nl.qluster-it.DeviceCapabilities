@@ -412,5 +412,143 @@
   },
   "2.7.22": {
     "en": "Added: Picker: Schedule, Until, Manual, Off Until, Off."
+  },
+  "2.7.23": {
+    "en": "Added: App icons and icons from the Virtual Devices App."
+  },
+  "2.7.24": {
+    "en": "Improved: The Flow Exchange(r)."
+  },
+  "2.7.25": {
+    "en": "Improved: The Flow Exchange(r) and added support for BetterLogic and Countdown."
+  },
+  "2.7.26": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
+  },
+  "2.7.27": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
+  },
+  "2.7.28": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
+  },
+  "2.8.0": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
+  },
+  "2.8.1": {
+    "en": "Improved: TEFs will have colors on the Community Forum (any topics) :) ."
+  },
+  "2.8.2": {
+    "en": "Improved: Remove device icon after removal."
+  },
+  "2.8.3": {
+    "en": "Added: Duration and ChangedOn tags to Retrieve Insights flowcard."
+  },
+  "2.8.4": {
+    "en": "Added: Some error logging."
+  },
+  "2.8.5": {
+    "en": "Added: The in total 2016(!) Font Awesome icons (Regular, Solid and Brands) to the default icon set."
+  },
+  "2.8.6": {
+    "en": "Bugfixing: Watch not loading autocomplete/list."
+  },
+  "2.8.7": {
+    "en": "Added: DeviceName and DeviceID tags to the Watch cards."
+  },
+  "2.8.8": {
+    "en": "Changed: The automaticly generated Store Urls for Used apps in topic posts are now international."
+  },
+  "2.8.9": {
+    "en": "Added: Filter the default icons (wait till the are all loaded!)."
+  },
+  "2.8.10": {
+    "en": "Added: Filter the default icons (wait till the are all loaded!), debounce added."
+  },
+  "2.8.11": {
+    "en": "Bugfixed: Negative duration in Retrieve insights card for number-insights."
+  },
+  "2.8.12": {
+    "en": "Bugfixed: Insight for 0 minutes duration was not updated correctly."
+  },
+  "2.8.13": {
+    "en": "Bugfixed: Resolved various reported bugs."
+  },
+  "2.8.14": {
+    "en": "Bugfixed: Importing TEF's with Chronograph."
+  },
+  "2.9.0": {
+    "en": "Added: API call to change value from AVDs through HS/Api: await dcApp.apiPost('setvalue', {device:'Day-number', field:'number1', value:20})."
+  },
+  "2.9.1": {
+    "en": "Added: Picker: EVCC.io."
+  },
+  "2.9.2": {
+    "en": "Fixed: Values for Picker: EVCC.io."
+  },
+  "2.9.3": {
+    "en": "Fixed: Solar Value for Picker: EVCC.io."
+  },
+  "2.9.4": {
+    "en": "Resolved: Loading Templates from Forum made the App hang and crash. Also resolved Settings/Repair layout issues."
+  },
+  "2.9.5": {
+    "en": "Bugfixed: Create new AVD wouldn't save fields sometimes."
+  },
+  "2.9.6": {
+    "en": "Bugfixed: 2.9.5 had a new bug that would not save icons."
+  },
+  "2.9.7": {
+    "en": "Improved: Creation AVD UI."
+  },
+  "2.9.8": {
+    "en": "Improved: Creation AVD UI."
+  },
+  "2.9.9": {
+    "en": "Improved: Creation of an AVD UI."
+  },
+  "2.9.10": {
+    "en": "Improved: Creation of an AVD UI."
+  },
+  "2.9.11": {
+    "en": "Improved: Creation of an AVD UI."
+  },
+  "2.9.12": {
+    "en": "Improved: Translations and further HP2023 support (TEF)."
+  },
+  "2.9.13": {
+    "en": "Changed: Get Flows returns an array instead of object (for use with npm's jsonpath)."
+  },
+  "2.9.14": {
+    "en": "Added: Picker: Auto, Low, Medium, High, Turbo."
+  },
+  "2.9.15": {
+    "en": "Bugfixed: Icons."
+  },
+  "2.9.16": {
+    "en": "Bugfixed: Back to the old homey-api."
+  },
+  "2.9.17": {
+    "en": "Added: Picker: Automatic, On, Off."
+  },
+  "2.9.18": {
+    "en": "Bugfixed: AVD."
+  },
+  "2.9.19": {
+    "en": "Bugfixed: Autocomplete Devices showed empty lists."
+  },
+  "2.9.20": {
+    "en": "Bugfixed: Autocomplete Apps showed empty lists."
+  },
+  "2.9.21": {
+    "en": "Bugfixed: Resolved issues with TEFs not loading at all."
+  },
+  "2.9.22": {
+    "en": "Bugfixed (everything works again): Back to Athom-api to resolve the issues of Homey-api."
+  },
+  "2.9.23": {
+    "en": "Added: 2 Pickers: Heating, Cooling, Off and Automatic, Electricity, Gas, Off. Also, one breaking change for picker Auto, On, Off: The values are now all lowercase."
+  },
+  "2.9.24": {
+    "en": "Improved: Updated, added and removed a (text-)tag(s) on the retrieve insights flowcard and some bugfixes for HP2023."
   }
 }

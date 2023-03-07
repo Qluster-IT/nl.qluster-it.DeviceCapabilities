@@ -30,8 +30,8 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
 			<form id="theflowexchanger" name="theflowexchanger">
 				<div class="field text-center">
-					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
-					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false;"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerexport'}" ng-click="view.subid='theflowexchangerexport'; loadStuff();"><i class="fa fa-icon fa-file-export"></i> <span data-i18n="settings.export">Export</span></h2>
+					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangerimport'}" ng-click="view.subid='theflowexchangerimport';vars.imported=false; loadStuff();"><i class="fa fa-icon fa-file-import"></i> <span data-i18n="settings.import">Import</span></h2>
 					<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 				</div>
 				<div class="field" ng-show="!view.subid">
@@ -117,8 +117,9 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 						</div>
 						<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
 							<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
-							<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-								<option value="" data-i18n="settings.dontChange">Don't change</option>
+							<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length" required>
+								<option value="" ng-if="!device.replaceWithId"></option>
+								<option value="--[NULL]--" data-i18n="settings.dontChange">Don't change</option>
 								<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 							</select>
 							<div class="field" ng-repeat="item  in device.tags">
@@ -186,15 +187,17 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 										<input type="text" ng-model="item.replaceWith.newName">
 									</div>
 								</div>
-								<div class="field" ng-repeat="item  in app.types">
-									<div class="label">{{item.name}}</div>
-									<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-										<option value="" data-i18n="settings.dontChange">Don't change</option>
-										<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-											{{replacement.name}}</option>
-									</select>
-									<div class="field" ng-if="item.replaceWithId===-1">
-										<input type="text" ng-model="item.replaceWith.newName">
+								<div class="field" ng-repeat="type  in app.types">
+									<div class="field" ng-repeat="item  in type">
+										<div class="label">{{item.name}}</div>
+										<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+											<option value="" data-i18n="settings.dontChange">Don't change</option>
+											<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+												{{replacement.name}}</option>
+										</select>
+										<div class="field" ng-if="item.replaceWithId===-1">
+											<input type="text" ng-model="item.replaceWith.newName">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -228,7 +231,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 
 					<div class="name">{{device.name}}</div>
 					<div ng-if="device.icon.substr(8).startsWith('/userdata/virtualdeviceicons/')">
-						<div class="image" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
+						<div class="image" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities' + device.icon.substr(8) + '?' + stamp + ')'}">
 						</div>
 						<div class="buttons">
 							<button class="edit" ng-click="setEditDeviceIcon(device);" ng-if="device.icon"><i class="fa fa-upload"></i></button>
@@ -257,11 +260,11 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				can be seen back at the bottom of the Device Settings.</div>
 
 			<div>
-				<div ng-repeat="category in customicons" style="margin-top:30px;">
+				<div class="category" ng-repeat="category in customicons" style="margin-top:30px;">
 					<h1 class="name">{{category.title}}</h1>
 					<ul id="customicons">
 						<li class="customicon" ng-repeat="customicon in category.icons">
-							<div class="image" ng-if="$index<customIconLoadIndex" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
+							<div class="image" ng-if="$index<customIconLoadIndex" ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/customicons/' + customicon.file + '.svg?'+ stamp + ')'}">
 							</div>
 							<div>
 								<div ng-show="!customicon.updating" class="name">
@@ -343,34 +346,6 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				<button class="button" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
 			</div>
 		</div>
-
-
-
-
-		<!-- <p ng-show="icons.length < 1">
-			<span data-i18n="settings.no_icons"></span>
-		</p>
-
-		<h1 data-i18n="settings.title_icons"></h1>
-
-		<ul id="icons">
-			<li class="icon" ng-repeat="icon in icons">
-				<div class="image"
-					ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities' + icon.path.substr(1) + ')'}">
-				</div>
-				<div ng-show="!icon.updating" class="name" ng-dblclick="icon.updating = true;">{{icon.name}}</div>
-				<input ng-show="icon.updating" class="name" type="text" ng-model="icon.name"
-					ng-enter="updateIcon(icon)" />
-
-				<div class="buttons">
-					<button class="remove" ng-click="deleteIcon(icon)"><i class="fa fa-trash"></i></button>
-				</div>
-
-			</li>
-		</ul>
-
-		<h1 data-i18n="settings.title_upload">Upload a .svg</h1>
-		<input type="file" id="files" name="files[]" multiple /> -->
 	</div>
 
 	<div id="editdevice" ng-show="editdeviceicon">
@@ -394,13 +369,14 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 
 	<div id="defaultIcons" ng-show="setCustomIcon || setDeviceIcon">
 		<div class="panel">
+			<div class="inline-block" style="width:100%;"><input type="text" ng-model="vars.filter.defaultIcon" ng-model-options="{ debounce: 300 }" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
 			<div ng-repeat="category in defaultIcons">
 				<div ng-if="$index<=defaultCategoryLoadIndex">
 					<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
 						{{category.title}}</h1>
-					<div class="default-icon" ng-repeat="defaulticon in category.icons | orderBy:'title'">
+					<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
 						<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setFromDefaultIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
-							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + defaulticon + ')'}">
+							ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/defaulticons/' + defaulticon + ')'}">
 						</div>
 					</div>
 				</div>
@@ -487,7 +463,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
-					, filter: { flow: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
+					, filter: { flow: '', defaultIcon:'' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
 				};
 				//Homey.ready();
 
@@ -496,7 +472,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 					//if(vars.textSettings)
 					let appsUsed = '';
 					let tefType = vars.flowName && vars.deviceName ? 'AVD,FLOWS' : vars.flowName ? 'FLOWS' : vars.deviceName ? 'AVD' : 'UNKNOWN';
-					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/nl-nl/app/'+appKey+')');
+					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/a/'+appKey+')');
 					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
 []()
 []()
@@ -595,7 +571,8 @@ ${vars.textSettings}
 					});
 
 					// $scope.getIcons();
-					$scope.getAdvancedFlows();
+					//$scope.getAdvancedFlows();
+					
 					$scope.getDevices();
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
@@ -621,6 +598,12 @@ ${vars.textSettings}
 					console.log('ready done');
 				});
 
+				let loadedStuff = false;
+				$scope.loadStuff = function() {
+					if(loadedStuff) return;
+					loadedStuff = true;
+					$scope.getAdvancedFlows();					
+				}
 				$scope.size = function (collection) {
 					console.log('size()');
 					return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
@@ -693,10 +676,12 @@ ${vars.textSettings}
 							$scope.vars.template = template;
 
 							/// Sanitize all posts!!
-							template.post = $sanitize(template.post);
+							if(!template.sanitizedPost) {
+								template.post = $sanitize(template.post);
 
-							if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-							else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+								if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+								else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+							}
 							let compiled = $compile(template.sanitizedPost)($scope);
 							$('.content').empty();
 
@@ -814,11 +799,9 @@ ${vars.textSettings}
 					$scope.vars.readflow.apiCommand = '';
 					$scope.vars.scriptCopied = false;
 					if (!item) return;
-					// if (item.replaceWithId === -1) {
-					// 	item.replaceWith = { id: -1, name: item.name };
-					// }
-					//else 
-					if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+					if(item.replaceWithId=='--[NULL]--') item.replaceWith = null;
+					else if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+					else item.replaceWith = null;
 				}
 
 				$scope.getFunctionFromSettings = function () {
@@ -863,7 +846,9 @@ ${vars.textSettings}
 					}
 				};
 				$scope.deleteAll = function () {
-					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, () => {
+					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, (err, val) => {
+					if(err) return Homey.alert(err);
+					if(!val) return;
 						$scope.$apply(function () {
 							$scope.functions = [];
 							$scope.storeFunction();
@@ -871,7 +856,9 @@ ${vars.textSettings}
 					})
 				}
 				$scope.removeFunction = function (row) {
-					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, () => {
+					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, (err, val) => {
+						if(err) return Homey.alert(err);
+						if(!val) return;
 						var index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);
@@ -977,7 +964,7 @@ ${vars.textSettings}
 							let catKeys = Object.keys($scope.defaultIcons);
 							let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
 							if (!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
-							if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 5;
+							if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 10;
 							else if ($scope.defaultCategoryLoadIndex < catKeys.length) {
 								$scope.defaultCategoryLoadIndex++;
 								$scope.defaultIconLoadIndex = 0.0;

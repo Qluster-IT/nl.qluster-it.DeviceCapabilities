@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.7.22",
+  "version": "2.9.24",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -175,6 +175,10 @@
     "deleteIcon": {
       "method": "DELETE",
       "path": "/deleteicon/:id"
+    },
+    "setValue": {
+      "method": "POST",
+      "path": "/setvalue"
     }
   },
   "flow": {
@@ -299,6 +303,24 @@
               "en": "Client",
               "nl": "Cliënt",
               "de": "Client"
+            }
+          },
+          {
+            "name": "deviceId",
+            "type": "string",
+            "title": {
+              "en": "Device ID",
+              "nl": "Apparaat ID",
+              "de": "Geräte ID"
+            }
+          },
+          {
+            "name": "deviceName",
+            "type": "string",
+            "title": {
+              "en": "Device Name",
+              "nl": "Apparaat naam",
+              "de": "Gerätename"
             }
           },
           {
@@ -2215,7 +2237,6 @@
           "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd.",
           "de": "Ruft den Wert aus dem Einblicke-Protokoll (und OnOff) von x Minuten zuvor ab. Wenn der Wert auf null (0) Minuten eingestellt ist, wird der zuletzt geänderte Wert abgerufen.\r\nEnthält Token für den Benutzer und den Client, der den Wert geändert hat."
         },
-        "highlight": true,
         "args": [
           {
             "type": "autocomplete",
@@ -2248,6 +2269,7 @@
           {
             "type": "number",
             "name": "numberof",
+            "value": 0,
             "placeholder": {
               "en": "Minutes ago",
               "nl": "Minuten geleden",
@@ -2256,6 +2278,25 @@
           }
         ],
         "tokens": [
+          {
+            "name": "device",
+            "type": "string",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat",
+              "de": "Gerät"
+            }
+          },
+          {
+            "name": "capability",
+            "type": "string",
+            "title": {
+              "en": "Capability",
+              "nl": "Mogelijkheid",
+              "de": "Fähigkeit"
+            }
+          },
+
           {
             "name": "user",
             "type": "string",
@@ -2275,15 +2316,6 @@
             }
           },
           {
-            "name": "text",
-            "type": "string",
-            "title": {
-              "en": "Text",
-              "nl": "Tekst",
-              "de": "Text"
-            }
-          },
-          {
             "name": "number",
             "type": "number",
             "title": {
@@ -2299,6 +2331,30 @@
               "en": "Yes/No",
               "nl": "Ja/Nee",
               "de": "Ja/Nein"
+            }
+          },
+          {
+            "name": "changedon",
+            "type": "string",
+            "title": {
+              "en": "Changed on (UTC)",
+              "nl": "Aangepast op (UTC)"
+            }
+          },
+          {
+            "name": "changedonms",
+            "type": "number",
+            "title": {
+              "en": "Changed on (UTC tick)",
+              "nl": "Aangepast op (UTC tick)"
+            }
+          },
+          {
+            "name": "durationtillnow",
+            "type": "number",
+            "title": {
+              "en": "Duration till now (Milliseconds)",
+              "nl": "Duur tot nu (Milliseconden)"
             }
           }
         ]
@@ -3175,7 +3231,7 @@
             "name": "objecttype",
             "title": {
               "en": "Object Type",
-              "nl": "Geadvanceerd Virtueel Apparaat",
+              "nl": "Object type",
               "de": "Objekt Typ"
             },
             "placeholder": {
@@ -15803,7 +15859,6 @@
       "title": {
         "en": "Schedule, Until, Manual, Off Until, Off"
       },
-      "type": "enum",
       "values": [
         {
           "id": "smartschedule",
@@ -15846,9 +15901,229 @@
           }
         }
       ],
+      "type": "enum",
       "getable": true,
       "setable": true,
       "uiComponent": "picker"
+    },
+    "devicecapabilities_picker-EVCC_list": {
+      "title": {
+        "en": "EVCC.io"
+      },
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          },
+          "value": "off"
+        },
+        {
+          "id": "pv",
+          "title": {
+            "en": "Solar",
+            "nl": "Zonne",
+            "de": "Solar"
+          },
+          "value": "solar"
+        },
+        {
+          "id": "minpv",
+          "title": {
+            "en": "Min+Solar",
+            "nl": "Min+Zonne",
+            "de": "Min+Solar"
+          },
+          "value": "minpv"
+        },
+        {
+          "id": "now",
+          "title": {
+            "en": "Fast",
+            "nl": "Snel",
+            "de": "Schnell"
+          },
+          "value": "now"
+        }
+      ]
+    },
+    "devicecapabilities_picker-auto-low-medium-high-turbo_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, Low, Medium, High, Turbo",
+        "nl": "Auto, Laag, Medium, Hoog, Turbo",
+        "de": "Auto, Niedrig, Mittel, Hoch, Turbo"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Auto",
+            "de": "Auto"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Laag",
+            "de": "Niedrig"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Medium",
+            "de": "Mittel"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Hoog",
+            "de": "Hoch"
+          }
+        },
+        {
+          "id": "turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo",
+            "de": "Turbo"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-automatic-on-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, On, Off",
+        "nl": "Auto, Aan, Uit",
+        "de": "Auto, Eingeschaltet, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "on",
+          "title": {
+            "en": "On",
+            "nl": "Aan",
+            "de": "Eingeschaltet"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-heating-cooling-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Heating, Cooling, Off",
+        "nl": "Verwarmen, Koelen, Uit",
+        "de": "Heizen, Kuehlen, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "heating",
+          "title": {
+            "en": "Heating",
+            "nl": "Verwarmen",
+            "de": "Heizen"
+          }
+        },
+        {
+          "id": "cooling",
+          "title": {
+            "en": "Cooling",
+            "nl": "Koelen",
+            "de": "Kuehlen"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-automatic-electricity-gas-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Electricity, Gas, Off",
+        "nl": "Automatisch, Electrisch, Gas, Uit",
+        "de": "Automatisch, Elektrisch, Gas, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "electricity",
+          "title": {
+            "en": "Electric",
+            "nl": "Electrisch",
+            "de": "Elektrisch"
+          }
+        },
+        {
+          "id": "gas",
+          "title": {
+            "en": "Natural Gas",
+            "nl": "Aardgas",
+            "de": "Erdgas"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
     }
   },
   "drivers": [

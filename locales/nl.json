@@ -16,7 +16,7 @@
 		"functions":"Functies",
 		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
 		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies, flows, welke die functie gebruiken, kan breken.",
-		"add_function_text":"Om een ​​functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
+		"add_function_text":"Om een functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
 		"add_function":"Functie toevoegen",
 		"function_name":"Functienaam",
 		"delete_all":"Verwijder alles",
@@ -31,9 +31,7 @@
 		"search_for_name":"zoek op naam",		
 		"close":"Sluiten",
 		"explain_virtualdevices": "Hier kunt u het pictogram voor Geavanceerde Virtuele Apparaten bewerken door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
-		"explain_restart":"Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",
-		
-		
+		"explain_restart":"Na het wijzigen van een pictogram dient u persoonlijk de App opnieuw op te starten voordat de nieuwe pictogram(men) wordt/worden geïmplementeerd.",		
 		"title_theflowexchanger":"The Flow Exchanger",
 		"templates":"Sjablonen",
 		"import":"Importeren",
@@ -64,10 +62,14 @@
 		"flowsThatAreCreated":"Flows die worden gemaakt, worden hier weergegeven:",
 		"filter":"filter",		
 		"selectFlowAndPressCreate":"Selecteer een flow en druk op Maken",
-		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",
-		
+		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",		
 		"no_avd_in_tef":"TEF bevat geen AVD.",
-		"flows_will_be_created":"De volgende flows worden in het script aangemaakt."
+		"flows_will_be_created":"De volgende flows worden in het script aangemaakt.",
+
+
+
+		"pasteTEFReadDevice":"Plak het Exchanger-bestand en druk op Apparaat lezen",
+		"back":"Terug"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",
@@ -146,8 +148,6 @@
 		"step":"Stap",
 		"stepHint":"De stap stelt het stapinterval voor het nummer in.",
 		"labelTopicLink":"Zie het AVD Forum Topic voor uitleg of als u hulp zoekt bij AVD's of sjablonen.",
-		
-
 		"disableZoneActivity":"Zoneactiviteit uitschakelen",
 		"disableZoneActivityHint":"Indien geselecteerd, wordt zoneactiviteit voor dit veld uitgeschakeld.",
 		"openShareYourDevice":"Open Deel uw apparaat",
@@ -162,9 +162,13 @@
 		"readDevice":"Lees Apparaat",
 		"saveAs":"Opslaan als",
 		"customIcon":"Aangepast pictogram",
-		"finish":"Gereed"
-
-
+		"finish":"Gereed",		
+		"listFields":"Lijsten",
+		"listFieldI":"Lijst __i__",
+		"createListField":"Lijst maken",		
+		"prefixedList":"Vooraf ingestelde lijst",		
+		"prefixedListHint":"Momenteel zijn alleen vooraf vastgestelde lijsten beschikbaar. Ga naar het forum om je eigen aan te vragen!",
+		"cumulative":"Cumulatief"
 	},
 	"pair": {
 		"list_icons":{
@@ -174,17 +178,43 @@
 			"select_device_icon":"Of kies er een uit de lijst.",
 			"set_icon_and_customize":"Hier kunt u een pictogram voor het Geavanceerde Virtuele Apparaten instellen, door uw eigen .svg-pictogram te uploaden of uit de standaardlijst te kiezen.",
 			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
-
 			"set_name":"Hier kunt u de naam van het apparaat instellen:",			
 			"create_device_self":"Of maak zelf een apparaat aan",
-			"choose_template":"Of kies een sjabloon"
+			"choose_template":"Of kies een sjabloon",
+
+			
+			"create_avd_by":"Maak een geavanceerd virtueel apparaat (AVD) door",
+			"creating_empty_avd":"Een lege AVD maken",
+			"selecting_template":"Selecteren uit een sjabloon",
+			"importing_tef":"Een TEF importeren",
+			"empty":"Leeg?",
+			"when_creating_empty_avd":"Wanneer u een nieuwe lege AVD maakt, kunt u een naam invoeren en een pictogram uploaden of er een selecteren uit een lange lijst met standaardpictogrammen.",
+			"both_alter":"Zowel de naam als het pictogram kunnen worden gewijzigd nadat de AVD is gemaakt.",
+			"no_fields":"Wanneer de AVD wordt gemaakt, bevat deze nog geen velden of eigenschappen.",
+			"modify_repair":"Ga naar apparaat repareren om te beginnen met het wijzigen van de nieuw aangemaakte AVD.",
+			"configure_avd":"Daar kunt u de AVD wijzigen door velden toe te voegen en te configureren, precies zoals u dat wilt!",
+			"goto_avd_topic":"Ga naar het AVD forum topic",
+			"what_is_a_template":"Wat is een sjabloon?",
+			"templates_are_posts":"Sjablonen zijn berichten op het Athom Community Forum, onder specifieke topics, die TEF's bevatten en vergezeld gaan van beschrijvingen, voorbeelden en/of afbeeldingen.",
+			"basicly_topics":"In principe zijn er twee soorten topics: The Flow Exchange(r) topics, die sjablonen met alleen flows bevatten, en Deel Uw Apparaat topics, die sjablonen met een AVD bevatten en optioneel flows kunnen bevatten.",
+			"template_avd_source":"Sjablonen die u kunt selecteren tijdens het maken van een nieuwe AVD, komen altijd uit de Deel uw Apparaat topics en bevatten ten minste één AVD.",
+			"templates_multiple":"Sjablonen kúnnen echter meerdere AVD's en flows bevatten.",
+			"goto_syd_topic":"Ga naar het forumtopic Deel Uw Apparaat",
+			"note_templates_flows_settings":"Opmerking: als u de sjablonen wilt zien die alleen flows bevatten, gaat u naar de app-instellingen.",
+			"what_is_a_tef":"Wat is een TEF?",
+			"TEF_contains_AVD_flows":"Een TEF, of The Exchanger File, is een tekststring of tekstbestand dat een AVD, Flows of beide bevat.",
+			"example_tef":"Hier is een voorbeeld van een TEF die zowel een AVD als een flow bevat.",
+			"tef_contains_avd":"Een TEF die een AVD bevat, kan worden gebruikt om die AVD te maken.",
+			"tef_contains_icons":"De TEF bevat (mogelijk) het apparaatpictogram en ook de veldpictogrammen.",
+			"tef_flows_screen":"Als na het aanmaken van een AVD van een TEF de TEF ook (een) flow(s) bevat, wordt er een importscherm getoond, waarin je eigen apparaten, zones, variabelen etc. kunt instellen voor gebruik binnen die flow. U kunt dan een script genereren dat moet worden uitgevoerd in de API Playground, dat die flow zal creëren op basis van uw eigen configuratie, apparaten, enz.",
+			"note_tef_flows_settings":"Opmerking: als u een TEF wilt importeren die alleen flows bevat, gaat u naar de app-instellingen.",
+			"import_tef_template_settings":"Als u een TEF wilt importeren of sjablonen wilt zien die alleen flows bevatten, gaat u naar de app-instellingen."
 		},
 
 		"done":{
 			"title":"Een ogenblik alstublieft",
 			"creating_device":"Uw nieuwe virtuele apparaat wordt aangemaakt.",
 			"done":"Gereed!",
-
 			"avds_are_created":"De AVD('s) zijn aangemaakt!",
 			"flow_available_in_template":"Er zijn flows in de sjabloon die werd gebruikt, u kunt hier nu een script voor aanmaken.",
 			"title_flows":"Flow script aanmaken"
@@ -194,6 +224,7 @@
 		}
 	},
 	"icons":{
+		"Apps":"Apps",
 		"Alarms":"Alarmen",
 		"Athom":"Athom",
 		"Buttons":"Knoppen",
@@ -203,6 +234,10 @@
 		"Media":"Media",
 		"Gauges_and_meters":"Meters",
 		"Other":"Overige",
-		"Weather":"Weer"
+		"Virtual_devices":"Virtuele Apparaten",
+		"Weather":"Weer",
+		"Font_awesome_regular":"Font Awesome Regular",
+		"Font_awesome_brands":"Font Awesome Brands",
+		"Font_awesome_solid":"Font Awesome Solid"
 	}
 }

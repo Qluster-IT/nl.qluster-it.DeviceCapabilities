@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.2,0,0,1.2,-2.4,-3.6)">
+        <path d="M15,20C15,19.45 14.55,19 14,19L13,19L13,17L19,17C20.11,17 21,16.11 21,15L21,7C21,5.9 20.11,5 19,5L13,5L11,3L5,3C3.9,3 3,3.9 3,5L3,15C3,16.11 3.9,17 5,17L11,17L11,19L10,19C9.45,19 9,19.45 9,20L2,20L2,22L9,22C9,22.55 9.45,23 10,23L14,23C14.55,23 15,22.55 15,22L22,22L22,20L15,20M5,15L5,7L19,7L19,15L5,15Z" style="fill-rule:nonzero;"/>
+    </g>
+    <g transform="matrix(0.141363,0,0,0.143299,-25.1725,-23.5413)">
+        <text x="207px" y="255px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:57.238px;">FTP</text>
+    </g>
+</svg>

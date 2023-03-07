@@ -1,3 +1,5 @@
+Neu: API-Aufruf zum Aktualisieren von AVD-Feldern.
+
 Neu: Exportieren und importieren Sie Flows und/oder Advanced Virtual Devices von anderen Homey-Benutzern.
 Importieren Sie über Vorlagen über App-Einstellungen, AVD-Reparatur oder beim Erstellen von AVDs.
 

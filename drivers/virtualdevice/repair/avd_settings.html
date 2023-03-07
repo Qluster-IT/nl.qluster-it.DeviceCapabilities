@@ -3,7 +3,7 @@
 <script type="text/javascript" src="../../../assets/js/lodash.js"></script>
 <script type="text/javascript" src="../../../assets/js/smart-table.min.js"></script>
 <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
-<script type="text/javascript" src="../../../assets/js/elif.js"></script>
+<script type="text/javascript" src="../../../assets/js/angular-elif.js"></script>
 <script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
 <script type="text/javascript" src="../../../assets/js/default.js"></script>
 	
@@ -17,7 +17,7 @@
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
 
 	<form name="settings" class="main-view" ng-show="!view.id">
-		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';" data-i18n="virtualdevicesettings.openShareYourDevice">Open Share Your Device</div>
+		<div class="button block margin-top margin-bottom text-center" ng-click="view.id='theflowexchanger';loadStuff();" data-i18n="virtualdevicesettings.openShareYourDevice">Open Share Your Device</div>
 		<h1 data-i18n="virtualdevicesettings.titleGeneral" class="top-labels">General</h1>
 		<div data-i18n="virtualdevicesettings.labelGeneral" class="top-labels">Welcome and have fun!</div>
 		<!-- <div data-i18n="virtualdevicesettings.labelTopicExplain" class="top-labels">See the Homey Forum Topic for examples and usages.</div> -->
@@ -209,7 +209,13 @@
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 					</select>
 				</div>
-				<div ng-else execute="s['number'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulative']" />
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulative']=undefined;" ></div>
+
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.units' || 'Units')}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -634,7 +640,7 @@
 		<h2 class="top-button" ng-class="{active:view.subid=='theflowexchangertemplates'}" ng-click="view.subid='theflowexchangertemplates'"><i class="fa fa-icon fa-stream"></i> <span data-i18n="settings.templates">Templates</span></h2>
 		<div ng-show="view.id=='theflowexchanger' && !view.subid">				
 			<h1 data-i18n="virtualdevicesettings.titleShareYourDevice" class="top-labels">Share Your Device</h1>
-			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId)">See the Share Your Device Forum Topic for other AVDs</div>	
+			<div data-i18n="virtualdevicesettings.labelShareYourDeviceLink" class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId)">See the Share Your Device Forum Topic for other AVDs</div>
 		</div>
 		<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 			<div data-i18n="virtualdevicesettings.labelShareYourDevice" class="top-labels">Here you can create The Exchanger File for this device, including flows.</div>
@@ -734,8 +740,9 @@
 				</div>
 				<div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
 					<div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
-					<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-						<option value="" data-i18n="settings.dontChange">Don't change</option>
+					<select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length" required>
+						<option value="" ng-if="!device.replaceWithId"></option>
+						<option value="--[NULL]--" data-i18n="settings.dontChange">Don't change</option>
 						<option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
 					</select>
 					<div class="field" ng-repeat="item  in device.tags">
@@ -803,15 +810,17 @@
 								<input type="text" ng-model="item.replaceWith.newName">
 							</div>
 						</div>
-						<div class="field" ng-repeat="item  in app.types">
-							<div class="label">{{item.name}}</div>
-							<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-								<option value="" data-i18n="settings.dontChange">Don't change</option>
-								<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-									{{replacement.name}}</option>
-							</select>
-							<div class="field" ng-if="item.replaceWithId===-1">
-								<input type="text" ng-model="item.replaceWith.newName">
+						<div class="field" ng-repeat="type  in app.types">
+							<div class="field" ng-repeat="item  in type">
+								<div class="label">{{item.name}}</div>
+								<select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+									<option value="" data-i18n="settings.dontChange">Don't change</option>
+									<option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+										{{replacement.name}}</option>
+								</select>
+								<div class="field" ng-if="item.replaceWithId===-1">
+									<input type="text" ng-model="item.replaceWith.newName">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1003,6 +1012,15 @@ ${vars.textSettings}
 					});
 				}
 			}
+
+			let loadedStuff = false;
+			$scope.loadStuff = function() {
+				if(loadedStuff) return;
+				loadedStuff = true;
+				Homey.emit('virtualdevicesettings_loadStuff', vars.favoriteTemplates , function (err, result) {
+						if (err) return console.log(err);
+					});
+			}
 			
 			$scope.refreshTemplates = function () {
 				vars.templatesRefreshing = true;
@@ -1034,10 +1052,12 @@ ${vars.textSettings}
 					$scope.vars.template = template;
 					
 					/// Sanitize all posts!!
-					template.post = $sanitize(template.post);
-					
-					if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
-					else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+					if(!template.sanitizedPost) {
+						template.post = $sanitize(template.post);
+						
+						if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+						else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
+					}
 						
 					let compiled = $compile(template.sanitizedPost)($scope);
 					$('.content').empty();
@@ -1162,7 +1182,9 @@ ${vars.textSettings}
 				$scope.vars.readflow.apiCommand = '';
 				$scope.vars.scriptCopied = false;
 				if (!item) return;
-				if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+				if(item.replaceWithId=='--[NULL]--') item.replaceWith = null;
+                else if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+                else item.replaceWith = null;
 			}
 			
 			
@@ -1309,13 +1331,10 @@ ${vars.textSettings}
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
-				//Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
-				Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
+				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
+				//Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
 				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
-					if (err) {
-						console.log(err);
-						return;
-					}
+					if (err) { console.log(err); return; }
 					$scope.$apply(function () {
 						$scope.customIconsAvailable = result.customIconsAvailable;
 					});

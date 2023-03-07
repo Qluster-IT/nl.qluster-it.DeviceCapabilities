@@ -11,12 +11,18 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	onDeleted() {
 		//delete Homeyman.Current.VirtualDevices[this.getName()];
+		if( typeof this.getData().icon !== 'undefined' && this.getData().icon !== null && this.getData().icon.startsWith("../../../userdata"))
+      		this.homey.app.deleteFile(this.getData().icon.substring(8));
+	}
+	onUninit() {
+		this.homey.app._getDevices=null;	
 	}
 	// this method is called when the Device is inited
 	async onInit() {
 		this.log('Device init');
 		this.log('Name:', this.getName());
 		this.log('Class:', this.getClass());
+		this.homey.app._getDevices=null;
 
 		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', this.homey.__("virtualdevicesettings.devicecapabilities_starttext") || "To start");//"Goto Device Settings");
 
@@ -146,7 +152,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					let oldValue = this.getStoreValue(fieldId+"Value");
 					if (settings[fieldId + 'ShowAs'] === "pushbutton_indicator") {
 						let val = this.getStoreValue(fieldId + "Value") === true;
-						await this.setCapabilityValue(cap, val);
+						//await this.setCapabilityValue(cap, val); //Why twice?
 						return setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
 							this.driver.triggerFlowButton(this, !val, { field: { id: fieldId }, changed:value!==oldValue }); //Do we need to await for triggerFlow?
@@ -290,7 +296,7 @@ module.exports = class WatchDevice extends Homey.Device {
 
 
 			var button1Reset = false;
-
+			let energyCumulative = false;
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
 				const fieldCount = type=="status" ? 1 : Math.max(settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0, oldSettings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
@@ -582,11 +588,12 @@ module.exports = class WatchDevice extends Homey.Device {
 							// 	let b = a;
 							// 	//await this.homey.insights.deleteLog({id:secondCap});
 							// }
-							
+							if(type == 'number' && cap==='measure_power' && settings[type + i + 'EnergyCumulative']) energyCumulative=true;
 
 							if (type == 'button' && disabled && !pushbutton) {
 								await this.setCapabilityValue(cap, checked);
 							}
+							
 						} else if (this.hasCapability(cap)) 
 							await this.removeCapability(cap);
 					}
@@ -595,6 +602,12 @@ module.exports = class WatchDevice extends Homey.Device {
 					}
 
 				}
+			}
+
+			let energy = await this.getEnergy();
+
+			if (energy && energyCumulative!=energy.cumulative) {
+				await this.setEnergy({cumulative:energyCumulative});
 			}
 
 			// if(settings.batteries != oldSettings.batteries) {

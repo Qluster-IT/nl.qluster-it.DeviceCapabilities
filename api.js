@@ -55,6 +55,48 @@ module.exports = {
     },
     async deleteIcon({ homey,  params: { id } }) {
         return await homey.app.deleteIcon({id});
+    },
+    async setValue({ homey,  body:{device:deviceId, field: fieldId, value} }) {
+        //let fieldId = field=fieldId;
+        let driver = homey.drivers.getDriver('virtualdevice');
+        let devices = await driver.getDevices();
+        let device;
+        if(deviceId) {
+            if(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/gm.test(deviceId)) device = _.find(devices, d=>d.__id==deviceId);
+            else device = _.find(devices, d=>d.getName()==deviceId);
+        }
+        if(!device) return "Device not found.";
+
+        //let device = _.find(devices, d=>d.getName()==deviceName || d.__id==deviceId);
+        let cap = fieldId && fieldId.indexOf('.')>-1 ? fieldId : device.getStoreValue(fieldId);
+        if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
+        
+        if(device.hasCapability(fieldId)){
+            cap = fieldId;
+            fieldId = device.getStoreValue(fieldId);
+        }
+        else
+            cap = device.getStoreValue(fieldId) || cap;
+
+        let type = driver.getTypeFromField(fieldId);
+        //let  energy = args.device.getEnergy();
+        try {
+            let oldValue = device.getStoreValue(fieldId+"Value");                                
+            
+            await driver.setSecondCapability({ val:value, device , fieldId});
+            await device.setCapabilityValue(cap, value);
+            await device.setStoreValue(fieldId+"Value", value);
+
+            if(type=="status") driver.triggerFlowStatus(device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
+            else if(driver['triggerFlow'+driver.capitalizeFirstLetter(type)]) driver['triggerFlow'+driver.capitalizeFirstLetter(type)].call(driver,device, value, { field: { id: fieldId }, changed:value!==oldValue });
+            
+            return true;
+
+        }
+        catch (ex) {
+            throw ex;
+        }
+
     }
 };
 // module.exports = [

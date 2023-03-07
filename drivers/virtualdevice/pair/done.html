@@ -1,7 +1,15 @@
 
 
-<div id="avddoneCtrl" ng-app="avdcreate" ng-controller="avddoneCtrl as avddone" class="non-setting-view">
-    <form name="theflowexchanger"  id="theflowexchanger" class="main-view" ng-show="view.subid=='theflowexchangerimport'">        
+<style>
+    .hy-header {
+        display: none !important;
+    }
+    .theflowexchangerimport {
+        height: calc(100vh - 130px);
+    }
+</style>
+<div id="avddoneCtrl" ng-app="avdcreate" ng-controller="avddoneCtrl as avddone" class="non-setting-view theflowexchangerimport">
+    <form name="theflowexchanger"  id="theflowexchanger" class="main-view " ng-show="view.subid=='theflowexchangerimport'">        
         <div class="field">
             <span  data-i18n="pair.done.avds_are_created">The AVD(s) have been created!</span><br/>
             <br/>
@@ -47,8 +55,9 @@
             </div>
             <div class="field" ng-repeat="device  in vars.readflow.devicesToReplace">
                 <div class="label">{{device && device.name ? (device.name + ' (' + device.class + ')') : key}}</div>
-                <select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length">
-                    <option value="" data-i18n="settings.dontChange">Don't change</option>
+                <select class="value" ng-model="device.replaceWithId" ng-change="updateReadFlow(device);" ng-if="device.replacements.length" required>
+                    <option value="" ng-if="!device.replaceWithId"></option>
+                    <option value="--[NULL]--" data-i18n="settings.dontChange">Don't change</option>
                     <option ng-repeat="replacement in device.replacements" ng-value="replacement.id">{{replacement.name}}</option>
                 </select>
                 <div class="field" ng-repeat="item  in device.tags">
@@ -116,15 +125,17 @@
                             <input type="text" ng-model="item.replaceWith.newName">
                         </div>
                     </div>
-                    <div class="field" ng-repeat="item  in app.types">
-                        <div class="label">{{item.name}}</div>
-                        <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
-                            <option value="" data-i18n="settings.dontChange">Don't change</option>
-                            <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
-                                {{replacement.name}}</option>
-                        </select>
-                        <div class="field" ng-if="item.replaceWithId===-1">
-                            <input type="text" ng-model="item.replaceWith.newName">
+                    <div class="field" ng-repeat="type  in app.types">
+                        <div class="field" ng-repeat="item  in type">
+                            <div class="label">{{item.name}}</div>
+                            <select class="value" ng-model="item.replaceWithId" ng-change="updateReadFlow(item);">
+                                <option value="" data-i18n="settings.dontChange">Don't change</option>
+                                <option ng-repeat="replacement in item.replacements" ng-value="replacement.id">
+                                    {{replacement.name}}</option>
+                            </select>
+                            <div class="field" ng-if="item.replaceWithId===-1">
+                                <input type="text" ng-model="item.replaceWith.newName">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,6 +190,7 @@
                             devicesCreated+=1;
                             if(devicesCreated===devices.length) Homey.emit('done_finished', null, function (err, result) {
                                 if (err) return console.log(err);
+                                if(result && result.advancedflows && !result.advancedflows.length) return Homey.done();
                                 $scope.view.subid='theflowexchangerimport';
                                 Homey.setTitle( Homey.__("pair.done.title_flows") );
 				                Homey.hideLoadingOverlay();
@@ -197,6 +209,12 @@
                     });
                 }
 
+            });
+        
+            Homey.on('createdadvancedflow', (af) => {
+                $scope.$apply(function () {
+                    $scope.vars.createdadvancedflows.push(af);
+                });
             });
 
 
@@ -222,7 +240,9 @@
 				$scope.vars.readflow.apiCommand = '';
 				$scope.vars.scriptCopied = false;
 				if (!item) return;
-				if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+				if(item.replaceWithId=='--[NULL]--') item.replaceWith = null;
+                else if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
+                else item.replaceWith = null;
 			}
 			
 

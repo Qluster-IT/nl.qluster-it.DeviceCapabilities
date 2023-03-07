@@ -18,7 +18,7 @@
   
 }
 .non-setting-view {
-    height: calc(100vh - 70px);
+    height: calc(100vh - 30px);
     position: relative;
 }
 
@@ -32,6 +32,7 @@ body {
     display: inline-block;
     overflow: auto !important;
     position: relative;
+    min-height:auto!important;
 }
 
 
@@ -168,14 +169,20 @@ a {
 }
 
 .margin-top {
-    margin-top: 10px;
+    margin-top: 10px!important;
 }
 
+.double-padding-top {
+    padding-top: 20px!important;
+}
 .double-margin-top {
-    margin-top: 20px;
+    margin-top: 20px!important;
 }
 .margin-bottom {
-    margin-bottom: 10px;
+    margin-bottom: 10px!important;
+}
+.padding-top {   
+    padding-top: 10px!important;
 }
 .padding-bottom {   
     padding-bottom: 10px!important;
@@ -444,7 +451,6 @@ input {
 [ng-click^="view"],
 [ng-click] {
     cursor: pointer;
-    /* margin-top: 30px; */
 }
 
 #theflowexchanger {}
@@ -554,6 +560,9 @@ h1.top-labels {
     width: 49% !important;
     display: inline-block;
 }
+.value[type=checkbox] {
+    width: 20px !important;
+}
 
 
 .create-button {
@@ -650,6 +659,7 @@ h1.top-labels {
     bottom: 0;
     text-align: center;
     background-color: white;
+    left: 0;
 }
 
 .top-button {
@@ -671,7 +681,8 @@ h1.top-labels {
     padding: 16px !important;
     display: inline-block;
     margin: 0px 20px;
-    bottom: 0px;
+    /* bottom: 5px; */
+    position: relative;
 }
 
 .main-buttons .button:nth-child(1):nth-last-child(1) {
@@ -681,20 +692,20 @@ h1.top-labels {
 
 .main-buttons .button:nth-child(1):nth-last-child(2) {
     margin-left:0!important;
-    left: 0px;
+    left: 10px;
     position: fixed;
 }
 
 .main-buttons .button:nth-child(2):nth-last-child(1) {
     margin-right:0!important;
-    right: 0px;
+    right: 10px;
     position: fixed;
 }
 
 
 .main-buttons .button:nth-child(1):nth-last-child(3) {
     margin-left:0!important;
-    left: 0px;
+    left: 10px;
     position: fixed;
 }
 .main-buttons .button:nth-child(2):nth-last-child(2) {
@@ -704,7 +715,7 @@ h1.top-labels {
 
 .main-buttons .button:nth-child(3):nth-last-child(1) {
     margin-right:0!important;
-    right: 0px;
+    right: 10px;
     position: fixed;
 }
 
@@ -742,9 +753,12 @@ h1.top-labels {
     overflow: auto; 
 }
 .non-setting-view .top {
-    overflow:auto;
-    height: calc(100% - 32px);
-    margin-top: 32px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    /* height: calc(100% - 38px);
+    margin-top: 0px; */
+    height: calc(100% - 80px);
+    top: 40px;
 }
 
 .setting-group {
@@ -783,12 +797,19 @@ input[type="text"]:not(.hy-nostyle),
 input[type="password"]:not(.hy-nostyle),
 input[type="email"]:not(.hy-nostyle),
 .hy-input-text {
+    width: calc(100% - 10px) !important;
+}
+
+input[type="text"]:not(.hy-nostyle):not(.homey-form-input),
+input[type="password"]:not(.hy-nostyle):not(.homey-form-input),
+input[type="email"]:not(.hy-nostyle):not(.homey-form-input),
+.hy-input-text {
     border-bottom: 1px solid #999 !important;
     border-right: 1px solid #999 !important;
     border-radius: 0px 0px 5px 0px !important;
     padding-left: 5px !important;
-    width: calc(100% - 10px) !important;
 }
+
 
 select {
     padding: 5px;
@@ -853,7 +874,9 @@ alinky,
     display: inline-block;
     height:100%;
     width:100%;
-
+}
+.template-panel pre code {
+    user-select: all;
 }
 
 /* .template-panel>.content {
@@ -877,7 +900,7 @@ alinky,
 }
 
 .field.filter {
-    height: 32px;
+    height: 38px;
     z-index: 10;
     right: 0;
     margin-bottom: 10px;
@@ -887,6 +910,7 @@ alinky,
     margin:0px;
     background-color:white;
     top:0px;
+    padding:5px;
 }
 .filter input[type="text"].label {
     /* width: 65%!important;
@@ -957,7 +981,44 @@ form.top {
 }
 
 
+.category .name {
+    font-weight: bold;
+    font-size:16pt;
+}
 
+.full-width {
+    width:100%!important;
+}
+
+
+
+.pair-main {
+    height:100%;
+}
+.pair-main-flex {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+.pair-main-flex>* {
+    flex-grow: 1;
+}
+/* .pair-main-flex>* .button {
+    padding: 20px !important;
+} */
+
+.info-view {
+    position: fixed;
+    z-index: 1100;
+    display: inline-block;
+    top:0;
+    bottom:60px;
+    left:0;
+    Right:0;
+    padding:20px;
+    background-color:white;
+    overflow-y:auto;
+}
 
 
 

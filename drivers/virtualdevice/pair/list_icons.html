@@ -7,7 +7,6 @@
 
 <link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
 
-<script src='../../../assets/js/vue.min.js'></script>
 
 <style>
 	[v-cloak] {
@@ -68,7 +67,30 @@
 	.category {
 		margin-top: 40px;
 	}
-
+	/* .non-setting-view {
+		top: 40px!important;
+	} */
+	.tef-example {
+		word-break: break-all;
+		overflow-y: scroll;
+		height: 100px;
+		white-space: pre-wrap;
+		border:1px solid var(--homey-color-black);
+		border-radius:var(--homey-border-radius-small);
+	}
+	/* .non-setting-view  {
+		height: calc(100% - 100px);
+	} */
+	
+	.non-setting-view .top-up {
+		/* height: calc(100% - 38px);
+		margin-top: 0px; */
+		overflow-y:auto;
+		overflow-x:hidden;
+		height: calc(100% - 40px);
+		top: 0px;
+		position:relative;
+	}
 
 </style>
 <script>
@@ -83,35 +105,35 @@
 
 	$('#hy-overlay-loading-message').html(Homey.__("pair.list_icons.loading"));
 
-	Homey.emit('list_icons', null, function (err, result) {
-		console.log('list_icons');
+	// Homey.emit('list_icons', null, function (err, result) {
+	// 	console.log('list_icons');
 
-		new Vue({
-			el: '#icon_list',
-			data: {
-				iconCategories: result,
-			},
-			mounted() {
-				Homey.hideLoadingOverlay();
-			},
-			methods: {
-				setIcon(icon) {
-					let name = undefined;
-					try {
-						name = $('#name').val();
-						console.log(name);
-					} catch (error) { }
-					Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
-						if (err) {
-							console.log(err);
-							return;
-						}
-						Homey.nextView();
-					});
-				}
-			}
-		});
-	});
+	// 	new Vue({
+	// 		el: '#icon_list',
+	// 		data: {
+	// 			iconCategories: result,
+	// 		},
+	// 		mounted() {
+	// 			Homey.hideLoadingOverlay();
+	// 		},
+	// 		methods: {
+	// 			setIcon(icon) {
+	// 				let name = undefined;
+	// 				try {
+	// 					name = $('#name').val();
+	// 					console.log(name);
+	// 				} catch (error) { }
+	// 				Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
+	// 					if (err) {
+	// 						console.log(err);
+	// 						return;
+	// 					}
+	// 					Homey.nextView();
+	// 				});
+	// 			}
+	// 		}
+	// 	});
+	// });
 
 	$('#save-icon').click(function () {
 		let name = undefined;
@@ -147,68 +169,106 @@
 </script>
 
 <div id="avdiconsCtrl" ng-app="avdcreate" ng-controller="avdiconsCtrl as avdicons" class="non-setting-view">
-	<div ng-show="!view.id">
-		<div class="field border-line padding-bottom" ng-show="!vars.imported">
+	<div ng-show="!view.id" class="pair-main top-up">
+		<div class="pair-main-flex" ng-show="!view.subid">
+			<div class="field padding-top text-center double-padding-top">
+				<h1 data-i18n="pair.list_icons.create_avd_by">Create an Advanced Virtual Device by</h1>
+			</div>			
+			<div class="field padding-bottom">
+				<div class="button homey-button-secondary-shadow-full" ng-click="view.subid='new_avd'" data-i18n="pair.list_icons.creating_empty_avd">Creating an empty AVD</div>
+				<a class="field text-center" href="" ng-click="view.infoview = 'empty'" data-i18n="pair.list_icons.empty">Empty?</a>
+			</div>
+			<div class="field padding-bottom">
+				<div class="button homey-button-secondary-shadow-full" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';"  data-i18n="pair.list_icons.selecting_template">Selecting from a Template</div>
+				<a class="field text-center" href="" ng-click="view.infoview = 'what_is_a_template'" data-i18n="pair.list_icons.what_is_a_template">What is a Template?</a>
+			</div>			
+			
+			<div class="field padding-bottom">
+				<div class="button homey-button-secondary-shadow-full" ng-click="view.subid='import_tef'" data-i18n="pair.list_icons.importing_tef">Importing a TEF</div>
+				<a class="field text-center" href="" ng-click="view.infoview = 'what_is_a_tef'" data-i18n="pair.list_icons.what_is_a_tef">What is a TEF?</a>
+			</div>		
+			
+			<div class="field text-center double-padding-top" data-i18n="pair.list_icons.import_tef_template_settings">
+				If you want to import a TEF or see Templates that only contain flows, go to the App Settings.
+			</div>	
+		</div>
+
+		<div class="field" ng-show="!vars.imported && view.subid=='import_tef'">
 			<div class="field">
 				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 				<div class="field margin-bottom">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" ng-attr-placeholder="{{__('settings.pasteTEFReadFlows') || 'Paste The Exchanger File and press Read Flows'}}" ng-change="blockTextSettings=true"></textarea>
+					<textarea aria-multiline="true" class="field homey-form-textarea" type="text" ng-model="vars.textSettings" rows="2" ng-attr-placeholder="{{__('settings.pasteTEFReadDevice') || 'Paste The Exchanger File and press Read Device'}}" ng-change="blockTextSettings=true"></textarea>
 				</div>
 			</div>
-			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.startsWith('[TEF:') && !vars.textSettings.startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
+			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.toUpperCase().startsWith('[TEF:') && !vars.textSettings.toUpperCase().startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
 				
 			<div class="field">
-				<div class="button" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.startsWith('[TEF:') || vars.textSettings.startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
+				<div class="button homey-button-primary" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.toUpperCase().startsWith('[TEF:') || vars.textSettings.toUpperCase().startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
+			</div>
+			<div ng-if="vars.readcopy">
+				<div class="field" ng-if="vars.readcopy.customIcons">
+					<div class="label" data-i18n="virtualdevicesettings.customIcon">Custom icon</div>
+					<div class="value" data-i18n="virtualdevicesettings.saveAs">Save as</div>
+				</div>
+				<div class="field" ng-repeat="(key,item)  in vars.readcopy.customIcons">
+					<div class="label">
+						<img class="custom-icon" src="{{item}}"></img>
+						<div>{{key}}</div>
+					</div>
+					<select class="value" ng-model="vars.readcopy.saveCustomIcons[key]">
+						<option value="">Don't save</option>
+						<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
+					</select>
+				</div>
+				<div class="field">
+					<div class="button" ng-click="setTextSettings(false);" ng-if="vars.readcopy">Save</div>
+				</div>
+			</div>
+
+			<div class="main-buttons">
+				<button class="button homey-button-secondary-shadow" data-i18n="settings.back" ng-click="view.subid=null;vars.readcopy=null;vars.textSettings=null;">Back</button>
 			</div>
 		</div>
-		<div class="double-margin-top padding-bottom">
+		
+		
+		<div ng-show="vars.selectedtemplate && view.subid=='theflowexchangerimport'">
+			<div class="field">Template used:</div>
+			<div class="field">{{vars.selectedtemplate.header}}</div>
+			<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
+
+
+
+			<div class="field" ng-repeat="tef in vars.selectedtefs">
+				<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
+				<div style="margin-top:20px;" class="field">
+					<input class="homey-form-input" type="text" id="name" ng-model="tef.device.name" />
+				</div>
+				<div class="field" ng-if="tef.customIcons.length>0">
+					<div class="label">Custom icon</div>
+					<div class="value">Save as</div>
+				</div>
+				<div class="field" ng-repeat="(key,item)  in tef.customIcons">
+					<div class="label">
+						<img class="custom-icon" src="{{item}}"></img>
+						<div>{{key}}</div>
+					</div>
+					<select class="value" ng-model="tef.saveCustomIcons[key]">
+						<option value="">Don't save</option>
+						<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="main-buttons">
+				<button class="button homey-button-secondary-shadow" data-i18n="settings.back" ng-click="view.subid=null;vars.selectedtemplate=null;">Back</button>
+				<button class="button homey-button-primary-shadow" data-i18n="settings.use_this_template" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
+			</div>
+		</div>
+
+		<div ng-show="view.subid=='new_avd'">
 			<div>
-				<h2 class="top-button" ng-click="view.id='theflowexchanger';view.subid='theflowexchangertemplates';"><span data-i18n="pair.list_icons.choose_template">Or choose a Template</span> <i class="fa fa-icon fa-stream"></i></h2>
-				<i ng-if="vars.selectedtemplate" class="fa fa-icon fa-trash float-right margin-top" ng-click="vars.selectedtemplate=null;"></i>
-			</div>
-
-			<div ng-show="vars.selectedtemplate">
-				<div class="field">Template used:</div>
-				<div class="field">{{vars.selectedtemplate.header}}</div>
-				<div class="field">Devices that will be created: {{vars.selectedtefs.length}}</div>
-
-
-
-				<div class="field" ng-repeat="tef in vars.selectedtefs">
-					<span data-i18n="pair.list_icons.set_names">Here you can set the name for the device(s):</span>
-					<div style="margin-top:20px;" class="field">
-						<input type="text" id="name" ng-model="tef.device.name" />
-					</div>
-					<div class="field" ng-if="tef.customIcons.length>0">
-						<div class="label">Custom icon</div>
-						<div class="value">Save as</div>
-					</div>
-					<div class="field" ng-repeat="(key,item)  in tef.customIcons">
-						<div class="label">
-							<img class="custom-icon" src="{{item}}"></img>
-							<div>{{key}}</div>
-						</div>
-						<select class="value" ng-model="tef.saveCustomIcons[key]">
-							<option value="">Don't save</option>
-							<option ng-repeat="icon in customIconsAvailable" value="{{icon}}">{{icon}}</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="main-buttons">
-					<button class="button" data-i18n="settings.back" ng-disabled="!vars.selectedtefs.length" ng-click="vars.selectedtefs.length ? useTemplate() : null">Use this template</button>
-				</div>
-			</div>
-		</div>
-		<div class="border-line" ng-show="!vars.selectedtemplate"></div>
-
-		<div ng-show="!vars.selectedtemplate">
-			<div style="margin-top:20px;">
-				<span data-i18n="pair.list_icons.create_device_self">Or create a device yourself</span>
-			</div>			
-			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.set_name">Here you can set the name for the device:</span>
-				<input type="text" id="name" ng-model="vars.device.name" />
+				<input class="homey-form-input" type="text" id="name" ng-model="vars.device.name" />
 			</div>
 			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.set_icon_and_customize"></span>
@@ -217,7 +277,8 @@
 			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.custom_device_icon">If you wish to use a custom icon for your device, you can to upload it here. The icon needs to be in .svg format.</span><br />
 				<div class="form-group" style="margin-top:10px;">
-					<input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+					<input id="custom-icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)" 
+					>
 				</div>
 				<div id="preview-outerframe" style="margin-top:10px;">
 					<div id="preview-innerframe">
@@ -225,40 +286,71 @@
 					</div>
 				</div>
 				<div class="form-group buttons" style="margin-top:10px;">
-					<button id="save-icon" class="button" data-i18n="pair.buttons.save_use" disabled>Save & use</button>
+					<button id="save-icon" class="button  homey-button-primary" data-i18n="pair.buttons.save_use" disabled="disabled">Save & use</button>
 				</div>
 			</div>
 
 			<div style="margin-top:20px;">
 				<span data-i18n="pair.list_icons.select_device_icon">Or select one from the list.</span><br />
 
-				<ul id="icon_list">
-					<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-						<h1 class="category-title" v-html="cat.title"></h1>
-						<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-							<label for="icon" class="icon-wrap">
-								<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/defaulticons/' + item}" title="{{item}}"></div>
-							</label>
+				<div class="panel" id="defaultIcons">
+					<div class="inline-block" style="width:100%;"><input class="homey-form-input" type="text" ng-model="vars.filter.defaultIcon" ng-model-options="{ debounce: 300 }" placeholder="filter" placeholder="{{__('settings.filter') || 'filter'}}" /></div>
+					<div ng-repeat="category in defaultIcons">
+						<div ng-if="$index<=defaultCategoryLoadIndex">
+							<h1 class="name" style="margin-top:1em;" data-i18n="{{'icons.' + category.title}}">
+								{{category.title}}</h1>
+							<div class="default-icon" ng-repeat="defaulticon in category.icons | filter:vars.filter.defaultIcon | orderBy:'title'">
+								<div class="image" ng-attr-title="{{defaulticon}}" ng-click="setIcon(defaulticon)" ng-if="$parent.$index<defaultCategoryLoadIndex || $index<=defaultIconLoadIndex"
+									ng-style="{'-webkit-mask-image': 'url(/app/nl.qluster-it.DeviceCapabilities/userdata/defaulticons/' + defaulticon + ')'}">
+								</div>
+							</div>
 						</div>
 					</div>
-				</ul>
+				</div>
 
-				<!-- <ul id="icon_list">
-		<div v-for="(cat, index) in iconCategories" :key="index" class="category">
-		<h1  class="category-title">{{cat.title}}</h1>
-		<div v-for="(item, index2) in cat.icons" :key="index2" v-on:click='setIcon(item)' class="icon tile">
-			<label for="icon" class="icon-wrap">
-			<div class="icon bg" v-bind:style="{WebkitMaskImage: 'url(/app/nl.qluster-it.devicecapabilities/userdata/customicons/' + item.file + '.svg'}"  title="{{item.name}}"></div>
-			<div class="icon id">{{item.subid}}</div>
-			</label>
+			</div>			
+			<div class="main-buttons">
+				<button class="button homey-button-secondary-shadow" data-i18n="settings.back" ng-click="view.subid=null;">Back</button>
+			</div>
 		</div>
-		</div>
-	</ul>  -->
+		<div class="info-view" ng-if="view.infoview">
+			<div ng-if="view.infoview=='empty'">
+				<h1 data-i18n="pair.list_icons.empty">Empty?</h1>
+				<div class="field" data-i18n="pair.list_icons.when_creating_empty_avd">When you create a new empty AVD, you will be able to enter a name and either upload an icon or select one from a long list of default icons.</div>
+				<div class="field" data-i18n="pair.list_icons.both_alter">Both the name and icon can be alter after the AVD has been created.</div>
+				<div class="field" data-i18n="pair.list_icons.no_fields">When the AVD is created, it will not contain any fields or properties yet.</div>
+				<div class="field" data-i18n="pair.list_icons.modify_repair">To start modifying the newly created AVD, go to device repair.</div>
+				<div class="field padding-bottom" data-i18n="pair.list_icons.configure_avd">There you can alter the AVD by adding fields and configuring them, just the way you want!</div>
+				<div class="top-labels" ng-click="openUrl('https://community.homey.app/t/app-pro-advanced-virtual-device-device-capabilities-app-with-unique-text-status-indicator/68198')" data-i18n="pair.list_icons.goto_avd_topic">Go to the AVD Forum Topic</div>
+			</div>
+			<div ng-if="view.infoview=='what_is_a_template'">
+				<h1 data-i18n="pair.list_icons.what_is_a_template">What is a Template?</h1>
+				<div class="field" data-i18n="pair.list_icons.templates_are_posts">Templates are posts on the Athom Community Forum, on specific topics, that contain TEFs and are accompanied by descriptions, examples and/or images.</div>
+				<div class="field" data-i18n="pair.list_icons.basicly_topics">Basicly, there are two kind of topics:The Flow Exchange(r) topics, which contains templates with only flows, and Share Your Device topics, which contains templates with an AVD and optionally may contain flows.</div>
+				<div class="field" data-i18n="pair.list_icons.template_avd_source">Templates you can select during the creation of a new AVD always come from the Share Your Device topics and will contain at least one AVD.</div>
+				<div class="field padding-bottom" data-i18n="pair.list_icons.templates_multiple">Templates, however, can contain multiple AVDs and flows.</div>
+				<div class="top-labels" ng-click="openUrl(vars.activeTopic.topicUrl+'/' + vars.activeTopic.topicId)" data-i18n="pair.list_icons.goto_syd_topic">Go to the Share Your Device Forum Topic</div>
+				<div class="field padding-top" data-i18n="pair.list_icons.note_templates_flows_settings">Note: If you want to see the Templates that only contains flows, go to the App Settings.</div>
+			</div>
+			<div ng-if="view.infoview=='what_is_a_tef'">
+				<h1 data-i18n="pair.list_icons.what_is_a_tef">What is a TEF?</h1>
+				<div class="field" data-i18n="pair.list_icons.TEF_contains_AVD_flows">A TEF, or The Exchanger File, is a text-string, or textfile, containing an AVD, Flows or both.</div>
+				<div class="field" data-i18n="pair.list_icons.example_tef">Here is an example of a TEF containing both an AVD and a flow.</div>
+				<div class="field">
+					<pre class="tef-example">[tef:AVD,FLOWS:"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":/tef]</pre>
+				</div>
+				<div class="field" data-i18n="pair.list_icons.tef_contains_avd">A TEF that contains an AVD, can be used to create that AVD.</div>
+				<div class="field" data-i18n="pair.list_icons.tef_contains_icons">The TEF (may) contain the device icon and also the field icons.</div>
+				<div class="field" data-i18n="pair.list_icons.tef_flows_screen">After creation of an AVD from an TEF, if the TEF also contains (a) flow(s), an importscreen will be shown, in which you can set your own devices, zones, variables, etc. for use within that flow. You than can generate a script to be executed in the API Playground, that will create that flow based on your own configuration, devices, etc.</div>
+				<div class="field padding-top" data-i18n="pair.list_icons.note_tef_flows_settings">Note: If you want to import a TEF that only contains flows, go to the App Settings.</div>
+			</div>
+			<div class="main-buttons">
+				<button class="button homey-button-secondary-shadow" ng-click="view.infoview=null;" data-i18n="settings.back">Back</button>
 			</div>
 		</div>
 	</div>
 
-	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
+	<form ng-class="{'top':!vars.template, 'top-up':vars.template}" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div ng-show="!vars.template">
 			<div class="field filter">
 				<div class="icon-button fa fa-icon fa-code-branch" ng-click="view.showlanguage=!view.showlanguage" ng-class="{active:view.showlanguage}"></div>
@@ -284,15 +376,15 @@
 				</div>
 			</div>
 			<div class="main-buttons ">
-				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+				<button class="button homey-button-secondary-shadow" data-i18n="settings.back" ng-click="closeTemplates();">Back</button>
 			</div>
 		</div>
 		<div class="template-panel" ng-show="vars.template">
 			<div class="content">&nbsp;</div>
 			<div class="main-buttons">
-				<button class="button" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
-				<button class="button" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
-				<button class="button" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
+				<button class="button  homey-button-secondary-shadow" data-i18n="settings.back" ng-click="backTemplates()">Back</button>
+				<button class="button  homey-button-secondary-shadow" ng-click="gotoLike(vars.template)"><span class="far fa-icon fa-hand-point-right"></span><span class="fa fa-icon fa-heart"></span></button>
+				<button class="button  homey-button-primary" data-i18n="settings.select" ng-click="selectTemplates();">Select</button>
 			</div>
 		</div>
 	</form>
@@ -319,17 +411,18 @@
 			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
 			$scope.topicsArray = _.toArray($scope.topics);
 
-			const vars = $scope.vars = { textSettings:undefined};
+			const vars = $scope.vars = { textSettings:undefined, filter:{defaultIcon:''}, };
 			$scope.temp = {};
-
+			
 			$scope.gotoLike = function(template) {
 				$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
 			}
 			$scope.closeTemplates = function() {
-				$scope.view.id=undefined; view.subid=undefined;
+				$scope.view.id=undefined; $scope.view.subid=undefined;
 			}
 			$scope.selectTemplates = function() {
-				vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; 
+				$scope.readTextSettings();
 			}
 			$scope.backTemplates = function() {
 				vars.template=null;
@@ -438,6 +531,24 @@
 			$scope.useTEF = function () {
 				Homey.emit('use_tef', { tef: vars.textSettings })
 					.then(result => {
+						vars.readcopy = result.tef;
+						//Homey.nextView();
+					})
+					.catch(error => {
+						Homey.alert(error.message, 'error');
+						Homey.done();
+					});
+			}
+
+			$scope.setTextSettings = function () {
+				($scope.vars.readcopy.settings.imported = 2) | 
+				($scope.vars.readcopy.settings.deviceIcon = $scope.vars.readcopy.deviceIcon) | 
+				($scope.vars.readcopy.settings.customIcons = $scope.vars.readcopy.customIcons) | 
+				($scope.vars.readcopy.settings.saveCustomIcons = $scope.vars.readcopy.saveCustomIcons) ;
+				
+				Homey.emit('virtualdeviceicons_setTextSettings', { tef: $scope.vars.readcopy })
+					.then(result => {
+						//vars.readcopy = result.tef;
 						Homey.nextView();
 					})
 					.catch(error => {
@@ -448,17 +559,16 @@
 
 
 
-
 			$scope.size = function (collection) {
 				console.log('size()');
 				return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
 			}
 
-			$scope.openUrl = function (url) {
+			$scope.openUrl = async function (url) {
 				try {
-					Homey.popup(url);
+					await Homey.popup(url);
 				} catch (error) {
-
+					console.log(error);
 				}
 			}
 
@@ -489,10 +599,48 @@
 					$scope.getTefTemplates();
 				});
 			}
+
+			$scope.setIcon = function(icon) {
+				let name = undefined;
+				try {
+					name = $('#name').val();
+					console.log(name);
+				} catch (error) { }
+				Homey.emit('icon_picked', { 'icon': icon, name: name }, function (err, result) {
+					if (err) {
+						console.log(err);
+						return;
+					}
+					Homey.nextView();
+				});
+			};
+
+			$scope.loadDefaultIcons = function () {
+				$scope.dedaultLoadInterval = setInterval(function () {
+					$scope.$apply(() => {
+						let catKeys = Object.keys($scope.defaultIcons);
+						let cat = $scope.defaultIcons[catKeys[$scope.defaultCategoryLoadIndex]];
+						if (!cat) return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+						if ($scope.defaultIconLoadIndex < (cat.icons ? cat.icons.length : 0)) $scope.defaultIconLoadIndex += 10;
+						else if ($scope.defaultCategoryLoadIndex < catKeys.length) {
+							$scope.defaultCategoryLoadIndex++;
+							$scope.defaultIconLoadIndex = 0.0;
+						} else return $scope.dedaultLoadInterval = clearInterval($scope.dedaultLoadInterval);
+					});
+					//Homey.alert('test');
+				}, 100);
+			}
 			
 
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
+				Homey.emit('virtualdeviceicons_getCustomIconsAvailable', null, function (err, result) {
+					if (err) { console.log(err); return; }
+					$scope.$apply(function () {
+						$scope.customIconsAvailable = result.customIconsAvailable;
+					});
+				});			
+				
 				Homey.emit('virtualdeviceicons_load', null, function (err, result) {
 					if (err) {
 						console.log(err);
@@ -507,6 +655,13 @@
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
 						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						
+						$scope.defaultIcons = result.defaultIcons;
+						$scope.defaultCategoryLoadIndex = 0;
+						$scope.defaultIconLoadIndex = 0.0;
+
+						$scope.loadDefaultIcons();
+						Homey.hideLoadingOverlay();
 					});
 				});
 

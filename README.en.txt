@@ -1,3 +1,5 @@
+New: API call to update AVD fields.
+
 New: Export and import Flows and/or Advanced Virtual Devices from other Homey users.
 Import via Templates via App Settings, AVD Repair or when creating AVDs.
 
