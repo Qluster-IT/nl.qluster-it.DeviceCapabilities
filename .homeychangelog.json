@@ -547,5 +547,8 @@
   },
   "2.9.23": {
     "en": "Added: 2 Pickers: Heating, Cooling, Off and Automatic, Electricity, Gas, Off. Also, one breaking change for picker Auto, On, Off: The values are now all lowercase."
+  },
+  "2.9.24": {
+    "en": "Improved: Updated, added and removed a (text-)tag(s) on the retrieve insights flowcard and some bugfixes for HP2023."
   }
 }
