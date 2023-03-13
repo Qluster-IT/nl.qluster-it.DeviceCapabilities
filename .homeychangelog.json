@@ -552,6 +552,12 @@
     "en": "Improved: Updated, added and removed a (text-)tag(s) on the retrieve insights flowcard and some bugfixes for HP2023."
   },
   "2.9.25": {
-    "en": "Improved: Retrieve Flows containing... no returns the flows itself as arrays also."
+    "en": "Improved: Retrieve Flows containing... now returns the flows itself as arrays also."
+  },
+  "2.9.26": {
+    "en": "Improved: Retrieve Flows containing [x] results can now be flatten."
+  },
+  "2.9.27": {
+    "en": "Improved: Retrieve Flows containing [x] results are now sorted on name."
   }
 }

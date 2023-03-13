@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.9.25",
+  "version": "2.9.27",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -3221,9 +3221,9 @@
           "de": "In Diagnosebericht eintragen"
         },
         "titleFormatted": {
-          "en": "Get Flows containing [[objecttype]], filtered: [[filter]]",
-          "nl": "Get Flows containing [[objecttype]], filtered: [[filter]]",
-          "de": "Flows mit [[objecttype]] erhalten, gefiltert: [[filter]]"
+          "en": "Get Flows containing [[objecttype]], filtered: [[filter]], flat:[[flat]]",
+          "nl": "Get Flows containing [[objecttype]], filtered: [[filter]], plat:[[flat]]",
+          "de": "Flows mit [[objecttype]] erhalten, gefiltert: [[filter]], plat:[[flat]]"
         },
         "args": [
           {
@@ -3287,6 +3287,19 @@
               "en": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
               "nl": "To filter you can use: 'test' OR 'c31ecacc-26fe-448e-ab00-d109618c8382' OR 'Device Cap*' OR [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ]",
               "de": "Um zu filtern kannst Du: 'test' ODER 'c31ecacc-26fe-448e-ab00-d109618c8382' ODER 'Device Cap*' ODER [{id:'f6ef2b6f-e3f2-4ecf-a205-4f919a7a6d3f'}, {name:'Test AVD'} ] benutzen"
+            }
+          },
+          {
+            "type": "checkbox",
+            "name": "flat",
+            "required": false,
+            "title": {
+              "en": "Flat",
+              "nl": "Plat"
+            },
+            "placeholder": {
+              "en": "Flatten the flownames",
+              "nl": "Sla de flownamen plat"
             }
           }
         ],

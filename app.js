@@ -94,7 +94,7 @@ class DeviceSetter extends Homey.App {
 		// 	this.Tracking.homeyAPIStatic = api;
 		// });
 
-		var capabilityZoneActions = ['set_capability_zone_text', 'set_capability_zone_number', 'set_capability_zone_percentage', 'set_capability_zone_boolean', 'set_capability_zone_2_boolean', 'set_capability_zone_json'];//, 'set_capability_zone_anders'];
+		const capabilityZoneActions = ['set_capability_zone_text', 'set_capability_zone_number', 'set_capability_zone_percentage', 'set_capability_zone_boolean', 'set_capability_zone_2_boolean', 'set_capability_zone_json'];//, 'set_capability_zone_anders'];
 		_.forEach(capabilityZoneActions, (action => {
 			var set_capability_zone = this.homey.flow.getActionCard(action);
 			set_capability_zone
@@ -219,7 +219,7 @@ class DeviceSetter extends Homey.App {
 
 
 		//#region Old Trigger
-		let trigger_capability_changedTrigger = this.homey.flow.getTriggerCard('trigger_capability_changed');
+		const trigger_capability_changedTrigger = this.homey.flow.getTriggerCard('trigger_capability_changed');
 		this.Triggers.triggercapabilitychanged.Card = trigger_capability_changedTrigger;
 		trigger_capability_changedTrigger
 			.on('update', (() => {
@@ -261,7 +261,7 @@ class DeviceSetter extends Homey.App {
 		//#endregion
 
 
-		let trigger_capability_changed2Trigger = this.homey.flow.getTriggerCard('trigger_capability_changed2');
+		const trigger_capability_changed2Trigger = this.homey.flow.getTriggerCard('trigger_capability_changed2');
 		this.Triggers.triggercapabilitychanged2.Card = trigger_capability_changed2Trigger;
 		trigger_capability_changed2Trigger
 			.on('update', (() => {
@@ -303,7 +303,7 @@ class DeviceSetter extends Homey.App {
 
 
 
-		let trigger_app_startedTrigger = this.homey.flow.getTriggerCard('trigger_app_started');
+		const trigger_app_startedTrigger = this.homey.flow.getTriggerCard('trigger_app_started');
 		this.Triggers.triggerappstarted.Card = trigger_app_startedTrigger;
 		trigger_app_startedTrigger
 			.on('update', (() => this.refreshAppStarted()))
@@ -316,7 +316,7 @@ class DeviceSetter extends Homey.App {
 		//this.refreshAppStarted.call(this);
 
 
-		let condition_app_running = this.homey.flow.getConditionCard('condition_app_running');
+		const condition_app_running = this.homey.flow.getConditionCard('condition_app_running');
 		condition_app_running.registerRunListener(async (args, state) => {
 			if (!args.app || !args.app.id || !this.apps || !this.apps[args.app.id]) return false;
 			else return this.apps[args.app.id].state === 'running';
@@ -324,7 +324,7 @@ class DeviceSetter extends Homey.App {
 			.getArgument('app').registerAutocompleteListener(this.autocompleteApp());
 
 
-		let condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
+			const condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
 		condition_change_capability_boolean
 			.registerRunListener((args, state) => {
 				console.log('condition_change_capability_boolean.registerRunListener');
@@ -378,9 +378,9 @@ class DeviceSetter extends Homey.App {
 			.registerAutocompleteListener(this.autocompleteCapability({ getable: true, setable: true, api: 'condition_change_capability_boolean' }));
 
 
-			let action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
+			const action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
 		_.forEach(action_capability_logs, (action => {
-			let set_capability_log = this.homey.flow.getActionCard(action);
+			const set_capability_log = this.homey.flow.getActionCard(action);
 			set_capability_log
 				.on('update', (() => { this.clearHomeyAPI(action); }).bind(this))
 				.registerRunListener((async (args, state) => {
@@ -500,7 +500,7 @@ class DeviceSetter extends Homey.App {
 		}).bind(this));
 
 
-		var virtualdevice_set_available = this.homey.flow.getActionCard('virtualdevice_set_available').registerRunListener(async (args, state) => {
+		const virtualdevice_set_available = this.homey.flow.getActionCard('virtualdevice_set_available').registerRunListener(async (args, state) => {
 			try {
 				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
 				var device = _.find(devices, dv => dv.__id == args.device.id);
@@ -513,7 +513,7 @@ class DeviceSetter extends Homey.App {
 		});
 		virtualdevice_set_available.getArgument('device').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
 
-		var virtualdevice_set_unavailable = this.homey.flow.getActionCard('virtualdevice_set_unavailable').registerRunListener(async (args, state) => {
+		const virtualdevice_set_unavailable = this.homey.flow.getActionCard('virtualdevice_set_unavailable').registerRunListener(async (args, state) => {
 			try {
 				var devices = this.homey.drivers.getDriver('virtualdevice').getDevices();
 				var device = _.find(devices, dv => dv.__id == args.device.id);
@@ -547,7 +547,7 @@ class DeviceSetter extends Homey.App {
 			}
 		});
 
-		var action_app_writeindiagnostic = this.homey.flow.getActionCard('action_app_writeindiagnostic').registerRunListener(async (args, state) => {
+		const action_app_writeindiagnostic = this.homey.flow.getActionCard('action_app_writeindiagnostic').registerRunListener(async (args, state) => {
 			try {
 				if (args.avd && args.avd.id) {
 					var avds = this.homey.drivers.getDriver('virtualdevice').getDevices();
@@ -577,12 +577,14 @@ class DeviceSetter extends Homey.App {
 		action_app_writeindiagnostic.getArgument('avd').registerAutocompleteListener(this.autocompleteDevice({ app: 'homey:app:' + this.id }));
 
 
-		var action_app_get_flows_containing = this.homey.flow.getActionCard('action_app_get_flows_containing').registerRunListener(async (args, state) => {
+		const action_app_get_flows_containing = this.homey.flow.getActionCard('action_app_get_flows_containing').registerRunListener(async (args, state) => {
 			try {
 				let filter = args.filter;
 				if (filter && ((filter.startsWith('{') && filter.endsWith('}')) || (filter.startsWith('[') && filter.endsWith(']')))) filter = JSON.parse(filter);
 				var api = await this.refreshHomeyAPI();
-				return { flows: JSON.stringify(await FindObject(args.objecttype, filter, api)) };
+				let flows = await FindObject(args.objecttype, filter, api);
+				if(args.flat===true) flows = _.map(flows, x=> { x.flows = _.join(_.map(x.flows, 'name'), ','); return x; });
+				return { flows: JSON.stringify(flows) };
 			} catch (error) {
 				this.log('action_app_get_flows_containing:');
 				this.error(error);
