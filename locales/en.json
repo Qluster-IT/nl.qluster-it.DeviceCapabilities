@@ -172,7 +172,25 @@
 		"createListField":"Create List",		
 		"prefixedList":"Prefixed list",		
 		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!",
-		"cumulative":"Cumulative"
+		"cumulative":"Cumulative",
+
+		"reflect":"Reflect",
+		"variable":"Variable",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":"",
+		"":""
 	},
 	"pair": {
 		"list_icons":{
@@ -181,13 +199,10 @@
 			"custom_device_icon":"If you wish to use a custom icon for your device, you can upload it here. The icon needs to be in .svg format.",
 			"select_device_icon":"Or select one from the list.",
 			"set_icon_and_customize":"Here you can pick an icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.",
-			"set_icon_and_customize_change" : "You can change the icon later through App Settings.",
-			
+			"set_icon_and_customize_change" : "You can change the icon later through App Settings.",			
 			"set_name":"Here you can set the name for the device:",
 			"create_device_self":"Or create a device yourself",
 			"choose_template":"Or choose a Template",
-			
-			
 			"create_avd_by":"Create an Advanced Virtual Device by",
 			"creating_empty_avd":"Creating an empty AVD",
 			"selecting_template":"Selecting from a Template",

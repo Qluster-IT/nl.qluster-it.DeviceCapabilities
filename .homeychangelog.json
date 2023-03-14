@@ -562,5 +562,11 @@
   },
   "2.9.28": {
     "en": "Bugfixed: Set devices with class/brand/etc should now work for everyone."
+  },
+  "2.9.29": {
+    "en": "Notification: Next update will optionally include the Better Logic Library and Chronograph App, to reflect it's values in AVDs."
+  },
+  "2.9.30": {
+    "en": "Added: optionally included the Better Logic Library and Chronograph App, to reflect it's values in AVDs."
   }
 }

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "athom-api": "^3.8.2",
+    "betterlogiclibrary": "^0.9.5",
     "lodash-core": "^4.17.19"
   },
   "devDependencies": {},

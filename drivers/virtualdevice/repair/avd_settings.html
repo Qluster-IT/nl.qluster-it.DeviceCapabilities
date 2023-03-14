@@ -64,6 +64,24 @@
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 					</select>
 				</div>
+				<div ng-else execute="s['status'+($index+1)+'Icon']=undefined" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
+					<select class="value" ng-model="s['status'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>				
+				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;" ></div>
+				<div class="field" ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+					<select class="value" ng-model="s['status'+($index+1)+'ReflectId']">
+						<option value=""></option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:['number', 'trigger']}" value="{{_var.name}}">{{_var.name}}</option>
+					</select>
+				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -141,6 +159,23 @@
 					</select>
 				</div>
 				<div ng-else execute="s['text'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
+					<select class="value" ng-model="s['text'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>				
+				<div class="field" ng-if="s['text'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['text'+($index+1)+'ReflectId']=undefined;" ></div>
+				<div class="field" ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+					<select class="value" ng-model="s['text'+($index+1)+'ReflectId']">
+						<option value=""></option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:'string'}" value="{{_var.name}}">{{_var.name}}</option>
+					</select>
+				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -207,6 +242,24 @@
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
+					</select>
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
+					<select class="value" ng-model="s['number'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>				
+				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'ReflectId']=undefined;" ></div>
+				<div class="field" ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+					<select class="value" ng-model="s['number'+($index+1)+'ReflectId']">
+						<option value=""></option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:'number, trigger'}:contains" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
 				</div>
 				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
@@ -341,6 +394,23 @@
 					</select>
 				</div>
 				<div ng-else execute="s['boolean'+($index+1)+'Icon']=undefined" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
+					<select class="value" ng-model="s['boolean'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>				
+				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['boolean'+($index+1)+'ReflectId']=undefined;" ></div>
+				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+					<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']">
+						<option value=""></option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
+					</select>
+				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -441,6 +511,23 @@
 					</select>
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'Icon'] = undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
+					<select class="value" ng-model="s['button'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>				
+				<div class="field" ng-if="s['button'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['button'+($index+1)+'ReflectId']=undefined;" ></div>
+				<div class="field" ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+					<select class="value" ng-model="s['button'+($index+1)+'ReflectId']">
+						<option value=""></option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
+					</select>
+				</div>
 				<div class="field"
 					ng-if="!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button'|| s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0)">
 					<div class="label"><span>{{__('virtualdevicesettings.nonClickable') || 'Non-Clickable'}}</span>
@@ -898,7 +985,7 @@
 			$scope.s = {};
 			$scope.temp = {};
 			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
-			$scope.view = {id:undefined, subid:undefined};
+			const view = $scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
 			$scope.filter = {header:''};
 			
@@ -987,11 +1074,16 @@ ${vars.textSettings}
 
 			$scope.deviceClasses = asv_settings.deviceClasses;
 			$scope.listPrefixedLists = asv_settings.listPrefixedLists;
+			$scope.reflectApps = asv_settings.reflectApps;
 
 			// $scope.setListShowAs = function(listId) {
 			// 	$scope.s[listId+'ShowAs'] = _.find($scope.listPrefixedLists, x=> x.id===$scope.s[listId+'PrefixedList']).showAs;
 			// }
 
+
+			$scope.contains = function(expected, actual) {
+				return actual.indexOf(expected) > -1;
+			}
 
 			$scope._delete = function(o,s) {
 				delete o[s];
@@ -1354,6 +1446,9 @@ ${vars.textSettings}
 
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
+						
+						$scope.vars.bllVariables = result.bllVariables;
+						
 						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
 						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
 					});

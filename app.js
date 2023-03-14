@@ -18,6 +18,8 @@ const fs = require('fs');
 const sandbox = require('./lib/sandbox');
 const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 
+const { BL } = require('betterlogiclibrary');
+
 
 const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
@@ -59,6 +61,8 @@ class DeviceSetter extends Homey.App {
 		devices: {}
 	}
 
+
+
 	async onInit() {
 		DeviceSetter.Current = this;
 		this.DEFAULT_ICONS_PATH = '/userdata/defaulticons/';
@@ -76,6 +80,38 @@ class DeviceSetter extends Homey.App {
 			}
 		}
 
+		const bl = await BL.init({ homey: this.homey });
+		BL.onVariableUpdate = async ({ variable, date }) => {
+			if (this.Reflections && this.Reflections['net.i-dev.betterlogic'] && this.Reflections['net.i-dev.betterlogic'][variable.name])
+				for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variable.name].length; i++) {
+					const field = this.Reflections['net.i-dev.betterlogic'][variable.name][i];
+					await field.method(field, variable);
+
+				}
+
+			// 	if (!variable.remove) return;
+			// 	switch (variable.type) {
+			// 		case "number":
+			// 		case "trigger":
+			// 			writeToInfluxDB('number', variable.value);
+			// 			break;
+			// 		case "string":
+			// 			writeToInfluxDB('string', variable.value);
+			// 			break;
+			// 		case "boolean":
+			// 			writeToInfluxDB('boolean', variable.value);
+			// 			break;
+			// 	}
+			// }
+			//this.log(this.Reflections);
+		}
+		bl.ready.then(() => {
+			try {
+				this.updateReflection();
+			} catch (error) {
+
+			}
+		})
 		this.appPath = this.homey.platform == 'local' && this.homey.platformVersion == 1 ? '/' : '/app/';
 
 
@@ -84,6 +120,10 @@ class DeviceSetter extends Homey.App {
 
 
 		this.log('DeviceSetter is running...');
+		if (!await this.homey.settings.get('notification_bll_chronograph_update')) {
+			this.homey.notifications.createNotification({ excerpt: "The next update of DC will optionally include the Better Logic Library and Chronograph, to reflect it's values in AVDs (without flows).\nBecause of this, auto-update will not update the DC app.\nYou need to manually update the DC app once the new version is available, because it needs permissions to BLL and Chronograph." });
+			this.homey.settings.set('notification_bll_chronograph_update', true);
+		}
 
 		// if(!await this.homey.settings.get('notification_petition_zerodash')) {
 		// 	this.homey.notifications.createNotification({excerpt : "For everyone who wants a Text Status Indicator (as Device Tile) without a zero or dash in front of it, please go to the Device Capability Homey Forum Topic, click on the petition link at the top or bottom of the topic and hit that Like!\n\n The target is 61 likes, we are almost there!\n Your Like counts!" });  
@@ -585,8 +625,8 @@ class DeviceSetter extends Homey.App {
 				this.log('trigger_app_zone_activated:'); this.error(error); return new Error(error);
 			}
 		});
-		
-		
+
+
 		// {
 		// 	"highlight": true,
 		// 	"deprecated":true,
@@ -719,6 +759,41 @@ class DeviceSetter extends Homey.App {
 
 	}
 
+	// addReflectApp({id, name}) {
+	// 	if(!this.reflectApps) this.homey.settings.get('reflectApps');
+	// 	let changed = false;
+	// 	if(!this.reflectApps && (changed=true)) this.reflectApps = [];
+	// 	if(!this.reflectApps.find(x=>x.id===id) && (changed=true)) this.reflectApps.push({id, app});
+	// 	if(changed) this.homey.settings.set('reflectApps', this.reflectApps);
+	// }
+
+
+	async updateReflection({ device } = {}) {
+		if (this.Reflections && this.Reflections['net.i-dev.betterlogic'])// && this.Reflections['net.i-dev.betterlogic'][variable.name])
+		{
+			const vars = await this.getBllVariables();
+			if(vars) for (const variableName in this.Reflections['net.i-dev.betterlogic']) {
+				let _var;
+				if ((_var = vars.find(x => x.name == variableName))) for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variableName].length; i++) {
+					const field = this.Reflections['net.i-dev.betterlogic'][variableName][i];
+					if(device && field.device!==device) continue;
+					await field.method(field, _var);
+				}
+			}
+		}
+
+	}
+
+	async getBllVariables() {
+		let vars;
+		if ((vars = this._bllVariables)) return vars;
+		vars = BL.isReady ? await BL.getVariables() : null;
+		if (vars) {
+			this._bllVariables = vars;
+			this.homey.setTimeout(() => { delete this._bllVariables; }, 10_000);
+			return vars;
+		}
+	}
 
 	getGuid() {
 		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
@@ -1189,7 +1264,7 @@ class DeviceSetter extends Homey.App {
 	async getDeviceclasssAndCapabilities({ action, queryDeviceclass, queryCapability, deviceclass } = {}) {
 		//let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
-		
+
 		await this.refreshHomeyAPI();
 		var devices = this.devices;
 		var classes = {};
@@ -1405,7 +1480,7 @@ class DeviceSetter extends Homey.App {
 				await this.refreshZones();
 				await this.refreshApps();
 				await this.refreshDrivers();
-				
+
 
 				// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
 				// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
@@ -1476,7 +1551,7 @@ class DeviceSetter extends Homey.App {
 
 	async refreshDevices(device, type) {
 		this.log('refreshDevices');
-		
+
 		//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
 		if (!this.devices || !type) {
 			this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });

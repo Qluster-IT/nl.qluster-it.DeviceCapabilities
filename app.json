@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.9.28",
+  "version": "2.9.29",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -69,7 +69,8 @@
     "tools"
   ],
   "permissions": [
-    "homey:manager:api"
+    "homey:manager:api",
+    "homey:app:net.i-dev.betterlogic"
   ],
   "source": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/",
   "bugs": {
