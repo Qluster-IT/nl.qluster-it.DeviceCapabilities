@@ -194,27 +194,9 @@ class DeviceSetter extends Homey.App {
 				}).catch(err => { defer.reject(err); });
 				return defer.promise;
 			});
-			set_capability_zone
-				.getArgument('zone').registerAutocompleteListener((query, args) => {
-					var defer = new Defer(10000);
-					//this.refreshHomeyAPI(action).then((async api => {
-					var zones = this.zones;//await api.zones.getZones();
-					var home = _(zones).find(z => !z.parent);
-					var arr = [];
-
-					fill(home);
-					defer.resolve(_.map(arr, zone => { return { id: zone.id, name: zone.name }; }));
-
-					function fill(obj, spaces) {
-						spaces = spaces || '';
-						arr.push({ id: obj.id, name: spaces + obj.name });
-						let subzones = _.filter(zones, z => z.parent == obj.id);
-						subzones = _.orderBy(subzones, 'name');
-						_(subzones).forEach(z => fill(z, spaces + '.. '));
-					}
-					//}).bind(this));
-					return defer.promise;
-				});
+			set_capability_zone.getArgument('zone').registerAutocompleteListener(async (query, args) => {
+				return await this.getZones();
+			});
 		}).bind(this));
 
 
@@ -324,7 +306,7 @@ class DeviceSetter extends Homey.App {
 			.getArgument('app').registerAutocompleteListener(this.autocompleteApp());
 
 
-			const condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
+		const condition_change_capability_boolean = this.homey.flow.getConditionCard('condition_change_capability_boolean');
 		condition_change_capability_boolean
 			.registerRunListener((args, state) => {
 				console.log('condition_change_capability_boolean.registerRunListener');
@@ -378,13 +360,13 @@ class DeviceSetter extends Homey.App {
 			.registerAutocompleteListener(this.autocompleteCapability({ getable: true, setable: true, api: 'condition_change_capability_boolean' }));
 
 
-			const action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
+		const action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
 		_.forEach(action_capability_logs, (action => {
 			const set_capability_log = this.homey.flow.getActionCard(action);
 			set_capability_log
 				.on('update', (() => { this.clearHomeyAPI(action); }).bind(this))
 				.registerRunListener((async (args, state) => {
-					let tokens = { number: 0, boolean: false, user: '', client: '', changedon: '', durationtillnow:0, changedonms: 0, device: '', capability: '' };
+					let tokens = { number: 0, boolean: false, user: '', client: '', changedon: '', durationtillnow: 0, changedonms: 0, device: '', capability: '' };
 					try {
 						if (!args || !args.device || !args.capability) return false;
 						tokens.device = args.device.name;
@@ -408,7 +390,7 @@ class DeviceSetter extends Homey.App {
 						if (args.capability.uri) {
 							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
-							if (device) targetInsight = _.find(device.insights, x => { return (x.id == args.capability.id || (x.id == 'homey:device:'+ args.capability.deviceId + ':' +args.capability.id)); });
+							if (device) targetInsight = _.find(device.insights, x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.capability.deviceId + ':' + args.capability.id)); });
 						}
 
 						if (targetInsight) {
@@ -456,7 +438,7 @@ class DeviceSetter extends Homey.App {
 
 								if (insights.step && args.numberof == 0) {
 
-									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString()  : new Date().toISOString();
+									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString() : new Date().toISOString();
 									let end = new Date(endD);
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -465,7 +447,7 @@ class DeviceSetter extends Homey.App {
 								}
 								else if (insights.end && args.numberof == 0) {
 
-									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString()  : new Date().toISOString();
+									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString() : new Date().toISOString();
 									let end = new Date(endD);
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -583,7 +565,7 @@ class DeviceSetter extends Homey.App {
 				if (filter && ((filter.startsWith('{') && filter.endsWith('}')) || (filter.startsWith('[') && filter.endsWith(']')))) filter = JSON.parse(filter);
 				var api = await this.refreshHomeyAPI();
 				let flows = await FindObject(args.objecttype, filter, api);
-				if(args.flat===true) flows = _.map(flows, x=> { x.flows = _.join(_.map(x.flows, 'name'), ','); return x; });
+				if (args.flat === true) flows = _.map(flows, x => { x.flows = _.join(_.map(x.flows, 'name'), ','); return x; });
 				return { flows: JSON.stringify(flows) };
 			} catch (error) {
 				this.log('action_app_get_flows_containing:');
@@ -603,6 +585,33 @@ class DeviceSetter extends Homey.App {
 				this.log('trigger_app_zone_activated:'); this.error(error); return new Error(error);
 			}
 		});
+		
+		// this.trigger_app_zone_device_changed = this.homey.flow.getTriggerCard('trigger_app_zone_device_changed');
+		// this.trigger_app_zone_device_changed.registerRunListener(async (args, state) => {
+		// 	try {
+		// 		return (args.zone.id === state.zone.id);
+		// 	} catch (error) {
+		// 		this.log('trigger_app_zone_device_changed:'); this.error(error); return new Error(error);
+		// 	}
+		// });
+		// this.trigger_app_zone_device_changed.getArgument('zone').registerAutocompleteListener(async (query, args) => {
+		// 	return await this.getZones();
+		// });
+		// const trigger_app_zone_device_changedUpdate = async ()=> {
+		// 	// if(device && this.trigger_app_zone_device_changedArguments) {
+		// 	// 	let find = this.trigger_app_zone_device_changedArguments.find(x=> x.zone.id===device.zone);
+		// 	// 	let zone;
+		// 	// 	if(find && (zone=this.zones[device.zone])) this.trigger_app_zone_device_changed.trigger({zoneId:device.zone, zoneName:zone.name, deviceName:device.name}, {zone:{id:device.zone}})
+		// 	// }
+		// 	const newArguments = await this.trigger_app_zone_device_changed.getArgumentValues();
+		// 	if(this.trigger_app_zone_device_changedArguments && this.trigger_app_zone_device_changedArguments.length) {
+		// 		const missing = this.trigger_app_zone_device_changedArguments.filter(x=>x.zone.id);
+		// 	}
+		// 	this.trigger_app_zone_device_changedArguments = newArguments;//.map(x=>{return x;});
+		// };
+		// this.trigger_app_zone_device_changed.on('update', ()=> {  trigger_app_zone_device_changedUpdate(); })
+		// await trigger_app_zone_device_changedUpdate();
+		// if(this.trigger_app_zone_device_changedArguments && this.trigger_app_zone_device_changedArguments.length) await this.refreshHomeyAPI();
 
 
 		this.trigger_app_device_available = this.homey.flow.getTriggerCard('trigger_app_device_available');
@@ -673,6 +682,24 @@ class DeviceSetter extends Homey.App {
 		}
 	}
 
+
+	async getZones() {
+		await this.refreshHomeyAPI();
+		var zones = this.zones;
+		var home = _(zones).find(z => !z.parent);
+		var arr = [];
+
+		fill(home);
+		return _.map(arr, zone => { return { id: zone.id, name: zone.name }; });
+
+		function fill(obj, spaces) {
+			spaces = spaces || '';
+			arr.push({ id: obj.id, name: spaces + obj.name });
+			let subzones = _.filter(zones, z => z.parent == obj.id);
+			subzones = _.orderBy(subzones, 'name');
+			_(subzones).forEach(z => fill(z, spaces + '\t'));
+		}
+	}
 
 
 	runSandBox(code) {
@@ -1099,6 +1126,8 @@ class DeviceSetter extends Homey.App {
 	async getDeviceclasssAndCapabilities({ action, queryDeviceclass, queryCapability, deviceclass } = {}) {
 		//let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
+		
+		await this.refreshHomeyAPI();
 		var devices = this.devices;
 		var classes = {};
 		var actionType = _.last(action.split('_'));
@@ -1194,10 +1223,10 @@ class DeviceSetter extends Homey.App {
 				} else {
 					var device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
-					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable, deviceId:device.id }; });
+					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
-					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':'+ cap.id); })) === insights; });
+					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
 
 				}
 				if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
@@ -1313,7 +1342,7 @@ class DeviceSetter extends Homey.App {
 				await this.refreshZones();
 				await this.refreshApps();
 				await this.refreshDrivers();
-
+				
 
 				// console.log('Size of this.devices:', this.homey.app.roughSizeOfObject(this.devices) );
 				// console.log('Size of this.zones:', this.homey.app.roughSizeOfObject(this.zones) );
@@ -1378,8 +1407,13 @@ class DeviceSetter extends Homey.App {
 		if (id && this.apis) delete this.apis[id];
 	}
 
+	// async refreshCapabilities(capabilty, type) {
+	// 	let b = capabilty;
+	// }
+
 	async refreshDevices(device, type) {
 		this.log('refreshDevices');
+		
 		//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
 		if (!this.devices || !type) {
 			this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
@@ -1527,7 +1561,7 @@ class DeviceSetter extends Homey.App {
 	}
 
 	getLastUpdated(capability) {
-		return (typeof(capability.lastUpdated)=='number' ? new Date(capability.lastUpdated) : capability.lastUpdated instanceof Date ? capability.lastUpdated: new Date(capability.lastUpdated));
+		return (typeof (capability.lastUpdated) == 'number' ? new Date(capability.lastUpdated) : capability.lastUpdated instanceof Date ? capability.lastUpdated : new Date(capability.lastUpdated));
 	}
 
 }
