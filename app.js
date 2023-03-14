@@ -19,6 +19,7 @@ const sandbox = require('./lib/sandbox');
 const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 
 const { BL } = require('betterlogiclibrary');
+const { CG } = require('chronograph-npm');
 
 
 const SETTING_PREFIX = 'icons_';
@@ -80,6 +81,24 @@ class DeviceSetter extends Homey.App {
 			}
 		}
 
+		const cg = await CG.init({ homey: this.homey });
+		CG.onChronographUpdate = async ({ chronograph }) => {
+			this.homey.log('onChronographUpdate', chronograph);
+			if (this.Reflections && this.Reflections['nl.fellownet.chronograph'] && this.Reflections['nl.fellownet.chronograph'][chronograph.name]);
+				// for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variable.name].length; i++) {
+				// 	const field = this.Reflections['net.i-dev.betterlogic'][variable.name][i];
+				// 	await field.method(field, variable);
+
+				// }
+		}
+		cg.ready.then(() => {
+			try {
+				this.updateReflection();
+			} catch (error) {
+
+			}
+		});
+
 		const bl = await BL.init({ homey: this.homey });
 		BL.onVariableUpdate = async ({ variable, date }) => {
 			if (this.Reflections && this.Reflections['net.i-dev.betterlogic'] && this.Reflections['net.i-dev.betterlogic'][variable.name])
@@ -88,22 +107,6 @@ class DeviceSetter extends Homey.App {
 					await field.method(field, variable);
 
 				}
-
-			// 	if (!variable.remove) return;
-			// 	switch (variable.type) {
-			// 		case "number":
-			// 		case "trigger":
-			// 			writeToInfluxDB('number', variable.value);
-			// 			break;
-			// 		case "string":
-			// 			writeToInfluxDB('string', variable.value);
-			// 			break;
-			// 		case "boolean":
-			// 			writeToInfluxDB('boolean', variable.value);
-			// 			break;
-			// 	}
-			// }
-			//this.log(this.Reflections);
 		}
 		bl.ready.then(() => {
 			try {
@@ -111,7 +114,8 @@ class DeviceSetter extends Homey.App {
 			} catch (error) {
 
 			}
-		})
+		});
+
 		this.appPath = this.homey.platform == 'local' && this.homey.platformVersion == 1 ? '/' : '/app/';
 
 
@@ -772,11 +776,11 @@ class DeviceSetter extends Homey.App {
 		if (this.Reflections && this.Reflections['net.i-dev.betterlogic'])// && this.Reflections['net.i-dev.betterlogic'][variable.name])
 		{
 			const vars = await this.getBllVariables();
-			if(vars) for (const variableName in this.Reflections['net.i-dev.betterlogic']) {
+			if (vars) for (const variableName in this.Reflections['net.i-dev.betterlogic']) {
 				let _var;
 				if ((_var = vars.find(x => x.name == variableName))) for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variableName].length; i++) {
 					const field = this.Reflections['net.i-dev.betterlogic'][variableName][i];
-					if(device && field.device!==device) continue;
+					if (device && field.device !== device) continue;
 					await field.method(field, _var);
 				}
 			}
