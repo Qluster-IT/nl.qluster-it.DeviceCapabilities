@@ -559,5 +559,8 @@
   },
   "2.9.27": {
     "en": "Improved: Retrieve Flows containing [x] results are now sorted on name."
+  },
+  "2.9.28": {
+    "en": "Bugfixed: Set devices with class/brand/etc should now work for everyone."
   }
 }

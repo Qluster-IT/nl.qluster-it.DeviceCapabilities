@@ -586,6 +586,69 @@ class DeviceSetter extends Homey.App {
 			}
 		});
 		
+		
+		// {
+		// 	"highlight": true,
+		// 	"deprecated":true,
+		// 	"id": "trigger_app_zone_device_changed",
+		// 	"title": {
+		// 	  "en": "Device in Zone changed",
+		// 	  "nl1": "..",
+		// 	  "de1": ".."
+		// 	},
+		// 	"titleFormatted": {
+		// 	  "en": "Device in [[zone]] changed ",
+		// 	  "nl1": "Ruimte werd [[zone]]",
+		// 	  "de1": "Zone wurde [[zone]]"
+		// 	},
+		// 	"args": [          
+		// 	  {
+		// 		"type": "autocomplete",
+		// 		"required": false,
+		// 		"name": "zone",
+		// 		"title": {
+		// 		  "en": "Zone",
+		// 		  "nl": "Ruimte",
+		// 		  "de": "Zone"
+		// 		},
+		// 		"placeholder": {
+		// 		  "en": "Zone",
+		// 		  "nl": "Ruimte",
+		// 		  "de": "Zone"
+		// 		}
+		// 	  }
+		// 	],
+		// 	"tokens": [
+		// 	  {
+		// 		"name": "zoneId",
+		// 		"type": "string",
+		// 		"title": {
+		// 		  "en": "Zone ID",
+		// 		  "nl": "Ruimte ID",
+		// 		  "de": "Zonen-ID"
+		// 		}
+		// 	  },
+		// 	  {
+		// 		"name": "zoneName",
+		// 		"type": "string",
+		// 		"title": {
+		// 		  "en": "Zone Name",
+		// 		  "nl": "Ruimte naam",
+		// 		  "de": "Zonen-Name"
+		// 		}
+		// 	  },
+		// 	  {
+		// 		"name": "deviceName",
+		// 		"type": "string",
+		// 		"title": {
+		// 		  "en": "Device",
+		// 		  "nl": "Apparaat",
+		// 		  "de": "Gerät"
+		// 		}
+		// 	  }
+		// 	]
+		//   },
+
 		// this.trigger_app_zone_device_changed = this.homey.flow.getTriggerCard('trigger_app_zone_device_changed');
 		// this.trigger_app_zone_device_changed.registerRunListener(async (args, state) => {
 		// 	try {
