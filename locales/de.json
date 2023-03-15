@@ -64,15 +64,10 @@
 		"selectFlowAndPressCreate":"Wählen Sie einen Flow und drücken Sie Erstellen",
 		"pasteTEFReadFlows":"The Exchanger File einfügen und Flows einlesen drücken",		
 		"no_avd_in_tef":"TEF enthält kein AVD.",
-		"flows_will_be_created":"Die folgenden Flows werden in dem Skript erstellt.",		
-
-		
+		"flows_will_be_created":"Die folgenden Flows werden in dem Skript erstellt.",
 		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
 		"back":"Back",
-		"use_this_template":"Use this template",
-		"":"",
-		"":"",
-		"":""
+		"use_this_template":"Use this template"
     },
 	"virtualdevicesettings":{
 		"labelButton1":"Taste 1 ist ein Sonderfall und bleibt die erste und somit die Haupttaste und -anzeige des Geräts.",
@@ -171,7 +166,18 @@
 		"createListField":"Erstelle Liste",		
 		"prefixedList":"Vorangestellte Liste",		
 		"prefixedListHint":"Derzeit sind nur vorgefertigte Listen verfügbar. Gehen Sie zum Forum, um Ihre eigene anzufordern!",
-		"cumulative":"Kumulativ"
+		"cumulative":"Kumulativ",
+		
+
+		"reflect":"Reflect",
+		"reflectHint":"Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.",
+		"variable":"Variable",
+		"chronograph":"Chronograph",
+		"property":"Property",
+		"format_bll_expression":"BLL expression",
+		"format_bll_expressionHint":"Format the value through an BLL Expression.<br/>N.b. Some properties require formatting to be parsed to this field<br/>Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.",
+		"format_bll_expressionHintBLL":"Format the value through an BLL Expression.<br/>Available parameters:<br/>$value, $variable.",
+		"format_bll_expressionHintCG":"Format the value through an BLL Expression.<br/>Available parameters:<br/>$value, $chronograph."
     },
 	"pair": {
 		"list_icons":{
