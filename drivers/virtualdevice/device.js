@@ -292,11 +292,11 @@ module.exports = class WatchDevice extends Homey.Device {
 							let property = this.Settings[r.fieldId + 'ReflectProperty'];
 							let value = property ? variable[property] : variable.value;
 							const format = this.Settings[r.fieldId + 'ReflectFormat'];
-							let date;
+							let date, time;
 							if (property == 'lastChanged' && value) date = value = new Date(value);
 							if (format) {
 								try {
-									value = await BL.express(format, { value, variable, date });
+									value = await BL.express(format, { value, variable, date, timeMs:time });
 								} catch (error) {
 									if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
 								}
@@ -317,8 +317,11 @@ module.exports = class WatchDevice extends Homey.Device {
 							let property = this.Settings[r.fieldId + 'ReflectProperty'];
 							let value = chronograph[property];
 							const format = this.Settings[r.fieldId + 'ReflectFormat'];
+							let timeMs;
+							if((value!==undefined && value !==null) && (property=='elapsed' ||property=='remaining') ) timeMs = value;
+
 							if (format) try {
-								value = await BL.express(format, { value, chronograph });
+								value = await BL.express(format, { value, chronograph, timeMs });
 							} catch (error) {
 								if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
 							} else {
