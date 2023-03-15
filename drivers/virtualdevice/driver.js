@@ -474,7 +474,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
 
-    async setValue({field, device, value, expression, mode="executewhencards"}) {
+    async setValue({field, device, value, expression, mode }) {
         const _fieldId = field ? field.id : undefined;
         const fieldIds = [_fieldId];
         try {
@@ -3279,8 +3279,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return {
             settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
             favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
-            bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined,
-            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined
+            bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined, blReady:BL.isReady,
+            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady
         };
 
         });

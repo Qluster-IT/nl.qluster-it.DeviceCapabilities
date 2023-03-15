@@ -65,9 +65,6 @@
 		"pasteTEFReadFlows":"Plak The Exchanger File en druk op Lees Flows",		
 		"no_avd_in_tef":"TEF bevat geen AVD.",
 		"flows_will_be_created":"De volgende flows worden in het script aangemaakt.",
-
-
-
 		"pasteTEFReadDevice":"Plak het Exchanger-bestand en druk op Apparaat lezen",
 		"back":"Terug"
 	},
@@ -168,7 +165,19 @@
 		"createListField":"Lijst maken",		
 		"prefixedList":"Vooraf ingestelde lijst",		
 		"prefixedListHint":"Momenteel zijn alleen vooraf vastgestelde lijsten beschikbaar. Ga naar het forum om je eigen aan te vragen!",
-		"cumulative":"Cumulatief"
+		"cumulative":"Cumulatief",
+
+
+		"reflect":"Reflecteer",
+		"reflectHint":"Hier kunt u een app selecteren om een ​​entiteit te selecteren waarvan de geselecteerde eigenschap automatisch het veld van de AVD zal bijwerken.",
+		"variable":"Variabel",
+		"chronograph":"Chronograph",
+		"property":"Eigenschap",
+		"format_bll_expression":"BLL expression",
+		"format_bll_expressionHint":"Formatteer de waarde via een BLL-expressie.<br/>N.b. Voor sommige eigenschappen moet de opmaak voor dit veld worden geconverteerd.<br/>Installeer de Better Logic Library-app uit de Athom App Store om BLL-expressies in te schakelen.",
+		"format_bll_expressionHintBLL":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $variable.",
+		"format_bll_expressionHintCG":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $chronograph."
+
 	},
 	"pair": {
 		"list_icons":{
@@ -180,9 +189,7 @@
 			"set_icon_and_customize_change" : "U kunt het pictogram later wijzigen via App Instellingen.",
 			"set_name":"Hier kunt u de naam van het apparaat instellen:",			
 			"create_device_self":"Of maak zelf een apparaat aan",
-			"choose_template":"Of kies een sjabloon",
-
-			
+			"choose_template":"Of kies een sjabloon",			
 			"create_avd_by":"Maak een geavanceerd virtueel apparaat (AVD) door",
 			"creating_empty_avd":"Een lege AVD maken",
 			"selecting_template":"Selecteren uit een sjabloon",

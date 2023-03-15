@@ -15,7 +15,7 @@
     width: 100%!important;
     height: 100%!important;
     display: inline-block;
-    padding:0px!important;
+    padding:0px 2px!important;
   
 }
 .non-setting-view {
@@ -534,13 +534,15 @@ h1.top-labels {
 }
 
 .label>* {
-    display: inline-block;
+    display: inline;
 }
 
 .label {
     position: relative;
     width: 48%;
     display: inline-block;
+    vertical-align: middle;
+
 }
 
 .label .fa {
