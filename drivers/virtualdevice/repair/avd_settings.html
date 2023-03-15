@@ -70,13 +70,27 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>				
-				<div class="field" ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
-					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
-						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:'number, trigger'}:contains" value="{{_var.name}}">{{_var.name}}</option>
-					</select>
+				</div>
+				<div ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['status'+($parent.$index+1)+'ReflectId'].name ? s['status'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['status'+($index+1)+'ReflectProperty']? '' : s['status'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['number','trigger'].indexOf(s['status'+($index+1)+'ReflectId'].type)==-1 && s['status'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
 				</div>
 				<div ng-if="s['status'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
@@ -86,18 +100,21 @@
 							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['status'+($parent.$index+1)+'ReflectId'].key ? s['status'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
-					<div class="field">
+					<div class="field" ng-init="s['status'+($index+1)+'ReflectProperty']? '' : s['status'+($index+1)+'ReflectProperty']='elapsed'">
 						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
 						<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
-							<option value=""></option>
 							<option value="elapsed">Elapsed duration</option>
 							<option ng-if="s['status'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
 						</select>
+					</div>				
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['running', 'removed'].indexOf(s['status'+($index+1)+'ReflectProperty'])>-1" />
 					</div>
 				</div>
 				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
-					<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
-					<input class="value" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" />
 				</div>
 				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;s['status'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field">
@@ -183,13 +200,49 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>				
-				<div class="field" ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
-					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
-						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:'string'}" value="{{_var.name}}">{{_var.name}}</option>
-					</select>
+				</div>
+				<div ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['text'+($parent.$index+1)+'ReflectId'].name ? s['text'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['text'+($index+1)+'ReflectProperty']? '' : s['text'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['string'].indexOf(s['text'+($index+1)+'ReflectId'].type)==-1 && s['text'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>
+				<div ng-if="s['text'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['text'+($parent.$index+1)+'ReflectId'].key ? s['text'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['text'+($index+1)+'ReflectProperty']? '' : s['text'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['text'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" required/>
+					</div>
 				</div>
 				<div class="field" ng-if="s['text'+($index+1)+'Reflect']">
 				</div>
@@ -269,13 +322,49 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>				
-				<div class="field" ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
-					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
-						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:'number, trigger'}:contains" value="{{_var.name}}">{{_var.name}}</option>
-					</select>
+				</div>
+				<div ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['number'+($parent.$index+1)+'ReflectId'].name ? s['number'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['number'+($index+1)+'ReflectProperty']? '' : s['number'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['number', 'trigger'].indexOf(s['number'+($index+1)+'ReflectId'].type)==-1 && s['number'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>
+				<div ng-if="s['number'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['number'+($parent.$index+1)+'ReflectId'].key ? s['number'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['number'+($index+1)+'ReflectProperty']? '' : s['number'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['number'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-required="['running', 'removed'].indexOf(s['number'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
 				</div>
 				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
 				</div>
@@ -418,14 +507,50 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>	
-				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
-					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
-						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
-					</select>
-				</div>			
+				</div>
+				<div ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['boolean'+($parent.$index+1)+'ReflectId'].name ? s['boolean'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['boolean'+($index+1)+'ReflectProperty']? '' : s['boolean'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['boolean'].indexOf(s['boolean'+($index+1)+'ReflectId'].type)==-1 && s['boolean'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>
+				<div ng-if="s['boolean'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['boolean'+($parent.$index+1)+'ReflectId'].key ? s['boolean'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['boolean'+($index+1)+'ReflectProperty']? '' : s['boolean'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['boolean'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['elapsed', 'remaining'].indexOf(s['boolean'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
 				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']">
 				</div>
 				<div ng-else execute="s['boolean'+($index+1)+'ReflectId']=undefined;s['boolean'+($index+1)+'ReflectProperty']=undefined;" ></div>
@@ -529,20 +654,57 @@
 					</select>
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'Icon'] = undefined;" ></div>
-				<div class="field" ng-if="reflectApps && reflectApps.length">
+				<div class="field" ng-if="reflectApps && reflectApps.length && s['button'+($index+1)+'ShowAs'] && s['button'+($index+1)+'ShowAs']!=='button'">
 					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
 					<select class="value" ng-model="s['button'+($index+1)+'Reflect']">
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>
-				<div class="field" ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
-					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
-						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
-					</select>
+				<div ng-else execute="s['button'+($index+1)+'Reflect']=undefined;s['button'+($index+1)+'ReflectId']=undefined;s['button'+($index+1)+'ReflectProperty']=undefined;" ></div>
+				<div ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['button'+($parent.$index+1)+'ReflectId'].name ? s['button'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['button'+($index+1)+'ReflectProperty']? '' : s['button'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-required="['boolean'].indexOf(s['button'+($index+1)+'ReflectId'].type)==-1 && s['button'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
 				</div>				
+				<div ng-if="s['button'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['button'+($parent.$index+1)+'ReflectId'].key ? s['button'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['button'+($index+1)+'ReflectProperty']? '' : s['button'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['button'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+						<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-required="['elapsed', 'remaining'].indexOf(s['button'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
 				<div class="field" ng-if="s['button'+($index+1)+'Reflect']">
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'ReflectId']=undefined;s['button'+($index+1)+'ReflectProperty']=undefined;" ></div>

@@ -269,29 +269,66 @@ module.exports = class WatchDevice extends Homey.Device {
 			for (let i = 1; i <= fieldCount; i++) {
 				const reflect = settings[type + i + 'Reflect'];
 				let reflectId = settings[type + i + 'ReflectId'];
+				const reflectIdOri =reflectId;
 				if (reflectId && reflect === 'nl.fellownet.chronograph') {
 					reflectId = reflectId.type + '|' + reflectId.name;
 				}
+				if (reflectId && reflect === 'net.i-dev.betterlogic') {
+					reflectId = reflectId.name;
+				}
 				if (reflect && reflectId) {
 					if (!this.homey.app.Reflections[reflect]) this.homey.app.Reflections[reflect] = {};
-					if (!this.homey.app.Reflections[reflect][reflectId]) this.homey.app.Reflections[reflect][reflectId] = [];
+					if (!this.homey.app.Reflections[reflect][reflectId]) {
+						this.homey.app.Reflections[reflect][reflectId] = [];
+						// if(reflect === 'nl.fellownet.chronograph') {
+						// 	this.homey.app.Reflections[reflect][reflectId].name = reflectIdOri.name;
+						// 	this.homey.app.Reflections[reflect][reflectId].type = reflectIdOri.type;
+						// } else if(reflect === 'net.i-dev.betterlogic') {
+						// 	this.homey.app.Reflections[reflect][reflectId].name = reflectIdOri.name;
+						// }
+					}
 					if (reflect === 'net.i-dev.betterlogic' && !this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
-						device: this, fieldId: type + i, method: async (r, x) => {
-							await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value: x.value });
+						device: this, fieldId: type + i, method: async (r, variable) => {
+							let property = this.Settings[r.fieldId + 'ReflectProperty'];
+							let value = property ? variable[property] : variable.value;
+							const format = this.Settings[r.fieldId + 'ReflectFormat'];
+							let date;
+							if (property == 'lastChanged' && value) date = value = new Date(value);
+							if (format) {
+								try {
+									value = await BL.express(format, { value, variable, date });
+								} catch (error) {
+									if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
+								}
+							}
+							else if (property == 'lastChanged' && value) {
+								if (['status', 'number'].indexOf(type) > -1) value = value.getTime();
+								else if (['text'].indexOf(type) > -1) value = value.toISOString();
+							}
+							try {
+								await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value });
+							} catch (error) {
+
+							}
 						}
 					});
 					else if (reflect === 'nl.fellownet.chronograph' && !this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
 						device: this, fieldId: type + i, method: async (r, chronograph) => {
-							let property = this.Settings[type + i + 'ReflectProperty'];
+							let property = this.Settings[r.fieldId + 'ReflectProperty'];
 							let value = chronograph[property];
-							const format = this.Settings[type + i + 'ReflectFormat'];
+							const format = this.Settings[r.fieldId + 'ReflectFormat'];
 							if (format) try {
 								value = await BL.express(format, { value, chronograph });
 							} catch (error) {
-								if(error!='Better Logic Library is not loaded.') ;//through an alert anywhere?;
-							 }
+								if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
+							} else {
+								if(['elapsed', 'remaining'].indexOf(property)>-1) value = value/1_000;
+							}
+							try {
+								await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value: value });
+							} catch (error) {
 
-							await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value: value });
+							}
 							//await this.setCapabilityValue(this.getStoreValue(r.fieldId), x.value);
 						}
 					});
@@ -300,7 +337,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		}
 		for (const reflect in this.homey.app.Reflections) {
 			for (const reflectId in this.homey.app.Reflections[reflect]) {
-				this.homey.app.Reflections[reflect][reflectId] = this.homey.app.Reflections[reflect][reflectId].filter(x => x.device !== this || (settings[x.fieldId + 'Reflect'] && (settings[x.fieldId + 'ReflectId'] == reflectId || reflectId == (settings[x.fieldId + 'ReflectId'].type + '|' + settings[x.fieldId + 'ReflectId'].name))));
+				this.homey.app.Reflections[reflect][reflectId] = this.homey.app.Reflections[reflect][reflectId].filter(x => x.device !== this || (settings[x.fieldId + 'Reflect'] && settings[x.fieldId + 'ReflectId'] && (settings[x.fieldId + 'ReflectId'].name == reflectId || reflectId == (settings[x.fieldId + 'ReflectId'].type + '|' + settings[x.fieldId + 'ReflectId'].name))));
 				if (!this.homey.app.Reflections[reflect][reflectId].length) delete this.homey.app.Reflections[reflect][reflectId];
 			}
 		}

@@ -347,7 +347,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     statusNumberSet = true;
                                     statusNumberChanged = true;
                                     await this.setSecondCapability({ val: value, device:args.device , fieldId});
-                                    await args.device.setCapabilityValue(cap, value);
+                                    try {                        
+                                        await args.device.setCapabilityValue(cap, value);
+                                    } catch (error) {
+                                        if(error && error.message!='Capability Not Getable') throw error; }
+
+                                    //await args.device.setCapabilityValue(cap, value);
+
                                     // //Remove logs here
                                     // let a = await this.homey.insights.getLogs();
                                     // let b = a;
@@ -497,7 +503,12 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         value = app.runSandBox(expression);                
                     }
                     await this.setSecondCapability({ val:value, device , fieldId});
-                    await device.setCapabilityValue(cap, value);
+                    try {                        
+                        await device.setCapabilityValue(cap, value);
+                    } catch (error) {
+                        //value = oldValue;
+                        if(error && error.message!='Capability Not Getable') throw error; }
+
                     await device.setStoreValue(fieldId+"Value", value);
 
                     if(mode==="executewhencards") {
@@ -761,7 +772,13 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                     await device.setCapabilityOptions(cap, opt);
                     //return true;
                 }
-            } else return await device.setCapabilityValue(cap, val);
+            } else {
+                try {                        
+                    return await device.setCapabilityValue(cap, value);
+                } catch (error) {
+                    if(error && error.message!='Capability Not Getable') throw error; }
+                return true;
+            }
         }
     }
 

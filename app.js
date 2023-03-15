@@ -21,6 +21,8 @@ const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 const { BL } = require('betterlogiclibrary');
 const { CG } = require('chronograph-npm');
 
+const APP_ID_BLL = 'net.i-dev.betterlogic';
+const APP_ID_CG = 'nl.fellownet.chronograph';
 
 const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
@@ -83,19 +85,21 @@ class DeviceSetter extends Homey.App {
 
 		const cg = await CG.init({ homey: this.homey });
 		CG.onChronographUpdate = async ({ chronograph }) => {
-			if(!chronograph || !chronograph.data || !chronograph.data.type) return;
+			if (!chronograph || !chronograph.data || !chronograph.data.type) return;
 			//this.homey.log('onChronographUpdate', chronograph);
 			let type = chronograph.data.type.toLowerCase();
-			if (this.Reflections && this.Reflections['nl.fellownet.chronograph'] && this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name])
-				for (let i = 0; i < this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name].length; i++) {
-					const field = this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name][i];
+			if (this.Reflections && this.Reflections[APP_ID_CG] && this.Reflections[APP_ID_CG][type + '|' + chronograph.name])
+				for (let i = 0; i < this.Reflections[APP_ID_CG][type + '|' + chronograph.name].length; i++) {
+					const field = this.Reflections[APP_ID_CG][type + '|' + chronograph.name][i];
+					if (field.lastSet && field.lastSet > chronograph.now) continue;
+					field.lastSet = chronograph.now;
 					await field.method(field, chronograph);
 
 				}
 		}
 		cg.ready.then(() => {
 			try {
-				this.updateReflection();
+				this.updateReflection({ appId: APP_ID_CG });
 			} catch (error) {
 
 			}
@@ -103,16 +107,18 @@ class DeviceSetter extends Homey.App {
 
 		const bl = await BL.init({ homey: this.homey });
 		BL.onVariableUpdate = async ({ variable, date }) => {
-			if (this.Reflections && this.Reflections['net.i-dev.betterlogic'] && this.Reflections['net.i-dev.betterlogic'][variable.name])
-				for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variable.name].length; i++) {
-					const field = this.Reflections['net.i-dev.betterlogic'][variable.name][i];
+			if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
+				for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
+					const field = this.Reflections[APP_ID_BLL][variable.name][i];
+					if (field.lastSet && field.lastSet > variable.lastChanged) continue;
+					field.lastSet = variable.lastChanged;
 					await field.method(field, variable);
 
 				}
 		}
 		bl.ready.then(() => {
 			try {
-				this.updateReflection();
+				this.updateReflection({ appId: APP_ID_BLL });
 			} catch (error) {
 
 			}
@@ -774,20 +780,34 @@ class DeviceSetter extends Homey.App {
 	// }
 
 
-	async updateReflection({ device } = {}) {
-		if (this.Reflections && this.Reflections['net.i-dev.betterlogic'])// && this.Reflections['net.i-dev.betterlogic'][variable.name])
+	async updateReflection({ device, appId } = {}) {
+		if (this.Reflections && this.Reflections[APP_ID_BLL] && (!appId || appId === APP_ID_BLL))// && this.Reflections[APP_ID_BLL][variable.name])
 		{
 			const vars = await this.getBllVariables();
-			if (vars) for (const variableName in this.Reflections['net.i-dev.betterlogic']) {
+			if (vars) for (const variableName in this.Reflections[APP_ID_BLL]) {
 				let _var;
-				if ((_var = vars.find(x => x.name == variableName))) for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variableName].length; i++) {
-					const field = this.Reflections['net.i-dev.betterlogic'][variableName][i];
+				if ((_var = vars.find(x => x.name == variableName))) for (let i = 0; i < this.Reflections[APP_ID_BLL][variableName].length; i++) {
+					const field = this.Reflections[APP_ID_BLL][variableName][i];
 					if (device && field.device !== device) continue;
 					await field.method(field, _var);
 				}
 			}
 		}
+		if (this.Reflections && this.Reflections[APP_ID_CG] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
+		{
+			const chronographs = await this.getChronographs();
+			for (const chronographName in this.Reflections[APP_ID_CG]) {
+				let type = chronographName.substring(0, chronographName.indexOf('|'));
+				let name = chronographName.substring(chronographName.indexOf('|') + 1);
+				const chronograph = chronographs.find(x => x.name == name && x.type == type)
+				for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
+					const field = this.Reflections[APP_ID_CG][chronographName][i];
+					if (device && field.device !== device) continue;
+					await field.method(field, chronograph || {elapsed:0, remaining:0, running:false,removed:true});
 
+				}
+			}
+		}
 	}
 
 	async getBllVariables() {
@@ -801,6 +821,16 @@ class DeviceSetter extends Homey.App {
 		}
 	}
 
+	async getChronographs() {
+		let chronographs;
+		if ((chronographs = this._Chronographs)) return chronographs;
+		chronographs = CG.isReady ? await CG.getChronographs() : null;
+		if (chronographs) {
+			this._Chronographs = chronographs;
+			this.homey.setTimeout(() => { delete this._Chronographs; }, 10_000);
+			return chronographs;
+		}
+	}
 	getGuid() {
 		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
 	}
