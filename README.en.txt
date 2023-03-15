@@ -1,3 +1,5 @@
+New: Chronographs and Better Logic Library Variables can now be directly reflected on AVD fields without flows.
+
 New: API call to update AVD fields.
 
 New: Export and import Flows and/or Advanced Virtual Devices from other Homey users.

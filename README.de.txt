@@ -1,3 +1,5 @@
+Neu: Chronographs und Better Logic Library variablen können jetzt ohne Flows direkt in AVD-Feldern reflektiert werden.
+
 Neu: API-Aufruf zum Aktualisieren von AVD-Feldern.
 
 Neu: Exportieren und importieren Sie Flows und/oder Advanced Virtual Devices von anderen Homey-Benutzern.

@@ -1,3 +1,5 @@
+Nieuw: Chronographs en Better Logic Library Variabelen kunnen nu direct worden weergegeven op AVD-velden zonder flows.
+
 Nieuw: API-oproep om AVD-velden bij te werken.
 
 Nieuw: Exporteer en importeer Flows en/of Advanced Virtual Devices van andere Homey gebruikers.
