@@ -77,6 +77,7 @@ const TOPICS = {
 };
 
 const { BL } = require('betterlogiclibrary');
+const { CG } = require('chronograph-npm');
 
 module.exports = class VirtualDeviceDriver extends Homey.Driver {
     async sleep(ms) {
@@ -3261,7 +3262,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         return {
             settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
             favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
-            bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined
+            bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined,
+            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined
         };
 
         });

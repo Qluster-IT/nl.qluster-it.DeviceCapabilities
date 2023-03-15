@@ -266,14 +266,25 @@ module.exports = class WatchDevice extends Homey.Device {
 			const fieldCount = type == "status" ? 1 : settings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'];
 
 			for (let i = 1; i <= fieldCount; i++) {
-				const reflect = settings[type + i + 'Reflect']
-				const reflectId = settings[type + i + 'ReflectId'];
+				const reflect = settings[type + i + 'Reflect'];
+				let reflectId = settings[type + i + 'ReflectId'];
+				if(reflectId && reflect==='nl.fellownet.chronograph') {
+					reflectId = reflectId.type + '|' + reflectId.name;
+				}
 				if (reflect && reflectId) {
 					if (!this.homey.app.Reflections[reflect]) this.homey.app.Reflections[reflect] = {};
 					if (!this.homey.app.Reflections[reflect][reflectId]) this.homey.app.Reflections[reflect][reflectId] = [];
 					if(reflect==='net.i-dev.betterlogic' && !this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
 						device: this, fieldId: type + i, method: async (r, x) => {
 							await this.driver.setValue({field:{id:r.fieldId}, device:r.device, value:x.value});
+						}
+					});
+					else if(reflect==='nl.fellownet.chronograph' && !this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
+						device: this, fieldId: type + i, method: async (r, x) => {
+							this.log('chronograph', x);
+							let property = settings[type + i + 'ReflectProperty'];
+							let val = x[property];
+							await this.driver.setValue({field:{id:r.fieldId}, device:r.device, value:val});
 							//await this.setCapabilityValue(this.getStoreValue(r.fieldId), x.value);
 						}
 					});
@@ -282,7 +293,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		}
 		for (const reflect in this.homey.app.Reflections) {
 			for (const reflectId in this.homey.app.Reflections[reflect]) {
-				this.homey.app.Reflections[reflect][reflectId] = this.homey.app.Reflections[reflect][reflectId].filter(x => x.device !== this || (settings[x.fieldId + 'Reflect'] && settings[x.fieldId + 'ReflectId'] == reflectId));
+				this.homey.app.Reflections[reflect][reflectId] = this.homey.app.Reflections[reflect][reflectId].filter(x => x.device !== this || (settings[x.fieldId + 'Reflect'] && (settings[x.fieldId + 'ReflectId'] == reflectId || reflectId == (settings[x.fieldId + 'ReflectId'].type+'|'+settings[x.fieldId + 'ReflectId'].name ))));
 				if (!this.homey.app.Reflections[reflect][reflectId].length) delete this.homey.app.Reflections[reflect][reflectId];
 			}
 		}

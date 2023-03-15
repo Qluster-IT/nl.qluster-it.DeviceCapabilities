@@ -83,13 +83,15 @@ class DeviceSetter extends Homey.App {
 
 		const cg = await CG.init({ homey: this.homey });
 		CG.onChronographUpdate = async ({ chronograph }) => {
+			if(!chronograph || !chronograph.data || !chronograph.data.type) return;
 			this.homey.log('onChronographUpdate', chronograph);
-			if (this.Reflections && this.Reflections['nl.fellownet.chronograph'] && this.Reflections['nl.fellownet.chronograph'][chronograph.name]);
-				// for (let i = 0; i < this.Reflections['net.i-dev.betterlogic'][variable.name].length; i++) {
-				// 	const field = this.Reflections['net.i-dev.betterlogic'][variable.name][i];
-				// 	await field.method(field, variable);
+			let type = chronograph.data.type.toLowerCase();
+			if (this.Reflections && this.Reflections['nl.fellownet.chronograph'] && this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name])
+				for (let i = 0; i < this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name].length; i++) {
+					const field = this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name][i];
+					await field.method(field, chronograph);
 
-				// }
+				}
 		}
 		cg.ready.then(() => {
 			try {

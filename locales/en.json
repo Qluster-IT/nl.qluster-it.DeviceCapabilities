@@ -176,9 +176,9 @@
 
 		"reflect":"Reflect",
 		"variable":"Variable",
-		"":"",
-		"":"",
-		"":"",
+		"chronograph":"Chronograph",
+		"property":"Property",
+		"format_bll_expression":"Format (BLL expression)",
 		"":"",
 		"":"",
 		"":"",

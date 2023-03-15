@@ -2234,7 +2234,8 @@ const asv_settings = {
   },
 
   reflectApps:[
-    {id:'net.i-dev.betterlogic', name:'Better Logic Library'}
+    {id:'net.i-dev.betterlogic', name:'Better Logic Library'},
+    {id:'nl.fellownet.chronograph', name:'Chronograph'}
   ]
 
 

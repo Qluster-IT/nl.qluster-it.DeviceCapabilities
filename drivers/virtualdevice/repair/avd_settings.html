@@ -64,7 +64,6 @@
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 					</select>
 				</div>
-				<div ng-else execute="s['status'+($index+1)+'Icon']=undefined" ></div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
 					<div class="label">{{__('virtualdevicesettings.reflect') || 'Reflect'}}</div>
 					<select class="value" ng-model="s['status'+($index+1)+'Reflect']">
@@ -72,16 +71,35 @@
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>				
-				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
-				</div>
-				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;" ></div>
 				<div class="field" ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['status'+($index+1)+'ReflectId']">
+					<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
 						<option value=""></option>
-						<option ng-repeat="_var in vars.bllVariables|filter:{type:['number', 'trigger']}" value="{{_var.name}}">{{_var.name}}</option>
+						<option ng-repeat="_var in vars.bllVariables|filter:{type:'number, trigger'}:contains" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
 				</div>
+				<div ng-if="s['status'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['status'+($parent.$index+1)+'ReflectId'].key ? s['status'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
+							<option value=""></option>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['status'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+						</select>
+					</div>
+				</div>
+				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
+					<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
+					<input class="value" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="value" />
+				</div>
+				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;s['status'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -166,16 +184,16 @@
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>				
-				<div class="field" ng-if="s['text'+($index+1)+'Reflect']">
-				</div>
-				<div ng-else execute="s['text'+($index+1)+'ReflectId']=undefined;" ></div>
 				<div class="field" ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['text'+($index+1)+'ReflectId']">
+					<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
 						<option value=""></option>
 						<option ng-repeat="_var in vars.bllVariables|filter:{type:'string'}" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
 				</div>
+				<div class="field" ng-if="s['text'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['text'+($index+1)+'ReflectId']=undefined;s['text'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -252,16 +270,16 @@
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>				
-				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
-				</div>
-				<div ng-else execute="s['number'+($index+1)+'ReflectId']=undefined;" ></div>
 				<div class="field" ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['number'+($index+1)+'ReflectId']">
+					<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
 						<option value=""></option>
 						<option ng-repeat="_var in vars.bllVariables|filter:{type:'number, trigger'}:contains" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
 				</div>
+				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'ReflectId']=undefined;s['number'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
 					<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
 				</div>
@@ -400,17 +418,17 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>				
-				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']">
-				</div>
-				<div ng-else execute="s['boolean'+($index+1)+'ReflectId']=undefined;" ></div>
+				</div>	
 				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']">
+					<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
 						<option value=""></option>
 						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
+				</div>			
+				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']">
 				</div>
+				<div ng-else execute="s['boolean'+($index+1)+'ReflectId']=undefined;s['boolean'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -517,17 +535,17 @@
 						<option value=""></option>
 						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
-				</div>				
-				<div class="field" ng-if="s['button'+($index+1)+'Reflect']">
 				</div>
-				<div ng-else execute="s['button'+($index+1)+'ReflectId']=undefined;" ></div>
 				<div class="field" ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
-					<select class="value" ng-model="s['button'+($index+1)+'ReflectId']">
+					<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
 						<option value=""></option>
 						<option ng-repeat="_var in vars.bllVariables|filter:{type:'boolean'}" value="{{_var.name}}">{{_var.name}}</option>
 					</select>
+				</div>				
+				<div class="field" ng-if="s['button'+($index+1)+'Reflect']">
 				</div>
+				<div ng-else execute="s['button'+($index+1)+'ReflectId']=undefined;s['button'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field"
 					ng-if="!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button'|| s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0)">
 					<div class="label"><span>{{__('virtualdevicesettings.nonClickable') || 'Non-Clickable'}}</span>
@@ -1440,17 +1458,26 @@ ${vars.textSettings}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
-						
+
 						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
 						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
 
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
-						
+
 						$scope.vars.bllVariables = result.bllVariables;
-						
-						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
+						$scope.vars.cgChronographs = result.cgChronographs;
+						if ($scope.vars.cgChronographs) {
+							$scope.vars.cgChronographs = _.sortBy(_.flatten(_.map($scope.vars.cgChronographs, (result, key) => {
+								return _.map(result, (name) => {
+									return { name: name, type: key, key:key+'|'+ name};
+								})
+							})), 'name');
+						}
+						console.log($scope.vars.cgChronographs);
+
+						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);
 					});
 				});
 				Homey.on('createdadvancedflow', (af) => {
