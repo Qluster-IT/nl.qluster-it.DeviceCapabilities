@@ -97,7 +97,7 @@
 				</div>
 				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
 					<div class="label">{{__('virtualdevicesettings.format_bll_expression') || 'Format (BLL expression)'}}</div>
-					<input class="value" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="value" />
+					<input class="value" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" />
 				</div>
 				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;s['status'+($index+1)+'ReflectProperty']=undefined;" ></div>
 				<div class="field">

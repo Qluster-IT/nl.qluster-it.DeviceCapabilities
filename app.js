@@ -84,7 +84,7 @@ class DeviceSetter extends Homey.App {
 		const cg = await CG.init({ homey: this.homey });
 		CG.onChronographUpdate = async ({ chronograph }) => {
 			if(!chronograph || !chronograph.data || !chronograph.data.type) return;
-			this.homey.log('onChronographUpdate', chronograph);
+			//this.homey.log('onChronographUpdate', chronograph);
 			let type = chronograph.data.type.toLowerCase();
 			if (this.Reflections && this.Reflections['nl.fellownet.chronograph'] && this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name])
 				for (let i = 0; i < this.Reflections['nl.fellownet.chronograph'][type+'|'+chronograph.name].length; i++) {
