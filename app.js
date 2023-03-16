@@ -106,7 +106,7 @@ class DeviceSetter extends Homey.App {
 		});
 
 		const bl = await BL.init({ homey: this.homey });
-		BL.onVariableUpdate = async ({ variable, date }) => {
+		BL.onVariableUpdate = async ({ variable, formattedDate }) => {
 			if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
 				for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
 					const field = this.Reflections[APP_ID_BLL][variable.name][i];
