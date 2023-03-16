@@ -566,7 +566,7 @@
   "2.9.29": {
     "en": "Notification: Next update will optionally include the Better Logic Library and Chronograph App, to reflect it's values in AVDs."
   },
-  "2.9.30": {
-    "en": "Added: Optionally included the Better Logic Library and Chronograph App, to reflect it's values in AVDs: Chronographs and Better Logic Library Variables can now be directly reflected on AVD fields without flows."
+  "2.10.0": {
+    "en": "Added: Optionally included the Better Logic Library and Chronograph App, to reflect it's values in AVDs: Chronographs and Variables can now be directly reflected on AVD fields without needing flows. Also, bugfixing for and extensive testing on the HP2023."
   }
 }
