@@ -1170,7 +1170,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 cards:x.cards
             };
         });
-        this.log('advancedflows', JSON.stringify(advancedflows));
+        //this.log('advancedflows', JSON.stringify(advancedflows));
         // _.each(advancedflows, f=> {
         //     delete f.__athom_api_type;
         //     delete f.triggerable;
@@ -1379,7 +1379,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         let advancedflowsselectedKeys = advancedflowsselected ? Object.keys(advancedflowsselected) : 0;
         let advancedflows = !copyWithFlows ? [] : _.filter(await api.flow.getAdvancedFlows(), x=> 
             ((advancedflowsselectedKeys && advancedflowsselectedKeys.indexOf(x.id)>-1 && advancedflowsselected[x.id]===true) ||
-            (x.enabled && device && _.find(x.cards, c=>c.id.startsWith('homey:device:' + device.__id + ':'))))
+            (x.enabled && device && _.find(x.cards, c=>c.id && c.id.startsWith('homey:device:' + device.__id + ':'))))
             );
         advancedflows = _.map(advancedflows, x=> {
             return {
@@ -1388,7 +1388,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 cards:x.cards
             };
         });
-        this.log('advancedflows', JSON.stringify(advancedflows));
+        //this.log('advancedflows', JSON.stringify(advancedflows));
         // _.each(advancedflows, f=> {
         //     delete f.__athom_api_type;
         //     delete f.triggerable;
@@ -1965,7 +1965,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             
 
 
-            this.log('devicesToReplace', JSON.stringify(devicesToReplace));
+            //this.log('devicesToReplace', JSON.stringify(devicesToReplace));
 
             let actionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.actions), x=>x));
             let conditionIdsDevices = _.uniqBy(_.filter(_.flatMap(devicesToReplace, d=>d.conditions), x=>x));
@@ -1976,10 +1976,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             let _triggerCardsDevices = _.filter(triggerCards, x=> x.id && triggerIdsDevices.indexOf(this.getCardId(x.id))>-1 && x.id.startsWith('homey:device'));
             
             
-            this.log('ExchangerFile', JSON.stringify(exchangerFile));
-            this.log('actionIdsDevices', JSON.stringify(actionIdsDevices));
-            this.log('actionCards', JSON.stringify(actionCards));
-            this.log('_actionCardsDevices', JSON.stringify(_actionCardsDevices));
+            //this.log('ExchangerFile', JSON.stringify(exchangerFile));
+            //this.log('actionIdsDevices', JSON.stringify(actionIdsDevices));
+            //this.log('actionCards', JSON.stringify(actionCards));
+            //this.log('_actionCardsDevices', JSON.stringify(_actionCardsDevices));
 
 
             //if(actionIdsDevices.length || conditionIdsDevices.length || triggerIdsDevices.length)
@@ -2006,7 +2006,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 if(zone.replaceWith) zone.replaceWithId = zone.replaceWith.id;
             });
 
-            this.log('_allDevices', _allDevices);
+            //this.log('_allDevices', _allDevices);
 
             _.each(exchangerFile.devicesToReplace, (device, deviceId)=>{
                 let devices = _.filter(_allDevices, (d, dKey)=> 
@@ -2860,20 +2860,24 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     }
 
-    async getDeviceIcon(device) {
-        try {
-            let getData = device.getData();
-            return await this.getIcon(getData && getData.icon ? getData.icon.substring(7) : undefined);
-        } catch (error) { return null; }
-    }
-    
+    // async getDeviceIcon(device) {
+    //     try {
+    //         let getData = device.getData();
+    //         return await this.getIcon(getData && getData.icon ? getData.icon.substring(7) : undefined);
+    //     } catch (error) { return null; }
+    // }
+
     async getDeviceIconZipped(device) {
         try {
             let getData = device.getData();
-            return await this.getIconZipped(getData && getData.icon ? getData.icon.substring(7) : undefined);
+            //let example = getData.icon.substring(8);
+            // if (this.getAPIV3())
+            //     return await this.getIconZipped(getData && getData.icon ? getData.icon.substring(8) : undefined);
+            // else
+                return await this.getIconZipped(getData && getData.icon ? getData.icon.substring(8) : undefined);
         } catch (error) { return null; }
     }
-    
+
     async unzip(str, returnType) {
         var gzippedJson = Buffer.from(str, 'base64');
         var jsonBuffer = await ungzip(gzippedJson, {level:9});
@@ -2965,9 +2969,14 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
 
                 
-        let f = (af)=> {
-            this.log('advancedflow.create (pair)', af);
-            if(session) session.emit("createdadvancedflow", af);
+        let f = async (af)=> {
+            //this.log('advancedflow.create (pair)', af);
+            try {
+                
+                if(session) await session.emit("createdadvancedflow", af);
+            } catch (error) {
+                
+            }
         };
         
         session.setHandler('disconnect', ()=>{
@@ -3088,7 +3097,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 return device;      
             } catch (error) {
                 this.error(error);
-                this.log('Fault saving icon: ', image);
+                //this.log('Fault saving icon: ', image);
                 throw new Error(error);
             }
         });
@@ -3244,14 +3253,22 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async onRepair(session, device) {
 
-        let f = (af)=> {
-            this.log('advancedflow.create (pair)', af);
-            if(session) session.emit("createdadvancedflow", af);
+        let f = async (af)=> {
+            //this.log('advancedflow.create (pair)', af);
+            try {             
+                if(session) await session.emit("createdadvancedflow", af);   
+            } catch (error) {
+                
+            }
         };
         
         session.setHandler('disconnect', ()=>{
             this.log('disconnect pair');
-            this.homey.api.off('realtime', f);
+            try {
+                this.homey.api.off('realtime', f);  
+            } catch (error) {
+                
+            } 
         });
 
         let apiSet = false;
@@ -3268,7 +3285,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
         session.setHandler('virtualdevicesettings_load', async (data) => {
             // // emit when devices are still being searched
-            // session.emit('list_devices', devices);
+            // await session.emit('list_devices', devices);
       
             // return devices when searching is done
             // let defer = new Defer();

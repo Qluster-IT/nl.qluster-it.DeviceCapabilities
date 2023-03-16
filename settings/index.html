@@ -10,14 +10,14 @@
 	<script type="text/javascript" src="../assets/js/smart-table.min.js"></script>
 	<script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 	<script type="text/javascript" src="../assets/js/default.js"></script>
-	
-	<link rel="stylesheet" href="../assets/fontawesome/fontawesome.css" type="text/css"/>
-	<link rel="stylesheet" href="../assets/css/default.css" type="text/css"/>
+
+	<link rel="stylesheet" href="../assets/fontawesome/fontawesome.css" type="text/css" />
+	<link rel="stylesheet" href="../assets/css/default.css" type="text/css" />
 
 </head>
 
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities"
-ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates') || editFunctionItem || editdeviceicon || setCustomIcon || setDeviceIcon || editcustomicon, 'with-top-bar':view.showMain, 'with-top-bar-small':view.subid=='theflowexchangertemplates' && !vars.template }">
+	ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates') || editFunctionItem || editdeviceicon || setCustomIcon || setDeviceIcon || editcustomicon, 'with-top-bar':view.showMain, 'with-top-bar-small':view.subid=='theflowexchangertemplates' && !vars.template }">
 	<div class="header-buttons" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
 		<div class="icon-button" ng-click="view.id='theflowexchanger'" ng-class="{active:view.id=='theflowexchanger'}" title="The Flow Exchanger"><span class="fa fa-icon fa-cloud-download-alt"></span></div>
 		<div class="icon-button" ng-click="view.id='virtualdevices'" ng-class="{active:view.id=='virtualdevices'}" title="AVD's"><span class="fa fa-icon fa-cogs"></span></div>
@@ -40,7 +40,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				<div class="field" ng-show="view.subid=='theflowexchangerexport'">
 					<div data-i18n="settings.explain_theflowexchanger_export">Here you can create The Exchanger Files.</div>
 					<div data-i18n="settings.select_advancedflows">Select the flows to include in the Exchanger File</div>
-					<input type="text" class="label margin-bottom" ng-model="vars.filter.flow"  placeholder="{{__('settings.filter') || 'filter'}}" />
+					<input type="text" class="label margin-bottom" ng-model="vars.filter.flow" placeholder="{{__('settings.filter') || 'filter'}}" />
 					<ul>
 						<li class="flow" ng-repeat="flow in advancedflows |filter:{name:vars.filter.flow}">
 							<input class="checkbox" type="checkbox" ng-model="vars.advancedflowsselected[flow.id]" />
@@ -206,7 +206,7 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 							<div class="button" ng-click="log(theflowexchanger); theflowexchanger.$valid ? updateFlows() : null" ng-disabled="!theflowexchanger.$valid" data-i18n="settings.updateText">Update Text</div>
 						</div>
 					</div>
-					
+
 					<div>
 						<div class="field">
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
@@ -288,13 +288,18 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 
 		<!-- Functions  -->
 		<div class="setting-group" ng-show="view.id=='functions'">
-			<h1 data-i18n="settings.functions">Functions</h1>
-			<p data-i18n="settings.functions_expressions">These functions can be used within
-				(javascript) expression.</p>
-			<p data-i18n="settings.functions_be_aware">Be aware that removing functions could
-				corrupt
-				flows that are using
-				that function.</p>
+
+			<h1 data-i18n="settings.reflection">Reflection</h1>
+			<p data-i18n="settings.reflection_explained">Here you can disable Reflection initialization</p>
+			<form role="form">				
+				<div class="form-check form-switch" ng-repeat="app in vars.reflectApps">
+					<input class="form-check-input hy-nostyle" type="checkbox" role="switch" id="autoupdate" checked ng-model="vars.reflectAppsSettings[app.id].enabled" ng-change="saveReflection()" />
+					<label class="form-check-label" for="autoupdate{{app.id}}">{{app.name}}</label>
+				</div>
+			</form>
+			<h1 class="margin-top" data-i18n="settings.functions">Functions</h1>
+			<p data-i18n="settings.functions_expressions">These functions can be used within (javascript) expression.</p>
+			<p data-i18n="settings.functions_be_aware">Be aware that removing functions will corrupt flows that are using that function.</p>
 			<div>
 				<div class="">
 					<div class="" data-i18n="settings.add_function_text">To create a function, enter a name,
@@ -454,26 +459,32 @@ ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='thef
 				var Homey;
 				$scope.stamp = Date.now();
 				$scope.view = { id: 'theflowexchanger', subid: undefined };
-				$scope.orderBy = {orderBy:'favorite', reverse:false};
-				$scope.filter = {header:''};
+				$scope.orderBy = { orderBy: 'favorite', reverse: false };
+				$scope.filter = { header: '' };
 				$scope.topics = TOPICS.tfe;
 				$scope.topicsArray = TOPICS.tfe;
-				_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
+				_.each($scope.topicsArray, (topic, key) => topic.key = key);
 				$scope.topicsArray = _.toArray($scope.topics);
-				
+
 				const vars = $scope.vars = {
 					advancedflowsselected: {}, readflow: null, useCompressed: true, useMinified: true
-					, filter: { flow: '', defaultIcon:'' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}
+					, filter: { flow: '', defaultIcon: '' }, scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates: {},
+					reflectApps: [
+						{ id: 'net.i-dev.betterlogic', name: 'Better Logic Library', enabled:true },
+						{ id: 'nl.fellownet.chronograph', name: 'Chronograph', enabled:true }
+					],
+					reflectAppsSettings:{}
+
 				};
 				//Homey.ready();
 
 
-				$scope.gotoPostTopic = function() {
+				$scope.gotoPostTopic = function () {
 					//if(vars.textSettings)
 					let appsUsed = '';
 					let tefType = vars.flowName && vars.deviceName ? 'AVD,FLOWS' : vars.flowName ? 'FLOWS' : vars.deviceName ? 'AVD' : 'UNKNOWN';
-					_.each(vars.appsUsed, (app, appKey) => appsUsed+='\n*  ['+app.name+'](https://homey.app/a/'+appKey+')');
-					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+					_.each(vars.appsUsed, (app, appKey) => appsUsed += '\n*  [' + app.name + '](https://homey.app/a/' + appKey + ')');
+					let prePost = vars.textSettings ? ('# ' + (vars.flowName ? vars.flowName : 'Header') + `
 []()
 []()
 
@@ -483,7 +494,7 @@ Write here what the flow(s) is/are all about.
 [[picture]]
 
 []()
-` + ( appsUsed!=='' ? '### Apps used:' + appsUsed + '\n' : '') + `
+` + (appsUsed !== '' ? '### Apps used:' + appsUsed + '\n' : '') + `
 
 ### Other things people need to do to get it working correct?
 
@@ -495,15 +506,15 @@ TEF:
 \`\`\`
 ${vars.textSettings}
 \`\`\`
-` ): '';
+` ) : '';
 
-					if(prePost) copyTextToClipboard(prePost);
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/last');
+					if (prePost) copyTextToClipboard(prePost);
+					$scope.openUrl($scope.vars.activeTopic.topicUrl + '/' + $scope.vars.activeTopic.topicId + '/last');
 				}
 
-				$scope.gotoHelpTopic = function() {
+				$scope.gotoHelpTopic = function () {
 					//if(vars.textSettings)
-					let prePost = vars.textSettings ? ('## Question about: ' + (vars.flowName ? vars.flowName : 'Header' ) +`
+					let prePost = vars.textSettings ? ('## Question about: ' + (vars.flowName ? vars.flowName : 'Header') + `
 
 [Write your question here]
 
@@ -515,23 +526,23 @@ TEF:
 \`\`\`
 ${vars.textSettings}
 \`\`\`
-` ): '';
+` ) : '';
 
-					if(prePost) copyTextToClipboard(prePost);
+					if (prePost) copyTextToClipboard(prePost);
 					$scope.openUrl(vars.activeTopic.helpTopicUrl + '/last');
 				}
 
-				$scope.gotoLike = function(template) {
-					$scope.openUrl($scope.vars.activeTopic.topicUrl+'/'+$scope.vars.activeTopic.topicId+'/' + template.number);
+				$scope.gotoLike = function (template) {
+					$scope.openUrl($scope.vars.activeTopic.topicUrl + '/' + $scope.vars.activeTopic.topicId + '/' + template.number);
 				}
-				$scope.closeTemplates = function() {
-					$scope.view.subid='theflowexchangerimport';
+				$scope.closeTemplates = function () {
+					$scope.view.subid = 'theflowexchangerimport';
 				}
-				$scope.selectTemplates = function() {
-					vars.textSettings=vars.template.tefs[0];vars.imported=true; vars.template=null; $scope.view.subid='theflowexchangerimport'; $scope.readTextSettings();
+				$scope.selectTemplates = function () {
+					vars.textSettings = vars.template.tefs[0]; vars.imported = true; vars.template = null; $scope.view.subid = 'theflowexchangerimport'; $scope.readTextSettings();
 				}
-				$scope.backTemplates = function() {
-					vars.template=null;
+				$scope.backTemplates = function () {
+					vars.template = null;
 				}
 
 				$scope.icons = [];
@@ -544,13 +555,19 @@ ${vars.textSettings}
 				$scope.messages = '';
 				$scope.selected = {};
 
-				$scope.setSource = function(source) {
+				$scope.setSource = function (source) {
 					$scope.vars.activeTfeSource = source || 'English';
 					$scope.vars.activeTopic = TOPICS.tfe[$scope.vars.activeTfeSource];
 					Homey.set('activeTfeSource', source, function (err, result) {
 						if (err) return console.log(err);
 					});
 					$scope.getTefTemplates();
+				}
+
+				$scope.saveReflection = function() {
+					Homey.set('reflectAppsSettings', vars.reflectAppsSettings, (err) => {
+						if(err) return Homey.alert(err);						
+					});
 				}
 
 				$scope.$on('ready', function ($e, Homey_) {
@@ -572,14 +589,22 @@ ${vars.textSettings}
 
 					// $scope.getIcons();
 					//$scope.getAdvancedFlows();
-					
+
 					$scope.getDevices();
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
 					$scope.getFunctionFromSettings();
+					
+					Homey.get('reflectAppsSettings', function (err, result) {
+						if (err) return console.log(err);
+						$scope.$apply(function () {
+							$scope.vars.reflectAppsSettings = result || {};
+						});
+					});
+
 					Homey.get('activeTfeSource', function (err, result) {
 						if (err) return console.log(err);
-						$scope.$apply(function () { 
+						$scope.$apply(function () {
 							$scope.vars.activeTfeSource = result || 'English';
 							$scope.vars.activeTopic = TOPICS.tfe[$scope.vars.activeTfeSource];
 							$scope.getTefTemplates();
@@ -589,8 +614,8 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.favoriteTemplates = result || {};
-							if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-							if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
+							if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+							if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);
 						});
 					});
 					Homey.ready();
@@ -599,10 +624,10 @@ ${vars.textSettings}
 				});
 
 				let loadedStuff = false;
-				$scope.loadStuff = function() {
-					if(loadedStuff) return;
+				$scope.loadStuff = function () {
+					if (loadedStuff) return;
 					loadedStuff = true;
-					$scope.getAdvancedFlows();					
+					$scope.getAdvancedFlows();
 				}
 				$scope.size = function (collection) {
 					console.log('size()');
@@ -625,21 +650,21 @@ ${vars.textSettings}
 				}
 
 
-				$scope.toggleFavorite = function(template) {
-				if(vars.favoriteTemplates[template.number]) {
-					delete vars.favoriteTemplates[template.number];
-					template.favorite = true;
+				$scope.toggleFavorite = function (template) {
+					if (vars.favoriteTemplates[template.number]) {
+						delete vars.favoriteTemplates[template.number];
+						template.favorite = true;
+					}
+					else {
+						vars.favoriteTemplates[template.number] = true;
+						template.favorite = false;
+					}
+					if (typeof (Homey) !== 'undefined') {
+						Homey.set('favoriteTemplates', $scope.vars.favoriteTemplates, function (err, result) {
+							if (err) return console.log(err);
+						});
+					}
 				}
-				else {
-					vars.favoriteTemplates[template.number]= true;
-					template.favorite = false;
-				}	
-				if(typeof(Homey)!=='undefined') {
-					Homey.set('favoriteTemplates', $scope.vars.favoriteTemplates , function (err, result) {
-						if (err) return console.log(err);
-					});
-				}
-			}
 
 
 				$scope.refreshTemplates = function () {
@@ -651,43 +676,43 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							if(vars.favoriteTemplates) _.each($scope.vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-							_.each($scope.vars.tefTemplates, t=>t.favorite=t.favorite==true);
+							if (vars.favoriteTemplates) _.each($scope.vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+							_.each($scope.vars.tefTemplates, t => t.favorite = t.favorite == true);
 						});
 					});
 				}
 
 
-				$scope.getTefTemplates = function () {					
-					Homey.get('tefTemplates' + ($scope.vars.activeTfeSource=='English'?'':'_'+$scope.vars.activeTfeSource), function (err, result) {
+				$scope.getTefTemplates = function () {
+					Homey.get('tefTemplates' + ($scope.vars.activeTfeSource == 'English' ? '' : '_' + $scope.vars.activeTfeSource), function (err, result) {
 						if (err) return Homey.alert(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							_.each($scope.vars.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-							_.each($scope.vars.tefTemplates, t=>t.favorite=t.favorite==true);
+							_.each($scope.vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+							_.each($scope.vars.tefTemplates, t => t.favorite = t.favorite == true);
 						});
 					});
 				}
 
 				$scope.openTemplate = function (template) {
 					try {
-							
+
 						if (template && template.post && template.tefs) {
 							$scope.vars.template = template;
 
 							/// Sanitize all posts!!
-							if(!template.sanitizedPost) {
+							if (!template.sanitizedPost) {
 								template.post = $sanitize(template.post);
 
-								if(String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
+								if (String.prototype.replaceAll) template.sanitizedPost = template.post.replaceAll('<a ', '<alinky ').replaceAll('</a>', '</alinky>');
 								else template.sanitizedPost = template.post.replace(/<a /g, '<alinky ').replace(/<\/a>/g, '</alinky>');
 							}
 							let compiled = $compile(template.sanitizedPost)($scope);
 							$('.content').empty();
 
 							$('.content').append(compiled);
-							$timeout(function() {
-								$scope.$apply(function() {							
+							$timeout(function () {
+								$scope.$apply(function () {
 									$('.content').scrollTop(0);
 								});
 							}, 1);
@@ -799,7 +824,7 @@ ${vars.textSettings}
 					$scope.vars.readflow.apiCommand = '';
 					$scope.vars.scriptCopied = false;
 					if (!item) return;
-					if(item.replaceWithId=='--[NULL]--') item.replaceWith = null;
+					if (item.replaceWithId == '--[NULL]--') item.replaceWith = null;
 					else if (item.replacements) item.replaceWith = item.replacements.find(x => x.id === item.replaceWithId);
 					else item.replaceWith = null;
 				}
@@ -847,8 +872,8 @@ ${vars.textSettings}
 				};
 				$scope.deleteAll = function () {
 					Homey.confirm(Homey.__("settings.delete_all_confirm") || 'Are you sure you wish to delete ALL functions?', null, (err, val) => {
-					if(err) return Homey.alert(err);
-					if(!val) return;
+						if (err) return Homey.alert(err);
+						if (!val) return;
 						$scope.$apply(function () {
 							$scope.functions = [];
 							$scope.storeFunction();
@@ -857,8 +882,8 @@ ${vars.textSettings}
 				}
 				$scope.removeFunction = function (row) {
 					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, (err, val) => {
-						if(err) return Homey.alert(err);
-						if(!val) return;
+						if (err) return Homey.alert(err);
+						if (!val) return;
 						var index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);

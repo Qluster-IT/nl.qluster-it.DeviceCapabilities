@@ -203,7 +203,7 @@
 			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.toUpperCase().startsWith('[TEF:') && !vars.textSettings.toUpperCase().startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>
 				
 			<div class="field">
-				<div class="button homey-button-primary" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.toUpperCase().startsWith('[TEF:') || vars.textSettings.toUpperCase().startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Use TEF</div>
+				<div class="button homey-button-primary" ng-disabled="!(temp.useTefEnabled = (vars.textSettings && (!vars.textSettings.toUpperCase().startsWith('[TEF:') || vars.textSettings.toUpperCase().startsWith('[TEF:AVD'))))" ng-click="temp.useTefEnabled ? useTEF() : null" data-i18n="virtualdevicesettings.readDevice">Read Device</div>
 			</div>
 			<div ng-if="vars.readcopy">
 				<div class="field" ng-if="vars.readcopy.customIcons">
@@ -531,7 +531,10 @@
 			$scope.useTEF = function () {
 				Homey.emit('use_tef', { tef: vars.textSettings })
 					.then(result => {
-						vars.readcopy = result.tef;
+						$scope.$apply(function () {
+							vars.readcopy = result.tef;
+						});
+						
 						//Homey.nextView();
 					})
 					.catch(error => {

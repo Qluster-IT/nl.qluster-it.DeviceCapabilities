@@ -83,46 +83,10 @@ class DeviceSetter extends Homey.App {
 			}
 		}
 
-		const cg = await CG.init({ homey: this.homey });
-		CG.onChronographUpdate = async ({ chronograph }) => {
-			if (!chronograph || !chronograph.data || !chronograph.data.type) return;
-			//this.homey.log('onChronographUpdate', chronograph);
-			let type = chronograph.data.type.toLowerCase();
-			if (this.Reflections && this.Reflections[APP_ID_CG] && this.Reflections[APP_ID_CG][type + '|' + chronograph.name])
-				for (let i = 0; i < this.Reflections[APP_ID_CG][type + '|' + chronograph.name].length; i++) {
-					const field = this.Reflections[APP_ID_CG][type + '|' + chronograph.name][i];
-					if (field.lastSet && field.lastSet > chronograph.now) continue;
-					field.lastSet = chronograph.now;
-					await field.method(field, chronograph);
 
-				}
-		}
-		cg.ready.then(() => {
-			try {
-				this.updateReflection({ appId: APP_ID_CG });
-			} catch (error) {
+		//this.homey.settings.unset('reflectAppsSettings');
 
-			}
-		});
-
-		const bl = await BL.init({ homey: this.homey });
-		BL.onVariableUpdate = async ({ variable, formattedDate }) => {
-			if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
-				for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
-					const field = this.Reflections[APP_ID_BLL][variable.name][i];
-					if (field.lastSet && field.lastSet > variable.lastChanged) continue;
-					field.lastSet = variable.lastChanged;
-					await field.method(field, variable);
-
-				}
-		}
-		bl.ready.then(() => {
-			try {
-				this.updateReflection({ appId: APP_ID_BLL });
-			} catch (error) {
-
-			}
-		});
+		await this.resetReflectAppsSettings();
 
 		this.appPath = this.homey.platform == 'local' && this.homey.platformVersion == 1 ? '/' : '/app/';
 
@@ -764,6 +728,10 @@ class DeviceSetter extends Homey.App {
 			if (settingName == 'javascript_functions') {
 				this.setFunctions();
 			}
+			else if (settingName == 'reflectAppsSettings') {
+				this.resetReflectAppsSettings();
+			}
+
 		}).bind(this));
 
 		await this.setFunctions();
@@ -771,13 +739,82 @@ class DeviceSetter extends Homey.App {
 
 	}
 
-	// addReflectApp({id, name}) {
-	// 	if(!this.reflectApps) this.homey.settings.get('reflectApps');
-	// 	let changed = false;
-	// 	if(!this.reflectApps && (changed=true)) this.reflectApps = [];
-	// 	if(!this.reflectApps.find(x=>x.id===id) && (changed=true)) this.reflectApps.push({id, app});
-	// 	if(changed) this.homey.settings.set('reflectApps', this.reflectApps);
-	// }
+	async resetReflectAppsSettings() {
+		this._reflectAppsSettings = this.homey.settings.get('reflectAppsSettings');
+		let changed = false;
+		if (!this._reflectAppsSettings && (changed = true)) this._reflectAppsSettings = {};
+		if (!this._reflectAppsSettings['net.i-dev.betterlogic'] && (changed = true)) this._reflectAppsSettings['net.i-dev.betterlogic'] = { enabled: true }
+		if (!this._reflectAppsSettings['nl.fellownet.chronograph'] && (changed = true)) this._reflectAppsSettings['nl.fellownet.chronograph'] = { enabled: true }
+		if (changed) this.homey.settings.set('reflectAppsSettings', this._reflectAppsSettings);
+		await this.resetReflectApps();
+	}
+
+	async resetReflectApps() {
+		if (this._reflectAppsSettings && this._reflectAppsSettings['nl.fellownet.chronograph'].enabled) {
+			if (!this._cg) {
+				this._cg = await CG.init({ homey: this.homey });
+				CG.onChronographUpdate = async ({ chronograph }) => {
+					if (!chronograph || !chronograph.data || !chronograph.data.type) return;
+					//this.homey.log('onChronographUpdate', chronograph);
+					let type = chronograph.data.type.toLowerCase();
+					if (this.Reflections && this.Reflections[APP_ID_CG] && this.Reflections[APP_ID_CG][type + '|' + chronograph.name])
+						for (let i = 0; i < this.Reflections[APP_ID_CG][type + '|' + chronograph.name].length; i++) {
+							const field = this.Reflections[APP_ID_CG][type + '|' + chronograph.name][i];
+							if (field.lastSet && field.lastSet > chronograph.now) continue;
+							field.lastSet = chronograph.now;
+							await field.method(field, chronograph);
+
+						}
+				}
+				this._cg.ready.then(() => {
+					try {
+						this.updateReflection({ appId: APP_ID_CG });
+					} catch (error) {
+
+					}
+				});
+			}
+		} else if (CG && CG.destroy) {
+			try {
+				CG.destroy();
+			} catch (error) {
+
+			}
+			delete this._cg;
+		}
+
+
+		if (this._reflectAppsSettings && this._reflectAppsSettings['net.i-dev.betterlogic'].enabled) {
+			if (!this._bl) {
+				this._bl = await BL.init({ homey: this.homey });
+				BL.onVariableUpdate = async ({ variable, formattedDate }) => {
+					if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
+						for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
+							const field = this.Reflections[APP_ID_BLL][variable.name][i];
+							if (field.lastSet && field.lastSet > variable.lastChanged) continue;
+							field.lastSet = variable.lastChanged;
+							await field.method(field, variable);
+
+						}
+				}
+				this._bl.ready.then(() => {
+					try {
+						this.updateReflection({ appId: APP_ID_BLL });
+					} catch (error) {
+
+					}
+				});
+			}
+		} else if (BL && BL.destroy) {
+			try {
+				BL.destroy();
+			} catch (error) {
+
+			}
+			delete this._bl;
+		}
+	}
+
 
 
 	async updateReflection({ device, appId } = {}) {
@@ -803,7 +840,7 @@ class DeviceSetter extends Homey.App {
 				for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
 					const field = this.Reflections[APP_ID_CG][chronographName][i];
 					if (device && field.device !== device) continue;
-					await field.method(field, chronograph || {elapsed:0, remaining:0, running:false,removed:true});
+					await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
 
 				}
 			}
@@ -1682,7 +1719,7 @@ class DeviceSetter extends Homey.App {
 		}
 	}
 	async refreshApps(app) {
-		this.log('refreshApps', app);
+		//this.log('refreshApps', app);
 		if (this.apps == 'waiting') return;
 		var firstrun = !this.apps;
 		this.apps = 'waiting';
