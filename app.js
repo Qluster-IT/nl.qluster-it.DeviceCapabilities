@@ -820,29 +820,47 @@ class DeviceSetter extends Homey.App {
 	async updateReflection({ device, appId } = {}) {
 		if (this.Reflections && this.Reflections[APP_ID_BLL] && (!appId || appId === APP_ID_BLL))// && this.Reflections[APP_ID_BLL][variable.name])
 		{
-			const vars = await this.getBllVariables();
-			if (vars) for (const variableName in this.Reflections[APP_ID_BLL]) {
-				let _var;
-				if ((_var = _.find(vars, x => x.name == variableName))) for (let i = 0; i < this.Reflections[APP_ID_BLL][variableName].length; i++) {
-					const field = this.Reflections[APP_ID_BLL][variableName][i];
-					if (device && field.device !== device) continue;
-					await field.method(field, _var);
+			try {
+
+				const vars = await this.getBllVariables();
+				if (vars) for (const variableName in this.Reflections[APP_ID_BLL]) {
+					let _var;
+					if ((_var = _.find(vars, x => x.name == variableName))) for (let i = 0; i < this.Reflections[APP_ID_BLL][variableName].length; i++) {
+						const field = this.Reflections[APP_ID_BLL][variableName][i];
+						if (device && field.device !== device) continue;
+						try {
+							await field.method(field, _var);
+						} catch (error) {
+							
+						}
+					}
 				}
+			} catch (error) {
+
 			}
 		}
 		if (this.Reflections && this.Reflections[APP_ID_CG] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
 		{
-			const chronographs = await this.getChronographs();
-			for (const chronographName in this.Reflections[APP_ID_CG]) {
-				let type = chronographName.substring(0, chronographName.indexOf('|'));
-				let name = chronographName.substring(chronographName.indexOf('|') + 1);
-				const chronograph = _.find(chronographs, x => x.name == name && x.type == type)
-				for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
-					const field = this.Reflections[APP_ID_CG][chronographName][i];
-					if (device && field.device !== device) continue;
-					await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
+			try {
+				const chronographs = await this.getChronographs();
+				for (const chronographName in this.Reflections[APP_ID_CG]) {
+					let type = chronographName.substring(0, chronographName.indexOf('|'));
+					let name = chronographName.substring(chronographName.indexOf('|') + 1);
+					const chronograph = _.find(chronographs, x => x.name == name && x.type == type)
+					for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
+						const field = this.Reflections[APP_ID_CG][chronographName][i];
+						if (device && field.device !== device) continue;
+						try {
 
+							await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
+						} catch (error) {
+
+						}
+
+					}
 				}
+			} catch (error) {
+
 			}
 		}
 	}
