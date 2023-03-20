@@ -792,8 +792,12 @@ div[disabled], button[disabled] {
     color: lightgray !important;
 }
 
-input.ng-invalid {
-    background-color: lightcoral;
+.group .field input.value.ng-invalid,  input.ng-invalid, select.ng-invalid {
+    border-color: lightcoral!important;
+    border-left:1px solid lightcoral!important;
+    border-top:1px solid  lightcoral!important;
+    border-right:1px solid  lightcoral!important;
+    border-bottom:1px solid  lightcoral!important;
 }
 
 input[type="text"]:not(.hy-nostyle),

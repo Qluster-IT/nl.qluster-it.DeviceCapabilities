@@ -987,15 +987,24 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
     }
 
     registerAutocompleteListValue(action) {
-        return async( query, args ) => {
+        const lg = this.homey.i18n.getLanguage();
+        return async (query, args) => {
             let settings = args.device.Settings;
-            if(!settings) return;            
+            if (!settings) return;
             let cap = args.device.getStoreValue(args.field.id);
-            let dev = this.homey.app.devices[args.device.__id];
-            let values = dev==null?null : dev.capabilitiesObj && dev.capabilitiesObj[cap] ?  dev.capabilitiesObj[cap].values : undefined;
-            return values;
-            //let a = 0;
-            //var type = this.getTypeFromAction(action);
+            //const dev2 = args.device;
+            let capabilities = this.homey.app.manifest.capabilities;
+            const options = capabilities[cap];
+            let values;
+            if (false && options)
+                values = options.values;
+            else {
+                await app.refreshHomeyAPI();
+                let dev = this.homey.app.devices[args.device.__id];
+                values = dev == null ? null : dev.capabilitiesObj && dev.capabilitiesObj[cap] ? dev.capabilitiesObj[cap].values : undefined;
+            }
+
+            return _.map(values, x => { return { id: x.id, name: typeof(x.title)=='string' ? x.title :  x.title[lg] ? x.title[lg] : x.title['en'] }; });
         };
     }
 
@@ -3297,10 +3306,21 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
             favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
             bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined, blReady:BL.isReady,
-            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady
+            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady//,
+            //reflectDevices : _.map(this.homey.app.devices, d=>{return {name:d.name, id: d.id} ;})
         };
 
+
         });
+
+        
+        session.setHandler('virtualdevicesettings_loadReflectDevices', async (settings) => {
+            await this.homey.app.refreshHomeyAPI();
+            return {reflectDevices : _.mapValues(this.homey.app.devices, d=>{
+                return {name:d.name, id: d.id, zoneName:this.homey.app.zones[d.zone].name, capabilitiesObj:_.mapValues(_.pickBy(d.capabilitiesObj, c=>c.getable), x=> {return {id:x.id, title:x.title, type:x.type, getable:x.getable, setable:x.setable} ;})} ;}
+            )};
+        });
+
         session.setHandler('virtualdevicesettings_save', async (settings) => {
             //console.log(settings, device.Settings , []);
             //device.data.icon = "../../../assets/icon.svg";

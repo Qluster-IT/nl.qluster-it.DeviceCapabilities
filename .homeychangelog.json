@@ -574,5 +574,17 @@
   },
   "2.10.2": {
     "en": "Bugfixed: Some crash reports."
+  },
+  "2.10.3": {
+    "en": "Bugfixed: A few HP2023 specific issues resolved."
+  },
+  "2.10.4": {
+    "en": "Added: Reflection: you can now add multiple devices as one reflection, thus: grouping."
+  },
+  "2.10.5": {
+    "en": "Added: Reflection: you can now add multiple devices as one reflection, thus: grouping!"
+  },
+  "2.10.6": {
+    "en": "Added: Reflection: You can now add multiple devices as one reflection, thus: grouping, without flows!"
   }
 }

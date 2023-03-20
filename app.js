@@ -23,6 +23,7 @@ const { CG } = require('chronograph-npm');
 
 const APP_ID_BLL = 'net.i-dev.betterlogic';
 const APP_ID_CG = 'nl.fellownet.chronograph';
+const DC_DEVICES = 'dc:devices';
 
 const SETTING_PREFIX = 'icons_';
 const TYPES_MAP = {
@@ -818,6 +819,30 @@ class DeviceSetter extends Homey.App {
 
 
 	async updateReflection({ device, appId } = {}) {
+
+		if (this.Reflections && this.Reflections[DC_DEVICES] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
+		{
+			let api = await this.homey.app.refreshHomeyAPI();
+			const runnedDevices = {};
+			for (const deviceId in this.homey.app.Reflections[DC_DEVICES]) {
+				let _device = this.homey.app.devices[deviceId];
+				for (const propertyId in this.homey.app.Reflections[DC_DEVICES][deviceId]) {
+					const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
+					for (let i = 0; i < property.fields.length; i++) {
+						const field = property.fields[i];
+						if (device && field.device !== device) 
+							continue;
+						if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
+							continue;
+						field.method(field, { value: property.value, id: propertyId });
+						if (!runnedDevices[field.device.id]) runnedDevices[field.device.id] = {};
+						if (!runnedDevices[field.device.id][field.fieldId]) runnedDevices[field.device.id][field.fieldId] = true;
+
+					}
+				}
+			}
+		}
+
 		if (this.Reflections && this.Reflections[APP_ID_BLL] && (!appId || appId === APP_ID_BLL))// && this.Reflections[APP_ID_BLL][variable.name])
 		{
 			try {
@@ -831,7 +856,7 @@ class DeviceSetter extends Homey.App {
 						try {
 							await field.method(field, _var);
 						} catch (error) {
-							
+
 						}
 					}
 				}
@@ -863,6 +888,7 @@ class DeviceSetter extends Homey.App {
 
 			}
 		}
+
 	}
 
 	async getBllVariables() {

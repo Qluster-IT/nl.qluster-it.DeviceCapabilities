@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.10.2",
+  "version": "2.10.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -29,7 +29,8 @@
       "zones",
       "virtual",
       "customize",
-      "customisable"
+      "customisable",
+      "group"
     ],
     "nl": [
       "apparaat",
@@ -46,7 +47,8 @@
       "virtueel",
       "virtual",
       "aanpassen",
-      "aanbasbaar"
+      "aanbasbaar",
+      "groep"
     ],
     "de": [
       "Gerät",
@@ -62,7 +64,8 @@
       "Zonen",
       "virtuell",
       "Anpassen",
-      "anpassbar"
+      "anpassbar",
+      "gruppe"
     ]
   },
   "category": [

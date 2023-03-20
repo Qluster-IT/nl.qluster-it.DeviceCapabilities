@@ -177,7 +177,20 @@
 		"format_bll_expression":"BLL expression",
 		"format_bll_expressionHint":"Format the value through an BLL Expression.<br/>N.b. Some properties require formatting to be parsed to this field<br/>Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.",
 		"format_bll_expressionHintBLL":"Format the value through an BLL Expression.<br/>Available parameters:<br/>$value, $variable.",
-		"format_bll_expressionHintCG":"Format the value through an BLL Expression.<br/>Available parameters:<br/>$value, $chronograph."
+		"format_bll_expressionHintCG":"Format the value through an BLL Expression.<br/>Available parameters:<br/>$value, $chronograph.",		
+		"devices":"Devices",
+		"device":"Device",
+		"format_bll_expressionHintDevices":"Format the value through an BLL Expression.<br/>Available parameters:<br/><strong>$value</strong>, <strong>$values</strong>.",
+		"calculation":"Calculation",
+		"format_bll_expressionHintDevicesCalculations":"Calculate the value through an BLL Expression.<br/>Available parameters:<br/><strong>$values</strong>.",
+		"format_bll_calculation":"Calculation BLL expression",
+		
+		"add_device":"Add device",
+		"debounceAVD":"Debounce (ms)",
+		"debounceAVDHint":"Milliseconds between setting the AVD field value (leading, maxwait, trailing).",
+		"excludeSeconds":"Exclude (seconds)",
+		"excludeSecondsHint":"Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting)."
+
     },
 	"pair": {
 		"list_icons":{
@@ -187,11 +200,9 @@
 			"select_device_icon":"Oder wählen Sie eines aus der Liste.",
 			"set_icon_and_customize":"Hier können Sie ein Symbol für die Advanced Virtual Devices festlegen, indem Sie Ihr eigenes .svg-Symbol hochladen oder eines aus der Standardliste auswählen.",
 			"set_icon_and_customize_change" : "Sie können das Symbol später über die App-Einstellungen ändern.",
-
 			"set_name":"Hier können Sie den Namen für das Gerät festlegen:",
 			"create_device_self":"Oder ein Gerät selber erstellen",
-			"choose_template":"Oder eine Vorlage auswählen",
-			
+			"choose_template":"Oder eine Vorlage auswählen",			
 			"create_avd_by":"Create an Advanced Virtual Device by",
 			"creating_empty_avd":"Creating an empty AVD",
 			"selecting_template":"Selecting from a Template",

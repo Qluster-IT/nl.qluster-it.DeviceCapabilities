@@ -176,7 +176,22 @@
 		"format_bll_expression":"BLL expression",
 		"format_bll_expressionHint":"Formatteer de waarde via een BLL-expressie.<br/>N.b. Voor sommige eigenschappen moet de opmaak voor dit veld worden geconverteerd.<br/>Installeer de Better Logic Library-app uit de Athom App Store om BLL-expressies in te schakelen.",
 		"format_bll_expressionHintBLL":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $variable.",
-		"format_bll_expressionHintCG":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $chronograph."
+		"format_bll_expressionHintCG":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $chronograph.",
+
+
+		
+		"devices":"Apparaten",
+		"device":"Apparaat",
+		"format_bll_expressionHintDevices":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/><strong>$value</strong>, <strong>$values</strong>.",
+		"calculation":"Berekening",
+		"format_bll_expressionHintDevicesCalculations":"Bereken de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/><strong>$values</strong>.",
+		"format_bll_calculation":"Berekening BLL-expressie",
+
+		"add_device":"Apparaat toevoegen",
+		"debounceAVD":"Debounce (ms)",
+		"debounceAVDHint":"Milliseconden tussen het instellen van de AVD-veldwaarde (leading, maxwait, trailing).",
+		"excludeSeconds":"Uitsluiten (seconden)",
+		"excludeSecondsHint":"Waarden automatisch uitsluiten die meer dan x aantal seconden oud zijn (apparaten die niet rapporteren)."
 
 	},
 	"pair": {
