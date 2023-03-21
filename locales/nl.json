@@ -191,7 +191,10 @@
 		"debounceAVD":"Debounce (ms)",
 		"debounceAVDHint":"Milliseconden tussen het instellen van de AVD-veldwaarde (leading, maxwait, trailing).",
 		"excludeSeconds":"Uitsluiten (seconden)",
-		"excludeSecondsHint":"Waarden automatisch uitsluiten die meer dan x aantal seconden oud zijn (apparaten die niet rapporteren)."
+		"excludeSecondsHint":"Waarden automatisch uitsluiten die meer dan x aantal seconden oud zijn (apparaten die niet rapporteren).",
+
+		"react":"React (zet eigenschappen)",
+		"reactHint":"Stel automatisch de apparaateigenschappen in wanneer dit veld wordt gewijzigd."
 
 	},
 	"pair": {

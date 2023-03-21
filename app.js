@@ -915,6 +915,20 @@ class DeviceSetter extends Homey.App {
 		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
 	}
 
+async getDevice({deviceId, full=false}) {
+	let device = this.homey.app.devices[deviceId];
+	if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full)) {
+		const api = await this.homey.app.refreshHomeyAPI();
+		device = this.homey.app.devices[deviceId] = await api.devices.getDevice({ id: deviceId, $skipCache: true });
+	}
+	return device;
+
+}
+
+
+
+
+
 	async setFunctions() {
 		this.functions = await this.homey.settings.get('javascript_functions');
 		//this.log('this.functions', typeof(this.functions), this.functions);

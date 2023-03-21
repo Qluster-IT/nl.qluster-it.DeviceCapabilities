@@ -153,6 +153,33 @@ module.exports = class WatchDevice extends Homey.Device {
 
 	}
 
+	async activateReact({ fieldId, value, source }) {
+		try {
+			const settings = this.Settings;
+			if (!settings || !settings[fieldId + 'Name']) return;
+			if (!settings[fieldId + 'ReflectDevices'] || !settings[fieldId + 'ReflectDevices'].length && !settings[fieldId + 'React']) return;
+			if ((source == DC_DEVICES && this.Settings[fieldId + 'React'] === 'true_not_devices')) return;
+			if (!this.ReactLocks) this.ReactLocks = {};
+			//if(!this.ReactLocks[fieldId]) 
+			this.ReactLocks[fieldId] = Date.now();
+
+			for (let i = 0; i < settings[fieldId + 'ReflectDevices'].length; i++) {
+				try {
+					const device = settings[fieldId + 'ReflectDevices'][i];
+					if (!device) continue;
+					const property = this.homey.app.Reflections[DC_DEVICES][device.id][device.property];
+
+					//await property.device.setCapabilityValue(device.property, value);
+					await property.listener.setValue(value);
+				} catch (error) {
+					const err = error;
+				}
+			}
+		} catch (error) {
+
+		}
+	}
+
 	async setListener({ fieldId, cap, settings }) {
 		if (fieldId.startsWith('button')) {
 			if (settings[fieldId + 'Disabled'] !== true)
@@ -161,13 +188,16 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (settings[fieldId + 'ShowAs'] === "pushbutton_indicator") {
 						let val = this.getStoreValue(fieldId + "Value") === true;
 						//await this.setCapabilityValue(cap, val); //Why twice?
-						return setTimeout(async () => {
+						setTimeout(async () => {
 							await this.setCapabilityValue(cap, val);
+							await this.activateReact({ fieldId, value: val });
 							this.driver.triggerFlowButton(this, !val, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 						}, 1);
+						return true;
 					} else {
 						await this.driver.setSecondCapability({ val: value, device: this, fieldId });
 						await this.setStoreValue(fieldId + "Value", value === true);
+						await this.activateReact({ fieldId, value });
 						this.driver.triggerFlowButton(this, value, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 					}
 					return true;
@@ -179,6 +209,7 @@ module.exports = class WatchDevice extends Homey.Device {
 					let oldValue = this.getStoreValue(fieldId + "Value");
 					await this.driver.setSecondCapability({ val: value, device: this, fieldId });
 					await this.setStoreValue(fieldId + "Value", value === true);
+					await this.activateReact({ fieldId, value });
 					this.driver.triggerFlowBoolean(this, value, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 				}).bind(this));
 		}
@@ -187,6 +218,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				let oldValue = this.getStoreValue(fieldId + "Value");
 				await this.driver.setSecondCapability({ val: value, device: this, fieldId });
 				await this.setStoreValue(fieldId + "Value", value);
+				await this.activateReact({ fieldId, value });
 				this.driver.triggerFlowNumber(this, value, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
@@ -195,6 +227,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				let oldValue = this.getStoreValue(fieldId + "Value");
 				await this.driver.setSecondCapability({ val: value, device: this, fieldId });
 				await this.setStoreValue(fieldId + "Value", value);
+				await this.activateReact({ fieldId, value });
 				this.driver.triggerFlowText(this, value, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
@@ -203,6 +236,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				let oldValue = this.getStoreValue(fieldId + "Value");
 				await this.driver.setSecondCapability({ val: value, device: this, fieldId });
 				await this.setStoreValue(fieldId + "Value", value);
+				await this.activateReact({ fieldId, value });
 				this.driver.triggerFlowList(this, value, { field: { id: fieldId }, changed: value !== oldValue }); //Do we need to await for triggerFlow?
 			}).bind(this));
 		}
@@ -246,23 +280,26 @@ module.exports = class WatchDevice extends Homey.Device {
 			await this.setCameraImage(ref, this.Cameras[ref].name, this.Cameras[ref].image);
 			this.Cameras[ref].attached = true;
 		};
+		try {
+			if (this.Cameras[ref].imageByFlow) {
+				const image = this.Cameras[ref].imageByFlow;
+				delete this.Cameras[ref].imageByFlow;
 
-		if (this.Cameras[ref].imageByFlow) {
-			const image = this.Cameras[ref].imageByFlow;
-			delete this.Cameras[ref].imageByFlow;
+				this.Cameras[ref].image.setStream(async (stream) => {
+					return image.pipe(stream);
+				});
 
-			this.Cameras[ref].image.setStream(async (stream) => {
-				return image.pipe(stream);
-			});
+				await this.Cameras[ref].image.update();
+			}
+			else if (this.Cameras[ref].url && this.Cameras[ref].url.length) {
+				this.Cameras[ref].image.setUrl(this.Cameras[ref].url);
+				await this.Cameras[ref].image.update();
+			}
 
-			await this.Cameras[ref].image.update();
+			if (!this.Cameras[ref].attached) await attach();
+		} catch (error) {
+
 		}
-		else if (this.Cameras[ref].url && this.Cameras[ref].url.length) {
-			this.Cameras[ref].image.setUrl(this.Cameras[ref].url);
-			await this.Cameras[ref].image.update();
-		}
-
-		if (!this.Cameras[ref].attached) await attach();
 	}
 
 	async setReflections(settings) {
@@ -283,6 +320,9 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property]) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property] = { fields: [] }
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.push({
 							device: this, fieldId: type + i, method: async (r, capability) => {
+								if (this.Settings[r.fieldId + 'React'] === 'only_react') return;
+								
+								if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
 								let devices = this.Settings[r.fieldId + 'ReflectDevices'];
 								const calculations = this.Settings[r.fieldId + 'ReflectCalculation'];
 								if (!devices) return;
@@ -295,21 +335,7 @@ module.exports = class WatchDevice extends Homey.Device {
 									for (let i = 0; i < devices.length; i++) {
 										const device = devices[i];
 										try {
-											let _d = this.homey.app.Reflections[reflect][device.id][device.property];
-												
-											try {
-												let a = this.homey.app.Reflections[reflect][device.id][device.property].lastUpdated;
-												let b = Date.now();
-												let c = Date.now() - (this.Settings[r.fieldId + 'ReflectExcludeSeconds'] * 1_000);
-												let d = a > c;
-												if (d) {
-													let cc = 1;
-												} else {
-													let dd = 2;
-												}
-											} catch (error) {
-												let err=error;
-											}
+
 											if (!this.Settings[r.fieldId + 'ReflectExcludeSeconds'] || this.homey.app.Reflections[reflect][device.id][device.property].lastUpdated > (Date.now() - (this.Settings[r.fieldId + 'ReflectExcludeSeconds'] * 1_000)))
 												values.push(this.homey.app.Reflections[reflect][device.id][device.property].value);
 										} catch (error) {
@@ -317,6 +343,7 @@ module.exports = class WatchDevice extends Homey.Device {
 										}
 
 									}
+									this.homey.app.log('values', values);
 									switch (calculations) {
 										case 'bll': {
 											const formatCalculation = this.Settings[r.fieldId + 'ReflectCalculationFormat'];
@@ -344,7 +371,7 @@ module.exports = class WatchDevice extends Homey.Device {
 									}
 								}
 
-								console.log('method ', capability, 'value', value);
+								console.log('method ', capability, 'value', value, 'r.field', r.field);
 
 
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
@@ -357,7 +384,7 @@ module.exports = class WatchDevice extends Homey.Device {
 								}
 
 								try {
-									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards' });
+									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES });
 								} catch (error) {
 
 								}
@@ -477,15 +504,12 @@ module.exports = class WatchDevice extends Homey.Device {
 				let api = await this.homey.app.refreshHomeyAPI();
 				//disconnect first
 				for (const deviceId in this.homey.app.Reflections[reflect]) {
-					if(!this.homey.app.devices) continue;
-					let device = this.homey.app.devices[deviceId];
-					if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue)) {
-						device = this.homey.app.devices[device.id] = await api.devices.getDevice({ id: device.id, $skipCache: true });
-					}
-					if(!device) continue;
-					//this.homey.app.Reflections[reflect].listener = device.makeCapabili
+					if (!this.homey.app.devices) continue;
+					const device = await this.homey.app.getDevice({ deviceId, full: true });
+					if (!device) continue;
 					for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
 						const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
+						if (!property.device) property.device = device;
 						if (!property.listener) {
 							const cap = device.capabilitiesObj[propertyId];
 							property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;

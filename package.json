@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "athom-api": "^3.8.2",
-    "betterlogiclibrary": "^0.9.11",
+    "betterlogiclibrary": "^0.9.14",
     "chronograph-npm": "^0.1.1",
     "lodash-core": "^4.17.19"
   },

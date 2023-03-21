@@ -189,7 +189,10 @@
 		"debounceAVD":"Debounce (ms)",
 		"debounceAVDHint":"Milliseconds between setting the AVD field value (leading, maxwait, trailing).",
 		"excludeSeconds":"Exclude (seconds)",
-		"excludeSecondsHint":"Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting)."
+		"excludeSecondsHint":"Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).",
+
+		"react":"React (set properties)",
+		"reactHint":"Automaticly set the device properties when this field is changed."
 
     },
 	"pair": {

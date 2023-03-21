@@ -589,5 +589,14 @@
   },
   "2.10.7": {
     "en": "Improved: Reflection: Some small bugfixes and timestamp handling on hp2019 and before models."
+  },
+  "2.10.8": {
+    "en": "Improved: Reflection: Devices."
+  },
+  "2.10.9": {
+    "en": "Improved: Reflection: Devices."
+  },
+  "2.10.10": {
+    "en": "Improved: Reflection: Devices, seems about ready for release."
   }
 }

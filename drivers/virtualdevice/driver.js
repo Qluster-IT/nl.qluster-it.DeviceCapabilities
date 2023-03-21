@@ -36,6 +36,10 @@ const CUSTOM_ICONS = [
 
 const { AppsInfo } = require('../virtualdevice/appinfo');
 
+const APP_ID_BLL = 'net.i-dev.betterlogic';
+const APP_ID_CG = 'nl.fellownet.chronograph';
+const DC_DEVICES = 'dc:devices';
+
 let allDevices,  allDrivers, actionCards, conditionCards, triggerCards, allUsers, allVariables, allTokens, allPrivateKeys, allAdvancedFlows, allZones, allApps;
 let app;
 
@@ -352,6 +356,10 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                                     } catch (error) {
                                         if(error && error.message!='Capability Not Getable') throw error; }
 
+
+                                        
+						            await args.device.activateReact({ fieldId, value });
+
                                     //await args.device.setCapabilityValue(cap, value);
 
                                     // //Remove logs here
@@ -474,7 +482,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
 
-    async setValue({field, device, value, expression, mode }) {
+    async setValue({field, device, value, expression, mode, source }) {
         const _fieldId = field ? field.id : undefined;
         const fieldIds = [_fieldId];
         try {
@@ -510,6 +518,8 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                         if(error && error.message!='Capability Not Getable') throw error; }
 
                     await device.setStoreValue(fieldId+"Value", value);
+
+                    await device.activateReact({ fieldId, value, source });
 
                     if(mode==="executewhencards") {
                         if(type=="status")this.triggerFlowStatus(device, null , value , { field: { id: fieldId }, textChanged:false, textSet:false, numberChanged:oldValue!==value, numberSet:true });
@@ -1010,7 +1020,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
 
     async triggerFlowButton(device, value, state) {
         try {
-            
+            //device.activateReact({ fieldId:state.field.id, value }); 
             this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
         } catch (error) {
             this.error(error);
@@ -1018,18 +1028,23 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         //return await this.trigger_virtualdevice_button.trigger(device, {value:value===null?true:value} , state);
     }
     async triggerFlowBoolean(device, value, state) {
+        //device.activateReact({ fieldId:state.field.id, value }); 
         return await this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
     }
     async triggerFlowNumber(device, value, state) {
+        //device.activateReact({ fieldId:state.field.id, value }); 
         return await this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
     }
     async triggerFlowText(device, value, state) {
+        //device.activateReact({ fieldId:state.field.id, value }); 
         return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);
     }
     async triggerFlowList(device, value, state) {
+        //device.activateReact({ fieldId:state.field.id, value }); 
         return await this.trigger_virtualdevice_list.trigger(device, {value:value===null?'':value} , state);
     }
     async triggerFlowStatus(device, text, number, state) {
+        //device.activateReact({ fieldId:state.field.id, value:number }); 
         return await this.trigger_virtualdevice_status.trigger(device, {text:text===null || text===undefined?'':text, number:number===null || number===undefined?0:number} , state);
     }
     // This method is called when a user is adding a device
@@ -1558,6 +1573,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
         if(Object.keys(tokensToReplace).length>0) dev.tokensToReplace = tokensToReplace;
 
         dev.advancedflows = advancedflows;
+        if(device&&device.settings && device.settings.energy_value_contant===undefined)device.settings.energy_value_contant = 0;
         const devCopy = JSON.parse(JSON.stringify(dev));
         const devCopyMinified = this.minifyExchangerFile(devCopy);
 
@@ -2715,15 +2731,17 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
             if(exchangerFile.startsWith('[tef:') && exchangerFile.endsWith(':/tef]'))  {
                 exchangerFile = exchangerFile.replace(/^(?:\[tef:(.*?):(?:")?)/, '');
                 exchangerFile = exchangerFile.substring(0, exchangerFile.length-6);
-                if(exchangerFile.endsWith('"')) exchangerFile.substring(0, exchangerFile.length-1);
+                if(exchangerFile.endsWith('"')) exchangerFile = exchangerFile.substring(0, exchangerFile.length-1);
             } else if(exchangerFile.startsWith('[TEF:'))  {
                 exchangerFile = exchangerFile.replace(/^(?:\[TEF:(.*?):(?:")?)/, '');
                 exchangerFile = exchangerFile.substring(0, exchangerFile.length-1);
-                if(exchangerFile.endsWith('"')) exchangerFile.substring(0, exchangerFile.length-1);
+                if(exchangerFile.endsWith('"')) exchangerFile =  exchangerFile.substring(0, exchangerFile.length-1);
             }
             if(exchangerFile.startsWith('H4s')) {
                 exchangerFile = this.getNormalZippedForForum(exchangerFile);
-                exchangerFile = JSON.parse(await this.unzip(exchangerFile));
+                exchangerFile = await this.unzip(exchangerFile);
+                this.homey.log('exchangerFile', exchangerFile);
+                exchangerFile = JSON.parse(exchangerFile);
             }
             else exchangerFile = JSON.parse(exchangerFile);
         }
