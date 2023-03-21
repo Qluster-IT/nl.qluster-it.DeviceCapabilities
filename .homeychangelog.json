@@ -586,5 +586,8 @@
   },
   "2.10.6": {
     "en": "Added: Reflection: You can now add multiple devices as one reflection, thus: grouping, without flows!"
+  },
+  "2.10.7": {
+    "en": "Improved: Reflection: Some small bugfixes and timestamp handling on hp2019 and before models."
   }
 }

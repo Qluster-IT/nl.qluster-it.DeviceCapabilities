@@ -820,12 +820,11 @@ class DeviceSetter extends Homey.App {
 
 	async updateReflection({ device, appId } = {}) {
 
-		if (this.Reflections && this.Reflections[DC_DEVICES] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
+		if (this.Reflections && this.Reflections[DC_DEVICES] && (!appId || appId === DC_DEVICES))// && this.Reflections[APP_ID_BLL][variable.name])
 		{
-			let api = await this.homey.app.refreshHomeyAPI();
+			//let api = await this.homey.app.refreshHomeyAPI();
 			const runnedDevices = {};
 			for (const deviceId in this.homey.app.Reflections[DC_DEVICES]) {
-				let _device = this.homey.app.devices[deviceId];
 				for (const propertyId in this.homey.app.Reflections[DC_DEVICES][deviceId]) {
 					const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
 					for (let i = 0; i < property.fields.length; i++) {

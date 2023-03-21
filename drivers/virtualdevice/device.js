@@ -489,7 +489,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!property.listener) {
 							const cap = device.capabilitiesObj[propertyId];
 							property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;
-							property.lastUpdated = cap.lastUpdated;
+							property.lastUpdated = new Date(cap.lastUpdated).getTime();
 							//api.devices.getCapabilityValue({capabilityId:propertyId, deviceId:device.id});
 							property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
 								property.value = value;
