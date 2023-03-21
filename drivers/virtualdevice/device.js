@@ -159,9 +159,8 @@ module.exports = class WatchDevice extends Homey.Device {
 			if (!settings || !settings[fieldId + 'Name']) return;
 			if (!settings[fieldId + 'ReflectDevices'] || !settings[fieldId + 'ReflectDevices'].length && !settings[fieldId + 'React']) return;
 			if ((source == DC_DEVICES && this.Settings[fieldId + 'React'] === 'true_not_devices')) return;
-			if (!this.ReactLocks) this.ReactLocks = {};
-			//if(!this.ReactLocks[fieldId]) 
-			this.ReactLocks[fieldId] = Date.now();
+			// if (!this.ReactLocks) this.ReactLocks = {};
+			// this.ReactLocks[fieldId] = Date.now();
 
 			for (let i = 0; i < settings[fieldId + 'ReflectDevices'].length; i++) {
 				try {
@@ -322,7 +321,7 @@ module.exports = class WatchDevice extends Homey.Device {
 							device: this, fieldId: type + i, method: async (r, capability) => {
 								if (this.Settings[r.fieldId + 'React'] === 'only_react') return;
 								
-								if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
+								//if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
 								let devices = this.Settings[r.fieldId + 'ReflectDevices'];
 								const calculations = this.Settings[r.fieldId + 'ReflectCalculation'];
 								if (!devices) return;
