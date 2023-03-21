@@ -157,7 +157,7 @@ module.exports = class WatchDevice extends Homey.Device {
 		try {
 			const settings = this.Settings;
 			if (!settings || !settings[fieldId + 'Name']) return;
-			if (!settings[fieldId + 'ReflectDevices'] || !settings[fieldId + 'ReflectDevices'].length && !settings[fieldId + 'React']) return;
+			if (!settings[fieldId + 'ReflectDevices'] || !settings[fieldId + 'ReflectDevices'].length || !settings[fieldId + 'React']) return;
 			if ((source == DC_DEVICES && this.Settings[fieldId + 'React'] === 'true_not_devices')) return;
 			// if (!this.ReactLocks) this.ReactLocks = {};
 			// this.ReactLocks[fieldId] = Date.now();
@@ -169,7 +169,15 @@ module.exports = class WatchDevice extends Homey.Device {
 					const property = this.homey.app.Reflections[DC_DEVICES][device.id][device.property];
 
 					//await property.device.setCapabilityValue(device.property, value);
+					property.value = value;
+					property.lastUpdated = Date.now();
+							
 					await property.listener.setValue(value);
+					for (let j = 0; j < property.fields.length; j++) {
+						const field = property.fields[j];
+						if(field.device!==this || field.fieldId!==fieldId) field.method(field, {value, id:device.property} );
+						
+					}
 				} catch (error) {
 					const err = error;
 				}
@@ -342,7 +350,7 @@ module.exports = class WatchDevice extends Homey.Device {
 										}
 
 									}
-									this.homey.app.log('values', values);
+									//this.homey.app.log('r.fieldId', r.fieldId, 'r.device.name', r.device?r.device.getName():null, 'capability', capability, 'values', values);
 									switch (calculations) {
 										case 'bll': {
 											const formatCalculation = this.Settings[r.fieldId + 'ReflectCalculationFormat'];
@@ -464,11 +472,12 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
 							device: this, fieldId: type + i, method: async (r, chronograph) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
+								if(chronograph.removed) chronograph.remaining = 0;
 								let value = chronograph[property];
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
 								let timeMs;
 								if ((value !== undefined && value !== null) && (property == 'elapsed' || property == 'remaining')) timeMs = value;
-
+								
 								if (format) try {
 									value = await BL.express(format, { value, chronograph, timeMs });
 								} catch (error) {
@@ -500,6 +509,7 @@ module.exports = class WatchDevice extends Homey.Device {
 				}
 			}
 			if (reflect == DC_DEVICES) {
+				const _this = this;
 				let api = await this.homey.app.refreshHomeyAPI();
 				//disconnect first
 				for (const deviceId in this.homey.app.Reflections[reflect]) {
@@ -514,6 +524,8 @@ module.exports = class WatchDevice extends Homey.Device {
 							property.lastUpdated = new Date(cap.lastUpdated).getTime();
 							//api.devices.getCapabilityValue({capabilityId:propertyId, deviceId:device.id});
 							property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
+								//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
+								if(property.value===value) return;
 								property.value = value;
 								property.lastUpdated = Date.now();
 								for (let i = 0; i < property.fields.length; i++) {

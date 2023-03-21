@@ -741,7 +741,22 @@ class DeviceSetter extends Homey.App {
 	}
 
 	async onUninit() {
-		
+		// for (const deviceId in this.homey.app.Reflections[DC_DEVICES]) {
+		// 	for (const propertyId in this.homey.app.Reflections[DC_DEVICES][deviceId]) {
+		// 		const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
+		// 		for (let i = 0; i < property.fields.length; i++) {
+		// 			const field = property.fields[i];
+		// 			if (device && field.device !== device) 
+		// 				continue;
+		// 			if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
+		// 				continue;
+		// 			field.method(field, { value: property.value, id: propertyId });
+		// 			if (!runnedDevices[field.device.id]) runnedDevices[field.device.id] = {};
+		// 			if (!runnedDevices[field.device.id][field.fieldId]) runnedDevices[field.device.id][field.fieldId] = true;
+
+		// 		}
+		// 	}
+		// }
 	}
 
 	async resetReflectAppsSettings() {
@@ -945,7 +960,7 @@ async getDevice({deviceId, full=false}) {
 
 				let func = funcObj.value.parseFunction();
 				//func.bind(this.context);
-				this.log('func', func);
+				//this.log('func', func);
 				this.context[funcObj.name] = func;
 			} catch (error) {
 				this.log('Error creating function ' + this.functions[i].name);
@@ -1255,8 +1270,7 @@ async getDevice({deviceId, full=false}) {
 				const device = hm.Tracking2.devices[deviceKey];
 				if (!device.device) {
 					try {
-						this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
-						device.device = this.devices[device.id];
+						device.device = this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
 					} catch (error) {
 						this.error(error);
 						this.log('continueing');

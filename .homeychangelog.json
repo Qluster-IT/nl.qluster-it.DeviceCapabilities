@@ -604,5 +604,17 @@
   },
   "2.10.12": {
     "en": "Improved: Reflection: Devices, almost ready for release."
+  },
+  "2.10.13": {
+    "en": "Improved: Reflection: Devices, almost ready for release."
+  },
+  "2.10.14": {
+    "en": "Bugfixed: Reflection: Devices, resolved a loop."
+  },
+  "2.10.15": {
+    "en": "Bugfixed: Reflection: Devices."
+  },
+  "2.10.16": {
+    "en": "Improvements: Reflection: Devices."
   }
 }
