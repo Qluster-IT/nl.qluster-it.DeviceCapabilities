@@ -370,7 +370,7 @@ module.exports = class WatchDevice extends Homey.Device {
 									}
 								}
 
-								console.log('method ', capability, 'value', value, 'r.field', r.field);
+								//console.log('method ', capability, 'value', value, 'r.field', r.field);
 
 
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
@@ -508,7 +508,6 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (!device) continue;
 					for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
 						const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
-						if (!property.device) property.device = device;
 						if (!property.listener) {
 							const cap = device.capabilitiesObj[propertyId];
 							property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;

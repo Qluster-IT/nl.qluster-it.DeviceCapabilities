@@ -601,5 +601,8 @@
   },
   "2.10.11": {
     "en": "Improved: Reflection: Devices, ready for release."
+  },
+  "2.10.12": {
+    "en": "Improved: Reflection: Devices, almost ready for release."
   }
 }

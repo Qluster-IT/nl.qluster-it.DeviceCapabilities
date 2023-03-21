@@ -740,6 +740,10 @@ class DeviceSetter extends Homey.App {
 
 	}
 
+	async onUninit() {
+		
+	}
+
 	async resetReflectAppsSettings() {
 		this._reflectAppsSettings = this.homey.settings.get('reflectAppsSettings');
 		let changed = false;
