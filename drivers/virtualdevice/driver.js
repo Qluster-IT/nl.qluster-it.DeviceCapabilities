@@ -784,7 +784,7 @@ module.exports = class VirtualDeviceDriver extends Homey.Driver {
                 }
             } else {
                 try {                        
-                    return await device.setCapabilityValue(cap, value);
+                    return await device.setCapabilityValue(cap, val);
                 } catch (error) {
                     if(error && error.message!='Capability Not Getable') throw error; }
                 return true;
