@@ -327,7 +327,7 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property]) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property] = { fields: [] }
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.push({
 							device: this, fieldId: type + i, method: async (r, capability) => {
-								if (this.Settings[r.fieldId + 'React'] === 'only_react') return;
+								if (this.Settings[r.fieldId + 'React'] === 'true_only_react') return;
 								
 								//if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
 								let devices = this.Settings[r.fieldId + 'ReflectDevices'];
@@ -559,8 +559,10 @@ module.exports = class WatchDevice extends Homey.Device {
 
 		//const prop = this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i);
 		if (!prop.originalMethod) prop.originalMethod = prop.method;
-		if (settings[type + i + 'ReflectDebounce']) prop.method = _.debounce(prop.originalMethod, settings[type + i + 'ReflectDebounce'], { leading: true, maxWait: settings[type + i + 'ReflectDebounce'], trailing: true });
-		else prop.method = prop.originalMethod;
+		prop.method = _.debounce(prop.originalMethod, 250, { leading: true, maxWait: 250, trailing: true });
+		
+		// if (settings[type + i + 'ReflectDebounce']) prop.method = _.debounce(prop.originalMethod, settings[type + i + 'ReflectDebounce'], { leading: true, maxWait: settings[type + i + 'ReflectDebounce'], trailing: true });
+		// else prop.method = prop.originalMethod;
 	}
 	async loadFromSettings(settings, oldSettings, changedKeys, saved, imported) {
 

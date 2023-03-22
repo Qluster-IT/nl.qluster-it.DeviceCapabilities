@@ -616,5 +616,11 @@
   },
   "2.10.16": {
     "en": "Improvements: Reflection: Devices."
+  },
+  "2.10.17": {
+    "en": "Removed: React option Yes."
+  },
+  "2.10.18": {
+    "en": "Removed: Reflection Debounce option, it's now always set to 250ms by default. And minor bugfixes."
   }
 }

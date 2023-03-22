@@ -121,6 +121,7 @@ class DeviceSetter extends Homey.App {
 				.registerRunListener((async (args, state) => {
 					try {
 						if (!args || (!args.zone || !args.zone.id) && (!args.zonebytag)) return Promise.reject(new Error('Zone must be zet.'));
+						await this.refreshHomeyAPI();
 						let zoneId = args.zone && args.zone.id ? args.zone.id : args.zonebytag;
 						var defer = new Defer();
 						var devices = this.devices;
@@ -317,6 +318,7 @@ class DeviceSetter extends Homey.App {
 
 		const condition_app_running = this.homey.flow.getConditionCard('condition_app_running');
 		condition_app_running.registerRunListener(async (args, state) => {
+			await this.refreshHomeyAPI();
 			if (!args.app || !args.app.id || !this.apps || !this.apps[args.app.id]) return false;
 			else return this.apps[args.app.id].state === 'running';
 		})
@@ -710,6 +712,7 @@ class DeviceSetter extends Homey.App {
 		this.condition_app_devices_available = this.homey.flow.getConditionCard('condition_app_devices_available');
 		this.condition_app_devices_available.registerRunListener(async (args, state) => {
 			try {
+				await this.refreshHomeyAPI();
 				let devices = _.toArray(this.devices);
 				if (args.brand && args.brand.id) devices = _.filter(devices, d => d.driverUri === 'homey:app:' + args.brand.id);
 				if (args.devicetype && args.devicetype.id) devices = _.filter(devices, d => d.driverId === args.devicetype.id);
@@ -1815,9 +1818,9 @@ async getDevice({deviceId, full=false}) {
 				}
 			});
 		}, 3000);
-		var args = await this.Triggers.triggerappstarted.Card.getArgumentValues();
+		let args = await this.Triggers.triggerappstarted.Card.getArgumentValues();
 		this.Triggers.triggerappstarted.List = args;
-		var apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
+		let apps = _.map(_.uniqBy(args, arg => { return arg.app.id; }), arg => { return arg.app; });
 		_.each(apps, app => this.watchAppState(app.id));
 		_.each(this.Watchers, watcher => {
 			if (!_.find(apps, app => app.id == watcher.app.id)) delete this.Watchers[watcher.app.id];

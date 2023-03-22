@@ -74,7 +74,7 @@
 					</select>
 				</div>
 				<div ng-if="s['status'+($index+1)+'Reflect']=='dc:devices'">
-					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['status'+($index+1)+'ReflectDevices'] ? (s['status'+($index+1)+'ReflectDevices']=[{}]):null; (!s['status'+($index+1)+'ReflectDebounce'] && s['status'+($index+1)+'ReflectDebounce']!==0)  ? s['status'+($index+1)+'ReflectDebounce'] = 250 : null; "></div>
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['status'+($index+1)+'ReflectDevices'] ? (s['status'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
 					<div ng-repeat="reflectDevice in s['status'+($index+1)+'ReflectDevices']">
 						<div class="field">
 							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['status'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['status'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'status'+($parent.$index+1)+'Reflect')  : null; "></span></div>
@@ -106,7 +106,7 @@
 							<option value="max">Max</option>
 						</select>
 					</div>
-					<div class="field" ng-if="s['status'+($index+1)+'React']!=='only_react'">
+					<div class="field" ng-if="s['status'+($index+1)+'React']!=='true_only_react'">
 						<div class="field" ng-if="s['status'+($index+1)+'ReflectCalculation']=='bll'">
 							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
@@ -120,12 +120,12 @@
 							</div>
 							<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['status'+($index+1)+'ReflectDevices'], 'number') && !s['status'+($index+1)+'ReflectCalculationFormat']" />
 						</div>
-						<div class="field">
+						<!-- <div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
 							</div>
 							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['status'+($index+1)+'ReflectDebounce']" required />						
-						</div>
+						</div> -->
 						<div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
@@ -138,11 +138,11 @@
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
-						<select class="value" ng-model="s['status'+($index+1)+'React']" ng-change="updateFromReact('status'+($index+1))">
+						<select class="value" ng-model="s['status'+($index+1)+'React']" >
 							<option value=""></option>
-							<option value="true">Yes</option>
+							<!--<option value="true">Yes</option>-->
 							<option value="true_not_devices">Yes, but not from devices updates</option>
-							<option value="only_react">Yes, only React</option>
+							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
 				</div>
@@ -285,7 +285,7 @@
 					</select>
 				</div>
 				<div ng-if="s['text'+($index+1)+'Reflect']=='dc:devices'">
-					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['text'+($index+1)+'ReflectDevices'] ? (s['text'+($index+1)+'ReflectDevices']=[{}]):null; (!s['text'+($index+1)+'ReflectDebounce'] && s['text'+($index+1)+'ReflectDebounce']!==0)  ? s['text'+($index+1)+'ReflectDebounce'] = 250 : null; "></div>
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['text'+($index+1)+'ReflectDevices'] ? (s['text'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
 					<div ng-repeat="reflectDevice in s['text'+($index+1)+'ReflectDevices']">
 						<div class="field">
 							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['text'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['text'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'text'+($parent.$index+1)+'Reflect')  : null; "></span></div>
@@ -312,7 +312,7 @@
 							<option value="bll">BLL</option>
 						</select>
 					</div>				
-					<div class="field" ng-if="s['text'+($index+1)+'React']!=='only_react'">
+					<div class="field" ng-if="s['text'+($index+1)+'React']!=='true_only_react'">
 						<div class="field" ng-if="s['text'+($index+1)+'ReflectCalculation']=='bll'">
 							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
@@ -326,12 +326,12 @@
 							</div>
 							<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="s['text'+($index+1)+'ReflectDevices'].length>0 && _wrongTypes(s['text'+($index+1)+'ReflectDevices'], ['string', 'enum']) && !s['text'+($index+1)+'ReflectCalculationFormat']" />
 						</div>
-						<div class="field">
+						<!-- <div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
 							</div>
 							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['text'+($index+1)+'ReflectDebounce']" required />
-						</div>
+						</div> -->
 						<div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
@@ -344,11 +344,11 @@
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
-						<select class="value" ng-model="s['text'+($index+1)+'React']" ng-change="updateFromReact('text'+($index+1))">
+						<select class="value" ng-model="s['text'+($index+1)+'React']" >
 							<option value=""></option>
-							<option value="true">Yes</option>
+							<!--<option value="true">Yes</option>-->
 							<option value="true_not_devices">Yes, but not from devices updates</option>
-							<option value="only_react">Yes, only React</option>
+							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
 				</div>
@@ -482,7 +482,7 @@
 					</select>
 				</div>
 				<div ng-if="s['number'+($index+1)+'Reflect']=='dc:devices'">
-					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['number'+($index+1)+'ReflectDevices'] ? (s['number'+($index+1)+'ReflectDevices']=[{}]):null; (!s['number'+($index+1)+'ReflectDebounce'] && s['number'+($index+1)+'ReflectDebounce']!==0) ? (s['number'+($index+1)+'ReflectDebounce'] = 250) : null; "></div>
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['number'+($index+1)+'ReflectDevices'] ? (s['number'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
 					<div ng-repeat="reflectDevice in s['number'+($index+1)+'ReflectDevices']">
 						<div class="field">
 							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['number'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['number'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'number'+($parent.$index+1)+'Reflect')  : null; "></span></div>
@@ -514,7 +514,7 @@
 							<option value="max">Max</option>
 						</select>
 					</div>
-					<div class="field" ng-if="s['number'+($index+1)+'React']!=='only_react'">
+					<div class="field" ng-if="s['number'+($index+1)+'React']!=='true_only_react'">
 						<div class="field" ng-if="s['number'+($index+1)+'ReflectCalculation']=='bll'">
 							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
@@ -528,12 +528,12 @@
 							</div>
 							<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['number'+($index+1)+'ReflectDevices'], 'number') && !s['number'+($index+1)+'ReflectCalculationFormat']" />
 						</div>
-						<div class="field">
+						<!-- <div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
 							</div>
 							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['number'+($index+1)+'ReflectDebounce']" required />						
-						</div>
+						</div> -->
 						<div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
@@ -546,11 +546,11 @@
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
-						<select class="value" ng-model="s['number'+($index+1)+'React']" ng-change="updateFromReact('number'+($index+1))">
+						<select class="value" ng-model="s['number'+($index+1)+'React']">
 							<option value=""></option>
-							<option value="true">Yes</option>
+							<!--<option value="true">Yes</option>-->
 							<option value="true_not_devices">Yes, but not from devices updates</option>
-							<option value="only_react">Yes, only React</option>
+							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
 				</div>
@@ -748,7 +748,7 @@
 					</select>
 				</div>
 				<div ng-if="s['boolean'+($index+1)+'Reflect']=='dc:devices'">
-					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['boolean'+($index+1)+'ReflectDevices'] ? (s['boolean'+($index+1)+'ReflectDevices']=[{}]):null; (!s['boolean'+($index+1)+'ReflectDebounce'] && s['boolean'+($index+1)+'ReflectDebounce']!==0)  ? s['boolean'+($index+1)+'ReflectDebounce'] = 250 : null; "></div>
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['boolean'+($index+1)+'ReflectDevices'] ? (s['boolean'+($index+1)+'ReflectDevices']=[{}]):null;"></div>
 					<div ng-repeat="reflectDevice in s['boolean'+($index+1)+'ReflectDevices']">
 						<div class="field">
 							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['boolean'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['boolean'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'boolean'+($parent.$index+1)+'Reflect')  : null; "></span></div>
@@ -777,7 +777,7 @@
 							<option value="all">True if all properties are true</option>
 						</select>
 					</div>
-					<div class="field" ng-if="s['boolean'+($index+1)+'React']!=='only_react'">
+					<div class="field" ng-if="s['boolean'+($index+1)+'React']!=='true_only_react'">
 						<div class="field" ng-if="s['boolean'+($index+1)+'ReflectCalculation']=='bll'">
 							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
@@ -791,12 +791,12 @@
 							</div>
 							<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['boolean'+($index+1)+'ReflectDevices'], 'boolean') && !s['boolean'+($index+1)+'ReflectCalculationFormat']" />
 						</div>
-						<div class="field">
+						<!-- <div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
 							</div>
 							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['boolean'+($index+1)+'ReflectDebounce']" required />						
-						</div>
+						</div> -->
 						<div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
@@ -809,11 +809,11 @@
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
-						<select class="value" ng-model="s['boolean'+($index+1)+'React']"  ng-change="updateFromReact('boolean'+($index+1))">
+						<select class="value" ng-model="s['boolean'+($index+1)+'React']">
 							<option value=""></option>
-							<option value="true">Yes</option>
+							<!--<option value="true">Yes</option>-->
 							<option value="true_not_devices">Yes, but not from devices updates</option>
-							<option value="only_react">Yes, only React</option>
+							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
 				</div>
@@ -980,7 +980,7 @@
 				</div>
 				<div ng-else execute="_delete(s, 'button'+($index+1)+'Reflect');" ></div>
 				<div ng-if="s['button'+($index+1)+'Reflect']=='dc:devices'">
-					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['button'+($index+1)+'ReflectDevices'] ? (s['button'+($index+1)+'ReflectDevices']=[{}]):null; (!s['button'+($index+1)+'ReflectDebounce'] && s['button'+($index+1)+'ReflectDebounce']!==0)  ? s['button'+($index+1)+'ReflectDebounce'] = 250 : null; "></div>
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['button'+($index+1)+'ReflectDevices'] ? (s['button'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
 					<div ng-repeat="reflectDevice in s['button'+($index+1)+'ReflectDevices']">
 						<div class="field">
 							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['button'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['button'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'button'+($parent.$index+1)+'Reflect')  : null; "></span></div>
@@ -1009,7 +1009,7 @@
 							<option value="all">True if all properties are true</option>
 						</select>
 					</div>
-					<div class="field" ng-if="s['button'+($index+1)+'React']!=='only_react'">
+					<div class="field" ng-if="s['button'+($index+1)+'React']!=='true_only_react'">
 						<div class="field" ng-if="s['button'+($index+1)+'ReflectCalculation']=='bll'">
 							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
@@ -1023,12 +1023,12 @@
 							</div>
 							<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['button'+($index+1)+'ReflectDevices'], 'boolean') && !s['button'+($index+1)+'ReflectCalculationFormat']" />
 						</div>
-						<div class="field">
+						<!-- <div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
 							</div>
 							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['button'+($index+1)+'ReflectDebounce']" required />			
-						</div>
+						</div> -->
 						<div class="field">
 							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
 									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
@@ -1041,11 +1041,11 @@
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
-						<select class="value" ng-model="s['button'+($index+1)+'React']" ng-change="updateFromReact('button'+($index+1))">
+						<select class="value" ng-model="s['button'+($index+1)+'React']">
 							<option value=""></option>
-							<option value="true">Yes</option>
+							<!--<option value="true">Yes</option>-->
 							<option value="true_not_devices">Yes, but not from devices updates</option>
-							<option value="only_react">Yes, only React</option>
+							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
 				</div>
@@ -1990,7 +1990,7 @@ ${vars.textSettings}
 			}
 
 			$scope.updateFromReact = function(fieldId) {
-				if($scope.s[fieldId+'React']!=='only_react' && !$scope.s[fieldId+'ReflectDebounce'] && $scope.s[fieldId+'ReflectDebounce']!==0)  $scope.s[fieldId+'ReflectDebounce'] = 250;
+				if($scope.s[fieldId+'React']!=='true_only_react' && !$scope.s[fieldId+'ReflectDebounce'] && $scope.s[fieldId+'ReflectDebounce']!==0)  $scope.s[fieldId+'ReflectDebounce'] = 250;
 			}
 			
 			
