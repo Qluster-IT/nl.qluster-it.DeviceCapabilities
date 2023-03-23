@@ -622,5 +622,8 @@
   },
   "2.10.18": {
     "en": "Removed: Reflection Debounce option, it's now always set to 250ms by default. And minor bugfixes."
+  },
+  "2.10.19": {
+    "en": "Changed: The connection with Chronograph, updated both apps to save resources."
   }
 }
