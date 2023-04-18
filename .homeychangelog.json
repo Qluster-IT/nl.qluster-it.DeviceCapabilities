@@ -625,5 +625,8 @@
   },
   "2.10.19": {
     "en": "Changed: The connection with Chronograph, updated both apps to save resources."
+  },
+  "2.10.20": {
+    "en": "Added custom pickers: Automatic, Always-on; Open, Stop, Close."
   }
 }

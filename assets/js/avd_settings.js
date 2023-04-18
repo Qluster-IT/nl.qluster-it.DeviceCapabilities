@@ -694,6 +694,18 @@ const asv_settings = {
       "label": "EVCC.io",
       "showAs": 'picker',
       "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-automatic-alwayson",
+      "label": "Automatic, Always-on",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-open-stop-close",
+      "label": "Open, Stop, Close",
+      "showAs": 'picker',
+      "order": 1
     }
   ],
 

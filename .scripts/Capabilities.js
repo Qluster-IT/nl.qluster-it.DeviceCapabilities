@@ -445,109 +445,6 @@ str += `"devicecapabilities_picker-schedule-until-manual-offuntil-off_list": {
 
 
 
-str += `"devicecapabilities_picker-EVCC_list": {
-      "title": {
-        "en": "EVCC.io"
-      },
-      "type": "enum",
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker",
-      "values": [
-        {
-          "id": "off",
-          "title": {
-            "en": "Off",
-            "nl": "Uit",
-            "de": "Aus"
-          },
-          "value": "off"
-        },
-        {
-          "id": "pv",
-          "title": {
-            "en": "Solar",
-            "nl": "Zonne",
-            "de": "Solar"
-          },
-          "value": "solar"
-        },
-        {
-          "id": "minpv",
-          "title": {
-            "en": "Min+Solar",
-            "nl": "Min+Zonne",
-            "de": "Min+Solar"
-          },
-          "value": "minpv"
-        },
-        {
-          "id": "now",
-          "title": {
-            "en": "Fast",
-            "nl": "Snel",
-            "de": "Schnell"
-          },
-          "value": "now"
-        }
-      ]
-    },`;
-
-
-
-str += `"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
-      "type": "enum",
-      "getable": true,
-      "setable": true,
-      "uiComponent": "picker",
-      "title": {
-        "en": "Auto, Low, Medium, High, Turbo",        
-        "nl": "Auto, Laag, Medium, Hoog, Turbo",        
-        "de": "Auto, Niedrig, Mittel, Hoch, Turbo"
-      },
-      "values": [
-        {
-          "id": "auto",
-          "title": {
-            "en": "Auto",
-            "nl": "Auto",
-            "de": "Auto"
-          }
-        },
-        {
-          "id": "low",
-          "title": {
-            "en": "Low",
-            "nl": "Laag",
-            "de": "Niedrig"
-          }
-        },
-        {
-          "id": "medium",
-          "title": {
-            "en": "Medium",
-            "nl": "Medium",
-            "de": "Mittel"
-          }
-        },
-        {
-          "id": "high",
-          "title": {
-            "en": "High",
-            "nl": "Hoog",
-            "de": "Hoch"
-          }
-        },
-        {
-          "id": "turbo",
-          "title": {
-            "en": "Turbo",
-            "nl": "Turbo",
-            "de": "Turbo"
-          }
-        }
-      ]
-    },`;
 
 
 
@@ -673,6 +570,174 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
         }
       ]
     },`;
+
+        
+    str += `"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, Low, Medium, High, Turbo",        
+        "nl": "Auto, Laag, Medium, Hoog, Turbo",        
+        "de": "Auto, Niedrig, Mittel, Hoch, Turbo"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Auto",
+            "de": "Auto"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Laag",
+            "de": "Niedrig"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Medium",
+            "de": "Mittel"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Hoog",
+            "de": "Hoch"
+          }
+        },
+        {
+          "id": "turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo",
+            "de": "Turbo"
+          }
+        }
+      ]
+    },`;
+
+    str += `"devicecapabilities_picker-EVCC_list": {
+      "title": {
+        "en": "EVCC.io"
+      },
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          },
+          "value": "off"
+        },
+        {
+          "id": "pv",
+          "title": {
+            "en": "Solar",
+            "nl": "Zonne",
+            "de": "Solar"
+          },
+          "value": "solar"
+        },
+        {
+          "id": "minpv",
+          "title": {
+            "en": "Min+Solar",
+            "nl": "Min+Zonne",
+            "de": "Min+Solar"
+          },
+          "value": "minpv"
+        },
+        {
+          "id": "now",
+          "title": {
+            "en": "Fast",
+            "nl": "Snel",
+            "de": "Schnell"
+          },
+          "value": "now"
+        }
+      ]
+    },`;
+
+    str += `"devicecapabilities_picker-automatic-alwayson": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Always-on"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "always-on",
+          "title": {
+            "en": "Always on",
+            "nl": "Altijd aan",
+            "de": "Dauerhaft aktiviert"
+          }
+        }
+      ]
+  },`;
+
+
+  str += `"devicecapabilities_picker-open-stop-close": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Open, Stop, Close"
+    },
+    "values": [
+      {
+        "id": "open",
+        "title": {
+          "en": "Open",
+          "nl": "Open",
+          "de": "Öffnen"
+        }
+      },
+      {
+        "id": "stop",
+        "title": {
+          "en": "Stop",
+          "nl": "Stop",
+          "de": "Stop"
+        }
+      },
+      {
+        "id": "close",
+        "title": {
+          "en": "Close",
+          "nl": "Dicht",
+          "de": "Schließen"
+        }
+      }
+    ]
+  },`;
 
 
 
