@@ -634,5 +634,8 @@
   },
   "2.11.1": {
     "en": "Text change: The React: \"Yes, but not from devices updates\" is renamed (just textual) to: Yes."
+  },
+  "2.11.2": {
+    "en": "Improved: React is only visible when there are setable properties selected under reflection."
   }
 }

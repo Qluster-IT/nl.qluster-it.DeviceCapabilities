@@ -134,7 +134,7 @@
 						</div>
 					</div>
 					<div ng-else execute="s['status'+($index+1)+'ReflectCalculationFormat']=undefined;s['status'+($index+1)+'ReflectFormat']=undefined;s['status'+($index+1)+'ReflectDebounce']=undefined;s['status'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
-					<div class="field">
+					<div class="field" ng-if="hasSetable(s['status'+($index+1)+'ReflectDevices'])">
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
@@ -145,6 +145,7 @@
 							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
+					<div ng-else execute="s['status'+($index+1)+'React']=undefined;" ></div>
 				</div>
 				<div ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="field">
@@ -340,7 +341,7 @@
 						</div>
 					</div>
 					<div ng-else execute="s['text'+($index+1)+'ReflectCalculationFormat']=undefined;s['text'+($index+1)+'ReflectFormat']=undefined;s['text'+($index+1)+'ReflectDebounce']=undefined;s['text'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
-					<div class="field">
+					<div class="field" ng-if="hasSetable(s['text'+($index+1)+'ReflectDevices'])">
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
@@ -351,6 +352,7 @@
 							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
+					<div ng-else execute="s['text'+($index+1)+'React']=undefined;" ></div>
 				</div>
 				<div ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="field">
@@ -542,7 +544,7 @@
 						</div>
 					</div>
 					<div ng-else execute="s['number'+($index+1)+'ReflectCalculationFormat']=undefined;s['number'+($index+1)+'ReflectFormat']=undefined;s['number'+($index+1)+'ReflectDebounce']=undefined;s['number'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
-					<div class="field">
+					<div class="field"  ng-if="hasSetable(s['number'+($index+1)+'ReflectDevices'])">
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
@@ -553,6 +555,7 @@
 							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
+					<div ng-else execute="s['number'+($index+1)+'React']=undefined;" ></div>
 				</div>
 				<div ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="field">
@@ -805,7 +808,7 @@
 						</div>
 					</div>
 					<div ng-else execute="s['boolean'+($index+1)+'ReflectCalculationFormat']=undefined;s['boolean'+($index+1)+'ReflectFormat']=undefined;s['boolean'+($index+1)+'ReflectDebounce']=undefined;s['boolean'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
-					<div class="field">
+					<div class="field" ng-if="hasSetable(s['boolean'+($index+1)+'ReflectDevices'])">
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
@@ -816,6 +819,7 @@
 							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
+					<div ng-else execute="s['boolean'+($index+1)+'React']=undefined;" ></div>
 				</div>
 				<div ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="field">
@@ -1037,7 +1041,7 @@
 						</div>
 					</div>
 					<div ng-else execute="s['button'+($index+1)+'ReflectCalculationFormat']=undefined;s['button'+($index+1)+'ReflectFormat']=undefined;s['button'+($index+1)+'ReflectDebounce']=undefined;s['button'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
-					<div class="field">
+					<div class="field" ng-if="hasSetable(s['button'+($index+1)+'ReflectDevices'])">
 						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
 								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
 						</div>
@@ -1048,6 +1052,7 @@
 							<option value="true_only_react">Yes, only React</option>
 						</select>
 					</div>
+					<div ng-else execute="s['button'+($index+1)+'React']=undefined;" ></div>
 				</div>
 				<div ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
 					<div class="field">
@@ -2003,15 +2008,28 @@ ${vars.textSettings}
 					});
 				}
 
-				$scope.loadReflectDevices = function() {
-					Homey.emit('virtualdevicesettings_loadReflectDevices', null, function (err, result) {
+			$scope.loadReflectDevices = function() {
+				Homey.emit('virtualdevicesettings_loadReflectDevices', null, function (err, result) {
 					if (err) { console.log(err); return; }
 					$scope.$apply(function () {
 						$scope.vars.reflectDevicesObj = result.reflectDevices;
 						$scope.vars.reflectDevices = _.sortBy($scope.vars.reflectDevicesObj, 'name');
 					});
 				});
+			}
+			$scope.hasSetable = function(reflectionDevices) {
+				//console.log('reflectionDevices', reflectionDevices);
+				let setable = false;
+				for (let i = 0; i < reflectionDevices.length; i++) {
+					const device = reflectionDevices[i];
+					try {
+						if($scope.vars.reflectDevicesObj[device.id].capabilitiesObj[device.property].setable) setable = true;
+					} catch (error) {
+						
+					}
 				}
+				return setable;
+			}
 
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
