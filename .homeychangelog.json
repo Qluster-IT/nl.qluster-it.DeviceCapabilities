@@ -628,5 +628,8 @@
   },
   "2.10.20": {
     "en": "Added custom pickers: Automatic, Always-on; Open, Stop, Close."
+  },
+  "2.11.0": {
+    "en": "Bugfixed: Having one wrong AVD (or dependent device in reflection) will not let other the AVD crash or become unavailable."
   }
 }

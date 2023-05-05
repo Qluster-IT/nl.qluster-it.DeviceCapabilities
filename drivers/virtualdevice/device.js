@@ -518,21 +518,26 @@ module.exports = class WatchDevice extends Homey.Device {
 					if (!device) continue;
 					for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
 						const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
-						if (!property.listener) {
-							const cap = device.capabilitiesObj[propertyId];
-							property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;
-							property.lastUpdated = new Date(cap.lastUpdated).getTime();
-							//api.devices.getCapabilityValue({capabilityId:propertyId, deviceId:device.id});
-							property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
-								//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
-								if(property.value===value) return;
-								property.value = value;
-								property.lastUpdated = Date.now();
-								for (let i = 0; i < property.fields.length; i++) {
-									const field = property.fields[i];
-									await field.method(field, { value, id: propertyId });
-								}
-							});
+						try {
+								
+							if (!property.listener) {
+								const cap = device.capabilitiesObj[propertyId];
+								property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;
+								property.lastUpdated = new Date(cap.lastUpdated).getTime();
+								//api.devices.getCapabilityValue({capabilityId:propertyId, deviceId:device.id});
+								property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
+									//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
+									if(property.value===value) return;
+									property.value = value;
+									property.lastUpdated = Date.now();
+									for (let i = 0; i < property.fields.length; i++) {
+										const field = property.fields[i];
+										await field.method(field, { value, id: propertyId });
+									}
+								});
+							}
+						} catch (error) {
+							this.homey.error('setReflections - const reflect in this.homey.app.Reflections device:', device, '\nPropertyId: ', propertyId, '\nError:', error);
 						}
 
 						// for (let i = 0; i < property.fields.length; i++) {

@@ -775,27 +775,33 @@ class DeviceSetter extends Homey.App {
 	async resetReflectApps() {
 		if (this._reflectAppsSettings && this._reflectAppsSettings['nl.fellownet.chronograph'].enabled) {
 			if (!this._cg) {
-				this._cg = await CG.init({ homey: this.homey });
-				CG.onChronographUpdate = async ({ chronograph }) => {
-					if (!chronograph || !chronograph.data || !chronograph.data.type) return;
-					//this.homey.log('onChronographUpdate', chronograph);
-					let type = chronograph.data.type.toLowerCase();
-					if (this.Reflections && this.Reflections[APP_ID_CG] && this.Reflections[APP_ID_CG][type + '|' + chronograph.name])
-						for (let i = 0; i < this.Reflections[APP_ID_CG][type + '|' + chronograph.name].length; i++) {
-							const field = this.Reflections[APP_ID_CG][type + '|' + chronograph.name][i];
-							if (field.lastSet && field.lastSet > chronograph.now) continue;
-							field.lastSet = chronograph.now;
-							await field.method(field, chronograph);
+				try {
+						
+					this._cg = await CG.init({ homey: this.homey });
+					CG.onChronographUpdate = async ({ chronograph }) => {
+						if (!chronograph || !chronograph.data || !chronograph.data.type) return;
+						//this.homey.log('onChronographUpdate', chronograph);
+						let type = chronograph.data.type.toLowerCase();
+						if (this.Reflections && this.Reflections[APP_ID_CG] && this.Reflections[APP_ID_CG][type + '|' + chronograph.name])
+							for (let i = 0; i < this.Reflections[APP_ID_CG][type + '|' + chronograph.name].length; i++) {
+								const field = this.Reflections[APP_ID_CG][type + '|' + chronograph.name][i];
+								if (field.lastSet && field.lastSet > chronograph.now) continue;
+								field.lastSet = chronograph.now;
+								await field.method(field, chronograph);
+
+							}
+					}
+					this._cg.ready.then(() => {
+						try {
+							this.updateReflection({ appId: APP_ID_CG });
+						} catch (error) {
 
 						}
+					});
+					
+				} catch (error) {
+					
 				}
-				this._cg.ready.then(() => {
-					try {
-						this.updateReflection({ appId: APP_ID_CG });
-					} catch (error) {
-
-					}
-				});
 			}
 		} else if (CG && CG.destroy) {
 			try {
@@ -809,24 +815,30 @@ class DeviceSetter extends Homey.App {
 
 		if (this._reflectAppsSettings && this._reflectAppsSettings['net.i-dev.betterlogic'].enabled) {
 			if (!this._bl) {
-				this._bl = await BL.init({ homey: this.homey });
-				BL.onVariableUpdate = async ({ variable, formattedDate }) => {
-					if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
-						for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
-							const field = this.Reflections[APP_ID_BLL][variable.name][i];
-							if (field.lastSet && field.lastSet > variable.lastChanged) continue;
-							field.lastSet = variable.lastChanged;
-							await field.method(field, variable);
+				try {
+						
+					this._bl = await BL.init({ homey: this.homey });
+					BL.onVariableUpdate = async ({ variable, formattedDate }) => {
+						if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
+							for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
+								const field = this.Reflections[APP_ID_BLL][variable.name][i];
+								if (field.lastSet && field.lastSet > variable.lastChanged) continue;
+								field.lastSet = variable.lastChanged;
+								await field.method(field, variable);
+
+							}
+					}
+					this._bl.ready.then(() => {
+						try {
+							this.updateReflection({ appId: APP_ID_BLL });
+						} catch (error) {
 
 						}
+					});
+					
+				} catch (error) {
+					
 				}
-				this._bl.ready.then(() => {
-					try {
-						this.updateReflection({ appId: APP_ID_BLL });
-					} catch (error) {
-
-					}
-				});
 			}
 		} else if (BL && BL.destroy) {
 			try {
@@ -941,7 +953,7 @@ async getDevice({deviceId, full=false}) {
 	let device = this.homey.app.devices[deviceId];
 	if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full)) {
 		const api = await this.homey.app.refreshHomeyAPI();
-		device = this.homey.app.devices[deviceId] = await api.devices.getDevice({ id: deviceId, $skipCache: true });
+		device = (this.homey.app.devices[deviceId] = await api.devices.getDevice({ id: deviceId, $skipCache: true }));
 	}
 	return device;
 
