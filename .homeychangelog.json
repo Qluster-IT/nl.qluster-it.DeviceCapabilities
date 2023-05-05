@@ -637,5 +637,8 @@
   },
   "2.11.2": {
     "en": "Improved: React is only visible when there are setable properties selected under reflection."
+  },
+  "2.11.3": {
+    "en": "Bugfixed: React is would automaticly clear it's value after opening the Settings."
   }
 }
