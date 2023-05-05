@@ -631,5 +631,8 @@
   },
   "2.11.0": {
     "en": "Bugfixed: Having one wrong AVD (or dependent device in reflection) will not let other the AVD crash or become unavailable."
+  },
+  "2.11.1": {
+    "en": "Text change: The React: \"Yes, but not from devices updates\" is renamed (just textual) to: Yes."
   }
 }
