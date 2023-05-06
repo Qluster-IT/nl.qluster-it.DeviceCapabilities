@@ -328,6 +328,11 @@ module.exports = class WatchDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.push({
 							device: this, fieldId: type + i, method: async (r, capability) => {
 								if (this.Settings[r.fieldId + 'React'] === 'true_only_react') return;
+
+								let property = this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property];
+								// if(property.value === null ) {
+								// 	let a = 1;
+								// }
 								
 								//if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
 								let devices = this.Settings[r.fieldId + 'ReflectDevices'];
@@ -343,7 +348,7 @@ module.exports = class WatchDevice extends Homey.Device {
 										const device = devices[i];
 										try {
 
-											if (!this.Settings[r.fieldId + 'ReflectExcludeSeconds'] || this.homey.app.Reflections[reflect][device.id][device.property].lastUpdated > (Date.now() - (this.Settings[r.fieldId + 'ReflectExcludeSeconds'] * 1_000)))
+											if (property.value === null || property.value === undefined || !this.Settings[r.fieldId + 'ReflectExcludeSeconds'] || this.homey.app.Reflections[reflect][device.id][device.property].lastUpdated > (Date.now() - (this.Settings[r.fieldId + 'ReflectExcludeSeconds'] * 1_000)))
 												values.push(this.homey.app.Reflections[reflect][device.id][device.property].value);
 										} catch (error) {
 
@@ -389,6 +394,7 @@ module.exports = class WatchDevice extends Homey.Device {
 										if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
 									}
 								}
+								if(!values.length && isNaN(value) && property.value!==null) value = property.value;
 
 								try {
 									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES });

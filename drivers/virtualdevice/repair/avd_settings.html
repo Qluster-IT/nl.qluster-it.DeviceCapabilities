@@ -174,9 +174,9 @@
 				<div ng-if="s['status'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" ng-init="s['status'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['status'+($parent.$index+1)+'ReflectId'].key]" required>
 							<option value=""></option>
-							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['status'+($parent.$index+1)+'ReflectId'].key ? s['status'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
 					<div class="field" ng-init="s['status'+($index+1)+'ReflectProperty']? '' : s['status'+($index+1)+'ReflectProperty']='elapsed'">
@@ -381,9 +381,9 @@
 				<div ng-if="s['text'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" ng-init="s['text'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['text'+($parent.$index+1)+'ReflectId'].key]" required >
 							<option value=""></option>
-							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['text'+($parent.$index+1)+'ReflectId'].key ? s['text'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
 					<div class="field" ng-init="s['text'+($index+1)+'ReflectProperty']? '' : s['text'+($index+1)+'ReflectProperty']='elapsed'">
@@ -584,9 +584,9 @@
 				<div ng-if="s['number'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" ng-init="s['number'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['number'+($parent.$index+1)+'ReflectId'].key]" required>
 							<option value=""></option>
-							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['number'+($parent.$index+1)+'ReflectId'].key ? s['number'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
 					<div class="field" ng-init="s['number'+($index+1)+'ReflectProperty']? '' : s['number'+($index+1)+'ReflectProperty']='elapsed'">
@@ -848,9 +848,9 @@
 				<div ng-if="s['boolean'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" ng-init="s['boolean'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['boolean'+($parent.$index+1)+'ReflectId'].key]" required>
 							<option value=""></option>
-							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['boolean'+($parent.$index+1)+'ReflectId'].key ? s['boolean'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
 					<div class="field" ng-init="s['boolean'+($index+1)+'ReflectProperty']? '' : s['boolean'+($index+1)+'ReflectProperty']='elapsed'">
@@ -1081,9 +1081,9 @@
 				<div ng-if="s['button'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" ng-init="s['button'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['button'+($parent.$index+1)+'ReflectId'].key]" required>
 							<option value=""></option>
-							<option ng-repeat="cg in vars.cgChronographs track by cg.key" ng-value="cg.key==s['button'+($parent.$index+1)+'ReflectId'].key ? s['button'+($parent.$index+1)+'ReflectId'] : cg">{{cg.name}} ({{cg.type}})</option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
 					</div>
 					<div class="field" ng-init="s['button'+($index+1)+'ReflectProperty']? '' : s['button'+($index+1)+'ReflectProperty']='elapsed'">
@@ -2031,6 +2031,10 @@ ${vars.textSettings}
 				return setable;
 			}
 
+			$scope.log = function() {
+				console.log(...arguments);
+			}
+
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
 				Homey.hideLoadingOverlay();
@@ -2069,8 +2073,13 @@ ${vars.textSettings}
 									return { name: name, type: key, key:key+'|'+ name};
 								})
 							})), 'name');
+							$scope.vars.cgChronographsByKey = {};
+							for (let i = 0; i < $scope.vars.cgChronographs.length; i++) {
+								const chronograph = $scope.vars.cgChronographs[i];
+								$scope.vars.cgChronographsByKey[chronograph.key] = chronograph;								
+							}
 						}
-						console.log($scope.vars.cgChronographs);
+						//console.log($scope.vars.cgChronographs);
 
 						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
 						if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);

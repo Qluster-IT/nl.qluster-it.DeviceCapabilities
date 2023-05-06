@@ -640,5 +640,8 @@
   },
   "2.11.3": {
     "en": "Bugfixed: React is would automaticly clear it's value after opening the Settings."
+  },
+  "2.11.4": {
+    "en": "Text change: Create Flowcards is renamed to \"Create Real field and Flow Cards\".\nBugfixes: Avd Settings."
   }
 }
