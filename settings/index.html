@@ -290,7 +290,7 @@
 		<div class="setting-group" ng-show="view.id=='functions'">
 
 			<h1 data-i18n="settings.reflection">Reflection</h1>
-			<p data-i18n="settings.reflection_explained">Here you can disable Reflection initialization</p>
+			<p data-i18n="settings.reflection_explained">Here you can enable Reflection initialization per app</p>
 			<form role="form">				
 				<div class="form-check form-switch" ng-repeat="app in vars.reflectApps">
 					<input class="form-check-input hy-nostyle" type="checkbox" role="switch" id="autoupdate" checked ng-model="vars.reflectAppsSettings[app.id].enabled" ng-change="saveReflection()" />

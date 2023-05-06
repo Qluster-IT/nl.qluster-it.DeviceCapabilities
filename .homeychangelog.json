@@ -646,5 +646,8 @@
   },
   "2.11.5": {
     "en": "Bugfixes: Reflection for single device bug."
+  },
+  "2.11.6": {
+    "en": "Textual fixes."
   }
 }
