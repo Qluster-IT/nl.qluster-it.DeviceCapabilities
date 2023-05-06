@@ -643,5 +643,8 @@
   },
   "2.11.4": {
     "en": "Text change: Create Flowcards is renamed to \"Create Real field and Flow Cards\".\nBugfixes: Avd Settings."
+  },
+  "2.11.5": {
+    "en": "Bugfixes: Reflection for single device bug."
   }
 }

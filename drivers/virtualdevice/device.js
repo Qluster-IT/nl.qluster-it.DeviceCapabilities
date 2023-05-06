@@ -394,7 +394,8 @@ module.exports = class WatchDevice extends Homey.Device {
 										if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
 									}
 								}
-								if(!values.length && isNaN(value) && property.value!==null) value = property.value;
+								//if(values && !values.length && isNaN(value) && property.value!==null) value = property.value;
+								if(values && !values.length && (isNaN(value) || value===null || value===undefined) && property.value!==null) value = property.value;
 
 								try {
 									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES });
