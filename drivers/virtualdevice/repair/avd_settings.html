@@ -1199,7 +1199,7 @@
 						<option ng-repeat="item in listShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
 				</div>				
-				<div class="field">
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='ternary' || s['list'+($index+1)+'ShowAs']=='picker'">
 					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span> <span
 							class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.prefixedListHint') || 'Currently, only pre-fixed lists are available. Goto the Forum to request your own!'}}"></span>
@@ -1208,8 +1208,8 @@
 						<option ng-repeat="item in listPrefixedLists | filter:{'showAs':s['list'+($index+1)+'ShowAs']}" value="{{item.id}}">{{item.label}}</option>
 					</select>
 				</div>
-				<div class="field"
-					ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker'">
+				<div ng-else execute="_delete(s, 'list'+($index+1)+'PrefixedList');" ></div>
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker'">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>

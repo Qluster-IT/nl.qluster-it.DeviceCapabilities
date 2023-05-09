@@ -649,5 +649,8 @@
   },
   "2.11.6": {
     "en": "Textual fixes."
+  },
+  "2.11.7": {
+    "en": "Resolved: There were some issues with default and prefixed lists, and switching between them. It has now been resolved."
   }
 }

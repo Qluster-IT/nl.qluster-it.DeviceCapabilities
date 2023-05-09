@@ -802,7 +802,11 @@ module.exports = class WatchDevice extends Homey.Device {
 										await this.removeCapability(secondCap);
 								}
 								await this.addCapability(cap);
-								if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
+								try {								
+									if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);	
+								} catch (error) {
+									
+								}
 								await this.setListener({ fieldId: type + i, settings, cap });
 							}
 							let opt;
