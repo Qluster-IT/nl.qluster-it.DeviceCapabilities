@@ -97,10 +97,10 @@ class DeviceSetter extends Homey.App {
 
 
 		this.log('DeviceSetter is running...');
-		if (!await this.homey.settings.get('notification_bll_chronograph_update')) {
-			this.homey.notifications.createNotification({ excerpt: "The next update of DC will optionally include the Better Logic Library and Chronograph, to reflect it's values in AVDs (without flows).\nBecause of this, auto-update will not update the DC app.\nYou need to manually update the DC app once the new version is available, because it needs permissions to BLL and Chronograph." });
-			this.homey.settings.set('notification_bll_chronograph_update', true);
-		}
+		// if (!await this.homey.settings.get('notification_bll_chronograph_update')) {
+		// 	this.homey.notifications.createNotification({ excerpt: "The next update of DC will optionally include the Better Logic Library and Chronograph, to reflect it's values in AVDs (without flows).\nBecause of this, auto-update will not update the DC app.\nYou need to manually update the DC app once the new version is available, because it needs permissions to BLL and Chronograph." });
+		// 	this.homey.settings.set('notification_bll_chronograph_update', true);
+		// }
 
 		// if(!await this.homey.settings.get('notification_petition_zerodash')) {
 		// 	this.homey.notifications.createNotification({excerpt : "For everyone who wants a Text Status Indicator (as Device Tile) without a zero or dash in front of it, please go to the Device Capability Homey Forum Topic, click on the petition link at the top or bottom of the topic and hit that Like!\n\n The target is 61 likes, we are almost there!\n Your Like counts!" });  
