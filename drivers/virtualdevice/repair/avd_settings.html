@@ -174,7 +174,7 @@
 				<div ng-if="s['status'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" ng-init="s['status'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['status'+($parent.$index+1)+'ReflectId'].key]" required>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
 							<option value=""></option>
 							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
@@ -381,7 +381,7 @@
 				<div ng-if="s['text'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" ng-init="s['text'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['text'+($parent.$index+1)+'ReflectId'].key]" required >
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required >
 							<option value=""></option>
 							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
@@ -584,7 +584,7 @@
 				<div ng-if="s['number'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" ng-init="s['number'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['number'+($parent.$index+1)+'ReflectId'].key]" required>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
 							<option value=""></option>
 							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
@@ -848,7 +848,7 @@
 				<div ng-if="s['boolean'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" ng-init="s['boolean'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['boolean'+($parent.$index+1)+'ReflectId'].key]" required>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
 							<option value=""></option>
 							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
@@ -1081,7 +1081,7 @@
 				<div ng-if="s['button'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
 					<div class="field">
 						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
-						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" ng-init="s['button'+($parent.$index+1)+'ReflectId'] = vars.cgChronographsByKey[s['button'+($parent.$index+1)+'ReflectId'].key]" required>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
 							<option value=""></option>
 							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
 						</select>
@@ -1807,6 +1807,27 @@ ${vars.textSettings}
 				Homey.hideLoadingOverlay();
 			}
 
+			const types = ['status', 'text', 'number', 'button', 'boolean', 'list'];
+
+			
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+			function setAllFieldProperties() {
+				let settings = $scope.s;
+				let s = settings;
+				console.log(settings);
+				
+				for (let iTypes = 0; iTypes < types.length; iTypes++) {
+					const type = types[iTypes];
+					const fieldCount = type == "status" ? 1 : (settings['numberOf' + capitalizeFirstLetter(type) + 'Fields'] || 0);
+					
+					for (let i = 1; i <= fieldCount; i++) {
+						if(s[type+(i)+'Reflect']=='nl.fellownet.chronograph') s[type+(i)+'ReflectId'] = vars.cgChronographsByKey[s[type+(i)+'ReflectId'].key];						
+					}
+				}
+			}
+
 
 			$scope.save = function (successFunction, settings) {
 				showOverlay(Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved');
@@ -1818,6 +1839,7 @@ ${vars.textSettings}
 					}
 					$scope.$apply(function () {
 						$scope.s = result;
+						setAllFieldProperties();
 						//$scope.vars.apiCommand = result.apiCommand;
 						if(successFunction && typeof(successFunction)=='function') successFunction();
 					});
@@ -2083,6 +2105,7 @@ ${vars.textSettings}
 
 						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
 						if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);
+						setAllFieldProperties();
 					});
 				});
 				Homey.on('createdadvancedflow', (af) => {

@@ -658,5 +658,8 @@
   },
   "2.11.9": {
     "en": "Removed a now useless notification."
+  },
+  "2.11.10": {
+    "en": "Bugfixed: After saving an AVD, the Reflect-Chronograph would be shown empty."
   }
 }
