@@ -74,7 +74,8 @@
   "permissions": [
     "homey:manager:api",
     "homey:app:net.i-dev.betterlogic",
-    "homey:app:nl.fellownet.chronograph"
+    "homey:app:nl.fellownet.chronograph",
+    "homey:app:nl.nielsdeklerk.log"
   ],
   "source": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/",
   "bugs": {
