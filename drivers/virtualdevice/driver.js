@@ -9,7 +9,7 @@ const DeviceSetter = require('../../app');
 const _ = require('lodash-core');
 const { Defer, gzip, ungzip } = require('../../lib/proto');
 
-const { SimpleLogMixin } = require('homey-simplelog-api');
+//const { SimpleLogMixin } = require('homey-simplelog-api');
 
 const TYPES = ['status', 'text', 'number', 'button', 'boolean', 'list'];
 const CUSTOM_ICONS = [
@@ -86,8 +86,9 @@ const TOPICS = {
 const { BL } = require('betterlogiclibrary');
 const { CG } = require('chronograph-npm');
 
-module.exports = class AvdDriver extends SimpleLogMixin(Homey.Driver) {
-    async sleep(ms) {
+//module.exports = class AvdDriver extends SimpleLogMixin(Homey.Driver) {
+module.exports = class AvdDriver extends Homey.Driver {
+        async sleep(ms) {
         return new Promise((resolve) => {
           setTimeout(resolve, ms);
         });
@@ -95,7 +96,7 @@ module.exports = class AvdDriver extends SimpleLogMixin(Homey.Driver) {
     async onInit() {
         app = this.homey.app;
         this.log('AvdDriver onInit');
-        this.logDebug('AvdDriver onInit');
+        //this.logDebug('AvdDriver onInit');
         //this.getTefTemplatesFromPosts();
 
 		//this.log("Capabilities", Object.keys(app.manifest.capabilities).length);

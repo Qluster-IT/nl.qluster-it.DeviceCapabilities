@@ -13,7 +13,7 @@ const APP_ID_CG = 'nl.fellownet.chronograph';
 const DC_DEVICES = 'dc:devices';
 
 
-module.exports = class WatchDevice extends Homey.Device {
+module.exports = class AvdDevice extends Homey.Device {
 
 
 	onDeleted() {

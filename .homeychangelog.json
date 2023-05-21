@@ -661,5 +661,8 @@
   },
   "2.11.10": {
     "en": "Bugfixed: After saving an AVD, the Reflect-Chronograph would be shown empty."
+  },
+  "2.11.11": {
+    "en": "Bugfixed: AVDs not starting up if reflect-devices are not available."
   }
 }

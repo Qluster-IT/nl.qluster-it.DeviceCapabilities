@@ -776,7 +776,7 @@ class DeviceSetter extends Homey.App {
 		if (this._reflectAppsSettings && this._reflectAppsSettings['nl.fellownet.chronograph'].enabled) {
 			if (!this._cg) {
 				try {
-						
+
 					this._cg = await CG.init({ homey: this.homey });
 					CG.onChronographUpdate = async ({ chronograph }) => {
 						if (!chronograph || !chronograph.data || !chronograph.data.type) return;
@@ -798,9 +798,9 @@ class DeviceSetter extends Homey.App {
 
 						}
 					});
-					
+
 				} catch (error) {
-					
+
 				}
 			}
 		} else if (CG && CG.destroy) {
@@ -816,7 +816,7 @@ class DeviceSetter extends Homey.App {
 		if (this._reflectAppsSettings && this._reflectAppsSettings['net.i-dev.betterlogic'].enabled) {
 			if (!this._bl) {
 				try {
-						
+
 					this._bl = await BL.init({ homey: this.homey });
 					BL.onVariableUpdate = async ({ variable, formattedDate }) => {
 						if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
@@ -835,9 +835,9 @@ class DeviceSetter extends Homey.App {
 
 						}
 					});
-					
+
 				} catch (error) {
-					
+
 				}
 			}
 		} else if (BL && BL.destroy) {
@@ -863,7 +863,7 @@ class DeviceSetter extends Homey.App {
 					const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
 					for (let i = 0; i < property.fields.length; i++) {
 						const field = property.fields[i];
-						if (device && field.device !== device) 
+						if (device && field.device !== device)
 							continue;
 						if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
 							continue;
@@ -949,15 +949,15 @@ class DeviceSetter extends Homey.App {
 		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
 	}
 
-async getDevice({deviceId, full=false}) {
-	let device = this.homey.app.devices[deviceId];
-	if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full)) {
-		const api = await this.homey.app.refreshHomeyAPI();
-		device = (this.homey.app.devices[deviceId] = await api.devices.getDevice({ id: deviceId, $skipCache: true }));
-	}
-	return device;
+	async getDevice({ deviceId, full = false }) {
+		let device = this.homey.app.devices[deviceId];
+		if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full)) {
+			const api = await this.homey.app.refreshHomeyAPI();
+			device = (this.homey.app.devices[deviceId] = await api.devices.getDevice({ id: deviceId, $skipCache: true }));
+		}
+		return device;
 
-}
+	}
 
 
 
@@ -978,8 +978,7 @@ async getDevice({deviceId, full=false}) {
 				//this.log('func', func);
 				this.context[funcObj.name] = func;
 			} catch (error) {
-				this.log('Error creating function ' + this.functions[i].name);
-				this.error(error);
+				this.error('Error creating function ',this.functions[i].name, '\n', error);
 			}
 		}
 	}
@@ -1714,40 +1713,45 @@ async getDevice({deviceId, full=false}) {
 
 	async refreshDevices(device, type) {
 		this.log('refreshDevices');
+		try {
 
-		//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-		if (!this.devices || !type) {
-			this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-			_.each(this.devices, (d, key) => this.devices[key] = this.getReducedDevice(d));
-		}
-		//this.log('refreshDevices size', this.roughSizeOfObject(this.devices));
-		switch (type) {
-			case 'create':
-			case 'update':
-				if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
-					if (device.unavailableMessage && typeof (device.unavailableMessage) === 'object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage);
-					let zone = this.zones[device.zone];
-					try {
+			//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
+			if (!this.devices || !type) {
+				this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
+				_.each(this.devices, (d, key) => this.devices[key] = this.getReducedDevice(d));
+			}
+			//this.log('refreshDevices size', this.roughSizeOfObject(this.devices));
+			switch (type) {
+				case 'create':
+				case 'update':
+					if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
+						if (device.unavailableMessage && typeof (device.unavailableMessage) === 'object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage);
+						let zone = this.zones[device.zone];
+						try {
 
-						this.trigger_app_device_available.trigger({
-							deviceName: device.name,
-							deviceId: device.id,
-							available: !!device.available,
-							unavailableMessage: (device.unavailableMessage || '').toString(),
-							zoneName: zone.name,
-							zoneId: zone.id
-						}, { available: !!device.available, brand: device.driverUri, devicetype: device.driverId });
-					} catch (error) {
-						this.error(error);
+							this.trigger_app_device_available.trigger({
+								deviceName: device.name,
+								deviceId: device.id,
+								available: !!device.available,
+								unavailableMessage: (device.unavailableMessage || '').toString(),
+								zoneName: zone.name,
+								zoneId: zone.id
+							}, { available: !!device.available, brand: device.driverUri, devicetype: device.driverId });
+						} catch (error) {
+							this.error(error);
+						}
 					}
-				}
-				if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
-				else this.devices[device.id] = this.getReducedDevice(device);
-				break;
-			case 'delete':
-				delete this.devices[device.id];
-				break;
+					if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
+					else this.devices[device.id] = this.getReducedDevice(device);
+					break;
+				case 'delete':
+					delete this.devices[device.id];
+					break;
+			}
+		} catch (error) {
+			this.error('refreshDevices error: ', error);
 		}
+
 	}
 	getReducedDevice(d) {
 		return {
