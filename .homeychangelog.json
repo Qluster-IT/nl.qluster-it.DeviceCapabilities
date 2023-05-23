@@ -664,5 +664,8 @@
   },
   "2.11.11": {
     "en": "Bugfixed: AVDs not starting up if reflect-devices are not available."
+  },
+  "2.12.0": {
+    "en": "Added: New Flowcard: When [[device]].[[capability]] is [[condition]] [[value]] for [[time]] [[unit]], execute [[trigger]].\nThis card will execute when a certain capability from a device has been a certain value for a specific period."
   }
 }

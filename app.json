@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.11.11",
+  "version": "2.12.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -354,6 +354,208 @@
               "nl": "Ja/Nee 1",
               "de": "Ja/Nein 1"
             }
+          }
+        ]
+      },
+      {
+        "highlight": true,
+        "id": "trigger_capability_hasbeen",
+        "title": {
+          "en": "When capability has been a certain value for a period",
+          "nl": "Capability luisteraar",
+          "de": "Fähigkeit überwachen"
+        },
+        "titleFormatted": {
+          "en": "When [[device]].[[capability]] is [[condition]] [[value]] for [[time]] [[unit]], execute [[trigger]]",
+          "nl": "Wanneer [[device]].[[capability]] is [[condition]] [[value]] voor [[time]] [[unit]], voer [[trigger]] uit",
+          "de": "Wenn [[device]].[[capability]] ist [[condition]] [[value]] für [[time]] [[unit]], [[trigger]] ausführen"
+        },
+        "hint--": {
+          "en": "This card will execute when a certain capability from a device has been a certain value for a specific period.",
+          "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde capaciteit van een apparaat gedurende een bepaalde periode een bepaalde waarde heeft gehad.",
+          "de": "Diese Karte wird ausgeführt, wenn eine bestimmte Fähigkeit eines Geräts für einen bestimmten Zeitraum einen bestimmten Wert erreicht hat."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "device",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat",
+              "de": "Gerät"
+            },
+            "placeholder": {
+              "en": "Device",
+              "nl": "Apparaat",
+              "de": "Gerät"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "capability",
+            "title": {
+              "en": "Capability",
+              "nl": "Capability",
+              "de": "Fähigkeit"
+            },
+            "placeholder": {
+              "en": "Capability",
+              "nl": "Capability",
+              "de": "Fähigkeit"
+            }
+          },
+          {
+            "name": "condition",
+            "title": {
+              "en": "Condition",
+              "nl": "Conditie",
+              "de": "Zustand"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "equal_to",
+                "label": {
+                  "en": "Equal to",
+                  "nl": "Gelijk aan",
+                  "de": "gleicht"
+                }
+              },
+              {
+                "id": "not_equal_to",
+                "label": {
+                  "en": "Not Equal to",
+                  "nl": "Niet gelijk aan",
+                  "de": "Nicht gleichzusetzen mit"
+                }
+              },
+              {
+                "id": "greater_than",
+                "label": {
+                  "en": "Greater than",
+                  "nl": "Groter dan",
+                  "de": "Größer als"
+                }
+              },
+              {
+                "id": "greater_than_equal",
+                "label": {
+                  "en": "Greater than or Equal to",
+                  "nl": "Groter dan of gelijk aan",
+                  "de": "Größer als oder gleich wie"
+                }
+              },
+              {
+                "id": "less_than",
+                "label": {
+                  "en": "Less than",
+                  "nl": "Minder dan",
+                  "de": "Weniger als"
+                }
+              },
+              {
+                "id": "less_than_equal",
+                "label": {
+                  "en": "Less than or Equal to",
+                  "nl": "Minder dan of gelijk aan",
+                  "de": "Gleich oder kleiner als"
+                }
+              }
+            ]
+          },
+          {
+            "name": "value",
+            "type": "text",
+            "title": {
+              "en": "Value",
+              "nl": "Waarde",
+              "de": "Wert"
+            },
+            "placeholder": {
+              "en": "Value - No tags!",
+              "nl": "Waarde - Geen tags!",
+              "de": "Wert – Keine Tags!"
+            }
+          },
+          {
+            "name": "time",
+            "title": {
+              "en": "Duration",
+              "nl": "Looptijd",
+              "de": "Dauer"
+            },
+            "type": "number"
+          },
+          {
+            "name": "unit",
+            "title": {
+              "en": "Unit",
+              "nl": "Eenheid",
+              "de": "Einheit"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "seconds",
+                "label": {
+                  "en": "seconds",
+                  "nl": "seconden",
+                  "de": "Sekunden"
+                }
+              },
+              {
+                "id": "minutes",
+                "label": {
+                  "en": "minutes",
+                  "nl": "minuten",
+                  "de": "Minuten"
+                }
+              },
+              {
+                "id": "hours",
+                "label": {
+                  "en": "hours",
+                  "nl": "uren",
+                  "de": "Stunden"
+                }
+              },
+              {
+                "id": "days",
+                "label": {
+                  "en": "days",
+                  "nl": "dagen",
+                  "de": "Tage"
+                }
+              }
+            ]
+          },          
+          {
+            "name": "trigger",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "type": "dropdown",
+            "value":"one_time",
+            "values": [
+              {
+                "id": "one_time",
+                "label": {
+                  "en": "One time",
+                  "nl": "Eén maal",
+                  "de": "Einmal"
+                }
+              },
+              {
+                "id": "every_time",
+                "label": {
+                  "en": "Every time",
+                  "nl": "Elke keer",
+                  "de": "Jedes mal"
+                }
+              }
+            ]
           }
         ]
       },

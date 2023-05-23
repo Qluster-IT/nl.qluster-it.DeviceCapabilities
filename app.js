@@ -50,6 +50,7 @@ class DeviceSetter extends Homey.App {
 	Triggers = {
 		triggercapabilitychanged: { List: [], Card: null },
 		triggercapabilitychanged2: { List: [], Card: null },
+		triggercapabilityHasbeenNumber: { List: [], Card: null },
 		triggerappstarted: { List: [], Card: null }
 	};
 	Tracking = {
@@ -62,6 +63,9 @@ class DeviceSetter extends Homey.App {
 		/** @type {HomeyAPI} homeyAPI; */
 		homeyAPI: null,
 		//homeyAPIStatic: null,
+		devices: {}
+	}
+	HasBeen = {
 		devices: {}
 	}
 
@@ -293,14 +297,120 @@ class DeviceSetter extends Homey.App {
 							var deviceToSet = this.Tracking2.devices[device.id];
 							if (!deviceToSet) return;
 							if (!deviceToSet.capabilities) deviceToSet.capabilities = {};
-							if (!deviceToSet.capabilities[capability]) deviceToSet.capabilities[capability] = { id: capability };
+							if (!deviceToSet.capabilities[capability]) deviceToSet.capabilities[capability] = { id: capability, changed: true };
 						});
-						this.updateTracking2(false, this.Triggers.triggercapabilitychanged2);
 					});
+					this.updateTracking2(false, this.Triggers.triggercapabilitychanged2);
 
 				}).bind(this));
 		}
 
+		this.oldHasBeen = this.homey.settings.get('HasBeen');
+
+		const trigger_capability_hasbeen = this.homey.flow.getTriggerCard('trigger_capability_hasbeen');
+		this.Triggers.triggercapabilityHasbeenNumber.Card = trigger_capability_hasbeen;
+		trigger_capability_hasbeen
+			.on('update', (() => {
+				refreshcapabilityhasbeennumbertrigger2s.call(this);
+			}).bind(this))
+			.registerRunListener((args, state) => {
+				var r = args.device && args.device.id && state.device && state.device.id && args.device.id === state.device.id &&
+					args.capability && args.capability.id && state.capability && state.capability.id && args.capability.id === state.capability.id &&
+					args.condition === state.condition &&
+					args.value === state.value &&
+					args.time === state.time &&
+					args.unit === state.unit &&
+					args.trigger === state.trigger
+					;
+				return Promise.resolve(r);
+			})
+			.getArgument('device')
+			.registerAutocompleteListener(this.autocompleteDevice({ api: 'trigger_capability_hasbeen' }));
+		trigger_capability_hasbeen.getArgument('capability')
+			.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'trigger_capability_hasbeen' }));
+		refreshcapabilityhasbeennumbertrigger2s.call(this);
+
+		function refreshcapabilityhasbeennumbertrigger2s() {
+			this.clearHomeyAPI('trigger_capability_hasbeen');
+			trigger_capability_hasbeen.getArgumentValues()
+				.then((async args => {
+					this.Triggers.triggercapabilityHasbeenNumber.List = args;
+					var devices = _.map(_.uniqBy(args, arg => { return arg.device.id; }), arg => { return arg.device; });
+					_.each(devices, device => {
+						if (!this.Tracking2.devices[device.id]) this.Tracking2.devices[device.id] = device;
+						var capabilitiesArgs = _.filter(args, _arg => { return _arg.device.id == device.id; });
+
+						_.each(capabilitiesArgs, capabilityArg => {
+							//BL.homey.log('capabilityArg', capabilityArg);
+							var deviceToSet = this.Tracking2.devices[device.id];
+							if (!deviceToSet) return;
+							if (!deviceToSet.capabilities) deviceToSet.capabilities = {};
+							if (!deviceToSet.capabilities[capabilityArg.capability.id]) deviceToSet.capabilities[capabilityArg.capability.id] = { id: capabilityArg.capability.id };
+							deviceToSet.capabilities[capabilityArg.capability.id].hasBeen = true;
+
+							if (!this.HasBeen.devices[device.id]) this.HasBeen.devices[device.id] = { capabilities: {} };
+							if (!this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id]) this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id] = { hasBeen: [] };
+							let hasBeen;
+							if (!(hasBeen = this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasBeen.find(x =>
+								x.condition === capabilityArg.condition &&
+								x.value === capabilityArg.value &&
+								x.time === capabilityArg.time &&
+								x.unit === capabilityArg.unit &&
+								x.trigger === capabilityArg.trigger
+							)))
+								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasBeen.push((hasBeen = {
+									condition: capabilityArg.condition,
+									value: capabilityArg.value,
+									time: capabilityArg.time,
+									unit: capabilityArg.unit,
+									trigger: capabilityArg.trigger,
+								}));
+							let oldCap = this.oldHasBeen && this.oldHasBeen.devices && this.oldHasBeen.devices[device.id] && this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id] ? this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id] : null;
+							if (oldCap && !this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasOwnProperty('value')) {
+								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = oldCap.value;
+								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = oldCap.valueSet;
+								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = oldCap.type;
+							}
+							if (!this.validateHasBeen(hasBeen, this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id])) {
+								this.clearTimeoutHasBeen(hasBeen);
+								delete hasBeen.triggered;
+							} else if (!hasBeen.timeoutId) {
+								let oldHasBeen;
+								if (this.oldHasBeen && this.oldHasBeen.devices && this.oldHasBeen.devices[device.id] && this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id] &&
+									(oldHasBeen = this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasBeen.find(x =>
+										x.condition === capabilityArg.condition &&
+										x.value === capabilityArg.value &&
+										x.time === capabilityArg.time &&
+										x.unit === capabilityArg.unit &&
+										x.trigger === capabilityArg.trigger
+									))) {
+									hasBeen.triggered = oldHasBeen.triggered;
+									hasBeen.nextTimeout = oldHasBeen.nextTimeout;
+								} else {
+									let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
+									hasBeen.nextTimeout = Date.now() + time;
+								}
+								// let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
+								// hasBeen.nextTimeout = (this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet || Date.now()) + time;
+
+								// let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
+								// hasBeen.nextTimeout = (this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet || Date.now()) + time;
+
+
+								let timeout = hasBeen.nextTimeout - Date.now();
+								if (timeout <= 0) timeout = 1;
+								this.setTimeoutHasBeen(hasBeen, this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id], timeout, device.id, capabilityArg.capability.id);
+
+							}
+						});
+					});
+
+					await this.updateTracking2(false, this.Triggers.triggercapabilityHasbeenNumber);
+
+					//this.saveHasBeen();
+					delete this.oldHasBeen;
+				}).bind(this));
+		}
 
 
 		const trigger_app_startedTrigger = this.homey.flow.getTriggerCard('trigger_app_started');
@@ -762,6 +872,86 @@ class DeviceSetter extends Homey.App {
 		// }
 	}
 
+	saveHasBeen() {
+		//this.log('HasBeen', JSON.stringify(this.HasBeen));
+		this.homey.settings.set('HasBeen', this.HasBeen);
+	}
+
+	validateHasBeen(hasBeen, capability) {
+		if (capability.value === null || capability.value === undefined) return false;
+		let value = hasBeen.value;
+		switch (capability.type) {
+			case 'number': value = Number.parseFloat(hasBeen.value);
+				break;
+			case 'boolean': value = hasBeen.value === 'true';
+				break;
+		}
+		switch (hasBeen.condition) {
+			case 'equal_to':
+				if (capability.value === value) return true;
+				break;
+			case 'not_equal_to':
+				if (capability.value !== value) return true;
+				break;
+			case 'greater_than':
+				if (capability.value > value) return true;
+				break;
+			case 'greater_than_equal':
+				if (capability.value >= value) return true;
+				break;
+			case 'less_than':
+				if (capability.value < value) return true;
+				break;
+			case 'less_than_equal':
+				if (capability.value <= value) return true;
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
+	clearTimeoutHasBeen(hasBeen, capability, time) {
+		if (hasBeen.timeoutId) {
+			this.homey.clearTimeout(hasBeen.timeoutId);
+			delete hasBeen.timeoutId;
+		}
+		//delete hasBeen.nextTimeout;
+	}
+	setTimeoutHasBeen(hasBeen, capability, time, deviceId, capabilityId) {
+		this.clearTimeoutHasBeen(hasBeen);
+		//if (hasBeen.timeoutId) this.homey.clearTimeout(hasBeen.timeoutId);
+		let timeOuter = this.homey.setTimeout(() => {
+			this.timeoutHasBeen(hasBeen, capability, deviceId, capabilityId);
+		}, time);
+		let timeoutId = timeOuter[Symbol.toPrimitive]();
+		hasBeen.timeoutId = timeoutId;
+	}
+
+	timeoutHasBeen(hasBeen, capability, deviceId, capabilityId) {
+		if (hasBeen.triggered && hasBeen.triggered >= hasBeen.nextTimeout && hasBeen.trigger === 'one_time') {
+			this.clearTimeoutHasBeen(hasBeen);
+			return;
+		}
+		//this.log('timeoutHasBeen:', '\nCapability', capability);
+		let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
+		let state = _.clone(hasBeen);
+		state.device = { id: deviceId };
+		state.capability = { id: capabilityId };
+		let executed = false;
+		if (this.validateHasBeen(hasBeen, capability)) {
+			executed = true;
+			hasBeen.triggered = Date.now();
+			this.Triggers.triggercapabilityHasbeenNumber.Card.trigger(null, state);
+		}
+		if (hasBeen.trigger === 'every_time' || !executed) {
+			hasBeen.nextTimeout = Date.now() + time;
+
+			this.setTimeoutHasBeen(hasBeen, capability, time, deviceId, capabilityId);
+		}
+		this.saveHasBeen();
+
+	}
+
 	async resetReflectAppsSettings() {
 		this._reflectAppsSettings = this.homey.settings.get('reflectAppsSettings');
 		let changed = false;
@@ -978,7 +1168,7 @@ class DeviceSetter extends Homey.App {
 				//this.log('func', func);
 				this.context[funcObj.name] = func;
 			} catch (error) {
-				this.error('Error creating function ',this.functions[i].name, '\n', error);
+				this.error('Error creating function ', this.functions[i].name, '\n', error);
 			}
 		}
 	}
@@ -1271,7 +1461,7 @@ class DeviceSetter extends Homey.App {
 
 
 	async updateTracking2(refresh, trigger) {
-		var hm = this;
+		const hm = this;
 		if (hm.Tracking2.homeyAPI === true) return;
 		if (!hm.Tracking2.homeyAPI || refresh) {
 			hm.Tracking2.homeyAPI = true;
@@ -1279,6 +1469,7 @@ class DeviceSetter extends Homey.App {
 		}
 
 		//var devices = null;
+		//let save = false;
 		for (const deviceKey in hm.Tracking2.devices) {
 			if (Object.hasOwnProperty.call(hm.Tracking2.devices, deviceKey)) {
 				const device = hm.Tracking2.devices[deviceKey];
@@ -1296,53 +1487,120 @@ class DeviceSetter extends Homey.App {
 					const capability = device.capabilities[keys[i]];
 					if (!capability.listener) {
 						try {
-							capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
-								let targetInsight = device.device && device.device.insights ? _.find(device.device.insights, x => { return x.id == capability.id; }) : null;
-								var tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
-								if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
-								else if (typeof (value) == typeof (tokens.number1)) {
-									tokens.number1 = value;
-									//if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
+							if (capability.hasBeen) {
+								let cap = this.HasBeen.devices[device.id].capabilities[capability.id];
+								cap.type = device.device.capabilitiesObj[capability.id].type;
+								if (cap.value !== device.device.capabilitiesObj[capability.id].value) {
+									cap.value = device.device.capabilitiesObj[capability.id].value;
+									cap.valueSet = Date.now();
 								}
-								else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
+							}
 
-								if (targetInsight) {
-									var insights, lastOne = null;
-									try {
-										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
-									} catch (error) {
-										insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+							capability.listener = device.device.makeCapabilityInstance(capability.id, async (value) => {
+								let tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
+								if (capability.changed) {
+									let targetInsight = device.device && device.device.insights ? _.find(device.device.insights, x => { return x.id == capability.id; }) : null;
+									if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
+									else if (typeof (value) == typeof (tokens.number1)) {
+										tokens.number1 = value;
+										//if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(targetInsight.decimals ? lastOne.v.toFixed(targetInsight.decimals) : lastOne.v);
 									}
-									if (insights && (lastOne = _.last(insights.values))) {
-										if (lastOne.originUserName) tokens.user = lastOne.originUserName;
-										if (lastOne.originName) tokens.client = lastOne.originName;
-										else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+									else if (typeof (value) == typeof (tokens.boolean1)) tokens.boolean1 = value;
 
-										// if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
-										// else if (typeof (lastOne.v) == typeof (tokens.number)) {
-										// 	tokens.number = lastOne.v;
-										// 	if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(lastOne.v.toFixed(targetInsight.decimals));
-										// }
-										// else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
+									if (targetInsight) {
+										var insights, lastOne = null;
+										try {
+											insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id, resolution: 'lastHour' });
+										} catch (error) {
+											insights = await hm.Tracking2.homeyAPI.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
+										}
+										if (insights && (lastOne = _.last(insights.values))) {
+											if (lastOne.originUserName) tokens.user = lastOne.originUserName;
+											if (lastOne.originName) tokens.client = lastOne.originName;
+											else if (lastOne.originClientName) tokens.client = lastOne.originClientName;
+
+											// if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v;
+											// else if (typeof (lastOne.v) == typeof (tokens.number)) {
+											// 	tokens.number = lastOne.v;
+											// 	if (Number.isInteger(targetInsight.decimals)) tokens.number = parseFloat(lastOne.v.toFixed(targetInsight.decimals));
+											// }
+											// else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
+										}
+										//if(lastOne) tokens
 									}
-									//if(lastOne) tokens
+
+									tokens.deviceName = device.name;
+									tokens.deviceId = device.id;
+
+									trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
 								}
+								try {
+									if (capability.hasBeen) {
+										let cap = this.HasBeen.devices[device.id].capabilities[capability.id];
+										cap.value = value;
+										cap.valueSet = Date.now();
+										for (let i = 0; i < this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length; i++) {
+											const hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen[i];
+											if (this.validateHasBeen(hasBeen, cap)) {
+												if (!hasBeen.timeoutId) {
+													if (!(hasBeen.triggered && hasBeen.triggered >= hasBeen.nextTimeout && hasBeen.trigger === 'one_time')) {
+														let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
+														hasBeen.nextTimeout = Date.now() + time;
+														this.setTimeoutHasBeen(hasBeen, cap, time, device.id, capability.id);
+													}
+												}
+											}
+											else {
+												this.clearTimeoutHasBeen(hasBeen);
+												delete hasBeen.triggered;
+											}
 
-								tokens.deviceName = device.name;
-								tokens.deviceId = device.id;
-
-
-
-								trigger.Card.trigger(tokens, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
+										}
+										this.saveHasBeen();
+									}
+								} catch (error) {
+									this.error(error);
+								}
 
 							});
 						} catch (error) {
 							this.log(error);
 						}
 					}
+					if (capability.hasBeen && this.HasBeen.devices[device.id] && this.HasBeen.devices[device.id].capabilities[capability.id]) {
+						let cardsHasBeen = this.Triggers.triggercapabilityHasbeenNumber.List.filter(x => x.device.id === device.id && x.capability.id === capability.id);//.map(x => x.capability.id);
+						let listToRemove = cardsHasBeen.length === 0 ? this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen
+							: this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.filter(x => !cardsHasBeen.find(y =>
+								x.condition === y.condition &&
+								x.value === y.value &&
+								x.time === y.time &&
+								x.unit === y.unit &&
+								x.trigger === y.trigger
+							))
+						//if (capsHasBeen.indexOf(capability.id) === -1);
+						for (let i = 0; i < listToRemove.length; i++) {
+							const hasBeen = listToRemove[i];
+							this.clearTimeoutHasBeen(hasBeen);
+						}
+						this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.filter(x => listToRemove.indexOf(x) === -1);
+						if(!this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length) delete capability.hasBeen;
+						this.log('this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen ', this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen);
+					}
+					if(!capability.hasBeen && !capability.changed && capability.listener) {
+						try {
+							capability.listener.destroy();
+							delete capability.listener;
+						} catch (error) {
+							
+						}
+						this.log('capability.listener', capability.listener);
+					}
 				}
 			}
 		}
+		//if (save) 
+		this.saveHasBeen();
+
 
 		// console.log('Size of hm.Tracking:', this.roughSizeOfObject(hm.Tracking) );
 		// console.log('Size of hm.Tracking2:', this.roughSizeOfObject(hm.Tracking2) );
@@ -1354,6 +1612,28 @@ class DeviceSetter extends Homey.App {
 	refreshTracking2(trigger) {
 		this.updateTracking2.call(this, true, trigger);
 	}
+
+	calculateDuration(time, unit) {
+		if (isNaN(time)) {
+			throw new Error('invalid time');
+		}
+
+		switch (unit) {
+			case 'milliseconds':
+				return time;
+			case 'seconds':
+				return 1e3 * time;
+			case 'minutes':
+				return 1e3 * time * 60;
+			case 'hours':
+				return 1e3 * time * 60 * 60;
+			case 'days':
+				return 1e3 * time * 60 * 60 * 24;
+			default:
+				throw new Error('invalid unit');
+		}
+	}
+
 
 	roughSizeOfObject(object) {
 
@@ -1523,7 +1803,7 @@ class DeviceSetter extends Homey.App {
 				} else {
 					var device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
-					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
+					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
 					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
