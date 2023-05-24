@@ -105,7 +105,6 @@ str += '"measure_Status": { \r\n' +
   '    }, \r\n';
 
 
-
 var sets1 = ['_hide', '_onoff_hide'];
 for (var j = 0; j < sets1.length; j++) {
   var val = sets1[j];
@@ -153,6 +152,21 @@ for (var i = 0; i < icons.length; i++) {
   let icon = (icons[i] != '' ?
     ', "icon": "' + ((icons[i].startsWith('custom_') ? '/userdata/customicons/' + icons[i] : '/assets/icons/' + icons[i]) + '.svg') + '" \r\n'
     : '');
+
+str += '"measure_sensor' + header + '": { \r\n' +
+  '      "type": "number", \r\n' +
+  '      "title": { \r\n' +
+  '        "en": "Status" \r\n' +
+  '      }, \r\n' +
+    '      "getable": true, \r\n' +
+    '      "setable": true, \r\n' +
+    '      "uiComponent": "sensor", \r\n' +
+  '      "uiQuickAction": true, \r\n' +
+  '      "insights": true, \r\n' +
+  '      "value": "" \r\n' +
+    icon +
+  '    }, \r\n';
+
 
   str += '"devicecapabilities_text' + header + '": { \r\n' +
     '      "type": "string", \r\n' +

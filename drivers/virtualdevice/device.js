@@ -673,6 +673,9 @@ module.exports = class AvdDevice extends Homey.Device {
 									case "": break;
 									case "sensor": break;
 									case "slider": break;
+									case "measure_sensor" :
+										cap = 'measure_sensor' + icon + '.' + type + i;
+										 break;
 									default:
 										capSet = true;
 										break;
