@@ -667,5 +667,8 @@
   },
   "2.12.0": {
     "en": "Added: New Flowcard: When [[device]].[[capability]] is [[condition]] [[value]] for [[time]] [[unit]], execute [[trigger]].\nThis card will execute when a certain capability from a device has been a certain value for a specific period."
+  },
+  "2.13.0": {
+    "en": "Added: Each number field can now be used as an free field status indicator by setting ShowAs: Sensor (Status)."
   }
 }
