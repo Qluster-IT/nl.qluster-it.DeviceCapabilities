@@ -241,7 +241,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 
         }
         
-        var set_camera_image = this.homey.flow.getActionCard('virtualdevice_set_camera_image');
+        let set_camera_image = this.homey.flow.getActionCard('virtualdevice_set_camera_image');
 			set_camera_image
             .registerRunListener(async (args, state) => {
                 if (!args || !args.device) return false;
@@ -272,9 +272,9 @@ module.exports = class AvdDriver extends Homey.Driver {
                 
 
         
-        var action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
+        let action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
-			var set_value = this.homey.flow.getActionCard(action);
+			let set_value = this.homey.flow.getActionCard(action);
 			set_value
 				.registerRunListener((async (args, state) => {
                     if (!args || !args.device) return false;
@@ -329,7 +329,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     case 'virtualdevice_set_status_optionalnumber':                                
                                         triggerCard = this.triggerFlowStatus;
                                         if(args.text!==undefined && args.text!=='undefined') {
-                                            var opt = args.device.getCapabilityOptions(cap);
+                                            let opt = args.device.getCapabilityOptions(cap);
                                             if (!opt) opt = {};
                                             if(opt.units!=args.text) {
                                                 statusTextChanged = true;
@@ -398,7 +398,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 
 		}).bind(this));
 
-        var virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
+        let virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
             return await this.setValue(args);
         });
@@ -406,7 +406,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 
         let triggers = ['trigger_virtualdevice_button', 'trigger_virtualdevice_boolean', 'trigger_virtualdevice_number', 'trigger_virtualdevice_text', 'trigger_virtualdevice_status', 'trigger_virtualdevice_list'];
         triggers.forEach((trigger => {
-			var triggerCard = this.homey.flow.getDeviceTriggerCard(trigger);
+			let triggerCard = this.homey.flow.getDeviceTriggerCard(trigger);
             this[trigger]= triggerCard;
 			triggerCard
 				.registerRunListener(async (args, state) => {
@@ -446,7 +446,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         });
 		
 
-        var virtualdevice_update_capability_name = this.homey.flow.getActionCard('virtualdevice_update_capability_name');
+        let virtualdevice_update_capability_name = this.homey.flow.getActionCard('virtualdevice_update_capability_name');
         virtualdevice_update_capability_name.registerRunListener(async (args, state) => {
             let fieldId = args.field.id;
             let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
@@ -772,7 +772,7 @@ module.exports = class AvdDriver extends Homey.Driver {
      * @returns True if value has changed
      */
     async setSecondCapability({fieldId, device, val, units}={}) {
-        var type = fieldId.startsWith('text') ? 'Text' : 
+        let type = fieldId.startsWith('text') ? 'Text' : 
             fieldId.startsWith('number') ? 'Number' : 
             fieldId.startsWith('boolean') ? 'Boolean' : 
             fieldId.startsWith('button') ? 'Button' : 
@@ -781,7 +781,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         let cap = type+"."+fieldId;
         if(device.hasCapability(cap)) {
             if(units) {
-                var opt = device.getCapabilityOptions(cap);
+                let opt = device.getCapabilityOptions(cap);
                 if (!opt) opt = {};
                 if(opt.units!=units) {
                     opt.units = units;
@@ -938,15 +938,15 @@ module.exports = class AvdDriver extends Homey.Driver {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
-            var type = this.getTypeFromAction(action);// action.split('_')[2];
-            var ret = [];
+            let type = this.getTypeFromAction(action);// action.split('_')[2];
+            let ret = [];
             let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
             for(var i=1;i<=fieldCount;i++){
                 let name = settings['camera' + i + 'Name'];
                 if(name) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
-                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
+                    let typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':name || typeText, description:typeText});
                 }
             }
@@ -959,15 +959,15 @@ module.exports = class AvdDriver extends Homey.Driver {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
-            var type = this.getTypeFromAction(action);// action.split('_')[2];
-            var ret = [];
+            let type = this.getTypeFromAction(action);// action.split('_')[2];
+            let ret = [];
             let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
             for(var i=1;i<=fieldCount;i++){
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
-                    var typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i : type=='camera' ? 'Camera ' +i : 'unknown';
+                    let typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i : type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                 }
             }
@@ -991,7 +991,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                     if(cap) {
                         if(!actionAllSet && useSetAll!==false && type!=='status') actionAllSet = retSetAll.push | retSetAll.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     
-                        var typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : type=='list' ? 'List' : 'unknown';
+                        let typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : type=='list' ? 'List' : 'unknown';
                         ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
                     }
                     
@@ -1086,7 +1086,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             }
         };
         if(true) {
-            var iconPath = "../../../userdata/virtualdeviceicons/" + device.data.id + ".svg";    
+            let iconPath = "../../../userdata/virtualdeviceicons/" + device.data.id + ".svg";    
             device.data.icon = iconPath;
             device.icon = iconPath;
         }
@@ -2912,8 +2912,8 @@ module.exports = class AvdDriver extends Homey.Driver {
     }
 
     async unzip(str, returnType) {
-        var gzippedJson = Buffer.from(str, 'base64');
-        var jsonBuffer = await ungzip(gzippedJson, {level:9});
+        let gzippedJson = Buffer.from(str, 'base64');
+        let jsonBuffer = await ungzip(gzippedJson, {level:9});
         return returnType ? jsonBuffer.toString(returnType) : jsonBuffer.toString();
     }
     
@@ -2993,10 +2993,10 @@ module.exports = class AvdDriver extends Homey.Driver {
     }
       
     async onPair(session, arg1) {
-        // var s = session;
+        // let s = session;
         // await session.nextView();
         let devices = await this.onPairListDevices();
-        var device;
+        let device;
         //let useTemplate;
         let tefs;
 
@@ -3111,7 +3111,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 
             // This is for custom icon picked
             // device = devices[0];
-            // var iconPath = "../../../userdata/customicons/" + data.icon.file+'.svg';
+            // let iconPath = "../../../userdata/customicons/" + data.icon.file+'.svg';
             // device.data.icon = iconPath;
             // device.icon = iconPath;
             // return device;
@@ -3121,8 +3121,8 @@ module.exports = class AvdDriver extends Homey.Driver {
             try
             {
                 device = devices[0];       
-                var icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
-                var iconPath = "../../.." + icon.path;      
+                let icon = await DeviceSetter.Current.createDeviceIcon({ type:'image/svg', buffer:image, id:device.data.id });              
+                let iconPath = "../../.." + icon.path;      
                 device.data.icon = iconPath;
                 device.icon = iconPath;
                 if(name && name.length>0) device.name = name;
@@ -3441,7 +3441,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 	}
 
   };
-// var self = module.exports = class MyDriver  {
+// let self = module.exports = class MyDriver  {
 //     init: function(devices_data, call-back) {
 //         Homey.log(devices_data);
 //         for (var x = 0; x < devices_data.length; x++) {
@@ -3454,7 +3454,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 //         speaker_track: {
 //             set: function (device_data, button, call-back) {
 //                 l('speaker_track set');
-//                 // var variable = variableManager.getVariable(device_data.id);
+//                 // let variable = variableManager.getVariable(device_data.id);
 //                 // if (variable) {
 //                 //     variableManager.updateVariable(device_data.id, new Date().toISOString(), device_data.type);
                  
@@ -3471,15 +3471,15 @@ module.exports = class AvdDriver extends Homey.Driver {
         
 //         socket.on('list_devices', function (data, call-back) {
 //             // Homey.log('list devices');
-//             // var vars = variableManager.getVariables();
+//             // let vars = variableManager.getVariables();
 //             // Homey.log(vars);
-//             // var bools = variableManager.getVariables().filter(util.findVariable('', 'trigger'));
+//             // let bools = variableManager.getVariables().filter(util.findVariable('', 'trigger'));
 
-//             // var devices = [];
+//             // let devices = [];
 
 //             // bools.forEach(function (variable) {
 //             //     Homey.log(variable);
-//             //     var device = {
+//             //     let device = {
 //             //             name: variable.name,
 //             //         data: {
 //             //             id: variable.name,

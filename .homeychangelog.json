@@ -673,5 +673,8 @@
   },
   "2.13.1": {
     "en": "Added: Each number field can now be used as an free field status indicator by setting ShowAs: Sensor (Status).\nNow with Icon option and multiline for Units."
+  },
+  "2.13.2": {
+    "en": "Improved: Reduced memory usage."
   }
 }

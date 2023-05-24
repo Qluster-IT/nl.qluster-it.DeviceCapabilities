@@ -107,7 +107,7 @@ str += '"measure_Status": { \r\n' +
 
 var sets1 = ['_hide', '_onoff_hide'];
 for (var j = 0; j < sets1.length; j++) {
-  var val = sets1[j];
+  let val = sets1[j];
   str += '"devicecapabilities' + val + '_button": { \r\n' +
     '      "type": "boolean", \r\n' +
     '      "title": { \r\n' +
@@ -240,12 +240,12 @@ str += '"measure_sensor' + header + '": { \r\n' +
   //         icon+
   // '    },     \r\n';
 
-  var sets1 = ['', '_disabled'];//, , '_hide'];
+  let sets1 = ['', '_disabled'];//, , '_hide'];
   for (var j = 0; j < sets1.length; j++) {
-    var val = sets1[j];
-    var sets2 = ['', 'onoffbuttontab_'];
+    let val = sets1[j];
+    let sets2 = ['', 'onoffbuttontab_'];
     for (var k = 0; k < sets2.length; k++) {
-      var val2 = sets2[k];
+      let val2 = sets2[k];
       str +=
         '    "' + val2 + 'devicecapabilities' + val + '_button' + header + '": { \r\n' +
         '      "type": "boolean", \r\n' +

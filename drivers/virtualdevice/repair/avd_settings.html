@@ -2178,18 +2178,18 @@ ${vars.textSettings}
 			};
 		})
 		.directive('tooltip', function ($compile) {
-		var contentContainer;
+		let contentContainer;
 		return {
 			restrict: "A",
 			scope: {
 				myTooltipScope: "="
 			},
 			link: function (scope, element, attrs) {
-				var text = attrs.tooltip;
+				let text = attrs.tooltip;
 
 				scope.hidden = true;
 
-				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+				let tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
 				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
 
 				element.parent().append(tooltipElement);
@@ -2197,7 +2197,7 @@ ${vars.textSettings}
 					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
 					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
 
-				var toolTipScope = scope.$new(true);
+				let toolTipScope = scope.$new(true);
 				angular.extend(toolTipScope, scope.myTooltipScope);
 				$compile(tooltipElement.contents())(toolTipScope);
 				$compile(tooltipElement)(scope);

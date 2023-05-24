@@ -456,7 +456,7 @@
 		angular.module('devicecapabilities', ['smart-table', 'ngSanitize'])
 			.controller("devicecapabilitiesCtrl", ['$scope', '$rootScope', '$timeout', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $sanitize, $compile) {
 				//let $;
-				var Homey;
+				let Homey;
 				$scope.stamp = Date.now();
 				$scope.view = { id: 'theflowexchanger', subid: undefined };
 				$scope.orderBy = { orderBy: 'favorite', reverse: false };
@@ -854,7 +854,7 @@ ${vars.textSettings}
 							return;
 						}
 
-						var func = {
+						let func = {
 							name: $scope.newFunction.name,
 							value: undefined,
 							remove: false
@@ -884,7 +884,7 @@ ${vars.textSettings}
 					Homey.confirm(Homey.__("settings.delete_confirm", { functionName: row.name }) || 'Are you sure you wish to delete function ' + row.name + '?', null, (err, val) => {
 						if (err) return Homey.alert(err);
 						if (!val) return;
-						var index = $scope.functions.indexOf(row);
+						let index = $scope.functions.indexOf(row);
 						$scope.$apply(function () {
 							$scope.functions.splice(index, 1);
 							$scope.storeFunction();
@@ -939,7 +939,7 @@ ${vars.textSettings}
 					reader.onload = () => {
 						imgBase64 = reader.result;
 						preview.src = imgBase64;
-						var buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
+						let buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
 						$scope.$apply(function () {
 							$scope.editcustomicon.type = img.type;
 							$scope.editcustomicon.name = img.name;
@@ -1089,7 +1089,7 @@ ${vars.textSettings}
 					reader.onload = () => {
 						imgBase64 = reader.result;
 						preview.src = imgBase64;
-						var buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
+						let buffer = imgBase64.substr(imgBase64.indexOf(',') + 1)
 						$scope.$apply(function () {
 							$scope.editdeviceicon.type = img.type;
 							$scope.editdeviceicon.name = img.name;
@@ -1150,13 +1150,13 @@ ${vars.textSettings}
 				// }
 
 				// $scope.onFileSelect = function (evt) {
-				// 	var files = evt.target.files;
+				// 	let files = evt.target.files;
 				// 	for (var i = 0, file; file = files[i]; i++) {
-				// 		var reader = new FileReader();
+				// 		let reader = new FileReader();
 				// 		reader.onload = (function (theFile) {
 				// 			return function (e) {
 
-				// 				var buffer = e.target.result.substr(e.target.result.indexOf(',') + 1)
+				// 				let buffer = e.target.result.substr(e.target.result.indexOf(',') + 1)
 
 				// 				Homey.api('POST', '/createicon/', {
 				// 					type: theFile.type,
@@ -1208,18 +1208,18 @@ ${vars.textSettings}
 				};
 			})
 			.directive('tooltip', function ($compile) {
-				var contentContainer;
+				let contentContainer;
 				return {
 					restrict: "A",
 					scope: {
 						myTooltipScope: "="
 					},
 					link: function (scope, element, attrs) {
-						var text = attrs.tooltip;
+						let text = attrs.tooltip;
 
 						scope.hidden = true;
 
-						var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+						let tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
 						tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
 
 						element.parent().append(tooltipElement);
@@ -1227,7 +1227,7 @@ ${vars.textSettings}
 							.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
 							.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
 
-						var toolTipScope = scope.$new(true);
+						let toolTipScope = scope.$new(true);
 						angular.extend(toolTipScope, scope.myTooltipScope);
 						$compile(tooltipElement.contents())(toolTipScope);
 						$compile(tooltipElement)(scope);
@@ -1237,7 +1237,7 @@ ${vars.textSettings}
 
 		function onHomeyReady(Homey) {
 			console.log('onHomeyReady');
-			var scope = angular.element(document.body).scope();
+			let scope = angular.element(document.body).scope();
 			scope.$emit('ready', Homey, $);//, $);
 		}
 	</script>

@@ -56,7 +56,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 
 		//Homeyman.Current.VirtualDevices[this.getName()] = this;
-		var caps = this.getCapabilities();
+		let caps = this.getCapabilities();
 
 
 		this.Settings = await this.getStoreValue('Settings');
@@ -110,7 +110,7 @@ module.exports = class AvdDevice extends Homey.Device {
 				delete this.Settings.iconNames;
 			}
 
-			var a = this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
+			let a = this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
 			await this.setSettings({ "labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend") });
 
 			try {
@@ -614,7 +614,7 @@ module.exports = class AvdDevice extends Homey.Device {
 			}
 
 
-			var button1Reset = false;
+			let button1Reset = false;
 			let energyCumulative = false;
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
@@ -822,7 +822,7 @@ module.exports = class AvdDevice extends Homey.Device {
 							if (!opt) opt = {};
 
 							//var valuesChanged = false;
-							var values = null;
+							let values = null;
 							// if(type=="dropdown") {
 							// 	if(opt.values!=settings["dropdown"+i+"Values"] || changedKeys.indexOf("dropdown"+i+"Values")>-1)
 							// 	values = this.getDropDownValues(settings["dropdown"+i+"Values"]);
@@ -985,7 +985,7 @@ module.exports = class AvdDevice extends Homey.Device {
 	}
 
 	// getDropDownValues(text) {
-	// 	var results = [];
+	// 	let results = [];
 	// 	let t = text.trimStart();
 	// 	if(t.startsWith('[')) {
 	// 		let r = JSON.parse(text);
@@ -1001,13 +1001,13 @@ module.exports = class AvdDevice extends Homey.Device {
 	// 		if(r=="string") results.push({id:r, name:r});
 	// 	} else {
 	// 		//let specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/gi; 
-	// 		var seperators = {
+	// 		let seperators = {
 	// 			"," : {"sep":",", "count": (text.match(/\,/g) ||[]).length},
 	// 			";" : {"sep":";", "count": (text.match(/\;/g) ||[]).length}
 	// 		};
-	// 		var sep1 = _.orderBy(seperators,"count",'desc');
-	// 		var sep = _.first(sep1) ? sep1[0].sep : "null";
-	// 		var arr = text.split(sep);
+	// 		let sep1 = _.orderBy(seperators,"count",'desc');
+	// 		let sep = _.first(sep1) ? sep1[0].sep : "null";
+	// 		let arr = text.split(sep);
 	// 		for (let i = 0; i < arr.length; i++) {
 	// 			let _r =  arr[i].trimStart();
 	// 			results.push({id:_r, title:_r});
