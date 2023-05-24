@@ -1564,7 +1564,7 @@ class DeviceSetter extends Homey.App {
 
 							});
 						} catch (error) {
-							this.log(error);
+							this.error(error);
 						}
 					}
 					if (capability.hasBeen && this.HasBeen.devices[device.id] && this.HasBeen.devices[device.id].capabilities[capability.id]) {
