@@ -151,7 +151,7 @@ class DeviceSetter extends Homey.App {
 							// }
 							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability]) {
 								values = d.capabilitiesObj[capability].values;
-								promises.push(api.devices.setCapabilityValue({deviceId:d.id, capabilityId:capability, value: val}));
+								promises.push(api.devices.setCapabilityValue({ deviceId: d.id, capabilityId: capability, value: val }));
 							}
 						}
 						let all = Promise.all(promises);
@@ -458,8 +458,8 @@ class DeviceSetter extends Homey.App {
 					_setTimeout();
 					function _setTimeout() {
 						setTimeout(async () => {
-							api.devices.setCapabilityValue({deviceId:device.id, capabilityId:args.capability.id, value: args.value == 'true'})
-							//device.setCapabilityValue(args.capability.id, args.value == 'true')
+							api.devices.setCapabilityValue({ deviceId: device.id, capabilityId: args.capability.id, value: args.value == 'true' })
+								//device.setCapabilityValue(args.capability.id, args.value == 'true')
 								.then(() => {
 									if (new Date().getTime() - startTime < 20 * 1000) _setTimeout();
 									else defer.reject();
@@ -814,7 +814,7 @@ class DeviceSetter extends Homey.App {
 		this.trigger_app_device_available.registerRunListener(async (args, state) => {
 			try {
 				return ((args.available === 'available' && state.available === true) || (args.available === 'unavailable' && state.available === false) || args.available === 'both' || args.available === 'undefined' || !args.available) &&
-					(!args.brand || args.brand === 'undefined' || args.brand.id === "homey:app:" + state.brand) &&
+					(!args.brand || args.brand === 'undefined' || ("homey:app:" + args.brand.id) === state.brand) &&
 					(!args.devicetype || args.devicetype === 'undefined' || args.devicetype.id === state.devicetype);
 			} catch (error) {
 				this.log('trigger_app_device_available:'); this.error(error); return new Error(error);
@@ -1587,15 +1587,15 @@ class DeviceSetter extends Homey.App {
 							this.clearTimeoutHasBeen(hasBeen);
 						}
 						this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.filter(x => listToRemove.indexOf(x) === -1);
-						if(!this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length) delete capability.hasBeen;
+						if (!this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length) delete capability.hasBeen;
 						this.log('this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen ', this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen);
 					}
-					if(!capability.hasBeen && !capability.changed && capability.listener) {
+					if (!capability.hasBeen && !capability.changed && capability.listener) {
 						try {
 							capability.listener.destroy();
 							delete capability.listener;
 						} catch (error) {
-							
+
 						}
 						this.log('capability.listener', capability.listener);
 					}
@@ -2002,13 +2002,17 @@ class DeviceSetter extends Homey.App {
 			//return this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
 			if (!this.devices || !type) {
 				this.devices = await this.homeyAPI.devices.getDevices({ $skipCache: true });
-				_.each(this.devices, (d, key) => this.devices[key] = this.getReducedDevice(d));
+				if (!this.devicesAvailable) this.devicesAvailable = {};
+				_.each(this.devices, (d, key) => {
+					this.devices[key] = this.getReducedDevice(d);
+					this.devicesAvailable[key] = d.available;
+				});
 			}
 			//this.log('refreshDevices size', this.roughSizeOfObject(this.devices));
 			switch (type) {
 				case 'create':
 				case 'update':
-					if (this.devices[device.id] && this.devices[device.id].available !== device.available) {
+					if (this.devicesAvailable && this.devicesAvailable[device.id] && this.devicesAvailable[device.id] !== device.available) {
 						if (device.unavailableMessage && typeof (device.unavailableMessage) === 'object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage);
 						let zone = this.zones[device.zone];
 						try {
@@ -2028,11 +2032,15 @@ class DeviceSetter extends Homey.App {
 
 					if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
 					else this.devices[device.id] = this.getReducedDevice(device);
+
+					if (!this.devicesAvailable) this.devicesAvailable = {};
+					this.devicesAvailable[device.id] = device.available;
 					//this.devices[device.id] = device;
-					
+
 					break;
 				case 'delete':
 					delete this.devices[device.id];
+					if (this.devicesAvailable) delete this.devicesAvailable[device.id];
 					break;
 			}
 		} catch (error) {
