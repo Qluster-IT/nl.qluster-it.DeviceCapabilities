@@ -9,7 +9,7 @@ const _ = require('lodash-core');
 
 const { Defer } = require('./lib/proto');
 
-const { join } = require('path');
+//const { join } = require('path');
 const { readFile, writeFile, unlink, rename, exists, mkdir, copyFile, readdir, stat } = require('fs');
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
@@ -33,9 +33,7 @@ const TYPES_MAP = {
 
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
-const copyFileAsync = promisify(copyFile);
 const unlinkAsync = promisify(unlink);
-const renameAsync = promisify(rename);
 const existsAsync = promisify(exists);
 const mkdirAsync = promisify(mkdir);
 const readdirAsync = promisify(readdir);
@@ -125,7 +123,7 @@ class DeviceSetter extends Homey.App {
 				.registerRunListener((async (args, state) => {
 					try {
 						if (!args || (!args.zone || !args.zone.id) && (!args.zonebytag)) return Promise.reject(new Error('Zone must be zet.'));
-						await this.refreshHomeyAPI();
+						let api = await this.refreshHomeyAPI();
 						let zoneId = args.zone && args.zone.id ? args.zone.id : args.zonebytag;
 						let defer = new Defer();
 						let devices = this.devices;
@@ -137,19 +135,23 @@ class DeviceSetter extends Homey.App {
 						setZone(zoneId);
 						let val = args.value;
 						if (action.endsWith('_boolean')) val = val === 'true' || val === true;
-						if (action.endsWith('_json')) val = JSON.parse(val);// === 'true' || val ===true;
+						if (action.endsWith('_json')) val = JSON.parse(val);
 						let promises = [];
-						let values = null;//capability.values;
+						let values = null;
 						for (let i = 0; i < devicesToSet.length; i++) {
 							let d = devicesToSet[i];
-							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && !d.setCapabilityValue) {
-								this.devices[d.id] = await this.homeyAPI.devices.getDevice({ id: d.id, $skipCache: true });
-								d = this.devices[d.id];
-							}
-							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && d.setCapabilityValue) {
+							// athom-api-change
+							// if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && !d.setCapabilityValue) {
+							// 	this.devices[d.id] = await this.homeyAPI.devices.getDevice({ id: d.id, $skipCache: true });
+							// 	d = this.devices[d.id];
+							// }
+							// if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability] && d.setCapabilityValue) {
+							// 	values = d.capabilitiesObj[capability].values;
+							// 	promises.push(d.setCapabilityValue(capability, val));
+							// }
+							if (d && d.capabilitiesObj && d.capabilitiesObj && d.capabilitiesObj[capability]) {
 								values = d.capabilitiesObj[capability].values;
-								promises.push(d.setCapabilityValue(capability, val));
-								//promises.push(d.setCapabilityValue({capabilityId:capability, value:val}));
+								promises.push(api.devices.setCapabilityValue({deviceId:d.id, capabilityId:capability, value: val}));
 							}
 						}
 						let all = Promise.all(promises);
@@ -445,7 +447,8 @@ class DeviceSetter extends Homey.App {
 					return defer.promise;
 				}
 				this.refreshHomeyAPI().then((async api => {
-					let device = await api.devices.getDevice({ id: args.device.id, $skipCache: true });
+					//let device = await api.devices.getDevice({ id: args.device.id, $skipCache: true });
+					let device = this.devices[args.device.id]
 					if (!device) {
 						defer.reject('Reject');
 						return defer.promise;
@@ -455,7 +458,8 @@ class DeviceSetter extends Homey.App {
 					_setTimeout();
 					function _setTimeout() {
 						setTimeout(async () => {
-							device.setCapabilityValue(args.capability.id, args.value == 'true')
+							api.devices.setCapabilityValue({deviceId:device.id, capabilityId:args.capability.id, value: args.value == 'true'})
+							//device.setCapabilityValue(args.capability.id, args.value == 'true')
 								.then(() => {
 									if (new Date().getTime() - startTime < 20 * 1000) _setTimeout();
 									else defer.reject();
@@ -2021,8 +2025,11 @@ class DeviceSetter extends Homey.App {
 							this.error(error);
 						}
 					}
+
 					if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
 					else this.devices[device.id] = this.getReducedDevice(device);
+					//this.devices[device.id] = device;
+					
 					break;
 				case 'delete':
 					delete this.devices[device.id];

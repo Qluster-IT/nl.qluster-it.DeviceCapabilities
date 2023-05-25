@@ -529,9 +529,8 @@ module.exports = class AvdDevice extends Homey.Device {
 								
 							if (!property.listener) {
 								const cap = device.capabilitiesObj[propertyId];
-								property.value = device.getCapabilityValue ? device.getCapabilityValue(propertyId) : cap.value;
-								property.lastUpdated = new Date(cap.lastUpdated).getTime();
-								//api.devices.getCapabilityValue({capabilityId:propertyId, deviceId:device.id});
+								property.value = cap.value;
+								property.lastUpdated = new Date(cap.lastUpdated).getTime();								
 								property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
 									//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
 									if(property.value===value) return;
