@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.13.3",
+  "version": "2.13.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -542,17 +542,17 @@
               {
                 "id": "one_time",
                 "label": {
-                  "en": "One time",
-                  "nl": "Eén maal",
-                  "de": "Einmal"
+                  "en": "One's after each change to true",
+                  "nl": "Eén na elke wijziging in waar",
+                  "de": "Einer ist nach jeder Änderung auf true"
                 }
               },
               {
                 "id": "every_time",
                 "label": {
-                  "en": "Every time",
-                  "nl": "Elke keer",
-                  "de": "Jedes mal"
+                  "en": "Continuously while true",
+                  "nl": "Voortdurend terwijl het waar is",
+                  "de": "Kontinuierlich solange wahr"
                 }
               }
             ]

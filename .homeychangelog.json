@@ -679,5 +679,8 @@
   },
   "2.13.3": {
     "en": "Re-fixed: Numbers ShowAs Sensor (Default) can be set to create Flowcards again.\nRemoved the new option Sensor (status): Use Sensor (default) with CreateFlowCards checked."
+  },
+  "2.13.4": {
+    "en": "Description: Better description for the new flowcard When [...] execute mode."
   }
 }
