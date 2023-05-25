@@ -688,5 +688,8 @@
   },
   "2.13.6": {
     "en": "Bugfixed: Dummy cards for HomeyScript for the HP2023."
+  },
+  "2.13.7": {
+    "en": "Bugfixed: Optional arguments for the Device Becaume (un)available flowcards didn't work correct."
   }
 }

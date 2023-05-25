@@ -2012,7 +2012,7 @@ class DeviceSetter extends Homey.App {
 			switch (type) {
 				case 'create':
 				case 'update':
-					if (this.devicesAvailable && this.devicesAvailable[device.id] && this.devicesAvailable[device.id] !== device.available) {
+					if (this.devicesAvailable && this.devicesAvailable[device.id] !== device.available) {
 						if (device.unavailableMessage && typeof (device.unavailableMessage) === 'object') this.error('device.unavailableMessage  is object: ', device.unavailableMessage);
 						let zone = this.zones[device.zone];
 						try {
@@ -2030,7 +2030,7 @@ class DeviceSetter extends Homey.App {
 						}
 					}
 
-					if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: this.devices[device.id].id, $skipCache: true });
+					if (this.devices[device.id] && this.devices[device.id].setCapabilityValue) this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
 					else this.devices[device.id] = this.getReducedDevice(device);
 
 					if (!this.devicesAvailable) this.devicesAvailable = {};
