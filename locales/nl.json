@@ -116,6 +116,7 @@
 		"showAsButtonHint":"Selecteer hoe de knop moet worden weergegeven.",
 		"createFlowCards":"Creëer echt veld en flowkaarten",
 		"createFlowCardsHint":"Indien geselecteerd, zal dit veld lijken op het echte ShowAs-type en zullen standaard flowkaarten voor dit veld zichtbaar worden.",
+		"createFlowCardsStatusIndication":"* Maakt het ook mogelijk om te worden geselecteerd als statusindicator",
 		"units":"Eenheden",
 		"unitsHint":"De eenheden die voor het nummer moeten worden gebruikt. Als je Fahrenheit nodig hebt, voer dan °C in en het wordt vertaald in Fahrenheit.",
 		"hintEmptyDefault":"\r\nWanneer deze leeg is zal de standaard waarde worden ingesteld.",

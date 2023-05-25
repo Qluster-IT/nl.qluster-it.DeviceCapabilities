@@ -153,19 +153,19 @@ for (var i = 0; i < icons.length; i++) {
     ', "icon": "' + ((icons[i].startsWith('custom_') ? '/userdata/customicons/' + icons[i] : '/assets/icons/' + icons[i]) + '.svg') + '" \r\n'
     : '');
 
-str += '"measure_sensor' + header + '": { \r\n' +
-  '      "type": "number", \r\n' +
-  '      "title": { \r\n' +
-  '        "en": "Status" \r\n' +
-  '      }, \r\n' +
-    '      "getable": true, \r\n' +
-    '      "setable": true, \r\n' +
-    '      "uiComponent": "sensor", \r\n' +
-  '      "uiQuickAction": true, \r\n' +
-  '      "insights": true, \r\n' +
-  '      "value": "" \r\n' +
-    icon +
-  '    }, \r\n';
+// str += '"measure_sensor' + header + '": { \r\n' +
+//   '      "type": "number", \r\n' +
+//   '      "title": { \r\n' +
+//   '        "en": "Status" \r\n' +
+//   '      }, \r\n' +
+//     '      "getable": true, \r\n' +
+//     '      "setable": true, \r\n' +
+//     '      "uiComponent": "sensor", \r\n' +
+//   '      "uiQuickAction": true, \r\n' +
+//   '      "insights": true, \r\n' +
+//   '      "value": "" \r\n' +
+//     icon +
+//   '    }, \r\n';
 
 
   str += '"devicecapabilities_text' + header + '": { \r\n' +

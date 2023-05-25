@@ -676,5 +676,8 @@
   },
   "2.13.2": {
     "en": "Improved: Reduced memory usage."
+  },
+  "2.13.3": {
+    "en": "Re-fixed: Numbers ShowAs Sensor (Default) can be set to create Flowcards again.\nRemoved the new option Sensor (status): Use Sensor (default) with CreateFlowCards checked."
   }
 }

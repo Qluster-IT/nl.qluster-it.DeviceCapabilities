@@ -454,15 +454,15 @@
 						<option ng-repeat="item in numberShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
 				</div>
-				<div class="field" ng-if="!(!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor' || s['number'+($index+1)+'ShowAs']==='measure_sensor')">
+				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow
 							Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateFlowCards']" />
+					<div ng-if="s['number'+($index+1)+'ShowAs']==='sensor'">{{__('virtualdevicesettings.createFlowCardsStatusIndication') || '* Also allows to be selected as Status Indicator'}}</div>
 				</div>
-				<div ng-else execute="s['number'+($index+1)+'CreateFlowCards']=false;" ></div>
-				<div class="field" ng-if="!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor'  || s['number'+($index+1)+'ShowAs']==='measure_sensor'">
+				<div class="field" ng-if="!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
 					<select class="value" ng-model="s['number'+($index+1)+'Icon']">
 						<option value=""></option>

@@ -4,11 +4,12 @@ const asv_settings = {
       "id": "sensor",
       "label": "Sensor (Default)",
       "order": -1
-    },{
-      "id": "measure_sensor",
-      "label": "Sensor (Status)",
-      "order": -2
     },
+    // {
+    //   "id": "measure_sensor",
+    //   "label": "Sensor (Status)",
+    //   "order": -2
+    // },
     {
       "id": "slider",
       "label": "Slider",

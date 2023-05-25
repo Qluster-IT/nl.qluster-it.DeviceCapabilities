@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.13.2",
+  "version": "2.13.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -4061,18 +4061,6 @@
       "uiComponent": "slider",
       "insights": true
     },
-    "measure_sensor": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": ""
-    },
     "devicecapabilities_text": {
       "type": "string",
       "title": {
@@ -4208,19 +4196,6 @@
       "setable": false,
       "uiComponent": "toggle",
       "insights": true
-    },
-    "measure_sensor-custom_1": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_1.svg"
     },
     "devicecapabilities_text-custom_1": {
       "type": "string",
@@ -4369,19 +4344,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_1.svg"
     },
-    "measure_sensor-custom_2": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_2.svg"
-    },
     "devicecapabilities_text-custom_2": {
       "type": "string",
       "title": {
@@ -4528,19 +4490,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_2.svg"
-    },
-    "measure_sensor-custom_3": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_3.svg"
     },
     "devicecapabilities_text-custom_3": {
       "type": "string",
@@ -4689,19 +4638,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_3.svg"
     },
-    "measure_sensor-custom_4": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_4.svg"
-    },
     "devicecapabilities_text-custom_4": {
       "type": "string",
       "title": {
@@ -4848,19 +4784,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_4.svg"
-    },
-    "measure_sensor-custom_5": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_5.svg"
     },
     "devicecapabilities_text-custom_5": {
       "type": "string",
@@ -5009,19 +4932,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_5.svg"
     },
-    "measure_sensor-custom_6": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_6.svg"
-    },
     "devicecapabilities_text-custom_6": {
       "type": "string",
       "title": {
@@ -5168,19 +5078,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_6.svg"
-    },
-    "measure_sensor-custom_7": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_7.svg"
     },
     "devicecapabilities_text-custom_7": {
       "type": "string",
@@ -5329,19 +5226,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_7.svg"
     },
-    "measure_sensor-custom_8": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_8.svg"
-    },
     "devicecapabilities_text-custom_8": {
       "type": "string",
       "title": {
@@ -5488,19 +5372,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_8.svg"
-    },
-    "measure_sensor-custom_9": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_9.svg"
     },
     "devicecapabilities_text-custom_9": {
       "type": "string",
@@ -5649,19 +5520,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_9.svg"
     },
-    "measure_sensor-custom_10": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_10.svg"
-    },
     "devicecapabilities_text-custom_10": {
       "type": "string",
       "title": {
@@ -5808,19 +5666,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_10.svg"
-    },
-    "measure_sensor-custom_11": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_11.svg"
     },
     "devicecapabilities_text-custom_11": {
       "type": "string",
@@ -5969,19 +5814,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_11.svg"
     },
-    "measure_sensor-custom_12": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_12.svg"
-    },
     "devicecapabilities_text-custom_12": {
       "type": "string",
       "title": {
@@ -6128,19 +5960,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_12.svg"
-    },
-    "measure_sensor-custom_13": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_13.svg"
     },
     "devicecapabilities_text-custom_13": {
       "type": "string",
@@ -6289,19 +6108,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_13.svg"
     },
-    "measure_sensor-custom_14": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_14.svg"
-    },
     "devicecapabilities_text-custom_14": {
       "type": "string",
       "title": {
@@ -6448,19 +6254,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_14.svg"
-    },
-    "measure_sensor-custom_15": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_15.svg"
     },
     "devicecapabilities_text-custom_15": {
       "type": "string",
@@ -6609,19 +6402,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_15.svg"
     },
-    "measure_sensor-custom_16": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_16.svg"
-    },
     "devicecapabilities_text-custom_16": {
       "type": "string",
       "title": {
@@ -6768,19 +6548,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_16.svg"
-    },
-    "measure_sensor-custom_17": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_17.svg"
     },
     "devicecapabilities_text-custom_17": {
       "type": "string",
@@ -6929,19 +6696,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_17.svg"
     },
-    "measure_sensor-custom_18": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_18.svg"
-    },
     "devicecapabilities_text-custom_18": {
       "type": "string",
       "title": {
@@ -7088,19 +6842,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_18.svg"
-    },
-    "measure_sensor-custom_19": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_19.svg"
     },
     "devicecapabilities_text-custom_19": {
       "type": "string",
@@ -7249,19 +6990,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_19.svg"
     },
-    "measure_sensor-custom_20": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_20.svg"
-    },
     "devicecapabilities_text-custom_20": {
       "type": "string",
       "title": {
@@ -7408,19 +7136,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_20.svg"
-    },
-    "measure_sensor-custom_21": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_21.svg"
     },
     "devicecapabilities_text-custom_21": {
       "type": "string",
@@ -7569,19 +7284,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_21.svg"
     },
-    "measure_sensor-custom_22": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_22.svg"
-    },
     "devicecapabilities_text-custom_22": {
       "type": "string",
       "title": {
@@ -7728,19 +7430,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_22.svg"
-    },
-    "measure_sensor-custom_23": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_23.svg"
     },
     "devicecapabilities_text-custom_23": {
       "type": "string",
@@ -7889,19 +7578,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_23.svg"
     },
-    "measure_sensor-custom_24": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_24.svg"
-    },
     "devicecapabilities_text-custom_24": {
       "type": "string",
       "title": {
@@ -8048,19 +7724,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_24.svg"
-    },
-    "measure_sensor-custom_25": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_25.svg"
     },
     "devicecapabilities_text-custom_25": {
       "type": "string",
@@ -8209,19 +7872,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_25.svg"
     },
-    "measure_sensor-custom_26": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_26.svg"
-    },
     "devicecapabilities_text-custom_26": {
       "type": "string",
       "title": {
@@ -8368,19 +8018,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_26.svg"
-    },
-    "measure_sensor-custom_27": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_27.svg"
     },
     "devicecapabilities_text-custom_27": {
       "type": "string",
@@ -8529,19 +8166,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_27.svg"
     },
-    "measure_sensor-custom_28": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_28.svg"
-    },
     "devicecapabilities_text-custom_28": {
       "type": "string",
       "title": {
@@ -8688,19 +8312,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_28.svg"
-    },
-    "measure_sensor-custom_29": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_29.svg"
     },
     "devicecapabilities_text-custom_29": {
       "type": "string",
@@ -8849,19 +8460,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_29.svg"
     },
-    "measure_sensor-custom_30": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_30.svg"
-    },
     "devicecapabilities_text-custom_30": {
       "type": "string",
       "title": {
@@ -9008,19 +8606,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_30.svg"
-    },
-    "measure_sensor-custom_31": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_31.svg"
     },
     "devicecapabilities_text-custom_31": {
       "type": "string",
@@ -9169,19 +8754,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_31.svg"
     },
-    "measure_sensor-custom_32": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_32.svg"
-    },
     "devicecapabilities_text-custom_32": {
       "type": "string",
       "title": {
@@ -9328,19 +8900,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_32.svg"
-    },
-    "measure_sensor-custom_33": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_33.svg"
     },
     "devicecapabilities_text-custom_33": {
       "type": "string",
@@ -9489,19 +9048,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_33.svg"
     },
-    "measure_sensor-custom_34": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_34.svg"
-    },
     "devicecapabilities_text-custom_34": {
       "type": "string",
       "title": {
@@ -9648,19 +9194,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_34.svg"
-    },
-    "measure_sensor-custom_35": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_35.svg"
     },
     "devicecapabilities_text-custom_35": {
       "type": "string",
@@ -9809,19 +9342,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_35.svg"
     },
-    "measure_sensor-custom_36": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_36.svg"
-    },
     "devicecapabilities_text-custom_36": {
       "type": "string",
       "title": {
@@ -9968,19 +9488,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_36.svg"
-    },
-    "measure_sensor-custom_37": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_37.svg"
     },
     "devicecapabilities_text-custom_37": {
       "type": "string",
@@ -10129,19 +9636,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_37.svg"
     },
-    "measure_sensor-custom_38": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_38.svg"
-    },
     "devicecapabilities_text-custom_38": {
       "type": "string",
       "title": {
@@ -10288,19 +9782,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_38.svg"
-    },
-    "measure_sensor-custom_39": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_39.svg"
     },
     "devicecapabilities_text-custom_39": {
       "type": "string",
@@ -10449,19 +9930,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_39.svg"
     },
-    "measure_sensor-custom_40": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_40.svg"
-    },
     "devicecapabilities_text-custom_40": {
       "type": "string",
       "title": {
@@ -10608,19 +10076,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_40.svg"
-    },
-    "measure_sensor-custom_41": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_41.svg"
     },
     "devicecapabilities_text-custom_41": {
       "type": "string",
@@ -10769,19 +10224,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_41.svg"
     },
-    "measure_sensor-custom_42": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_42.svg"
-    },
     "devicecapabilities_text-custom_42": {
       "type": "string",
       "title": {
@@ -10928,19 +10370,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_42.svg"
-    },
-    "measure_sensor-custom_43": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_43.svg"
     },
     "devicecapabilities_text-custom_43": {
       "type": "string",
@@ -11089,19 +10518,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_43.svg"
     },
-    "measure_sensor-custom_44": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_44.svg"
-    },
     "devicecapabilities_text-custom_44": {
       "type": "string",
       "title": {
@@ -11248,19 +10664,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_44.svg"
-    },
-    "measure_sensor-custom_45": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_45.svg"
     },
     "devicecapabilities_text-custom_45": {
       "type": "string",
@@ -11409,19 +10812,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_45.svg"
     },
-    "measure_sensor-custom_46": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_46.svg"
-    },
     "devicecapabilities_text-custom_46": {
       "type": "string",
       "title": {
@@ -11568,19 +10958,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_46.svg"
-    },
-    "measure_sensor-custom_47": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_47.svg"
     },
     "devicecapabilities_text-custom_47": {
       "type": "string",
@@ -11729,19 +11106,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_47.svg"
     },
-    "measure_sensor-custom_48": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_48.svg"
-    },
     "devicecapabilities_text-custom_48": {
       "type": "string",
       "title": {
@@ -11888,19 +11252,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_48.svg"
-    },
-    "measure_sensor-custom_49": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_49.svg"
     },
     "devicecapabilities_text-custom_49": {
       "type": "string",
@@ -12049,19 +11400,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_49.svg"
     },
-    "measure_sensor-custom_50": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_50.svg"
-    },
     "devicecapabilities_text-custom_50": {
       "type": "string",
       "title": {
@@ -12208,19 +11546,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_50.svg"
-    },
-    "measure_sensor-custom_51": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_51.svg"
     },
     "devicecapabilities_text-custom_51": {
       "type": "string",
@@ -12369,19 +11694,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_51.svg"
     },
-    "measure_sensor-custom_52": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_52.svg"
-    },
     "devicecapabilities_text-custom_52": {
       "type": "string",
       "title": {
@@ -12528,19 +11840,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_52.svg"
-    },
-    "measure_sensor-custom_53": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_53.svg"
     },
     "devicecapabilities_text-custom_53": {
       "type": "string",
@@ -12689,19 +11988,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_53.svg"
     },
-    "measure_sensor-custom_54": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_54.svg"
-    },
     "devicecapabilities_text-custom_54": {
       "type": "string",
       "title": {
@@ -12848,19 +12134,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_54.svg"
-    },
-    "measure_sensor-custom_55": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_55.svg"
     },
     "devicecapabilities_text-custom_55": {
       "type": "string",
@@ -13009,19 +12282,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_55.svg"
     },
-    "measure_sensor-custom_56": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_56.svg"
-    },
     "devicecapabilities_text-custom_56": {
       "type": "string",
       "title": {
@@ -13168,19 +12428,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_56.svg"
-    },
-    "measure_sensor-custom_57": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_57.svg"
     },
     "devicecapabilities_text-custom_57": {
       "type": "string",
@@ -13329,19 +12576,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_57.svg"
     },
-    "measure_sensor-custom_58": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_58.svg"
-    },
     "devicecapabilities_text-custom_58": {
       "type": "string",
       "title": {
@@ -13488,19 +12722,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_58.svg"
-    },
-    "measure_sensor-custom_59": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_59.svg"
     },
     "devicecapabilities_text-custom_59": {
       "type": "string",
@@ -13649,19 +12870,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_59.svg"
     },
-    "measure_sensor-custom_60": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_60.svg"
-    },
     "devicecapabilities_text-custom_60": {
       "type": "string",
       "title": {
@@ -13808,19 +13016,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_60.svg"
-    },
-    "measure_sensor-custom_61": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_61.svg"
     },
     "devicecapabilities_text-custom_61": {
       "type": "string",
@@ -13969,19 +13164,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_61.svg"
     },
-    "measure_sensor-custom_62": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_62.svg"
-    },
     "devicecapabilities_text-custom_62": {
       "type": "string",
       "title": {
@@ -14128,19 +13310,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_62.svg"
-    },
-    "measure_sensor-custom_63": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_63.svg"
     },
     "devicecapabilities_text-custom_63": {
       "type": "string",
@@ -14289,19 +13458,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_63.svg"
     },
-    "measure_sensor-custom_64": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_64.svg"
-    },
     "devicecapabilities_text-custom_64": {
       "type": "string",
       "title": {
@@ -14448,19 +13604,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_64.svg"
-    },
-    "measure_sensor-custom_65": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_65.svg"
     },
     "devicecapabilities_text-custom_65": {
       "type": "string",
@@ -14609,19 +13752,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_65.svg"
     },
-    "measure_sensor-custom_66": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_66.svg"
-    },
     "devicecapabilities_text-custom_66": {
       "type": "string",
       "title": {
@@ -14768,19 +13898,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_66.svg"
-    },
-    "measure_sensor-custom_67": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_67.svg"
     },
     "devicecapabilities_text-custom_67": {
       "type": "string",
@@ -14929,19 +14046,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_67.svg"
     },
-    "measure_sensor-custom_68": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_68.svg"
-    },
     "devicecapabilities_text-custom_68": {
       "type": "string",
       "title": {
@@ -15088,19 +14192,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_68.svg"
-    },
-    "measure_sensor-custom_69": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_69.svg"
     },
     "devicecapabilities_text-custom_69": {
       "type": "string",
@@ -15249,19 +14340,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_69.svg"
     },
-    "measure_sensor-custom_70": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_70.svg"
-    },
     "devicecapabilities_text-custom_70": {
       "type": "string",
       "title": {
@@ -15408,19 +14486,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_70.svg"
-    },
-    "measure_sensor-custom_71": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_71.svg"
     },
     "devicecapabilities_text-custom_71": {
       "type": "string",
@@ -15569,19 +14634,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_71.svg"
     },
-    "measure_sensor-custom_72": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_72.svg"
-    },
     "devicecapabilities_text-custom_72": {
       "type": "string",
       "title": {
@@ -15728,19 +14780,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_72.svg"
-    },
-    "measure_sensor-custom_73": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_73.svg"
     },
     "devicecapabilities_text-custom_73": {
       "type": "string",
@@ -15889,19 +14928,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_73.svg"
     },
-    "measure_sensor-custom_74": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_74.svg"
-    },
     "devicecapabilities_text-custom_74": {
       "type": "string",
       "title": {
@@ -16048,19 +15074,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_74.svg"
-    },
-    "measure_sensor-custom_75": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_75.svg"
     },
     "devicecapabilities_text-custom_75": {
       "type": "string",
@@ -16209,19 +15222,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_75.svg"
     },
-    "measure_sensor-custom_76": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_76.svg"
-    },
     "devicecapabilities_text-custom_76": {
       "type": "string",
       "title": {
@@ -16368,19 +15368,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_76.svg"
-    },
-    "measure_sensor-custom_77": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_77.svg"
     },
     "devicecapabilities_text-custom_77": {
       "type": "string",
@@ -16529,19 +15516,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_77.svg"
     },
-    "measure_sensor-custom_78": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_78.svg"
-    },
     "devicecapabilities_text-custom_78": {
       "type": "string",
       "title": {
@@ -16689,19 +15663,6 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_78.svg"
     },
-    "measure_sensor-custom_79": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_79.svg"
-    },
     "devicecapabilities_text-custom_79": {
       "type": "string",
       "title": {
@@ -16848,19 +15809,6 @@
       "uiComponent": "toggle",
       "insights": true,
       "icon": "/userdata/customicons/custom_79.svg"
-    },
-    "measure_sensor-custom_80": {
-      "type": "number",
-      "title": {
-        "en": "Status"
-      },
-      "getable": true,
-      "setable": true,
-      "uiComponent": "sensor",
-      "uiQuickAction": true,
-      "insights": true,
-      "value": "",
-      "icon": "/userdata/customicons/custom_80.svg"
     },
     "devicecapabilities_text-custom_80": {
       "type": "string",
