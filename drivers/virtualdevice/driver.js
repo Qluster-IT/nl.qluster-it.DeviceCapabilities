@@ -2629,7 +2629,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 }
                 if(this.getOwnerUri(card.id) === 'homey:app:com.athom.homeyscript') {
                     card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
-                    card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:' + this.getCardId(card.id);
+                    card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:hs_' + this.getCardId(card.id);
                 }
             });
 

@@ -682,5 +682,11 @@
   },
   "2.13.4": {
     "en": "Description: Better description for the new flowcard When [...] execute mode."
+  },
+  "2.13.5": {
+    "en": "Bugfixed: Dummy cards for HomeyScript for the HP2023."
+  },
+  "2.13.6": {
+    "en": "Bugfixed: Dummy cards for HomeyScript for the HP2023."
   }
 }
