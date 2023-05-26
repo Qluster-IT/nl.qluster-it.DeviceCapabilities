@@ -691,5 +691,8 @@
   },
   "2.13.7": {
     "en": "Bugfixed: Optional arguments for the Device Becaume (un)available flowcards didn't work correct."
+  },
+  "2.13.8": {
+    "en": "Bugfixed: Startup of AVD's wend wrong if some Reflect devices didn't exist anymore."
   }
 }

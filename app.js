@@ -1047,75 +1047,87 @@ class DeviceSetter extends Homey.App {
 
 
 	async updateReflection({ device, appId } = {}) {
+		try {
+			if (this.Reflections && this.Reflections[DC_DEVICES] && (!appId || appId === DC_DEVICES))// && this.Reflections[APP_ID_BLL][variable.name])
+			{
+				//let api = await this.homey.app.refreshHomeyAPI();
+				const runnedDevices = {};
+				for (const deviceId in this.homey.app.Reflections[DC_DEVICES]) {
+					try {
 
-		if (this.Reflections && this.Reflections[DC_DEVICES] && (!appId || appId === DC_DEVICES))// && this.Reflections[APP_ID_BLL][variable.name])
-		{
-			//let api = await this.homey.app.refreshHomeyAPI();
-			const runnedDevices = {};
-			for (const deviceId in this.homey.app.Reflections[DC_DEVICES]) {
-				for (const propertyId in this.homey.app.Reflections[DC_DEVICES][deviceId]) {
-					const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
-					for (let i = 0; i < property.fields.length; i++) {
-						const field = property.fields[i];
-						if (device && field.device !== device)
-							continue;
-						if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
-							continue;
-						field.method(field, { value: property.value, id: propertyId });
-						if (!runnedDevices[field.device.id]) runnedDevices[field.device.id] = {};
-						if (!runnedDevices[field.device.id][field.fieldId]) runnedDevices[field.device.id][field.fieldId] = true;
+						for (const propertyId in this.homey.app.Reflections[DC_DEVICES][deviceId]) {
+							try {
+								const property = this.homey.app.Reflections[DC_DEVICES][deviceId][propertyId];
+								for (let i = 0; i < property.fields.length; i++) {
+									const field = property.fields[i];
+									if (device && field.device !== device)
+										continue;
+									if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
+										continue;
+									field.method(field, { value: property.value, id: propertyId });
+									if (!runnedDevices[field.device.id]) runnedDevices[field.device.id] = {};
+									if (!runnedDevices[field.device.id][field.fieldId]) runnedDevices[field.device.id][field.fieldId] = true;
 
+								}
+							} catch (errorPropertyId) {
+								this.error('updateReflection (const propertyId in) Error: ', device, appId, '\n', errorPropertyId);
+							}
+						}
+					} catch (errorDeviceId) {
+						this.error('updateReflection (const deviceId in) Error: ', device, appId, '\n', errorDeviceId);
 					}
 				}
 			}
-		}
 
-		if (this.Reflections && this.Reflections[APP_ID_BLL] && (!appId || appId === APP_ID_BLL))// && this.Reflections[APP_ID_BLL][variable.name])
-		{
-			try {
+			if (this.Reflections && this.Reflections[APP_ID_BLL] && (!appId || appId === APP_ID_BLL))// && this.Reflections[APP_ID_BLL][variable.name])
+			{
+				try {
 
-				const vars = await this.getBllVariables();
-				if (vars) for (const variableName in this.Reflections[APP_ID_BLL]) {
-					let _var;
-					if ((_var = _.find(vars, x => x.name == variableName))) for (let i = 0; i < this.Reflections[APP_ID_BLL][variableName].length; i++) {
-						const field = this.Reflections[APP_ID_BLL][variableName][i];
-						if (device && field.device !== device) continue;
-						try {
-							await field.method(field, _var);
-						} catch (error) {
+					const vars = await this.getBllVariables();
+					if (vars) for (const variableName in this.Reflections[APP_ID_BLL]) {
+						let _var;
+						if ((_var = _.find(vars, x => x.name == variableName))) for (let i = 0; i < this.Reflections[APP_ID_BLL][variableName].length; i++) {
+							const field = this.Reflections[APP_ID_BLL][variableName][i];
+							if (device && field.device !== device) continue;
+							try {
+								await field.method(field, _var);
+							} catch (error) {
+
+							}
+						}
+					}
+				} catch (error) {
+
+				}
+			}
+			if (this.Reflections && this.Reflections[APP_ID_CG] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
+			{
+				try {
+					const chronographs = await this.getChronographs();
+					for (const chronographName in this.Reflections[APP_ID_CG]) {
+						let type = chronographName.substring(0, chronographName.indexOf('|'));
+						let name = chronographName.substring(chronographName.indexOf('|') + 1);
+						const chronograph = _.find(chronographs, x => x.name == name && x.type == type)
+						for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
+							const field = this.Reflections[APP_ID_CG][chronographName][i];
+							if (device && field.device !== device) continue;
+							try {
+
+								await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
+							} catch (error) {
+
+							}
 
 						}
 					}
+				} catch (error) {
+
 				}
-			} catch (error) {
-
 			}
+
+		} catch (error) {
+			this.error('updateReflection Error: ', device, appId, '\n', error);
 		}
-		if (this.Reflections && this.Reflections[APP_ID_CG] && (!appId || appId === APP_ID_CG))// && this.Reflections[APP_ID_BLL][variable.name])
-		{
-			try {
-				const chronographs = await this.getChronographs();
-				for (const chronographName in this.Reflections[APP_ID_CG]) {
-					let type = chronographName.substring(0, chronographName.indexOf('|'));
-					let name = chronographName.substring(chronographName.indexOf('|') + 1);
-					const chronograph = _.find(chronographs, x => x.name == name && x.type == type)
-					for (let i = 0; i < this.Reflections[APP_ID_CG][chronographName].length; i++) {
-						const field = this.Reflections[APP_ID_CG][chronographName][i];
-						if (device && field.device !== device) continue;
-						try {
-
-							await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
-						} catch (error) {
-
-						}
-
-					}
-				}
-			} catch (error) {
-
-			}
-		}
-
 	}
 
 	async getBllVariables() {

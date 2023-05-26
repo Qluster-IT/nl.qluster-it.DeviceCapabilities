@@ -171,12 +171,12 @@ module.exports = class AvdDevice extends Homey.Device {
 					//await property.device.setCapabilityValue(device.property, value);
 					property.value = value;
 					property.lastUpdated = Date.now();
-							
+
 					await property.listener.setValue(value);
 					for (let j = 0; j < property.fields.length; j++) {
 						const field = property.fields[j];
-						if(field.device!==this || field.fieldId!==fieldId) field.method(field, {value, id:device.property} );
-						
+						if (field.device !== this || field.fieldId !== fieldId) field.method(field, { value, id: device.property });
+
 					}
 				} catch (error) {
 					const err = error;
@@ -333,7 +333,7 @@ module.exports = class AvdDevice extends Homey.Device {
 								// if(property.value === null ) {
 								// 	let a = 1;
 								// }
-								
+
 								//if (this.Settings[r.fieldId + 'React'] === 'true' && this.ReactLocks && this.ReactLocks[r.fieldId] && this.ReactLocks[r.fieldId] > (Date.now() - 1_000)) return;
 								let devices = this.Settings[r.fieldId + 'ReflectDevices'];
 								const calculations = this.Settings[r.fieldId + 'ReflectCalculation'];
@@ -395,7 +395,7 @@ module.exports = class AvdDevice extends Homey.Device {
 									}
 								}
 								//if(values && !values.length && isNaN(value) && property.value!==null) value = property.value;
-								if(values && !values.length && (isNaN(value) || value===null || value===undefined) && property.value!==null) value = property.value;
+								if (values && !values.length && (isNaN(value) || value === null || value === undefined) && property.value !== null) value = property.value;
 
 								try {
 									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES });
@@ -479,12 +479,12 @@ module.exports = class AvdDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
 							device: this, fieldId: type + i, method: async (r, chronograph) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
-								if(chronograph.removed) chronograph.remaining = 0;
+								if (chronograph.removed) chronograph.remaining = 0;
 								let value = chronograph[property];
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
 								let timeMs;
 								if ((value !== undefined && value !== null) && (property == 'elapsed' || property == 'remaining')) timeMs = value;
-								
+
 								if (format) try {
 									value = await BL.express(format, { value, chronograph, timeMs });
 								} catch (error) {
@@ -506,6 +506,7 @@ module.exports = class AvdDevice extends Homey.Device {
 				}
 			}
 		}
+		let api;
 		for (const reflect in this.homey.app.Reflections) {
 			for (const reflectId in this.homey.app.Reflections[reflect]) {
 				if (reflect == DC_DEVICES) {
@@ -517,51 +518,51 @@ module.exports = class AvdDevice extends Homey.Device {
 			}
 			if (reflect == DC_DEVICES) {
 				const _this = this;
-				let api = await this.homey.app.refreshHomeyAPI();
+				if (!api) api = await this.homey.app.refreshHomeyAPI();
 				//disconnect first
 				for (const deviceId in this.homey.app.Reflections[reflect]) {
-					if (!this.homey.app.devices) continue;
-					const device = await this.homey.app.getDevice({ deviceId, full: true });
-					if (!device) continue;
-					for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
-						const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
-						try {
-								
-							if (!property.listener) {
-								const cap = device.capabilitiesObj[propertyId];
-								property.value = cap.value;
-								property.lastUpdated = new Date(cap.lastUpdated).getTime();								
-								property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
-									//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
-									if(property.value===value) return;
-									property.value = value;
-									property.lastUpdated = Date.now();
-									for (let i = 0; i < property.fields.length; i++) {
-										const field = property.fields[i];
-										await field.method(field, { value, id: propertyId });
-									}
-								});
-							}
-						} catch (error) {
-							this.homey.error('setReflections - const reflect in this.homey.app.Reflections device:', device, '\nPropertyId: ', propertyId, '\nError:', error);
-						}
+					try {
 
-						// for (let i = 0; i < property.fields.length; i++) {
-						// 	const field = property.fields[i];
-						// 	process.nextTick(()=> {
-						// 		field.method(field, { value:property.value, id: propertyId });
-						// 	})
-						// }
+						if (!this.homey.app.devices) continue;
+						const device = await this.homey.app.getDevice({ deviceId, full: true });
+						if (!device) continue;
+						for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
+							const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
+							try {
+
+								if (!property.listener) {
+									const cap = device.capabilitiesObj[propertyId];
+									property.value = cap.value;
+									property.lastUpdated = new Date(cap.lastUpdated).getTime();
+									property.listener = device.makeCapabilityInstance(propertyId, async function (value) {
+										//_this.homey.log('makeCapabilityInstance', device.name, 'propertyId', propertyId, 'property.value', property.value, 'value', value);
+										if (property.value === value) return;
+										property.value = value;
+										property.lastUpdated = Date.now();
+										for (let i = 0; i < property.fields.length; i++) {
+											const field = property.fields[i];
+											await field.method(field, { value, id: propertyId });
+										}
+									});
+								}
+							} catch (error) {
+								this.homey.error('setReflections - const reflect in this.homey.app.Reflections device:', device, '\nPropertyId: ', propertyId, '\nError:', error);
+							}
+
+							// for (let i = 0; i < property.fields.length; i++) {
+							// 	const field = property.fields[i];
+							// 	process.nextTick(()=> {
+							// 		field.method(field, { value:property.value, id: propertyId });
+							// 	})
+							// }
+						}
+					} catch (error) {
+						this.error('setReflections for (const deviceId in) Error: ', error);
 					}
 				}
 			}
 		}
-		//this.homey.setTimeout(()=>{
 		this.homey.app.updateReflection({ device: this });
-		//}, 1);
-
-
-
 	}
 
 
@@ -571,7 +572,7 @@ module.exports = class AvdDevice extends Homey.Device {
 		//const prop = this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i);
 		if (!prop.originalMethod) prop.originalMethod = prop.method;
 		prop.method = _.debounce(prop.originalMethod, 250, { leading: true, maxWait: 250, trailing: true });
-		
+
 		// if (settings[type + i + 'ReflectDebounce']) prop.method = _.debounce(prop.originalMethod, settings[type + i + 'ReflectDebounce'], { leading: true, maxWait: settings[type + i + 'ReflectDebounce'], trailing: true });
 		// else prop.method = prop.originalMethod;
 	}
@@ -804,10 +805,10 @@ module.exports = class AvdDevice extends Homey.Device {
 										await this.removeCapability(secondCap);
 								}
 								await this.addCapability(cap);
-								try {								
-									if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);	
+								try {
+									if (oldValue !== undefined) await this.setCapabilityValue(cap, oldValue);
 								} catch (error) {
-									
+
 								}
 								await this.setListener({ fieldId: type + i, settings, cap });
 							}
