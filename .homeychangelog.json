@@ -694,5 +694,8 @@
   },
   "2.13.8": {
     "en": "Bugfixed: Startup of AVD's wend wrong if some Reflect devices didn't exist anymore."
+  },
+  "2.13.9": {
+    "en": "Added: App ID and Device Type tokens to the flowcard: Device became available."
   }
 }

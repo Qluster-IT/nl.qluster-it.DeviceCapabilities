@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.13.8",
+  "version": "2.13.9",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -764,6 +764,24 @@
               "en": "Device Name",
               "nl": "Apparaat naam",
               "de": "Gerätename"
+            }
+          },
+          {
+            "name": "appId",
+            "type": "string",
+            "title": {
+              "en": "App ID",
+              "nl": "App-ID",
+              "de": "App-ID"
+            }
+          },
+          {
+            "name": "deviceType",
+            "type": "string",
+            "title": {
+              "en": "Device type",
+              "nl": "Apparaat type",
+              "de": "Gerätetyp"
             }
           },
           {

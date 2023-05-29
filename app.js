@@ -2032,6 +2032,8 @@ class DeviceSetter extends Homey.App {
 							this.trigger_app_device_available.trigger({
 								deviceName: device.name,
 								deviceId: device.id,
+								appId: device.driverUri,
+								deviceType: device.driverId,
 								available: !!device.available,
 								unavailableMessage: (device.unavailableMessage || '').toString(),
 								zoneName: zone.name,
