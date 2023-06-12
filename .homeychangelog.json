@@ -700,5 +700,11 @@
   },
   "2.13.10": {
     "en": "Added: Status Indicator Unit can now be configured in the AVD Settings with Reflect."
+  },
+  "2.13.11": {
+    "en": "Added: Status Indicator Unit can now be configured in the AVD Settings with Reflect."
+  },
+  "2.13.12": {
+    "en": "Added: Status Indicator Unit can now be configured in the AVD Settings with Reflect.\nBufixed Set Status flowcard."
   }
 }

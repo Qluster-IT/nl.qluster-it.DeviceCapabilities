@@ -410,7 +410,10 @@ module.exports = class AvdDevice extends Homey.Device {
 								}
 
 								try {
-									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES, units:valueUnit });
+									
+									let args = { field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES };
+									if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) args.units = valueUnit;
+									await this.driver.setValue(args);
 								} catch (error) {
 
 								}

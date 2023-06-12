@@ -380,7 +380,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     } else 
                                     triggerCard.call(this,args.device, value, { field: { id: fieldId }, changed:value!==oldValue });
                                 }
-                                await args.device.setStoreValue(fieldId+"Value", value);
+                                await args.device.setStoreValue(fieldId+"Value", value===undefined ? null : value);
                             
                             } catch (innerError) {
                                 throw new Error(innerError.message.replaceAll(cap.split('.')[0]+' ', ''));
@@ -522,7 +522,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                         //value = oldValue;
                         if(error && error.message!='Capability Not Getable') throw error; 
                     }
-                    if(units) {
+                    if(arguments[0].hasOwnProperty('units')) {
                         let opt = device.getCapabilityOptions(cap);
                         if (!opt) opt = {};
                         if(opt.units!=units) {
