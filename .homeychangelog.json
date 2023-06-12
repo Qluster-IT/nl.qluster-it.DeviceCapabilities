@@ -697,5 +697,8 @@
   },
   "2.13.9": {
     "en": "Added: App ID and Device Type tokens to the flowcard: Device became available."
+  },
+  "2.13.10": {
+    "en": "Added: Status Indicator Unit can now be configured in the AVD Settings with Reflect."
   }
 }

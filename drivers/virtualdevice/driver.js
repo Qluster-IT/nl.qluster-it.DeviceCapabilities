@@ -487,7 +487,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             //this.log('Driver size: ', app.roughSizeOfObject(this));
     }
 
-    async setValue({field, device, value, expression, mode, source }) {
+    async setValue({field, device, value, expression, mode, source, units }) {
         const _fieldId = field ? field.id : undefined;
         const fieldIds = [_fieldId];
         try {
@@ -515,12 +515,21 @@ module.exports = class AvdDriver extends Homey.Driver {
                     if(expression!==undefined && expression!=='undefined') {
                         value = app.runSandBox(expression);                
                     }
-                    await this.setSecondCapability({ val:value, device , fieldId});
+                    await this.setSecondCapability({ val:value, device , fieldId, units:units});
                     try {                        
                         await device.setCapabilityValue(cap, value);
                     } catch (error) {
                         //value = oldValue;
-                        if(error && error.message!='Capability Not Getable') throw error; }
+                        if(error && error.message!='Capability Not Getable') throw error; 
+                    }
+                    if(units) {
+                        let opt = device.getCapabilityOptions(cap);
+                        if (!opt) opt = {};
+                        if(opt.units!=units) {
+                            opt.units = units;
+                            await device.setCapabilityOptions(cap, opt);
+                        }
+                    }
 
                     await device.setStoreValue(fieldId+"Value", value);
 
@@ -788,7 +797,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                     await device.setCapabilityOptions(cap, opt);
                     //return true;
                 }
-            } else {
+            } else  {
                 try {                        
                     return await device.setCapabilityValue(cap, val);
                 } catch (error) {

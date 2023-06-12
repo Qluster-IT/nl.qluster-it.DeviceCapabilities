@@ -394,14 +394,47 @@ module.exports = class AvdDevice extends Homey.Device {
 										if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
 									}
 								}
-								//if(values && !values.length && isNaN(value) && property.value!==null) value = property.value;
+
 								if (values && !values.length && (isNaN(value) || value === null || value === undefined) && property.value !== null) value = property.value;
+								let valueUnit = undefined;
+								if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) {
+									valueUnit = value;
+									const formatUnit = this.Settings[r.fieldId + 'ReflectFormatUnit'];
+									if (formatUnit) {
+										try {
+											valueUnit = await BL.express(formatUnit, { value, values });
+										} catch (error) {
+											if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
+										}
+									}
+								}
 
 								try {
-									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES });
+									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES, units:valueUnit });
 								} catch (error) {
 
 								}
+
+								// if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) {
+								// 	let valueUnit = value;
+								// 	const formatUnit = this.Settings[r.fieldId + 'ReflectFormatUnit'];
+								// 	if (formatUnit) {
+								// 		try {
+								// 			valueUnit = await BL.express(formatUnit, { value, values });
+								// 		} catch (error) {
+								// 			if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
+								// 		}
+
+								// 		try {
+								// 			await this.driver.setSecondCapability({ field: { id: r.fieldId }, device: r.device, units: valueUnit });
+								// 		} catch (error) {
+
+								// 		}
+								// 	}
+
+								// }
+
+
 								//let value = devices ? capability[devices] : capability.value;
 								// const format = this.Settings[r.fieldId + 'ReflectFormat'];
 								// let date, time;
