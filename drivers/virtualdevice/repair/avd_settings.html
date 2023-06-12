@@ -967,7 +967,7 @@
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'CreateFlowCards'] = false;" ></div>
 				<div class="field"
-					ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' ">
+					ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' && s['button'+($index+1)+'CreateFlowCards']!=true ">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
 					<select class="value" ng-model="s['button'+($index+1)+'Icon']">
 						<option value=""></option>

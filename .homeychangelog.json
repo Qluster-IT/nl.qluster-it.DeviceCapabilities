@@ -706,5 +706,8 @@
   },
   "2.13.12": {
     "en": "Added: Status Indicator Unit can now be configured in the AVD Settings with Reflect.\nBufixed Set Status flowcard."
+  },
+  "2.13.13": {
+    "en": "Bugfixes: Button 1 can now have a icon.\nButtons with CreateFlowcards checked cannot have icons set (never worked and not possible)."
   }
 }

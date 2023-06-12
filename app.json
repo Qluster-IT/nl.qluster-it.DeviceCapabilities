@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.13.12",
+  "version": "2.13.13",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -542,7 +542,7 @@
               {
                 "id": "one_time",
                 "label": {
-                  "en": "One's after each change to true",
+                  "en": "Once after each change to true",
                   "nl": "Eén na elke wijziging in waar",
                   "de": "Einer ist nach jeder Änderung auf true"
                 }

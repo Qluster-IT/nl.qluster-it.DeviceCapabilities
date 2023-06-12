@@ -410,7 +410,7 @@ module.exports = class AvdDevice extends Homey.Device {
 								}
 
 								try {
-									
+
 									let args = { field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES };
 									if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) args.units = valueUnit;
 									await this.driver.setValue(args);
@@ -794,7 +794,7 @@ module.exports = class AvdDevice extends Homey.Device {
 								}
 
 								if (!hide && !capSet) {
-									if (i === 1 && !isOnOffButtonTab) {
+									if (settings[type + i + 'CreateFlowCards'] === true && i === 1 && !isOnOffButtonTab) {
 										cap = (isOnOff ? 'onoff' : type) + (settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : '');
 									} else {
 										cap = ((isOnOff ? 'onoff_' : '') + (isOnOffButtonTab ? 'onoffbuttontab_' : '') + ("devicecapabilities" + (disabled ? "_disabled" : "") + "_button" + icon + "." + type + i));
@@ -906,7 +906,8 @@ module.exports = class AvdDevice extends Homey.Device {
 									optNew.preventInsights = !settings[type + i + 'CreateInsights'];
 									optNew.preventTag = !settings[type + i + 'CreateTag'];
 								}
-								if (cap === 'measure_power' || cap.startsWith('measure_power.')) optNew.approximated = true; //Does not do much usefulls, only remove the graph from Mobile--> Energy, or not?
+								//if (cap === 'measure_power' || cap.startsWith('measure_power.')) optNew.approximated = true; //Does not do much usefulls, only remove the graph from Mobile--> Energy, or not?
+
 								if (this.hasCapability(cap))
 									await this.setCapabilityOptions(cap, optNew);
 							}
@@ -969,7 +970,17 @@ module.exports = class AvdDevice extends Homey.Device {
 			let energy = await this.getEnergy();
 
 			if (!energy || energyCumulative != energy.cumulative) {
-				await this.setEnergy({ cumulative: energyCumulative });
+				// if (!energy) energy = { cumulative: energyCumulative };
+				// else energy.cumulative = energyCumulative;
+				// if (!energyCumulative) energy = {};
+				energy = { cumulative: energyCumulative };
+				//if (!energyCumulative) energy = {};
+				// energy = {
+				// 	approximation: {
+				// 		usageConstant: 0
+				// 	}
+				// };
+				await this.setEnergy(energy);
 			}
 
 			// if(settings.batteries != oldSettings.batteries) {
