@@ -6,12 +6,17 @@
 <script type="text/javascript" src="../../../assets/js/angular-elif.js"></script>
 <script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
 <script type="text/javascript" src="../../../assets/js/default.js"></script>
+
+<script type="text/javascript" src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+
 	
 <!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
 <!-- <script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
 <link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
 <link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
+
 
 
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
@@ -51,18 +56,32 @@
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
 				<input class="value" type="text" ng-model="s.status1Name" />
 			</div>
-			<div  ng-if="s['status1Name']">
+			<div  ng-if="s['status1Name']">				
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s.status1Icon">
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s.status1Icon" src="../../../userdata/customicons/{{s.status1Icon}}.svg"/> {{customiconsById[s.status1Icon].customname || customiconsById[s.status1Icon].title[customicons.languagecode] || customiconsById[s.status1Icon].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'status1Icon')" ng-class="{active:!s.status1Icon}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
+					<!-- <select class="value" ng-model="s.status1Icon">
 						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}" style="background-image:url('../../../userdata/customicons/{{icon.file}}.svg')">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					</select> -->
 				</div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
 					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
@@ -273,15 +292,20 @@
 				<div ng-else execute="s['text'+($index+1)+'CreateFlowCards']=false;" ></div>
 				<div class="field" ng-if="!s['text'+($index+1)+'ShowAs'] || s['text'+($index+1)+'ShowAs']==='sensor'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['text'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['text'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['text'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['text'+($parent.$index+1)+'Icon']].customname || customiconsById[s['text'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['text'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'text'+($parent.$index+1)+'Icon')" ng-class="{active:!s['text'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['text'+($index+1)+'Icon']=undefined;" ></div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
@@ -472,15 +496,20 @@
 				</div>
 				<div class="field" ng-if="!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['number'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['number'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['number'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['number'+($parent.$index+1)+'Icon']].customname || customiconsById[s['number'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['number'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'number'+($parent.$index+1)+'Icon')" ng-class="{active:!s['number'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['number'+($index+1)+'Icon']=undefined;" ></div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
@@ -739,15 +768,20 @@
 				<div class="field"
 					ng-if="!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['boolean'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['boolean'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['boolean'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['boolean'+($parent.$index+1)+'Icon']].customname || customiconsById[s['boolean'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['boolean'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'boolean'+($parent.$index+1)+'Icon')" ng-class="{active:!s['boolean'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['boolean'+($index+1)+'Icon']=undefined" ></div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
@@ -971,15 +1005,20 @@
 				<div class="field"
 					ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' && s['button'+($index+1)+'CreateFlowCards']!=true ">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['button'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['button'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['button'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['button'+($parent.$index+1)+'Icon']].customname || customiconsById[s['button'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['button'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'button'+($parent.$index+1)+'Icon')" ng-class="{active:!s['button'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'Icon'] = undefined;" ></div>
 				<div class="field" ng-if="reflectApps && reflectApps.length && s['button'+($index+1)+'ShowAs'] && s['button'+($index+1)+'ShowAs']!=='button'">
@@ -2086,6 +2125,16 @@ ${vars.textSettings}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
+						$scope.customiconsById = {};
+						for (let i = 0; i < $scope.customicons.icons.length; i++) {
+							const iconGroup = $scope.customicons.icons[i];
+							for (let j = 0; j < iconGroup.icons.length; j++) {
+								const icon = iconGroup.icons[j];
+								$scope.customiconsById[icon.file] = icon;
+								
+							}
+							
+						}
 
 						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
 						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];

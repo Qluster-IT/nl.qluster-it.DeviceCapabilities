@@ -711,9 +711,15 @@ const asv_settings = {
       "label": "Open, Stop, Close",
       "showAs": 'picker',
       "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-auto-cool-dry-fan",
+      "label": "Auto, Cool, Dry, Fan",
+      "showAs": 'picker',
+      "order": 1
     }
   ],
-
+  
 
   customicons: {
     "icons": [

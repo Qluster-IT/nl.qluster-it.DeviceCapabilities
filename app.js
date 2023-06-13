@@ -1600,7 +1600,7 @@ class DeviceSetter extends Homey.App {
 						}
 						this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.filter(x => listToRemove.indexOf(x) === -1);
 						if (!this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length) delete capability.hasBeen;
-						this.log('this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen ', this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen);
+						//this.log('this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen ', this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen);
 					}
 					if (!capability.hasBeen && !capability.changed && capability.listener) {
 						try {
@@ -1609,21 +1609,13 @@ class DeviceSetter extends Homey.App {
 						} catch (error) {
 
 						}
-						this.log('capability.listener', capability.listener);
+						//this.log('capability.listener', capability.listener);
 					}
 				}
 			}
 		}
-		//if (save) 
 		this.saveHasBeen();
 
-
-		// console.log('Size of hm.Tracking:', this.roughSizeOfObject(hm.Tracking) );
-		// console.log('Size of hm.Tracking2:', this.roughSizeOfObject(hm.Tracking2) );
-		// console.log('Size of hm:', this.roughSizeOfObject(hm) );
-		// //hm.Tracking2.homeyAPI = null;
-		// console.log('Size of hm.Tracking after:', this.roughSizeOfObject(hm.Tracking) );
-		// console.log('Size of hm.Tracking2 after:', this.roughSizeOfObject(hm.Tracking2) );
 	}
 	refreshTracking2(trigger) {
 		this.updateTracking2.call(this, true, trigger);

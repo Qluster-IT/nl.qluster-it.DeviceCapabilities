@@ -398,6 +398,14 @@ module.exports = class AvdDriver extends Homey.Driver {
                 
 		}).bind(this));
 
+        
+        // let virtualdevice_set_fieldname = this.homey.flow.getActionCard('virtualdevice_set_fieldname');
+        // virtualdevice_set_fieldname.registerRunListener(async (args, state) => {
+        //     return await this.setValue(args);
+        // });
+        // virtualdevice_set_fieldname.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false, invertName:true}));
+
+
         let virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
             return await this.setValue(args);
@@ -448,31 +456,9 @@ module.exports = class AvdDriver extends Homey.Driver {
 
         let virtualdevice_update_capability_name = this.homey.flow.getActionCard('virtualdevice_update_capability_name');
         virtualdevice_update_capability_name.registerRunListener(async (args, state) => {
-            let fieldId = args.field.id;
-            let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
-            if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
-            cap = args.device.getStoreValue(fieldId) || cap;
-            let type = this.getTypeFromField(fieldId);
-            //let  energy = args.device.getEnergy();
-            try {
-                let opt;
-                try {
-                    opt = args.device.getCapabilityOptions(cap);
-                } catch (error) {}
-                if (!opt) opt = {};
-                opt.title = args.name;
-                try {
-                    await args.device.setCapabilityOptions(cap, opt);
-                } catch (error) {}
-
-                return true;                    
-            } catch (error) {
-                //this.log('action_virtualdevice_set_name:');
-                //this.error(error);
-                throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
-            }
+            return await this.setFieldName (args);
         });
-        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false}));
+        virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false, invertName:true}));
 
 
         this.homey.settings.on('set', (async function(settingName) {
@@ -485,6 +471,32 @@ module.exports = class AvdDriver extends Homey.Driver {
         
             
             //this.log('Driver size: ', app.roughSizeOfObject(this));
+    }
+
+    async setFieldName (args) {
+        let fieldId = args.field.id;
+        let cap = args.field && args.field.id.indexOf('.')>-1 ? args.field.id : args.device.getStoreValue(fieldId);
+        if(fieldId && fieldId.indexOf('.')>-1) fieldId = fieldId.split('.')[1];
+        cap = args.device.getStoreValue(fieldId) || cap;
+        let type = this.getTypeFromField(fieldId);
+        //let  energy = args.device.getEnergy();
+        try {
+            let opt;
+            try {
+                opt = args.device.getCapabilityOptions(cap);
+            } catch (error) {}
+            if (!opt) opt = {};
+            opt.title = args.name;
+            try {
+                await args.device.setCapabilityOptions(cap, opt);
+            } catch (error) {}
+
+            return true;                    
+        } catch (error) {
+            //this.log('action_virtualdevice_set_name:');
+            //this.error(error);
+            throw new Error(error.message.replaceAll(cap.split('.')[0]+' ', ''));
+        }
     }
 
     async setValue({field, device, value, expression, mode, source, units }) {
@@ -983,7 +995,7 @@ module.exports = class AvdDriver extends Homey.Driver {
           return ret;
         };
     }
-    registerAutocompleteFieldExpression({useSetAll} = {}) {
+    registerAutocompleteFieldExpression({useSetAll, invertName} = {}) {
         return async( query, args ) => {
             let settings = args.device.Settings;
             if(!settings) return;
@@ -991,6 +1003,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             let retSetAll = [];
             let caps = args.device.getCapabilities();
             let types = ['status', 'text', 'number', 'boolean', 'button', 'list'];
+            //if(query) query = query.toLowerCase();
             for (let k = 0; k < types.length; k++) {
                 const type = types[k];                
                 let actionAllSet = false;
@@ -1001,12 +1014,16 @@ module.exports = class AvdDriver extends Homey.Driver {
                         if(!actionAllSet && useSetAll!==false && type!=='status') actionAllSet = retSetAll.push | retSetAll.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     
                         let typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : type=='list' ? 'List' : 'unknown';
-                        ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
+                        //ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
+                        ret.push({'id':type + i, 'name':settings[type+i+"Name"] || typeText, description:typeText});
                     }
                     
                 }
             }
             if(retSetAll.length) ret = _.union(retSetAll, ret);
+            if(invertName) ret = ret.map(x=> {
+                return {id:x.id, name:x.description, description:x.name };
+            })
           return ret;
         };
     }

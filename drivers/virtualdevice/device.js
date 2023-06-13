@@ -617,7 +617,13 @@ module.exports = class AvdDevice extends Homey.Device {
 		try {
 
 			let cls = this.getClass();
-			if (cls != settings.cls) await this.setClass(settings.cls);
+			if (cls != settings.cls) {
+				try {
+					await this.setClass(settings.cls);
+				} catch (error) {
+					settings.cls = cls;
+				}
+			}
 			if (this.hasCapability('devicecapabilities_starttext') && saved) await this.removeCapability('devicecapabilities_starttext');
 
 			if (settings.imported) {

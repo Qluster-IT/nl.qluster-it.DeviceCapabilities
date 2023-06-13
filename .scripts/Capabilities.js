@@ -754,6 +754,50 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
+  str += `"devicecapabilities_picker-auto-cool-dry-fan": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Auto, Cool, Dry, Fan"
+    },
+    "values": [
+      {
+        "id": "auto",
+        "title": {
+          "en": "Auto",
+          "nl": "Auto",
+          "de": "Auto"
+        }
+      },
+      {
+        "id": "cool",
+        "title": {
+          "en": "Cool",
+          "nl": "Koel",
+          "de": "Cool"
+        }
+      },
+      {
+        "id": "dry",
+        "title": {
+          "en": "Dry",
+          "nl": "Droog",
+          "de": "Trocken"
+        }
+      },
+      {
+        "id": "fan",
+        "title": {
+          "en": "Fan",
+          "nl": "Fan",
+          "de": "Fan"
+        }
+      }
+    ]
+  },`;
+
 
 
 
