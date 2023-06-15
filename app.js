@@ -40,8 +40,8 @@ const readdirAsync = promisify(readdir);
 const statAsync = promisify(stat);
 
 
-class DeviceSetter extends Homey.App {
-	/**@type {DeviceSetter} */
+class DeviceCapabilities extends Homey.App {
+	/**@type {DeviceCapabilities} */
 	static get Current() { return this._current; }
 	static set Current(v) { this._current = v; }
 
@@ -70,11 +70,9 @@ class DeviceSetter extends Homey.App {
 
 
 	async onInit() {
-		DeviceSetter.Current = this;
+		DeviceCapabilities.Current = this;
 		this.DEFAULT_ICONS_PATH = '/userdata/defaulticons/';
-		//this.VirtualDevices = {};
 
-		//return null;
 
 		// if (process.env.DEBUG === '1' && this.homey.platform=='local' && this.homey.platformVersion==1) require('inspector').open(9219, '0.0.0.0', true);
 		if (process.env.DEBUG === '1' || false) {
@@ -87,8 +85,6 @@ class DeviceSetter extends Homey.App {
 		}
 
 
-		//this.homey.settings.unset('reflectAppsSettings');
-
 		await this.resetReflectAppsSettings();
 
 		this.appPath = this.homey.platform == 'local' && this.homey.platformVersion == 1 ? '/' : '/app/';
@@ -98,7 +94,7 @@ class DeviceSetter extends Homey.App {
 		this.sessionToken = await this.homey.api.getOwnerApiToken();
 
 
-		this.log('DeviceSetter is running...');
+		this.log('DeviceCapabilities is running...');
 		// if (!await this.homey.settings.get('notification_bll_chronograph_update')) {
 		// 	this.homey.notifications.createNotification({ excerpt: "The next update of DC will optionally include the Better Logic Library and Chronograph, to reflect it's values in AVDs (without flows).\nBecause of this, auto-update will not update the DC app.\nYou need to manually update the DC app once the new version is available, because it needs permissions to BLL and Chronograph." });
 		// 	this.homey.settings.set('notification_bll_chronograph_update', true);
@@ -334,15 +330,23 @@ class DeviceSetter extends Homey.App {
 
 		function refreshcapabilityhasbeennumbertrigger2s() {
 			this.clearHomeyAPI('trigger_capability_hasbeen');
+			// this.log('refreshcapabilityhasbeennumbertrigger2s');
+			// if(this.oldHasBeen) this.log('oldHasBeen', JSON.stringify(this.oldHasBeen));
+			// if(this.HasBeen) this.log('HasBeen', JSON.stringify(this.HasBeen));
 			trigger_capability_hasbeen.getArgumentValues()
 				.then((async args => {
 					this.Triggers.triggercapabilityHasbeenNumber.List = args;
 					let devices = _.map(_.uniqBy(args, arg => { return arg.device.id; }), arg => { return arg.device; });
-					_.each(devices, device => {
+
+					for (let DeviceI = 0; DeviceI < devices.length; DeviceI++) {
+						const device = devices[DeviceI];
+						//_.each(devices, device => {
 						if (!this.Tracking2.devices[device.id]) this.Tracking2.devices[device.id] = device;
 						let capabilitiesArgs = _.filter(args, _arg => { return _arg.device.id == device.id; });
 
-						_.each(capabilitiesArgs, capabilityArg => {
+						for (let capabilityArgI = 0; capabilityArgI < capabilitiesArgs.length; capabilityArgI++) {
+							const capabilityArg = capabilitiesArgs[capabilityArgI];
+							//_.each(capabilitiesArgs, capabilityArg => {
 							//BL.homey.log('capabilityArg', capabilityArg);
 							let deviceToSet = this.Tracking2.devices[device.id];
 							if (!deviceToSet) return;
@@ -368,11 +372,31 @@ class DeviceSetter extends Homey.App {
 									trigger: capabilityArg.trigger,
 								}));
 							let oldCap = this.oldHasBeen && this.oldHasBeen.devices && this.oldHasBeen.devices[device.id] && this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id] ? this.oldHasBeen.devices[device.id].capabilities[capabilityArg.capability.id] : null;
-							if (oldCap && !this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasOwnProperty('value')) {
-								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = oldCap.value;
-								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = oldCap.valueSet;
-								this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = oldCap.type;
+							if (!this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].hasOwnProperty('value')) {
+								if (oldCap) {
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = oldCap.value;
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = oldCap.valueSet;
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = oldCap.type;
+								} else {
+									if (!device.device) {
+										try {
+											device.device = this.devices[device.id] = await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
+										} catch (error) {
+										}
+									}
+									try {
+										
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = device.device.capabilitiesObj[capabilityArg.capability.id].type;
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = device.device.capabilitiesObj[capabilityArg.capability.id].value;
+									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = this.getLastUpdated(device.device.capabilitiesObj[capabilityArg.capability.id]).getTime();// new Date(device.device.capabilitiesObj[capabilityArg.capability.id].lastUpdated);// Date.now();
+
+									} catch (error) {
+										
+									}
+									
+								}
 							}
+							//Add get values from device
 							if (!this.validateHasBeen(hasBeen, this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id])) {
 								this.clearTimeoutHasBeen(hasBeen);
 								delete hasBeen.triggered;
@@ -388,9 +412,10 @@ class DeviceSetter extends Homey.App {
 									))) {
 									hasBeen.triggered = oldHasBeen.triggered;
 									hasBeen.nextTimeout = oldHasBeen.nextTimeout;
-								} else {
+								} else if (!hasBeen.nextTimeout) {
 									let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
-									hasBeen.nextTimeout = Date.now() + time;
+									//hasBeen.nextTimeout = Date.now() + time;
+									hasBeen.nextTimeout = (this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet || Date.now()) + time;
 								}
 								// let time = this.calculateDuration(hasBeen.time, hasBeen.unit);
 								// hasBeen.nextTimeout = (this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet || Date.now()) + time;
@@ -404,10 +429,20 @@ class DeviceSetter extends Homey.App {
 								this.setTimeoutHasBeen(hasBeen, this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id], timeout, device.id, capabilityArg.capability.id);
 
 							}
-						});
-					});
+							//});
+						}
+						//});
+					}
+
+					// this.log('updateTracking2');
+					// if(this.oldHasBeen) this.log('oldHasBeen', JSON.stringify(this.oldHasBeen));
+					// if(this.HasBeen) this.log('HasBeen', JSON.stringify(this.HasBeen));
 
 					await this.updateTracking2(false, this.Triggers.triggercapabilityHasbeenNumber);
+
+					// this.log('refreshcapabilityhasbeennumbertrigger2s end');
+					// if(this.oldHasBeen) this.log('oldHasBeen', JSON.stringify(this.oldHasBeen));
+					// if(this.HasBeen) this.log('HasBeen', JSON.stringify(this.HasBeen));
 
 					//this.saveHasBeen();
 					delete this.oldHasBeen;
@@ -1508,7 +1543,7 @@ class DeviceSetter extends Homey.App {
 								cap.type = device.device.capabilitiesObj[capability.id].type;
 								if (cap.value !== device.device.capabilitiesObj[capability.id].value) {
 									cap.value = device.device.capabilitiesObj[capability.id].value;
-									cap.valueSet = Date.now();
+									cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime(); ;//new Date(device.device.capabilitiesObj[capability.id]).lastUpdated;// Date.now();
 								}
 							}
 
@@ -1554,7 +1589,8 @@ class DeviceSetter extends Homey.App {
 									if (capability.hasBeen) {
 										let cap = this.HasBeen.devices[device.id].capabilities[capability.id];
 										cap.value = value;
-										cap.valueSet = Date.now();
+										cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime();// new Date(device.device.capabilitiesObj[capability.id].lastUpdated);
+										//cap.valueSet = Date.now();
 										for (let i = 0; i < this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length; i++) {
 											const hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen[i];
 											if (this.validateHasBeen(hasBeen, cap)) {
@@ -1587,6 +1623,8 @@ class DeviceSetter extends Homey.App {
 						let cardsHasBeen = this.Triggers.triggercapabilityHasbeenNumber.List.filter(x => x.device.id === device.id && x.capability.id === capability.id);//.map(x => x.capability.id);
 						let listToRemove = cardsHasBeen.length === 0 ? this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen
 							: this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.filter(x => !cardsHasBeen.find(y =>
+								// x.device.id === device.id &&
+								// x.capability.id === capability.id &&
 								x.condition === y.condition &&
 								x.value === y.value &&
 								x.time === y.time &&
@@ -1602,13 +1640,20 @@ class DeviceSetter extends Homey.App {
 						if (!this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length) delete capability.hasBeen;
 						//this.log('this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen ', this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen);
 					}
-					if (!capability.hasBeen && !capability.changed && capability.listener) {
-						try {
-							capability.listener.destroy();
-							delete capability.listener;
-						} catch (error) {
+					if (!capability.hasBeen && !capability.changed) {
+						if (capability.listener) {
+							try {
+								capability.listener.destroy();
+								delete capability.listener;
+							} catch (error) {
 
+							}
 						}
+						delete device.capabilities[keys[i]];
+						delete this.HasBeen.devices[device.id].capabilities[capability.id];
+						if (!Object.keys(device.capabilities).length) delete hm.Tracking2.devices[deviceKey];
+						if (!Object.keys(delete this.HasBeen.devices[device.id].capabilities).length) delete this.HasBeen.devices[device.id];
+
 						//this.log('capability.listener', capability.listener);
 					}
 				}
@@ -2172,4 +2217,4 @@ class DeviceSetter extends Homey.App {
 
 }
 
-module.exports = DeviceSetter;
+module.exports = DeviceCapabilities;

@@ -724,5 +724,11 @@
   },
   "2.13.18": {
     "en": "Resolved: Empty AVD settings when class is invalid\nSpeedup the Virtual Device Set Expression field selector\nAdded: API to set the fieldname."
+  },
+  "2.13.19": {
+    "en": "Resolved: The When [capability] is [x] for a certain period flowcard triggered wrongly when the app got updated. This has been resolved."
+  },
+  "2.14.0": {
+    "en": "Resolved: The When [capability] is [x] for a certain period flowcard had multiple bugs which are resolved."
   }
 }
