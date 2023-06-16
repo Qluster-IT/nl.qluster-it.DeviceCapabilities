@@ -1589,8 +1589,8 @@ class DeviceCapabilities extends Homey.App {
 									if (capability.hasBeen) {
 										let cap = this.HasBeen.devices[device.id].capabilities[capability.id];
 										cap.value = value;
-										cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime();// new Date(device.device.capabilitiesObj[capability.id].lastUpdated);
-										//cap.valueSet = Date.now();
+										//cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime();// new Date(device.device.capabilitiesObj[capability.id].lastUpdated);
+										cap.valueSet = Date.now();
 										for (let i = 0; i < this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen.length; i++) {
 											const hasBeen = this.HasBeen.devices[device.id].capabilities[capability.id].hasBeen[i];
 											if (this.validateHasBeen(hasBeen, cap)) {

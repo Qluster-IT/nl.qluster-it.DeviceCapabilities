@@ -730,5 +730,8 @@
   },
   "2.14.0": {
     "en": "Resolved: The When [capability] is [x] for a certain period flowcard had multiple bugs which are resolved."
+  },
+  "2.14.1": {
+    "en": "Resolved: The When [capability] is [x] for a certain period flowcard still had a bug which is resolved."
   }
 }
