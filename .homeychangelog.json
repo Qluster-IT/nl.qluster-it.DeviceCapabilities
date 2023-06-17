@@ -733,5 +733,11 @@
   },
   "2.14.1": {
     "en": "Resolved: The When [capability] is [x] for a certain period flowcard still had a bug which is resolved."
+  },
+  "2.14.2": {
+    "en": "Added: Set Textfield from AVD now supports BLL Coding."
+  },
+  "2.14.3": {
+    "en": "Added: Set Textfield from AVD now supports BLL Coding."
   }
 }

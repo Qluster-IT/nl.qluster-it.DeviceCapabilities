@@ -303,6 +303,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     case 'virtualdevice_set_text':
                                         if(args.text!==undefined && args.text!=='undefined') value = args.text;
                                         else value = null;
+                                        
+                                        value = await BL.decode(value);
                                         triggerCard = this.triggerFlowText;
                                         break;
                                     case 'virtualdevice_set_number':

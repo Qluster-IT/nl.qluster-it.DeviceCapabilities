@@ -92,6 +92,11 @@ class DeviceCapabilities extends Homey.App {
 
 		this.localURL = await this.homey.api.getLocalUrl();
 		this.sessionToken = await this.homey.api.getOwnerApiToken();
+		if (!this._bl) {
+			try {
+				this._bl = await BL.init({ homey: this.homey });
+			}catch(ex) {}
+		}
 
 
 		this.log('DeviceCapabilities is running...');
@@ -1045,9 +1050,15 @@ class DeviceCapabilities extends Homey.App {
 		if (this._reflectAppsSettings && this._reflectAppsSettings['net.i-dev.betterlogic'].enabled) {
 			if (!this._bl) {
 				try {
-
 					this._bl = await BL.init({ homey: this.homey });
-					BL.onVariableUpdate = async ({ variable, formattedDate }) => {
+				}catch(ex) {}
+			}
+
+			if (!this._blOnVariablesSet) {
+				try {
+
+					//this._bl = await BL.init({ homey: this.homey });
+					BL.onVariableUpdate  = async ({ variable, formattedDate }) => {
 						if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
 							for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
 								const field = this.Reflections[APP_ID_BLL][variable.name][i];
@@ -1064,6 +1075,7 @@ class DeviceCapabilities extends Homey.App {
 
 						}
 					});
+					this._blOnVariablesSet = true;
 
 				} catch (error) {
 
