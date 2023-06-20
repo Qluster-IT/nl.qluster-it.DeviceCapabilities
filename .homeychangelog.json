@@ -742,5 +742,8 @@
   },
   "2.14.4": {
     "en": "Added: Flowcard: Set BLL Expression for AVD fields.\nImproved: Field names in selectarguments of flowcards.\nAdded: Retrieve insights through device and capabilties TAGs/text."
+  },
+  "2.14.5": {
+    "en": "Resolved: Some AVD triggering bugs."
   }
 }

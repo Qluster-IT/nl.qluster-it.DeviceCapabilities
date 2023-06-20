@@ -1073,23 +1073,43 @@ module.exports = class AvdDriver extends Homey.Driver {
     }
     async triggerFlowBoolean(device, value, state) {
         //device.activateReact({ fieldId:state.field.id, value }); 
-        return await this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);
+        try {
+            return await this.trigger_virtualdevice_boolean.trigger(device, {value:value===null?true:value} , state);            
+        } catch (error) {
+            this.error(error);            
+        }
     }
     async triggerFlowNumber(device, value, state) {
         //device.activateReact({ fieldId:state.field.id, value }); 
-        return await this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);
+        try {
+            return await this.trigger_virtualdevice_number.trigger(device, {value:value===null?-1:value} , state);            
+        } catch (error) {
+            this.error(error);
+        }
     }
     async triggerFlowText(device, value, state) {
         //device.activateReact({ fieldId:state.field.id, value }); 
-        return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);
+        try {
+            return await this.trigger_virtualdevice_text.trigger(device, {value:value===null?'':value} , state);            
+        } catch (error) {
+            this.error(error);
+        }
     }
     async triggerFlowList(device, value, state) {
         //device.activateReact({ fieldId:state.field.id, value }); 
-        return await this.trigger_virtualdevice_list.trigger(device, {value:value===null?'':value} , state);
+        try {
+            return await this.trigger_virtualdevice_list.trigger(device, {value:value===null?'':value} , state);            
+        } catch (error) {
+            this.error(error);
+        }
     }
     async triggerFlowStatus(device, text, number, state) {
         //device.activateReact({ fieldId:state.field.id, value:number }); 
-        return await this.trigger_virtualdevice_status.trigger(device, {text:text===null || text===undefined?'':text, number:number===null || number===undefined?0:number} , state);
+        try {
+            return await this.trigger_virtualdevice_status.trigger(device, { text: text === null || text === undefined ? '' : text, number: number === null || number === undefined ? 0 : number }, state);
+        } catch (error) {
+            this.error(error);
+        }
     }
     // This method is called when a user is adding a device
     // and the 'list_devices' view is called
