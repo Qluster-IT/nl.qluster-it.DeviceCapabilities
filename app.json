@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.14.3",
+  "version": "2.14.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2587,7 +2587,146 @@
             }
           }
         ]
-      },      
+      },   
+      {
+        "highlight": true,
+        "id": "action_capability_log_bytag",
+        "title": {
+          "en": "Retrieve Insight Log Value",
+          "nl": "Ontvang Insight Log Waarde",
+          "de": "Einblicke-Protokollwert abrufen"
+        },
+        "titleFormatted": {
+          "en": "Retrieve the insights value from [[device]] for [[capability]] from [[numberof]] minutes ago",
+          "nl": "Ontvang de insights waarde van [[device]] voor [[capability]] van [[numberof]] minuten geleden",
+          "de": "Einblicke-Protokollwert vom [[device]] für [[capability]] von [[numberof]] Minuten zuvor abrufen"
+        },
+        "hint": {
+          "en": "Retrieve the Value from the Insight Log (and OnOff) from x Minutes ago. Setting it to zero (0) minutes will retrieve the last changed value.\r\nIncludes Tokens for with the User and Client who changed the value.\nDevices can be found by Name or ID. Capabilities can be found by ID or Title.",
+          "nl": "Haal de waarde op uit de Insight log van x minuten geleden. Als deze op nul (0) minuten wordt ingesteld, wordt de laatst gewijzigde waarde opgehaald.\r\nInclusief tokens met Gebruiker en Client die de waarde heeft gewijzigd.\nApparaten kunnen worden gevonden op Naam of ID. Capabilities kunnen worden gevonden op ID of Titel.",
+          "de": "Ruft den Wert aus dem Einblicke-Protokoll (und OnOff) von x Minuten zuvor ab. Wenn der Wert auf null (0) Minuten eingestellt ist, wird der zuletzt geänderte Wert abgerufen.\r\nEnthält Token für den Benutzer und den Client, der den Wert geändert hat.\nGeräte können nach Name oder ID gefunden werden. Fähigkeiten können nach ID oder Titel gefunden werden."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "device",
+            "title": {
+              "en": "Device (tag)",
+              "nl": "Apparaat (tag)",
+              "de": "Gerät (tag)"
+            },
+            "placeholder": {
+              "en": "Device",
+              "nl": "Apparaat",
+              "de": "Gerät"
+            }
+          },
+          {
+            "type": "text",
+            "name": "capability",
+            "title": {
+              "en": "Capability (tag)",
+              "nl": "Capability (tag)",
+              "de": "Fähigkeit (tag)"
+            },
+            "placeholder": {
+              "en": "Capability",
+              "nl": "Mogelijkheid",
+              "de": "Fähigkeit"
+            }
+          },
+          {
+            "type": "number",
+            "name": "numberof",
+            "value": 0,
+            "placeholder": {
+              "en": "Minutes ago",
+              "nl": "Minuten geleden",
+              "de": "Minuten zuvor"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "device",
+            "type": "string",
+            "title": {
+              "en": "Device",
+              "nl": "Apparaat",
+              "de": "Gerät"
+            }
+          },
+          {
+            "name": "capability",
+            "type": "string",
+            "title": {
+              "en": "Capability",
+              "nl": "Mogelijkheid",
+              "de": "Fähigkeit"
+            }
+          },
+          {
+            "name": "user",
+            "type": "string",
+            "title": {
+              "en": "User",
+              "nl": "Gebruiker",
+              "de": "Benutzer"
+            }
+          },
+          {
+            "name": "client",
+            "type": "string",
+            "title": {
+              "en": "Client",
+              "nl": "Cliënt",
+              "de": "Client"
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number",
+              "nl": "Nummer",
+              "de": "Nummer"
+            }
+          },
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Yes/No",
+              "nl": "Ja/Nee",
+              "de": "Ja/Nein"
+            }
+          },
+          {
+            "name": "changedon",
+            "type": "string",
+            "title": {
+              "en": "Changed on (UTC)",
+              "nl": "Aangepast op (UTC)"
+            }
+          },
+          {
+            "name": "changedonms",
+            "type": "number",
+            "title": {
+              "en": "Changed on (UTC tick)",
+              "nl": "Aangepast op (UTC tick)"
+            }
+          },
+          {
+            "name": "durationtillnow",
+            "type": "number",
+            "title": {
+              "en": "Duration till now (Milliseconds)",
+              "nl": "Duur tot nu (Milliseconden)"
+            }
+          }
+        ]
+      },    
       {
         "highlight": true,
         "id": "virtualdevice_set_text",
@@ -3146,6 +3285,74 @@
               "en": "Expression",
               "nl": "Expression",
               "de": "Bezeichnung"
+            },
+            "required": false
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "de": "sonst nichts"
+            },
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "de": "sonst nichts"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "de": "Flowkarten ausführen (Wenn)"
+                }
+              }
+            ],
+            "required": false
+          }
+        ]
+      },
+      {
+        "highlight": true,
+        "id": "virtualdevice_set_bll_expression",
+        "title": {
+          "en": "Set Expression",
+          "nl": "Zet Expression",
+          "de": "Bezeichnung setzen"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[expression]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[expression]] en [[mode]]",
+          "de": "Setze [[field]] auf [[expression]] und [[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "Field",
+              "nl": "Veld",
+              "de": "Feld"
+            }
+          },
+          {
+            "type": "text",
+            "name": "expression",
+            "placeholder": {
+              "en": "BLL Expression",
+              "nl": "BLL Expression",
+              "de": "BLL Bezeichnung"
             },
             "required": false
           },

@@ -407,6 +407,16 @@ module.exports = class AvdDriver extends Homey.Driver {
         // });
         // virtualdevice_set_fieldname.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false, invertName:true}));
 
+        let virtualdevice_set_bll_expression = this.homey.flow.getActionCard('virtualdevice_set_bll_expression');
+        virtualdevice_set_bll_expression.registerRunListener(async (args, state) => {
+            let value = await BL.express(args.expression);
+            delete args.expression;
+            args.value = value;
+            return await this.setValue(args);
+        });
+        virtualdevice_set_bll_expression.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression());
+
+
 
         let virtualdevice_set_expression = this.homey.flow.getActionCard('virtualdevice_set_expression');
         virtualdevice_set_expression.registerRunListener(async (args, state) => {
@@ -966,7 +976,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
             for(var i=1;i<=fieldCount;i++){
-                let name = settings['camera' + i + 'Name'];
+                let name = settings[type + i + 'Name'];
                 if(name) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     let typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i :  type=='camera' ? 'Camera ' +i : 'unknown';
@@ -991,7 +1001,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 if(cap) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     let typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i : type=='camera' ? 'Camera ' +i : 'unknown';
-                    ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
+                    ret.push({'id':type + i, 'name':settings[type+i+"Name"] || typeText, description:typeText});
                 }
             }
           return ret;
@@ -1017,7 +1027,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                     
                         let typeText = type=='text' ? 'Tekst ' + i : type=='number' ? 'Number ' + i : type=='boolean' ? 'Yes/No ' + i : type=='button' ? 'Button ' + i : type=='status' ? 'Status' : type=='list' ? 'List' : 'unknown';
                         //ret.push({'id':type + i, 'name':args.device.getCapabilityOptions(cap).title || typeText, description:typeText});
-                        ret.push({'id':type + i, 'name':settings[type+i+"Name"] || typeText, description:typeText});
+                        ret.push({'id':type + i, name:settings[type+i+"Name"] || typeText, description:typeText});
                     }
                     
                 }

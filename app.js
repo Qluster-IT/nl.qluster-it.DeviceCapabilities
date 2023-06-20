@@ -533,7 +533,7 @@ class DeviceCapabilities extends Homey.App {
 			.registerAutocompleteListener(this.autocompleteCapability({ getable: true, setable: true, api: 'condition_change_capability_boolean' }));
 
 
-		const action_capability_logs = ['action_capability_log'];//, 'set_capability_zone_anders'];
+		const action_capability_logs = ['action_capability_log', 'action_capability_log_bytag'];//, 'set_capability_zone_anders'];
 		_.forEach(action_capability_logs, (action => {
 			const set_capability_log = this.homey.flow.getActionCard(action);
 			set_capability_log
@@ -542,8 +542,14 @@ class DeviceCapabilities extends Homey.App {
 					let tokens = { number: 0, boolean: false, user: '', client: '', changedon: '', durationtillnow: 0, changedonms: 0, device: '', capability: '' };
 					try {
 						if (!args || !args.device || !args.capability) return false;
+						if(action=='action_capability_log_bytag') {
+							args.device = _.find(this.devices, x=> x.name==args.device || x.id==args.device);
+							if(!args.device) throw new Error('Device not found.');
+							args.capability = _.find(args.device.capabilitiesObj, x=> x.id==args.capability || x.title==args.capability);
+							if(!args.device) throw new Error('Capability not found.')
+						}
 						tokens.device = args.device.name;
-						tokens.capability = args.capability.name;
+						tokens.capability = args.capability.id;
 
 						// let targetInsight = _.find(device.device.insights, x => { return x.id == capability.id; });
 
@@ -563,7 +569,7 @@ class DeviceCapabilities extends Homey.App {
 						if (args.capability.uri) {
 							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
-							if (device) targetInsight = _.find(device.insights, x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.capability.deviceId + ':' + args.capability.id)); });
+							if (device) targetInsight = _.find(device.insights, x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.device.id + ':' + args.capability.id)); });
 						}
 
 						if (targetInsight) {
@@ -630,6 +636,12 @@ class DeviceCapabilities extends Homey.App {
 								else if (insights.end) {
 									let end = new Date(insights.start);
 									tokens.changedon = insights.start;
+									tokens.changedonms = end.getTime();
+									tokens.durationtillnow = new Date().getTime() - end.getTime();
+								} else if (args.numberof == 0) {									
+									let end =  device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]) : new Date() ;//new Date(endD);
+									let endD = end.toISOString();
+									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
 									tokens.durationtillnow = new Date().getTime() - end.getTime();
 								}
@@ -1868,7 +1880,7 @@ class DeviceCapabilities extends Homey.App {
 				} else {
 					let device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
-					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
+					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: capability.title||key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
 					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
