@@ -2587,7 +2587,7 @@
             }
           }
         ]
-      },   
+      },
       {
         "highlight": true,
         "id": "action_capability_log_bytag",
@@ -2726,7 +2726,7 @@
             }
           }
         ]
-      },    
+      },
       {
         "highlight": true,
         "id": "virtualdevice_set_text",
