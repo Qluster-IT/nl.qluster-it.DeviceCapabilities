@@ -745,5 +745,8 @@
   },
   "2.14.5": {
     "en": "Resolved: Some AVD triggering bugs."
+  },
+  "2.14.6": {
+    "en": "Improved: Set value for AVD flowcards will have Execute flowcards (When) selected as default."
   }
 }
