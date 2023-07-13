@@ -799,6 +799,130 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
+  str += `"devicecapabilities_picker-off-running-finished_not_emptied-finished": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Off, Running, Finished (Not emptied), Finished"
+    },
+    "values": [{
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "no": "Av",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }, {
+        "id": "running",
+        "title": {
+          "en": "Running",
+          "no": "Kjører",
+          "nl": "Rennen",
+          "de": "Betrieb"
+        }
+      }, {
+        "id": "finished_not_emptied",
+        "title": {
+          "en": "Finished (Not emptied)",
+          "no": "Fullført (Ikke tømt)",
+          "nl": "Afgewerkt (Niet geleegd)",
+          "de": "Fertig (Nicht geleert)"
+        }
+      }, {
+        "id": "finished",
+        "title": {
+          "en": "Finished",
+          "no": "Fullført",
+          "nl": "Afgewerkt",
+          "de": "Fertig"
+        }
+      }
+    ]
+  },`;
+
+
+  str += `"devicecapabilities_picker-present-away-comingsoon": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Present, Away, Coming Soon"
+    },
+    "values": [{
+        "id": "present",
+        "title": {
+          "en": "Present",
+          "no": "Tilstede",
+          "nl": "Aanwezig",
+          "de": "Vorhanden"
+        }
+      }, {
+        "id": "away",
+        "title": {
+          "en": "Away",
+          "no": "Borte",
+          "nl": "Weg",
+          "de": "Weg"
+        }
+      }, {
+        "id": "comingsoon",
+        "title": {
+          "en": "Coming Soon",
+          "no": "Kommer Snart",
+          "nl": "Komt Binnenkort",
+          "de": "Kommt Bald"
+        }
+      }
+    ]
+  },`;
+
+
+
+  str += `"devicecapabilities_picker-home-away-sleep-vacation": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Home, Away, Sleep, Vacation"
+    },
+    "values": [{
+        "id": "home",
+        "title": {
+          "en": "Home",
+          "nl": "Thuis",
+          "de": "Zu Hause"
+        }
+      }, {
+        "id": "away",
+        "title": {
+          "en": "Away",
+          "nl": "Afwezig",
+          "de": "Abwesend"
+        }
+      }, {
+        "id": "sleep",
+        "title": {
+          "en": "Sleep",
+          "nl": "Slapen",
+          "de": "Schlafen"
+        }
+      }, {
+        "id": "vacation",
+        "title": {
+          "en": "Vacation",
+          "nl": "Vakantie",
+          "de": "Feiertage"
+        }
+      }
+    ]
+  },`;
+
+
 
 
 console.log(str);

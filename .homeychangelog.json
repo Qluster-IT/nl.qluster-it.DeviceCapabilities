@@ -748,5 +748,8 @@
   },
   "2.14.6": {
     "en": "Improved: Set value for AVD flowcards will have Execute flowcards (When) selected as default."
+  },
+  "2.14.7": {
+    "en": "Added: Pickers: Off, Running, Finished (Not emptied), Finished; Present, Away, Coming Soon; Home, Away, Sleep, Vacation."
   }
 }

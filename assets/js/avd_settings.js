@@ -717,6 +717,24 @@ const asv_settings = {
       "label": "Auto, Cool, Dry, Fan",
       "showAs": 'picker',
       "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-off-running-finished_not_emptied-finished",
+      "label": "Off, Running, Finished (Not emptied), Finished",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-present-away-comingsoon",
+      "label": "Present, Away, Coming Soon",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-home-away-sleep-vacation",
+      "label": "Home, Away, Sleep, Vacation",
+      "showAs": 'picker',
+      "order": 1
     }
   ],
   

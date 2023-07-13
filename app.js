@@ -92,11 +92,11 @@ class DeviceCapabilities extends Homey.App {
 
 		this.localURL = await this.homey.api.getLocalUrl();
 		this.sessionToken = await this.homey.api.getOwnerApiToken();
-		if (!this._bl) {
-			try {
-				this._bl = await BL.init({ homey: this.homey });
-			}catch(ex) {}
-		}
+		//if (!this._bl) {
+		try {
+			this._bl = await BL.init({ homey: this.homey });
+		} catch (ex) { }
+		//}
 
 
 		this.log('DeviceCapabilities is running...');
@@ -390,15 +390,15 @@ class DeviceCapabilities extends Homey.App {
 										}
 									}
 									try {
-										
-									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = device.device.capabilitiesObj[capabilityArg.capability.id].type;
-									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = device.device.capabilitiesObj[capabilityArg.capability.id].value;
-									this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = this.getLastUpdated(device.device.capabilitiesObj[capabilityArg.capability.id]).getTime();// new Date(device.device.capabilitiesObj[capabilityArg.capability.id].lastUpdated);// Date.now();
+
+										this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].type = device.device.capabilitiesObj[capabilityArg.capability.id].type;
+										this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].value = device.device.capabilitiesObj[capabilityArg.capability.id].value;
+										this.HasBeen.devices[device.id].capabilities[capabilityArg.capability.id].valueSet = this.getLastUpdated(device.device.capabilitiesObj[capabilityArg.capability.id]).getTime();// new Date(device.device.capabilitiesObj[capabilityArg.capability.id].lastUpdated);// Date.now();
 
 									} catch (error) {
-										
+
 									}
-									
+
 								}
 							}
 							//Add get values from device
@@ -542,11 +542,11 @@ class DeviceCapabilities extends Homey.App {
 					let tokens = { number: 0, boolean: false, user: '', client: '', changedon: '', durationtillnow: 0, changedonms: 0, device: '', capability: '' };
 					try {
 						if (!args || !args.device || !args.capability) return false;
-						if(action=='action_capability_log_bytag') {
-							args.device = _.find(this.devices, x=> x.name==args.device || x.id==args.device);
-							if(!args.device) throw new Error('Device not found.');
-							args.capability = _.find(args.device.capabilitiesObj, x=> x.id==args.capability || x.title==args.capability);
-							if(!args.device) throw new Error('Capability not found.')
+						if (action == 'action_capability_log_bytag') {
+							args.device = _.find(this.devices, x => x.name == args.device || x.id == args.device);
+							if (!args.device) throw new Error('Device not found.');
+							args.capability = _.find(args.device.capabilitiesObj, x => x.id == args.capability || x.title == args.capability);
+							if (!args.device) throw new Error('Capability not found.')
 						}
 						tokens.device = args.device.name;
 						tokens.capability = args.capability.id;
@@ -638,8 +638,8 @@ class DeviceCapabilities extends Homey.App {
 									tokens.changedon = insights.start;
 									tokens.changedonms = end.getTime();
 									tokens.durationtillnow = new Date().getTime() - end.getTime();
-								} else if (args.numberof == 0) {									
-									let end =  device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]) : new Date() ;//new Date(endD);
+								} else if (args.numberof == 0) {
+									let end = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]) : new Date();//new Date(endD);
 									let endD = end.toISOString();
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -1070,7 +1070,7 @@ class DeviceCapabilities extends Homey.App {
 				try {
 
 					//this._bl = await BL.init({ homey: this.homey });
-					BL.onVariableUpdate  = async ({ variable, formattedDate }) => {
+					BL.onVariableUpdate = async ({ variable, formattedDate }) => {
 						if (this.Reflections && this.Reflections[APP_ID_BLL] && this.Reflections[APP_ID_BLL][variable.name])
 							for (let i = 0; i < this.Reflections[APP_ID_BLL][variable.name].length; i++) {
 								const field = this.Reflections[APP_ID_BLL][variable.name][i];
@@ -1093,13 +1093,15 @@ class DeviceCapabilities extends Homey.App {
 
 				}
 			}
-		} else if (BL && BL.destroy) {
+			//} else if (BL && BL.destroy) {
+		} else if (this._blOnVariablesSet) {
 			try {
-				BL.destroy();
+				BL.onVariableUpdate = () => { };
+				this._blOnVariablesSet = false;
 			} catch (error) {
 
 			}
-			delete this._bl;
+			//delete this._bl;
 		}
 	}
 
@@ -1567,7 +1569,7 @@ class DeviceCapabilities extends Homey.App {
 								cap.type = device.device.capabilitiesObj[capability.id].type;
 								if (cap.value !== device.device.capabilitiesObj[capability.id].value) {
 									cap.value = device.device.capabilitiesObj[capability.id].value;
-									cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime(); ;//new Date(device.device.capabilitiesObj[capability.id]).lastUpdated;// Date.now();
+									cap.valueSet = this.getLastUpdated(device.device.capabilitiesObj[capability.id]).getTime();;//new Date(device.device.capabilitiesObj[capability.id]).lastUpdated;// Date.now();
 								}
 							}
 
@@ -1880,7 +1882,7 @@ class DeviceCapabilities extends Homey.App {
 				} else {
 					let device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
-					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: capability.title||key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
+					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: capability.title || key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
 					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
