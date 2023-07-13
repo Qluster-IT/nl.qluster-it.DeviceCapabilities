@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.14.7",
+  "version": "2.14.8",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -366,15 +366,15 @@
         "id": "trigger_capability_hasbeen",
         "title": {
           "en": "When capability has been a certain value for a period",
-          "nl": "Capability luisteraar",
-          "de": "Fähigkeit überwachen"
+          "nl": "Wanneer capability een bepaalde periode een bepaalde waarde is geweest",
+          "de": "Wenn die Leistungsfähigkeit über einen bestimmten Zeitraum einen bestimmten Wert annimmt"
         },
         "titleFormatted": {
           "en": "When [[device]].[[capability]] is [[condition]] [[value]] for [[time]] [[unit]], execute [[trigger]]",
           "nl": "Wanneer [[device]].[[capability]] is [[condition]] [[value]] voor [[time]] [[unit]], voer [[trigger]] uit",
           "de": "Wenn [[device]].[[capability]] ist [[condition]] [[value]] für [[time]] [[unit]], [[trigger]] ausführen"
         },
-        "hint--": {
+        "hint": {
           "en": "This card will execute when a certain capability from a device has been a certain value for a specific period.",
           "nl": "Deze kaart wordt uitgevoerd wanneer een bepaalde capaciteit van een apparaat gedurende een bepaalde periode een bepaalde waarde heeft gehad.",
           "de": "Diese Karte wird ausgeführt, wenn eine bestimmte Fähigkeit eines Geräts für einen bestimmten Zeitraum einen bestimmten Wert erreicht hat."
@@ -431,6 +431,14 @@
                   "en": "Not Equal to",
                   "nl": "Niet gelijk aan",
                   "de": "Nicht gleichzusetzen mit"
+                }
+              },
+              {
+                "id": "contains",
+                "label": {
+                  "en": "Contains",
+                  "nl": "Bevat",
+                  "de": "Enthält"
                 }
               },
               {

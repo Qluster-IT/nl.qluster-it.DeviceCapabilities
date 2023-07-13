@@ -942,27 +942,34 @@ class DeviceCapabilities extends Homey.App {
 			case 'boolean': value = hasBeen.value === 'true';
 				break;
 		}
-		switch (hasBeen.condition) {
-			case 'equal_to':
-				if (capability.value === value) return true;
-				break;
-			case 'not_equal_to':
-				if (capability.value !== value) return true;
-				break;
-			case 'greater_than':
-				if (capability.value > value) return true;
-				break;
-			case 'greater_than_equal':
-				if (capability.value >= value) return true;
-				break;
-			case 'less_than':
-				if (capability.value < value) return true;
-				break;
-			case 'less_than_equal':
-				if (capability.value <= value) return true;
-				break;
-			default:
-				break;
+		try {
+			switch (hasBeen.condition) {
+				case 'equal_to':
+					if (capability.value === value) return true;
+					break;
+				case 'not_equal_to':
+					if (capability.value !== value) return true;
+					break;
+				case 'contains':
+					if (capability.value.toLowerCase().indexOf(value.toLowerCase())>-1) return true;
+					break;
+				case 'greater_than':
+					if (capability.value > value) return true;
+					break;
+				case 'greater_than_equal':
+					if (capability.value >= value) return true;
+					break;
+				case 'less_than':
+					if (capability.value < value) return true;
+					break;
+				case 'less_than_equal':
+					if (capability.value <= value) return true;
+					break;
+				default:
+					break;
+			}
+		} catch (error) {
+
 		}
 		return false;
 	}
@@ -1063,7 +1070,7 @@ class DeviceCapabilities extends Homey.App {
 			if (!this._bl) {
 				try {
 					this._bl = await BL.init({ homey: this.homey });
-				}catch(ex) {}
+				} catch (ex) { }
 			}
 
 			if (!this._blOnVariablesSet) {

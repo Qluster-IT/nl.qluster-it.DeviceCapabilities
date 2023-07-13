@@ -751,5 +751,8 @@
   },
   "2.14.7": {
     "en": "Added: Pickers: Off, Running, Finished (Not emptied), Finished; Present, Away, Coming Soon; Home, Away, Sleep, Vacation."
+  },
+  "2.14.8": {
+    "en": "Added: When capability has been a certain value for a period Flowcard now has a Contains condition."
   }
 }
