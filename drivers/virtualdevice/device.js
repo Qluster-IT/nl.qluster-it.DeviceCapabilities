@@ -369,6 +369,9 @@ module.exports = class AvdDevice extends Homey.Device {
 										} break;
 										case 'any': value = !!_.find(values, val => val === true); break;
 										case 'all': value = _.every(values, val => val === true); break;
+										
+										case 'falseIfAny': value = !_.find(values, val => val === true); break;
+										case 'falseIfAll': value = !_.every(values, val => val === true); break;
 
 										case 'sum': value = _.sum(values); break;
 										case 'mean': value = _.mean(values); break;
@@ -560,7 +563,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					try {
 
 						if (!this.homey.app.devices) continue;
-						const device = await this.homey.app.getDevice({ deviceId, full: true });
+						const device = await this.homey.app.getDevice({ id:deviceId, full: true });
 						if (!device) continue;
 						for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
 							const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
@@ -739,7 +742,9 @@ module.exports = class AvdDevice extends Homey.Device {
 									case "":
 									case "picker":
 									case "ternary":
-										cap = settings[type + i + 'PrefixedList'] && settings[type + i + 'PrefixedList'].length ? settings[type + i + 'PrefixedList'] : (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
+										cap = settings[type + i + 'PrefixedList'] && settings[type + i + 'PrefixedList'].length ? 
+											(settings[type + i + 'OnlyThroughFlows']===true  ? settings[type + i + 'PrefixedList'].replace('devicecapabilities_picker', 'devicecapabilities_picker_onlythroughflows') :  settings[type + i + 'PrefixedList'])
+											: (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
 										break;
 									default:
 										capSet = true;

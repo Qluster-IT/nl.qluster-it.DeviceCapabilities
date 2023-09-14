@@ -760,5 +760,11 @@
   },
   "2.15.0": {
     "en": "Improved: Complete rewrite for homey-api v3."
+  },
+  "2.15.1": {
+    "en": "Improved: AVD Pickers/lists can now be set to change Only Through Flows.\nBugfixes"
+  },
+  "2.15.2": {
+    "en": "Improved: More default reflection calculations.\nDeprecated the Status Indicator Field and placed multiple messages about the field and howto set a status indicator."
   }
 }

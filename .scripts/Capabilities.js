@@ -343,6 +343,8 @@ str += `"devicecapabilities_ternary-up-idle-down_list": {
   "setable": true,
   "uiComponent": "ternary"
   },`;
+
+
 str += `"devicecapabilities_picker-up-idle-down_list": {
   "title": {
     "en": "Up, Idle, Down"
@@ -404,6 +406,66 @@ str += `"devicecapabilities_picker-up-idle-down_list": {
   },`;
 
 
+str += `"devicecapabilities_picker_onlythroughflows-up-idle-down_list": {
+  "title": {
+    "en": "Up, Idle, Down"
+  },
+  "type": "enum",
+  "values": [
+    {
+      "id": "up",
+      "title": {
+        "en": "Up",
+        "nl": "Omhoog",
+        "de": "Oben",
+        "fr": "Haut",
+        "it": "Alzate",
+        "sv": "Upp",
+        "no": "Opp",
+        "es": "Arriba",
+        "da": "Oppe",
+        "ru": "Наверх",
+        "pl": "Rozchylone"
+      }
+    },
+    {
+      "id": "idle",
+      "title": {
+        "en": "Idle",
+        "nl": "Stil",
+        "de": "Inaktiv",
+        "fr": "Inactif",
+        "it": "Socchiuse",
+        "sv": "Inaktiv",
+        "no": "Ikke aktiv",
+        "es": "Inactivos",
+        "da": "Inaktiv",
+        "ru": "В ожидании",
+        "pl": "W spoczynku"
+      }
+    },
+    {
+      "id": "down",
+      "title": {
+        "en": "Down",
+        "nl": "Omlaag",
+        "de": "Unten",
+        "fr": "Bas",
+        "it": "Abbassate",
+        "sv": "Ned",
+        "no": "Ned",
+        "es": "Abajo",
+        "da": "Nede",
+        "ru": "Вниз",
+        "pl": "Zasunięte"
+      }
+    }
+  ],
+  "getable": true,
+  "setable": false,
+  "uiComponent": "picker"
+  },`;
+
 
 str += `"devicecapabilities_picker-schedule-until-manual-offuntil-off_list": {
     "title": {
@@ -460,6 +522,59 @@ str += `"devicecapabilities_picker-schedule-until-manual-offuntil-off_list": {
 
 
 
+str += `"devicecapabilities_picker_onlythroughflows-schedule-until-manual-offuntil-off_list": {
+    "title": {
+      "en": "Schedule, Until, Manual, Off Until, Off"
+    },
+    "values": [
+      {
+        "id": "smartschedule",
+        "title": {
+          "en": "Follow Smart Schedule",
+          "nl": "Volg slim schema",
+          "de": "Dem intelligenten Zeitplan folgen"
+        }
+      },
+      {
+        "id": "untilnextblock",
+        "title": {
+          "en": "Until next time block",
+          "nl": "Tot aan volgend tijdsblok",
+          "de": "Bis zum nächsten Zeitblock"
+        }
+      },
+      {
+        "id": "manual",
+        "title": {
+          "en": "Manual",
+          "nl": "Handmatig",
+          "de": "Manuell"
+        }
+      },
+      {
+        "id": "offuntilnextblock",
+        "title": {
+          "en": "Off until next time block",
+          "nl": "Uit tot aan volgend tijdsblok",
+          "de": "Aus bis zum nächsten Zeitblock"
+        }
+      },
+      {
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }
+    ],
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker"
+    },`;
+
+
 
 
 str += `"devicecapabilities_picker-automatic-on-off_list": {
@@ -500,11 +615,87 @@ str += `"devicecapabilities_picker-automatic-on-off_list": {
         ]
     },`;
 
+str += `"devicecapabilities_picker_onlythroughflows-automatic-on-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, On, Off",        
+        "nl": "Auto, Aan, Uit",        
+        "de": "Auto, Eingeschaltet, Ausgeschaltet"
+      },
+      "values": [
+        {
+        "id": "automatic",
+        "title": {
+        "en": "Automatic",
+        "nl": "Automatisch",
+        "de": "Automatisch"
+        }
+        },
+        {
+        "id": "on",
+        "title": {
+        "en": "On",
+        "nl": "Aan",
+        "de": "Eingeschaltet"
+        }
+        },
+        {
+        "id": "off",
+        "title": {
+        "en": "Off",
+        "nl": "Uit",
+        "de": "Ausgeschaltet"
+        }
+        }
+        ]
+    },`;
+
 
 str += `"devicecapabilities_picker-heating-cooling-off_list": {
       "type": "enum",
       "getable": true,
       "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Heating, Cooling, Off",
+        "nl": "Verwarmen, Koelen, Uit",
+        "de": "Heizen, Kuehlen, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "heating",
+          "title": {
+            "en": "Heating",
+            "nl": "Verwarmen",
+            "de": "Heizen"
+          }
+        },
+        {
+          "id": "cooling",
+          "title": {
+            "en": "Cooling",
+            "nl": "Koelen",
+            "de": "Kuehlen"
+          }
+        },      
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
+    },`;
+
+str += `"devicecapabilities_picker_onlythroughflows-heating-cooling-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": false,
       "uiComponent": "picker",
       "title": {
         "en": "Heating, Cooling, Off",
@@ -586,10 +777,111 @@ str += `"devicecapabilities_picker-automatic-electricity-gas-off_list": {
     },`;
 
 
+str += `"devicecapabilities_picker_onlythroughflows-automatic-electricity-gas-off_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Electricity, Gas, Off",
+        "nl": "Automatisch, Electrisch, Gas, Uit",
+        "de": "Automatisch, Elektrisch, Gas, Ausgeschaltet"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "electricity",
+          "title": {
+            "en": "Electric",
+            "nl": "Electrisch",
+            "de": "Elektrisch"
+          }
+        },      
+        {
+          "id": "gas",
+          "title": {
+            "en": "Natural Gas",
+            "nl": "Aardgas",
+            "de": "Erdgas"
+          }
+        },        
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Ausgeschaltet"
+          }
+        }
+      ]
+    },`;
+
+
 str += `"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
       "type": "enum",
       "getable": true,
       "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Auto, Low, Medium, High, Turbo",        
+        "nl": "Auto, Laag, Medium, Hoog, Turbo",        
+        "de": "Auto, Niedrig, Mittel, Hoch, Turbo"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "nl": "Auto",
+            "de": "Auto"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Laag",
+            "de": "Niedrig"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Medium",
+            "de": "Mittel"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Hoog",
+            "de": "Hoch"
+          }
+        },
+        {
+          "id": "turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo",
+            "de": "Turbo"
+          }
+        }
+      ]
+    },`;
+
+str += `"devicecapabilities_picker_onlythroughflows-auto-low-medium-high-turbo_list": {
+      "type": "enum",
+      "getable": true,
+      "setable": false,
       "uiComponent": "picker",
       "title": {
         "en": "Auto, Low, Medium, High, Turbo",        
@@ -688,10 +980,86 @@ str += `"devicecapabilities_picker-EVCC_list": {
       ]
     },`;
 
+str += `"devicecapabilities_picker_onlythroughflows-EVCC_list": {
+      "title": {
+        "en": "EVCC.io"
+      },
+      "type": "enum",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          },
+          "value": "off"
+        },
+        {
+          "id": "pv",
+          "title": {
+            "en": "Solar",
+            "nl": "Zonne",
+            "de": "Solar"
+          },
+          "value": "solar"
+        },
+        {
+          "id": "minpv",
+          "title": {
+            "en": "Min+Solar",
+            "nl": "Min+Zonne",
+            "de": "Min+Solar"
+          },
+          "value": "minpv"
+        },
+        {
+          "id": "now",
+          "title": {
+            "en": "Fast",
+            "nl": "Snel",
+            "de": "Schnell"
+          },
+          "value": "now"
+        }
+      ]
+    },`;
+
 str += `"devicecapabilities_picker-automatic-alwayson": {
       "type": "enum",
       "getable": true,
       "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Always-on"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "always-on",
+          "title": {
+            "en": "Always on",
+            "nl": "Altijd aan",
+            "de": "Dauerhaft aktiviert"
+          }
+        }
+      ]
+  },`;
+
+str += `"devicecapabilities_picker_onlythroughflows-automatic-alwayson": {
+      "type": "enum",
+      "getable": true,
+      "setable": false,
       "uiComponent": "picker",
       "title": {
         "en": "Automatic, Always-on"
@@ -753,11 +1121,91 @@ str += `"devicecapabilities_picker-open-stop-close": {
     ]
   },`;
 
+str += `"devicecapabilities_picker_onlythroughflows-open-stop-close": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Open, Stop, Close"
+    },
+    "values": [
+      {
+        "id": "open",
+        "title": {
+          "en": "Open",
+          "nl": "Open",
+          "de": "Öffnen"
+        }
+      },
+      {
+        "id": "stop",
+        "title": {
+          "en": "Stop",
+          "nl": "Stop",
+          "de": "Stop"
+        }
+      },
+      {
+        "id": "close",
+        "title": {
+          "en": "Close",
+          "nl": "Dicht",
+          "de": "Schließen"
+        }
+      }
+    ]
+  },`;
+
 
 str += `"devicecapabilities_picker-auto-cool-dry-fan": {
     "type": "enum",
     "getable": true,
     "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Auto, Cool, Dry, Fan"
+    },
+    "values": [
+      {
+        "id": "auto",
+        "title": {
+          "en": "Auto",
+          "nl": "Auto",
+          "de": "Auto"
+        }
+      },
+      {
+        "id": "cool",
+        "title": {
+          "en": "Cool",
+          "nl": "Koel",
+          "de": "Cool"
+        }
+      },
+      {
+        "id": "dry",
+        "title": {
+          "en": "Dry",
+          "nl": "Droog",
+          "de": "Trocken"
+        }
+      },
+      {
+        "id": "fan",
+        "title": {
+          "en": "Fan",
+          "nl": "Fan",
+          "de": "Fan"
+        }
+      }
+    ]
+  },`;
+
+str += `"devicecapabilities_picker_onlythroughflows-auto-cool-dry-fan": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
     "uiComponent": "picker",
     "title": {
       "en": "Auto, Cool, Dry, Fan"
@@ -844,6 +1292,52 @@ str += `"devicecapabilities_picker-off-running-finished_not_emptied-finished": {
   },`;
 
 
+str += `"devicecapabilities_picker_onlythroughflows-off-running-finished_not_emptied-finished": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Off, Running, Finished (Not emptied), Finished"
+    },
+    "values": [{
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "no": "Av",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }, {
+        "id": "running",
+        "title": {
+          "en": "Running",
+          "no": "Kjører",
+          "nl": "Rennen",
+          "de": "Betrieb"
+        }
+      }, {
+        "id": "finished_not_emptied",
+        "title": {
+          "en": "Finished (Not emptied)",
+          "no": "Fullført (Ikke tømt)",
+          "nl": "Afgewerkt (Niet geleegd)",
+          "de": "Fertig (Nicht geleert)"
+        }
+      }, {
+        "id": "finished",
+        "title": {
+          "en": "Finished",
+          "no": "Fullført",
+          "nl": "Afgewerkt",
+          "de": "Fertig"
+        }
+      }
+    ]
+  },`;
+
+
+
 str += `"devicecapabilities_picker-present-away-comingsoon": {
     "type": "enum",
     "getable": true,
@@ -882,10 +1376,89 @@ str += `"devicecapabilities_picker-present-away-comingsoon": {
 
 
 
+str += `"devicecapabilities_picker_onlythroughflows-present-away-comingsoon": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Present, Away, Coming Soon"
+    },
+    "values": [{
+        "id": "present",
+        "title": {
+          "en": "Present",
+          "no": "Tilstede",
+          "nl": "Aanwezig",
+          "de": "Vorhanden"
+        }
+      }, {
+        "id": "away",
+        "title": {
+          "en": "Away",
+          "no": "Borte",
+          "nl": "Weg",
+          "de": "Weg"
+        }
+      }, {
+        "id": "comingsoon",
+        "title": {
+          "en": "Coming Soon",
+          "no": "Kommer Snart",
+          "nl": "Komt Binnenkort",
+          "de": "Kommt Bald"
+        }
+      }
+    ]
+  },`;
+
+
+
 str += `"devicecapabilities_picker-home-away-sleep-vacation": {
     "type": "enum",
     "getable": true,
     "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Home, Away, Sleep, Vacation"
+    },
+    "values": [{
+        "id": "home",
+        "title": {
+          "en": "Home",
+          "nl": "Thuis",
+          "de": "Zu Hause"
+        }
+      }, {
+        "id": "away",
+        "title": {
+          "en": "Away",
+          "nl": "Afwezig",
+          "de": "Abwesend"
+        }
+      }, {
+        "id": "sleep",
+        "title": {
+          "en": "Sleep",
+          "nl": "Slapen",
+          "de": "Schlafen"
+        }
+      }, {
+        "id": "vacation",
+        "title": {
+          "en": "Vacation",
+          "nl": "Vakantie",
+          "de": "Feiertage"
+        }
+      }
+    ]
+  },`;
+
+
+str += `"devicecapabilities_picker_onlythroughflows-home-away-sleep-vacation": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
     "uiComponent": "picker",
     "title": {
       "en": "Home, Away, Sleep, Vacation"
@@ -982,11 +1555,108 @@ str += `"devicecapabilities_picker-bright-regular-mood-colour-tv-cinema": {
     ]
   },`;
 
+str += `"devicecapabilities_picker_onlythroughflows-bright-regular-mood-colour-tv-cinema": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Bright, Regular, Mood, Colour, TV, Cinema"
+    },
+    "values": [
+      {
+        "id": "bright",
+        "title": {
+          "en": "Bright",
+          "nl": "Helder",
+          "de": "Hell"
+        }
+      },
+      {
+        "id": "regular",
+        "title": {
+          "en": "Regular",
+          "nl": "Normaal",
+          "de": "Normal"
+        }
+      },
+      {
+        "id": "mood",
+        "title": {
+          "en": "Mood",
+          "nl": "Sfeer",
+          "de": "Stimmung"
+        }
+      },
+      {
+        "id": "colour",
+        "title": {
+          "en": "Colour",
+          "nl": "Kleur",
+          "de": "Bunt"
+        }
+      },
+      {
+        "id": "tv",
+        "title": {
+          "en": "TV",
+          "nl": "TV",
+          "de": "TV"
+        }
+      },
+      {
+        "id": "cinema",
+        "title": {
+          "en": "Cinema",
+          "nl": "Bios",
+          "de": "Kino"
+        }
+      }
+    ]
+  },`;
+
 
 str += `"devicecapabilities_picker-automatic-manual-off": {
     "type": "enum",
     "getable": true,
     "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Automatic, Manual, Off"
+    },
+    "values": [
+      {
+        "id": "automatic",
+        "title": {
+          "en": "Automatic",
+          "nl": "Automatisch",
+          "de": "Automatisch"
+        }
+      },
+      {
+        "id": "manual",
+        "title": {
+          "en": "Manual",
+          "nl": "Handmatig",
+          "de": "Manuell"
+        }
+      },
+      {
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }
+    ]
+  },`;
+
+
+str += `"devicecapabilities_picker_onlythroughflows-automatic-manual-off": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
     "uiComponent": "picker",
     "title": {
       "en": "Automatic, Manual, Off"
@@ -1065,10 +1735,100 @@ str += `"devicecapabilities_picker-bright-regular-mood-night": {
   },`;
 
 
+str += `"devicecapabilities_picker_onlythroughflows-bright-regular-mood-night": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Bright, Regular, Mood, Night"
+    },
+    "values": [
+      {
+        "id": "bright",
+        "title": {
+          "en": "Bright",
+          "nl": "Helder",
+          "de": "Hell"
+        }
+      },
+      {
+        "id": "regular",
+        "title": {
+          "en": "Regular",
+          "nl": "Normaal",
+          "de": "Normal"
+        }
+      },
+      {
+        "id": "mood",
+        "title": {
+          "en": "Mood",
+          "nl": "Sfeer",
+          "de": "Stimmung"
+        }
+      },
+      {
+        "id": "night",
+        "title": {
+          "en": "Night",
+          "nl": "Nacht",
+          "de": "Nacht"
+        }
+      }
+    ]
+  },`;
+
+
 str += `"devicecapabilities_picker-evcharge-compressor-machines-workbench": {
     "type": "enum",
     "getable": true,
     "setable": true,
+    "uiComponent": "picker",    
+    "title": {
+      "en": "EV Charge, Compressor, Machines, Workbench"
+    },
+    "values": [
+      {
+        "id": "ev charge",
+        "title": {
+          "en": "EV charge",
+          "nl": "EV laden",
+          "de": "BEV laden"
+        }
+      },
+      {
+        "id": "compressor",
+        "title": {
+          "en": "Compressor",
+          "nl": "Compressor",
+          "de": "Kompressor"
+        }
+      },
+      {
+        "id": "machines",
+        "title": {
+          "en": "Machines",
+          "nl": "Machines",
+          "de": "Machines"
+        }
+      },
+      {
+        "id": "workbench",
+        "title": {
+          "en": "Workbench",
+          "nl": "Werkbank",
+          "de": "Werkbank"
+         }
+      }
+    ]
+  },`;
+
+
+str += `"devicecapabilities_picker_onlythroughflows-evcharge-compressor-machines-workbench": {
+    "type": "enum",
+    "getable": true,
+    "setable": false,
     "uiComponent": "picker",    
     "title": {
       "en": "EV Charge, Compressor, Machines, Workbench"
