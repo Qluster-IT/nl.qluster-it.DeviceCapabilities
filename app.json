@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.14.8",
+  "version": "2.15.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -16825,6 +16825,186 @@
             "en": "Vacation",
             "nl": "Vakantie",
             "de": "Feiertage"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-bright-regular-mood-colour-tv-cinema": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Bright, Regular, Mood, Colour, TV, Cinema"
+      },
+      "values": [
+        {
+          "id": "bright",
+          "title": {
+            "en": "Bright",
+            "nl": "Helder",
+            "de": "Hell"
+          }
+        },
+        {
+          "id": "regular",
+          "title": {
+            "en": "Regular",
+            "nl": "Normaal",
+            "de": "Normal"
+          }
+        },
+        {
+          "id": "mood",
+          "title": {
+            "en": "Mood",
+            "nl": "Sfeer",
+            "de": "Stimmung"
+          }
+        },
+        {
+          "id": "colour",
+          "title": {
+            "en": "Colour",
+            "nl": "Kleur",
+            "de": "Bunt"
+          }
+        },
+        {
+          "id": "tv",
+          "title": {
+            "en": "TV",
+            "nl": "TV",
+            "de": "TV"
+          }
+        },
+        {
+          "id": "cinema",
+          "title": {
+            "en": "Cinema",
+            "nl": "Bios",
+            "de": "Kino"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-automatic-manual-off": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Automatic, Manual, Off"
+      },
+      "values": [
+        {
+          "id": "automatic",
+          "title": {
+            "en": "Automatic",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "manual",
+          "title": {
+            "en": "Manual",
+            "nl": "Handmatig",
+            "de": "Manuell"
+          }
+        },
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit",
+            "de": "Aus"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-bright-regular-mood-night": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "Bright, Regular, Mood, Night"
+      },
+      "values": [
+        {
+          "id": "bright",
+          "title": {
+            "en": "Bright",
+            "nl": "Helder",
+            "de": "Hell"
+          }
+        },
+        {
+          "id": "regular",
+          "title": {
+            "en": "Regular",
+            "nl": "Normaal",
+            "de": "Normal"
+          }
+        },
+        {
+          "id": "mood",
+          "title": {
+            "en": "Mood",
+            "nl": "Sfeer",
+            "de": "Stimmung"
+          }
+        },
+        {
+          "id": "night",
+          "title": {
+            "en": "Night",
+            "nl": "Nacht",
+            "de": "Nacht"
+          }
+        }
+      ]
+    },
+    "devicecapabilities_picker-evcharge-compressor-machines-workbench": {
+      "type": "enum",
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "title": {
+        "en": "EV Charge, Compressor, Machines, Workbench"
+      },
+      "values": [
+        {
+          "id": "ev charge",
+          "title": {
+            "en": "EV charge",
+            "nl": "EV laden",
+            "de": "BEV laden"
+          }
+        },
+        {
+          "id": "compressor",
+          "title": {
+            "en": "Compressor",
+            "nl": "Compressor",
+            "de": "Kompressor"
+          }
+        },
+        {
+          "id": "machines",
+          "title": {
+            "en": "Machines",
+            "nl": "Machines",
+            "de": "Machines"
+          }
+        },
+        {
+          "id": "workbench",
+          "title": {
+            "en": "Workbench",
+            "nl": "Werkbank",
+            "de": "Werkbank"
           }
         }
       ]

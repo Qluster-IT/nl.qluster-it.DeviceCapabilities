@@ -754,5 +754,11 @@
   },
   "2.14.8": {
     "en": "Added: When capability has been a certain value for a period Flowcard now has a Contains condition."
+  },
+  "2.14.9": {
+    "en": "Added: Multiple pickers."
+  },
+  "2.15.0": {
+    "en": "Improved: Complete rewrite for homey-api v3."
   }
 }

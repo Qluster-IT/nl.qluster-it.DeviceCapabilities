@@ -85,6 +85,7 @@ const TOPICS = {
 
 const { BL } = require('betterlogiclibrary');
 const { CG } = require('chronograph-npm');
+const { getDriverId } = require('../../lib/homeyApiHelper');
 
 //module.exports = class AvdDriver extends SimpleLogMixin(Homey.Driver) {
 module.exports = class AvdDriver extends Homey.Driver {
@@ -252,7 +253,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                             fieldIds.length=0;
                             let type = fieldId.split('_')[2];
                             const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
-                            for(var i=1;i<=fieldCount;i++){
+                            for(let i=1;i<=fieldCount;i++){
                                 if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0) fieldIds.push(type+i);
                             }
                         }
@@ -285,7 +286,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                             fieldIds.length=0;
                             let type = fieldId.split('_')[2];
                             const fieldCount = args.device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
-                            for(var i=1;i<=fieldCount;i++){
+                            for(let i=1;i<=fieldCount;i++){
                                 if(args.device.Settings[type+i+'Name'] && args.device.Settings[type+i+'Name'].length>0)
                                 fieldIds.push(type+i);
                             }
@@ -519,7 +520,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 fieldIds.length=0;
                 const type = _fieldId.split('_')[2];
                 const fieldCount = device.Settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0;
-                for(var i=1;i<=fieldCount;i++){
+                for(let i=1;i<=fieldCount;i++){
                     if(device.Settings[type+i+'Name'] && device.Settings[type+i+'Name'].length>0)
                     fieldIds.push(type+i);
                 }
@@ -975,7 +976,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             let ret = [];
             let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
-            for(var i=1;i<=fieldCount;i++){
+            for(let i=1;i<=fieldCount;i++){
                 let name = settings[type + i + 'Name'];
                 if(name) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
@@ -996,7 +997,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             let ret = [];
             let actionAllSet = false;
             const fieldCount = type=="status" ? 1 : (settings['numberOf'+this.capitalizeFirstLetter(type)+'Fields'] || 0);
-            for(var i=1;i<=fieldCount;i++){
+            for(let i=1;i<=fieldCount;i++){
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
                     if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
@@ -1167,13 +1168,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         allUsers = !reload && allUsers ? allUsers : _.mapValues(await api.users.getUsers(), ({name, athomId, avatar})=>{ return {name, athomId, avatar}; });
         allVariables = !reload && allVariables ? allVariables : _.mapValues(await api.logic.getVariables(), ({name, type})=>{ return {name, type}; });
         allAdvancedFlows = (!reload || reloadAf===false) && allAdvancedFlows ? allAdvancedFlows : await this.loadAdvancedFlows();
-        if(true) {
-            //this.log(JSON.stringify(await api.flowtoken.getFlowTokens()));
-            if(this.getAPIV3()) 
-                allTokens = !reload && allTokens ? allTokens : _.map(await (api.flowtoken||api.flowToken).getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
-            else 
-                allTokens = !reload && allTokens ? allTokens : _.map(await (api.flowtoken||api.flowToken).getFlowTokens(), ({uri, id, title, type, uriObj:{name}})=>{ return {uri, id, title, type, uriObj:{name}}; });
-        }
+        allTokens = !reload && allTokens ? allTokens : _.map(await api.flowtoken.getFlowTokens(), ({uri, ownerUri, id, title, type})=>{ return {uri, id, title, type, ownerName: ownerUri.startsWith('homey:device:') ? allDevices[getDriverId(ownerUri)].name : ownerUri.startsWith('homey:app:') ? allApps[getDriverId(ownerUri)].name : ownerUri.split(':')[2] }; });
         
         actionCards = !reload && actionCards ? actionCards : _.map(await api.flow.getFlowCardActions(), ({uri, id})=>{ return {uri, id}; });
         conditionCards = !reload && conditionCards ? conditionCards : _.map(await api.flow.getFlowCardConditions(), ({uri, id})=>{ return {uri, id}; });
@@ -1357,7 +1352,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                                 } else {
                                                     let token = _.find(allTokens, t=>t.uri=='homey:app:' + tokenMatchs[2] &&t.id == tokenId );                                            
                                                     if(token) {
-                                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
+                                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.ownerName, tokens:{}};
                                                         if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens =  {};
                                                         if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                                     }
@@ -1400,7 +1395,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                         }
                                         else if((token = _.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id==id ))) {
-                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.ownerName, tokens:{}};
                                             if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens = {};
                                             if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                         }
@@ -1575,7 +1570,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                                 } else {
                                                     let token = _.find(allTokens, t=>t.uri=='homey:app:' + tokenMatchs[2] &&t.id == tokenId );                                            
                                                     if(token) {
-                                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
+                                                        if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.ownerName, tokens:{}};
                                                         if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens =  {};
                                                         if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                                     }
@@ -1616,7 +1611,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:allApps[appId].name};
                                         }
                                         else if((token = _.find(allTokens, t=>t.uri=='homey:app:' + appId &&t.id==id ))) {
-                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.uriObj?token.uriObj.name:null, tokens:{}};
+                                            if(!tokensToReplace[appId]) tokensToReplace[appId] =  {name:token.ownerName, tokens:{}};
                                             if(!tokensToReplace[appId].tokens) tokensToReplace[appId].tokens = {};
                                             if(!tokensToReplace[appId].tokens[token.id]) tokensToReplace[appId].tokens[token.id] =  {name:token.title, type:token.type};
                                         }
@@ -1862,7 +1857,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 if(!device.replaceWith) device.replaceWith = _.find(device.replacements, x=>x.id==deviceId);
                 if(device.replaceWith) device.replaceWithId = device.replaceWith.id;
                 _.each(device.tags, (tag, tagId)=>{
-                    tag.replacements = _.sortBy(_.map( _.filter(allTokens, t=> t.type==tag.type) , x=> { return {id:x.uri + "|" + x.id, name: x.uriObj? x.uriObj.name + ' - ' + x.title : x.title};}), 'name');
+                    tag.replacements = _.sortBy(_.map( _.filter(allTokens, t=> t.type==tag.type) , x=> { return {id:x.uri + "|" + x.id, name: x.ownerName? (x.ownerName + ' - ' + x.title) : x.title};}), 'name');
                    if(!device.replacements.length) tag.replaceWith = _.find(tag.replacements, x=>x.id=='homey:device:' + deviceId + '|' + tagId);
                     if(tag.replaceWith) tag.replaceWithId = tag.replaceWith.id;
                 });
@@ -2108,7 +2103,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 if(!device.replaceWith) device.replaceWith = _.find(device.replacements, x=>x.id==deviceId);
                 if(device.replaceWith) device.replaceWithId = device.replaceWith.id;
                 _.each(device.tags, (tag, tagId)=>{
-                    tag.replacements = _.sortBy(_.map( _.filter(allTokens, t=> t.type==tag.type) , x=> { return {id:x.uri + "|" + x.id, name: x.uriObj? x.uriObj.name + ' - ' + x.title : x.title};}), 'name');
+                    tag.replacements = _.sortBy(_.map( _.filter(allTokens, t=> t.type==tag.type) , x=> { return {id:x.uri + "|" + x.id, name: x.ownerName? (x.ownerName + ' - ' + x.title) : x.title};}), 'name');
                    if(!device.replacements.length) tag.replaceWith = _.find(tag.replacements, x=>x.id=='homey:device:' + deviceId + '|' + tagId);
                     if(tag.replaceWith) tag.replaceWithId = tag.replaceWith.id;
                 });

@@ -2,9 +2,8 @@
 const crypto = require("crypto");
 
 const Homey = require('homey');
-//const { HomeyAPI } = require('homey-api');
-//const { HomeyAPIApp } = require('homey-api');
-const { HomeyAPI } = require('athom-api');
+const { HomeyAPI } = require('homey-api');
+//const { HomeyAPI } = require('athom-api');
 const _ = require('lodash-core');
 
 const { Defer } = require('./lib/proto');
@@ -20,6 +19,7 @@ const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 
 const { BL } = require('betterlogiclibrary');
 const { CG } = require('chronograph-npm');
+const { getDriverId } = require("./lib/homeyApiHelper");
 
 const APP_ID_BLL = 'net.i-dev.betterlogic';
 const APP_ID_CG = 'nl.fellownet.chronograph';
@@ -110,10 +110,6 @@ class DeviceCapabilities extends Homey.App {
 		// 	this.homey.settings.set('notification_petition_zerodash', true);
 		// }
 
-		// this.refreshHomeyAPI().then(async api => {
-		// 	this.Tracking.homeyAPIStatic = api;
-		// });
-
 		const capabilityZoneActions = ['set_capability_zone_text', 'set_capability_zone_number', 'set_capability_zone_percentage', 'set_capability_zone_boolean', 'set_capability_zone_2_boolean', 'set_capability_zone_json'];//, 'set_capability_zone_anders'];
 		_.forEach(capabilityZoneActions, (action => {
 			let set_capability_zone = this.homey.flow.getActionCard(action);
@@ -171,8 +167,8 @@ class DeviceCapabilities extends Homey.App {
 							let devs = _.filter(devices, d =>
 								//d &&
 								d.zone == zoneId &&
-								(!args.brand || !args.brand.id || d.driverUri === args.brand.id) &&
-								(!args.devicetype || !args.devicetype.id || (d.driverUri === args.devicetype.brandUri && d.driverId === args.devicetype.id)) &&
+								(!args.brand || !args.brand.id || d.ownerUri === args.brand.id) &&
+								(!args.devicetype || !args.devicetype.id || (d.ownerUri === args.devicetype.brandUri && getDriverId(d.driverId) === getDriverId(args.devicetype.id))) &&
 								(d.class == cls || d.virtualClass == cls) &&
 								d.capabilities && d.capabilities.indexOf(capability) > -1);
 							_.forEach(devs, d => devicesToSet.push(d));
@@ -513,15 +509,6 @@ class DeviceCapabilities extends Homey.App {
 						}, 250);
 					}
 
-					// let tracker = device.makeCapabilityInstance(args.capability.id, function (s) {
-					// 	console.log('capability ' +  args.capability.id + ' changed:' + s );
-					// });
-					// defer.finally(x=> {
-					// 	if(tracker && tracker.destroy) tracker.destroy();
-					// });
-
-					//await tracker.setValue(args.value=='true');
-
 				}).bind(this));
 
 				return defer.promise;
@@ -574,9 +561,7 @@ class DeviceCapabilities extends Homey.App {
 
 						if (targetInsight) {
 							let insights, lastOne = null;
-							// if(args.numberof==0) {
-							// 	insights = await api.insights.getLogEntries({ uri: targetInsight.uri, id: targetInsight.id });
-							// } else {
+							
 							try {
 								let resolution = undefined;
 								if (args.numberof <= 60) resolution = 'lastHour';
@@ -880,8 +865,8 @@ class DeviceCapabilities extends Homey.App {
 			try {
 				await this.refreshHomeyAPI();
 				let devices = _.toArray(this.devices);
-				if (args.brand && args.brand.id) devices = _.filter(devices, d => d.driverUri === 'homey:app:' + args.brand.id);
-				if (args.devicetype && args.devicetype.id) devices = _.filter(devices, d => d.driverId === args.devicetype.id);
+				if (args.brand && args.brand.id) devices = _.filter(devices, d => d.ownerUri === 'homey:app:' + args.brand.id);
+				if (args.devicetype && args.devicetype.id) devices = _.filter(devices, d => getDriverId(d.driverId) === getDriverId(args.devicetype.id));
 				let t = _.every(devices, d => d.available === args.inverted != true);
 				let tt = _.filter(devices, d => d.available === (args.inverted != true));
 				return _.every(devices, d => d.available === (args.inverted != true));
@@ -951,7 +936,7 @@ class DeviceCapabilities extends Homey.App {
 					if (capability.value !== value) return true;
 					break;
 				case 'contains':
-					if (capability.value.toLowerCase().indexOf(value.toLowerCase())>-1) return true;
+					if (capability.value.toLowerCase().indexOf(value.toLowerCase()) > -1) return true;
 					break;
 				case 'greater_than':
 					if (capability.value > value) return true;
@@ -1701,7 +1686,7 @@ class DeviceCapabilities extends Homey.App {
 
 	calculateDuration(time, unit) {
 		if (isNaN(time)) {
-			throw new Error('invalid time');
+			throw new Error('invalid time: ', time);
 		}
 
 		switch (unit) {
@@ -1745,7 +1730,7 @@ class DeviceCapabilities extends Homey.App {
 			) {
 				objectList.push(value);
 
-				for (var i in value) {
+				for (let i in value) {
 					stack.push(value[i]);
 				}
 			}
@@ -1754,13 +1739,13 @@ class DeviceCapabilities extends Homey.App {
 	}
 
 	async getDeviceclasss(action, query, args) {
-		let all = await this.getDeviceclasssAndCapabilities({ action: action, queryDeviceclass: query });
+		let all = await this.getDeviceclassAndCapabilities({ action: action, queryDeviceclass: query });
 		all = _.sortBy(_.filter(all, dt => dt && Object.keys(dt.capabilities).length), 'name');
 		return all.length == 0 ? [] : _.map(all, x => { return { id: x.name, name: x.name }; });// all;//_.map(all, x=> x.id.split('.')[0]);
 	}
 	async getDeviceclassBrands(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		let all = await this.getDeviceclasssAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
+		let all = await this.getDeviceclassAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
 		all = _.filter(all, dt => dt && Object.keys(dt.capabilities).length);
 		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
 		all = _.uniqBy(all, 'id');
@@ -1769,18 +1754,19 @@ class DeviceCapabilities extends Homey.App {
 	}
 	async getDeviceclassDeviceTypes(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		let all = await this.getDeviceclasssAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
+		let all = await this.getDeviceclassAndCapabilities({ action: action, deviceclass: args.deviceclass.id });
 		all = _.filter(all, dt => dt && Object.keys(dt.capabilities).length);
 		all = _.flatMap(all[0].capabilities, x => { return _.filter(x.brands); });
 		if (args.brand && args.brand.id) all = _.filter(all, x => x.id === args.brand.id);
-		all = _.flatMap(all, x => { return _.map(x.devicetypes, dt => { let d = _.find(this.drivers, _d => _d.id == dt.id && (_d.uri || _d.ownerUri) == x.id); return { id: dt.id, name: d ? d.name : dt.name, brandUri: x.id, brandName: x.name }; }); });
+		//let a = this.drivers;
+		all = _.flatMap(all, x => { return _.map(x.devicetypes, dt => { let d = _.find(this.drivers, _d => _d.id == x.id+':'+dt.id); return { id: dt.id, name: d ? d.name : dt.name, brandUri: x.id, brandName: x.name }; }); });
 		all = _.uniqBy(all, x => x.brandUri + ':' + x.id);
 		if (query && query.length > 0) all = _.filter(all, dt => dt.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
 		return all.length == 0 ? [] : _.map(_.sortBy(all, "name"), x => { return { id: x.id, name: x.name, description: x.brandName, brandUri: x.brandUri }; });
 	}
 	async getDeviceclassCapabilities(action, query, args) {
 		if (!args.deviceclass || !args.deviceclass.id) return [];
-		let all = await this.getDeviceclasssAndCapabilities({ action: action, queryCapability: query, deviceclass: args.deviceclass.id });
+		let all = await this.getDeviceclassAndCapabilities({ action: action, queryCapability: query, deviceclass: args.deviceclass.id });
 		all = _.filter(all, dt => _.countBy(dt.capabilities, 1));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
 		all = all[0].capabilities;
 		if (args.brand && args.brand.id) all = _.filter(all, cap => _.find(cap.brands, (b) => b.id === args.brand.id));// && _.countBy(dt.capabilities, cap=> _.countBy(cap.brands,1)));
@@ -1789,7 +1775,7 @@ class DeviceCapabilities extends Homey.App {
 		return all.length == 0 ? [] : _.map(_.sortBy(all, "id"), x => { return { id: x.id, name: x.id }; });
 	}
 
-	async getDeviceclasssAndCapabilities({ action, queryDeviceclass, queryCapability, deviceclass } = {}) {
+	async getDeviceclassAndCapabilities({ action, queryDeviceclass, queryCapability, deviceclass } = {}) {
 		//let api = await this.refreshHomeyAPI();
 		//var devices = await api.devices.getDevices({ $skipCache: true });
 
@@ -1841,13 +1827,14 @@ class DeviceCapabilities extends Homey.App {
 	}
 
 	addDeviceToCapabilities(device, capability, cls) {
-		let driverUri = device.driverUri;
-		let driverUriLast = _.last(device.driverUri.split(':'));
+		let ownerUri = device.ownerUri;
+		let ownerUriLast = _.last(device.ownerUri.split(':'));
+		var driverId = getDriverId(device.driverId);
 		if (!cls) return;
 		if (!cls.capabilities[capability]) cls.capabilities[capability] = { id: capability };
 		if (!cls.capabilities[capability].brands) cls.capabilities[capability].brands = {};
-		if (!cls.capabilities[capability].brands[driverUri]) cls.capabilities[capability].brands[driverUri] = { id: driverUri, name: this.apps[driverUriLast] ? this.apps[driverUriLast].name : driverUri, devicetypes: {} };
-		if (!cls.capabilities[capability].brands[driverUri].devicetypes[device.driverId]) cls.capabilities[capability].brands[driverUri].devicetypes[device.driverId] = { id: device.driverId };
+		if (!cls.capabilities[capability].brands[ownerUri]) cls.capabilities[capability].brands[ownerUri] = { id: ownerUri, name: this.apps[ownerUriLast] ? this.apps[ownerUriLast].name : ownerUri, devicetypes: {} };
+		if (!cls.capabilities[capability].brands[ownerUri].devicetypes[driverId]) cls.capabilities[capability].brands[ownerUri].devicetypes[driverId] = { id: driverId };
 
 	}
 
@@ -1860,11 +1847,11 @@ class DeviceCapabilities extends Homey.App {
 			let api = await this.refreshHomeyAPI();
 			let devices = this.devices;
 			let list = _.filter(devices, device => _.every(queries, q => device.name.toLowerCase().indexOf(q) > -1));
-			if (app) list = _.filter(list, device => device.driverUri == app);
+			if (app) list = _.filter(list, device => device.ownerUri == app);
 			if (insights) {
 				//let a = await (api).insights.getLogs();
-				let logs = _.map(_.uniqBy(_.filter(await (api).insights.getLogs(), l => l.uriObj ? l.uriObj.type == 'manager' : l.ownerUri.startsWith('homey:manager:')), 'uri'), l => { return { uri: (l.uri || l.ownerUri), uriName: 'Manager - ' + (l.uriObj ? l.uriObj.name : l.ownerName) }; });
-				_.each(logs, l => list.push({ id: (l.uri || l.ownerUri), name: l.uriName }));
+				let logs = _.map(_.uniqBy(_.filter(await (api).insights.getLogs(), l => l.ownerUri.startsWith('homey:manager:')), 'ownerUri'), l => { return { uri: l.ownerUri, uriName: 'Manager - ' + getDriverId(l.ownerUri) }; });
+				_.each(logs, l => list.push({ id: l.uri, name: l.uriName }));
 			}
 			if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
 			list = _.orderBy(list, 'name');
@@ -1885,7 +1872,7 @@ class DeviceCapabilities extends Homey.App {
 				if (args.device.id.startsWith('homey:manager:') && insights) {
 
 					//let a = await (api).insights.getLogs();
-					list = _.map(_.filter(await api.insights.getLogs(), l => (l.uri || l.ownerUri) == args.device.id), l => { return { uri: (l.uri || l.ownerUri), id: l.id, name: l.title }; });
+					list = _.map(_.filter(await api.insights.getLogs(), l => l.ownerUri == args.device.id), l => { return { uri: l.ownerUri, id: l.id, name: l.title }; });
 				} else {
 					let device = this.devices[args.device.id];
 					if (!device && (!args.device.id || !insights)) return defer.resolve([]);
@@ -1895,7 +1882,7 @@ class DeviceCapabilities extends Homey.App {
 					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
 
 				}
-				if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1);
+				if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1 || cap.id.toLowerCase().indexOf(query) > -1);
 				list = _.orderBy(list, 'name');
 				defer.resolve(list);
 			}).bind(this));
@@ -1925,7 +1912,7 @@ class DeviceCapabilities extends Homey.App {
 			let defer = new Defer(10000);
 
 			let drivers = this.drivers;
-			let list = _.filter(drivers, driver => _.every(queries, q => driver.name.toLowerCase().indexOf(q) > -1) && (!args.brand || args.brand === 'undefined' || (driver.uri || driver.ownerUri) === 'homey:app:' + args.brand.id));
+			let list = _.filter(drivers, driver => _.every(queries, q => driver.name.toLowerCase().indexOf(q) > -1) && (!args.brand || args.brand === 'undefined' || driver.ownerUri === 'homey:app:' + args.brand.id));
 			list = _.orderBy(list, 'name');
 			let array = _.map(list, driver => { return { id: driver.id, name: driver.name }; });
 			defer.resolve(array);
@@ -1933,33 +1920,16 @@ class DeviceCapabilities extends Homey.App {
 			return defer.promise;
 		}).bind(this);
 	}
-	// async getDisconnectedHomeyApi() {
-	// 	const api = new HomeyAPIApp({
-	// 		localUrl: this.localURL,
-	// 		baseUrl: this.localURL,
-	// 		token: this.sessionToken,
-	// 		apiVersion: 2,
-	// 		online: true,
-	// 	}, () => {
-	// 		// called by HomeyAPI on 401 requests
-	// 		api.setToken(this.sessionToken);
+	
+	// async destroyAndRefreshHomeyAPI() {
+	// 	this.homeyAPI.destroy();
+	// 	this.homeyAPI = null;
+	// 	//this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
+
+	// 	this.homeyAPI = await HomeyAPI.createAppAPI({
+	// 		homey: this.homey,
 	// 	});
-	// 	return api;
 	// }
-
-	async destroyAndRefreshHomeyAPI() {
-		this.homeyAPI.destroy();
-		this.homeyAPI = null;
-		this.homeyAPI = await HomeyAPI.forCurrentHomey(this.homey);
-		//this.homeyAPI = new HomeyAPI(this.homey);
-
-
-		//this.homeyAPI = new HomeyAPIApp({homey:this.homey});
-
-		// this.homeyAPI = await HomeyAPI.createAppAPI({
-		// 	homey: this.homey,
-		//   });
-	}
 
 	async refreshHomeyAPI(id) {
 		if (id === undefined && this.homeyAPI) {
@@ -1972,29 +1942,29 @@ class DeviceCapabilities extends Homey.App {
 			this.refreshDefer = new Defer();
 
 			try {
-				//this.homeyAPI = new HomeyAPIApp({homey:this.homey}); // SET THE CONNECTS
 
-				// this.homeyAPI = HomeyAPI.createAppAPI({
-				// 	homey: this.homey,
-				//   });
-				// this.homeyAPI.then(x => this.homeyAPI = x);
-				// await this.homeyAPI;
-
-
-
-				// this.homeyAPI.devices.connect();
-				// this.homeyAPI.zones.connect();
-				// this.homeyAPI.apps.connect();
-				// this.homeyAPI.drivers.connect();
-				// this.homeyAPI.flow.connect();
-
-				// SET THE CONNECTS
-				// SET THE CONNECTS
-				// SET THE CONNECTS
-
-				this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
+				this.homeyAPI = HomeyAPI.createAppAPI({
+					homey: this.homey,
+				});
 				this.homeyAPI.then(x => this.homeyAPI = x);
 				await this.homeyAPI;
+
+
+				// SET THE CONNECTS
+
+				this.homeyAPI.devices.connect();
+				this.homeyAPI.zones.connect();
+				this.homeyAPI.apps.connect();
+				this.homeyAPI.drivers.connect();
+				this.homeyAPI.flow.connect();
+
+				// SET THE CONNECTS
+				// SET THE CONNECTS
+				// SET THE CONNECTS
+
+				// this.homeyAPI = HomeyAPI.forCurrentHomey(this.homey); // Refresh
+				// this.homeyAPI.then(x => this.homeyAPI = x);
+				// await this.homeyAPI;
 
 
 				////this.homeyAPI.devices.on(['device.create', 'device.delete', 'device.update'], x => { this.refreshDevices(x); });
@@ -2043,13 +2013,11 @@ class DeviceCapabilities extends Homey.App {
 
 				this.homeyAPI.flow.on('advancedflow.create', x => {
 					this.homey.api.realtime('createdadvancedflow', x);
-					// let avdDriver = this.homey.drivers.getDriver('virtualdevice');
-					// if (avdDriver && avdDriver.onCreatedAdvancedFlows) avdDriver.onCreatedAdvancedFlows(x);
 				});
 
 				this.refreshDefer.resolve(this.homeyAPI);
 				this.refreshDefer = null;
-				//this.log('App size: ', this.roughSizeOfObject(this));
+
 				return this.homeyAPI;
 			} catch (error) {
 				this.error(error);
@@ -2060,12 +2028,11 @@ class DeviceCapabilities extends Homey.App {
 		if (!this.apis) this.apis = {};
 		if (!this.apis[id]) {
 			this.log('refreshHomeyAPI id:', id);
-			this.apis[id] = new HomeyAPIApp({ homey: this.homey });
+			//this.apis[id] = new HomeyAPIApp({ homey: this.homey });
 
-			// this.apis[id] = await HomeyAPI.createAppAPI({
-			// 	homey: this.homey,
-			//   });
-			// this.apis[id] = await HomeyAPI.forCurrentHomey(this.homey);
+			this.apis[id] = await HomeyAPI.createAppAPI({
+				homey: this.homey,
+			});
 		}
 		return this.apis[id];
 	}
@@ -2102,13 +2069,13 @@ class DeviceCapabilities extends Homey.App {
 							this.trigger_app_device_available.trigger({
 								deviceName: device.name,
 								deviceId: device.id,
-								appId: device.driverUri,
-								deviceType: device.driverId,
+								appId: device.ownerUri,
+								deviceType: getDriverId(device.driverId),
 								available: !!device.available,
 								unavailableMessage: (device.unavailableMessage || '').toString(),
 								zoneName: zone.name,
 								zoneId: zone.id
-							}, { available: !!device.available, brand: device.driverUri, devicetype: device.driverId });
+							}, { available: !!device.available, brand: device.ownerUri, devicetype: getDriverId(device.driverId) });
 						} catch (error) {
 							this.error(error);
 						}
@@ -2141,7 +2108,7 @@ class DeviceCapabilities extends Homey.App {
 			capabilitiesObj: d.capabilitiesObj,
 			class: d.class,
 			driverId: d.driverId,
-			driverUri: d.driverUri,
+			ownerUri: d.ownerUri,
 			insights: d.insights,
 			name: d.name,
 			zone: d.zone,

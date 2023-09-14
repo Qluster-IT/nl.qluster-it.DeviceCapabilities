@@ -736,6 +736,34 @@ const asv_settings = {
       "showAs": 'picker',
       "order": 1
     }
+
+
+
+    ,
+    {
+      "id": "devicecapabilities_picker-bright-regular-mood-colour-tv-cinema",
+      "label": "Bright, Regular, Mood, Colour, TV, Cinema",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-automatic-manual-off",
+      "label": "Automatic, Manual, Off",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-bright-regular-mood-night",
+      "label": "Bright, Regular, Mood, Night",
+      "showAs": 'picker',
+      "order": 1
+    },
+    {
+      "id": "devicecapabilities_picker-evcharge-compressor-machines-workbench",
+      "label": "EV Charge, Compressor, Machines, Workbench",
+      "showAs": 'picker',
+      "order": 1
+    }
   ],
   
 

@@ -153,19 +153,19 @@ for (var i = 0; i < icons.length; i++) {
     ', "icon": "' + ((icons[i].startsWith('custom_') ? '/userdata/customicons/' + icons[i] : '/assets/icons/' + icons[i]) + '.svg') + '" \r\n'
     : '');
 
-// str += '"measure_sensor' + header + '": { \r\n' +
-//   '      "type": "number", \r\n' +
-//   '      "title": { \r\n' +
-//   '        "en": "Status" \r\n' +
-//   '      }, \r\n' +
-//     '      "getable": true, \r\n' +
-//     '      "setable": true, \r\n' +
-//     '      "uiComponent": "sensor", \r\n' +
-//   '      "uiQuickAction": true, \r\n' +
-//   '      "insights": true, \r\n' +
-//   '      "value": "" \r\n' +
-//     icon +
-//   '    }, \r\n';
+  // str += '"measure_sensor' + header + '": { \r\n' +
+  //   '      "type": "number", \r\n' +
+  //   '      "title": { \r\n' +
+  //   '        "en": "Status" \r\n' +
+  //   '      }, \r\n' +
+  //     '      "getable": true, \r\n' +
+  //     '      "setable": true, \r\n' +
+  //     '      "uiComponent": "sensor", \r\n' +
+  //   '      "uiQuickAction": true, \r\n' +
+  //   '      "insights": true, \r\n' +
+  //   '      "value": "" \r\n' +
+  //     icon +
+  //   '    }, \r\n';
 
 
   str += '"devicecapabilities_text' + header + '": { \r\n' +
@@ -539,7 +539,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
       ]
     },`;
 
-    str += `"devicecapabilities_picker-automatic-electricity-gas-off_list": {
+str += `"devicecapabilities_picker-automatic-electricity-gas-off_list": {
       "type": "enum",
       "getable": true,
       "setable": true,
@@ -585,8 +585,8 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
       ]
     },`;
 
-        
-    str += `"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
+
+str += `"devicecapabilities_picker-auto-low-medium-high-turbo_list": {
       "type": "enum",
       "getable": true,
       "setable": true,
@@ -640,7 +640,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
       ]
     },`;
 
-    str += `"devicecapabilities_picker-EVCC_list": {
+str += `"devicecapabilities_picker-EVCC_list": {
       "title": {
         "en": "EVCC.io"
       },
@@ -688,7 +688,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
       ]
     },`;
 
-    str += `"devicecapabilities_picker-automatic-alwayson": {
+str += `"devicecapabilities_picker-automatic-alwayson": {
       "type": "enum",
       "getable": true,
       "setable": true,
@@ -717,7 +717,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
-  str += `"devicecapabilities_picker-open-stop-close": {
+str += `"devicecapabilities_picker-open-stop-close": {
     "type": "enum",
     "getable": true,
     "setable": true,
@@ -754,7 +754,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
-  str += `"devicecapabilities_picker-auto-cool-dry-fan": {
+str += `"devicecapabilities_picker-auto-cool-dry-fan": {
     "type": "enum",
     "getable": true,
     "setable": true,
@@ -799,7 +799,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
-  str += `"devicecapabilities_picker-off-running-finished_not_emptied-finished": {
+str += `"devicecapabilities_picker-off-running-finished_not_emptied-finished": {
     "type": "enum",
     "getable": true,
     "setable": true,
@@ -844,7 +844,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
   },`;
 
 
-  str += `"devicecapabilities_picker-present-away-comingsoon": {
+str += `"devicecapabilities_picker-present-away-comingsoon": {
     "type": "enum",
     "getable": true,
     "setable": true,
@@ -882,7 +882,7 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
 
 
 
-  str += `"devicecapabilities_picker-home-away-sleep-vacation": {
+str += `"devicecapabilities_picker-home-away-sleep-vacation": {
     "type": "enum",
     "getable": true,
     "setable": true,
@@ -922,7 +922,192 @@ str += `"devicecapabilities_picker-heating-cooling-off_list": {
     ]
   },`;
 
+str += `"devicecapabilities_picker-bright-regular-mood-colour-tv-cinema": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Bright, Regular, Mood, Colour, TV, Cinema"
+    },
+    "values": [
+      {
+        "id": "bright",
+        "title": {
+          "en": "Bright",
+          "nl": "Helder",
+          "de": "Hell"
+        }
+      },
+      {
+        "id": "regular",
+        "title": {
+          "en": "Regular",
+          "nl": "Normaal",
+          "de": "Normal"
+        }
+      },
+      {
+        "id": "mood",
+        "title": {
+          "en": "Mood",
+          "nl": "Sfeer",
+          "de": "Stimmung"
+        }
+      },
+      {
+        "id": "colour",
+        "title": {
+          "en": "Colour",
+          "nl": "Kleur",
+          "de": "Bunt"
+        }
+      },
+      {
+        "id": "tv",
+        "title": {
+          "en": "TV",
+          "nl": "TV",
+          "de": "TV"
+        }
+      },
+      {
+        "id": "cinema",
+        "title": {
+          "en": "Cinema",
+          "nl": "Bios",
+          "de": "Kino"
+        }
+      }
+    ]
+  },`;
 
+
+str += `"devicecapabilities_picker-automatic-manual-off": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Automatic, Manual, Off"
+    },
+    "values": [
+      {
+        "id": "automatic",
+        "title": {
+          "en": "Automatic",
+          "nl": "Automatisch",
+          "de": "Automatisch"
+        }
+      },
+      {
+        "id": "manual",
+        "title": {
+          "en": "Manual",
+          "nl": "Handmatig",
+          "de": "Manuell"
+        }
+      },
+      {
+        "id": "off",
+        "title": {
+          "en": "Off",
+          "nl": "Uit",
+          "de": "Aus"
+        }
+      }
+    ]
+  },`;
+
+
+str += `"devicecapabilities_picker-bright-regular-mood-night": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "title": {
+      "en": "Bright, Regular, Mood, Night"
+    },
+    "values": [
+      {
+        "id": "bright",
+        "title": {
+          "en": "Bright",
+          "nl": "Helder",
+          "de": "Hell"
+        }
+      },
+      {
+        "id": "regular",
+        "title": {
+          "en": "Regular",
+          "nl": "Normaal",
+          "de": "Normal"
+        }
+      },
+      {
+        "id": "mood",
+        "title": {
+          "en": "Mood",
+          "nl": "Sfeer",
+          "de": "Stimmung"
+        }
+      },
+      {
+        "id": "night",
+        "title": {
+          "en": "Night",
+          "nl": "Nacht",
+          "de": "Nacht"
+        }
+      }
+    ]
+  },`;
+
+
+str += `"devicecapabilities_picker-evcharge-compressor-machines-workbench": {
+    "type": "enum",
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",    
+    "title": {
+      "en": "EV Charge, Compressor, Machines, Workbench"
+    },
+    "values": [
+      {
+        "id": "ev charge",
+        "title": {
+          "en": "EV charge",
+          "nl": "EV laden",
+          "de": "BEV laden"
+        }
+      },
+      {
+        "id": "compressor",
+        "title": {
+          "en": "Compressor",
+          "nl": "Compressor",
+          "de": "Kompressor"
+        }
+      },
+      {
+        "id": "machines",
+        "title": {
+          "en": "Machines",
+          "nl": "Machines",
+          "de": "Machines"
+        }
+      },
+      {
+        "id": "workbench",
+        "title": {
+          "en": "Workbench",
+          "nl": "Werkbank",
+          "de": "Werkbank"
+         }
+      }
+    ]
+  },`;
 
 
 console.log(str);
