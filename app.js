@@ -1213,9 +1213,9 @@ class DeviceCapabilities extends Homey.App {
 		return [8, 4, 4, 4, 12].map(n => crypto.randomBytes(n / 2).toString("hex")).join("-");
 	}
 
-	async getDevice({ id, full = false, skipCache = false }) {
+	async getDevice({ id, full = false, $skipCache = false }) {
 		let device = this.devices[id];
-		if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full) || skipCache) {
+		if (!device || (device && device.capabilitiesObj && !device.setCapabilityValue && full) || $skipCache) {
 			const api = await this.refreshHomeyAPI();
 			device = (this.devices[id] = await api.devices.getDevice({ id: id, $skipCache: true }));
 		}

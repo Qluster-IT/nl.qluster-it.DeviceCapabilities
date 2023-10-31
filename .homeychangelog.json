@@ -766,5 +766,8 @@
   },
   "2.15.2": {
     "en": "Improved: More default reflection calculations.\nDeprecated the Status Indicator Field and placed multiple messages about the field and howto set a status indicator."
+  },
+  "2.15.3": {
+    "en": "Bugfixed: Homey-api v3 issues."
   }
 }
