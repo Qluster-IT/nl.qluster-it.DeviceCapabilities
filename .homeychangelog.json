@@ -769,5 +769,8 @@
   },
   "2.15.3": {
     "en": "Bugfixed: Homey-api v3 issues."
+  },
+  "2.15.4": {
+    "en": "Updated: Homey-api."
   }
 }
