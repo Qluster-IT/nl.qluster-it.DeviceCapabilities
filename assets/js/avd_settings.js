@@ -735,11 +735,7 @@ const asv_settings = {
       "label": "Home, Away, Sleep, Vacation",
       "showAs": 'picker',
       "order": 1
-    }
-
-
-
-    ,
+    },
     {
       "id": "devicecapabilities_picker-bright-regular-mood-colour-tv-cinema",
       "label": "Bright, Regular, Mood, Colour, TV, Cinema",

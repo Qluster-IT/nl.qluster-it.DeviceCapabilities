@@ -42,6 +42,13 @@
 				<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
 			</select>
 		</div>
+		<div class="field">
+			<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+			</div>
+			<input class="value" type="checkbox" ng-model="s['energyCumulative']" />
+		</div>
+		<!-- <div ng-else execute="s['energyCumulative']=undefined;" ></div> -->
+			
 		<div class="group header white text-center">
 			{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}
 		</div>
@@ -654,12 +661,18 @@
 				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
 				</div>
 				<div ng-else execute="s['number'+($index+1)+'ReflectId']=undefined;s['number'+($index+1)+'ReflectDevices']=undefined;s['number'+($index+1)+'ReflectProperty']=undefined;s['number'+($index+1)+'ReflectFormat']=undefined;s['number'+($index+1)+'ReflectCalculation']=undefined;s['number'+($index+1)+'ReflectDebounce']=undefined;" ></div>
-				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
-					<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+				<div class="field" ng-if="['meter_power' ].indexOf(s['number'+($index+1)+'ShowAs'])>-1">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulativeImported') || 'Cumulative Imported'}}</span>
 				</div>
-				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulative']" />
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulativeImported']" />
 				</div>
-				<div ng-else execute="s['number'+($index+1)+'EnergyCumulative']=undefined;" ></div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulativeExported']=undefined;" ></div>
+				<div class="field" ng-if="['meter_power' ].indexOf(s['number'+($index+1)+'ShowAs'])>-1">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulativeExported') || 'Cumulative Exported'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulativeExported']" />
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulativeExported']=undefined;" ></div>
 
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.units' || 'Units')}}</span> <span

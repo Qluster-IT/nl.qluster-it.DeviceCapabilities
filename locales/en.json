@@ -179,6 +179,8 @@
 		"prefixedList":"Prefixed list",		
 		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!",
 		"cumulative":"Cumulative",
+		"cumulativeImported":"Cumulative Imported",
+		"cumulativeExported":"Cumulative Exported",
 
 		"reflect":"Reflect",
 		"reflectHint":"Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.",

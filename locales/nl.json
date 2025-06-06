@@ -172,6 +172,8 @@
 		"prefixedList":"Vooraf ingestelde lijst",		
 		"prefixedListHint":"Momenteel zijn alleen vooraf vastgestelde lijsten beschikbaar. Ga naar het forum om je eigen aan te vragen!",
 		"cumulative":"Cumulatief",
+		"cumulativeImported":"Cumulatief geïmporteerd",
+		"cumulativeExported":"Cumulatief geëxporteerd",
 
 
 		"reflect":"Reflecteer",

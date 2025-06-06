@@ -173,6 +173,8 @@
 		"prefixedList":"Vorangestellte Liste",		
 		"prefixedListHint":"Derzeit sind nur vorgefertigte Listen verfügbar. Gehen Sie zum Forum, um Ihre eigene anzufordern!",
 		"cumulative":"Kumulativ",
+		"cumulativeImported":"Kumulativ Importiert",
+		"cumulativeExported":"Kumulativ Exportiert",
 		
 
 		"reflect":"Reflect",

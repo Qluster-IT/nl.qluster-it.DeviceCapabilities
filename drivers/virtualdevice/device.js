@@ -108,9 +108,15 @@ module.exports = class AvdDevice extends Homey.Device {
 					if (this.Settings['number' + i + 'Max'] === -1) this.Settings['number' + i + 'Max'] = undefined;
 				}
 				delete this.Settings.iconNames;
+				for(let settingName in this.Settings) {
+					if(settingName!='energyCumulative' && settingName.endsWith('EnergyCumulative')) {
+						if(this.Settings[settingName]===true) this.Settings['energyCumulative'] = true;
+						delete this.Settings[settingName];
+					}
+				}
 			}
 
-			let a = this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
+			//let a = this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
 			await this.setSettings({ "labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend") });
 
 			try {
@@ -661,6 +667,8 @@ module.exports = class AvdDevice extends Homey.Device {
 
 			let button1Reset = false;
 			let energyCumulative = false;
+			let energyCumulativeImported = undefined;
+			let energyCumulativeExported = undefined;
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
 				const fieldCount = type == "status" ? 1 : Math.max(settings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0, oldSettings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0);
@@ -962,8 +970,10 @@ module.exports = class AvdDevice extends Homey.Device {
 							// 	let b = a;
 							// 	//await this.homey.insights.deleteLog({id:secondCap});
 							// }
-							if (type == 'number' && cap === 'measure_power' && settings[type + i + 'EnergyCumulative']) energyCumulative = true;
 
+							if (settings[type + i + 'EnergyCumulativeImported']) energyCumulativeImported = createSecondCap ? secondCap : cap;
+							if (settings[type + i + 'EnergyCumulativeExported']) energyCumulativeExported = createSecondCap ? secondCap : cap;
+							
 							if (type == 'button' && disabled && !pushbutton) {
 								await this.setCapabilityValue(cap, checked);
 							}
@@ -977,14 +987,22 @@ module.exports = class AvdDevice extends Homey.Device {
 
 				}
 			}
+			if (settings['energyCumulative']) energyCumulative = true;
 
 			let energy = await this.getEnergy();
 
-			if (!energy || energyCumulative != energy.cumulative) {
+			if (!energy || energyCumulative != energy.cumulative
+				|| energyCumulativeImported!=energy.cumulativeImportedCapability
+				|| energyCumulativeExported!=energy.cumulativeExportedCapability
+			) {
 				// if (!energy) energy = { cumulative: energyCumulative };
 				// else energy.cumulative = energyCumulative;
 				// if (!energyCumulative) energy = {};
-				energy = { cumulative: energyCumulative };
+				energy = { };//cumulative: energyCumulative };
+				if(energyCumulative) energy.cumulative = energyCumulative;
+				if(energyCumulativeImported) energy.cumulativeImportedCapability = energyCumulativeImported;
+				if(energyCumulativeExported) energy.cumulativeExportedCapability = energyCumulativeExported;
+
 				//if (!energyCumulative) energy = {};
 				// energy = {
 				// 	approximation: {
@@ -1002,14 +1020,16 @@ module.exports = class AvdDevice extends Homey.Device {
 			// } 
 
 			await this.setCameras(settings);
-			await this.setStoreValue('Settings', settings);
-
-
+			
 			if (settings.imported) delete settings.imported;
 			if (settings.flows) delete settings.flows;
 			if (settings.advancedflows) delete settings.advancedflows;
 			//if(settings.originalId) delete settings.originalId; // Maybe we will use this later?
 
+			await this.setStoreValue('Settings', settings);
+
+
+			
 			//if(command=="") command = null;
 			this.Settings = settings;
 
