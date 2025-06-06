@@ -113,8 +113,8 @@ module.exports = class AvdDriver extends Homey.Driver {
         });
         
         //true || process.env.DEBUG === '1' || 
-        if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {
-            await this.homey.settings.set('Version', app.manifest.version);
+        if(app.versionChanged) {
+            //await this.homey.settings.set('Version', app.manifest.version);
         } else {
             try {             
                 this.defaultIcons =  await this.homey.settings.get('DefaultIcons');

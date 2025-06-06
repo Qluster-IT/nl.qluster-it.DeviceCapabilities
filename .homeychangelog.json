@@ -774,6 +774,6 @@
     "en": "Updated: Homey-api."
   },
   "2.16.0": {
-    "en": "Updated: Homey-api to 3.11.3.\nAdded option for cumulative for meter_gas, meter_water and meter_power.\nCumulative is now a base device property and no longer a capability property.\nAdded cumulativeImportedCapability and cumulativeExportedCapability for meter_power.\n"
+    "en": "Updated: Homey-api to 3.11.3.\nAdded option for cumulative for meter_gas, meter_water and meter_power.\nCumulative is now a base device property and no longer a capability property.\nAdded cumulativeImportedCapability and cumulativeExportedCapability for meter_power.\nAdded all classes and capabilities (ShowAs) dynamicly (in your own language)."
   }
 }

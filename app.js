@@ -20,6 +20,7 @@ const FindObject = require('./lib/TheFindObjectsinFlowsScript');
 const { BL } = require('betterlogiclibrary');
 const { CG } = require('chronograph-npm');
 const { getDriverId, getOwnerUri } = require("./lib/homeyApiHelper");
+const { getDeviceClasses, getCapabilities } = require('homey-lib');
 
 const APP_ID_BLL = 'net.i-dev.betterlogic';
 const APP_ID_CG = 'nl.fellownet.chronograph';
@@ -88,6 +89,51 @@ class DeviceCapabilities extends Homey.App {
 		await this.resetReflectAppsSettings();
 
 		this.appPath = this.homey.platform == 'local' && this.homey.platformVersion == 1 ? '/' : '/app/';
+		let language = this.homey.i18n.getLanguage();
+
+		/// REMOVE TRUE
+		if(this.getVersionChanged(this.homey.settings.get('Version') || "0.0.0")) {			
+            await this.homey.settings.set('Version', this.homey.app.manifest.version);
+			this.homey.app.versionChanged = true;
+		}
+		if(this.getHomeyVersionChanged(this.homey.settings.get('HomeyVersion') || "0.0.0")) {			
+            await this.homey.settings.set('HomeyVersion', this.homey.version);
+			this.homey.app.homeyVersionChanged = true;
+		}
+		if(language != (this.homey.settings.get('Language'))) {						
+            await this.homey.settings.set('Language', language);
+			this.homey.app.languageChanged = true;
+		}
+		if(this.homey.app.versionChanged || this.homey.app.homeyVersionChanged || this.homey.app.languageChanged) {
+
+			//if (await this.homey.app.fileExists(this.appPath +'assets/js/avd_settings.json')) {
+			let avd_settings = require(this.appPath +'assets/js/avd_settings.json');
+
+			let classes = getDeviceClasses();
+			let caps = getCapabilities();
+			for (let i = 0; i < Object.keys(classes).length; i++) {
+				const key = Object.keys(classes)[i];
+				const cls = classes[key];
+				if(!cls.minCompatibility || this.getRequiredVersion(cls.minCompatibility)) {
+					if(!avd_settings.deviceClasses.find(x=>x.id==key)) 
+						avd_settings.deviceClasses.push({
+							id:key,
+							label:cls.title[language] ? cls.title[language] : cls.title['en'],
+							order:2
+						});
+				}        
+			}
+			this.addCapabilities(avd_settings.textShowAs, 'string', caps, language);
+			this.addCapabilities(avd_settings.listShowAs, 'enum', caps, language);
+			this.addCapabilities(avd_settings.booleanShowAs, 'boolean', caps, language, false);
+			this.addCapabilities(avd_settings.buttonShowAs1, 'boolean', caps, language, true);
+			this.addCapabilities(avd_settings.buttonShowAsRest, 'boolean', caps, language, true);
+			this.addCapabilities(avd_settings.numberShowAs, 'number', caps, language);
+				
+			await this.homey.app.writeFile('/userdata/avd_settings.js', "const avd_settings = " + JSON.stringify(avd_settings));
+			//}
+        } 
+		
 
 
 		this.localURL = await this.homey.api.getLocalUrl();
@@ -2225,6 +2271,63 @@ class DeviceCapabilities extends Homey.App {
 		return (typeof (capability.lastUpdated) == 'number' ? new Date(capability.lastUpdated) : capability.lastUpdated instanceof Date ? capability.lastUpdated : new Date(capability.lastUpdated));
 	}
 
+	getRequiredVersion(version) {
+	if(this.homey.version!=version) {
+		let versionArr = this.homey.version.split(".");
+		let versionUpdatedToArr = version.split(".");
+		return (
+		parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
+		(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
+		(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[2]))
+		);
+	}
+	return true;
+	}
+
+	getVersionChanged(versionUpdatedTo) {
+        if(this.homey.app.manifest.version!=versionUpdatedTo) {
+			let versionArr = this.homey.app.manifest.version.split(".");
+			let versionUpdatedToArr = versionUpdatedTo.split(".");
+			return (
+				parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[2]))
+				);
+		}
+        return false;
+    }
+
+	getHomeyVersionChanged(versionUpdatedTo) {
+        if(this.homey.version!=versionUpdatedTo) {
+			let versionArr = this.homey.version.split(".");
+			let versionUpdatedToArr = versionUpdatedTo.split(".");
+			return (
+				parseInt(versionArr[0])> parseInt(versionUpdatedToArr[0]) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])> parseInt(versionUpdatedToArr[1])) || 
+				(parseInt(versionArr[0])=== parseInt(versionUpdatedToArr[0]) && parseInt(versionArr[1])=== parseInt(versionUpdatedToArr[1]) && parseInt(versionArr[2])> parseInt(versionUpdatedToArr[2]))
+				);
+		}
+        return false;
+    }
+
+	addCapabilities(arr, type, capabilities, language, setable , uiComponents) {
+		for (let i = 0; i < Object.keys(capabilities).length; i++) {
+			const key = Object.keys(capabilities)[i];
+			const cap = capabilities[key];
+			if(cap.type!=type) continue;
+			if((setable===true || setable===false) && cap.setable!==setable) continue;
+			if(uiComponents && !uiComponents.find(x=>x==cap.uiComponent)) continue;
+			if(!cap.minCompatibility || this.getRequiredVersion(cap.minCompatibility)) {
+				if(!arr.find(x=>x.id==key)) 
+					arr.push({
+						id:key,
+						label:(cap.title[language] ? cap.title[language] : cap.title['en']) + ' (' + cap.uiComponent + ', '+key+')',
+						order: ['target_temperature', 'measure_temperature'].indexOf(key)>-1 ? 2 : 3,
+						uiComponent:cap.uiComponent
+					});
+			}        
+		}
+	}
 }
 
 module.exports = DeviceCapabilities;

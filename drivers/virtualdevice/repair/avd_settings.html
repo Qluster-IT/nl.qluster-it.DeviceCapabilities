@@ -4,7 +4,8 @@
 <script type="text/javascript" src="../../../assets/js/smart-table.min.js"></script>
 <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 <script type="text/javascript" src="../../../assets/js/angular-elif.js"></script>
-<script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
+<script type="text/javascript" src="../../../userdata/avd_settings.js"></script>
+<script type="text/javascript" src="../../../assets/js/avd_settings_sort.js"></script>
 <script type="text/javascript" src="../../../assets/js/default.js"></script>
 
 <script type="text/javascript" src="../../../assets/js/bootstrap.bundle.min.js"></script>
@@ -1721,18 +1722,18 @@ ${vars.textSettings}
 				vars.template=null;
 			}
 
-			$scope.numberShowAs = asv_settings.numberShowAs;
-			$scope.textShowAs = asv_settings.textShowAs;
+			$scope.numberShowAs = avd_settings.numberShowAs;
+			$scope.textShowAs = avd_settings.textShowAs;
 
-			$scope.booleanShowAs = asv_settings.booleanShowAs;
+			$scope.booleanShowAs = avd_settings.booleanShowAs;
 
-			$scope.buttonShowAs1 = asv_settings.buttonShowAs1;
-			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
-			$scope.listShowAs = asv_settings.listShowAs;
+			$scope.buttonShowAs1 = avd_settings.buttonShowAs1;
+			$scope.buttonShowAsRest = avd_settings.buttonShowAsRest;
+			$scope.listShowAs = avd_settings.listShowAs;
 
-			$scope.deviceClasses = asv_settings.deviceClasses;
-			$scope.listPrefixedLists = asv_settings.listPrefixedLists;
-			$scope.reflectApps = asv_settings.reflectApps;
+			$scope.deviceClasses = avd_settings.deviceClasses;
+			$scope.listPrefixedLists = avd_settings.listPrefixedLists;
+			$scope.reflectApps = avd_settings.reflectApps;
 
 			// $scope.setListShowAs = function(listId) {
 			// 	$scope.s[listId+'ShowAs'] = _.find($scope.listPrefixedLists, x=> x.id===$scope.s[listId+'PrefixedList']).showAs;
@@ -2209,8 +2210,8 @@ ${vars.textSettings}
 
 				console.log('ready done');
 			} else {
-				$scope.customicons = asv_settings.customicons;
-				$scope.s = asv_settings.exampleSettings;
+				$scope.customicons = avd_settings.customicons;
+				$scope.s = avd_settings.exampleSettings;
 				$scope.customIconsAvailable = [
 					'custom_1',  'custom_2',  'custom_3',
 					'custom_4',  'custom_5',  'custom_6',  'custom_7',
