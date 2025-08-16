@@ -603,7 +603,8 @@ class DeviceCapabilities extends Homey.App {
 						if (args.capability.uri) {
 							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
-							if (device) targetInsight = _.find(device.insights, x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.device.id + ':' + args.capability.id)); });
+							//var logs = device.insights || await this.getLogs(device);
+							if (device) targetInsight = _.find(device.insights || await this.getLogs(device), x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.device.id + ':' + args.capability.id)); });
 						}
 
 						if (targetInsight) {
@@ -1620,7 +1621,7 @@ class DeviceCapabilities extends Homey.App {
 							capability.listener = device.device.makeCapabilityInstance(capability.id, async (value) => {
 								let tokens = { text1: '', number1: 0, boolean1: false, user: '', client: '' };
 								if (capability.changed) {
-									let targetInsight = device.device && device.device.insights ? _.find(device.device.insights, x => { return x.id == capability.id; }) : null;
+									let targetInsight = device.device && (device.device.insights  || await this.getLogs(device)) ? _.find(device.device.insights  || await this.getLogs(device), x => { return x.id == capability.id; }) : null;
 									if (typeof (value) == typeof (tokens.text1)) tokens.text1 = value;
 									else if (typeof (value) == typeof (tokens.number1)) {
 										tokens.number1 = value;
@@ -1931,7 +1932,10 @@ class DeviceCapabilities extends Homey.App {
 					list = _.map(device.capabilitiesObj, (capability, key) => { return { id: key, name: capability.title || key, description: capability.type, getable: capability.getable, setable: capability.setable, deviceId: device.id }; });
 					if (getable === true || getable === false) list = _.filter(list, cap => cap.getable == getable);
 					if (setable === true || setable === false) list = _.filter(list, cap => cap.setable == setable);
-					if (insights === true || insights === false) list = _.filter(list, cap => { return (!!_.find(device.insights, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
+					if (insights === true || insights === false) {
+						let logs = device.insights || await this.getLogs(device);
+						list = _.filter(list, cap => { return (!!_.find(logs, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
+					}
 
 				}
 				if (query) list = _.filter(list, cap => cap.name.toLowerCase().indexOf(query) > -1 || cap.id.toLowerCase().indexOf(query) > -1);
@@ -2096,6 +2100,14 @@ class DeviceCapabilities extends Homey.App {
 	// async refreshCapabilities(capabilty, type) {
 	// 	let b = capabilty;
 	// }
+
+	async getRealDevices(device) {
+		return await this.homeyAPI.devices.getDevice({ id: device.id, $skipCache: true });
+	}
+
+	async getLogs(device) {
+		return await (await this.getRealDevices(device)).getLogs();
+	}
 
 	async refreshDevices(device, type) {
 		this.log('refreshDevices');
