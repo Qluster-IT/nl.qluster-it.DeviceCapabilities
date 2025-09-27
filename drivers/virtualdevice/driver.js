@@ -704,7 +704,7 @@ module.exports = class AvdDriver extends Homey.Driver {
     async getTefTemplatesFromPosts() {
         let templates = [];
         let run = true;
-        const postsPerRun = 20;
+        const postsPerRun = 15;
         let runs = 0;
         let lastNumber = 0;
         let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
@@ -764,7 +764,7 @@ module.exports = class AvdDriver extends Homey.Driver {
     async getAvdTemplatesFromPosts() {
         let templates = [];
         let run = true;
-        const postsPerRun = 20;
+        const postsPerRun = 15;
         let runs = 0;
         let lastNumber = 0;
         let topic = TOPICS.avd[this.activeAvdSource] || TOPICS.avd.English;

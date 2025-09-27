@@ -778,5 +778,8 @@
   },
   "2.16.1": {
     "en": "Resolved: Some bugs with the new homey-api."
+  },
+  "2.16.2": {
+    "en": "Resolved: Not all Flow Exchange(r) and AVD Templates would load correctly."
   }
 }
