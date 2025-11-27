@@ -2622,9 +2622,9 @@
             "type": "text",
             "name": "device",
             "title": {
-              "en": "Device (tag)",
-              "nl": "Apparaat (tag)",
-              "de": "Gerät (tag)"
+              "en": "Device (tag/text)",
+              "nl": "Apparaat (tag/tekst)",
+              "de": "Gerät (tag/text)"
             },
             "placeholder": {
               "en": "Device",
@@ -2636,9 +2636,9 @@
             "type": "text",
             "name": "capability",
             "title": {
-              "en": "Capability (tag)",
-              "nl": "Capability (tag)",
-              "de": "Fähigkeit (tag)"
+              "en": "Capability (tag/text)",
+              "nl": "Capability (tag/tekst)",
+              "de": "Fähigkeit (tag/text)"
             },
             "placeholder": {
               "en": "Capability",
