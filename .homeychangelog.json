@@ -781,5 +781,8 @@
   },
   "2.16.2": {
     "en": "Resolved: Not all Flow Exchange(r) and AVD Templates would load correctly."
+  },
+  "2.16.3": {
+    "en": "Resolved: Fixed getting insights for measure_power."
   }
 }

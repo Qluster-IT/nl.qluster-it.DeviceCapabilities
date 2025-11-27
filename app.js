@@ -603,8 +603,12 @@ class DeviceCapabilities extends Homey.App {
 						if (args.capability.uri) {
 							targetInsight = { uri: args.capability.uri, id: args.capability.id };
 						} else {
-							//var logs = device.insights || await this.getLogs(device);
-							if (device) targetInsight = _.find(device.insights || await this.getLogs(device), x => { return (x.id == args.capability.id || (x.id == 'homey:device:' + args.device.id + ':' + args.capability.id)); });
+							var targetInsightId = args.capability.id;
+							if(targetInsightId=='measure_power') {
+								var logs = device.insights || await this.getLogs(device);
+								if(_.find(logs, l=>l.ownerId=='energy_power')) targetInsightId = 'energy_power';
+							}
+							if (device) targetInsight = _.find(device.insights || await this.getLogs(device), x => { return (x.id == targetInsightId || (x.id == 'homey:device:' + args.device.id + ':' + targetInsightId)); });
 						}
 
 						if (targetInsight) {
@@ -642,7 +646,11 @@ class DeviceCapabilities extends Homey.App {
 										this.error(error);
 										//continue;
 									}
-									v = device.capabilitiesObj[args.capability.id].value;
+									try {									
+										v =  device.capabilitiesObj[args.capability.id].value;	
+									} catch (error) {
+										//v = targetInsight.lastValue;
+									}
 								}
 								// if (typeof (lastOne.v) == typeof (tokens.text)) tokens.text = lastOne.v; // / There are no text insights (yet).
 								// else 
@@ -652,9 +660,13 @@ class DeviceCapabilities extends Homey.App {
 								}
 								else if (typeof (lastOne.v) == typeof (tokens.boolean)) tokens.boolean = lastOne.v;
 
+								let capObject = device.capabilitiesObj[args.capability.id];
+								// if(capObject===undefined || capObject === null) {
+								// 	capObject = {lastUpdated:targetInsight.__lastUpdated};
+								// }
 								if (insights.step && args.numberof == 0) {
 
-									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString() : new Date().toISOString();
+									let endD = device ? this.getLastUpdated(capObject).toISOString() : new Date().toISOString();
 									let end = new Date(endD);
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -663,7 +675,7 @@ class DeviceCapabilities extends Homey.App {
 								}
 								else if (insights.end && args.numberof == 0) {
 
-									let endD = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]).toISOString() : new Date().toISOString();
+									let endD = device ? this.getLastUpdated(capObject).toISOString() : new Date().toISOString();
 									let end = new Date(endD);
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -676,7 +688,7 @@ class DeviceCapabilities extends Homey.App {
 									tokens.changedonms = end.getTime();
 									tokens.durationtillnow = new Date().getTime() - end.getTime();
 								} else if (args.numberof == 0) {
-									let end = device ? this.getLastUpdated(device.capabilitiesObj[args.capability.id]) : new Date();//new Date(endD);
+									let end = device ? this.getLastUpdated(capObject) : new Date();//new Date(endD);
 									let endD = end.toISOString();
 									tokens.changedon = endD;
 									tokens.changedonms = end.getTime();
@@ -700,7 +712,7 @@ class DeviceCapabilities extends Homey.App {
 			set_capability_log.getArgument('device')
 				.registerAutocompleteListener(this.autocompleteDevice({ api: 'set_capability_log', insights: true }));
 			set_capability_log.getArgument('capability')
-				.registerAutocompleteListener(this.autocompleteCapability({ getable: true, api: 'set_capability_log', insights: true }));
+				.registerAutocompleteListener(this.autocompleteCapability({  api: 'set_capability_log', insights: true })); //getable: true,
 		}).bind(this));
 
 
@@ -1935,6 +1947,9 @@ class DeviceCapabilities extends Homey.App {
 					if (insights === true || insights === false) {
 						let logs = device.insights || await this.getLogs(device);
 						list = _.filter(list, cap => { return (!!_.find(logs, insight => { return (insight.id == cap.id || insight.id == 'homey:device:' + cap.deviceId + ':' + cap.id); })) === insights; });
+						// let listToAddFromInsights = _.filter(logs, log=>log.ownerId && !_.find(list, l=>l.id==log.ownerId));
+						// list = _.union(list, _.map(listToAddFromInsights, l => { return {id:l.ownerId, name:l.title, description:l.type, deviceId:args.device.id}}));
+						
 					}
 
 				}
