@@ -10,7 +10,7 @@
     "betterlogiclibrary": "^0.9.17",
     "chronograph-npm": "^0.1.3",
     "homey-api": "^3.14.21",
-    "homey-lib": "^2.35.4",
+    "homey-lib": "^2.52.0",
     "lodash-core": "^4.17.19"
   },
   "scripts": {
