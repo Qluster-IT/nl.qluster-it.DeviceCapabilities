@@ -356,7 +356,7 @@
 					<tbody>
 						<tr ng-repeat-start="value in editCustomListItem.values">
 							<td class="full-width" colspan="3">
-								<input type="text" required ng-model="value.id"/>
+								<input type="text" required ng-model="value.id" placeholder="ID"/>
 							</td>
 							<td>
 								<i class="fa fa-icon fa-arrow-up" ng-if="$index>0" ng-click="arrayMoveUp(editCustomListItem.values, value)"></i>
