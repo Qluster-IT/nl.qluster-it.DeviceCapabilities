@@ -14,7 +14,7 @@
 		"explain_customicons": "Hier kunt u de aangepaste pictogrammen wijzigen die voor velden kunnen worden gebruikt.",
 		"explain_customicons_doubleclick": "Dubbelklik op een naam om deze een omschrijving te geven, die zal worden weergegeven bij het selecteren van pictogrammen.",        
 		"functions":"Functies",
-		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.",
+		"functions_expressions":"Deze functies kunnen gebruikt worden binnen (javascript) expressies.\r\nBeter Logic Library bied echter meer mogelijkheden en wordt volledig ondersteund door deze app.",
 		"functions_be_aware":"Houd er rekening mee dat het verwijderen van functies, flows, welke die functie gebruiken, kan breken.",
 		"add_function_text":"Om een functie aan te maken, voert u een naam in, drukt u op Functie toevoegen en drukt u vervolgens op aanpassen hieronder.",
 		"add_function":"Functie toevoegen",

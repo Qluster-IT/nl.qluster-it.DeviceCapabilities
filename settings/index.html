@@ -17,14 +17,16 @@
 </head>
 
 <body ng-app="devicecapabilities" ng-controller="devicecapabilitiesCtrl as devicecapabilities"
-	ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates') || editFunctionItem || editdeviceicon || setCustomIcon || setDeviceIcon || editcustomicon, 'with-top-bar':view.showMain, 'with-top-bar-small':view.subid=='theflowexchangertemplates' && !vars.template }">
+	ng-class="{'with-main-buttons':(view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates') || editFunctionItem || editCustomListItem || editdeviceicon || setCustomIcon || setDeviceIcon || editcustomicon, 'with-top-bar':view.showMain, 'with-top-bar-small':view.subid=='theflowexchangertemplates' && !vars.template }">
 	<div class="header-buttons" ng-show="!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates'">
 		<div class="icon-button" ng-click="view.id='theflowexchanger'" ng-class="{active:view.id=='theflowexchanger'}" title="The Flow Exchanger"><span class="fa fa-icon fa-cloud-download-alt"></span></div>
 		<div class="icon-button" ng-click="view.id='virtualdevices'" ng-class="{active:view.id=='virtualdevices'}" title="AVD's"><span class="fa fa-icon fa-cogs"></span></div>
-		<div class="icon-button" ng-click="view.id='customicons'" ng-class="{active:view.id=='customicons'}" title="Custom Icons"><span class="fa fa-icon fa-grip-horizontal"></span></div>
+		<div class="icon-button" ng-click="view.id='customicons'" ng-class="{active:view.id=='customicons'}" title="Custom Icons"><span class="fa fa-icon fa-icons"></span></div>
+		<div class="icon-button" ng-click="view.id='lists'" ng-class="{active:view.id=='lists'}" title="Lists"><span class="fa fa-icon fa-list"></span></div>
 		<div class="icon-button" ng-click="view.id='functions'" ng-class="{active:view.id=='functions'}" title="Functions"><span class="fa fa-icon fa-code"></span></div>
 	</div>
 	<div class="main-panel" ng-show="view.showMain = (!editdeviceicon && !editcustomicon && !setCustomIcon && !setDeviceIcon && view.subid!='theflowexchangertemplates')">
+		
 		<!-- The Flow Exchange -->
 		<div class="setting-group" ng-show="view.id=='theflowexchanger'">
 			<h1 data-i18n="settings.title_theflowexchanger">The Flow Exchanger</h1>
@@ -221,13 +223,15 @@
 				</div>
 			</form>
 		</div>
+
+
 		<!-- Devices -->
 		<div class="setting-group" ng-show="view.id=='virtualdevices'">
-			<h1 data-i18n="settings.title_virtualdevices"></h1>
+			<h1 data-i18n="settings.title_virtualdevices">Your virtual devices</h1>
 			<div data-i18n="settings.explain_virtualdevices">Here you can edit the icon for Advanced Virtual Devices by uploading your own .svg icon, or choosing from the defaults.</div>
 			<div data-i18n="settings.explain_restart">After changing an icon, you personally need to restart the App before the new icon(s) is/are implemented.</div>
 			<ul id="devices">
-				<li class="device" ng-repeat="device in devices">
+				<li class="device" ng-repeat="device in devices | orderBy: 'name'">
 
 					<div class="name">{{device.name}}</div>
 					<div ng-if="device.icon.substr(8).startsWith('/userdata/virtualdeviceicons/')">
@@ -286,7 +290,112 @@
 			</div>
 		</div>
 
-		<!-- Functions  -->
+		
+		<!-- Custom lists  -->
+		<div class="setting-group" ng-show="view.id=='lists'">
+
+			<h1 data-i18n="settings.custom_lists">Custom lists</h1>
+			<p data-i18n="settings.custom_lists_explained">Here you can create your own custom lists to be used within AVD's.</p>
+			
+			<p data-i18n="settings.custom_lists_explained_aware">Be aware that removing or changing custom lists will disrupt AVD's and/or flows that depend on those lists.</p>
+			<div>
+				<div class="">
+					<div class="" data-i18n="settings.add_custom_list_text">To create a new custom list, enter a name and press Add List.</div>
+					<div class="">
+						<form role="form">
+							<div class="form-group">
+								<label for="customListName" data-i18n="settings.custom_list_name">List name</label>
+								<input class="form-control" id="customListName" type="text" ng-model="newCustomList.name" placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
+							</div>
+
+							<div class="form-group">
+								<button class="btn btn-default" type="button" ng-disabled="!newCustomList.name" ng-click="addCustomList()" data-i18n="settings.add_custom_list">Add custom list</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<table st-safe-src="customLists" st-table="displayedCollectionCustomLists" class="table table-striped list-table">
+					<thead>
+						<tr>
+							<th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
+						</tr>
+						<tr>
+							<th colspan="3">
+								<input st-search="name" placeholder="{{__('settings.search_for_name') || 'search for name'}}" class="input-sm form-control" type="search" />
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="customList in displayedCollectionCustomLists">
+							<td>{{customList.name}}</td>
+							<td><button ng-click="editCustomList(customList)" data-i18n="settings.edit">{{__('settings.edit') || 'Edit'}}</button></td>
+							<td><button ng-click="removeCustomList(customList)" data-i18n="settings.delete">{{__('settings.delete') || 'Delete'}}</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<form id="editCustomList" name="editCustomList" ng-if="editCustomListItem" class="top-view">
+			<div>
+				<span class="margin-right" data-i18n="settings.name">Name</span>	
+				<input class="input-sm form-control" style="height:40px;" ng-model="editCustomListItem.name" />			
+			</div>
+			<h1 class="margin-top full-width block" data-i18n="settings.items">Items</h1>
+
+			<button class="button fa fa-icon fa-plus-square block" ng-click="addCustomListValue();"></button>
+			<div class="block overflow-y" style="height:calc(100% - 60px)">
+				<table>
+					<thead>
+						<tr>
+							<th colspan="3" data-i18n="settings.items">ID</th>
+							<th colspan="4"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat-start="value in editCustomListItem.values">
+							<td class="full-width" colspan="3">
+								<input type="text" required ng-model="value.id"/>
+							</td>
+							<td>
+								<i class="fa fa-icon fa-arrow-up" ng-if="$index>0" ng-click="arrayMoveUp(editCustomListItem.values, value)"></i>
+							</td>
+							<td>
+								<i class="fa fa-icon fa-arrow-down" ng-if="$index<editCustomListItem.values.length-1" ng-click="arrayMoveDown(editCustomListItem.values, value)"></i>
+							</td>
+							<td>
+								<i class="fa fa-icon fa-trash" ng-click="arrayRemove(editCustomListItem.values, value);"></i>
+							</td>
+							<td>
+								<i class="fa fa-icon fa-plus" ng-click="addCustomListValueTitle(value);"></i>
+							</td>
+						</tr>
+						<tr ng-repeat-end ng-repeat="(lg, text) in value.title">
+							<td style="width:40px;">&nbsp;</td>
+							<td>
+								<select ng-model="lg" ng-change="objectRemove(value.title, '{{lg}}'); value.title[lg]=text;" ng-options="o as o for o in vars.locales" required>
+								</select>
+							</td>
+							<td>
+								<input type="text" ng-model="text" ng-change="value.title[lg]=text" placeholder="{{__('settings.description') || 'Description'}}" required/>
+							</td>
+							<td colspan="2">&nbsp;</td>
+							<td>
+								<i class="fa fa-icon fa-trash" ng-click="objectRemove(value.title, lg);"></i>
+							</td>
+							<td>&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="main-buttons">
+				<button class="button" ng-click="saveActiveCustomList()" data-i18n="settings.save" ng-disabled="!editCustomList.$valid">Save</button>
+				<button class="button" ng-click="saveActiveCustomList(true)" data-i18n="settings.save_close" ng-disabled="!editCustomList.$valid">Save & Close</button>
+			</div>
+		</form>
+
+		<!-- Functions -->
 		<div class="setting-group" ng-show="view.id=='functions'">
 
 			<h1 data-i18n="settings.reflection">Reflection</h1>
@@ -319,7 +428,7 @@
 					</div>
 				</div>
 
-				<table st-safe-src="functions" st-table="displayedCollection" class="table table-striped functions-table">
+				<table st-safe-src="functions" st-table="displayedCollection" class="table table-striped list-table">
 					<thead>
 						<tr>
 							<th st-sort="name" colspan="3" data-i18n="settings.name">Name</th>
@@ -343,9 +452,9 @@
 			</div>
 		</div>
 
-		<div id="editFunction" ng-if="editFunctionItem" style="position: fixed;z-index: 100;top: 0;bottom: 60px;background-color: white;">
+		<div id="editFunction" ng-if="editFunctionItem" class="top-view">
 			<input class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
-			<textarea style="width:100%;height:calc(100% - 80px)" ng-model="editFunctionItem.value"></textarea>
+			<textarea style="width:100%;height:calc(100% - 60px)" ng-model="editFunctionItem.value"></textarea>
 			<div class="main-buttons">
 				<button class="button" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button>
 				<button class="button" ng-click="saveActiveFunction(true)" data-i18n="settings.save_close">Save & Close</button>
@@ -450,7 +559,6 @@
 	</form>
 	<div id="overlay"></div>
 
-
 	<script type="text/javascript">
 
 		angular.module('devicecapabilities', ['smart-table', 'ngSanitize'])
@@ -473,7 +581,9 @@
 						{ id: 'net.i-dev.betterlogic', name: 'Better Logic Library', enabled:true },
 						{ id: 'nl.fellownet.chronograph', name: 'Chronograph', enabled:true }
 					],
-					reflectAppsSettings:{}
+					reflectAppsSettings:{},
+					locales: [],
+					defaultLocale:'en'
 
 				};
 				//Homey.ready();
@@ -594,11 +704,20 @@ ${vars.textSettings}
 					$scope.getCustomIcons();
 					$scope.getDefaultIcons();
 					$scope.getFunctionFromSettings();
+					$scope.getCustomListsFromSettings();
 					
 					Homey.get('reflectAppsSettings', function (err, result) {
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.reflectAppsSettings = result || {};
+						});
+					});
+
+					Homey.api('GET', '/getlocales/', function (err, result) {
+						if (err) return Homey.alert(err, 'error');
+						$scope.$apply(function () {
+							$scope.vars.defaultLocale = result.defaultLocale;
+							$scope.vars.locales = result.locales;
 						});
 					});
 
@@ -630,13 +749,35 @@ ${vars.textSettings}
 					$scope.getAdvancedFlows();
 				}
 				$scope.size = function (collection) {
-					console.log('size()');
+					//console.log('size()');
 					return collection === null || collection === undefined ? 0 : typeof (collection) == 'object' ? Object.keys(collection).length : 0;
 				}
 
 				$scope.openUrl = function (url) {
 					Homey.openURL(url);
 				}
+
+
+				$scope.arrayMoveUp = function(array, item) {
+					let index = array.indexOf(item);
+					array.splice(index, 1);
+					array.splice(index-1, 0, item);					
+				}
+                $scope.arrayRemove = function(array, item) {
+					let index = array.indexOf(item);
+					array.splice(index, 1);				
+				}
+
+				$scope.arrayMoveDown = function(array, item) {
+					let index = array.indexOf(item);
+					array.splice(index, 1);
+					array.splice(index+1, 0, item);					
+				}
+
+				$scope.objectRemove = function(object, key) {
+					delete object[key];
+				}
+
 
 				function showOverlay(str) {
 					//let elms=angular.element('#overlay');
@@ -829,6 +970,91 @@ ${vars.textSettings}
 					else item.replaceWith = null;
 				}
 
+				
+				//#region Custom lists
+				$scope.getCustomListsFromSettings = function () {
+					Homey.get('custom_lists', (err, customLists) => {
+						if (!err && !customLists) {
+							customLists = [];
+						}
+						$scope.$apply(() => {
+							$scope.customLists = customLists;
+							$scope.messages = err;
+						});
+					});
+				}
+
+				$scope.addCustomList = function () {
+					try {
+						console.log('addCustomList');
+						if ($scope.customLists && $scope.customLists.filter(function (e) { return e.name == $scope.newCustomList.name; }).length > 0) {
+							$scope.messages = Homey.__("settings.custom_list_exists") || "Custom list already exists.";
+							return;
+						}
+
+						let list = {
+							name: $scope.newCustomList.name,
+							values: [],
+							remove: false
+						};
+						$scope.customLists.push(list);
+						$scope.storeCustomLists();
+						$scope.messages = '';
+						$scope.newCustomList = {};
+						console.log('addCustomList done');
+					} catch (error) {
+						console.log('addCustomList error: ' + error);
+						$scope.messages = error;
+						//$scope.messages = JSON.stringify($scope.functions) + '\r\n\r\n' +  JSON.stringify($scope.newFunction) ;
+					}
+				};
+				
+				
+				$scope.removeCustomList = function (row) {
+					Homey.confirm(Homey.__("settings.delete_confirm_custom_list", { customListName: row.name }) || 'Are you sure you wish to delete custom list ' + row.name + '?', null, (err, val) => {
+						if (err) return Homey.alert(err);
+						if (!val) return;
+						let index = $scope.customLists.indexOf(row);
+						$scope.$apply(function () {
+							$scope.customLists.splice(index, 1);
+							$scope.storeCustomLists();
+						});
+					})
+				};
+				$scope.editCustomList = function (row) {
+					$scope.editCustomListItem = row;
+				};
+				$scope.saveActiveCustomList = function (close) {
+					if ($scope.customLists && $scope.customLists.filter(function (e) { return e.name == $scope.editCustomListItem.name && e!=$scope.editCustomListItem; }).length > 0) {						
+						Homey.alert(Homey.__("settings.custom_list_exists") || "Custom list already exists." );
+						return;
+					}
+
+					$scope.storeCustomLists();
+					if (close) $scope.editCustomListItem = null;
+				};
+
+				$scope.storeCustomLists = function () {
+					console.log('storeCustomLists', angular.copy($scope.customLists));
+					Homey.set('custom_lists', angular.copy($scope.customLists));
+				}
+
+				$scope.addCustomListValue = function() {
+					var o = {};
+					o[vars.defaultLocale] = "";
+					$scope.editCustomListItem.values.push({id:undefined, title:o});
+				}
+				$scope.removeCustomListValue = function(row) {
+					let index = $scope.editCustomListItem.values.indexOf(row);
+					$scope.editCustomListItem.values.splice(index, 1);
+				}
+				$scope.addCustomListValueTitle = function(value) {
+					value.title[" "] = "";
+				}
+				//#endregion Custom lists
+
+
+				//#region Functions
 				$scope.getFunctionFromSettings = function () {
 					Homey.get('javascript_functions', (err, newFunctions) => {
 						if (!err && !newFunctions) {
@@ -841,10 +1067,10 @@ ${vars.textSettings}
 					});
 				}
 
-				$scope.savefunctions = function () {
-					Homey.set('javascript_functions', $scope.functions);
-					Homey.alert(Homey.__("settings.functions_saved") || 'Functions saved');
-				}
+				// $scope.savefunctions = function () {
+				// 	Homey.set('javascript_functions', $scope.functions);
+				// 	Homey.alert(Homey.__("settings.functions_saved") || 'Functions saved');
+				// }
 
 				$scope.addFunction = function () {
 					try {
@@ -902,6 +1128,7 @@ ${vars.textSettings}
 				$scope.storeFunction = function () {
 					Homey.set('javascript_functions', angular.copy($scope.functions));
 				}
+				//#endregion Functions
 
 
 
@@ -1174,11 +1401,6 @@ ${vars.textSettings}
 				// }
 
 			}])
-			// .filter('trustAsHtml', ['$sce', function($sce){
-			// 	return function(text) {
-			// 		return $sce.trustAsHtml(text);
-			// 	};
-			// }])
 			.directive('alinky', function () {
 				return function (scope, element, attrs) {
 					element.bind('click', function (event) {
@@ -1186,13 +1408,6 @@ ${vars.textSettings}
 					});
 				};
 			})
-			// .directive('a', function () {
-			// 	return function (scope, element, attrs) {
-			// 		element.bind('click', function (event) {
-			// 			Homey.openURL(attrs.href);
-			// 		});
-			// 	};
-			// })
 			.directive('ngEnter', function () {
 				return function (scope, element, attrs) {
 					element.bind('keydown keypress', function (event) {

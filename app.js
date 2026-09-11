@@ -2215,6 +2215,7 @@ class DeviceCapabilities extends Homey.App {
 				delete this.drivers[driver.id];
 				break;
 		}
+		this.log('refreshDrivers done');
 	}
 	getReducedDriver(d) {
 		return {

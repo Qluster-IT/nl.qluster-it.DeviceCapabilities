@@ -14,7 +14,7 @@
 		"explain_customicons": "Hier können Sie Ihre Symbole ändern, die für Felder verwendet werden können.",
 		"explain_customicons_doubleclick": "Doppelklicken Sie auf einen Namen, um ihm eine Beschreibung zu geben, welche bei der Auswahl von Symbolen angezeigt werden soll.",
 		"functions":"Funktionen",
-		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.",
+		"functions_expressions":"Diese Funktionen können innerhalb von (Javascript) Ausdrücken verwendet werden.\r\nDie Beter Logic Library bietet jedoch mehr Möglichkeiten und wird von dieser App vollständig unterstützt.",
 		"functions_be_aware":"Beachten Sie, dass das Entfernen von Funktionen Flows beschädigen können, die diese Funktion verwenden.",
 		"add_function_text":"Um eine Funktion zu erstellen, müssen Sie einen Namen eingeben. Drücken Sie dazu auf Funktion hinzufügen und dann unten auf Bearbeiten.",
 		"add_function":"Funktion hinzufügen",

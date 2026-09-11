@@ -274,6 +274,10 @@ a {
     margin-top: 10px !important;
 }
 
+.margin-right {
+    margin-right: 10px !important;
+}
+
 .double-padding-top {
     padding-top: 20px !important;
 }
@@ -410,7 +414,7 @@ input {
 .device {
     position: relative;
     border-bottom: 1px solid #eee;
-    height: 60px;
+    /* height: 60px; */
 }
 
 .device:last-child {
@@ -548,7 +552,10 @@ input {
     height: 50px;
 }
 
-.functions-table button {
+.list-table td:first-child {
+    width:100%;
+}
+.list-table button {
     padding-left: 5px !important;
     padding-right: 5px !important;
     font-size: 12px !important;
@@ -639,6 +646,9 @@ h1.top-labels {
     margin-top: 10px;
 }
 
+.overflow-y {
+    overflow-y: scroll;
+}
 .label>* {
     display: inline;
 }
@@ -743,11 +753,12 @@ textarea.value {
     text-align: center;
     /* padding-top: 30px; */
     background-color: white;
+    padding-right: var( --homey-su-2 ) !important;
     /* z-index: 100; */
 }
 
 .header-buttons .icon-button {
-    width: 24%;
+    width: 19%;
     display: inline-block;
     position: relative;
     height: 60px;
@@ -904,6 +915,9 @@ textarea.value {
 
 .text-center {
     text-align: center;
+}
+.text-left {
+    text-align: left;
 }
 
 div[disabled],
@@ -1099,9 +1113,19 @@ form {
     position: absolute;
     width: 100%;
 } */
-form.top {
+.top {
+    width:100%;
     height: 100%;
     position: relative;
+}
+.top-view {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    bottom: 60px;
+    background-color: white; 
+    left:0; 
+    right:0;
 }
 
 .padding-left {

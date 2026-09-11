@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.16.4",
+  "version": "2.17.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -72,7 +72,8 @@
     ]
   },
   "category": [
-    "tools"
+    "tools",
+    "appliances"
   ],
   "permissions": [
     "homey:manager:api",
@@ -191,6 +192,10 @@
     "setFieldName": {
       "method": "POST",
       "path": "/setfieldname"
+    },
+    "getLocales": {
+      "method": "GET",
+      "path": "/getlocales/"
     }
   },
   "flow": {

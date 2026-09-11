@@ -14,7 +14,7 @@
 		"explain_customicons": "Here you can change the custom icon's that can be used for fields.",		
 		"explain_customicons_doubleclick": "Double click on a name to give it a description, which will be displayed when selecting icons.",
 		"functions":"Functions",
-		"functions_expressions":"These functions can be used within (javascript) expression.",
+		"functions_expressions":"These functions can be used within (javascript) expression.\r\nHowever, Beter Logic Library offers more possibilities and is fully supported by this app.",
 		"functions_be_aware":"Be aware that removing functions could corrupt flows that are using that function.",
 		"add_function_text":"To create a function, enter a name, press Add Function, then press edit below.",
 		"add_function":"Add function",
@@ -70,6 +70,19 @@
 		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
 		"back":"Back",
 		"use_this_template":"Use this template",
+
+
+
+		"custom_lists":"Custom lists",
+		"custom_lists_explained":"Here you can create your own custom lists to be used within AVD's.",
+		"custom_lists_explained_aware":"Be aware that removing or changing custom lists will disrupt AVD's and/or flows that depend on those lists.",
+		"add_custom_list_text":"To create a new custom list, enter a name and press Add List.",
+		"custom_list_name":"List name",
+		"add_custom_list":"Add custom list",
+		"custom_list_exists":"Custom list already exists.",
+		"delete_confirm_custom_list":"Are you sure you wish to delete custom list __customListName__?",
+		"items":"Items",
+		"description":"Description",
 		"":"",
 		"":"",
 		"":""
