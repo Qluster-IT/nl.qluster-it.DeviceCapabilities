@@ -305,10 +305,11 @@
 						<form role="form">
 							<div class="form-group">
 								<label for="customListName" data-i18n="settings.custom_list_name">List name</label>
-								<input class="form-control" id="customListName" type="text" ng-model="newCustomList.name" placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
+								<input class="form-control" id="customListName" type="text" ng-model="newCustomList.name" placeholder="{{__('settings.name') || 'Name'}}">
+								<div class="error margin-top">{{messages}}</div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group margin-top">
 								<button class="btn btn-default" type="button" ng-disabled="!newCustomList.name" ng-click="addCustomList()" data-i18n="settings.add_custom_list">Add custom list</button>
 							</div>
 						</form>
@@ -337,16 +338,21 @@
 			</div>
 		</div>
 		
-		<form id="editCustomList" name="editCustomList" ng-if="editCustomListItem" class="top-view">
-			<div>
+		<form id="editCustomList" name="editCustomList" ng-if="editCustomListItem" class="top-view overflow-y">
+			<div class="block full-width">
 				<span class="margin-right" data-i18n="settings.name">Name</span>	
-				<input class="input-sm form-control" style="height:40px;" ng-model="editCustomListItem.name" />			
+				<input class="input-sm form-control padding" style="height:40px;" ng-model="editCustomListItem.name" required />
 			</div>
-			<h1 class="margin-top full-width block" data-i18n="settings.items">Items</h1>
 
-			<button class="button fa fa-icon fa-plus-square block" ng-click="addCustomListValue();"></button>
-			<div class="block overflow-y" style="height:calc(100% - 60px)">
-				<table>
+			<h1 class="margin-top full-width block" data-i18n="settings.add_items_click_button">Click on the plus button to add items for this list.</h1>
+			<div class="margin-top" data-i18n="settings.id_case_sensative">ID's are case sensative.</div>
+			
+			<div class="full-width block text-center">
+				<button class="button fa fa-icon fa-plus-square block" ng-click="addCustomListValue();"></button>
+			</div>
+
+			<div class="block">
+				<table class="full-width">
 					<thead>
 						<tr>
 							<th colspan="3" data-i18n="settings.items">ID</th>
@@ -378,7 +384,7 @@
 								</select>
 							</td>
 							<td>
-								<input type="text" ng-model="text" ng-change="value.title[lg]=text" placeholder="{{__('settings.description') || 'Description'}}" required/>
+								<input type="text" ng-model="text" ng-change="value.title[lg]=text" placeholder="{{__('settings.title') || 'Title'}}" required/>
 							</td>
 							<td colspan="2">&nbsp;</td>
 							<td>
@@ -417,10 +423,11 @@
 						<form role="form">
 							<div class="form-group">
 								<label for="functionName" data-i18n="settings.function_name">Function name</label>
-								<input class="form-control" id="functionName" type="text" ng-model="newFunction.name" placeholder="{{__('settings.name') || 'Name'}}"><span class="error">{{messages}}</span>
+								<input class="form-control" id="functionName" type="text" ng-model="newFunction.name" placeholder="{{__('settings.name') || 'Name'}}">
+								<div class="error margin-top">{{messages}}</div>
 							</div>
 
-							<div class="form-group">
+							<div class="form-group margin-top">
 								<button class="btn btn-default" type="button" ng-disabled="!newFunction.name" ng-click="addFunction()" data-i18n="settings.add_function">Add function</button>
 								<button class="btn btn-default" type="button" ng-click="deleteAll()" data-i18n="settings.delete_all">Delete All</button>
 							</div>
@@ -453,7 +460,7 @@
 		</div>
 
 		<div id="editFunction" ng-if="editFunctionItem" class="top-view">
-			<input class="input-sm form-control" style="height:40px;" ng-model="editFunctionItem.name" />
+			<input class="input-sm form-control padding" style="height:40px;" ng-model="editFunctionItem.name" />
 			<textarea style="width:100%;height:calc(100% - 60px)" ng-model="editFunctionItem.value"></textarea>
 			<div class="main-buttons">
 				<button class="button" ng-click="saveActiveFunction()" data-i18n="settings.save">Save</button>

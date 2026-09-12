@@ -626,6 +626,7 @@ module.exports = class AvdDevice extends Homey.Device {
 		try {
 
 			let cls = this.getClass();
+			let customLists = await this.homey.settings.get('custom_lists') || [];
 			if (cls != settings.cls) {
 				try {
 					await this.setClass(settings.cls);
@@ -678,6 +679,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					try {
 						let oldCap = this.getStoreValue(type + i);
 						let oldValue;
+						let customListValues;
 						//let targetInsight;
 						if (oldCap) {
 							oldValue = this.getCapabilityValue(oldCap);
@@ -753,6 +755,11 @@ module.exports = class AvdDevice extends Homey.Device {
 										cap = settings[type + i + 'PrefixedList'] && settings[type + i + 'PrefixedList'].length ? 
 											(settings[type + i + 'OnlyThroughFlows']===true  ? settings[type + i + 'PrefixedList'].replace('devicecapabilities_picker', 'devicecapabilities_picker_onlythroughflows') :  settings[type + i + 'PrefixedList'])
 											: (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
+										break;
+									case "customlist":
+										cap = (settings[type + i + 'OnlyThroughFlows']===true  ? 'devicecapabilities_custom_list_onlythroughflows' : 'devicecapabilities_custom_list');
+										customListValues = customLists ? _.find(customLists, x=> x.name==settings[type + i + 'CustomList']) : null;
+										if(customListValues) customListValues = customListValues.values;
 										break;
 									default:
 										capSet = true;
@@ -877,7 +884,7 @@ module.exports = class AvdDevice extends Homey.Device {
 							if (!opt) opt = {};
 
 							//var valuesChanged = false;
-							let values = null;
+							//let values = null;
 							// if(type=="dropdown") {
 							// 	if(opt.values!=settings["dropdown"+i+"Values"] || changedKeys.indexOf("dropdown"+i+"Values")>-1)
 							// 	values = this.getDropDownValues(settings["dropdown"+i+"Values"]);
@@ -889,6 +896,8 @@ module.exports = class AvdDevice extends Homey.Device {
 							let step = settings[type + i + 'Step'];
 							let disableZoneActivity = settings[type + i + 'DisableZoneActivity'];
 
+							let customListValuesJson = customListValues ? JSON.stringify(customListValues) : null;
+							let values = opt.values ? JSON.stringify(opt.values) : null;
 
 							// let var1= (settings[type + i + 'SeparateCapabilities']!==true && (opt.preventTag!= !settings[type + i + 'CreateTag'] || opt.preventInsights!= !settings[type + i + 'CreateInsights']));
 							// let var2= (settings[type + i + 'SeparateCapabilities']===true && (opt.preventTag!==true || opt.preventInsights!==true)) ;
@@ -910,7 +919,7 @@ module.exports = class AvdDevice extends Homey.Device {
 								disableZoneActivity != oldSettings[type + i + 'DisableZoneActivity'] ||
 								(opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue'] != '') ||
 								(opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse'] != '') ||
-								values ||
+								customListValuesJson!=values ||
 								(decimals != oldSettings[type + i + 'Decimals']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  ||
 								(min != oldSettings[type + i + 'Min']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && min!==-1 && !oldSettings[type + i + 'Min'])  ||
 								(max != oldSettings[type + i + 'Max']) ||
@@ -918,7 +927,7 @@ module.exports = class AvdDevice extends Homey.Device {
 							//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 							if (capOptionsChanged) {
-								let optionValues = { type, i, settings, decimals, min, max, name, step, disableZoneActivity };
+								let optionValues = { type, i, settings, decimals, min, max, name, step, disableZoneActivity, values:customListValues };
 								if (type == "status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
 								if (settings[type + i + 'SeparateCapabilities'] !== true) {
@@ -1108,7 +1117,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 	}
 
-	getOptions({ type, i, settings, decimals, min, max, name, units, step, disableZoneActivity }) {
+	getOptions({ type, i, settings, decimals, min, max, name, units, step, disableZoneActivity, values }) {
 		let optNew = {
 			title: name,
 			preventInsights: true,
@@ -1125,6 +1134,7 @@ module.exports = class AvdDevice extends Homey.Device {
 		if (max !== undefined) optNew.max = max;
 		if (step !== undefined) optNew.step = step;
 		if (disableZoneActivity === true) optNew.zoneActivity = false;
+		if (values !== undefined) optNew.values = values;
 		return optNew;
 	}
 };

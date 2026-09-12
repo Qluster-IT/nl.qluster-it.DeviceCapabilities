@@ -3383,7 +3383,9 @@ module.exports = class AvdDriver extends Homey.Driver {
             settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
             favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
             bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined, blReady:BL.isReady,
-            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady//,
+            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady,
+            listCustomLists : await this.homey.settings.get('custom_lists')
+            //,
             //reflectDevices : _.map(this.homey.app.devices, d=>{return {name:d.name, id: d.id} ;})
         };
 

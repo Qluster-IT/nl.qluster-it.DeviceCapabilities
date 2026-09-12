@@ -81,9 +81,9 @@
 		"add_custom_list":"Add custom list",
 		"custom_list_exists":"Custom list already exists.",
 		"delete_confirm_custom_list":"Are you sure you wish to delete custom list __customListName__?",
-		"items":"Items",
-		"description":"Description",
-		"":"",
+		"add_items_click_button":"Click on the plus button to add items for this list.",
+		"title":"Title",
+		"id_case_sensative":"ID's are case sensative.",
 		"":"",
 		"":""
 	},
@@ -190,7 +190,6 @@
 		"listFieldI":"List __i__",
 		"createListField":"Create List",		
 		"prefixedList":"Prefixed list",		
-		"prefixedListHint":"Currently, only pre-fixed lists are available. Goto the Forum to request your own!",
 		"cumulative":"Cumulative",
 		"cumulativeImported":"Cumulative Imported",
 		"cumulativeExported":"Cumulative Exported",
@@ -223,8 +222,10 @@
 
 		"react":"React (set properties)",
 		"reactHint":"Automaticly set the device properties when this field is changed.",
-		"":"",
-		"":"",
+
+
+		"customList":"Custom list",
+		"customListAppSettings":"Goto the app settings to create your own custom lists.",
 		"":"",
 		"":"",
 		"":"",

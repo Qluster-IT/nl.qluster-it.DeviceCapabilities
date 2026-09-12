@@ -83,6 +83,11 @@
     {
       "id": "picker",
       "label": "Picker (Default)",
+      "order": -1
+    },
+    {
+      "id": "customlist",
+      "label": "Custom list",
       "order": 0
     },
     {

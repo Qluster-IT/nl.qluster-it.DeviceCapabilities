@@ -281,6 +281,29 @@ for (var i = 0; i < icons.length; i++) {
 
 
 
+str += `"devicecapabilities_custom_list": {
+  "title": {
+    "en": "Custom list"
+  },
+  "type": "enum",
+  "values": [],
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker"
+  },`;
+
+
+str += `"devicecapabilities_custom_list_onlythroughflows": {
+  "title": {
+    "en": "Custom list"
+  },
+  "type": "enum",
+  "values": [],
+  "getable": true,
+  "setable": false,
+  "uiComponent": "picker"
+  },`;
+
 
 
 

@@ -16216,6 +16216,26 @@
       "insights": true,
       "icon": "/userdata/customicons/custom_80.svg"
     },
+    "devicecapabilities_custom_list": {
+      "title": {
+        "en": "Custom list"
+      },
+      "type": "enum",
+      "values": [],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
+    },
+    "devicecapabilities_custom_list_onlythroughflows": {
+      "title": {
+        "en": "Custom list"
+      },
+      "type": "enum",
+      "values": [],
+      "getable": true,
+      "setable": false,
+      "uiComponent": "picker"
+    },
     "devicecapabilities_ternary-up-idle-down_list": {
       "title": {
         "en": "Up, Idle, Down"

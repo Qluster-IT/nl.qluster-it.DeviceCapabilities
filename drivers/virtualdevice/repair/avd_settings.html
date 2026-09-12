@@ -1269,11 +1269,9 @@
 					<select class="value" ng-model="s['list'+($index+1)+'ShowAs']">
 						<option ng-repeat="item in listShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
-				</div>				
+				</div>
 				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='ternary' || s['list'+($index+1)+'ShowAs']=='picker'">
-					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span> <span
-							class="fa fa-icon fa-info-circle"
-							tooltip="{{__('virtualdevicesettings.prefixedListHint') || 'Currently, only pre-fixed lists are available. Goto the Forum to request your own!'}}"></span>
+					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span>
 					</div>
 					<select class="value" ng-model="s['list'+($index+1)+'PrefixedList']">
 						<option ng-repeat="item in listPrefixedLists | filter:{'showAs':s['list'+($index+1)+'ShowAs']}" value="{{item.id}}">{{item.label}}</option>
@@ -1281,7 +1279,18 @@
 				</div>
 				<div ng-else execute="_delete(s, 'list'+($index+1)+'PrefixedList');" ></div>
 				
-				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker'">
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='customlist'">
+					<div class="label"><span>{{__('virtualdevicesettings.customList') || 'Custom list'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.customListAppSettings') || 'Goto the app settings to create your own custom lists.'}}"></span>
+					</div>
+					<select class="value" ng-model="s['list'+($index+1)+'CustomList']">
+						<option ng-repeat="item in listCustomLists" value="{{item.name}}">{{item.name}}</option>
+					</select>
+				</div>
+				<div ng-else execute="_delete(s, 'list'+($index+1)+'CustomList');" ></div>
+				
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker' && s['list'+($index+1)+'ShowAs']!='customlist'">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
@@ -1289,7 +1298,7 @@
 				</div>
 				<div ng-else execute="s['list'+($index+1)+'CreateFlowCards'] = false;" ></div>
 
-				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='picker' && s['list'+($index+1)+'PrefixedList']">
+				<div class="field" ng-if="(s['list'+($index+1)+'ShowAs']=='picker' && s['list'+($index+1)+'PrefixedList']) || s['list'+($index+1)+'ShowAs']=='customlist'">
 					<div class="label"><span>{{__('virtualdevicesettings.onlyThroughFlows') || 'Only through flows'}}</span> <span
 							class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.onlyThroughFlowsHint') || 'When selected the picker can only be set through flows.'}}"></span>
@@ -2179,6 +2188,9 @@ ${vars.textSettings}
 						$scope.vars.blReady = result.blReady;
 						$scope.vars.cgReady = result.cgReady;
 						
+						$scope.listCustomLists = result.listCustomLists;
+						
+
 						if ($scope.vars.cgChronographs) {
 							$scope.vars.cgChronographs = _.sortBy(_.flatten(_.map($scope.vars.cgChronographs, (result, key) => {
 								return _.map(result, (name) => {

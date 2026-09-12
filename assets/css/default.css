@@ -152,6 +152,9 @@ body {
     overflow: auto !important;
     position: relative;
 } */
+ body {
+    height:100%;
+ }
 
 body.with-top-bar-small {
     position: relative;
@@ -193,7 +196,8 @@ h3 {
 .main-panel {
     /* margin-top: 60px; */
     display: inline-block;
-    width: calc(100% - 10px);
+    width: 100%;
+    /* calc(100% - 10px); */
     /* overflow-y: auto; */
     /* height: calc(100% - 60px); */
     /* overflow-x: hidden; */
@@ -294,9 +298,18 @@ a {
     padding-top: 10px !important;
 }
 
+.padding-left {
+    padding-left: 10px !important;
+}
+
 .padding-bottom {
     padding-bottom: 10px !important;
 }
+.padding {
+    padding:10px !important;
+}
+
+
 
 .border-line {
     border-bottom: 1px solid grey;
@@ -647,7 +660,7 @@ h1.top-labels {
 }
 
 .overflow-y {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .label>* {
     display: inline;
@@ -700,7 +713,7 @@ textarea.value {
     position: relative;
     /* margin: 10px 0px;
     left:-20px; */
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .color-icon {
@@ -1126,10 +1139,9 @@ form {
     background-color: white; 
     left:0; 
     right:0;
-}
-
-.padding-left {
-    padding-left: 10px;
+    box-sizing: border-box;
+    height:calc(100% - 80px) !important;
+    padding: var( --homey-su-2 ) !important;
 }
 
 .template-row>.fa-icon {
