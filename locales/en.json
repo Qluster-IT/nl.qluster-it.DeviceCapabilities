@@ -64,15 +64,11 @@
 		"selectFlowAndPressCreate":"Select a flow and press Create",
 		"pasteTEFReadFlows":"Paste The Exchanger File and press Read Flows",		
 		"no_avd_in_tef":"TEF does not contains an AVD.",
-		"flows_will_be_created":"The following flows will be created in the script.",
-
-		
+		"flows_will_be_created":"The following flows will be created in the script.",		
 		"pasteTEFReadDevice":"Paste The Exchanger File and press Read Device",
 		"back":"Back",
+
 		"use_this_template":"Use this template",
-
-
-
 		"custom_lists":"Custom lists",
 		"custom_lists_explained":"Here you can create your own custom lists to be used within AVD's.",
 		"custom_lists_explained_aware":"Be aware that removing or changing custom lists will disrupt AVD's and/or flows that depend on those lists.",
@@ -84,8 +80,12 @@
 		"add_items_click_button":"Click on the plus button to add items for this list.",
 		"title":"Title",
 		"id_case_sensative":"ID's are case sensative.",
-		"":"",
-		"":""
+		"reflection":"Reflection",
+		"reflection_explained":"Here you can enable Reflection initialization per app.",
+		"run_in_api_playground": "Run this in the Homey API Playground to create the Flows!",
+		"edit_device_icon":"You can change your device icon here. The icon needs to be in .svg format.",
+		"edit_customicon_icon":"You can change your capability icon here. The icon needs to be in .svg format.",
+		"save_use":"Save & Use"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Button 1 is special and remains the first, and therefore, the main device button and indicator.",
@@ -193,7 +193,6 @@
 		"cumulative":"Cumulative",
 		"cumulativeImported":"Cumulative Imported",
 		"cumulativeExported":"Cumulative Exported",
-
 		"reflect":"Reflect",
 		"reflectHint":"Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.",
 		"variable":"Variable",
@@ -204,35 +203,23 @@
 		"format_bll_expressionHint":"Format the value through an BLL Expression.<br/>N.b. Some properties require formatting to be parsed to this field<br/>Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.",
 		"format_bll_expressionHintBLL":"Format the value through an BLL Expression.<br/>Available parameters:<br/><strong>$value</strong>, <strong>$variable</strong>.",
 		"format_bll_expressionHintCG":"Format the value through an BLL Expression.<br/>Available parameters:<br/><strong>$value</strong>, <strong>$chronograph</strong>.",
-		
-		
-		
 		"devices":"Devices",
 		"device":"Device",
 		"format_bll_expressionHintDevices":"Format the value through an BLL Expression.<br/>Available parameters:<br/><strong>$value</strong>, <strong>$values</strong>.",
 		"calculation":"Calculation",
 		"format_bll_expressionHintDevicesCalculations":"Calculate the value through an BLL Expression.<br/>Available parameters:<br/><strong>$values</strong>.",
 		"format_bll_calculation":"Calculation BLL expression",
-		
 		"add_device":"Add device",
 		"debounceAVD":"Debounce (ms)",
 		"debounceAVDHint":"Milliseconds between setting the AVD field value (leading, maxwait, trailing).",
 		"excludeSeconds":"Exclude (seconds)",
 		"excludeSecondsHint":"Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).",
-
 		"react":"React (set properties)",
 		"reactHint":"Automaticly set the device properties when this field is changed.",
 
-
 		"customList":"Custom list",
 		"customListAppSettings":"Goto the app settings to create your own custom lists.",
-		"":"",
-		"":"",
-		"":"",
-		"":"",
-		"":"",
-		"":"",
-		"":""
+		"device_class":"Device Class"
 	},
 	"pair": {
 		"list_icons":{
@@ -270,14 +257,8 @@
 			"tef_contains_icons":"The TEF (may) contain the device icon and also the field icons.",
 			"tef_flows_screen":"After creation of an AVD from an TEF, if the TEF also contains (a) flow(s), an importscreen will be shown, in which you can set your own devices, zones, variables, etc. for use within that flow. You than can generate a script to be executed in the API Playground, that will create that flow based on your own configuration, devices, etc.",
 			"note_tef_flows_settings":"Note: If you want to import a TEF that only contains flows, go to the App Settings.",
-			"import_tef_template_settings":"If you want to import a TEF or see Templates that only contain flows, go to the App Settings.",
-			"":"",
-			"":"",
-			"":"",
-			"":"",
-			"":""
+			"import_tef_template_settings":"If you want to import a TEF or see Templates that only contain flows, go to the App Settings."
 		},
-
 		"done":{
 			"title":"One moment please",
 			"creating_device":"Your New Virtual Device is Being Created.",

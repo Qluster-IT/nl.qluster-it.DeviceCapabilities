@@ -66,7 +66,26 @@
 		"no_avd_in_tef":"TEF bevat geen AVD.",
 		"flows_will_be_created":"De volgende flows worden in het script aangemaakt.",
 		"pasteTEFReadDevice":"Plak het Exchanger-bestand en druk op Apparaat lezen",
-		"back":"Terug"
+		"back":"Terug",
+
+		"use_this_template":"Use this template",
+		"custom_lists":"Custom lists",
+		"custom_lists_explained":"Here you can create your own custom lists to be used within AVD's.",
+		"custom_lists_explained_aware":"Be aware that removing or changing custom lists will disrupt AVD's and/or flows that depend on those lists.",
+		"add_custom_list_text":"To create a new custom list, enter a name and press Add List.",
+		"custom_list_name":"List name",
+		"add_custom_list":"Add custom list",
+		"custom_list_exists":"Custom list already exists.",
+		"delete_confirm_custom_list":"Are you sure you wish to delete custom list __customListName__?",
+		"add_items_click_button":"Click on the plus button to add items for this list.",
+		"title":"Title",
+		"id_case_sensative":"ID's are case sensative.",
+		"reflection":"Reflection",
+		"reflection_explained":"Here you can enable Reflection initialization per app.",
+		"run_in_api_playground": "Run this in the Homey API Playground to create the Flows!",
+		"edit_device_icon":"You can change your device icon here. The icon needs to be in .svg format.",
+		"edit_customicon_icon":"You can change your capability icon here. The icon needs to be in .svg format.",
+		"save_use":"Save & Use"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",
@@ -174,8 +193,6 @@
 		"cumulative":"Cumulatief",
 		"cumulativeImported":"Cumulatief geïmporteerd",
 		"cumulativeExported":"Cumulatief geëxporteerd",
-
-
 		"reflect":"Reflecteer",
 		"reflectHint":"Hier kunt u een app selecteren om een ​​entiteit te selecteren waarvan de geselecteerde eigenschap automatisch het veld van de AVD zal bijwerken.",
 		"variable":"Variabel",
@@ -186,25 +203,23 @@
 		"format_bll_expressionHint":"Formatteer de waarde via een BLL-expressie.<br/>N.b. Voor sommige eigenschappen moet de opmaak voor dit veld worden geconverteerd.<br/>Installeer de Better Logic Library-app uit de Athom App Store om BLL-expressies in te schakelen.",
 		"format_bll_expressionHintBLL":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $variable.",
 		"format_bll_expressionHintCG":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/>$value, $chronograph.",
-
-
-		
 		"devices":"Apparaten",
 		"device":"Apparaat",
 		"format_bll_expressionHintDevices":"Formatteer de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/><strong>$value</strong>, <strong>$values</strong>.",
 		"calculation":"Berekening",
 		"format_bll_expressionHintDevicesCalculations":"Bereken de waarde via een BLL-expressie.<br/>Beschikbare parameters:<br/><strong>$values</strong>.",
 		"format_bll_calculation":"Berekening BLL-expressie",
-
 		"add_device":"Apparaat toevoegen",
 		"debounceAVD":"Debounce (ms)",
 		"debounceAVDHint":"Milliseconden tussen het instellen van de AVD-veldwaarde (leading, maxwait, trailing).",
 		"excludeSeconds":"Uitsluiten (seconden)",
 		"excludeSecondsHint":"Waarden automatisch uitsluiten die meer dan x aantal seconden oud zijn (apparaten die niet rapporteren).",
-
 		"react":"React (zet eigenschappen)",
-		"reactHint":"Stel automatisch de apparaateigenschappen in wanneer dit veld wordt gewijzigd."
-
+		"reactHint":"Stel automatisch de apparaateigenschappen in wanneer dit veld wordt gewijzigd.",
+		
+		"customList":"Custom list",
+		"customListAppSettings":"Goto the app settings to create your own custom lists.",
+		"device_class":"Device Class"
 	},
 	"pair": {
 		"list_icons":{
@@ -244,7 +259,6 @@
 			"note_tef_flows_settings":"Opmerking: als u een TEF wilt importeren die alleen flows bevat, gaat u naar de app-instellingen.",
 			"import_tef_template_settings":"Als u een TEF wilt importeren of sjablonen wilt zien die alleen flows bevatten, gaat u naar de app-instellingen."
 		},
-
 		"done":{
 			"title":"Een ogenblik alstublieft",
 			"creating_device":"Uw nieuwe virtuele apparaat wordt aangemaakt.",

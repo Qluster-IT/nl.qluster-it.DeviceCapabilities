@@ -757,7 +757,7 @@ module.exports = class AvdDevice extends Homey.Device {
 											: (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
 										break;
 									case "customlist":
-										cap = (settings[type + i + 'OnlyThroughFlows']===true  ? 'devicecapabilities_custom_list_onlythroughflows' : 'devicecapabilities_custom_list');
+										cap = (settings[type + i + 'OnlyThroughFlows']===true  ? 'devicecapabilities_custom_list_onlythroughflows' : 'devicecapabilities_custom_list') + '.' + type + i;
 										customListValues = customLists ? _.find(customLists, x=> x.name==settings[type + i + 'CustomList']) : null;
 										if(customListValues) customListValues = customListValues.values;
 										break;

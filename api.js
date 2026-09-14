@@ -1,7 +1,6 @@
 "use strict";
 
 const Homey = require('homey');
-const { getAppLocales } = require('homey-lib');
 const _ = require('lodash-core');
 
 
@@ -124,7 +123,8 @@ module.exports = {
 
     },
     async getLocales({ homey }) {
-        return {defaultLocale : homey.i18n.getLanguage(), locales: getAppLocales() };
+        //getAppLocales()
+        return {defaultLocale : homey.i18n.getLanguage(), locales: ['en', 'nl', 'de', 'fr', 'it', 'sv', 'no', 'es', 'da', 'ru', 'pl', 'ko', 'ar'].sort() };
     }
 };
 // module.exports = [

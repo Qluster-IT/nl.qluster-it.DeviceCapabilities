@@ -214,7 +214,7 @@
 							<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
 						</div>
 						<div class="field margin-top margin-bottom">
-							Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+							<div class="field link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" data-i18n="settings.run_in_api_playground">Run this in the Homey API Playground to create the Flows!</div>
 							<div class="field block" ng-show="vars.scriptCopied" data-i18n="settings.textInClipboard">(Text in clipboard allready)</div>
 						</div>
 					</div>
@@ -405,7 +405,7 @@
 		<div class="setting-group" ng-show="view.id=='functions'">
 
 			<h1 data-i18n="settings.reflection">Reflection</h1>
-			<p data-i18n="settings.reflection_explained">Here you can enable Reflection initialization per app</p>
+			<p data-i18n="settings.reflection_explained">Here you can enable Reflection initialization per app.</p>
 			<form role="form">				
 				<div class="form-check form-switch" ng-repeat="app in vars.reflectApps">
 					<input class="form-check-input hy-nostyle" type="checkbox" role="switch" id="autoupdate" checked ng-model="vars.reflectAppsSettings[app.id].enabled" ng-change="saveReflection()" />
@@ -471,8 +471,7 @@
 
 	<div id="editdevice" ng-show="editdeviceicon">
 		<div>
-			<span data-i18n="settings.edit_device_icon">You can change your device icon here. The icon needs to be in
-				.svg format.</span><br />
+			<span data-i18n="settings.edit_device_icon">You can change your device icon here. The icon needs to be in .svg format.</span><br />
 			<div class="form-group">
 				<input id="custom-device-icon" type="file" accept=".svg" name="image">
 			</div>
@@ -482,8 +481,8 @@
 				</div>
 			</div>
 			<div class="main-buttons">
-				<button id="save-icon" class="button" data-i18n="pair.button.icon.use" ng-disabled="!editdeviceicon.buffer" ng-click="uploadDeviceIcon(editdeviceicon);">Save &
-					use</button>
+				<button id="close-icon" class="button" data-i18n="settings.close" ng-click="editdeviceicon=null;">Close</button>
+				<button id="save-icon" class="button" data-i18n="settings.save_use" ng-disabled="!editdeviceicon.buffer" ng-click="uploadDeviceIcon(editdeviceicon);">Save & Use</button>
 			</div>
 		</div>
 	</div>
@@ -521,7 +520,7 @@
 		</div>
 		<div class="main-buttons">
 			<button id="save-icon" class="button" data-i18n="settings.close" ng-click="setEditCustomIcon(null);">Close</button>
-			<button id="save-icon" class="button" data-i18n="settings.save" ng-click="uploadCustomIcon();">Save</button>
+			<button id="save-icon" class="button" data-i18n="settings.save" ng-disabled="!editcustomicon.buffer" ng-click="uploadCustomIcon();">Save</button>
 		</div>
 
 	</div>

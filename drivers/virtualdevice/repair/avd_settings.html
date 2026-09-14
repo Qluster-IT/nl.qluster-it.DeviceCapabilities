@@ -36,7 +36,7 @@
 			the App Settings.</div>
 
 		<div class="field">
-			<div class="label">Device Class <span class="fa fa-icon fa-info-circle"
+			<div class="label"><div data-i18n="virtualdevicesettings.device_class">Device Class</div> <span class="fa fa-icon fa-info-circle"
 					tooltip="{{__('virtualdevicesettings.hintClass') || 'Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.'}}"></span>
 			</div>
 			<select class="value" ng-model="s.cls">
@@ -1586,8 +1586,9 @@
 			
 			<div class="field">
 				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
-			</div>			<div class="field margin-top margin-bottom">
-				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+			</div>			
+			<div class="field margin-top margin-bottom">
+				<div class="field link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" data-i18n="settings.run_in_api_playground">Run this in the Homey API Playground to create the Flows!</div>
 				<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 			</div>
 			<div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
@@ -1596,7 +1597,7 @@
 	</form>
 	<!-- <div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div> -->
 	<div class="main-buttons" ng-show="view.id">
-		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;">Close</div>
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;"  data-i18n="virtualdevicesettings.close">Close</div>
 	</div>
 
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
@@ -1625,7 +1626,7 @@
 				</div>
 			</div>
 			<div class="main-buttons ">
-				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+				<button class="button" data-i18n="virtualdevicesettings.close" ng-click="closeTemplates();">Close</button>
 			</div>
 		</div>
 		<div class="template-panel" ng-show="vars.template">
