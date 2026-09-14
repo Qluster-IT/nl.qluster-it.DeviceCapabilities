@@ -1,3 +1,8 @@
+/*
+
+EERST VERTALEN!!!!!!!
+
+*/
 var str = '';
 let icons = [
   '', 'custom_1', 'custom_2', 'custom_3',

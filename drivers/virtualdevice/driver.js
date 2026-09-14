@@ -2373,11 +2373,11 @@ module.exports = class AvdDriver extends Homey.Driver {
                     delete card.args._$droptoken$_;
                     if(Object.keys(card.args).length===0) delete card.args;
                 }
-                if(card.ownerUri==='homey:app:com.athom.homeyscript') {
-                    card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
-                    card.id = 'hs_' + card.id;
-                    if(this.getAPIV3()) card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:' + card.id;
-                }
+                // if(card.ownerUri==='homey:app:com.athom.homeyscript') {
+                //     card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
+                //     card.id = 'hs_' + card.id;
+                //     if(this.getAPIV3()) card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:' + card.id;
+                // }
             });
 
             
@@ -2680,10 +2680,10 @@ module.exports = class AvdDriver extends Homey.Driver {
                     delete card.args._$droptoken$_;
                     if(Object.keys(card.args).length===0) delete card.args;
                 }
-                if(this.getOwnerUri(card.id) === 'homey:app:com.athom.homeyscript') {
-                    card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
-                    card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:hs_' + this.getCardId(card.id);
-                }
+                // if(this.getOwnerUri(card.id) === 'homey:app:com.athom.homeyscript') {
+                //     card.ownerUri = 'homey:app:nl.qluster-it.DeviceCapabilities';
+                //     card.id = 'homey:app:nl.qluster-it.DeviceCapabilities:hs_' + this.getCardId(card.id);
+                // }
             });
 
             
