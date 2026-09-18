@@ -3974,7 +3974,19 @@
     "ko": "업데이트: 사용자 지정 목록과 관련된 버그가 해결되었습니다. 또한 모든 지원 언어로 번역되었습니다.",
     "ar": "تم التحديث: تم حل الأخطاء المتعلقة بالقوائم المخصصة.  \nكما تمت الترجمة إلى جميع اللغات المدعومة."
   },
-  "2.17.2": {
-    "en": "Updated: Added a condition (And) flowcard for lists."
+  "2.17.3": {
+    "en": "Updated: Added a condition (And) flowcard for lists.",
+    "nl": "Bijgewerkt: Een voorwaarde (En) flowkaart toegevoegd voor lijsten.",
+    "da": "Opdateret: Tilføjet et betingelses (Og) flowkort for lister.",
+    "de": "Aktualisiert: Eine Bedingung (Und) Flowkarte für Listen hinzugefügt.",
+    "es": "Actualizado: Se añadió una tarjeta de flujo de condición (Y) para listas.",
+    "fr": "Mis à jour : Ajout d'une carte de flux de condition (Et) pour les listes.",
+    "it": "Aggiornato: Aggiunta una scheda di flusso condizionale (E) per le liste.",
+    "no": "Oppdatert: Lagt til en betingelse (Og) flytkort for lister.",
+    "sv": "Uppdaterad: Lade till ett villkor (Och) flödeskort för listor.",
+    "pl": "Zaktualizowano: Dodano kartę przepływu warunku (I) dla list.",
+    "ru": "Обновлено: Добавлена карточка условия (И) для списков.",
+    "ko": "업데이트: 목록에 대한 조건(그리고) 플로우 카드를 추가했습니다.",
+    "ar": "تم التحديث: تمت إضافة بطاقة تدفق شرطية (و) للقوائم."
   }
 }
