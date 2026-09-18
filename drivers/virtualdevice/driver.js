@@ -442,7 +442,7 @@ module.exports = class AvdDriver extends Homey.Driver {
 						this.error(error);
 					}
 				});
-            if(!trigger.endsWith('_status')) triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger, false));
+            if(!trigger.endsWith('_status')) triggerCard.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(trigger, true));
 		}).bind(this));
 
 
@@ -474,11 +474,28 @@ module.exports = class AvdDriver extends Homey.Driver {
         virtualdevice_update_capability_name.getArgument('field').registerAutocompleteListener(this.registerAutocompleteFieldExpression({useSetAll:false, invertName:true}));
 
 
+
+        
+		let condition_virtualdevice_list = this.homey.flow.getConditionCard('condition_virtualdevice_list');
+		condition_virtualdevice_list.registerRunListener(async (args, state) => {
+			try {
+				let fieldId = args.field? args.field.id : 'status1';
+                let cap = args.device.getStoreValue(fieldId);
+                if(!cap) throw new Error(this.homey.__("field-not-set", {fieldId}) || (fieldId + '__fieldId__ has not been set. Goto Device Settings and add the field.'));
+
+                return args.device.getCapabilityValue(cap) === args.value.id;
+
+			} catch (error) {
+				this.error('condition_virtualdevice_list:'); this.error(error); return new Error(error);
+			}
+		});
+        condition_virtualdevice_list.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField('__list', false));
+        condition_virtualdevice_list.getArgument('value').registerAutocompleteListener(this.registerAutocompleteListValue());
+
         this.homey.settings.on('set', (async function(settingName) {
             if(settingName=='customIconNames') {
                 this.customIconNames = await this.homey.settings.get('customIconNames');
-                }                
-        
+            }
         }).bind(this));
         this.customIconNames = await this.homey.settings.get('customIconNames');
         
@@ -1000,7 +1017,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             for(let i=1;i<=fieldCount;i++){
                 let cap = args.device.getStoreValue(type + i);
                 if(cap) {
-                    if(!actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
+                    if(useAll && !actionAllSet) actionAllSet = ret.push | ret.push({id:'set_all_'+type, name:'All ' + this.capitalizeFirstLetter(type) + 's' });
                     let typeText = type=='text' ? 'Text ' +i : type=='number' ? 'Number ' +i : type=='boolean' ? 'Yes/No ' +i : type=='button' ? 'Button ' +i :  type=='list' ? 'List ' +i : type=='camera' ? 'Camera ' +i : 'unknown';
                     ret.push({'id':type + i, 'name':settings[type+i+"Name"] || typeText, description:typeText});
                 }
@@ -1047,6 +1064,7 @@ module.exports = class AvdDriver extends Homey.Driver {
             let settings = args.device.Settings;
             if (!settings) return;
             let cap = args.device.getStoreValue(args.field.id);
+            this.log(args.device);
             //const dev2 = args.device;
             let capabilities = this.homey.app.manifest.capabilities;
             const options = capabilities[cap];

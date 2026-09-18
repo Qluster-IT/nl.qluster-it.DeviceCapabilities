@@ -67,25 +67,24 @@
 		"flows_will_be_created":"De volgende flows worden in het script aangemaakt.",
 		"pasteTEFReadDevice":"Plak het Exchanger-bestand en druk op Apparaat lezen",
 		"back":"Terug",
-
-		"use_this_template":"Use this template",
-		"custom_lists":"Custom lists",
-		"custom_lists_explained":"Here you can create your own custom lists to be used within AVD's.",
-		"custom_lists_explained_aware":"Be aware that removing or changing custom lists will disrupt AVD's and/or flows that depend on those lists.",
-		"add_custom_list_text":"To create a new custom list, enter a name and press Add List.",
-		"custom_list_name":"List name",
-		"add_custom_list":"Add custom list",
-		"custom_list_exists":"Custom list already exists.",
-		"delete_confirm_custom_list":"Are you sure you wish to delete custom list __customListName__?",
-		"add_items_click_button":"Click on the plus button to add items for this list.",
-		"title":"Title",
-		"id_case_sensative":"ID's are case sensative.",
-		"reflection":"Reflection",
-		"reflection_explained":"Here you can enable Reflection initialization per app.",
-		"run_in_api_playground": "Run this in the Homey API Playground to create the Flows!",
-		"edit_device_icon":"You can change your device icon here. The icon needs to be in .svg format.",
-		"edit_customicon_icon":"You can change your capability icon here. The icon needs to be in .svg format.",
-		"save_use":"Save & Use"
+		"use_this_template": "Gebruik dit sjabloon",
+		"custom_lists": "Aangepaste lijsten",
+		"custom_lists_explained": "Hier kun je je eigen aangepaste lijsten maken om binnen AVD's te gebruiken.",
+		"custom_lists_explained_aware": "Houd er rekening mee dat het verwijderen of wijzigen van aangepaste lijsten AVD's en/of stromen die van deze lijsten afhankelijk zijn zal verstoren.",
+		"add_custom_list_text": "Om een nieuwe aangepaste lijst te maken, voer een naam in en druk op Voeg Lijst Toe.",
+		"custom_list_name": "Lijstnaam",
+		"add_custom_list": "Voeg aangepaste lijst toe",
+		"custom_list_exists": "Aangepaste lijst bestaat al.",
+		"delete_confirm_custom_list": "Weet je zeker dat je aangepaste lijst __customListName__ wilt verwijderen?",
+		"add_items_click_button": "Klik op de plusknop om items aan deze lijst toe te voegen.",
+		"title": "Titel",
+		"id_case_sensative": "ID's zijn hoofdlettergevoelig.",
+		"reflection": "Reflectie",
+		"reflection_explained": "Hier kun je Reflectie-initialisatie per app inschakelen.",
+		"run_in_api_playground": "Voer dit uit in de Homey API Playground om de Stromen te maken!",
+		"edit_device_icon": "Je kunt hier je apparaat icoon wijzigen. Het icoon moet in .svg formaat zijn.",
+		"edit_customicon_icon": "Je kunt hier je mogelijkheid-icoon wijzigen. Het icoon moet in .svg formaat zijn.",
+		"save_use": "Opslaan & Gebruik"
 	},
 	"virtualdevicesettings":{
 		"labelButton1":"Knop 1 is speciaal en blijft de eerste, en dus de Device Tile en Indicator.",
@@ -216,10 +215,9 @@
 		"excludeSecondsHint":"Waarden automatisch uitsluiten die meer dan x aantal seconden oud zijn (apparaten die niet rapporteren).",
 		"react":"React (zet eigenschappen)",
 		"reactHint":"Stel automatisch de apparaateigenschappen in wanneer dit veld wordt gewijzigd.",
-		
-		"customList":"Custom list",
-		"customListAppSettings":"Goto the app settings to create your own custom lists.",
-		"device_class":"Device Class"
+		"customList": "Aangepaste lijst",
+		"customListAppSettings": "Ga naar de app-instellingen om je eigen aangepaste lijsten te maken.",
+		"device_class": "Apparaatklasse"
 	},
 	"pair": {
 		"list_icons":{

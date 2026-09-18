@@ -2882,6 +2882,60 @@
         ]
       },
       {
+        "id": "condition_virtualdevice_list",
+        "title": {
+          "en": "List is value"
+        },
+        "titleFormatted": {
+          "en": "[[field]] !{{is|is not}} [[value]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "List",
+              "nl": "Lijst",
+              "da": "Liste",
+              "de": "Aufführen",
+              "es": "Lista",
+              "fr": "Liste",
+              "it": "Elenco",
+              "no": "Liste",
+              "sv": "Lista",
+              "pl": "Lista",
+              "ru": "Список",
+              "ko": "목록",
+              "ar": "قائمة"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "value",
+            "placeholder": {
+              "en": "Value",
+              "nl": "Waarde",
+              "da": "Værdi",
+              "de": "Wert",
+              "es": "Valor",
+              "fr": "Valeur",
+              "it": "Valore",
+              "no": "Verdi",
+              "sv": "Värde",
+              "pl": "Wartość",
+              "ru": "Значение",
+              "ko": "값",
+              "ar": "القيمة"
+            }
+          }          
+        ]
+      },
+      {
         "deprecated": true,
         "id": "hs_run",
         "title": {
