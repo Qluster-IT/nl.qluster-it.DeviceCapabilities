@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.17.1",
+  "version": "2.17.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -2882,12 +2882,37 @@
         ]
       },
       {
+        "highlight": true,
         "id": "condition_virtualdevice_list",
         "title": {
-          "en": "List is value"
+          "en": "List is value",
+          "nl": "Lijst is waarde",
+          "da": "Liste er værdi",
+          "de": "Liste ist Wert",
+          "es": "La lista es valor",
+          "fr": "La liste est une valeur",
+          "it": "L'elenco è il valore",
+          "no": "Liste er verdi",
+          "sv": "Listan är värdet",
+          "pl": "Lista jest wartością",
+          "ru": "Список является значением",
+          "ko": "목록은 값입니다",
+          "ar": "القائمة هي القيمة"
         },
         "titleFormatted": {
-          "en": "[[field]] !{{is|is not}} [[value]]"
+          "en": "[[field]] !{{is|is not}} [[value]]",
+          "nl": "[[field]] !{{is|is niet}} [[value]]",
+          "da": "[[field]] !{{er|er ikke}} [[value]]",
+          "de": "[[field]] !{{ist|ist nicht}} [[value]]",
+          "es": "[[field]] ¡{{es|no es}} [[value]]",
+          "fr": "[[field]] !{{est|n'est pas}} [[value]]",
+          "it": "[[field]] !{{è|non è}} [[value]]",
+          "no": "[[field]] !{{er|er ikke}} [[value]]",
+          "sv": "[[field]] !{{är|är inte}} [[value]]",
+          "pl": "[[field]] !{{jest|nie jest}} [[value]]",
+          "ru": "[[field]] !{{является|не является}} [[value]]",
+          "ko": "[[field]] !{{이다|아니다}} [[value]]",
+          "ar": "[[field]] !{{هو|ليس}} [[value]]"
         },
         "args": [
           {
@@ -2932,7 +2957,7 @@
               "ko": "값",
               "ar": "القيمة"
             }
-          }          
+          }
         ]
       },
       {

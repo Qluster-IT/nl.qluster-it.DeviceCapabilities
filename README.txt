@@ -10,6 +10,7 @@ Create a device and configure it yourself:
 * unlimited Numbers, Texts, Yes/No's, Buttons, Lists and Cameras can be added.
 * Hide device tile button from the device itself.
 * Use the API to update or change the fields or AVD's.
+* Chronographs and Better Logic Library Variables can be directly reflected on AVD fields without flows.
 * And much, much more!
 
 See the topics on the community forum for examples or help.
