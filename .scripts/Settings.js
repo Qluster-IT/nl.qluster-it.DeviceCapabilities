@@ -357,6 +357,7 @@ for(var i=1;i<=fields;i++) {
 '              "values":['+
 '                {"id":"", "label":" "}, '+
 '                {"id":"sensor", "label":"Sensor (Default)"}, '+
+'                {"id":"measure_sensor", "label":"Sensor (Status)"}, '+
 '                {"id":"target_temperature", "label":"Temperature (target)"}, '+
 '                {"id":"measure_temperature", "label":"Temperature (measure)"}, '+
 '                {"id":"dim", "label":"Dim"}, '+

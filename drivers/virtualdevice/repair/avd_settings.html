@@ -4,14 +4,20 @@
 <script type="text/javascript" src="../../../assets/js/smart-table.min.js"></script>
 <script type="text/javascript" src="/manager/webserver/assets/js/jquery.js"></script>
 <script type="text/javascript" src="../../../assets/js/angular-elif.js"></script>
-<script type="text/javascript" src="../../../assets/js/avd_settings.js"></script>
+<script type="text/javascript" src="../../../userdata/avd_settings.js"></script>
+<script type="text/javascript" src="../../../assets/js/avd_settings_sort.js"></script>
 <script type="text/javascript" src="../../../assets/js/default.js"></script>
+
+<script type="text/javascript" src="../../../assets/js/bootstrap.bundle.min.js"></script>
+
+
 	
 <!-- <script type="text/javascript" src="/manager/webserver/assets/js/angular.js"></script> -->
 <!-- <script type="text/javascript" src="/manager/webserver/assets/font/fontawesome/fontawesome.css"></script> -->
 <link rel="stylesheet" href="../../../assets/fontawesome/fontawesome.css" type="text/css"/>
 
 <link rel="stylesheet" href="../../../assets/css/default.css" type="text/css"/>
+
 
 
 <div id="avdsettingsCtrl" ng-app="avdsettings" ng-controller="avdsettingsCtrl as avdsettings" class="non-setting-view">
@@ -30,40 +36,208 @@
 			the App Settings.</div>
 
 		<div class="field">
-			<div class="label">Device Class <span class="fa fa-icon fa-info-circle"
+			<div class="label"><div data-i18n="virtualdevicesettings.device_class">Device Class</div> <span class="fa fa-icon fa-info-circle"
 					tooltip="{{__('virtualdevicesettings.hintClass') || 'Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.'}}"></span>
 			</div>
 			<select class="value" ng-model="s.cls">
 				<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
 			</select>
 		</div>
+		<div class="field">
+			<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+			</div>
+			<input class="value" type="checkbox" ng-model="s['energyCumulative']" />
+		</div>
+		<!-- <div ng-else execute="s['energyCumulative']=undefined;" ></div> -->
+			
 		<div class="group header white text-center">
 			{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}
 		</div>
-		<div class="group">
+		<div class="field">
+			{{__('virtualdevicesettings.statusIndicatorFieldHint') || 'Setting (any field) as status indicator is done in the Homey Mobile App in the device settings.'}}
+		</div>
+
+		<div class="group" ng-if="s['status1Name'] || vars.useStatusIndicator">
 			<div class="field" ng-if="true">
 				<div class="label"><span class="color-icon white"></span>
 					<span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div>
-				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true);"></span>
+				<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true); vars.useStatusIndicator = false;"></span>
 			</div>
 			<!-- <div class="label"><span class="color-icon purple"></span> ><span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div> -->
 			<div class="field">
 				<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
 				<input class="value" type="text" ng-model="s.status1Name" />
 			</div>
-			<div  ng-if="s['status1Name']">
+			<div  ng-if="s['status1Name']">				
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s.status1Icon">
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s.status1Icon" src="../../../userdata/customicons/{{s.status1Icon}}.svg"/> {{customiconsById[s.status1Icon].customname || customiconsById[s.status1Icon].title[customicons.languagecode] || customiconsById[s.status1Icon].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'status1Icon')" ng-class="{active:!s.status1Icon}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s.status1Icon = icon.file;" ng-class="{active:s.status1Icon==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
+					<!-- <select class="value" ng-model="s.status1Icon">
 						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
+						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}" style="background-image:url('../../../userdata/customicons/{{icon.file}}.svg')">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
 						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
 							|| icon.title[customicons.languagecode] || icon.name}}</option>
+					</select> -->
+				</div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
+					<select class="value" ng-model="s['status'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option value="dc:devices" data-i18n="virtualdevicesettings.devices">Devices</option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>
+				<div ng-if="s['status'+($index+1)+'Reflect']=='dc:devices'">
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['status'+($index+1)+'ReflectDevices'] ? (s['status'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
+					<div ng-repeat="reflectDevice in s['status'+($index+1)+'ReflectDevices']">
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['status'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['status'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'status'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+							<select class="value" ng-model="s['status'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
+								<option value=""></option>
+								<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
+							</select>
+						</div>
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+							<select class="value" ng-model="s['status'+($parent.$index+1)+'ReflectDevices'][$index].property" required>
+								<option value=""></option>
+								<option ng-repeat="property in vars.reflectDevicesObj[s['status'+($parent.$index+1)+'ReflectDevices'][$index].id].capabilitiesObj" ng-value="property.id">{{property.title}} ({{property.type}})</option>
+							</select>
+						</div>
+					</div>
+					<div class="field text-center">
+						<button type="button" ng-click="s['status'+($index+1)+'ReflectDevices'].push({})" data-i18n="virtualdevicesettings.add_device">Add Device</button>
+					</div>
+					<div class="field" ng-if="s['status'+($index+1)+'ReflectDevices'].length>1">
+						<div class="label">{{__('virtualdevicesettings.calculation') || 'Calculation'}}</div>
+						<select class="value" ng-model="s['status'+($parent.$index+1)+'ReflectCalculation']" required>
+							<option value=""></option>
+							<option value="bll">BLL</option>
+							<option value="sum">Sum</option>
+							<option value="mean">Mean</option>
+							<option value="median">Median</option>
+							<option value="min">Min</option>
+							<option value="max">Max</option>
+						</select>
+					</div>
+					<div class="field" ng-if="s['status'+($index+1)+'React']!=='true_only_react'">
+						<div class="field" ng-if="s['status'+($index+1)+'ReflectCalculation']=='bll'">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectCalculationFormat']" placeholder="_.min($values)" ng-disabled="!vars.blReady"  required />
+						</div>
+						<div ng-else execute="s['status'+($index+1)+'ReflectCalculationFormat']=undefined;" ></div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['status'+($index+1)+'ReflectDevices'], 'number') && !s['status'+($index+1)+'ReflectCalculationFormat']" />
+						</div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expressionUnit') || 'BLL expression (Unit)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							
+						<textarea class="value" ng-model="s['status'+($index+1)+'ReflectFormatUnit']" rows="1"  placeholder="Math.round($value/1000).toString()" ng-disabled="!vars.blReady" ></textarea>
+							<!-- <input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormatUnit']" placeholder="Math.round($value/1000).toString()" ng-disabled="!vars.blReady" /> -->
+						</div>
+						<!-- <div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
+							</div>
+							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['status'+($index+1)+'ReflectDebounce']" required />						
+						</div> -->
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
+							</div>
+							<input class="value" type="number" min="1" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['status'+($index+1)+'ReflectExcludeSeconds']" />						
+						</div>
+					</div>
+					<div ng-else execute="s['status'+($index+1)+'ReflectCalculationFormat']=undefined;s['status'+($index+1)+'ReflectFormat']=undefined;s['status'+($index+1)+'ReflectFormatUnit']=undefined;s['status'+($index+1)+'ReflectDebounce']=undefined;s['status'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
+					<div class="field" ng-if="hasSetable(s['status'+($index+1)+'ReflectDevices'])">
+						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
+								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
+						</div>
+						<select class="value" ng-model="s['status'+($index+1)+'React']" >
+							<option value=""></option>
+							<!--<option value="true">Yes</option>-->
+							<option value="true_not_devices">Yes</option>
+							<option value="true_only_react">Yes, only React</option>
+						</select>
+					</div>
+					<div ng-else execute="s['status'+($index+1)+'React']=undefined;" ></div>
+				</div>
+				<div ng-if="s['status'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['status'+($parent.$index+1)+'ReflectId'].name ? s['status'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['status'+($index+1)+'ReflectProperty']? '' : s['status'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintBLL') || 'Format the value through an BLL Expression. Available parameters: $value, $variable.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" 
+						ng-required="['number','trigger'].indexOf(s['status'+($index+1)+'ReflectId'].type)==-1 && s['status'+($index+1)+'ReflectProperty']=='value'" ng-disabled="!vars.blReady" />
+					</div>
+				</div>
+				<div ng-if="s['status'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['status'+($index+1)+'ReflectProperty']? '' : s['status'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['status'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.cgReady ? (__('virtualdevicesettings.format_bll_expressionHintCG') || 'Format the value through an BLL Expression. Available parameters: $value, $chronograph.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['status'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.cgReady" 
+						 ng-required="['running', 'removed'].indexOf(s['status'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
+				<div class="field" ng-if="s['status'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['status'+($index+1)+'ReflectId']=undefined;s['status'+($index+1)+'ReflectDevices']=undefined;s['status'+($index+1)+'ReflectProperty']=undefined;s['status'+($index+1)+'ReflectFormat']=undefined;s['status'+($index+1)+'ReflectCalculation']=undefined;s['status'+($index+1)+'ReflectDebounce']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -95,6 +269,9 @@
 				</div>
 			</div>			
 			<div ng-else execute="removeAllSettings('status', 1);"></div>
+		</div>
+		<div class="field" ng-else ng-click="vars.useStatusIndicator=true">
+			{{__('virtualdevicesettings.statusIndicatorFieldDeprecated') || 'The Status Indicator Field is deprecated. You can now use any textfield as status indicator, which uses way less resources.\nIf you still want to use this old status indicator, click here.'}}
 		</div>
 
 		<div class="group header green text-center">
@@ -130,17 +307,151 @@
 				<div ng-else execute="s['text'+($index+1)+'CreateFlowCards']=false;" ></div>
 				<div class="field" ng-if="!s['text'+($index+1)+'ShowAs'] || s['text'+($index+1)+'ShowAs']==='sensor'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['text'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['text'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['text'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['text'+($parent.$index+1)+'Icon']].customname || customiconsById[s['text'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['text'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'text'+($parent.$index+1)+'Icon')" ng-class="{active:!s['text'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['text'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['text'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['text'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
+					<select class="value" ng-model="s['text'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option value="dc:devices" data-i18n="virtualdevicesettings.devices">Devices</option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>
+				<div ng-if="s['text'+($index+1)+'Reflect']=='dc:devices'">
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['text'+($index+1)+'ReflectDevices'] ? (s['text'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
+					<div ng-repeat="reflectDevice in s['text'+($index+1)+'ReflectDevices']">
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['text'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['text'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'text'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+							<select class="value" ng-model="s['text'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
+								<option value=""></option>
+								<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
+							</select>
+						</div>
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+							<select class="value" ng-model="s['text'+($parent.$index+1)+'ReflectDevices'][$index].property" required>
+								<option value=""></option>
+								<option ng-repeat="property in vars.reflectDevicesObj[s['text'+($parent.$index+1)+'ReflectDevices'][$index].id].capabilitiesObj" ng-value="property.id">{{property.title}} ({{property.type}})</option>
+							</select>
+						</div>
+					</div>
+					<div class="field text-center">
+						<button type="button" ng-click="s['text'+($index+1)+'ReflectDevices'].push({})" data-i18n="virtualdevicesettings.add_device">Add Device</button>
+					</div>
+					<div class="field" ng-if="s['text'+($index+1)+'ReflectDevices'].length>1">
+						<div class="label">{{__('virtualdevicesettings.calculation') || 'Calculation'}}</div>
+						<select class="value" ng-model="s['text'+($parent.$index+1)+'ReflectCalculation']" required>
+							<option value=""></option>
+							<option value="bll">BLL</option>
+						</select>
+					</div>				
+					<div class="field" ng-if="s['text'+($index+1)+'React']!=='true_only_react'">
+						<div class="field" ng-if="s['text'+($index+1)+'ReflectCalculation']=='bll'">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectCalculationFormat']" placeholder="$values.join(',')" ng-disabled="!vars.blReady"  required />
+						</div>
+						<div ng-else execute="s['text'+($index+1)+'ReflectCalculationFormat']=undefined;" ></div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="s['text'+($index+1)+'ReflectDevices'].length>0 && _wrongTypes(s['text'+($index+1)+'ReflectDevices'], ['string', 'enum']) && !s['text'+($index+1)+'ReflectCalculationFormat']" />
+						</div>
+						<!-- <div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
+							</div>
+							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['text'+($index+1)+'ReflectDebounce']" required />
+						</div> -->
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
+							</div>
+							<input class="value" type="number" min="1" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['text'+($index+1)+'ReflectExcludeSeconds']" />						
+						</div>
+					</div>
+					<div ng-else execute="s['text'+($index+1)+'ReflectCalculationFormat']=undefined;s['text'+($index+1)+'ReflectFormat']=undefined;s['text'+($index+1)+'ReflectDebounce']=undefined;s['text'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
+					<div class="field" ng-if="hasSetable(s['text'+($index+1)+'ReflectDevices'])">
+						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
+								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
+						</div>
+						<select class="value" ng-model="s['text'+($index+1)+'React']" >
+							<option value=""></option>
+							<!--<option value="true">Yes</option>-->
+							<option value="true_not_devices">Yes</option>
+							<option value="true_only_react">Yes, only React</option>
+						</select>
+					</div>
+					<div ng-else execute="s['text'+($index+1)+'React']=undefined;" ></div>
+				</div>
+				<div ng-if="s['text'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['text'+($parent.$index+1)+'ReflectId'].name ? s['text'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['text'+($index+1)+'ReflectProperty']? '' : s['text'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintBLL') || 'Format the value through an BLL Expression. Available parameters: $value, $variable.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-disabled="!vars.blReady" 
+						ng-required="['string'].indexOf(s['text'+($index+1)+'ReflectId'].type)==-1 && s['text'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>
+				<div ng-if="s['text'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectId']" required >
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['text'+($index+1)+'ReflectProperty']? '' : s['text'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['text'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['text'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.cgReady ? (__('virtualdevicesettings.format_bll_expressionHintCG') || 'Format the value through an BLL Expression. Available parameters: $value, $chronograph.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['text'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" required ng-disabled="!vars.cgReady" />
+					</div>
+				</div>
+				<div class="field" ng-if="s['text'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['text'+($index+1)+'ReflectId']=undefined;s['text'+($index+1)+'ReflectDevices']=undefined;s['text'+($index+1)+'ReflectProperty']=undefined;s['text'+($index+1)+'ReflectFormat']=undefined;s['text'+($index+1)+'ReflectCalculation']=undefined;s['text'+($index+1)+'ReflectDebounce']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -156,7 +467,7 @@
 					<input class="value" type="checkbox" ng-model="s['text'+($index+1)+'SeparateCapabilities']" />
 				</div>
 				<div ng-else execute="s['text'+($index+1)+'SeparateCapabilities']=false;" ></div>
-			</div>						
+			</div>
 			<div ng-else execute="removeAllSettings('text', ($index+1));"></div>
 		</div>
 		<div class="create-button group last">
@@ -196,31 +507,179 @@
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'CreateFlowCards']" />
+					<div ng-if="s['number'+($index+1)+'ShowAs']==='sensor'">{{__('virtualdevicesettings.createFlowCardsStatusIndication') || '* Also allows to be selected as Status Indicator'}}</div>
 				</div>
 				<div class="field" ng-if="!s['number'+($index+1)+'ShowAs'] || s['number'+($index+1)+'ShowAs']==='sensor'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['number'+($index+1)+'Icon']">
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['number'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['number'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['number'+($parent.$index+1)+'Icon']].customname || customiconsById[s['number'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['number'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'number'+($parent.$index+1)+'Icon')" ng-class="{active:!s['number'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['number'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['number'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'Icon']=undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
+					<select class="value" ng-model="s['number'+($index+1)+'Reflect']">
 						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
+						<option value="dc:devices" data-i18n="virtualdevicesettings.devices">Devices</option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
 					</select>
 				</div>
-				<div class="field" ng-if="s['number'+($index+1)+'ShowAs'] ==='measure_power' && s['number'+($index+1)+'CreateFlowCards']">
-					<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+				<div ng-if="s['number'+($index+1)+'Reflect']=='dc:devices'">
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['number'+($index+1)+'ReflectDevices'] ? (s['number'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
+					<div ng-repeat="reflectDevice in s['number'+($index+1)+'ReflectDevices']">
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['number'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['number'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'number'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+							<select class="value" ng-model="s['number'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
+								<option value=""></option>
+								<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
+							</select>
+						</div>
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+							<select class="value" ng-model="s['number'+($parent.$index+1)+'ReflectDevices'][$index].property" required>
+								<option value=""></option>
+								<option ng-repeat="property in vars.reflectDevicesObj[s['number'+($parent.$index+1)+'ReflectDevices'][$index].id].capabilitiesObj" ng-value="property.id">{{property.title}} ({{property.type}})</option>
+							</select>
+						</div>
+					</div>
+					<div class="field text-center">
+						<button type="button" ng-click="s['number'+($index+1)+'ReflectDevices'].push({})" data-i18n="virtualdevicesettings.add_device">Add Device</button>
+					</div>
+					<div class="field" ng-if="s['number'+($index+1)+'ReflectDevices'].length>1">
+						<div class="label">{{__('virtualdevicesettings.calculation') || 'Calculation'}}</div>
+						<select class="value" ng-model="s['number'+($parent.$index+1)+'ReflectCalculation']" required>
+							<option value=""></option>
+							<option value="bll">BLL</option>
+							<option value="sum">Sum</option>
+							<option value="mean">Mean</option>
+							<option value="median">Median</option>
+							<option value="min">Min</option>
+							<option value="max">Max</option>
+						</select>
+					</div>
+					<div class="field" ng-if="s['number'+($index+1)+'React']!=='true_only_react'">
+						<div class="field" ng-if="s['number'+($index+1)+'ReflectCalculation']=='bll'">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectCalculationFormat']" placeholder="_.min($values)" ng-disabled="!vars.blReady"  required />
+						</div>
+						<div ng-else execute="s['number'+($index+1)+'ReflectCalculationFormat']=undefined;" ></div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['number'+($index+1)+'ReflectDevices'], 'number') && !s['number'+($index+1)+'ReflectCalculationFormat']" />
+						</div>
+						<!-- <div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
+							</div>
+							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['number'+($index+1)+'ReflectDebounce']" required />						
+						</div> -->
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
+							</div>
+							<input class="value" type="number" min="1" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['number'+($index+1)+'ReflectExcludeSeconds']" />						
+						</div>
+					</div>
+					<div ng-else execute="s['number'+($index+1)+'ReflectCalculationFormat']=undefined;s['number'+($index+1)+'ReflectFormat']=undefined;s['number'+($index+1)+'ReflectDebounce']=undefined;s['number'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
+					<div class="field"  ng-if="hasSetable(s['number'+($index+1)+'ReflectDevices'])">
+						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
+								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
+						</div>
+						<select class="value" ng-model="s['number'+($index+1)+'React']">
+							<option value=""></option>
+							<!--<option value="true">Yes</option>-->
+							<option value="true_not_devices">Yes</option>
+							<option value="true_only_react">Yes, only React</option>
+						</select>
+					</div>
+					<div ng-else execute="s['number'+($index+1)+'React']=undefined;" ></div>
 				</div>
-				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulative']" />
+				<div ng-if="s['number'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['number'+($parent.$index+1)+'ReflectId'].name ? s['number'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['number'+($index+1)+'ReflectProperty']? '' : s['number'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintBLL') || 'Format the value through an BLL Expression. Available parameters: $value, $variable.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-disabled="!vars.blReady" 
+						ng-required="['number', 'trigger'].indexOf(s['number'+($index+1)+'ReflectId'].type)==-1 && s['number'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
 				</div>
-				<div ng-else execute="s['number'+($index+1)+'EnergyCumulative']=undefined;" ></div>
+				<div ng-if="s['number'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['number'+($index+1)+'ReflectProperty']? '' : s['number'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['number'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['number'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.cgReady ? (__('virtualdevicesettings.format_bll_expressionHintCG') || 'Format the value through an BLL Expression. Available parameters: $value, $chronograph.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['number'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"   ng-disabled="!vars.cgReady" 
+						ng-required="['running', 'removed'].indexOf(s['number'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
+				<div class="field" ng-if="s['number'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'ReflectId']=undefined;s['number'+($index+1)+'ReflectDevices']=undefined;s['number'+($index+1)+'ReflectProperty']=undefined;s['number'+($index+1)+'ReflectFormat']=undefined;s['number'+($index+1)+'ReflectCalculation']=undefined;s['number'+($index+1)+'ReflectDebounce']=undefined;" ></div>
+				<div class="field" ng-if="['meter_power' ].indexOf(s['number'+($index+1)+'ShowAs'])>-1">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulativeImported') || 'Cumulative Imported'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulativeImported']" />
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulativeExported']=undefined;" ></div>
+				<div class="field" ng-if="['meter_power' ].indexOf(s['number'+($index+1)+'ShowAs'])>-1">
+					<div class="label"><span>{{__('virtualdevicesettings.cumulativeExported') || 'Cumulative Exported'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['number'+($index+1)+'EnergyCumulativeExported']" />
+				</div>
+				<div ng-else execute="s['number'+($index+1)+'EnergyCumulativeExported']=undefined;" ></div>
 
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.units' || 'Units')}}</span> <span
 							class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.unitsHint')}}"></span></div>
-					<input class="value" type="text" ng-model="s['number'+($index+1)+'Units']" />
+					<textarea class="value" ng-model="s['number'+($index+1)+'Units']" rows="1" ></textarea>
 				</div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.decimals') || 'Decimals'}}</span> <span
@@ -330,17 +789,156 @@
 				<div class="field"
 					ng-if="!s['boolean'+($index+1)+'ShowAs'] || s['boolean'+($index+1)+'ShowAs']==='sensor' || s['boolean'+($index+1)+'ShowAs']==='alarm' || s['boolean'+($index+1)+'ShowAs']==='onoff'">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['boolean'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['boolean'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['boolean'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['boolean'+($parent.$index+1)+'Icon']].customname || customiconsById[s['boolean'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['boolean'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'boolean'+($parent.$index+1)+'Icon')" ng-class="{active:!s['boolean'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['boolean'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['boolean'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['boolean'+($index+1)+'Icon']=undefined" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length">
+					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
+					<select class="value" ng-model="s['boolean'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option value="dc:devices" data-i18n="virtualdevicesettings.devices">Devices</option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>
+				<div ng-if="s['boolean'+($index+1)+'Reflect']=='dc:devices'">
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['boolean'+($index+1)+'ReflectDevices'] ? (s['boolean'+($index+1)+'ReflectDevices']=[{}]):null;"></div>
+					<div ng-repeat="reflectDevice in s['boolean'+($index+1)+'ReflectDevices']">
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['boolean'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['boolean'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'boolean'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+							<select class="value" ng-model="s['boolean'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
+								<option value=""></option>
+								<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
+							</select>
+						</div>
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+							<select class="value" ng-model="s['boolean'+($parent.$index+1)+'ReflectDevices'][$index].property" required>
+								<option value=""></option>
+								<option ng-repeat="property in vars.reflectDevicesObj[s['boolean'+($parent.$index+1)+'ReflectDevices'][$index].id].capabilitiesObj" ng-value="property.id">{{property.title}} ({{property.type}})</option>
+							</select>
+						</div>
+					</div>
+					<div class="field text-center">
+						<button type="button" ng-click="s['boolean'+($index+1)+'ReflectDevices'].push({})" data-i18n="virtualdevicesettings.add_device">Add Device</button>
+					</div>
+					<div class="field" ng-if="s['boolean'+($index+1)+'ReflectDevices'].length>1">
+						<div class="label">{{__('virtualdevicesettings.calculation') || 'Calculation'}}</div>
+						<select class="value" ng-model="s['boolean'+($parent.$index+1)+'ReflectCalculation']" required>
+							<option value=""></option>
+							<option value="bll">BLL</option>
+							<option value="any">True if any property is true</option>
+							<option value="all">True if all properties are true</option>
+							<option value="falseIfAny">False if any property is true</option>
+							<option value="falseIfAll">False if all properties are true</option>
+						</select>
+					</div>
+					<div class="field" ng-if="s['boolean'+($index+1)+'React']!=='true_only_react'">
+						<div class="field" ng-if="s['boolean'+($index+1)+'ReflectCalculation']=='bll'">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectCalculationFormat']" placeholder="_.min($values)" ng-disabled="!vars.blReady"  required />
+						</div>
+						<div ng-else execute="s['boolean'+($index+1)+'ReflectCalculationFormat']=undefined;" ></div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['boolean'+($index+1)+'ReflectDevices'], 'boolean') && !s['boolean'+($index+1)+'ReflectCalculationFormat']" />
+						</div>
+						<!-- <div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
+							</div>
+							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['boolean'+($index+1)+'ReflectDebounce']" required />						
+						</div> -->
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
+							</div>
+							<input class="value" type="number" min="1" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['boolean'+($index+1)+'ReflectExcludeSeconds']" />						
+						</div>
+					</div>
+					<div ng-else execute="s['boolean'+($index+1)+'ReflectCalculationFormat']=undefined;s['boolean'+($index+1)+'ReflectFormat']=undefined;s['boolean'+($index+1)+'ReflectDebounce']=undefined;s['boolean'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
+					<div class="field" ng-if="hasSetable(s['boolean'+($index+1)+'ReflectDevices'])">
+						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
+								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
+						</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'React']">
+							<option value=""></option>
+							<!--<option value="true">Yes</option>-->
+							<option value="true_not_devices">Yes</option>
+							<option value="true_only_react">Yes, only React</option>
+						</select>
+					</div>
+					<div ng-else execute="s['boolean'+($index+1)+'React']=undefined;" ></div>
+				</div>
+				<div ng-if="s['boolean'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['boolean'+($parent.$index+1)+'ReflectId'].name ? s['boolean'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['boolean'+($index+1)+'ReflectProperty']? '' : s['boolean'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintBLL') || 'Format the value through an BLL Expression. Available parameters: $value, $variable.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-disabled="!vars.blReady" 
+						ng-required="['boolean'].indexOf(s['boolean'+($index+1)+'ReflectId'].type)==-1 && s['boolean'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>
+				<div ng-if="s['boolean'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['boolean'+($index+1)+'ReflectProperty']? '' : s['boolean'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['boolean'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['boolean'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.cgReady ? (__('virtualdevicesettings.format_bll_expressionHintCG') || 'Format the value through an BLL Expression. Available parameters: $value, $chronograph.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['boolean'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-disabled="!vars.cgReady" 
+						ng-required="['elapsed', 'remaining'].indexOf(s['boolean'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
+				<div class="field" ng-if="s['boolean'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['boolean'+($index+1)+'ReflectId']=undefined;s['boolean'+($index+1)+'ReflectDevices']=undefined;s['boolean'+($index+1)+'ReflectProperty']=undefined;s['boolean'+($index+1)+'ReflectFormat']=undefined;s['boolean'+($index+1)+'ReflectCalculation']=undefined;s['boolean'+($index+1)+'ReflectDebounce']=undefined;" ></div>
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"
@@ -428,19 +1026,157 @@
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'CreateFlowCards'] = false;" ></div>
 				<div class="field"
-					ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' ">
+					ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' && s['button'+($index+1)+'CreateFlowCards']!=true ">
 					<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
-					<select class="value" ng-model="s['button'+($index+1)+'Icon']">
-						<option value=""></option>
-						<option ng-repeat="icon in customicons.icons[0].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[1].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-						<option ng-repeat="icon in customicons.icons[2].icons" value="{{icon.file}}">{{icon.customname
-							|| icon.title[customicons.languagecode] || icon.name}}</option>
-					</select>
+					<div class="dropdown value">
+						<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img ng-if="s['button'+($parent.$index+1)+'Icon']" src="../../../userdata/customicons/{{s['button'+($parent.$index+1)+'Icon']}}.svg"/> {{customiconsById[s['button'+($parent.$index+1)+'Icon']].customname || customiconsById[s['button'+($parent.$index+1)+'Icon']].title[customicons.languagecode] || customiconsById[s['button'+($parent.$index+1)+'Icon']].name || '&nbsp;'}}
+						</button>
+						<ul class="dropdown-menu overflow-y-scroll" >
+							<li ng-click="_delete(s, 'button'+($parent.$index+1)+'Icon')" ng-class="{active:!s['button'+($parent.$index+1)+'Icon']}"> &nbsp;</li>
+						  <li ng-repeat="icon in customicons.icons[0].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[1].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+							<li ng-repeat="icon in customicons.icons[2].icons" ng-click="s['button'+($parent.$index+1)+'Icon'] = icon.file;" ng-class="{active:s['button'+($parent.$index+1)+'Icon']==icon.file}"><img src="../../../userdata/customicons/{{icon.file}}.svg"/>{{icon.customname
+							|| icon.title[customicons.languagecode] || icon.name}}</li>
+						</ul>
+					</div>
 				</div>
 				<div ng-else execute="s['button'+($index+1)+'Icon'] = undefined;" ></div>
+				<div class="field" ng-if="reflectApps && reflectApps.length && s['button'+($index+1)+'ShowAs'] && s['button'+($index+1)+'ShowAs']!=='button'">
+					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
+					<select class="value" ng-model="s['button'+($index+1)+'Reflect']">
+						<option value=""></option>
+						<option value="dc:devices" data-i18n="virtualdevicesettings.devices">Devices</option>
+						<option ng-repeat="app in reflectApps" value="{{app.id}}">{{app.name}}</option>
+					</select>
+				</div>
+				<div ng-else execute="_delete(s, 'button'+($index+1)+'Reflect');" ></div>
+				<div ng-if="s['button'+($index+1)+'Reflect']=='dc:devices'">
+					<div ng-init="!vars.reflectDevices ? loadReflectDevices() : null; !s['button'+($index+1)+'ReflectDevices'] ? (s['button'+($index+1)+'ReflectDevices']=[{}]):null; "></div>
+					<div ng-repeat="reflectDevice in s['button'+($index+1)+'ReflectDevices']">
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span  class="float-right fa fa-icon fa-trash" ng-click="s['button'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['button'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'button'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+							<select class="value" ng-model="s['button'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
+								<option value=""></option>
+								<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
+							</select>
+						</div>
+						<div class="field">
+							<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+							<select class="value" ng-model="s['button'+($parent.$index+1)+'ReflectDevices'][$index].property" required>
+								<option value=""></option>
+								<option ng-repeat="property in vars.reflectDevicesObj[s['button'+($parent.$index+1)+'ReflectDevices'][$index].id].capabilitiesObj" ng-value="property.id">{{property.title}} ({{property.type}})</option>
+							</select>
+						</div>
+					</div>
+					<div class="field text-center">
+						<button type="button" ng-click="s['button'+($index+1)+'ReflectDevices'].push({})" data-i18n="virtualdevicesettings.add_device">Add Device</button>
+					</div>
+					<div class="field" ng-if="s['button'+($index+1)+'ReflectDevices'].length>1">
+						<div class="label">{{__('virtualdevicesettings.calculation') || 'Calculation'}}</div>
+						<select class="value" ng-model="s['button'+($parent.$index+1)+'ReflectCalculation']" required>
+							<option value=""></option>
+							<option value="bll">BLL</option>
+							<option value="any">True if any property is true</option>
+							<option value="all">True if all properties are true</option>
+						</select>
+					</div>
+					<div class="field" ng-if="s['button'+($index+1)+'React']!=='true_only_react'">
+						<div class="field" ng-if="s['button'+($index+1)+'ReflectCalculation']=='bll'">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_calculation') || 'Calculation BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevicesCalculations') || 'Calculate the value through an BLL Expression. Available parameters: $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectCalculationFormat']" placeholder="_.min($values)" ng-disabled="!vars.blReady" required />
+						</div>
+						<div ng-else execute="s['button'+($index+1)+'ReflectCalculationFormat']=undefined;" ></div>
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintDevices') || 'Format the value through an BLL Expression. Available parameters: $value, $values') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+							</div>
+							<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)" ng-disabled="!vars.blReady" ng-required="_wrongTypes(s['button'+($index+1)+'ReflectDevices'], 'boolean') && !s['button'+($index+1)+'ReflectCalculationFormat']" />
+						</div>
+						<!-- <div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.debounceAVD') || 'Debounce (ms)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.debounceAVDHint') || 'Milliseconds between setting the AVD field value (leading, maxwait, trailing).') }}"></span>
+							</div>
+							<input class="value" type="number" min="0" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['button'+($index+1)+'ReflectDebounce']" required />			
+						</div> -->
+						<div class="field">
+							<div class="label"><span>{{__('virtualdevicesettings.excludeSeconds') || 'Exclude (seconds)'}}</span><span class="fa fa-icon fa-info-circle"
+									tooltip="{{ (__('virtualdevicesettings.excludeSecondsHint') || 'Automaticly Exclude values that are more than x number of seconds old (devices that are not reporting).') }}"></span>
+							</div>
+							<input class="value" type="number" min="1" step="1" ng-blur="onBlurNumber($event)"  ng-model="s['button'+($index+1)+'ReflectExcludeSeconds']" />
+						</div>
+					</div>
+					<div ng-else execute="s['button'+($index+1)+'ReflectCalculationFormat']=undefined;s['button'+($index+1)+'ReflectFormat']=undefined;s['button'+($index+1)+'ReflectDebounce']=undefined;s['button'+($index+1)+'ReflectExcludeSeconds']=undefined;" ></div>
+					<div class="field" ng-if="hasSetable(s['button'+($index+1)+'ReflectDevices'])">
+						<div class="label"><span>{{__('virtualdevicesettings.react') || 'React (set properties)'}}</span><span class="fa fa-icon fa-info-circle"
+								tooltip="{{ (__('virtualdevicesettings.reactHint') || 'Automaticly set the device properties when this field is changed.') }}"></span>
+						</div>
+						<select class="value" ng-model="s['button'+($index+1)+'React']">
+							<option value=""></option>
+							<!--<option value="true">Yes</option>-->
+							<option value="true_not_devices">Yes</option>
+							<option value="true_only_react">Yes, only React</option>
+						</select>
+					</div>
+					<div ng-else execute="s['button'+($index+1)+'React']=undefined;" ></div>
+				</div>
+				<div ng-if="s['button'+($index+1)+'Reflect']=='net.i-dev.betterlogic'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.variable') || 'Variable'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="_var in vars.bllVariables|filter" ng-value="_var.name==s['button'+($parent.$index+1)+'ReflectId'].name ? s['button'+($parent.$index+1)+'ReflectId'] : _var">{{_var.name}} ({{_var.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['button'+($index+1)+'ReflectProperty']? '' : s['button'+($index+1)+'ReflectProperty']='value'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectProperty']" required>
+							<!-- <option value=""></option> -->
+							<option value="value">Value</option>
+							<option value="lastChanged">Last Set</option>
+						</select>
+					</div>					
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.blReady ? (__('virtualdevicesettings.format_bll_expressionHintBLL') || 'Format the value through an BLL Expression. Available parameters: $value, $variable.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"  ng-disabled="!vars.blReady" 
+						ng-required="['boolean'].indexOf(s['button'+($index+1)+'ReflectId'].type)==-1 && s['button'+($index+1)+'ReflectProperty']=='value'" />
+					</div>
+				</div>				
+				<div ng-if="s['button'+($index+1)+'Reflect']=='nl.fellownet.chronograph'">
+					<div class="field">
+						<div class="label">{{__('virtualdevicesettings.chronograph') || 'Chronograph'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectId']" required>
+							<option value=""></option>
+							<option ng-repeat="cg in vars.cgChronographs" ng-value="cg">{{cg.name}} ({{cg.type}})</option>
+						</select>
+					</div>
+					<div class="field" ng-init="s['button'+($index+1)+'ReflectProperty']? '' : s['button'+($index+1)+'ReflectProperty']='elapsed'">
+						<div class="label">{{__('virtualdevicesettings.property') || 'Property'}}</div>
+						<select class="value" ng-model="s['button'+($index+1)+'ReflectProperty']" required>
+							<option value="elapsed">Elapsed duration</option>
+							<option ng-if="s['button'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
+							<option value="running">Running</option>
+							<option value="removed">Removed</option>
+						</select>
+					</div>				
+					<div class="field">
+						<div class="label"><span>{{__('virtualdevicesettings.format_bll_expression') || 'BLL expression'}}</span><span class="fa fa-icon fa-info-circle"
+							tooltip="{{ vars.cgReady ? (__('virtualdevicesettings.format_bll_expressionHintCG') || 'Format the value through an BLL Expression. Available parameters: $value, $chronograph.') : (__('virtualdevicesettings.format_bll_expressionHint') || 'Format the value through an BLL Expression. N.b. Some properties require formatting to be parsed to this field. Install the Better Logic Library App from the Athom App Store to enable BLL Expressions.')}}"></span>
+					</div>
+						<input class="value" type="text" ng-model="s['button'+($index+1)+'ReflectFormat']" placeholder="Math.round($value/1000)"   ng-disabled="!vars.cgReady" 
+						ng-required="['elapsed', 'remaining'].indexOf(s['button'+($index+1)+'ReflectProperty'])>-1" />
+					</div>
+				</div>
+				<div class="field" ng-if="s['button'+($index+1)+'Reflect']">
+				</div>
+				<div ng-else execute="s['button'+($index+1)+'ReflectId']=undefined;s['button'+($index+1)+'ReflectDevices']=undefined;s['button'+($index+1)+'ReflectProperty']=undefined;s['button'+($index+1)+'ReflectFormat']=undefined;s['button'+($index+1)+'ReflectCalculation']=undefined;s['button'+($index+1)+'ReflectDebounce']=undefined;" ></div>
 				<div class="field"
 					ng-if="!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button'|| s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || (s['button'+($index+1)+'ShowAs']==='onoff' && $index!==0)">
 					<div class="label"><span>{{__('virtualdevicesettings.nonClickable') || 'Non-Clickable'}}</span>
@@ -533,24 +1269,42 @@
 					<select class="value" ng-model="s['list'+($index+1)+'ShowAs']">
 						<option ng-repeat="item in listShowAs" value="{{item.id}}">{{item.label}}</option>
 					</select>
-				</div>				
-				<div class="field">
-					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span> <span
-							class="fa fa-icon fa-info-circle"
-							tooltip="{{__('virtualdevicesettings.prefixedListHint') || 'Currently, only pre-fixed lists are available. Goto the Forum to request your own!'}}"></span>
+				</div>
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='ternary' || s['list'+($index+1)+'ShowAs']=='picker'">
+					<div class="label"><span>{{__('virtualdevicesettings.prefixedList') || 'Prefixed list'}}</span>
 					</div>
 					<select class="value" ng-model="s['list'+($index+1)+'PrefixedList']">
 						<option ng-repeat="item in listPrefixedLists | filter:{'showAs':s['list'+($index+1)+'ShowAs']}" value="{{item.id}}">{{item.label}}</option>
 					</select>
 				</div>
-				<div class="field"
-					ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker'">
+				<div ng-else execute="_delete(s, 'list'+($index+1)+'PrefixedList');" ></div>
+				
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']=='customlist'">
+					<div class="label"><span>{{__('virtualdevicesettings.customList') || 'Custom list'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.customListAppSettings') || 'Goto the app settings to create your own custom lists.'}}"></span>
+					</div>
+					<select class="value" ng-model="s['list'+($index+1)+'CustomList']">
+						<option ng-repeat="item in listCustomLists" value="{{item.name}}">{{item.name}}</option>
+					</select>
+				</div>
+				<div ng-else execute="_delete(s, 'list'+($index+1)+'CustomList');" ></div>
+				
+				<div class="field" ng-if="s['list'+($index+1)+'ShowAs']!='ternary' && s['list'+($index+1)+'ShowAs']!='picker' && s['list'+($index+1)+'ShowAs']!='customlist'">
 					<div class="label"><span>{{__('virtualdevicesettings.createFlowCards') || 'Create Flow Cards'}}</span> <span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.createFlowCardsHint') || 'When selected Default Flow Cards will be created for this capability.'}}"></span>
 					</div>
 					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'CreateFlowCards']" />
 				</div>
 				<div ng-else execute="s['list'+($index+1)+'CreateFlowCards'] = false;" ></div>
+
+				<div class="field" ng-if="(s['list'+($index+1)+'ShowAs']=='picker' && s['list'+($index+1)+'PrefixedList']) || s['list'+($index+1)+'ShowAs']=='customlist'">
+					<div class="label"><span>{{__('virtualdevicesettings.onlyThroughFlows') || 'Only through flows'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.onlyThroughFlowsHint') || 'When selected the picker can only be set through flows.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'OnlyThroughFlows']" />
+				</div>
 
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
@@ -832,8 +1586,9 @@
 			
 			<div class="field">
 				<textarea aria-multiline="true" class="field" type="text" ng-model="vars.readflow.apiCommand" rows="5" ng-attr-rows="{{vars.readflow.apiCommand?5:1}}"></textarea>
-			</div>			<div class="field margin-top margin-bottom">
-				Run this in the <div ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');">Homey API Playground</div> to create the Flows!
+			</div>			
+			<div class="field margin-top margin-bottom">
+				<div class="field link" ng-click="openUrl('https://tools.developer.homey.app/tools/api-playground');" data-i18n="settings.run_in_api_playground">Run this in the Homey API Playground to create the Flows!</div>
 				<div class="field block" ng-show="vars.scriptCopied">(Text in clipboard allready)</div>
 			</div>
 			<div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
@@ -842,7 +1597,7 @@
 	</form>
 	<!-- <div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div> -->
 	<div class="main-buttons" ng-show="view.id">
-		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;">Close</div>
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;"  data-i18n="virtualdevicesettings.close">Close</div>
 	</div>
 
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
@@ -871,7 +1626,7 @@
 				</div>
 			</div>
 			<div class="main-buttons ">
-				<button class="button" data-i18n="settings.close" ng-click="closeTemplates();">Close</button>
+				<button class="button" data-i18n="virtualdevicesettings.close" ng-click="closeTemplates();">Close</button>
 			</div>
 		</div>
 		<div class="template-panel" ng-show="vars.template">
@@ -894,11 +1649,12 @@
 		.controller("avdsettingsCtrl", ['$scope', '$rootScope', '$timeout', '$parse', '$sanitize', '$compile', function ($scope, $rootScope, $timeout, $parse, $sanitize, $compile) {
 			console.log('controller started');
 			scope = $scope;
+			$scope._ = _;
 			//let Homey = _homey
 			$scope.s = {};
 			$scope.temp = {};
 			//$scope.view = {id:'theflowexchanger', subid:'theflowexchangerimport'};
-			$scope.view = {id:undefined, subid:undefined};
+			const view = $scope.view = {id:undefined, subid:undefined};
 			$scope.orderBy = {orderBy:'favorite'};
 			$scope.filter = {header:''};
 			
@@ -907,7 +1663,7 @@
 			_.each($scope.topicsArray, (topic, key)=> topic.key = key); 
 			$scope.topicsArray = _.toArray($scope.topics);
 			
-			const vars = $scope.vars = {copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
+			const vars = $scope.vars = {useStatusIndicator:false, copyWithIcons : true, copyWithFlows : true, textSettings: null, readcopy:null, readflow:null, useCompressed: true, useMinified: true,
 				scriptCopied: false, tefCopied: false, homeyId: null, createdadvancedflows: [], favoriteTemplates:{}};
 
 			$scope.gotoPostTopic = function() {
@@ -976,22 +1732,27 @@ ${vars.textSettings}
 				vars.template=null;
 			}
 
-			$scope.numberShowAs = asv_settings.numberShowAs;
-			$scope.textShowAs = asv_settings.textShowAs;
+			$scope.numberShowAs = avd_settings.numberShowAs;
+			$scope.textShowAs = avd_settings.textShowAs;
 
-			$scope.booleanShowAs = asv_settings.booleanShowAs;
+			$scope.booleanShowAs = avd_settings.booleanShowAs;
 
-			$scope.buttonShowAs1 = asv_settings.buttonShowAs1;
-			$scope.buttonShowAsRest = asv_settings.buttonShowAsRest;
-			$scope.listShowAs = asv_settings.listShowAs;
+			$scope.buttonShowAs1 = avd_settings.buttonShowAs1;
+			$scope.buttonShowAsRest = avd_settings.buttonShowAsRest;
+			$scope.listShowAs = avd_settings.listShowAs;
 
-			$scope.deviceClasses = asv_settings.deviceClasses;
-			$scope.listPrefixedLists = asv_settings.listPrefixedLists;
+			$scope.deviceClasses = avd_settings.deviceClasses;
+			$scope.listPrefixedLists = avd_settings.listPrefixedLists;
+			$scope.reflectApps = avd_settings.reflectApps;
 
 			// $scope.setListShowAs = function(listId) {
 			// 	$scope.s[listId+'ShowAs'] = _.find($scope.listPrefixedLists, x=> x.id===$scope.s[listId+'PrefixedList']).showAs;
 			// }
 
+
+			$scope.contains = function(expected, actual) {
+				return actual.indexOf(expected) > -1;
+			}
 
 			$scope._delete = function(o,s) {
 				delete o[s];
@@ -1088,6 +1849,11 @@ ${vars.textSettings}
 
 
 
+			$scope._wrongTypes = function(devices, types, ) {
+				if(!vars.reflectDevicesObj) return null;
+				if(typeof(type)=='string') types = [types];
+				return _.find(devices, x=> types.indexOf(vars.reflectDevicesObj[x.id].capabilitiesObj[x.property].type)===-1)
+			}
 			
 			$scope.size = function (collection) {
 				console.log('size()');
@@ -1131,6 +1897,27 @@ ${vars.textSettings}
 				Homey.hideLoadingOverlay();
 			}
 
+			const types = ['status', 'text', 'number', 'button', 'boolean', 'list'];
+
+			
+			function capitalizeFirstLetter(string) {
+				return string.charAt(0).toUpperCase() + string.slice(1);
+			}
+			function setAllFieldProperties() {
+				let settings = $scope.s;
+				let s = settings;
+				console.log(settings);
+				
+				for (let iTypes = 0; iTypes < types.length; iTypes++) {
+					const type = types[iTypes];
+					const fieldCount = type == "status" ? 1 : (settings['numberOf' + capitalizeFirstLetter(type) + 'Fields'] || 0);
+					
+					for (let i = 1; i <= fieldCount; i++) {
+						if(s[type+(i)+'Reflect']=='nl.fellownet.chronograph') s[type+(i)+'ReflectId'] = vars.cgChronographsByKey[s[type+(i)+'ReflectId'].key];						
+					}
+				}
+			}
+
 
 			$scope.save = function (successFunction, settings) {
 				showOverlay(Homey.__("virtualdevicesettings.device_saving") || 'The Device is being saved');
@@ -1142,6 +1929,7 @@ ${vars.textSettings}
 					}
 					$scope.$apply(function () {
 						$scope.s = result;
+						setAllFieldProperties();
 						//$scope.vars.apiCommand = result.apiCommand;
 						if(successFunction && typeof(successFunction)=='function') successFunction();
 					});
@@ -1317,6 +2105,10 @@ ${vars.textSettings}
 				}
 				//$scope.vars.textSettings = JSON.stringify($scope.s);
 			}
+
+			$scope.updateFromReact = function(fieldId) {
+				if($scope.s[fieldId+'React']!=='true_only_react' && !$scope.s[fieldId+'ReflectDebounce'] && $scope.s[fieldId+'ReflectDebounce']!==0)  $scope.s[fieldId+'ReflectDebounce'] = 250;
+			}
 			
 			
 			$scope.setSource = function(source) {
@@ -1327,6 +2119,33 @@ ${vars.textSettings}
 						$scope.getTefTemplates();
 					});
 				}
+
+			$scope.loadReflectDevices = function() {
+				Homey.emit('virtualdevicesettings_loadReflectDevices', null, function (err, result) {
+					if (err) { console.log(err); return; }
+					$scope.$apply(function () {
+						$scope.vars.reflectDevicesObj = result.reflectDevices;
+						$scope.vars.reflectDevices = _.sortBy($scope.vars.reflectDevicesObj, 'name');
+					});
+				});
+			}
+			$scope.hasSetable = function(reflectionDevices) {
+				//console.log('reflectionDevices', reflectionDevices);
+				let setable = true;
+				for (let i = 0; i < reflectionDevices.length; i++) {
+					const device = reflectionDevices[i];
+					try {
+						if($scope.vars.reflectDevicesObj[device.id].capabilitiesObj[device.property].setable) setable = true;
+					} catch (error) {
+						
+					}
+				}
+				return setable;
+			}
+
+			$scope.log = function() {
+				console.log(...arguments);
+			}
 
 			/** Start of program */
 			if (typeof Homey !== 'undefined') {
@@ -1348,14 +2167,48 @@ ${vars.textSettings}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
 						$scope.customicons = result.customicons;
-						
+						$scope.customiconsById = {};
+						for (let i = 0; i < $scope.customicons.icons.length; i++) {
+							const iconGroup = $scope.customicons.icons[i];
+							for (let j = 0; j < iconGroup.icons.length; j++) {
+								const icon = iconGroup.icons[j];
+								$scope.customiconsById[icon.file] = icon;
+								
+							}
+							
+						}
+
 						$scope.vars.activeAvdSource = result.activeAvdSource || 'English';
 						$scope.vars.activeTopic = TOPICS.avd[$scope.vars.activeAvdSource];
 
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
-						_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
-						if(vars.tefTemplates) _.each(vars.tefTemplates, t=>t.favorite=t.favorite==true);
+
+						$scope.vars.bllVariables = result.bllVariables;
+						$scope.vars.cgChronographs = result.cgChronographs;
+						$scope.vars.blReady = result.blReady;
+						$scope.vars.cgReady = result.cgReady;
+						
+						$scope.listCustomLists = result.listCustomLists;
+						
+
+						if ($scope.vars.cgChronographs) {
+							$scope.vars.cgChronographs = _.sortBy(_.flatten(_.map($scope.vars.cgChronographs, (result, key) => {
+								return _.map(result, (name) => {
+									return { name: name, type: key, key:key+'|'+ name};
+								})
+							})), 'name');
+							$scope.vars.cgChronographsByKey = {};
+							for (let i = 0; i < $scope.vars.cgChronographs.length; i++) {
+								const chronograph = $scope.vars.cgChronographs[i];
+								$scope.vars.cgChronographsByKey[chronograph.key] = chronograph;								
+							}
+						}
+						//console.log($scope.vars.cgChronographs);
+
+						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);
+						setAllFieldProperties();
 					});
 				});
 				Homey.on('createdadvancedflow', (af) => {
@@ -1370,8 +2223,8 @@ ${vars.textSettings}
 
 				console.log('ready done');
 			} else {
-				$scope.customicons = asv_settings.customicons;
-				$scope.s = asv_settings.exampleSettings;
+				$scope.customicons = avd_settings.customicons;
+				$scope.s = avd_settings.exampleSettings;
 				$scope.customIconsAvailable = [
 					'custom_1',  'custom_2',  'custom_3',
 					'custom_4',  'custom_5',  'custom_6',  'custom_7',
@@ -1427,18 +2280,18 @@ ${vars.textSettings}
 			};
 		})
 		.directive('tooltip', function ($compile) {
-		var contentContainer;
+		let contentContainer;
 		return {
 			restrict: "A",
 			scope: {
 				myTooltipScope: "="
 			},
 			link: function (scope, element, attrs) {
-				var text = attrs.tooltip;
+				let text = attrs.tooltip;
 
 				scope.hidden = true;
 
-				var tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
+				let tooltipElement = angular.element("<div ng-hide='hidden' class='tooltip'>");
 				tooltipElement.append("<div>" + text.replaceAll('\r\n', '<br/>') + "</div>");
 
 				element.parent().append(tooltipElement);
@@ -1446,7 +2299,7 @@ ${vars.textSettings}
 					.on('mouseenter', function () { scope.hidden = false; scope.$digest(); })
 					.on('mouseleave', function () { scope.hidden = true; scope.$digest(); });
 
-				var toolTipScope = scope.$new(true);
+				let toolTipScope = scope.$new(true);
 				angular.extend(toolTipScope, scope.myTooltipScope);
 				$compile(tooltipElement.contents())(toolTipScope);
 				$compile(tooltipElement)(scope);

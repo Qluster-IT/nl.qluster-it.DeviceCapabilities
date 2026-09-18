@@ -112,7 +112,7 @@ let str='';
 for(let i=0;i<categories.length;i++){
   str+= '\'                {"id": "'+"".padStart(i+1,' ')+'","label": {"en": "-----   '+categories[i].title.padEnd(15, ' ')+'   -----"}}, \\r\\n\' + \r\n';
     for(let j=0;j<categories[i].icons.length;j++) {
-      var icon  = categories[i].icons[j];
+      let icon  = categories[i].icons[j];
       str+= '\'                {"id": "'+icon.file+'","label": ' + JSON.stringify(icon.title) + '}';
       if(i===categories.length-1 && j===categories[i].icons.length-1)str+="\\r\\n\' + \r\n";else str+=", \\r\\n\' + \r\n";
     }
