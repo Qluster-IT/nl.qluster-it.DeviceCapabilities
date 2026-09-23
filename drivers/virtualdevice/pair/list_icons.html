@@ -359,10 +359,10 @@
 				</div>
 				<input type="text" class="label" ng-model="filter.header" placeholder="filter"/>
 				<div class="float-right sorting">
-					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=undefined;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy=['-likes', '+header'];" ng-class="{'active fas':orderBy.orderBy[0]=='-likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy=['-favorite', '+header'];" ng-class="{'active fas':orderBy.orderBy[0]=='-favorite'}"></div>
 				</div>
 			</div>
 			<div class="panel">
@@ -370,7 +370,7 @@
 					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 					<h1>Here you can select a template</h1>
 				</div>
-				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 				</div>
@@ -402,8 +402,8 @@
 			$SCOPE = $scope;
 			scope = $scope;
 			//let Homey = _homey
-			$scope.s = {};
-			$scope.orderBy = {orderBy:'favorite'};
+			$scope.s = {};			
+			$scope.orderBy = { orderBy: ['-favorite', '+header'] };
 			$scope.filter = {header:''};
 			
 			$scope.topics = TOPICS.avd;
@@ -453,7 +453,7 @@
 					if (err) return console.log(err);
 					$scope.$apply(function () {
 						$scope.vars.tefTemplates = result;
-						_.each(result, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						if(vars.favoriteTemplates && vars.tefTemplates) _.each(vars.tefTemplates, t => { t.favorite = (vars.favoriteTemplates[t.number] ? true : false) });
 					});
 				});
 			}
@@ -488,7 +488,7 @@
 			// 		$scope.$apply(function () {
 			// 			$scope.vars.tefTemplates = result.tefTemplates;
 			// 			$scope.vars.favoriteTemplates = result.favoriteTemplates || {};						
-			// 			_.each(result.tefTemplates, t=>t.favorite=vars.favoriteTemplates[t.number]?0:1);
+			// 			_.each(result.tefTemplates, t=>t.favorite=(vars.favoriteTemplates[t.number]?true:false));
 			// 		});
 			// 	});
 			// }
@@ -657,7 +657,7 @@
 						
 						$scope.vars.tefTemplates = result.tefTemplates;
 						$scope.vars.favoriteTemplates = result.favoriteTemplates || {};
-						_.each(result.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
+						if(vars.favoriteTemplates && vars.tefTemplates) _.each(vars.tefTemplates, t => { t.favorite = (vars.favoriteTemplates[t.number] ? true : false) });
 						
 						$scope.defaultIcons = result.defaultIcons;
 						$scope.defaultCategoryLoadIndex = 0;

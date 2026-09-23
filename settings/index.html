@@ -534,10 +534,10 @@
 				</div>
 				<input type="text" class="label" ng-model="filter.header" data-i18n="[placeholder]settings.filter" />
 				<div class="float-right sorting">
-					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy='';orderBy.reverse=false;" ng-class="{active:!orderBy.orderBy}"></div>
-					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';orderBy.reverse=false;" ng-class="{'active':orderBy.orderBy=='header'}"></div>
-					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy='likes';orderBy.reverse=true;" ng-class="{'active fas':orderBy.orderBy=='likes'}"></div>
-					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy='favorite';orderBy.reverse=false;" ng-class="{'active fas':orderBy.orderBy=='favorite'}"></div>
+					<div class="icon-button fa fa-icon fa-sort-numeric-down" ng-click="orderBy.orderBy=undefined;" ng-class="{active:!orderBy.orderBy}"></div>
+					<div class="icon-button fa fa-icon fa-sort-alpha-down" ng-click="orderBy.orderBy='header';" ng-class="{'active':orderBy.orderBy=='header'}"></div>
+					<div class="icon-button far fa-icon fa-heart" ng-click="orderBy.orderBy=['-likes', '+header'];" ng-class="{'active fas':orderBy.orderBy[0]=='-likes'}"></div>
+					<div class="icon-button far fa-icon fa-star" ng-click="orderBy.orderBy=['-favorite', '+header'];" ng-class="{'active fas':orderBy.orderBy[0]=='-favorite'}"></div>
 				</div>
 			</div>
 			<div class="panel">
@@ -545,7 +545,7 @@
 					<div class="float-right" ng-click="refreshTemplates()"><span class="fa fa-icon fa-sync-alt" ng-class="{'spin':vars.templatesRefreshing}"></span></div>
 					<!-- <h1>Here you can select a template</h1> -->
 				</div>
-				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy:orderBy.reverse">
+				<div class="field template-row" ng-repeat="template in vars.tefTemplates |filter:filter | orderBy:orderBy.orderBy">
 					<div class="fa-icon fa-star" ng-class="{fa: vars.favoriteTemplates[template.number], far:!vars.favoriteTemplates[template.number]}" ng-click="toggleFavorite(template)"></div>
 					<span class="link" ng-click="openTemplate(template)" ng-bind-html="template.header"></span>
 				</div>
@@ -573,7 +573,7 @@
 				let Homey;
 				$scope.stamp = Date.now();
 				$scope.view = { id: 'theflowexchanger', subid: undefined };
-				$scope.orderBy = { orderBy: 'favorite', reverse: false };
+				$scope.orderBy = { orderBy: ['-favorite', '+header'] };
 				$scope.filter = { header: '' };
 				$scope.topics = TOPICS.tfe;
 				$scope.topicsArray = TOPICS.tfe;
@@ -739,8 +739,9 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.favoriteTemplates = result || {};
-							if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
-							if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = t.favorite == true);
+							if (vars.tefTemplates) _.each(vars.tefTemplates, t => t.favorite = (vars.favoriteTemplates[t.number] ? true : false));
+							if(vars.tefTemplates) _.each($scope.vars.tefTemplates, t => t.favorite = t.favorite == true);
+							
 						});
 					});
 					Homey.ready();
@@ -823,8 +824,7 @@ ${vars.textSettings}
 						if (err) return console.log(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							if (vars.favoriteTemplates) _.each($scope.vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
-							_.each($scope.vars.tefTemplates, t => t.favorite = t.favorite == true);
+							if(vars.favoriteTemplates && vars.tefTemplates) _.each(vars.tefTemplates, t => { t.favorite = (vars.favoriteTemplates[t.number] ? true : false) });
 						});
 					});
 				}
@@ -835,8 +835,8 @@ ${vars.textSettings}
 						if (err) return Homey.alert(err);
 						$scope.$apply(function () {
 							$scope.vars.tefTemplates = result;
-							_.each($scope.vars.tefTemplates, t => t.favorite = vars.favoriteTemplates[t.number] ? 0 : 1);
-							_.each($scope.vars.tefTemplates, t => t.favorite = t.favorite == true);
+							if(vars.favoriteTemplates && vars.tefTemplates) _.each(vars.tefTemplates, t => { t.favorite = (vars.favoriteTemplates[t.number] ? true : false) });							
+							//console.log('vars.tefTemplates', vars.tefTemplates);
 						});
 					});
 				}

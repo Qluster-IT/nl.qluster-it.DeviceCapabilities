@@ -619,34 +619,47 @@ module.exports = class AvdDriver extends Homey.Driver {
         return string;
     }
     async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl, type}) {
-        try {                
+        try {         
+            console.log(`${topicUrl}/${topicId}/${postId}`);
             let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
             if(topicHtml) {
 
-                let preloaderString = topicHtml.matchAll(/<div class="hidden" id="data-preloaded" data-preloaded="(.*?)"/gmsi);
+                let preloaderString = topicHtml.matchAll(/(?:<script type="application\/ld\+json">)(?:\s*)(.*?)<\/script>/gmsi);
                 let preloaderFound = preloaderString? [...preloaderString] : [];
-                let preloader;                
+                let preloader;
                 let templates = [];
-                let postsFound ;
+                let postsFound = 0 ;
                 let lastNumberFound = 0;
                 
                 if(preloaderFound && preloaderFound.length) {
-                    preloader = this.decodeHtml(preloaderFound[0][1]);
+                    //preloader = this.decodeHtml(preloaderFound[0][1]);
+                    preloader = preloaderFound[0][1];
                     try {
                         let json = JSON.parse(preloader);
-                        let topicInfo = JSON.parse(json['topic_'+topicId]);
-                        let a=topicInfo;
-                        postsFound = _.filter(topicInfo.post_stream.posts, p=>p.post_number>=postId).length;
-                        _.each(topicInfo.post_stream.posts, (post, postIndex)=>{
-                            let postId = post.id;
-                            let postNumber = post.post_number;
+                        let topicInfo = json.mainEntity;// JSON.parse(json['topic_'+topicId]);
+                        
+                        //postsFound = _.filter(topicInfo.post_stream.posts, p=>p.post_number>=postId).length;
+                        _.each(topicInfo.suggestedAnswer, (post, postIndex)=>{
+                            let url = post.url;
+                            let urlPostNumber = url.matchAll(/\d{5,6}\/(\d+)/gmsi);
+                            let urlPostNumberFound = urlPostNumber? [...urlPostNumber] : [];
+                            
+                            let postNumber = Number.parseInt(urlPostNumberFound[0][1]);
+                            if(_.find(templates, x=>x.number==postNumber)) return;
+                            postsFound++;
+
+                            //let postId = postNumber;
                             lastNumberFound = postNumber;
                     
-                            let postCreatedOn = new Date(post.created_at);
-                            let autherName = post.display_username;
-                            let autherId = post.user_id;
+                            let postCreatedOn = new Date(post.datePublished);
+                            
+                            let autherId = post.author.name;
 
-                            let postText = post.cooked;
+                            //let postTextReg = new RegExp(`<${postNumber}`, 'gmsi');
+                            let postTextReg = topicHtml.matchAll(new RegExp(`<div id='post_${postNumber}'.*?<div class='post' itemprop="text">(.*?)<\/div>\s*?(?:<meta itemprop='upvoteCount')+`, 'gmsi'));
+                            let postTextRegFound = postTextReg? [...postTextReg] : [];
+
+                            let postText = postTextRegFound[0][1];
                             if(postText.startsWith('\n')) postText=postText.substring(1);//.trim();
                     
                             let tefs = [], header;
@@ -669,7 +682,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                 if(headersFound && headersFound.length>0 && headersFound[0].length>2) header = headersFound[0][2].trim();
                                 //console.log(header);
                                 if(header && header.length>0) templates.push({
-                                    id:postId,
+                                    id:postNumber,
                                     number:postNumber,
                                     post:postText,
                                     createdOn:postCreatedOn,
@@ -687,16 +700,18 @@ module.exports = class AvdDriver extends Homey.Driver {
                 }
                 //if(templates.length) return {templates, postsFound};
 
+                let posts = topicHtml.matchAll(/(?:<div\sid='post_.{1,4}'){1}(?:.*?)<span itemprop="position">(\d+).*?<meta itemprop='upvoteCount' content='([0-9]*)'>\s?/gmsi);
                 //let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='text'>(.*?)<meta itemprop=(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                //let posts = topicHtml.matchAll(/(?:<div\sid='post_.{1,4}'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='text'>(.*?)<meta itemprop=(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                //this.log(topicHtml);
                 //Crashes - Above
                 //let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\')(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
 
                 let matchesFound = posts? [...posts] : [];
                 postsFound = postsFound===undefined ? matchesFound.length : postsFound;
                 for (let i = 0; i < matchesFound.length; i++) {
-                    const postNumber = Number.parseInt(matchesFound[i][3]);
-                    const likes = matchesFound[i][2] ? Number.parseInt(matchesFound[i][2]) : 0;
+                    const postNumber = Number.parseInt(matchesFound[i][2]);
+                    const likes = matchesFound[i][1] ? Number.parseInt(matchesFound[i][1]) : 0;
                     
                     // const matchText = matchesFound[i][1];                    
                     // let postsData = matchText.matchAll(/(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>([\d]*)/gmsi);
@@ -721,7 +736,7 @@ module.exports = class AvdDriver extends Homey.Driver {
     async getTefTemplatesFromPosts() {
         let templates = [];
         let run = true;
-        const postsPerRun = 15;
+        const postsPerRun = 19;
         let runs = 0;
         let lastNumber = 0;
         let topic = TOPICS.tfe[this.activeTfeSource] || TOPICS.tfe.English;
