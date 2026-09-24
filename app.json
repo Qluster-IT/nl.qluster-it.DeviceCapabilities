@@ -6694,19 +6694,19 @@
             "type": "text",
             "name": "value",
             "placeholder": {
-                "en": "Text",
-                "nl": "Tekst",
-                "da": "Tekst",
-                "de": "Text",
-                "es": "Texto",
-                "fr": "Texte",
-                "it": "Testo",
-                "no": "Tekst",
-                "sv": "Text",
-                "pl": "Tekst",
-                "ru": "Текст",
-                "ko": "텍스트",
-                "ar": "نص"
+              "en": "Text",
+              "nl": "Tekst",
+              "da": "Tekst",
+              "de": "Text",
+              "es": "Texto",
+              "fr": "Texte",
+              "it": "Testo",
+              "no": "Tekst",
+              "sv": "Text",
+              "pl": "Tekst",
+              "ru": "Текст",
+              "ko": "텍스트",
+              "ar": "نص"
             }
           },
           {
