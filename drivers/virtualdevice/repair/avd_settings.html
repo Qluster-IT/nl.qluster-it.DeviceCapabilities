@@ -1285,13 +1285,6 @@
 				</div>
 				<div ng-else execute="s['list'+($index+1)+'CreateFlowCards'] = false;" ></div>
 
-				<div class="field" ng-if="(s['list'+($index+1)+'ShowAs']=='picker' && s['list'+($index+1)+'PrefixedList']) || s['list'+($index+1)+'ShowAs']=='customlist'">
-					<div class="label"><span>{{__('virtualdevicesettings.onlyThroughFlows') || 'Only through flows'}}</span> <span
-							class="fa fa-icon fa-info-circle"
-							tooltip="{{__('virtualdevicesettings.onlyThroughFlowsHint') || 'When selected the picker can only be set through flows.'}}"></span>
-					</div>
-					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'OnlyThroughFlows']" />
-				</div>
 				<div class="field" ng-if="reflectApps && reflectApps.length">
 					<div class="label"><span>{{__('virtualdevicesettings.reflect') || 'Reflect'}}</span><span class="fa fa-icon fa-info-circle"
 							tooltip="{{__('virtualdevicesettings.reflectHint') || 'Here you can select an app, to select an entity from, of which the selected property will automaticly update the field of the AVD.'}}"></span></div>
@@ -1421,7 +1414,16 @@
 				<div class="field" ng-if="s['list'+($index+1)+'Reflect']">
 				</div>
 				<div ng-else execute="s['list'+($index+1)+'ReflectId']=undefined;s['list'+($index+1)+'ReflectDevices']=undefined;s['list'+($index+1)+'ReflectProperty']=undefined;s['list'+($index+1)+'ReflectFormat']=undefined;s['list'+($index+1)+'ReflectCalculation']=undefined;s['list'+($index+1)+'ReflectDebounce']=undefined;" ></div>
-				
+
+				<div class="field" ng-if="(s['list'+($index+1)+'ShowAs']=='picker' && s['list'+($index+1)+'PrefixedList']) || s['list'+($index+1)+'ShowAs']=='customlist'">
+					<div class="label"><span>{{__('virtualdevicesettings.onlyThroughFlows') || 'Only through flows'}}</span> <span
+							class="fa fa-icon fa-info-circle"
+							tooltip="{{__('virtualdevicesettings.onlyThroughFlowsHint') || 'When selected the picker can only be set through flows.'}}"></span>
+					</div>
+					<input class="value" type="checkbox" ng-model="s['list'+($index+1)+'OnlyThroughFlows']" />
+				</div>
+				<div ng-else execute="s['list'+($index+1)+'OnlyThroughFlows'] = false;" ></div>
+
 				<div class="field">
 					<div class="label"><span>{{__('virtualdevicesettings.createTag') || 'Create Tag'}}</span> <span
 							class="fa fa-icon fa-info-circle"

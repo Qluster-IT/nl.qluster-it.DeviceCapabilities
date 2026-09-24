@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.17.5",
+  "version": "2.17.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#E8A713",
@@ -552,7 +552,7 @@
               "fr": "Texte",
               "it": "Testo 1",
               "no": "Tekst 1",
-              "sv": "Text",
+              "sv": "Text 1",
               "pl": "Tekst",
               "ru": "Текст 1",
               "ko": "텍스트",
@@ -6556,19 +6556,157 @@
             "type": "autocomplete",
             "name": "value",
             "placeholder": {
-              "en": "Value",
-              "nl": "Waarde",
-              "da": "Værdi",
-              "de": "Wert",
-              "es": "Valor",
-              "fr": "Valeur",
-              "it": "Valore",
-              "no": "Verdi",
-              "sv": "Värde",
-              "pl": "Wartość",
-              "ru": "Значение",
-              "ko": "값",
-              "ar": "القيمة"
+              "en": "Pick value",
+              "nl": "Waarde kiezen",
+              "da": "Vælg værdi",
+              "de": "Wert auswählen",
+              "es": "Seleccionar valor",
+              "fr": "Choisir une valeur",
+              "it": "Seleziona valore",
+              "no": "Velg verdi",
+              "sv": "Välj värde",
+              "pl": "Wybierz wartość",
+              "ru": "Выберите значение",
+              "ko": "값 선택",
+              "ar": "اختر القيمة"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "placeholder": {
+              "en": "nothing else",
+              "nl": "verder niks",
+              "da": "intet andet",
+              "de": "sonst nichts",
+              "es": "nada más",
+              "fr": "rien d'autre",
+              "it": "nient'altro",
+              "no": "ingenting annet",
+              "sv": "inget annat",
+              "pl": "nic innego",
+              "ru": "ничего больше",
+              "ko": "다른 정보 없음",
+              "ar": "لا شيء آخر"
+            },
+            "value": "executewhencards",
+            "values": [
+              {
+                "id": "nothing",
+                "label": {
+                  "en": "Nothing else",
+                  "nl": "Verder niks",
+                  "da": "Intet andet",
+                  "de": "sonst nichts",
+                  "es": "Nada más",
+                  "fr": "Rien d'autre",
+                  "it": "Nient'altro",
+                  "no": "Ingenting annet",
+                  "sv": "Inget annat",
+                  "pl": "Nic więcej",
+                  "ru": "Больше ничего",
+                  "ko": "아무것도 없습니다.",
+                  "ar": "لا شيء آخر"
+                }
+              },
+              {
+                "id": "executewhencards",
+                "label": {
+                  "en": "Execute flowcards (When)",
+                  "nl": "Start flowkaarten (Als)",
+                  "da": "Udfør flowkort (Når)",
+                  "de": "Flowkarten ausführen (Wenn)",
+                  "es": "Ejecutar tarjetas de flujo (Cuando)",
+                  "fr": "Exécuter des cartes de flux (Quand)",
+                  "it": "Esegui schede di flusso (Quando)",
+                  "no": "Utfør flytkort (Når)",
+                  "sv": "Kör flödeskort (När)",
+                  "pl": "Uruchom karty przepływu (Kiedy)",
+                  "ru": "Выполнить карточки потока (Когда)",
+                  "ko": "플로우 카드 실행 (When)",
+                  "ar": "تنفيذ بطاقات التدفق (عند)"
+                }
+              }
+            ],
+            "required": false
+          }
+        ]
+      },
+      {
+        "highlight": true,
+        "id": "virtualdevice_set_list_tag",
+        "title": {
+          "en": "Set List",
+          "nl": "Zet Lijst",
+          "da": "Sæt liste",
+          "de": "Aufführen setzen",
+          "es": "Establecer lista",
+          "fr": "Définir la liste",
+          "it": "Imposta elenco",
+          "no": "Sett liste",
+          "sv": "Ange lista",
+          "pl": "Ustaw listę",
+          "ru": "Установить список",
+          "ko": "목록 설정",
+          "ar": "تعيين القائمة"
+        },
+        "titleFormatted": {
+          "en": "Set [[field]] to [[value]] and [[mode]]",
+          "nl": "Zet [[field]] naar [[value]] en [[mode]]",
+          "da": "Indstil [[field]] til [[value]] og [[mode]]",
+          "de": "Setze [[field]] auf [[value]] und [[mode]]",
+          "es": "Establecer [[field]] a [[value]] y [[mode]]",
+          "fr": "Réglez [[field]] sur [[value]] et [[mode]]",
+          "it": "Imposta [[field]] su [[value]] e [[mode]]",
+          "no": "Sett [[field]] til [[value]] og [[mode]]",
+          "sv": "Ställ in [[field]] till [[value]] och [[mode]]",
+          "pl": "Ustaw [[field]] na [[value]] i [[mode]]",
+          "ru": "Установите [[field]] на [[value]] и [[mode]]",
+          "ko": "[[field]]을(를) [[value]] 및 [[mode]]로 설정하세요.",
+          "ar": "اضبط [[field]] على [[value]] و[[mode]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=virtualdevice"
+          },
+          {
+            "type": "autocomplete",
+            "name": "field",
+            "placeholder": {
+              "en": "List",
+              "nl": "Lijst",
+              "da": "Liste",
+              "de": "Aufführen",
+              "es": "Lista",
+              "fr": "Liste",
+              "it": "Elenco",
+              "no": "Liste",
+              "sv": "Lista",
+              "pl": "Lista",
+              "ru": "Список",
+              "ko": "목록",
+              "ar": "قائمة"
+            }
+          },
+          {
+            "type": "text",
+            "name": "value",
+            "placeholder": {
+                "en": "Text",
+                "nl": "Tekst",
+                "da": "Tekst",
+                "de": "Text",
+                "es": "Texto",
+                "fr": "Texte",
+                "it": "Testo",
+                "no": "Tekst",
+                "sv": "Text",
+                "pl": "Tekst",
+                "ru": "Текст",
+                "ko": "텍스트",
+                "ar": "نص"
             }
           },
           {
@@ -6996,7 +7134,6 @@
         ]
       },
       {
-        "highlight": true,
         "id": "virtualdevice_set_expression",
         "title": {
           "en": "Set Expression",

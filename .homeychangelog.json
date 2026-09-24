@@ -4018,5 +4018,20 @@
     "ru": "Улучшено: Добавлено отражение для (пользовательских) списков.",
     "ko": "개선됨: (사용자 정의) 목록에 반영 기능 추가.",
     "ar": "محسن: تمت إضافة الانعكاس للقوائم (المخصصة)."
+  },
+  "2.17.6": {
+    "en": "Improved: Added a Set Lists to Tag flowcard.",
+    "nl": "Verbeterd: Een Set Lists to Tag-flowkaart toegevoegd.",
+    "da": "Forbedret: Tilføjet en Sæt Lister til Tag flowkort.",
+    "de": "Verbessert: Eine \"Set Lists to Tag\"-Flowkarte hinzugefügt.",
+    "es": "Mejorado: Se añadió una tarjeta de flujo para Establecer Listas en Etiquetas.",
+    "fr": "Amélioré : Ajout d'une carte de flux \"Définir les listes\" aux tags.",
+    "it": "Migliorato: Aggiunto un flowcard Imposta Elenchi a Tag.",
+    "no": "Forbedret: La til et \"Set Lists to Tag\"-flytkort.",
+    "sv": "Förbättrad: Lade till ett flödeskort för att ställa in listor till taggar.",
+    "pl": "Ulepszono: Dodano kartę przepływu Ustaw Listy do Tagów.",
+    "ru": "Улучшено: Добавлена карточка потока \"Установить списки в тег\".",
+    "ko": "개선됨: 태그 플로우카드에 목록 설정 추가.",
+    "ar": "تحسين: تمت إضافة بطاقة تدفق \"تعيين القوائم إلى العلامة\"."
   }
 }

@@ -273,7 +273,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 
 
         
-        let action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
+        let action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_list_tag', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
 			let set_value = this.homey.flow.getActionCard(action);
 			set_value
@@ -325,6 +325,11 @@ module.exports = class AvdDriver extends Homey.Driver {
                                         break;                                        
                                     case 'virtualdevice_set_list':
                                         if(args.value!==undefined && args.value!=='undefined') value = args.value?args.value.id:'';
+                                        else value = null;
+                                        triggerCard = this.triggerFlowList;
+                                        break;                                     
+                                    case 'virtualdevice_set_list_tag':
+                                        if(args.value!==undefined && args.value!=='undefined') value = args.value;
                                         else value = null;
                                         triggerCard = this.triggerFlowList;
                                         break;
@@ -394,7 +399,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                         throw new Error(error);
 					}
 				}).bind(this));
-                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button') || action.endsWith('_list')) 
+                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button') || action.endsWith('_list') || action.endsWith('_list_tag')) 
                     set_value.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action, true));
                 if(action.endsWith('_list')) 
                     set_value.getArgument('value').registerAutocompleteListener(this.registerAutocompleteListValue(action));
