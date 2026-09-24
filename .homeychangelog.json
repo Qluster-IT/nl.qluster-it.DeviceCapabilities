@@ -4003,5 +4003,20 @@
     "ru": "Улучшено: Небольшие исправления ошибок.",
     "ko": "개선됨: 작은 버그 수정.",
     "ar": "محسن: إصلاحات لبعض الأخطاء الصغيرة."
+  },
+  "2.17.5": {
+    "en": "Improved: Added reflection for (custom)lists.",
+    "nl": "Verbeterd: Reflectie toegevoegd voor (aangepaste) lijsten.",
+    "da": "Forbedret: Tilføjet refleksion for (tilpassede)lister.",
+    "de": "Verbessert: Reflexion für (benutzerdefinierte) Listen hinzugefügt.",
+    "es": "Mejorado: Se añadió reflexión para listas (personalizadas).",
+    "fr": "Amélioré : Ajout de la réflexion pour les listes (personnalisées).",
+    "it": "Migliorato: Aggiunta la riflessione per le liste (personalizzate).",
+    "no": "Forbedret: La til refleksjon for (tilpassede) lister.",
+    "sv": "Förbättrad: Lade till reflektion för (anpassade) listor.",
+    "pl": "Ulepszone: Dodano odbicie dla (niestandardowych) list.",
+    "ru": "Улучшено: Добавлено отражение для (пользовательских) списков.",
+    "ko": "개선됨: (사용자 정의) 목록에 반영 기능 추가.",
+    "ar": "محسن: تمت إضافة الانعكاس للقوائم (المخصصة)."
   }
 }
