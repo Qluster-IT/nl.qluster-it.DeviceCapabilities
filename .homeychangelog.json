@@ -4033,5 +4033,20 @@
     "ru": "Улучшено: Добавлена карточка потока \"Установить списки в тег\".",
     "ko": "개선됨: 태그 플로우카드에 목록 설정 추가.",
     "ar": "تحسين: تمت إضافة بطاقة تدفق \"تعيين القوائم إلى العلامة\"."
+  },
+  "2.17.7": {
+    "en": "Resolved: Styling bug on AVD creation templates view.",
+    "nl": "Opgelost: Stijlbug in het weergave van AVD-aanmaaktemplates.",
+    "da": "Løst: Styling-fejl på AVD-oprettelsesskabeloner visning.",
+    "de": "Behoben: Styling-Fehler in der Ansicht der AVD-Erstellungsvorlagen.",
+    "es": "Resuelto: Error de estilo en la vista de plantillas de creación de AVD.",
+    "fr": "Résolu : Bug de style sur la vue des modèles de création AVD.",
+    "it": "Risolto: Bug di stile nella visualizzazione dei modelli di creazione AVD.",
+    "no": "Løst: Stilfeil på visning av AVD-opprettelsesskjemaer.",
+    "sv": "Löst: Stilfel i vyn för skapande av AVD-mallar.",
+    "pl": "Rozwiązano: Błąd stylizacji w widoku szablonów tworzenia AVD.",
+    "ru": "Исправлено: Ошибка стиля в представлении шаблонов создания AVD.",
+    "ko": "해결됨: AVD 생성 템플릿 보기에서 스타일링 버그.",
+    "ar": "تم الحل: خطأ في التنسيق في عرض قوالب إنشاء AVD."
   }
 }
