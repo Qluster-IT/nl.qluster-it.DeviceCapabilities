@@ -1,0 +1,47 @@
+{
+  "createFlowCards": {
+    "en": "Create real field and Default Flowcards",
+    "nl": "Maak echte velden en Standaard Flowkaarten aan",
+    "da": "Opret rigtige felter og standard Flow-kort",
+    "de": "Erstelle echte Felder und Standard-Flowkarten",
+    "es": "Crear tarjetas de flujo reales y predeterminadas",
+    "fr": "Créer des cartes de flux réelles et par défaut",
+    "it": "Crea Flowcard reali e predefinite",
+    "no": "Opprett ekte felt og standard flytkort",
+    "sv": "Skapa riktiga fält och standardflödeskort",
+    "pl": "Utwórz rzeczywiste pole i domyślne karty przepływu",
+    "ru": "Создайте реальные поля и стандартные Flowcards.",
+    "ko": "실제 필드 및 기본 플로우카드 생성",
+    "ar": "إنشاء بطاقات تدفق حقيقية وبطاقات تدفق افتراضية"
+  },
+  "createFlowCardsOnly": {
+    "en": "Create Default Flowcards",
+    "nl": "Standaard Flowkaarten Maken",
+    "da": "Opret standard flowkort",
+    "de": "Standard-Flowkarten erstellen",
+    "es": "Crear Tarjetas de Flujo Predeterminadas",
+    "fr": "Créer des cartes de flux par défaut",
+    "it": "Crea Flowcard Predefiniti",
+    "no": "Opprett standard flytkort",
+    "sv": "Skapa standardflödeskort",
+    "pl": "Utwórz domyślne karty przepływu",
+    "ru": "Создать стандартные карточки потоков",
+    "ko": "기본 플로우카드 만들기",
+    "ar": "إنشاء بطاقات تدفق افتراضية"
+  },
+  "createFlowCardsOnlyHint": {
+    "en": "When selected, Default Flowcards will be available for this field.",
+    "nl": "Wanneer geselecteerd, zijn de Standaard Flowkaarten beschikbaar voor dit veld.",
+    "da": "Når valgt, vil standard flowkort være tilgængelige for dette felt.",
+    "de": "Wenn ausgewählt, stehen Standard-Flowkarten für dieses Feld zur Verfügung.",
+    "es": "Cuando se selecciona, las Tarjetas de Flujo Predeterminadas estarán disponibles para este campo.",
+    "fr": "Lorsqu'elles sont sélectionnées, les cartes de flux par défaut seront disponibles pour ce champ.",
+    "it": "Quando selezionato, le Flowcard predefinite saranno disponibili per questo campo.",
+    "no": "Når valgt, vil standard flytkort være tilgjengelige for dette feltet.",
+    "sv": "När det är valt kommer standardflödeskort att vara tillgängliga för detta fält.",
+    "pl": "Po wybraniu, domyślne karty przepływu będą dostępne dla tego pola.",
+    "ru": "При выборе для этого поля будут доступны стандартные Flowcards.",
+    "ko": "선택하면 이 필드에 기본 플로우카드가 제공됩니다.",
+    "ar": "عند التحديد، ستكون بطاقات التدفق الافتراضية متاحة لهذا الحقل."
+  }
+}
