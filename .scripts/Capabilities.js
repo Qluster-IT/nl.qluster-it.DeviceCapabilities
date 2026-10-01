@@ -32,7 +32,20 @@ let icons = [
 str += '"devicecapabilities_starttext": { \r\n' +
   '      "type": "string", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "goto Device Maintainance/Repair", "nl":"door naar apparaat Onderhoud/Repareren te gaan", "de":"mit den Gerätewartung/reparatur" \r\n' +
+  `        "en": "goto Device Maintainance/Repair",
+          "nl": "door naar apparaat Onderhoud/Repareren te gaan",
+          "da": "gå til Enhedsvedligeholdelse/Reparation",
+          "de": "mit den Gerätewartung/reparatur",
+          "es": "ir a Mantenimiento/Reparación del Dispositivo",
+          "fr": "aller à Maintenance/Réparation de l'appareil",
+          "it": "vai a Manutenzione/Riparazione Dispositivo",
+          "no": "gå til Enhetsvedlikehold/Reparasjon",
+          "sv": "gå till Enhetsunderhåll/Reparation",
+          "pl": "przejdź do Konserwacja/Serwisowanie Urządzenia",
+          "ru": "перейти к Обслуживанию/Ремонту устройства",
+          "ko": "장치 유지보수/수리로 이동",
+          "ar": "اذهب إلى صيانة/إصلاح الجهاز"
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -47,7 +60,20 @@ str += '"devicecapabilities_starttext": { \r\n' +
 str += '"Text": { \r\n' +
   '      "type": "string", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "Text", "nl":"Tekst", "de":"Text" \r\n' +
+  `        "en": "Text",
+          "nl": "Tekst",
+          "da": "Tekst",
+          "de": "Text",
+          "es": "Texto",
+          "fr": "Texte",
+          "it": "Testo",
+          "no": "Tekst",
+          "sv": "Text",
+          "pl": "Tekst",
+          "ru": "текст",
+          "ko": "텍스트",
+          "ar": "نص"
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -60,7 +86,20 @@ str += '"Text": { \r\n' +
 str += '"Number": { \r\n' +
   '      "type": "number", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "Number", "nl":"Nummer", "de":"Nummer" \r\n' +
+  `        "en": "Number",
+          "nl": "Nummer",
+          "da": "Nummer",
+          "de": "Nummer",
+          "es": "Número",
+          "fr": "Nombre",
+          "it": "Numero",
+          "no": "Nummer",
+          "sv": "Nummer",
+          "pl": "Numer",
+          "ru": "Число",
+          "ko": "숫자",
+          "ar": "رقم" 
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -73,7 +112,20 @@ str += '"Number": { \r\n' +
 str += '"Boolean": { \r\n' +
   '      "type": "boolean", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "Boolean" \r\n' +
+  `        "en": "Boolean",
+          "nl": "Boolean",
+          "da": "Boolesk",
+          "de": "Boolesch",
+          "es": "Booleano",
+          "fr": "Booléen",
+          "it": "Booleano",
+          "no": "Boolsk",
+          "sv": "Boolean",
+          "pl": "Boolean",
+          "ru": "Булево",
+          "ko": "불리언",
+          "ar": "منطقي (Boolean)" 
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -86,7 +138,20 @@ str += '"Boolean": { \r\n' +
 str += '"Button": { \r\n' +
   '      "type": "boolean", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "Button", "nl":"Knop", "de":"Taste" \r\n' +
+  `        "en": "Button",
+          "nl": "Knop",
+          "da": "Knap",
+          "de": "Taste",
+          "es": "Botón",
+          "fr": "Bouton",
+          "it": "Pulsante",
+          "no": "Knapp",
+          "sv": "Knapp",
+          "pl": "Przycisk",
+          "ru": "Кнопка",
+          "ko": "버튼",
+          "ar": "زر" 
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -99,7 +164,20 @@ str += '"Button": { \r\n' +
 str += '"measure_Status": { \r\n' +
   '      "type": "number", \r\n' +
   '      "title": { \r\n' +
-  '        "en": "Status" \r\n' +
+    `     "en": "Status",
+          "nl": "Status",
+          "da": "Status",
+          "de": "Status",
+          "es": "Estado",
+          "fr": "Statut",
+          "it": "Stato",
+          "no": "Status",
+          "sv": "Status",
+          "pl": "Status",
+          "ru": "Статус",
+          "ko": "상태",
+          "ar": "الحالة"
+  ` +
   '      }, \r\n' +
   '      "getable": true, \r\n' +
   '      "setable": false, \r\n' +
@@ -116,7 +194,20 @@ for (var j = 0; j < sets1.length; j++) {
   str += '"devicecapabilities' + val + '_button": { \r\n' +
     '      "type": "boolean", \r\n' +
     '      "title": { \r\n' +
-    '        "en": "Button", "nl":"Knop", "de":"Taste" \r\n' +
+    `       "en": "Button",
+            "nl": "Knop",
+            "da": "Knap",
+            "de": "Taste",
+            "es": "Botón",
+            "fr": "Bouton",
+            "it": "Pulsante",
+            "no": "Knapp",
+            "sv": "Knapp",
+            "pl": "Przycisk",
+            "ru": "Кнопка",
+            "ko": "버튼",
+            "ar": "زر"
+    ` +
     '      }, \r\n' +
     '      "getable": true, \r\n' +
     '      "setable": ' + (val == '_hide' ? 'false' : 'true') + ', \r\n' +
