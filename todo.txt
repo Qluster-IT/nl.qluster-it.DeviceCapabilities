@@ -1,6 +1,14 @@
+ToDo:
 * setInterval and setTimeout to homey.setInterval and homey.setTimeout.
 * Show/Hide flowcards if certain fields do not exist on a AVD.
 * Check all CreateFlowCards for custom capabilities (measure_, alarm_, etc).
 * Add all Energy options.
 * Make lists exportable/TEF.
 * Replace Reflection devices during AVD import.
+
+
+
+Done:
+* When changing a fieldname, don't reset all fieldsettings while typing.
+* ng-else _delete properties, do not set to undefined.
+* Remove "Maakt het ook mogelijk om te..."

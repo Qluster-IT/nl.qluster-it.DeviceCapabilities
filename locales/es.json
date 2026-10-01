@@ -138,7 +138,6 @@
     "showAsListHint": "Selecciona cómo debe mostrarse la lista.",
     "createFlowCards": "Crear Campo Real y Tarjetas de Flujo",
     "createFlowCardsHint": "Cuando se selecciona, este campo será como el tipo de Mostrar Como real y estarán disponibles las Tarjetas de Flujo Predeterminadas para este campo.",
-    "createFlowCardsStatusIndication": "* También permite ser seleccionado como Indicador de Estado",
     "units": "Unidades",
     "unitsHint": "Las Unidades a usar para el número. Si necesitas Fahrenheit, ingresa °C y se traducirá a Fahrenheit.",
     "hintEmptyDefault": "\r\nCuando se deje vacío, se establecerá por defecto.",

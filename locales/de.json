@@ -137,7 +137,6 @@
 		"showAsButtonHint":"Wählen Sie aus, wie die Taste angezeigt werden soll.",
 		"createFlowCards":"Erstellen Sie ein echtes Feld und Flow-Karten",
 		"createFlowCardsHint":"Wenn diese Option ausgewählt ist, entspricht dieses Feld dem echten ShowAs-Typ, und für dieses Feld sind Standard-Flowcards verfügbar.",
-		"createFlowCardsStatusIndication":"* Kann auch als Statusanzeige ausgewählt werden",
 		"units":"Einheit",
 		"unitsHint":"Die für die Zahl zu verwendende Einheit. Sollte Ihr Homey standardmäßig Fahrenheit anzeigen, dann geben Sie °C ein und der Wert wird wird automatisch umgerechnet.",
 		"hintEmptyDefault":"\r\nWenn das Feld leer bleibt, wird der Standardwert gesetzt.",

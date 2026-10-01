@@ -138,7 +138,6 @@
     "showAsListHint": "Wybierz, jak lista ma być wyświetlana.",
     "createFlowCards": "Utwórz rzeczywiste pole i karty przepływu",
     "createFlowCardsHint": "Gdy wybrane, to pole będzie jak rzeczywisty typ Pokazywania jako, a domyślne karty przepływu będą dostępne dla tego pola.",
-    "createFlowCardsStatusIndication": "* Umożliwia również wybranie jako Wskaźnik Stanu",
     "units": "Jednostki",
     "unitsHint": "Jednostki do użycia dla liczby. Jeśli potrzebujesz Fahrenheita, wprowadź °C, a zostanie on przetłumaczony na Fahrenheita.",
     "hintEmptyDefault": "\r\nGdy pozostawione puste, zostanie ustawione na domyślną.",
