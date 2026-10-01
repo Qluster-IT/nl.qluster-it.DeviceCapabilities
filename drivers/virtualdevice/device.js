@@ -627,6 +627,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 			let cls = this.getClass();
 			let customLists = await this.homey.settings.get('custom_lists') || [];
+			
 			if (cls != settings.cls) {
 				try {
 					await this.setClass(settings.cls);
@@ -779,7 +780,7 @@ module.exports = class AvdDevice extends Homey.Device {
 									case "":
 									case "sensor": sensor = true; break;
 									case "alarm": isAlarm = true; break;
-									case "onoff": quickAction = true; break;
+									case "onoff": quickAction = true; break; // Is not in use anymore.
 									default:
 										capSet = true;
 										break;

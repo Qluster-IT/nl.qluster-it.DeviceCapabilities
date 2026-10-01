@@ -1,0 +1,6 @@
+* setInterval and setTimeout to homey.setInterval and homey.setTimeout.
+* Show/Hide flowcards if certain fields do not exist on a AVD.
+* Check all CreateFlowCards for custom capabilities (measure_, alarm_, etc).
+* Add all Energy options.
+* Make lists exportable/TEF.
+* Replace Reflection devices during AVD import.
