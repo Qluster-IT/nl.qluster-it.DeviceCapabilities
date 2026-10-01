@@ -65,7 +65,7 @@ str += '"Text": { \r\n' +
           "no": "Tekst",
           "sv": "Text",
           "pl": "Tekst",
-          "ru": "текст",
+          "ru": "Текст",
           "ko": "텍스트",
           "ar": "نص"
   ` +
@@ -92,7 +92,7 @@ str += '"Number": { \r\n' +
           "sv": "Nummer",
           "pl": "Numer",
           "ru": "Число",
-          "ko": "숫자",
+          "ko": "번호",
           "ar": "رقم" 
   ` +
   '      }, \r\n' +
@@ -228,7 +228,7 @@ str += '"devicecapabilities_slider_number": { \r\n' +
             "sv": "Nummer",
             "pl": "Numer",
             "ru": "Число",
-            "ko": "숫자",
+            "ko": "번호",
             "ar": "رقم"
   ` +
   '      }, \r\n' +
@@ -252,7 +252,7 @@ str += '"measure_devicecapabilities_slider_number": { \r\n' +
             "sv": "Nummer",
             "pl": "Numer",
             "ru": "Число",
-            "ko": "숫자",
+            "ko": "번호",
             "ar": "رقم"
   ` +
   '      }, \r\n' +
@@ -324,7 +324,7 @@ for (var i = 0; i < icons.length; i++) {
               "sv": "Nummer",
               "pl": "Numer",
               "ru": "Число",
-              "ko": "숫자",
+              "ko": "번호",
               "ar": "رقم"
     ` +
     '      }, \r\n' +
@@ -349,7 +349,7 @@ for (var i = 0; i < icons.length; i++) {
               "sv": "Nummer",
               "pl": "Numer",
               "ru": "Число",
-              "ko": "숫자",
+              "ko": "번호",
               "ar": "رقم"
     ` +
     '      }, \r\n' +
@@ -530,7 +530,19 @@ str += `"devicecapabilities_custom_list_onlythroughflows": {
 
 str += `"devicecapabilities_ternary-up-idle-down_list": {
   "title": {
-    "en": "Up, Idle, Down"
+    "en": "Up, Idle, Down",
+    "nl": "Omhoog, Inactief, Omlaag",
+    "da": "Op, Inaktiv, Ned",
+    "de": "Hoch, Leerlauf, Runter",
+    "es": "Arriba, Inactivo, Abajo",
+    "fr": "Haut, Inactif, Bas",
+    "it": "Su, Inattivo, Giù",
+    "no": "Opp, Inaktiv, Ned",
+    "sv": "Upp, Inaktiv, Ner",
+    "pl": "Góra, Bezczynny, Dół",
+    "ru": "Вверх, Ожидание, Вниз",
+    "ko": "위로, 대기, 아래로",
+    "ar": "أعلى، خامل، أسفل"
   },
   "type": "enum",
   "values": [
@@ -591,7 +603,19 @@ str += `"devicecapabilities_ternary-up-idle-down_list": {
 
 str += `"devicecapabilities_picker-up-idle-down_list": {
   "title": {
-    "en": "Up, Idle, Down"
+    "en": "Up, Idle, Down",
+    "nl": "Omhoog, Inactief, Omlaag",
+    "da": "Op, Inaktiv, Ned",
+    "de": "Hoch, Leerlauf, Runter",
+    "es": "Arriba, Inactivo, Abajo",
+    "fr": "Haut, Inactif, Bas",
+    "it": "Su, Inattivo, Giù",
+    "no": "Opp, Inaktiv, Ned",
+    "sv": "Upp, Inaktiv, Ner",
+    "pl": "Góra, Bezczynny, Dół",
+    "ru": "Вверх, Ожидание, Вниз",
+    "ko": "위로, 대기, 아래로",
+    "ar": "أعلى، خامل، أسفل"
   },
   "type": "enum",
   "values": [
@@ -652,7 +676,19 @@ str += `"devicecapabilities_picker-up-idle-down_list": {
 
 str += `"devicecapabilities_picker_onlythroughflows-up-idle-down_list": {
   "title": {
-    "en": "Up, Idle, Down"
+    "en": "Up, Idle, Down",
+    "nl": "Omhoog, Inactief, Omlaag",
+    "da": "Op, Inaktiv, Ned",
+    "de": "Hoch, Leerlauf, Runter",
+    "es": "Arriba, Inactivo, Abajo",
+    "fr": "Haut, Inactif, Bas",
+    "it": "Su, Inattivo, Giù",
+    "no": "Opp, Inaktiv, Ned",
+    "sv": "Upp, Inaktiv, Ner",
+    "pl": "Góra, Bezczynny, Dół",
+    "ru": "Вверх, Ожидание, Вниз",
+    "ko": "위로, 대기, 아래로",
+    "ar": "أعلى، خامل، أسفل"
   },
   "type": "enum",
   "values": [

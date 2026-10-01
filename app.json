@@ -9134,7 +9134,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "текст",
+        "ru": "Текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -9159,7 +9159,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9301,7 +9301,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9323,7 +9323,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9367,7 +9367,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9389,7 +9389,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9590,7 +9590,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -9614,7 +9614,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9637,7 +9637,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9847,7 +9847,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -9871,7 +9871,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -9894,7 +9894,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10104,7 +10104,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -10128,7 +10128,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10151,7 +10151,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10361,7 +10361,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -10385,7 +10385,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10618,7 +10618,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -10642,7 +10642,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10665,7 +10665,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -10875,7 +10875,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -10922,7 +10922,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11132,7 +11132,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -11156,7 +11156,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11179,7 +11179,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11389,7 +11389,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -11413,7 +11413,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11436,7 +11436,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11646,7 +11646,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -11670,7 +11670,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11693,7 +11693,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11903,7 +11903,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -11927,7 +11927,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -11950,7 +11950,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12184,7 +12184,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12207,7 +12207,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12417,7 +12417,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -12441,7 +12441,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12464,7 +12464,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12698,7 +12698,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12721,7 +12721,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12931,7 +12931,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -12955,7 +12955,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -12978,7 +12978,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13212,7 +13212,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13235,7 +13235,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13445,7 +13445,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -13492,7 +13492,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13726,7 +13726,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13749,7 +13749,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -13983,7 +13983,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14006,7 +14006,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14240,7 +14240,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14263,7 +14263,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14497,7 +14497,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14520,7 +14520,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14730,7 +14730,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -14754,7 +14754,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14777,7 +14777,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -14987,7 +14987,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -15011,7 +15011,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15034,7 +15034,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15268,7 +15268,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15291,7 +15291,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15501,7 +15501,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -15525,7 +15525,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15548,7 +15548,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15782,7 +15782,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -15805,7 +15805,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16039,7 +16039,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16062,7 +16062,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16272,7 +16272,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -16296,7 +16296,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16319,7 +16319,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16529,7 +16529,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -16553,7 +16553,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16576,7 +16576,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16810,7 +16810,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -16833,7 +16833,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17067,7 +17067,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17090,7 +17090,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17300,7 +17300,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -17347,7 +17347,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17557,7 +17557,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -17581,7 +17581,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17604,7 +17604,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17838,7 +17838,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -17861,7 +17861,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18071,7 +18071,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -18095,7 +18095,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18118,7 +18118,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18328,7 +18328,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -18352,7 +18352,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18375,7 +18375,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18585,7 +18585,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -18609,7 +18609,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18632,7 +18632,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -18866,7 +18866,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19099,7 +19099,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -19123,7 +19123,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19356,7 +19356,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -19380,7 +19380,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19403,7 +19403,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19613,7 +19613,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -19637,7 +19637,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19660,7 +19660,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19870,7 +19870,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -19894,7 +19894,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -19917,7 +19917,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20127,7 +20127,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -20174,7 +20174,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20384,7 +20384,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -20408,7 +20408,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20431,7 +20431,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20641,7 +20641,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -20665,7 +20665,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20688,7 +20688,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20922,7 +20922,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -20945,7 +20945,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21155,7 +21155,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -21179,7 +21179,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21202,7 +21202,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21412,7 +21412,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -21436,7 +21436,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21459,7 +21459,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21669,7 +21669,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -21716,7 +21716,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -21926,7 +21926,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -21973,7 +21973,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22207,7 +22207,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22440,7 +22440,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -22464,7 +22464,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22487,7 +22487,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22721,7 +22721,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22744,7 +22744,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -22978,7 +22978,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23001,7 +23001,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23235,7 +23235,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23258,7 +23258,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23468,7 +23468,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -23492,7 +23492,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23515,7 +23515,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23725,7 +23725,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -23749,7 +23749,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -23982,7 +23982,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -24006,7 +24006,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24029,7 +24029,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24239,7 +24239,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -24263,7 +24263,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24286,7 +24286,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24496,7 +24496,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -24520,7 +24520,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24777,7 +24777,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -24800,7 +24800,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25010,7 +25010,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -25034,7 +25034,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25057,7 +25057,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25267,7 +25267,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -25291,7 +25291,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25314,7 +25314,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25524,7 +25524,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -25548,7 +25548,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25571,7 +25571,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -25781,7 +25781,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -25828,7 +25828,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26062,7 +26062,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26085,7 +26085,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26319,7 +26319,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26342,7 +26342,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26576,7 +26576,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26599,7 +26599,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -26856,7 +26856,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27113,7 +27113,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27347,7 +27347,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27370,7 +27370,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27604,7 +27604,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27627,7 +27627,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27861,7 +27861,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -27884,7 +27884,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28118,7 +28118,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28375,7 +28375,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28398,7 +28398,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28608,7 +28608,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -28655,7 +28655,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28889,7 +28889,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -28912,7 +28912,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29122,7 +29122,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -29146,7 +29146,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29169,7 +29169,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29379,7 +29379,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -29403,7 +29403,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29426,7 +29426,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29660,7 +29660,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29683,7 +29683,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29893,7 +29893,7 @@
         "no": "Tekst",
         "sv": "Text",
         "pl": "Tekst",
-        "ru": "Текст",
+        "ru": "текст",
         "ko": "텍스트",
         "ar": "نص"
       },
@@ -29917,7 +29917,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -29940,7 +29940,7 @@
         "sv": "Nummer",
         "pl": "Numer",
         "ru": "Число",
-        "ko": "숫자",
+        "ko": "번호",
         "ar": "رقم"
       },
       "getable": true,
@@ -30212,9 +30212,7 @@
             "es": "Arriba",
             "da": "Oppe",
             "ru": "Наверх",
-            "pl": "Rozchylone",
-            "ko": "위로",
-            "ar": "أعلى"
+            "pl": "Rozchylone"
           }
         },
         {
@@ -30230,9 +30228,7 @@
             "es": "Inactivos",
             "da": "Inaktiv",
             "ru": "В ожидании",
-            "pl": "W spoczynku",
-            "ko": "대기 중",
-            "ar": "خامل"
+            "pl": "W spoczynku"
           }
         },
         {
@@ -30248,9 +30244,7 @@
             "es": "Abajo",
             "da": "Nede",
             "ru": "Вниз",
-            "pl": "Zasunięte",
-            "ko": "아래",
-            "ar": "أسفل"
+            "pl": "Zasunięte"
           }
         }
       ],
@@ -30289,9 +30283,7 @@
             "es": "Arriba",
             "da": "Oppe",
             "ru": "Наверх",
-            "pl": "Rozchylone",
-            "ko": "위로",
-            "ar": "أعلى"
+            "pl": "Rozchylone"
           }
         },
         {
@@ -30307,9 +30299,7 @@
             "es": "Inactivos",
             "da": "Inaktiv",
             "ru": "В ожидании",
-            "pl": "W spoczynku",
-            "ko": "유휴",
-            "ar": "خامل"
+            "pl": "W spoczynku"
           }
         },
         {
@@ -30325,9 +30315,7 @@
             "es": "Abajo",
             "da": "Nede",
             "ru": "Вниз",
-            "pl": "Zasunięte",
-            "ko": "아래",
-            "ar": "أسفل"
+            "pl": "Zasunięte"
           }
         }
       ],
@@ -30366,9 +30354,7 @@
             "es": "Arriba",
             "da": "Oppe",
             "ru": "Наверх",
-            "pl": "Rozchylone",
-            "ko": "위로",
-            "ar": "أعلى"
+            "pl": "Rozchylone"
           }
         },
         {
@@ -30384,9 +30370,7 @@
             "es": "Inactivos",
             "da": "Inaktiv",
             "ru": "В ожидании",
-            "pl": "W spoczynku",
-            "ko": "유휴",
-            "ar": "خامل"
+            "pl": "W spoczynku"
           }
         },
         {
@@ -30402,9 +30386,7 @@
             "es": "Abajo",
             "da": "Nede",
             "ru": "Вниз",
-            "pl": "Zasunięte",
-            "ko": "아래",
-            "ar": "أسفل"
+            "pl": "Zasunięte"
           }
         }
       ],
