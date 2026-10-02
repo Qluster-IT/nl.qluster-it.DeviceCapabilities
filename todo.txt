@@ -1,10 +1,16 @@
 ToDo:
-* setInterval and setTimeout to homey.setInterval and homey.setTimeout.
+* setInterval and setTimeout to homey.setInterval and homey.setTimeout. and clearInterval and clearTimeout.
 * Show/Hide flowcards if certain fields do not exist on a AVD.
 * Check all CreateFlowCards for custom capabilities (measure_, alarm_, etc).
 * Add all Energy options.
 * Make lists exportable/TEF.
 * Replace Reflection devices during AVD import.
+* Sorting of fields.
+* Text for button 1, when changed, will reset the buttons ordering.
+* Naming/languages for customicons. (at least in the driver and other places).
+* Camera allow for video.
+* Add oldValue to flowcard triggers (device.setListener).
+* Set AlbumArtImage toevoegen als flowcard.
 
 
 Done:
@@ -13,3 +19,4 @@ Done:
 * Remove "Maakt het ook mogelijk om te..."
 * Create real field and standard flowcards or Create standard flowcards.
 * Numbers decimals and steps fixen, min and max also.
+* Saving AVD only when the AVD has changed.

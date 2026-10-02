@@ -32,28 +32,31 @@
 		<div data-i18n="virtualdevicesettings.labelAlso" class="top-labels">Enabling all fields at once and pressing
 			save, might be hard for Homey and could take a while.</div>
 		<h1 data-i18n="virtualdevicesettings.titleCustomIcons" class="top-labels">Custom icons</h1>
-		<div data-i18n="virtualdevicesettings.labelCustomIcons" class="top-labels">The custom icons can be set through
-			the App Settings.</div>
+		<div data-i18n="virtualdevicesettings.labelCustomIcons" class="top-labels">The custom icons can be set through the App Settings.</div>
 
-		<!-- Device Class -->
-		<div class="field">
-			<div class="label">
-				<div data-i18n="virtualdevicesettings.device_class">Device Class</div> <span class="fa fa-icon fa-info-circle"
-					tooltip="{{__('virtualdevicesettings.hintClass') || 'Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.'}}"></span>
-			</div>
-			<select class="value" ng-model="s.cls">
-				<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
-			</select>
-		</div>
-		<!-- Cumulative -->
-		<div class="field">
-			<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
-			</div>
-			<input class="value" type="checkbox" ng-model="s['energyCumulative']" />
-		</div>
+		<h1 data-i18n="virtualdevicesettings.titleOrderFields" class="top-labels">Order Fields</h1>
+		<div data-i18n="virtualdevicesettings.labelOrderFields" class="top-labels">You can change the order in which the fields appear on the device (once the fields are saved).</div>
+		<div class="button block margin-top margin-bottom text-center" ng-click="settings.$dirty ? null : ((view.id='orderfields') && loadOrderFields())" ng-disabled="settings.$dirty" data-i18n="virtualdevicesettings.openOrderFields">Order Fields</div>
 
 		<!-- All fields -->
 		<div ng-if="s">
+			<!-- Device Class -->
+			<div class="field">
+				<div class="label">
+					<div data-i18n="virtualdevicesettings.device_class">Device Class</div> <span class="fa fa-icon fa-info-circle"
+						tooltip="{{__('virtualdevicesettings.hintClass') || 'Changing the Device Class may break flows that depend on automaticly created flowcards of the previously specified class.'}}"></span>
+				</div>
+				<select class="value" ng-model="s.cls">
+					<option ng-repeat="item in deviceClasses" value="{{item.id}}">{{item.label}}</option>
+				</select>
+			</div>
+			<!-- Cumulative -->
+			<div class="field">
+				<div class="label"><span>{{__('virtualdevicesettings.cumulative') || 'Cumulative'}}</span>
+				</div>
+				<input class="value" type="checkbox" ng-model="s['energyCumulative']" />
+			</div>
+
 			<!-- Status Indicator -->
 			<div class="group header white text-center">
 				{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}
@@ -1466,7 +1469,7 @@
 		<br><br>
 	</form>
 	<div class="main-buttons" ng-show="!view.id">
-		<div class="button" ng-click="settings.$valid ? save() : null" ng-disabled="!settings.$valid" data-i18n="virtualdevicesettings.saveDevice">Save Device</div>
+		<div class="button" ng-click="settings.$valid && settings.$dirty ? save() : null" ng-disabled="!settings.$valid || !settings.$dirty" data-i18n="virtualdevicesettings.saveDevice">Save Device</div>
 		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.close">Close</div>
 	</div>
 
@@ -1677,11 +1680,7 @@
 			<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
 		</div>
 	</form>
-	<!-- <div ng-else execute="vars.textSettings=null;vars.readycopy=null;"></div> -->
-	<div class="main-buttons" ng-show="view.id">
-		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;" data-i18n="virtualdevicesettings.close">Close</div>
-	</div>
-
+	
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
 		<div ng-show="!vars.template">
 			<div class="field filter">
@@ -1720,6 +1719,35 @@
 			</div>
 		</div>
 	</form>
+
+	<form name="orderfields" class="main-view hide" ng-show="view.id=='orderfields'">
+		<div ng-repeat="component in vars.orderFields.components track by $index">
+			<div class="group header blue text-center">
+				<div class="field">
+					<div class="label">{{component.id}}</div>
+				</div>
+			</div>
+			<div class="group" ng-class="{odd:$odd}" ng-repeat="capability in component.capabilities track by $index">
+				<div class="field bold">
+					<div class="label">{{capability.name}}</div>
+					<div class="float-right text-right">
+						<span class="fa fa-icon fa-sort-up cursor" ng-if="$index>0" ng-click="moveInArray(component.capabilities, $index, $index-1)"></span>
+						<span class="fa fa-icon fa-sort-down cursor" ng-if="$index<component.capabilities.length-1" ng-click="moveInArray(component.capabilities, $index, $index+1)"></span>
+						<span class="fa fa-icon" ng-else></span>
+					</div>
+				</div>
+				<div class="field">
+					{{capability.id}}
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="main-buttons" ng-show="view.id">
+		<div class="button" ng-click="saveOrderFields();" data-i18n="settings.save">Save</div>
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;" data-i18n="settings.back">Back</div>
+	</div>
+
 </div>
 
 
@@ -1842,6 +1870,13 @@ ${vars.textSettings}
 				delete o[s];
 			}
 
+			$scope.moveInArray = function (arr, from, to) {				
+				// remove `from` item and store it
+				let f = arr.splice(from, 1)[0];
+				// insert stored item into position `to`
+				arr.splice(to, 0, f);
+			}
+
 			$scope.removeAllSettings = function (startName, i, removeNumberOf) {
 				console.log('removeAllSettings', startName, i);
 				removeAllSettings($scope.s, startName, i, removeNumberOf);
@@ -1880,6 +1915,26 @@ ${vars.textSettings}
 					});
 			}
 			
+			$scope.loadOrderFields = function() {
+				Homey.emit('virtualdevicesettings_loadOrderFields', function (err, result) {
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						console.log('result', result);
+						vars.orderFields = result;
+					});
+				});
+			}
+			$scope.saveOrderFields = function() {
+				showOverlay(Homey.__('virtualdevicesettings.savingOrderFields'));
+				Homey.emit('virtualdevicesettings_saveOrderFields', vars.orderFields, function (err, result) {
+					hideOverlay();
+					if (err) return Homey.alert(err);
+					$scope.$apply(function () {
+						vars.orderFields = undefined;
+						view.id=undefined;
+					});
+				});
+			}
 			$scope.refreshTemplates = function () {
 				vars.templatesRefreshing = true;
 				if(typeof(Homey)!=='undefined') Homey.emit('refreshAvdTemplates', function (err, result) {
@@ -2016,6 +2071,9 @@ ${vars.textSettings}
 					}
 					$scope.$apply(function () {
 						$scope.s = result;
+						//console.log($scope.settings);
+						$scope.settings.$setPristine();
+						$scope.settings.$setSubmitted();
 						setAllFieldProperties();
 						//$scope.vars.apiCommand = result.apiCommand;
 						if(successFunction && typeof(successFunction)=='function') successFunction();

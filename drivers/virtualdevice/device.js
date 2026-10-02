@@ -621,6 +621,73 @@ module.exports = class AvdDevice extends Homey.Device {
 		// if (settings[type + i + 'ReflectDebounce']) prop.method = _.debounce(prop.originalMethod, settings[type + i + 'ReflectDebounce'], { leading: true, maxWait: settings[type + i + 'ReflectDebounce'], trailing: true });
 		// else prop.method = prop.originalMethod;
 	}
+
+	async getOrderFields() {
+		if(!this.Settings) return null;
+		let result = {components:[]};
+		let capabilities = {};
+		let api = await this.homey.app.refreshHomeyAPI();
+
+
+		
+		for (let iTypes = 0; iTypes < types.length; iTypes++) {
+			const type = types[iTypes];
+			const fieldCount = type == "status" ? 1 : this.Settings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0;
+
+			for (let i = 1; i <= fieldCount; i++) {
+				let cap = this.getStoreValue(type + i);
+				capabilities[cap] = type + i;
+			}
+		}
+		let device = await api.devices.getDevice({id:this.getId()});
+
+		
+		if(device.ui && device.ui.components)
+			for (let i = 0; i < device.ui.components.length; i++) {
+				const component = device.ui.components[i];
+				if(component==='media') continue;
+				let resultComponent = result.components.find(x=>x.id===component.id);
+				if(!resultComponent) {
+					resultComponent = {id:component.id, capabilities:[]};
+					result.components.push(resultComponent);
+				}
+				for (let iCaps = 0; iCaps < component.capabilities.length; iCaps++) {
+					const capability = component.capabilities[iCaps];					
+					let resultCapability = resultComponent.capabilities.find(x=>x.id===capability);
+					if(!resultCapability) {
+						resultCapability = {id:capability, fieldId:capabilities[capability], name:device.capabilitiesObj[capability].title };
+						resultComponent.capabilities.push(resultCapability);
+					}
+					
+				}				
+			}
+
+		return result;
+	}
+
+	async saveOrderFields(orderFields) {
+		let oldOrderFields = await this.getOrderFields();
+		if(!orderFields) return;
+		let energy = this.getEnergy();
+		for (let iComponent = 0; iComponent < orderFields.components.length; iComponent++) {
+			const component = orderFields.components[iComponent];
+			let reset = false;
+			for (let iCapability = 0; iCapability < component.capabilities.length; iCapability++) {
+				const capability = component.capabilities[iCapability];
+				if(!reset && oldOrderFields.components[iComponent].capabilities[iCapability].id===capability.id) continue;
+				reset = true;
+				let capOptions = this.getCapabilityOptions(capability.id);
+				let capValue = this.getCapabilityValue(capability.id);
+				await this.removeCapability(capability.id);
+				await this.addCapability(capability.id);
+				await this.setCapabilityOptions(capability.id, capOptions);
+				await this.setCapabilityValue(capability.id, capValue);
+			}
+		}
+		this.setEnergy(energy);
+	}
+
+
 	async loadFromSettings(settings, oldSettings, changedKeys, saved, imported) {
 
 		try {

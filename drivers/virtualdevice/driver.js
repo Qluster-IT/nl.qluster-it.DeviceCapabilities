@@ -3418,6 +3418,13 @@ module.exports = class AvdDriver extends Homey.Driver {
 
         });
 
+        session.setHandler('virtualdevicesettings_loadOrderFields', async () => {
+            return await device.getOrderFields();
+        });
+        
+        session.setHandler('virtualdevicesettings_saveOrderFields', async (orderFields) => {
+            return await device.saveOrderFields(orderFields);
+        });
         
         session.setHandler('virtualdevicesettings_loadReflectDevices', async (settings) => {
             await this.homey.app.refreshHomeyAPI();

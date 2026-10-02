@@ -491,6 +491,9 @@ input {
 
 
 
+.cursor {
+    cursor:pointer;
+}
 
 #customicons {
     list-style: none;
