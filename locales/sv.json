@@ -218,7 +218,11 @@
     "reactHint": "Automatiskt sätta enhetens egenskaper när detta fält ändras.",
     "customList": "Anpassad lista",
     "customListAppSettings": "Gå till appinställningarna för att skapa egna anpassade listor.",
-    "device_class": "Enhetsklass"
+    "device_class": "Enhetsklass",
+    "openOrderFields":"Sortera fält",
+    "titleOrderFields":"Sortera fält",
+    "labelOrderFields":"Du kan ändra ordningen på fälten som visas på enheten (när fälten har sparats).",
+    "savingOrderFields":"Sparar ordningen på fälten. Detta kan ta en stund."
   },
   "pair": {
     "list_icons": {

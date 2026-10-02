@@ -4048,5 +4048,20 @@
     "ru": "Исправлено: Ошибка стиля в представлении шаблонов создания AVD.",
     "ko": "해결됨: AVD 생성 템플릿 보기에서 스타일링 버그.",
     "ar": "تم الحل: خطأ في التنسيق في عرض قوالب إنشاء AVD."
+  },
+  "2.18.0": {
+    "en": "Improved: Fields can now be ordered/sorted.\nNumbers decimals, steps, min and max has been synced with each other.\nWhen changing a fieldname, the settings are not reset.",
+    "nl": "Verbeterd: Velden kunnen nu worden geordend/gesorteerd. Decimalen, stappen, minimum en maximum van nummers zijn met elkaar gesynchroniseerd. Bij het wijzigen van een veldnaam worden de instellingen niet gereset.",
+    "da": "Forbedret: Felter kan nu ordnes/sorteres. Decimaler, trin, minimum og maksimum for tal er nu synkroniseret med hinanden. Når et feltnavn ændres, nulstilles indstillingerne ikke.",
+    "de": "Verbessert: Felder können jetzt geordnet/sortiert werden. Dezimalstellen, Schritte, Min und Max von Zahlen wurden miteinander synchronisiert. Beim Ändern eines Feldnamens werden die Einstellungen nicht zurückgesetzt.",
+    "es": "Mejorado: Ahora se pueden ordenar/clasificar los campos. Los decimales de números, pasos, mínimo y máximo se han sincronizado entre sí. Al cambiar el nombre de un campo, la configuración no se restablece.",
+    "fr": "Amélioré : Les champs peuvent désormais être ordonnés/triés.  \nLes décimales, les étapes, les valeurs min et max des nombres ont été synchronisées entre elles.  \nLors du changement d'un nom de champ, les paramètres ne sont pas réinitialisés.",
+    "it": "Migliorato: Ora i campi possono essere ordinati/sistemati.\nI decimali dei numeri, i passi, il minimo e il massimo sono stati sincronizzati tra loro.\nQuando si cambia il nome di un campo, le impostazioni non vengono reimpostate.",
+    "no": "Forbedret: Felter kan nå ordnes/sorteres.\nDesimaler, trinn, min og maks for tall er nå synkronisert med hverandre.\nNår du endrer et feltnavn, blir ikke innstillingene tilbakestilt.",
+    "sv": "Förbättrat: Fält kan nu ordnas/sorteras.\nDecimaler, steg, min och max för nummer har synkroniserats med varandra.\nNär du ändrar ett fältnamn återställs inte inställningarna.",
+    "pl": "Ulepszone: Pola można teraz porządkować/sortować. \nDziesiętne liczby, kroki, minimalne i maksymalne wartości zostały zsynchronizowane ze sobą. \nPodczas zmiany nazwy pola ustawienia nie są resetowane.",
+    "ru": "Улучшено: теперь поля можно упорядочивать/сортировать. Десятичные числа, шаги, минимальные и максимальные значения синхронизированы друг с другом. При изменении названия поля настройки не сбрасываются.",
+    "ko": "개선 사항: 이제 필드를 정렬할 수 있습니다.  \n숫자의 소수점, 단계, 최소 및 최대값이 서로 동기화되었습니다.  \n필드 이름을 변경할 때 설정이 초기화되지 않습니다.",
+    "ar": "محسن: يمكن الآن ترتيب/فرز الحقول.\nتمت مزامنة الأرقام العشرية، الخطوات، الحد الأدنى والحد الأقصى مع بعضها البعض.\nعند تغيير اسم الحقل، لا يتم إعادة تعيين الإعدادات."
   }
 }

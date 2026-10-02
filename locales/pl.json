@@ -218,7 +218,11 @@
     "reactHint": "Automatycznie ustaw właściwości urządzenia, gdy to pole zostanie zmienione.",
     "customList": "Niestandardowa lista",
     "customListAppSettings": "Przejdź do ustawień aplikacji, aby utworzyć własne niestandardowe listy.",
-    "device_class": "Klasa urządzenia"
+    "device_class": "Klasa urządzenia",
+    "openOrderFields":"Sortuj pola",
+    "titleOrderFields":"Sortuj pola",
+    "labelOrderFields":"Możesz zmienić kolejność, w jakiej pola pojawiają się na urządzeniu (po zapisaniu pól).",
+    "savingOrderFields":"Zapisywanie kolejności pól. To może chwilę potrwać."
   },
   "pair": {
     "list_icons": {

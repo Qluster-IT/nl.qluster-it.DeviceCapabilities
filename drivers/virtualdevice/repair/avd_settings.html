@@ -70,12 +70,11 @@
 					<div class="label"><span class="color-icon white"></span>
 						<span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true); vars.useStatusIndicator = false;"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('status', 1, true); vars.useStatusIndicator = false; settings.$setDirty();"></span>
 				</div>
 				<!-- <div class="label"><span class="color-icon purple"></span> ><span>{{__('virtualdevicesettings.statusIndicatorField') || 'Status Indicator Field'}}</span></div> -->
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
-					<input class="value" type="text" ng-model="s.status1Name" />
 					<input class="value" type="text" ng-init="sTemp['status1Name']=s['status1Name']" ng-model="sTemp['status1Name']" ng-change="sTemp['status1Name'].length>0 ? s['status1Name']=sTemp['status1Name'] : null" ng-blur="s['status1Name']=sTemp['status1Name']" />
 				</div>
 				<div ng-if="s['status1Name']">
@@ -119,7 +118,7 @@
 						<div ng-repeat="reflectDevice in s['status'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['status'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['status'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'status'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['status'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['status'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'status'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['status'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -289,7 +288,7 @@
 				<div class="field">
 					<div class="label"><span class="color-icon green"></span> <span>{{__('virtualdevicesettings.textFieldI',
 							{i:$index+1}) || 'Textfield ' + ($index+1)}}</span></div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('text', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('text', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -344,7 +343,7 @@
 						<div ng-repeat="reflectDevice in s['text'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['text'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['text'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'text'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['text'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['text'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'text'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['text'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -491,7 +490,7 @@
 						<span>{{__('virtualdevicesettings.numberFieldI', {i:$index+1}) || 'Numberfield ' +
 							($index+1)}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('number', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('number', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -551,7 +550,7 @@
 						<div ng-repeat="reflectDevice in s['number'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['number'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['number'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'number'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['number'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['number'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'number'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['number'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -750,7 +749,7 @@
 						<span>{{__('virtualdevicesettings.booleanFieldI', {i:$index+1}) || 'Yes/No Field ' +
 							($index+1)}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('boolean', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('boolean', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -812,7 +811,7 @@
 						<div ng-repeat="reflectDevice in s['boolean'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['boolean'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['boolean'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'boolean'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['boolean'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['boolean'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'boolean'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['boolean'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -980,7 +979,7 @@
 					<div class="label"><span class="color-icon orange round"></span>
 						<span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1}) || 'Button ' + ($index+1)}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('button', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('button', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -1041,7 +1040,7 @@
 						<div ng-repeat="reflectDevice in s['button'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['button'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['button'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'button'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['button'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['button'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'button'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['button'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -1223,7 +1222,7 @@
 					<div class="label"><span class="color-icon green round"></span>
 						<span>{{__('virtualdevicesettings.listFieldI', {i:$index+1}) || 'List ' + ($index+1)}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('list', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('list', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -1278,7 +1277,7 @@
 						<div ng-repeat="reflectDevice in s['list'+($index+1)+'ReflectDevices']">
 							<div class="field">
 								<div class="label">{{__('virtualdevicesettings.device') || 'Device'}} <span class="float-right fa fa-icon fa-trash"
-										ng-click="s['list'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['list'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'list'+($parent.$index+1)+'Reflect')  : null; "></span></div>
+										ng-click="s['list'+($parent.$index+1)+'ReflectDevices'].splice($index,1);s['list'+($parent.$index+1)+'ReflectDevices'].length===0? _delete(s, 'list'+($parent.$index+1)+'Reflect')  : null;  settings.$setDirty();"></span></div>
 								<select class="value" ng-model="s['list'+($parent.$index+1)+'ReflectDevices'][$index].id" required>
 									<option value=""></option>
 									<option ng-repeat="device in vars.reflectDevices" ng-value="device.id">{{device.name}} ({{device.zoneName}})</option>
@@ -1437,7 +1436,7 @@
 					<div class="label"><span class="color-icon purple"></span>
 						<span>{{__('virtualdevicesettings.cameraFieldI', {i:$index+1}) || 'Camera ' + ($index+1)}}</span>
 					</div>
-					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('camera', ($index+1), true);"></span>
+					<span class="remove-icon fa fa-icon fa-trash" ng-click="removeAllSettings('camera', ($index+1), true); settings.$setDirty();"></span>
 				</div>
 				<div class="field">
 					<div class="label">{{__('virtualdevicesettings.name') || 'Name'}}</div>
@@ -1470,7 +1469,7 @@
 	</form>
 	<div class="main-buttons" ng-show="!view.id">
 		<div class="button" ng-click="settings.$valid && settings.$dirty ? save() : null" ng-disabled="!settings.$valid || !settings.$dirty" data-i18n="virtualdevicesettings.saveDevice">Save Device</div>
-		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.close">Close</div>
+		<div class="button" ng-click="close()" data-i18n="virtualdevicesettings.back">Close</div>
 	</div>
 
 	<form name="theflowexchanger" class="main-view hide" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
@@ -1679,6 +1678,9 @@
 			<div class="field margin-top" data-i18n="settings.flowsThatAreCreated">Flows that are created will be listed here:</div>
 			<div class="field link" ng-repeat="item in vars.createdadvancedflows" ng-click="openUrl('https://my.homey.app/homeys/' + homeyId + '/flows/advanced/' + item.id);">{{item.name}}</div>
 		</div>
+		<div class="main-buttons">
+			<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null; view.id=undefined; view.subid=undefined;" data-i18n="settings.back">Back</div>
+		</div>
 	</form>
 	
 	<form class="top" ng-show="view.id=='theflowexchanger' && view.subid=='theflowexchangertemplates'">
@@ -1707,7 +1709,7 @@
 				</div>
 			</div>
 			<div class="main-buttons ">
-				<button class="button" data-i18n="virtualdevicesettings.close" ng-click="closeTemplates();">Close</button>
+				<button class="button" data-i18n="settings.back" ng-click="closeTemplates();">Back</button>
 			</div>
 		</div>
 		<div class="template-panel" ng-show="vars.template">
@@ -1741,12 +1743,18 @@
 				</div>
 			</div>
 		</div>
+		<div class="main-buttons">
+			<div class="button" ng-if="view.id=='orderfields'" ng-click="saveOrderFields();" data-i18n="settings.save">Save</div>
+			<div class="button" ng-click="vars.orderFields=undefined; view.id=undefined;" data-i18n="settings.back">Back</div>
+		</div>
+
 	</form>
 
-	<div class="main-buttons" ng-show="view.id">
-		<div class="button" ng-click="saveOrderFields();" data-i18n="settings.save">Save</div>
-		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;view.id=undefined;" data-i18n="settings.back">Back</div>
-	</div>
+	<!-- <div class="main-buttons" ng-show="view.id=='theflowexchanger' && view.subid!='theflowexchangertemplates'">
+		<div class="button" ng-if="view.id=='orderfields'" ng-click="saveOrderFields();" data-i18n="settings.save">Save</div>
+		<div class="button" ng-if="" ng-click="vars.textSettings=null;vars.readycopy=null;vars.orderFields=undefined; view.id=undefined;" data-i18n="settings.back">Back</div>
+		<div class="button" ng-click="vars.textSettings=null;vars.readycopy=null;vars.orderFields=undefined; view.id=undefined;" data-i18n="settings.back">Back</div>
+	</div> -->
 
 </div>
 
@@ -1929,10 +1937,10 @@ ${vars.textSettings}
 				Homey.emit('virtualdevicesettings_saveOrderFields', vars.orderFields, function (err, result) {
 					hideOverlay();
 					if (err) return Homey.alert(err);
-					$scope.$apply(function () {
-						vars.orderFields = undefined;
-						view.id=undefined;
-					});
+					// $scope.$apply(function () {
+					// 	vars.orderFields = undefined;
+					// 	view.id=undefined;
+					// });
 				});
 			}
 			$scope.refreshTemplates = function () {

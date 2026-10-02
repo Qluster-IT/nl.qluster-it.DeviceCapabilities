@@ -218,7 +218,11 @@
     "reactHint": "تحديد خصائص الجهاز تلقائيًا عند تغيير هذا الحقل.",
     "customList": "قائمة مخصصة",
     "customListAppSettings": "انتقل إلى إعدادات التطبيق لإنشاء قوائم مخصصة بك.",
-    "device_class": "صنف الجهاز"
+    "device_class": "صنف الجهاز",
+    "openOrderFields":"فرز الحقول",
+    "titleOrderFields":"فرز الحقول",
+    "labelOrderFields":"يمكنك تغيير ترتيب ظهور الحقول على الجهاز (بمجرد حفظ الحقول).",
+    "savingOrderFields":"حفظ ترتيب الحقول. قد يستغرق هذا لحظة."
   },
   "pair": {
     "list_icons": {

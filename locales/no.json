@@ -218,7 +218,11 @@
     "reactHint": "Automatisk set egenskapene for enheten når dette feltet endres.",
     "customList": "Egendefinert liste",
     "customListAppSettings": "Gå til appinnstillingene for å lage dine egne egendefinerte lister.",
-    "device_class": "Enhetsklasse"
+    "device_class": "Enhetsklasse",
+    "openOrderFields":"Sorter felter",
+    "titleOrderFields":"Sorter felter",
+    "labelOrderFields":"Du kan endre rekkefølgen på hvordan feltene vises på enheten (når feltene er lagret).",
+    "savingOrderFields":"Lagrer rekkefølgen på feltene. Dette kan ta et øyeblikk."
   },
   "pair": {
     "list_icons": {

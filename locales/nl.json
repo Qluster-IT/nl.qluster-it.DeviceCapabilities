@@ -218,7 +218,11 @@
 		"reactHint": "Stel automatisch de apparaateigenschappen in wanneer dit veld wordt gewijzigd.",
 		"customList": "Aangepaste lijst",
 		"customListAppSettings": "Ga naar de app-instellingen om je eigen aangepaste lijsten te maken.",
-		"device_class": "Apparaatklasse"
+		"device_class": "Apparaatklasse",
+		"openOrderFields":"Velden sorteren",
+		"titleOrderFields":"Velden sorteren",
+		"labelOrderFields":"Je kunt de volgorde wijzigen waarin de velden op het apparaat verschijnen (zodra de velden zijn opgeslagen).",
+		"savingOrderFields":"De volgorde van de velden wordt opgeslagen. Dit kan even duren."
 	},
 	"pair": {
 		"list_icons": {

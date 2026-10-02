@@ -218,7 +218,11 @@
     "reactHint": "Imposta automaticamente le proprietà del dispositivo quando questo campo viene modificato.",
     "customList": "Lista personalizzata",
     "customListAppSettings": "Vai alle impostazioni dell'app per creare le tue liste personalizzate.",
-    "device_class": "Classe del dispositivo"
+    "device_class": "Classe del dispositivo",
+    "openOrderFields":"Ordina campi",
+    "titleOrderFields":"Ordina campi",
+    "labelOrderFields":"Puoi cambiare l'ordine in cui i campi appaiono sul dispositivo (una volta che i campi sono stati salvati).",
+    "savingOrderFields":"Salvataggio dell'ordine dei campi. Potrebbe volerci un momento."
   },
   "pair": {
     "list_icons": {

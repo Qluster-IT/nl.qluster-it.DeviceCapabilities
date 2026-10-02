@@ -5,12 +5,12 @@ ToDo:
 * Add all Energy options.
 * Make lists exportable/TEF.
 * Replace Reflection devices during AVD import.
-* Sorting of fields.
 * Text for button 1, when changed, will reset the buttons ordering.
 * Naming/languages for customicons. (at least in the driver and other places).
 * Camera allow for video.
 * Add oldValue to flowcard triggers (device.setListener).
 * Set AlbumArtImage toevoegen als flowcard.
+* Sorting of camera's
 
 
 Done:
@@ -20,3 +20,4 @@ Done:
 * Create real field and standard flowcards or Create standard flowcards.
 * Numbers decimals and steps fixen, min and max also.
 * Saving AVD only when the AVD has changed.
+* Sorting of fields.

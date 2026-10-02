@@ -1,14 +1,62 @@
 {
   "openOrderFields": {
-    "en": "Order Fields"
+    "en": "Sort Fields",
+    "nl": "Velden sorteren",
+    "da": "Sortér felter",
+    "de": "Felder sortieren",
+    "es": "Ordenar campos",
+    "fr": "Trier les champs",
+    "it": "Ordina campi",
+    "no": "Sorter felter",
+    "sv": "Sortera fält",
+    "pl": "Sortuj pola",
+    "ru": "Сортировать поля",
+    "ko": "필드 정렬",
+    "ar": "فرز الحقول"
   },
   "titleOrderFields": {
-    "en": "Order Fields"
+    "en": "Sort Fields",
+    "nl": "Velden sorteren",
+    "da": "Sortér felter",
+    "de": "Felder sortieren",
+    "es": "Ordenar campos",
+    "fr": "Trier les champs",
+    "it": "Ordina campi",
+    "no": "Sorter felter",
+    "sv": "Sortera fält",
+    "pl": "Sortuj pola",
+    "ru": "Сортировать поля",
+    "ko": "필드 정렬",
+    "ar": "فرز الحقول"
   },
   "labelOrderFields": {
-    "en": "You can change the order in which the fields appear on the device (once the fields are saved)."
+    "en": "You can change the order in which the fields appear on the device (once the fields are saved).",
+    "nl": "Je kunt de volgorde wijzigen waarin de velden op het apparaat verschijnen (zodra de velden zijn opgeslagen).",
+    "da": "Du kan ændre rækkefølgen, som felterne vises i på enheden (når felterne er gemt).",
+    "de": "Du kannst die Reihenfolge der Felder auf dem Gerät ändern (sobald die Felder gespeichert sind).",
+    "es": "Puedes cambiar el orden en el que aparecen los campos en el dispositivo (una vez que los campos estén guardados).",
+    "fr": "Vous pouvez modifier l'ordre dans lequel les champs apparaissent sur l'appareil (une fois les champs enregistrés).",
+    "it": "Puoi cambiare l'ordine in cui i campi appaiono sul dispositivo (una volta che i campi sono stati salvati).",
+    "no": "Du kan endre rekkefølgen på hvordan feltene vises på enheten (når feltene er lagret).",
+    "sv": "Du kan ändra ordningen på fälten som visas på enheten (när fälten har sparats).",
+    "pl": "Możesz zmienić kolejność, w jakiej pola pojawiają się na urządzeniu (po zapisaniu pól).",
+    "ru": "Вы можете изменить порядок, в котором поля отображаются на устройстве (после сохранения полей).",
+    "ko": "필드를 저장한 후에는 장치에서 필드가 나타나는 순서를 변경할 수 있습니다.",
+    "ar": "يمكنك تغيير ترتيب ظهور الحقول على الجهاز (بمجرد حفظ الحقول)."
   },
   "savingOrderFields": {
-    "en": "Saving the order of the fields. This might take a moment."
+    "en": "Saving the order of the fields. This might take a moment.",
+    "nl": "De volgorde van de velden wordt opgeslagen. Dit kan even duren.",
+    "da": "Gemmer rækkefølgen af felterne. Dette kan tage et øjeblik.",
+    "de": "Speichern der Reihenfolge der Felder. Dies kann einen Moment dauern.",
+    "es": "Guardando el orden de los campos. Esto podría tardar un momento.",
+    "fr": "Enregistrement de l'ordre des champs. Cela peut prendre un moment.",
+    "it": "Salvataggio dell'ordine dei campi. Potrebbe volerci un momento.",
+    "no": "Lagrer rekkefølgen på feltene. Dette kan ta et øyeblikk.",
+    "sv": "Sparar ordningen på fälten. Detta kan ta en stund.",
+    "pl": "Zapisywanie kolejności pól. To może chwilę potrwać.",
+    "ru": "Сохранение порядка полей. Это может занять некоторое время.",
+    "ko": "필드 순서를 저장 중입니다. 잠시만 기다려 주세요.",
+    "ar": "حفظ ترتيب الحقول. قد يستغرق هذا لحظة."
   }
 }

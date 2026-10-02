@@ -218,7 +218,11 @@
     "reactHint": "Automaticly set the device properties when this field is changed.",
     "customList": "Custom list",
     "customListAppSettings": "Goto the app settings to create your own custom lists.",
-    "device_class": "Device Class"
+    "device_class": "Device Class",
+    "openOrderFields":"Sort Fields",
+    "titleOrderFields":"Sort Fields",
+    "labelOrderFields":"You can change the order in which the fields appear on the device (once the fields are saved).",
+    "savingOrderFields":"Saving the order of the fields. This might take a moment."
   },
   "pair": {
     "list_icons": {
