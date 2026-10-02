@@ -5,7 +5,6 @@ ToDo:
 * Add all Energy options.
 * Make lists exportable/TEF.
 * Replace Reflection devices during AVD import.
-* Numbers decimals and steps fixen, min and max also.
 
 
 Done:
@@ -13,3 +12,4 @@ Done:
 * ng-else _delete properties, do not set to undefined.
 * Remove "Maakt het ook mogelijk om te..."
 * Create real field and standard flowcards or Create standard flowcards.
+* Numbers decimals and steps fixen, min and max also.
