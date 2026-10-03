@@ -1499,7 +1499,7 @@
 								<div class="button" ng-click="exportTextSettings();">Export</div>
 							</div> -->
 				<div class="field">
-					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="2" placeholder="{{__('virtualdevicesettings.pressCreateTEF') || 'Press Create TEF'}}" ng-change="blockTextSettings=true"></textarea>
+					<textarea aria-multiline="true" class="field" type="text" ng-model="vars.textSettings" rows="5" placeholder="{{__('virtualdevicesettings.pressCreateTEF') || 'Press Create TEF'}}" ng-change="blockTextSettings=true"></textarea>
 				</div>
 				<div class="field" ng-show="vars.textSettings">
 					<div class="button field" ng-click="gotoPostTopic();" data-i18n="settings.postTemplate">Post Template</div>
@@ -1895,7 +1895,8 @@ ${vars.textSettings}
 				let name = capitalizeFirstLetter(startName);
 				startName = startName + i;
 				if (removeNumberOf && settings['numberOf' + name + 'Fields'] === i) settings['numberOf' + name + 'Fields']--;
-				for (const settingKey in settings) if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName)) delete settings[settingKey];			
+				for (const settingKey in settings) 
+					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) && isNaN(settingKey.substr(startName.length-1, 1))) delete settings[settingKey];			
 			}
 
 			$scope.toggleFavorite = function(template) {
@@ -2007,11 +2008,11 @@ ${vars.textSettings}
 			}
 
 
-
+			// See if the Reflection Devices have the a "wrong" property selected, so BLL Calculation is required.
 			$scope._wrongTypes = function(devices, types, ) {
 				if(!vars.reflectDevicesObj) return null;
 				if(typeof(type)=='string') types = [types];
-				return _.find(devices, x=> types.indexOf(vars.reflectDevicesObj[x.id].capabilitiesObj[x.property].type)===-1)
+				return _.find(devices, x=> !vars.reflectDevicesObj[x.id] || !vars.reflectDevicesObj[x.id].capabilitiesObj[x.property] ||  types.indexOf(vars.reflectDevicesObj[x.id].capabilitiesObj[x.property].type)===-1)
 			}
 			
 			$scope.size = function (collection) {
@@ -2319,6 +2320,7 @@ ${vars.textSettings}
 					}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
+						console.log(JSON.stringify($scope.s));
 						$scope.customicons = result.customicons;
 						$scope.customiconsById = {};
 						for (let i = 0; i < $scope.customicons.icons.length; i++) {

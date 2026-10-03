@@ -197,7 +197,7 @@
 			<div class="field">
 				<div data-i18n="settings.explain_theflowexchanger_import">Here you can import The Exchanger File.</div>
 				<div class="field margin-bottom">
-					<textarea aria-multiline="true" class="field homey-form-textarea" type="text" ng-model="vars.textSettings" rows="2" ng-attr-placeholder="{{__('settings.pasteTEFReadDevice') || 'Paste The Exchanger File and press Read Device'}}" ng-change="blockTextSettings=true"></textarea>
+					<textarea aria-multiline="true" class="field homey-form-textarea" type="text" ng-model="vars.textSettings" rows="5" ng-attr-placeholder="{{__('settings.pasteTEFReadDevice') || 'Paste The Exchanger File and press Read Device'}}" ng-change="blockTextSettings=true"></textarea>
 				</div>
 			</div>
 			<div class="field alert" data-i18n="settings.no_avd_in_tef" ng-show="vars.textSettings && vars.textSettings.toUpperCase().startsWith('[TEF:') && !vars.textSettings.toUpperCase().startsWith('[TEF:AVD')">TEF does not contains an AVD.</div>

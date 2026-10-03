@@ -1243,7 +1243,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         }
     }
 
-
+    //Old version pre API3.
     async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device, copyWithFlows=true }) {
         if(this.getAPIV3()) return await this.getAdvancedFlowsJSONv3(arguments[0]);
 
@@ -1698,6 +1698,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         return (this.apiV3 = this.homey.version.split('.')[0] >= 10);
     }
 
+    // Old version pre API 3.
     async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         if(this.getAPIV3()) return await this.readAdvancedFlowsJSONv3(arguments[0]);    
         try {
@@ -1971,7 +1972,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 _.each(flow.cards, (card, cardKey)=>{
                     if(!card.id) return;
                     if(this.getAPIV3()) {
-                        if(!card.id.startsWith(card.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
+                        if(card.ownerUri && !card.id.startsWith(card.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
                     } else {
                         if(card.id.startsWith(card.ownerUri+':')) card.id = card.id.substring((card.ownerUri+':').length);
                     }
@@ -2414,8 +2415,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                 for(let i=0;i<exchangerFile.advancedflows.length;i++) {
                     let oldId = exchangerFile.advancedflows[i].id;
                     exchangerFile.advancedflows[i] = await Homey.flow.createAdvancedFlow({advancedflow:exchangerFile.advancedflows[i]});
-                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId]) {
-                        _.each(exchangerFile.flowsToReplace[oldId].types, type=> {
+                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId] && exchangerFile.flowsToReplace[oldId].types) {
+                        exchangerFile.flowsToReplace[oldId].types.forEach( type=> {
                             if(type.replaceWithId===oldId) type.replaceWith = {id:exchangerFile.advancedflows[i].id, name:exchangerFile.advancedflows[i].name};
                         });
                     }
@@ -2455,7 +2456,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     //const c.args[argKey] = c.args[argKey];
                                     switch (typeof(c.args[argKey])) {
                                         case "string":      
-                                            _.each(exchangerFile.variablesToReplace, (variable)=>{
+                                            if(exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach((variable)=>{
                                                 if(!variable) return;
                                                 if(variable.searchFor) {
                                                     if(c.args[argKey] === variable.searchFor) 
@@ -2466,7 +2467,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             });
                                             break;
                                         case "object":      
-                                            if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                            if(exchangerFile.variablesToReplace && c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') exchangerFile.variablesToReplace.forEach((variable)=>{ 
                                                 if(!variable) return;
                                                 if(variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {                                                
                                                     c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
@@ -2477,7 +2478,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     }
                                 }
                             }
-                            if(c.droptoken) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                            if(c.droptoken && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach((variable)=>{ 
                                 if(!variable) return;
                                 if(variable.searchFor && c.droptoken==variable.searchFor && variable.replaceWith) {                                                
                                     c.droptoken = variable.searchReplaceWith;
@@ -2720,8 +2721,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                 for(let i=0;i<exchangerFile.advancedflows.length;i++) {
                     let oldId = exchangerFile.advancedflows[i].id;
                     exchangerFile.advancedflows[i] = await Homey.flow.createAdvancedFlow({advancedflow:exchangerFile.advancedflows[i]});
-                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId]) {
-                        _.each(exchangerFile.flowsToReplace[oldId].types, type=> {
+                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId] && exchangerFile.flowsToReplace[oldId].types) {
+                        exchangerFile.flowsToReplace[oldId].types.forEach(type=> {
                             if(type.replaceWithId===oldId) type.replaceWith = {id:exchangerFile.advancedflows[i].id, name:exchangerFile.advancedflows[i].name};
                         });
                     }
@@ -2761,7 +2762,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     //const c.args[argKey] = c.args[argKey];
                                     switch (typeof(c.args[argKey])) {
                                         case "string":      
-                                            _.each(exchangerFile.variablesToReplace, (variable)=>{
+                                            if(exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{
                                                 if(!variable) return;
                                                 if(variable.searchFor) {
                                                     if(c.args[argKey] === variable.searchFor) 
@@ -2772,7 +2773,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             });
                                             break;
                                         case "object":      
-                                            if(c.args[argKey].id && c.id && c.id.startsWith('homey:manager:logic:')) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                            if(c.args[argKey].id && c.id && c.id.startsWith('homey:manager:logic:') && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{ 
                                                 if(!variable) return;
                                                 if(variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {                                                
                                                     c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
@@ -2783,7 +2784,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     }
                                 }
                             }
-                            if(c.droptoken) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                            if(c.droptoken && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{ 
                                 if(!variable) return;
                                 if(variable.searchFor && c.droptoken==variable.searchFor && variable.replaceWith) {                                                
                                     c.droptoken = variable.searchReplaceWith;

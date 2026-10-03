@@ -890,7 +890,7 @@ textarea.value {
 .main-view {
     /* height: calc(100% - 70px);
     position: fixed;*/
-    height: calc(100% - 70px);
+    height: calc(100% - 80px);
     /* padding-right: 10px; */
     width: 100%;
 

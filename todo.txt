@@ -11,6 +11,7 @@ ToDo:
 * Add oldValue to flowcard triggers (device.setListener).
 * Set AlbumArtImage toevoegen als flowcard.
 * Sorting of camera's
+* check all "button" if they are buttons or divs.
 
 
 Done:

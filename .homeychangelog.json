@@ -4063,5 +4063,20 @@
     "ru": "Улучшено: теперь поля можно упорядочивать/сортировать. Десятичные числа, шаги, минимальные и максимальные значения синхронизированы друг с другом. При изменении названия поля настройки не сбрасываются.",
     "ko": "개선 사항: 이제 필드를 정렬할 수 있습니다.  \n숫자의 소수점, 단계, 최소 및 최대값이 서로 동기화되었습니다.  \n필드 이름을 변경할 때 설정이 초기화되지 않습니다.",
     "ar": "محسن: يمكن الآن ترتيب/فرز الحقول.\nتمت مزامنة الأرقام العشرية، الخطوات، الحد الأدنى والحد الأقصى مع بعضها البعض.\nعند تغيير اسم الحقل، لا يتم إعادة تعيين الإعدادات."
+  },
+  "2.18.1": {
+    "en": "Bugfix: Removing a field1 would remove all field1* like, number10 and number11.\nAlso resolved a bug for importing TEF (Flows).",
+    "nl": "Bugfix: Het verwijderen van een veld1 zou alle veld1*-achtige, zoals nummer10 en nummer11, verwijderen. Ook een bug opgelost voor het importeren van TEF (Flows).",
+    "da": "Fejlrettelse: Fjernelse af et felt1 ville fjerne alle felt1* lignende, nummer10 og nummer11. Vi har også løst en fejl ved import af TEF (Flows).",
+    "de": "Fehlerbehebung: Das Entfernen eines Feld1 würde alle Feld1* wie, Nummer10 und Nummer11 entfernen. Außerdem wurde ein Fehler beim Importieren von TEF (Flows) behoben.",
+    "es": "Corrección de errores: Eliminar un campo1 eliminaba todos los campos similares a campo1*, como número10 y número11. También se resolvió un error al importar TEF (Flujos).",
+    "fr": "Correction de bug : La suppression d'un champ1 supprimait tous les champs similaires à champ1*, comme nombre10 et nombre11. Un bug lié à l'importation de TEF (Flows) a également été résolu.",
+    "it": "Correzione bug: Rimuovere un campo1 avrebbe rimosso tutti i campi simili a campo1*, come numero10 e numero11. Risolto anche un bug per l'importazione di TEF (Flussi).",
+    "no": "Feilretting: Å fjerne et felt1 ville fjerne alle felt1* som, nummer10 og nummer11. Løste også en feil ved import av TEF (Flows).",
+    "sv": "Buggfix: Att ta bort ett fält1 skulle ta bort alla fält1* som, nummer10 och nummer11. Vi har också löst en bugg vid import av TEF (Flöden).",
+    "pl": "Poprawka: Usunięcie pola1 powodowało usunięcie wszystkich podobnych do pola1, takich jak numer10 i numer11. Rozwiązano również problem z importowaniem TEF (Przepływy).",
+    "ru": "Исправление ошибки: удаление field1 приводило к удалению всех подобных field1*, таких как number10 и number11. Также решена проблема с импортом TEF (потоки).",
+    "ko": "버그 수정: field1을 제거하면 number10 및 number11과 같은 모든 field1*이 제거되는 문제를 해결했습니다. 또한 TEF(플로우) 가져오기와 관련된 버그도 해결했습니다.",
+    "ar": "إصلاح خطأ: إزالة field1 كان يؤدي إلى إزالة جميع الحقول المشابهة لـ field1* مثل number10 و number11. كما تم حل خطأ في استيراد TEF (التدفقات)."
   }
 }
