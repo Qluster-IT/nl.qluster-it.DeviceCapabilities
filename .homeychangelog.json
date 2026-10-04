@@ -4078,5 +4078,20 @@
     "ru": "Исправление ошибки: удаление field1 приводило к удалению всех подобных field1*, таких как number10 и number11. Также решена проблема с импортом TEF (потоки).",
     "ko": "버그 수정: field1을 제거하면 number10 및 number11과 같은 모든 field1*이 제거되는 문제를 해결했습니다. 또한 TEF(플로우) 가져오기와 관련된 버그도 해결했습니다.",
     "ar": "إصلاح خطأ: إزالة field1 كان يؤدي إلى إزالة جميع الحقول المشابهة لـ field1* مثل number10 و number11. كما تم حل خطأ في استيراد TEF (التدفقات)."
+  },
+  "2.18.2": {
+    "en": "Bugfix: Small AVD bug.",
+    "nl": "Bugfix: Kleine AVD-bug.",
+    "da": "Fejlrettelse: Lille AVD-fejl.",
+    "de": "Fehlerbehebung: Kleiner AVD-Fehler.",
+    "es": "Corrección de errores: Pequeño error en AVD.",
+    "fr": "Correction de bug : Petit bug AVD.",
+    "it": "Correzione: Piccolo bug AVD.",
+    "no": "Feilretting: Liten AVD-feil.",
+    "sv": "Buggfix: Litet AVD-fel.",
+    "pl": "Poprawka: Mały błąd AVD.",
+    "ru": "Исправление ошибки: небольшая ошибка AVD.",
+    "ko": "버그 수정: 작은 AVD 버그.",
+    "ar": "إصلاح خطأ: خطأ صغير في AVD."
   }
 }

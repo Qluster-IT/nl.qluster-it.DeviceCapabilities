@@ -1888,15 +1888,17 @@ ${vars.textSettings}
 			$scope.removeAllSettings = function (startName, i, removeNumberOf) {
 				console.log('removeAllSettings', startName, i);
 				removeAllSettings($scope.s, startName, i, removeNumberOf);
-				removeAllSettings($scope.sTemp, startName, i, removeNumberOf);
+				removeAllSettings($scope.sTemp, startName, i, removeNumberOf);				
 			}
 
 			function removeAllSettings(settings, startName, i, removeNumberOf) {
 				let name = capitalizeFirstLetter(startName);
 				startName = startName + i;
 				if (removeNumberOf && settings['numberOf' + name + 'Fields'] === i) settings['numberOf' + name + 'Fields']--;
-				for (const settingKey in settings) 
-					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) && isNaN(settingKey.substr(startName.length-1, 1))) delete settings[settingKey];			
+				for (const settingKey in settings) {
+					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) && isNaN(settingKey.substr(startName.length, 1))) delete settings[settingKey];
+					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) ) console.log(settingKey, startName, settingKey.substr(startName.length, 1), isNaN(settingKey.substr(startName.length, 1)));
+				}
 			}
 
 			$scope.toggleFavorite = function(template) {
@@ -2320,7 +2322,7 @@ ${vars.textSettings}
 					}
 					$scope.$apply(function () {
 						$scope.s = result.settings;
-						console.log(JSON.stringify($scope.s));
+						
 						$scope.customicons = result.customicons;
 						$scope.customiconsById = {};
 						for (let i = 0; i < $scope.customicons.icons.length; i++) {
