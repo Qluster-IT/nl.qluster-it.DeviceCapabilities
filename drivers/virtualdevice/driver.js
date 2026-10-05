@@ -112,9 +112,11 @@ module.exports = class AvdDriver extends Homey.Driver {
             }           
         });
         
-        //true || process.env.DEBUG === '1' || 
-        if(app.versionChanged) {
-            //await this.homey.settings.set('Version', app.manifest.version);
+        //if(app.versionChanged) {
+        let replaceAllIcons = false;
+        if(await this.homey.settings.get('updated_icons')!=='2.18.5') {
+            await this.homey.settings.set('updated_icons', '2.18.5');
+            //replaceAllIcons = true; // Dont use this ever!
         } else {
             try {             
                 this.defaultIcons =  await this.homey.settings.get('DefaultIcons');
@@ -127,7 +129,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         // let filesandfoldersApp = await app.readdir('/app');
 
         /// Get Compressed Icon File
-        if(true) {
+        if(false) {
             //Dont forget to add and remove the Icons to the App
             // and get it from: 
             let strCompressedFile = '';
@@ -182,10 +184,10 @@ module.exports = class AvdDriver extends Homey.Driver {
                 const icon = icons[i];
                 if(!icon) continue;
                 let path = icon.split('\r\n')[0];
-                const subpath = path.replace('./assets/icons/', '').split('/')[0];
-                path = path.replace('./assets/icons/', defaultPath);
-                if(!await app.exists(path)) {
-                    try {                        
+                const subpath = path.replace(this.homey.app.appPath+ 'icons/', '').split('/')[0];
+                path = path.replace(this.homey.app.appPath+ 'icons/', defaultPath);
+                if(!await app.exists(path) || replaceAllIcons) {
+                    try {
                         let unzipped = await this.unzip(icon.split('\r\n')[1]);
                         if(!(await app.exists(`${defaultPath}${subpath}/`))) await app.mkdir(`${defaultPath}${subpath}/`);
                         await app.writeFile(path, unzipped);
@@ -194,7 +196,6 @@ module.exports = class AvdDriver extends Homey.Driver {
                     }
                 }
             }
-
 
 
             this.defaultIcons = {};
@@ -861,8 +862,8 @@ module.exports = class AvdDriver extends Homey.Driver {
             {
                 title:'Devices',
                 icons:[
-                    {name:"device_1", file:'custom_1', defaultIcon:'Devices/device_capabilities', title:{en:"Device 1", nl:"Apparaat 1", de:""}},
-                    {name:"device_2", file:'custom_2', defaultIcon:'Devices/virtual_device', title:{en:"Device 2", nl:"Apparaat 2", de:""}},
+                    {name:"device_1", file:'custom_1', defaultIcon:'Devices/device_capabilities_new', title:{en:"Device 1", nl:"Apparaat 1", de:""}},
+                    {name:"device_2", file:'custom_2', defaultIcon:'Devices/avd', title:{en:"Device 2", nl:"Apparaat 2", de:""}},
                     {name:"device_3", file:'custom_3', defaultIcon:'Devices/circle', title:{en:"Device 3", nl:"Apparaat 3", de:""}},
                     {name:"device_4", file:'custom_4', defaultIcon:'Devices/curtain-half', title:{en:"Device 4", nl:"Apparaat 4", de:""}},
                     {name:"device_5", file:'custom_5', defaultIcon:'Devices/game', title:{en:"Device 5", nl:"Apparaat 5", de:""}},

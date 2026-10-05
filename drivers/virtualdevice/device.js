@@ -35,30 +35,7 @@ module.exports = class AvdDevice extends Homey.Device {
 			await this.setSettings({ "labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend") });
 		}
 
-
-
-		/*if (process.env.DEBUG === '1') {
-			if (this.getName() === 'Test AVD') {
-				if (this.hasCapability('devicecapabilities_2_dropdown')) await this.removeCapability('devicecapabilities_2_dropdown');
-				// if(!this.hasCapability('devicecapabilities_2_dropdown')) await this.addCapability('devicecapabilities_2_dropdown');
-				// await this.setCapabilityOptions('devicecapabilities_2_dropdown', {values:[
-				// 	{
-				// 	  "id":"1",
-				// 	  "title":"Test 1.1"
-				// 	},
-				// 	{
-				// 	  "id":"2",
-				// 	  "title":"Test 2.1"
-				// 	}
-				//   ], title : "Test title"
-				// });
-			}
-			//if(this.hasCapability('measure_Status.status.status1'))await this.removeCapability('measure_Status.status.status1');
-		}*/
-
-
 		let caps = this.getCapabilities();
-
 
 		this.Settings = await this.getStoreValue('Settings');
 		if (this.Settings && !this.Settings.cls) this.Settings.cls = 'other';

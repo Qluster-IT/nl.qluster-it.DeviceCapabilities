@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "2.18.3",
+  "version": "2.18.5",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#FC960B",
@@ -33355,9 +33355,9 @@
         "ar": "جهاز افتراضي متقدم"
       },
       "images": {
-        "xlarge": "drivers/virtualdevice/assets/images/xlarge.jpg",
-        "large": "drivers/virtualdevice/assets/images/large.jpg",
-        "small": "drivers/virtualdevice/assets/images/small.jpg"
+        "xlarge": "drivers/virtualdevice/assets/images/xlarge.png",
+        "large": "drivers/virtualdevice/assets/images/large.png",
+        "small": "drivers/virtualdevice/assets/images/small.png"
       },
       "class": "other",
       "capabilities": [
