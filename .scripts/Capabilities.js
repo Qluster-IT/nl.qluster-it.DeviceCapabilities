@@ -46,7 +46,7 @@ str += '"devicecapabilities_starttext": { \r\n' +
   '      "setable": false, \r\n' +
   '      "uiComponent": "sensor", \r\n' +
   '      "insights": false, \r\n' +
-  '      "icon": "/assets/virtual_device.svg", \r\n' +
+  '      "icon": "/drivers/virtualdevice/assets/icon.svg", \r\n' +
   '      "value": "Goto Device Settings" \r\n' +
   '    }, \r\n';
 

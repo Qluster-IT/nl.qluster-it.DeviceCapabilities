@@ -9118,7 +9118,7 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": false,
-      "icon": "/assets/virtual_device.svg",
+      "icon": "/drivers/virtualdevice/assets/icon.svg",
       "value": "Goto Device Settings"
     },
     "Text": {

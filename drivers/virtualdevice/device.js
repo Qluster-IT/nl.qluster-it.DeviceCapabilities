@@ -108,9 +108,9 @@ module.exports = class AvdDevice extends Homey.Device {
 					if (this.Settings['number' + i + 'Max'] === -1) this.Settings['number' + i + 'Max'] = undefined;
 				}
 				delete this.Settings.iconNames;
-				for(let settingName in this.Settings) {
-					if(settingName!='energyCumulative' && settingName.endsWith('EnergyCumulative')) {
-						if(this.Settings[settingName]===true) this.Settings['energyCumulative'] = true;
+				for (let settingName in this.Settings) {
+					if (settingName != 'energyCumulative' && settingName.endsWith('EnergyCumulative')) {
+						if (this.Settings[settingName] === true) this.Settings['energyCumulative'] = true;
 						delete this.Settings[settingName];
 					}
 				}
@@ -375,7 +375,7 @@ module.exports = class AvdDevice extends Homey.Device {
 										} break;
 										case 'any': value = !!_.find(values, val => val === true); break;
 										case 'all': value = _.every(values, val => val === true); break;
-										
+
 										case 'falseIfAny': value = !_.find(values, val => val === true); break;
 										case 'falseIfAll': value = !_.every(values, val => val === true); break;
 
@@ -569,7 +569,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					try {
 
 						if (!this.homey.app.devices) continue;
-						const device = await this.homey.app.getDevice({ id:deviceId, full: true });
+						const device = await this.homey.app.getDevice({ id: deviceId, full: true });
 						if (!device) continue;
 						for (const propertyId in this.homey.app.Reflections[reflect][deviceId]) {
 							const property = this.homey.app.Reflections[reflect][deviceId][propertyId];
@@ -623,13 +623,13 @@ module.exports = class AvdDevice extends Homey.Device {
 	}
 
 	async getOrderFields() {
-		if(!this.Settings) return null;
-		let result = {components:[]};
+		if (!this.Settings) return null;
+		let result = { components: [] };
 		let capabilities = {};
 		let api = await this.homey.app.refreshHomeyAPI();
 
 
-		
+
 		for (let iTypes = 0; iTypes < types.length; iTypes++) {
 			const type = types[iTypes];
 			const fieldCount = type == "status" ? 1 : this.Settings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0;
@@ -639,27 +639,27 @@ module.exports = class AvdDevice extends Homey.Device {
 				capabilities[cap] = type + i;
 			}
 		}
-		let device = await api.devices.getDevice({id:this.getId()});
+		let device = await api.devices.getDevice({ id: this.getId() });
 
-		
-		if(device.ui && device.ui.components)
+
+		if (device.ui && device.ui.components)
 			for (let i = 0; i < device.ui.components.length; i++) {
 				const component = device.ui.components[i];
-				if(component==='media') continue;
-				let resultComponent = result.components.find(x=>x.id===component.id);
-				if(!resultComponent) {
-					resultComponent = {id:component.id, capabilities:[]};
+				if (component.id === 'media') continue;
+				let resultComponent = result.components.find(x => x.id === component.id);
+				if (!resultComponent) {
+					resultComponent = { id: component.id, capabilities: [] };
 					result.components.push(resultComponent);
 				}
 				for (let iCaps = 0; iCaps < component.capabilities.length; iCaps++) {
-					const capability = component.capabilities[iCaps];					
-					let resultCapability = resultComponent.capabilities.find(x=>x.id===capability);
-					if(!resultCapability) {
-						resultCapability = {id:capability, fieldId:capabilities[capability], name:device.capabilitiesObj[capability].title };
+					const capability = component.capabilities[iCaps];
+					let resultCapability = resultComponent.capabilities.find(x => x.id === capability);
+					if (!resultCapability) {
+						resultCapability = { id: capability, fieldId: capabilities[capability], name: device.capabilitiesObj[capability].title };
 						resultComponent.capabilities.push(resultCapability);
 					}
-					
-				}				
+
+				}
 			}
 
 		return result;
@@ -667,14 +667,14 @@ module.exports = class AvdDevice extends Homey.Device {
 
 	async saveOrderFields(orderFields) {
 		let oldOrderFields = await this.getOrderFields();
-		if(!orderFields) return;
+		if (!orderFields) return;
 		let energy = this.getEnergy();
 		for (let iComponent = 0; iComponent < orderFields.components.length; iComponent++) {
 			const component = orderFields.components[iComponent];
 			let reset = false;
 			for (let iCapability = 0; iCapability < component.capabilities.length; iCapability++) {
 				const capability = component.capabilities[iCapability];
-				if(!reset && oldOrderFields.components[iComponent].capabilities[iCapability].id===capability.id) continue;
+				if (!reset && oldOrderFields.components[iComponent].capabilities[iCapability].id === capability.id) continue;
 				reset = true;
 				let capOptions = this.getCapabilityOptions(capability.id);
 				let capValue = this.getCapabilityValue(capability.id);
@@ -694,7 +694,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 			let cls = this.getClass();
 			let customLists = await this.homey.settings.get('custom_lists') || [];
-			
+
 			if (cls != settings.cls) {
 				try {
 					await this.setClass(settings.cls);
@@ -741,185 +741,182 @@ module.exports = class AvdDevice extends Homey.Device {
 			for (let iTypes = 0; iTypes < types.length; iTypes++) {
 				const type = types[iTypes];
 				const fieldCount = type == "status" ? 1 : Math.max(settings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0, oldSettings['numberOf' + this.capitalizeFirstLetter(type) + 'Fields'] || 0);
+				let fieldTypeCreated = false;
 
 				for (let i = 1; i <= fieldCount; i++) {
 					//if(type=="status" && i>1) continue;
 					try {
-						let oldCap = this.getStoreValue(type + i);
-						let oldValue;
-						let customListValues;
-						//let targetInsight;
-						if (oldCap) {
-							oldValue = this.getCapabilityValue(oldCap);
-							//targetInsight = _.find(apiDevice.insights, x => x.id == oldCap);
-
-						}
-
-						let icon = (settings[type + i + 'Icon'] || '').trim().length > 0 ? '-' + settings[type + i + 'Icon'] : '';
-						let disabled = settings[type + i + 'Disabled'] === true;
-						let checked = settings[type + i + 'Checked'] === true;
-
-						let pushbutton = false;
-						let isOnOff, hide, isOnOffButtonTab = false;
-
-						let sensor = false;
-
-						//let isStatus = type=="status";
-						let createSecondCap = (settings[type + i + 'CreateInsights'] === true || settings[type + i + 'CreateTag'] === true) && settings[type + i + 'SeparateCapabilities'] !== false;
-
-						let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
-						let capSet = false;
-						switch (type) {
-							case "text":
-								switch (settings[type + i + 'ShowAs']) {
-									case undefined:
-									case null:
-									case "":
-									case "sensor":
-										break;
-									default:
-										capSet = true;
-										break;
-								}
-								if (capSet) {
-									let caps = this.getCaps(type, i, settings, oldCap);
-									cap = caps.cap;
-									oldCap = caps.oldCap;
-								}
-								break;
-							case "number":
-								cap = (settings[type + i + 'CreateFlowCards'] !== true ? '' : 'measure_') + 'devicecapabilities_' + (settings[type + i + 'ShowAs'] === 'slider' ? 'slider_' : '') + type +
-									(settings[type + i + 'ShowAs'] !== 'slider' ? icon : '') + '.' + type + i;
-								switch (settings[type + i + 'ShowAs']) {
-									case undefined:
-									case null:
-									case "": break;
-									case "sensor": break;
-									case "slider": break;
-									// case "measure_sensor" :
-									// 	cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
-									// 	 break;
-									default:
-										capSet = true;
-										break;
-								}
-								if (capSet) {
-									let caps = this.getCaps(type, i, settings, oldCap);
-									cap = caps.cap;
-									oldCap = caps.oldCap;
-								}
-								break;
-							case "status":
-								if (createSecondCap) cap = 'devicecapabilities_number' + icon + '.' + type + i;
-								else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
-								break;
-							case "list":
-								switch (settings[type + i + 'ShowAs']) {
-									case undefined:
-									case null:
-									case "":
-									case "picker":
-									case "ternary":
-										cap = settings[type + i + 'PrefixedList'] && settings[type + i + 'PrefixedList'].length ? 
-											(settings[type + i + 'OnlyThroughFlows']===true  ? settings[type + i + 'PrefixedList'].replace('devicecapabilities_picker', 'devicecapabilities_picker_onlythroughflows') :  settings[type + i + 'PrefixedList'])
-											: (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
-										break;
-									case "customlist":
-										cap = (settings[type + i + 'OnlyThroughFlows']===true  ? 'devicecapabilities_custom_list_onlythroughflows' : 'devicecapabilities_custom_list') + '.' + type + i;
-										customListValues = customLists ? _.find(customLists, x=> x.name==settings[type + i + 'CustomList']) : null;
-										if(customListValues) customListValues = customListValues.values;
-										break;
-									default:
-										capSet = true;
-										break;
-								}
-								if (capSet) {
-									let caps = this.getCaps(type, i, settings, oldCap);
-									cap = caps.cap;
-									oldCap = caps.oldCap;
-								}
-								break;
-							case "boolean":
-								let isAlarm, quickAction;
-								switch (settings[type + i + 'ShowAs']) {
-									case undefined:
-									case null:
-									case "":
-									case "sensor": sensor = true; break;
-									case "alarm": isAlarm = true; break;
-									case "onoff": quickAction = true; break; // Is not in use anymore.
-									default:
-										capSet = true;
-										break;
-								}
-								cap = (isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + type + icon + '.' + type + i;
-								if (quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
-
-								if (capSet) {
-									let caps = this.getCaps(type, i, settings, oldCap);
-									cap = caps.cap;
-									oldCap = caps.oldCap;
-								}
-								break;
-							case "button":
-								switch (settings[type + i + 'ShowAs']) {
-									case undefined:
-									case null:
-									case "":
-									case "button": pushbutton = true; break;
-									case "onoff": isOnOff = true; break;
-									case "onoff_buttontab": isOnOffButtonTab = true; break;
-									case "indicatoronly": hide = true; break;
-									case "onoff_hide":
-									case "pushbutton_indicator":
-										isOnOff = true; hide = true; break;
-									default:
-										capSet = true;
-										break;
-								}
-								if (capSet) {
-									let caps = this.getCaps(type, i, settings, oldCap);
-									cap = caps.cap;
-									oldCap = caps.oldCap;
-								}
-								if (hide) { //always Button1
-									if (isOnOff) cap = "devicecapabilities_onoff_hide_button." + type + i;
-									else cap = "devicecapabilities_hide_button." + type + i;
-								}
-
-								if (!hide && !capSet) {
-									if (settings[type + i + 'CreateFlowCards'] === true && i === 1 && !isOnOffButtonTab) {
-										cap = (isOnOff ? 'onoff' : type) + (settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : '');
-									} else {
-										cap = ((isOnOff ? 'onoff_' : '') + (isOnOffButtonTab ? 'onoffbuttontab_' : '') + ("devicecapabilities" + (disabled ? "_disabled" : "") + "_button" + icon + "." + type + i));
-									}
-								}
-								//if (!oldCap && i===1) oldCap = 'button';
-
-								break;
-						}
-						if (oldCap) oldValue = this.getCapabilityValue(oldCap) || oldValue;
-						else if (type == "status") oldValue = 0;
-
-
-						if (oldCap && cap != oldCap && this.hasCapability(oldCap)) {
-							await this.removeCapability(oldCap);
-							//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id }); // Do i want this automatic, or after a restart?
-						}
-						//else targetInsight = null;
-
-
-
-
 						let name = settings[type + i + 'Name'];
-						if (!name || name.length <= 0) {
-							this.setStoreValue(type + i, null);
-							this.setStoreValue(cap, null);
-						}
-
+						let oldCap = this.getStoreValue(type + i);
+						let secondCap = type == 'status' ? ("measure_Status" + "." + type + i) : (this.capitalizeFirstLetter(type) + "." + type + i);
 						if (name && name.length > 0) {
+							let oldValue;
+							let customListValues;
+							//let targetInsight;
+							if (oldCap) {
+								oldValue = this.getCapabilityValue(oldCap);
+								//targetInsight = _.find(apiDevice.insights, x => x.id == oldCap);
 
-							let secondCap = type == 'status' ? ("measure_Status" + "." + type + i) : (this.capitalizeFirstLetter(type) + "." + type + i);
+							}
+
+							let icon = (settings[type + i + 'Icon'] || '').trim().length > 0 ? '-' + settings[type + i + 'Icon'] : '';
+							let disabled = settings[type + i + 'Disabled'] === true;
+							let checked = settings[type + i + 'Checked'] === true;
+
+							let pushbutton = false;
+							let isOnOff, hide, isOnOffButtonTab = false;
+
+							let sensor = false;
+
+							//let isStatus = type=="status";
+							let createSecondCap = (settings[type + i + 'CreateInsights'] === true || settings[type + i + 'CreateTag'] === true) && settings[type + i + 'SeparateCapabilities'] !== false;
+
+							let cap = 'devicecapabilities_' + type + icon + '.' + type + i;
+							let capSet = false;
+							switch (type) {
+								case "text":
+									switch (settings[type + i + 'ShowAs']) {
+										case undefined:
+										case null:
+										case "":
+										case "sensor":
+											break;
+										default:
+											capSet = true;
+											break;
+									}
+									if (capSet) {
+										let caps = this.getCaps(type, i, settings, oldCap);
+										cap = caps.cap;
+										oldCap = caps.oldCap;
+									}
+									break;
+								case "number":
+									cap = (settings[type + i + 'CreateFlowCards'] !== true ? '' : 'measure_') + 'devicecapabilities_' + (settings[type + i + 'ShowAs'] === 'slider' ? 'slider_' : '') + type +
+										(settings[type + i + 'ShowAs'] !== 'slider' ? icon : '') + '.' + type + i;
+									switch (settings[type + i + 'ShowAs']) {
+										case undefined:
+										case null:
+										case "": break;
+										case "sensor": break;
+										case "slider": break;
+										// case "measure_sensor" :
+										// 	cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
+										// 	 break;
+										default:
+											capSet = true;
+											break;
+									}
+									if (capSet) {
+										let caps = this.getCaps(type, i, settings, oldCap);
+										cap = caps.cap;
+										oldCap = caps.oldCap;
+									}
+									break;
+								case "status":
+									if (createSecondCap) cap = 'devicecapabilities_number' + icon + '.' + type + i;
+									else cap = 'measure_devicecapabilities_number' + icon + '.' + type + i;
+									break;
+								case "list":
+									switch (settings[type + i + 'ShowAs']) {
+										case undefined:
+										case null:
+										case "":
+										case "picker":
+										case "ternary":
+											cap = settings[type + i + 'PrefixedList'] && settings[type + i + 'PrefixedList'].length ?
+												(settings[type + i + 'OnlyThroughFlows'] === true ? settings[type + i + 'PrefixedList'].replace('devicecapabilities_picker', 'devicecapabilities_picker_onlythroughflows') : settings[type + i + 'PrefixedList'])
+												: (settings[type + i + 'ShowAs'] == 'ternary' ? 'devicecapabilities_ternary-up-idle-down_list' : 'devicecapabilities_picker-up-idle-down_list');
+											break;
+										case "customlist":
+											cap = (settings[type + i + 'OnlyThroughFlows'] === true ? 'devicecapabilities_custom_list_onlythroughflows' : 'devicecapabilities_custom_list') + '.' + type + i;
+											customListValues = customLists ? _.find(customLists, x => x.name == settings[type + i + 'CustomList']) : null;
+											if (customListValues) customListValues = customListValues.values;
+											break;
+										default:
+											capSet = true;
+											break;
+									}
+									if (capSet) {
+										let caps = this.getCaps(type, i, settings, oldCap);
+										cap = caps.cap;
+										oldCap = caps.oldCap;
+									}
+									break;
+								case "boolean":
+									let isAlarm, quickAction;
+									switch (settings[type + i + 'ShowAs']) {
+										case undefined:
+										case null:
+										case "":
+										case "sensor": sensor = true; break;
+										case "alarm": isAlarm = true; break;
+										case "onoff": quickAction = true; break; // Is not in use anymore.
+										default:
+											capSet = true;
+											break;
+									}
+									cap = (isAlarm ? 'alarm_' : '') + 'devicecapabilities_' + type + icon + '.' + type + i;
+									if (quickAction) cap = "onoffbuttontab_devicecapabilities_button" + icon + '.' + type + i;
+
+									if (capSet) {
+										let caps = this.getCaps(type, i, settings, oldCap);
+										cap = caps.cap;
+										oldCap = caps.oldCap;
+									}
+									break;
+								case "button":
+									switch (settings[type + i + 'ShowAs']) {
+										case undefined:
+										case null:
+										case "":
+										case "button": pushbutton = true; break;
+										case "onoff": isOnOff = true; break;
+										case "onoff_buttontab": isOnOffButtonTab = true; break;
+										case "indicatoronly": hide = true; break;
+										case "onoff_hide":
+										case "pushbutton_indicator":
+											isOnOff = true; hide = true; break;
+										default:
+											capSet = true;
+											break;
+									}
+									if (capSet) {
+										let caps = this.getCaps(type, i, settings, oldCap);
+										cap = caps.cap;
+										oldCap = caps.oldCap;
+									}
+									if (hide) { //always Button1
+										if (isOnOff) cap = "devicecapabilities_onoff_hide_button." + type + i;
+										else cap = "devicecapabilities_hide_button." + type + i;
+									}
+
+									if (!hide && !capSet) {
+										if (settings[type + i + 'CreateFlowCards'] === true && i === 1 && !isOnOffButtonTab) {
+											cap = (isOnOff ? 'onoff' : type) + (settings[type + i + 'CreateFlowCards'] !== true ? "." + type + i : '');
+										} else {
+											cap = ((isOnOff ? 'onoff_' : '') + (isOnOffButtonTab ? 'onoffbuttontab_' : '') + ("devicecapabilities" + (disabled ? "_disabled" : "") + "_button" + icon + "." + type + i));
+										}
+									}
+									//if (!oldCap && i===1) oldCap = 'button';
+
+									break;
+							}
+							if (oldCap) oldValue = this.getCapabilityValue(oldCap) || oldValue;
+							else if (type == "status") oldValue = 0;
+
+
+							if (oldCap && cap != oldCap && this.hasCapability(oldCap)) {
+								await this.removeCapability(oldCap);
+								//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id }); // Do i want this automatic, or after a restart?
+							}
+							//else targetInsight = null;
+
+
+
+
+
+							fieldTypeCreated = true;
 
 							if ((type == "button" || (type == "boolean" && cap.indexOf('_button') > -1)) && button1Reset) {
 								if (this.hasCapability(cap)) await this.removeCapability(cap);
@@ -987,7 +984,7 @@ module.exports = class AvdDevice extends Homey.Device {
 								disableZoneActivity != oldSettings[type + i + 'DisableZoneActivity'] ||
 								(opt.insightsTitleTrue != settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue'] && settings[type + i + 'InsightsTitleTrue'] != '') ||
 								(opt.insightsTitleFalse != settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse'] && settings[type + i + 'InsightsTitleFalse'] != '') ||
-								customListValuesJson!=values ||
+								customListValuesJson != values ||
 								(decimals != oldSettings[type + i + 'Decimals']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  ||
 								(min != oldSettings[type + i + 'Min']) || //&& decimals!==-1 && !oldSettings[type + i + 'Decimals'])  || && min!==-1 && !oldSettings[type + i + 'Min'])  ||
 								(max != oldSettings[type + i + 'Max']) ||
@@ -995,7 +992,7 @@ module.exports = class AvdDevice extends Homey.Device {
 							//|| opt.uiQuickAction != settings[type + i + 'UiQuickAction']
 							//|| (type == 'button' && disabled && !pushbutton && opt.value!=checked );
 							if (capOptionsChanged) {
-								let optionValues = { type, i, settings, decimals, min, max, name, step, disableZoneActivity, values:customListValues };
+								let optionValues = { type, i, settings, decimals, min, max, name, step, disableZoneActivity, values: customListValues };
 								if (type == "status") optionValues.units = opt.units || name;
 								let optNew = this.getOptions(optionValues);
 								if (settings[type + i + 'SeparateCapabilities'] !== true) {
@@ -1050,13 +1047,19 @@ module.exports = class AvdDevice extends Homey.Device {
 
 							if (settings[type + i + 'EnergyCumulativeImported']) energyCumulativeImported = createSecondCap ? secondCap : cap;
 							if (settings[type + i + 'EnergyCumulativeExported']) energyCumulativeExported = createSecondCap ? secondCap : cap;
-							
+
 							if (type == 'button' && disabled && !pushbutton) {
 								await this.setCapabilityValue(cap, checked);
 							}
 
-						} else if (this.hasCapability(cap))
-							await this.removeCapability(cap);
+						} else {
+							this.setStoreValue(type + i, null);
+							if(oldCap) {
+								this.setStoreValue(oldCap, null);
+								if (this.hasCapability(oldCap)) await this.removeCapability(oldCap);
+							}
+							if (this.hasCapability(secondCap)) await this.removeCapability(secondCap);
+						}
 					}
 					catch (err) {
 						this.error(err);
@@ -1069,16 +1072,16 @@ module.exports = class AvdDevice extends Homey.Device {
 			let energy = await this.getEnergy();
 
 			if (!energy || energyCumulative != energy.cumulative
-				|| energyCumulativeImported!=energy.cumulativeImportedCapability
-				|| energyCumulativeExported!=energy.cumulativeExportedCapability
+				|| energyCumulativeImported != energy.cumulativeImportedCapability
+				|| energyCumulativeExported != energy.cumulativeExportedCapability
 			) {
 				// if (!energy) energy = { cumulative: energyCumulative };
 				// else energy.cumulative = energyCumulative;
 				// if (!energyCumulative) energy = {};
-				energy = { };//cumulative: energyCumulative };
-				if(energyCumulative) energy.cumulative = energyCumulative;
-				if(energyCumulativeImported) energy.cumulativeImportedCapability = energyCumulativeImported;
-				if(energyCumulativeExported) energy.cumulativeExportedCapability = energyCumulativeExported;
+				energy = {};//cumulative: energyCumulative };
+				if (energyCumulative) energy.cumulative = energyCumulative;
+				if (energyCumulativeImported) energy.cumulativeImportedCapability = energyCumulativeImported;
+				if (energyCumulativeExported) energy.cumulativeExportedCapability = energyCumulativeExported;
 
 				//if (!energyCumulative) energy = {};
 				// energy = {
@@ -1097,7 +1100,7 @@ module.exports = class AvdDevice extends Homey.Device {
 			// } 
 
 			await this.setCameras(settings);
-			
+
 			if (settings.imported) delete settings.imported;
 			if (settings.flows) delete settings.flows;
 			if (settings.advancedflows) delete settings.advancedflows;
@@ -1106,7 +1109,7 @@ module.exports = class AvdDevice extends Homey.Device {
 			await this.setStoreValue('Settings', settings);
 
 
-			
+
 			//if(command=="") command = null;
 			this.Settings = settings;
 

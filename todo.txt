@@ -12,6 +12,8 @@ ToDo:
 * Set AlbumArtImage toevoegen als flowcard.
 * Sorting of camera's
 * check all "button" if they are buttons or divs.
+* New image.
+* Deprecate Set Expression and Functions.
 
 Done:
 * When changing a fieldname, don't reset all fieldsettings while typing.
@@ -21,3 +23,7 @@ Done:
 * Numbers decimals and steps fixen, min and max also.
 * Saving AVD only when the AVD has changed.
 * Sorting of fields.
+
+
+* Removed media from sorting.
+* Remove second capability when removing a field.
