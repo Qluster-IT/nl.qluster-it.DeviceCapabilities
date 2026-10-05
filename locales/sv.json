@@ -136,9 +136,10 @@
     "showAsBooleanHint": "Välj hur Ja/Nej ska visas.",
     "showAsButtonHint": "Välj hur knappen ska visas.",
     "showAsListHint": "Välj hur listan ska visas.",
-    "createFlowCards": "Skapa Riktigt fält och Flödeskort",
+    "createFlowCards": "Skapa riktiga fält och standardflödeskort",
     "createFlowCardsHint": "När det är valt kommer detta fält vara som den riktiga Visa som typen och Standard Flödeskort kommer att finnas tillgängliga för detta fält.",
-    "createFlowCardsStatusIndication": "* Tillåter också att väljas som Statusindikator",
+    "createFlowCardsOnly": "Skapa standardflödeskort",
+    "createFlowCardsOnlyHint": "När det är valt kommer standardflödeskort att vara tillgängliga för detta fält.",
     "units": "Enheter",
     "unitsHint": "Enheterna som ska användas för numret. Om du behöver Fahrenheit, ange °C och det kommer att översättas till Fahrenheit.",
     "hintEmptyDefault": "\r\nOm det lämnas tomt kommer det att sättas till standard.",
@@ -217,7 +218,11 @@
     "reactHint": "Automatiskt sätta enhetens egenskaper när detta fält ändras.",
     "customList": "Anpassad lista",
     "customListAppSettings": "Gå till appinställningarna för att skapa egna anpassade listor.",
-    "device_class": "Enhetsklass"
+    "device_class": "Enhetsklass",
+    "openOrderFields":"Sortera fält",
+    "titleOrderFields":"Sortera fält",
+    "labelOrderFields":"Du kan ändra ordningen på fälten som visas på enheten (när fälten har sparats).",
+    "savingOrderFields":"Sparar ordningen på fälten. Detta kan ta en stund."
   },
   "pair": {
     "list_icons": {

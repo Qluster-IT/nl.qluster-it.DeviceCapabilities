@@ -138,7 +138,8 @@
     "showAsListHint": "Vælg hvordan listen skal vises.",
     "createFlowCards": "Opret Reelt Felt og Flowcards",
     "createFlowCardsHint": "Når valgt, vil dette felt være som den reelle Vis-som-type og Standard Flowcards vil være tilgængelige for dette felt.",
-    "createFlowCardsStatusIndication": "* Tillader også at blive valgt som Status Indikator",
+    "createFlowCardsOnly": "Opret standard flowkort",
+    "createFlowCardsOnlyHint": "Når valgt, vil standard flowkort være tilgængelige for dette felt.",
     "units": "Enheder",
     "unitsHint": "De enheder, der skal bruges til nummeret. Hvis du har brug for Fahrenheit, indtast °C, og det vil blive oversat til Fahrenheit.",
     "hintEmptyDefault": "\r\nNår det er tomt, indstilles til standard.",
@@ -217,7 +218,11 @@
     "reactHint": "Automatisk indstil enhedens egenskaber, når dette felt ændres.",
     "customList": "Brugerdefineret liste",
     "customListAppSettings": "Gå til app-indstillingerne for at oprette dine egne brugerdefinerede lister.",
-    "device_class": "Enhedsklasse"
+    "device_class": "Enhedsklasse",
+    "openOrderFields":"Sortér felter",
+    "titleOrderFields":"Sortér felter",
+    "labelOrderFields":"Du kan ændre rækkefølgen, som felterne vises i på enheden (når felterne er gemt).",
+    "savingOrderFields":"Gemmer rækkefølgen af felterne. Dette kan tage et øjeblik."
   },
   "pair": {
     "list_icons": {

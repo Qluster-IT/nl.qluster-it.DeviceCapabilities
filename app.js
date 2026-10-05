@@ -1571,10 +1571,9 @@ class DeviceCapabilities extends Homey.App {
 				const capability = device.capabilities[keys[i]];
 				if (!capability.listener) {
 					try {
-
 						capability.listener = device.device.makeCapabilityInstance(capability.id, async function (value) {
 							//if(trigger==hm.Triggers.triggercapabilitychanged)  // Only ever this one
-							trigger.Card.trigger({ "value": value.toString ? value.toString() : value }, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
+							trigger.Card.trigger({ "value": value && value.toString ? value.toString() : value || '' }, { device: { id: device.id }, capability: { id: capability.id } }, function () { });
 						});
 					} catch (error) {
 						this.error("capability: " + capability.id + ', ' + (error.message || error));
@@ -1967,7 +1966,7 @@ class DeviceCapabilities extends Homey.App {
 			//var defer = new Defer(10000);
 			let api = await this.refreshHomeyAPI();
 			let apps = this.apps;
-			let list = _.filter(apps, app => _.every(queries, q => app.name.toLowerCase().indexOf(q) > -1));
+			let list = _.filter(apps, app => app.name && _.every(queries, q => app.name.toLowerCase().indexOf(q) > -1));
 			list = _.orderBy(list, 'name');
 			let array = _.map(list, app => { return { id: app.id, name: app.name }; });
 			//if(any) array.unshift({id:'[[any]]', name:'Any'});

@@ -1,0 +1,32 @@
+ToDo:
+* setInterval and setTimeout to homey.setInterval and homey.setTimeout. and clearInterval and clearTimeout.
+* Show/Hide flowcards if certain fields do not exist on a AVD.
+* Check all CreateFlowCards for custom capabilities (measure_, alarm_, etc).
+* Add all Energy options.
+* Make lists exportable/TEF.
+* Replace Reflection devices during AVD import.
+* Text for button 1, when changed, will reset the buttons ordering.
+* Naming/languages for customicons. (at least in the driver and other places).
+* Camera allow for video.
+* Add oldValue to flowcard triggers (device.setListener).
+* Set AlbumArtImage toevoegen als flowcard.
+* Sorting of camera's
+* check all "button" if they are buttons or divs.
+* New image.
+* Deprecate Set Expression and Functions.
+* Update secondcap name on setFieldName
+* On importing a AVD-TEF, with custom icons: Make you can select which customicon should be replaced.
+* Reflection BLL (and chronograph?) set React.
+
+Done:
+* When changing a fieldname, don't reset all fieldsettings while typing.
+* ng-else _delete properties, do not set to undefined.
+* Remove "Maakt het ook mogelijk om te..."
+* Create real field and standard flowcards or Create standard flowcards.
+* Numbers decimals and steps fixen, min and max also.
+* Saving AVD only when the AVD has changed.
+* Sorting of fields.
+
+
+* Removed media from sorting.
+* Remove second capability when removing a field.

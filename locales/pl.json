@@ -136,9 +136,10 @@
     "showAsBooleanHint": "Wybierz, jak Tak/Nie ma być wyświetlane.",
     "showAsButtonHint": "Wybierz, jak przycisk ma być wyświetlany.",
     "showAsListHint": "Wybierz, jak lista ma być wyświetlana.",
-    "createFlowCards": "Utwórz rzeczywiste pole i karty przepływu",
+    "createFlowCards": "Utwórz rzeczywiste pole i domyślne karty przepływu",
     "createFlowCardsHint": "Gdy wybrane, to pole będzie jak rzeczywisty typ Pokazywania jako, a domyślne karty przepływu będą dostępne dla tego pola.",
-    "createFlowCardsStatusIndication": "* Umożliwia również wybranie jako Wskaźnik Stanu",
+    "createFlowCardsOnly": "Utwórz domyślne karty przepływu",
+    "createFlowCardsOnlyHint": "Po wybraniu, domyślne karty przepływu będą dostępne dla tego pola.",
     "units": "Jednostki",
     "unitsHint": "Jednostki do użycia dla liczby. Jeśli potrzebujesz Fahrenheita, wprowadź °C, a zostanie on przetłumaczony na Fahrenheita.",
     "hintEmptyDefault": "\r\nGdy pozostawione puste, zostanie ustawione na domyślną.",
@@ -217,7 +218,11 @@
     "reactHint": "Automatycznie ustaw właściwości urządzenia, gdy to pole zostanie zmienione.",
     "customList": "Niestandardowa lista",
     "customListAppSettings": "Przejdź do ustawień aplikacji, aby utworzyć własne niestandardowe listy.",
-    "device_class": "Klasa urządzenia"
+    "device_class": "Klasa urządzenia",
+    "openOrderFields":"Sortuj pola",
+    "titleOrderFields":"Sortuj pola",
+    "labelOrderFields":"Możesz zmienić kolejność, w jakiej pola pojawiają się na urządzeniu (po zapisaniu pól).",
+    "savingOrderFields":"Zapisywanie kolejności pól. To może chwilę potrwać."
   },
   "pair": {
     "list_icons": {

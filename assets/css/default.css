@@ -491,6 +491,9 @@ input {
 
 
 
+.cursor {
+    cursor:pointer;
+}
 
 #customicons {
     list-style: none;
@@ -887,8 +890,8 @@ textarea.value {
 .main-view {
     /* height: calc(100% - 70px);
     position: fixed;*/
-
-    padding-right: 10px;
+    height: calc(100% - 80px);
+    /* padding-right: 10px; */
     width: 100%;
 
 }
@@ -903,7 +906,7 @@ textarea.value {
     /* height: calc(100% - 38px);
     margin-top: 0px; */
     height: calc(100% - 80px);
-    top: 40px;
+    /* //top: 40px; */
 }
 
 .setting-group {

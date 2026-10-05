@@ -138,7 +138,8 @@
     "showAsListHint": "Seleziona come deve essere mostrato l'elenco.",
     "createFlowCards": "Crea Campo reale e Flowcard",
     "createFlowCardsHint": "Quando selezionato, questo campo sarà come il tipo di Mostra Come reale e verranno resi disponibili i Flowcard predefiniti per questo campo.",
-    "createFlowCardsStatusIndication": "* Permette anche di essere selezionato come Indicatore di Stato",
+    "createFlowCardsOnly": "Crea Flowcard Predefiniti",
+    "createFlowCardsOnlyHint": "Quando selezionato, le Flowcard predefinite saranno disponibili per questo campo.",
     "units": "Unità",
     "unitsHint": "Le Unità da usare per il numero. Se hai bisogno di Fahrenheit, inserisci °C e verrà tradotto in Fahrenheit.",
     "hintEmptyDefault": "\r\nQuando lasciato vuoto, verrà impostato su predefinito.",
@@ -217,7 +218,11 @@
     "reactHint": "Imposta automaticamente le proprietà del dispositivo quando questo campo viene modificato.",
     "customList": "Lista personalizzata",
     "customListAppSettings": "Vai alle impostazioni dell'app per creare le tue liste personalizzate.",
-    "device_class": "Classe del dispositivo"
+    "device_class": "Classe del dispositivo",
+    "openOrderFields":"Ordina campi",
+    "titleOrderFields":"Ordina campi",
+    "labelOrderFields":"Puoi cambiare l'ordine in cui i campi appaiono sul dispositivo (una volta che i campi sono stati salvati).",
+    "savingOrderFields":"Salvataggio dell'ordine dei campi. Potrebbe volerci un momento."
   },
   "pair": {
     "list_icons": {

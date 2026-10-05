@@ -4,8 +4,7 @@
 
 --cannot-be-done-this-way-userdata/*
 manager/*
-assets/not-used/*
-assets/icons/*
+icons/*
 
 todo.js
 bugs.txt

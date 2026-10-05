@@ -112,9 +112,11 @@ module.exports = class AvdDriver extends Homey.Driver {
             }           
         });
         
-        //true || process.env.DEBUG === '1' || 
-        if(app.versionChanged) {
-            //await this.homey.settings.set('Version', app.manifest.version);
+        //if(app.versionChanged) {
+        let replaceAllIcons = false;
+        if(await this.homey.settings.get('updated_icons')!=='3.0.0') {
+            await this.homey.settings.set('updated_icons', '3.0.0');
+            //replaceAllIcons = true; // Dont use this ever!
         } else {
             try {             
                 this.defaultIcons =  await this.homey.settings.get('DefaultIcons');
@@ -164,8 +166,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         //this.log('this.defaultIcons', this.defaultIcons);
         if(!this.defaultIcons ) {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
-        //let filesandfolders1 = await app.readdir(defaultPath);
-    
+        
             //save all files from compressed icon files first
             let zippedIcons;
             try {
@@ -183,10 +184,10 @@ module.exports = class AvdDriver extends Homey.Driver {
                 const icon = icons[i];
                 if(!icon) continue;
                 let path = icon.split('\r\n')[0];
-                const subpath = path.replace('./assets/icons/', '').split('/')[0];
-                path = path.replace('./assets/icons/', defaultPath);
-                if(!await app.exists(path)) {
-                    try {                        
+                const subpath = path.replace(this.homey.app.appPath+ 'icons/', '').split('/')[0];
+                path = path.replace(this.homey.app.appPath+ 'icons/', defaultPath);
+                if(!await app.exists(path) || replaceAllIcons) {
+                    try {
                         let unzipped = await this.unzip(icon.split('\r\n')[1]);
                         if(!(await app.exists(`${defaultPath}${subpath}/`))) await app.mkdir(`${defaultPath}${subpath}/`);
                         await app.writeFile(path, unzipped);
@@ -195,7 +196,6 @@ module.exports = class AvdDriver extends Homey.Driver {
                     }
                 }
             }
-
 
 
             this.defaultIcons = {};
@@ -273,7 +273,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 
 
         
-        let action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
+        let action_virtualdevice_sets = ['virtualdevice_set_text', 'virtualdevice_set_number', 'virtualdevice_set_boolean', 'virtualdevice_set_button', 'virtualdevice_set_list', 'virtualdevice_set_list_tag', 'virtualdevice_set_status', 'virtualdevice_set_status_optionalnumber'];
         action_virtualdevice_sets.forEach((action => {
 			let set_value = this.homey.flow.getActionCard(action);
 			set_value
@@ -325,6 +325,11 @@ module.exports = class AvdDriver extends Homey.Driver {
                                         break;                                        
                                     case 'virtualdevice_set_list':
                                         if(args.value!==undefined && args.value!=='undefined') value = args.value?args.value.id:'';
+                                        else value = null;
+                                        triggerCard = this.triggerFlowList;
+                                        break;                                     
+                                    case 'virtualdevice_set_list_tag':
+                                        if(args.value!==undefined && args.value!=='undefined') value = args.value;
                                         else value = null;
                                         triggerCard = this.triggerFlowList;
                                         break;
@@ -394,7 +399,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                         throw new Error(error);
 					}
 				}).bind(this));
-                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button') || action.endsWith('_list')) 
+                if(action.endsWith('_text') || action.endsWith('_number') || action.endsWith('_boolean') || action.endsWith('_button') || action.endsWith('_list') || action.endsWith('_list_tag')) 
                     set_value.getArgument('field').registerAutocompleteListener(this.registerAutocompleteField(action, true));
                 if(action.endsWith('_list')) 
                     set_value.getArgument('value').registerAutocompleteListener(this.registerAutocompleteListValue(action));
@@ -619,11 +624,12 @@ module.exports = class AvdDriver extends Homey.Driver {
         return string;
     }
     async getTefTemplatesFromPostsByIdAndTopic({postId, topicId, topicUrl, type}) {
-        try {                
+        try {         
+            console.log(`${topicUrl}/${topicId}/${postId}`);
             let topicHtml = await this.httpsGet({url:`${topicUrl}/${topicId}/${postId}`});
             if(topicHtml) {
 
-                let preloaderString = topicHtml.matchAll(/<div class="hidden" id="data-preloaded" data-preloaded="(.*?)"/gmsi);
+                let preloaderString = topicHtml.matchAll(/<script type="application\/json" id="data-preloaded">(.*?)<\/script>/gmsi);
                 let preloaderFound = preloaderString? [...preloaderString] : [];
                 let preloader;                
                 let templates = [];
@@ -688,15 +694,17 @@ module.exports = class AvdDriver extends Homey.Driver {
                 //if(templates.length) return {templates, postsFound};
 
                 //let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='articleBody'>(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
-                let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='text'>(.*?)<meta itemprop=(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                let posts = topicHtml.matchAll(/(?:<div\sid='post_.{1,4}'){1}(?:.*?)<span itemprop="position">(\d+).*?<meta itemprop='upvoteCount' content='([0-9]*)'>\s?/gmsi);
+                //let posts = topicHtml.matchAll(/(?:<div\sid='post_.{1,4}'){1}(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>(?:#)?([\d]*)<\/span>.*?<div class='post' itemprop='text'>(.*?)<meta itemprop=(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
+                //this.log(topicHtml);
                 //Crashes - Above
                 //let posts = topicHtml.matchAll(/(?:<div\sid=\'post_.{1,4}\')(.*?)<meta itemprop='headline'(?:.*?)(?:post-likes'>)([0-9]*)(\s)?/gmsi);
 
                 let matchesFound = posts? [...posts] : [];
                 postsFound = postsFound===undefined ? matchesFound.length : postsFound;
                 for (let i = 0; i < matchesFound.length; i++) {
-                    const postNumber = Number.parseInt(matchesFound[i][3]);
-                    const likes = matchesFound[i][2] ? Number.parseInt(matchesFound[i][2]) : 0;
+                    const postNumber = Number.parseInt(matchesFound[i][2]);
+                    const likes = matchesFound[i][1] ? Number.parseInt(matchesFound[i][1]) : 0;
                     
                     // const matchText = matchesFound[i][1];                    
                     // let postsData = matchText.matchAll(/(?:.*?)(?:itemtype="http:\/\/schema\.org\/Person")(?:.*?)(?:href='(.*?)\')(?:.*?)(?:itemprop='name'>)(.*?)(?:<\/)(?:.*?)<span itemprop='position'>([\d]*)/gmsi);
@@ -854,8 +862,8 @@ module.exports = class AvdDriver extends Homey.Driver {
             {
                 title:'Devices',
                 icons:[
-                    {name:"device_1", file:'custom_1', defaultIcon:'Devices/device_capabilities', title:{en:"Device 1", nl:"Apparaat 1", de:""}},
-                    {name:"device_2", file:'custom_2', defaultIcon:'Devices/virtual_device', title:{en:"Device 2", nl:"Apparaat 2", de:""}},
+                    {name:"device_1", file:'custom_1', defaultIcon:'Devices/device_capabilities_new', title:{en:"Device 1", nl:"Apparaat 1", de:""}},
+                    {name:"device_2", file:'custom_2', defaultIcon:'Devices/avd', title:{en:"Device 2", nl:"Apparaat 2", de:""}},
                     {name:"device_3", file:'custom_3', defaultIcon:'Devices/circle', title:{en:"Device 3", nl:"Apparaat 3", de:""}},
                     {name:"device_4", file:'custom_4', defaultIcon:'Devices/curtain-half', title:{en:"Device 4", nl:"Apparaat 4", de:""}},
                     {name:"device_5", file:'custom_5', defaultIcon:'Devices/game', title:{en:"Device 5", nl:"Apparaat 5", de:""}},
@@ -1235,7 +1243,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         }
     }
 
-
+    //Old version pre API3.
     async getAdvancedFlowsJSON({ homey,   advancedflowsselected, dev, device, copyWithFlows=true }) {
         if(this.getAPIV3()) return await this.getAdvancedFlowsJSONv3(arguments[0]);
 
@@ -1690,6 +1698,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         return (this.apiV3 = this.homey.version.split('.')[0] >= 10);
     }
 
+    // Old version pre API 3.
     async readAdvancedFlowsJSON({ homey,  exchangerFile, device }) { 
         if(this.getAPIV3()) return await this.readAdvancedFlowsJSONv3(arguments[0]);    
         try {
@@ -1963,7 +1972,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                 _.each(flow.cards, (card, cardKey)=>{
                     if(!card.id) return;
                     if(this.getAPIV3()) {
-                        if(!card.id.startsWith(card.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
+                        if(card.ownerUri && !card.id.startsWith(card.ownerUri+':')) card.id = card.ownerUri + ':' + card.id;
                     } else {
                         if(card.id.startsWith(card.ownerUri+':')) card.id = card.id.substring((card.ownerUri+':').length);
                     }
@@ -2406,8 +2415,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                 for(let i=0;i<exchangerFile.advancedflows.length;i++) {
                     let oldId = exchangerFile.advancedflows[i].id;
                     exchangerFile.advancedflows[i] = await Homey.flow.createAdvancedFlow({advancedflow:exchangerFile.advancedflows[i]});
-                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId]) {
-                        _.each(exchangerFile.flowsToReplace[oldId].types, type=> {
+                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId] && exchangerFile.flowsToReplace[oldId].types) {
+                        exchangerFile.flowsToReplace[oldId].types.forEach( type=> {
                             if(type.replaceWithId===oldId) type.replaceWith = {id:exchangerFile.advancedflows[i].id, name:exchangerFile.advancedflows[i].name};
                         });
                     }
@@ -2447,7 +2456,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     //const c.args[argKey] = c.args[argKey];
                                     switch (typeof(c.args[argKey])) {
                                         case "string":      
-                                            _.each(exchangerFile.variablesToReplace, (variable)=>{
+                                            if(exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach((variable)=>{
                                                 if(!variable) return;
                                                 if(variable.searchFor) {
                                                     if(c.args[argKey] === variable.searchFor) 
@@ -2458,7 +2467,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             });
                                             break;
                                         case "object":      
-                                            if(c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                            if(exchangerFile.variablesToReplace && c.args[argKey].id && c.ownerUri && c.ownerUri=='homey:manager:logic') exchangerFile.variablesToReplace.forEach((variable)=>{ 
                                                 if(!variable) return;
                                                 if(variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {                                                
                                                     c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
@@ -2469,7 +2478,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     }
                                 }
                             }
-                            if(c.droptoken) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                            if(c.droptoken && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach((variable)=>{ 
                                 if(!variable) return;
                                 if(variable.searchFor && c.droptoken==variable.searchFor && variable.replaceWith) {                                                
                                     c.droptoken = variable.searchReplaceWith;
@@ -2712,8 +2721,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                 for(let i=0;i<exchangerFile.advancedflows.length;i++) {
                     let oldId = exchangerFile.advancedflows[i].id;
                     exchangerFile.advancedflows[i] = await Homey.flow.createAdvancedFlow({advancedflow:exchangerFile.advancedflows[i]});
-                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId]) {
-                        _.each(exchangerFile.flowsToReplace[oldId].types, type=> {
+                    if(exchangerFile.flowsToReplace && exchangerFile.flowsToReplace[oldId] && exchangerFile.flowsToReplace[oldId].types) {
+                        exchangerFile.flowsToReplace[oldId].types.forEach(type=> {
                             if(type.replaceWithId===oldId) type.replaceWith = {id:exchangerFile.advancedflows[i].id, name:exchangerFile.advancedflows[i].name};
                         });
                     }
@@ -2753,7 +2762,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     //const c.args[argKey] = c.args[argKey];
                                     switch (typeof(c.args[argKey])) {
                                         case "string":      
-                                            _.each(exchangerFile.variablesToReplace, (variable)=>{
+                                            if(exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{
                                                 if(!variable) return;
                                                 if(variable.searchFor) {
                                                     if(c.args[argKey] === variable.searchFor) 
@@ -2764,7 +2773,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             });
                                             break;
                                         case "object":      
-                                            if(c.args[argKey].id && c.id && c.id.startsWith('homey:manager:logic:')) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                                            if(c.args[argKey].id && c.id && c.id.startsWith('homey:manager:logic:') && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{ 
                                                 if(!variable) return;
                                                 if(variable.searchFor && c.args[argKey].id==variable.id && variable.replaceWith) {                                                
                                                     c.args[argKey].id = variable.replaceWith.id; c.args[argKey].name = variable.replaceWith.name;
@@ -2775,7 +2784,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                     }
                                 }
                             }
-                            if(c.droptoken) _.each(exchangerFile.variablesToReplace, (variable)=>{ 
+                            if(c.droptoken && exchangerFile.variablesToReplace) exchangerFile.variablesToReplace.forEach( (variable)=>{ 
                                 if(!variable) return;
                                 if(variable.searchFor && c.droptoken==variable.searchFor && variable.replaceWith) {                                                
                                     c.droptoken = variable.searchReplaceWith;
@@ -3410,6 +3419,13 @@ module.exports = class AvdDriver extends Homey.Driver {
 
         });
 
+        session.setHandler('virtualdevicesettings_loadOrderFields', async () => {
+            return await device.getOrderFields();
+        });
+        
+        session.setHandler('virtualdevicesettings_saveOrderFields', async (orderFields) => {
+            return await device.saveOrderFields(orderFields);
+        });
         
         session.setHandler('virtualdevicesettings_loadReflectDevices', async (settings) => {
             await this.homey.app.refreshHomeyAPI();

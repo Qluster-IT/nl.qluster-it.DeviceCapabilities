@@ -101,9 +101,8 @@
       "id": "other",
       "label": "Other (Default)",
       "order": 0
-    }    
+    }
   ],
-
   "listPrefixedLists": [
     {
       "id": "devicecapabilities_ternary-up-idle-down_list",
@@ -214,8 +213,6 @@
       "order": 1
     }
   ],
-  
-
   "customicons": {
     "icons": [
       {
@@ -228,7 +225,17 @@
             "title": {
               "en": "Device 1",
               "nl": "Apparaat 1",
-              "de": ""
+              "da": "Enhed 1",
+              "de": "Gerät 1",
+              "es": "Dispositivo 1",
+              "fr": "Appareil 1",
+              "it": "Dispositivo 1",
+              "no": "Enhet 1",
+              "sv": "Enhet 1",
+              "pl": "Urządzenie 1",
+              "ru": "Устройство 1",
+              "ko": "디바이스 1",
+              "ar": "الجهاز 1"
             },
             "id": 1,
             "subid": 1,
@@ -241,7 +248,17 @@
             "title": {
               "en": "Device 2",
               "nl": "Apparaat 2",
-              "de": ""
+              "da": "Enhed 2",
+              "de": "Gerät 2",
+              "es": "Dispositivo 2",
+              "fr": "Appareil 2",
+              "it": "Dispositivo 2",
+              "no": "Enhet 2",
+              "sv": "Enhet 2",
+              "pl": "Urządzenie 2",
+              "ru": "Устройство 2",
+              "ko": "디바이스 2",
+              "ar": "الجهاز 2"
             },
             "id": 2,
             "subid": 2,
@@ -254,7 +271,17 @@
             "title": {
               "en": "Device 3",
               "nl": "Apparaat 3",
-              "de": ""
+              "da": "Enhed 3",
+              "de": "Gerät 3",
+              "es": "Dispositivo 3",
+              "fr": "Appareil 3",
+              "it": "Dispositivo 3",
+              "no": "Enhet 3",
+              "sv": "Enhet 3",
+              "pl": "Urządzenie 3",
+              "ru": "Устройство 3",
+              "ko": "디바이스 3",
+              "ar": "الجهاز 3"
             },
             "id": 3,
             "subid": 3,
@@ -267,7 +294,17 @@
             "title": {
               "en": "Device 4",
               "nl": "Apparaat 4",
-              "de": ""
+              "da": "Enhed 4",
+              "de": "Gerät 4",
+              "es": "Dispositivo 4",
+              "fr": "Appareil 4",
+              "it": "Dispositivo 4",
+              "no": "Enhet 4",
+              "sv": "Enhet 4",
+              "pl": "Urządzenie 4",
+              "ru": "Устройство 4",
+              "ko": "디바이스 4",
+              "ar": "الجهاز 4"
             },
             "id": 4,
             "subid": 4
@@ -279,7 +316,17 @@
             "title": {
               "en": "Device 5",
               "nl": "Apparaat 5",
-              "de": ""
+              "da": "Enhed 5",
+              "de": "Gerät 5",
+              "es": "Dispositivo 5",
+              "fr": "Appareil 5",
+              "it": "Dispositivo 5",
+              "no": "Enhet 5",
+              "sv": "Enhet 5",
+              "pl": "Urządzenie 5",
+              "ru": "Устройство 5",
+              "ko": "디바이스 5",
+              "ar": "الجهاز 5"
             },
             "id": 5,
             "subid": 5,
@@ -292,7 +339,17 @@
             "title": {
               "en": "Device 6",
               "nl": "Apparaat 6",
-              "de": ""
+              "da": "Enhed 6",
+              "de": "Gerät 6",
+              "es": "Dispositivo 6",
+              "fr": "Appareil 6",
+              "it": "Dispositivo 6",
+              "no": "Enhet 6",
+              "sv": "Enhet 6",
+              "pl": "Urządzenie 6",
+              "ru": "Устройство 6",
+              "ko": "디바이스 6",
+              "ar": "الجهاز 6"
             },
             "id": 6,
             "subid": 6
@@ -304,7 +361,17 @@
             "title": {
               "en": "Device 7",
               "nl": "Apparaat 7",
-              "de": ""
+              "da": "Enhed 7",
+              "de": "Gerät 7",
+              "es": "Dispositivo 7",
+              "fr": "Appareil 7",
+              "it": "Dispositivo 7",
+              "no": "Enhet 7",
+              "sv": "Enhet 7",
+              "pl": "Urządzenie 7",
+              "ru": "Устройство 7",
+              "ko": "디바이스 7",
+              "ar": "الجهاز 7"
             },
             "id": 7,
             "subid": 7
@@ -316,7 +383,17 @@
             "title": {
               "en": "Device 8",
               "nl": "Apparaat 8",
-              "de": ""
+              "da": "Enhed 8",
+              "de": "Gerät 8",
+              "es": "Dispositivo 8",
+              "fr": "Appareil 8",
+              "it": "Dispositivo 8",
+              "no": "Enhet 8",
+              "sv": "Enhet 8",
+              "pl": "Urządzenie 8",
+              "ru": "Устройство 8",
+              "ko": "디바이스 8",
+              "ar": "الجهاز 8"
             },
             "id": 8,
             "subid": 8,
@@ -329,7 +406,17 @@
             "title": {
               "en": "Device 9",
               "nl": "Apparaat 9",
-              "de": ""
+              "da": "Enhed 9",
+              "de": "Gerät 9",
+              "es": "Dispositivo 9",
+              "fr": "Appareil 9",
+              "it": "Dispositivo 9",
+              "no": "Enhet 9",
+              "sv": "Enhet 9",
+              "pl": "Urządzenie 9",
+              "ru": "Устройство 9",
+              "ko": "장치 9",
+              "ar": "الجهاز 9"
             },
             "id": 9,
             "subid": 9
@@ -341,7 +428,17 @@
             "title": {
               "en": "Device 10",
               "nl": "Apparaat 10",
-              "de": ""
+              "da": "Enhed 10",
+              "de": "Gerät 10",
+              "es": "Dispositivo 10",
+              "fr": "Appareil 10",
+              "it": "Dispositivo 10",
+              "no": "Enhet 10",
+              "sv": "Enhet 10",
+              "pl": "Urządzenie 10",
+              "ru": "Устройство 10",
+              "ko": "디바이스 10",
+              "ar": "الجهاز 10"
             },
             "id": 10,
             "subid": 10
@@ -353,7 +450,17 @@
             "title": {
               "en": "Device 11",
               "nl": "Apparaat 11",
-              "de": ""
+              "da": "Enhed 11",
+              "de": "Gerät 11",
+              "es": "Dispositivo 11",
+              "fr": "Appareil 11",
+              "it": "Dispositivo 11",
+              "no": "Enhet 11",
+              "sv": "Enhet 11",
+              "pl": "Urządzenie 11",
+              "ru": "Устройство 11",
+              "ko": "디바이스 11",
+              "ar": "الجهاز 11"
             },
             "id": 11,
             "subid": 11
@@ -365,7 +472,17 @@
             "title": {
               "en": "Device 12",
               "nl": "Apparaat 12",
-              "de": ""
+              "da": "Enhed 12",
+              "de": "Gerät 12",
+              "es": "Dispositivo 12",
+              "fr": "Appareil 12",
+              "it": "Dispositivo 12",
+              "no": "Enhet 12",
+              "sv": "Enhet 12",
+              "pl": "Urządzenie 12",
+              "ru": "Устройство 12",
+              "ko": "디바이스 12",
+              "ar": "الجهاز 12"
             },
             "id": 12,
             "subid": 12
@@ -377,7 +494,17 @@
             "title": {
               "en": "Device 13",
               "nl": "Apparaat 13",
-              "de": ""
+              "da": "Enhed 13",
+              "de": "Gerät 13",
+              "es": "Dispositivo 13",
+              "fr": "Appareil 13",
+              "it": "Dispositivo 13",
+              "no": "Enhet 13",
+              "sv": "Enhet 13",
+              "pl": "Urządzenie 13",
+              "ru": "Устройство 13",
+              "ko": "디바이스 13",
+              "ar": "الجهاز 13"
             },
             "id": 13,
             "subid": 13
@@ -389,7 +516,17 @@
             "title": {
               "en": "Device 14",
               "nl": "Apparaat 14",
-              "de": ""
+              "da": "Enhed 14",
+              "de": "Gerät 14",
+              "es": "Dispositivo 14",
+              "fr": "Appareil 14",
+              "it": "Dispositivo 14",
+              "no": "Enhet 14",
+              "sv": "Enhet 14",
+              "pl": "Urządzenie 14",
+              "ru": "Устройство 14",
+              "ko": "디바이스 14",
+              "ar": "الجهاز 14"
             },
             "id": 14,
             "subid": 14
@@ -401,7 +538,17 @@
             "title": {
               "en": "Device 15",
               "nl": "Apparaat 15",
-              "de": ""
+              "da": "Enhed 15",
+              "de": "Gerät 15",
+              "es": "Dispositivo 15",
+              "fr": "Appareil 15",
+              "it": "Dispositivo 15",
+              "no": "Enhet 15",
+              "sv": "Enhet 15",
+              "pl": "Urządzenie 15",
+              "ru": "Устройство 15",
+              "ko": "디바이스 15",
+              "ar": "الجهاز 15"
             },
             "id": 15,
             "subid": 15
@@ -413,7 +560,17 @@
             "title": {
               "en": "Device 16",
               "nl": "Apparaat 16",
-              "de": ""
+              "da": "Enhed 16",
+              "de": "Gerät 16",
+              "es": "Dispositivo 16",
+              "fr": "Appareil 16",
+              "it": "Dispositivo 16",
+              "no": "Enhet 16",
+              "sv": "Enhet 16",
+              "pl": "Urządzenie 16",
+              "ru": "Устройство 16",
+              "ko": "장치 16",
+              "ar": "الجهاز 16"
             },
             "id": 16,
             "subid": 16
@@ -425,7 +582,17 @@
             "title": {
               "en": "Device 17",
               "nl": "Apparaat 17",
-              "de": ""
+              "da": "Enhed 17",
+              "de": "Gerät 17",
+              "es": "Dispositivo 17",
+              "fr": "Appareil 17",
+              "it": "Dispositivo 17",
+              "no": "Enhet 17",
+              "sv": "Enhet 17",
+              "pl": "Urządzenie 17",
+              "ru": "Устройство 17",
+              "ko": "장치 17",
+              "ar": "الجهاز 17"
             },
             "id": 17,
             "subid": 17
@@ -437,7 +604,17 @@
             "title": {
               "en": "Device 18",
               "nl": "Apparaat 18",
-              "de": ""
+              "da": "Enhed 18",
+              "de": "Gerät 18",
+              "es": "Dispositivo 18",
+              "fr": "Appareil 18",
+              "it": "Dispositivo 18",
+              "no": "Enhet 18",
+              "sv": "Enhet 18",
+              "pl": "Urządzenie 18",
+              "ru": "Устройство 18",
+              "ko": "장치 18",
+              "ar": "الجهاز 18"
             },
             "id": 18,
             "subid": 18
@@ -449,7 +626,17 @@
             "title": {
               "en": "Device 19",
               "nl": "Apparaat 19",
-              "de": ""
+              "da": "Enhed 19",
+              "de": "Gerät 19",
+              "es": "Dispositivo 19",
+              "fr": "Appareil 19",
+              "it": "Dispositivo 19",
+              "no": "Enhet 19",
+              "sv": "Enhet 19",
+              "pl": "Urządzenie 19",
+              "ru": "Устройство 19",
+              "ko": "디바이스 19",
+              "ar": "الجهاز 19"
             },
             "id": 19,
             "subid": 19
@@ -461,7 +648,17 @@
             "title": {
               "en": "Device 20",
               "nl": "Apparaat 20",
-              "de": ""
+              "da": "Enhed 20",
+              "de": "Gerät 20",
+              "es": "Dispositivo 20",
+              "fr": "Appareil 20",
+              "it": "Dispositivo 20",
+              "no": "Enhet 20",
+              "sv": "Enhet 20",
+              "pl": "Urządzenie 20",
+              "ru": "Устройство 20",
+              "ko": "디바이스 20",
+              "ar": "الجهاز 20"
             },
             "id": 20,
             "subid": 20
@@ -478,7 +675,17 @@
             "title": {
               "en": "Fields 1",
               "nl": "Velden 1",
-              "de": ""
+              "da": "Felter 1",
+              "de": "Felder 1",
+              "es": "Campos 1",
+              "fr": "Champs 1",
+              "it": "Campi 1",
+              "no": "Felter 1",
+              "sv": "Fält 1",
+              "pl": "Pola 1",
+              "ru": "Поля 1",
+              "ko": "필드 1",
+              "ar": "الحقول 1"
             },
             "id": 21,
             "subid": 1,
@@ -491,7 +698,17 @@
             "title": {
               "en": "Fields 2",
               "nl": "Velden 2",
-              "de": ""
+              "da": "Felter 2",
+              "de": "Felder 2",
+              "es": "Campos 2",
+              "fr": "Champs 2",
+              "it": "Campi 2",
+              "no": "Felter 2",
+              "sv": "Fält 2",
+              "pl": "Pola 2",
+              "ru": "Поля 2",
+              "ko": "필드 2",
+              "ar": "الحقول 2"
             },
             "id": 22,
             "subid": 2
@@ -503,7 +720,17 @@
             "title": {
               "en": "Fields 3",
               "nl": "Velden 3",
-              "de": ""
+              "da": "Felter 3",
+              "de": "Felder 3",
+              "es": "Campos 3",
+              "fr": "Champs 3",
+              "it": "Campi 3",
+              "no": "Felter 3",
+              "sv": "Fält 3",
+              "pl": "Pola 3",
+              "ru": "Поля 3",
+              "ko": "필드 3",
+              "ar": "الحقول 3"
             },
             "id": 23,
             "subid": 3
@@ -515,7 +742,17 @@
             "title": {
               "en": "Fields 4",
               "nl": "Velden 4",
-              "de": ""
+              "da": "Felter 4",
+              "de": "Felder 4",
+              "es": "Campos 4",
+              "fr": "Champs 4",
+              "it": "Campi 4",
+              "no": "Felter 4",
+              "sv": "Fält 4",
+              "pl": "Pola 4",
+              "ru": "Поля 4",
+              "ko": "필드 4",
+              "ar": "الحقول 4"
             },
             "id": 24,
             "subid": 4
@@ -527,7 +764,17 @@
             "title": {
               "en": "Fields 5",
               "nl": "Velden 5",
-              "de": ""
+              "da": "Felter 5",
+              "de": "Felder 5",
+              "es": "Campos 5",
+              "fr": "Champs 5",
+              "it": "Campi 5",
+              "no": "Felter 5",
+              "sv": "Fält 5",
+              "pl": "Pola 5",
+              "ru": "Поля 5",
+              "ko": "필드 5",
+              "ar": "الحقول 5"
             },
             "id": 25,
             "subid": 5
@@ -539,7 +786,17 @@
             "title": {
               "en": "Fields 6",
               "nl": "Velden 6",
-              "de": ""
+              "da": "Felter 6",
+              "de": "Felder 6",
+              "es": "Campos 6",
+              "fr": "Champs 6",
+              "it": "Campi 6",
+              "no": "Felter 6",
+              "sv": "Fält 6",
+              "pl": "Pola 6",
+              "ru": "Поля 6",
+              "ko": "필드 6",
+              "ar": "الحقول 6"
             },
             "id": 26,
             "subid": 6
@@ -551,7 +808,17 @@
             "title": {
               "en": "Fields 7",
               "nl": "Velden 7",
-              "de": ""
+              "da": "Felter 7",
+              "de": "Felder 7",
+              "es": "Campos 7",
+              "fr": "Champs 7",
+              "it": "Campi 7",
+              "no": "Felter 7",
+              "sv": "Fält 7",
+              "pl": "Pola 7",
+              "ru": "Поля 7",
+              "ko": "필드 7",
+              "ar": "الحقول 7"
             },
             "id": 27,
             "subid": 7
@@ -563,7 +830,17 @@
             "title": {
               "en": "Fields 8",
               "nl": "Velden 8",
-              "de": ""
+              "da": "Felter 8",
+              "de": "Felder 8",
+              "es": "Campos 8",
+              "fr": "Champs 8",
+              "it": "Campi 8",
+              "no": "Felter 8",
+              "sv": "Fält 8",
+              "pl": "Pola 8",
+              "ru": "Поля 8",
+              "ko": "필드 8",
+              "ar": "الحقول 8"
             },
             "id": 28,
             "subid": 8
@@ -575,7 +852,17 @@
             "title": {
               "en": "Fields 9",
               "nl": "Velden 9",
-              "de": ""
+              "da": "Felter 9",
+              "de": "Felder 9",
+              "es": "Campos 9",
+              "fr": "Champs 9",
+              "it": "Campi 9",
+              "no": "Felter 9",
+              "sv": "Fält 9",
+              "pl": "Pola 9",
+              "ru": "Поля 9",
+              "ko": "필드 9",
+              "ar": "الحقول 9"
             },
             "id": 29,
             "subid": 9
@@ -587,7 +874,17 @@
             "title": {
               "en": "Fields 10",
               "nl": "Velden 10",
-              "de": ""
+              "da": "Felter 10",
+              "de": "Felder 10",
+              "es": "Campos 10",
+              "fr": "Champs 10",
+              "it": "Campi 10",
+              "no": "Felter 10",
+              "sv": "Fält 10",
+              "pl": "Pola 10",
+              "ru": "Поля 10",
+              "ko": "필드 10",
+              "ar": "الحقول 10"
             },
             "id": 30,
             "subid": 10
@@ -599,7 +896,17 @@
             "title": {
               "en": "Fields 11",
               "nl": "Velden 11",
-              "de": ""
+              "da": "Felter 11",
+              "de": "Felder 11",
+              "es": "Campos 11",
+              "fr": "Champs 11",
+              "it": "Campi 11",
+              "no": "Felter 11",
+              "sv": "Fält 11",
+              "pl": "Pola 11",
+              "ru": "Поля 11",
+              "ko": "필드 11",
+              "ar": "الحقول 11"
             },
             "id": 31,
             "subid": 11
@@ -611,7 +918,17 @@
             "title": {
               "en": "Fields 12",
               "nl": "Velden 12",
-              "de": ""
+              "da": "Felter 12",
+              "de": "Felder 12",
+              "es": "Campos 12",
+              "fr": "Champs 12",
+              "it": "Campi 12",
+              "no": "Felter 12",
+              "sv": "Fält 12",
+              "pl": "Pola 12",
+              "ru": "Поля 12",
+              "ko": "필드 12",
+              "ar": "الحقول 12"
             },
             "id": 32,
             "subid": 12
@@ -623,7 +940,17 @@
             "title": {
               "en": "Fields 13",
               "nl": "Velden 13",
-              "de": ""
+              "da": "Felter 13",
+              "de": "Felder 13",
+              "es": "Campos 13",
+              "fr": "Champs 13",
+              "it": "Campi 13",
+              "no": "Felter 13",
+              "sv": "Fält 13",
+              "pl": "Pola 13",
+              "ru": "Поля 13",
+              "ko": "필드 13",
+              "ar": "الحقول 13"
             },
             "id": 33,
             "subid": 13
@@ -635,7 +962,17 @@
             "title": {
               "en": "Fields 14",
               "nl": "Velden 14",
-              "de": ""
+              "da": "Felter 14",
+              "de": "Felder 14",
+              "es": "Campos 14",
+              "fr": "Champs 14",
+              "it": "Campi 14",
+              "no": "Felter 14",
+              "sv": "Fält 14",
+              "pl": "Pola 14",
+              "ru": "Поля 14",
+              "ko": "필드 14",
+              "ar": "الحقول 14"
             },
             "id": 34,
             "subid": 14
@@ -647,7 +984,17 @@
             "title": {
               "en": "Fields 15",
               "nl": "Velden 15",
-              "de": ""
+              "da": "Felter 15",
+              "de": "Felder 15",
+              "es": "Campos 15",
+              "fr": "Champs 15",
+              "it": "Campi 15",
+              "no": "Felter 15",
+              "sv": "Fält 15",
+              "pl": "Pola 15",
+              "ru": "Поля 15",
+              "ko": "필드 15",
+              "ar": "الحقول 15"
             },
             "id": 35,
             "subid": 15
@@ -659,7 +1006,17 @@
             "title": {
               "en": "Fields 16",
               "nl": "Velden 16",
-              "de": ""
+              "da": "Felter 16",
+              "de": "Felder 16",
+              "es": "Campos 16",
+              "fr": "Champs 16",
+              "it": "Campi 16",
+              "no": "Felter 16",
+              "sv": "Fält 16",
+              "pl": "Pola 16",
+              "ru": "Поля 16",
+              "ko": "필드 16",
+              "ar": "الحقول 16"
             },
             "id": 36,
             "subid": 16
@@ -671,7 +1028,17 @@
             "title": {
               "en": "Fields 17",
               "nl": "Velden 17",
-              "de": ""
+              "da": "Felter 17",
+              "de": "Felder 17",
+              "es": "Campos 17",
+              "fr": "Champs 17",
+              "it": "Campi 17",
+              "no": "Felter 17",
+              "sv": "Fält 17",
+              "pl": "Pola 17",
+              "ru": "Поля 17",
+              "ko": "필드 17",
+              "ar": "الحقول 17"
             },
             "id": 37,
             "subid": 17
@@ -683,7 +1050,17 @@
             "title": {
               "en": "Fields 18",
               "nl": "Velden 18",
-              "de": ""
+              "da": "Felter 18",
+              "de": "Felder 18",
+              "es": "Campos 18",
+              "fr": "Champs 18",
+              "it": "Campi 18",
+              "no": "Felter 18",
+              "sv": "Fält 18",
+              "pl": "Pola 18",
+              "ru": "Поля 18",
+              "ko": "필드 18",
+              "ar": "الحقول 18"
             },
             "id": 38,
             "subid": 18
@@ -695,7 +1072,17 @@
             "title": {
               "en": "Fields 19",
               "nl": "Velden 19",
-              "de": ""
+              "da": "Felter 19",
+              "de": "Felder 19",
+              "es": "Campos 19",
+              "fr": "Champs 19",
+              "it": "Campi 19",
+              "no": "Felter 19",
+              "sv": "Fält 19",
+              "pl": "Pola 19",
+              "ru": "Поля 19",
+              "ko": "필드 19",
+              "ar": "الحقول 19"
             },
             "id": 39,
             "subid": 19
@@ -707,7 +1094,17 @@
             "title": {
               "en": "Fields 20",
               "nl": "Velden 20",
-              "de": ""
+              "da": "Felter 20",
+              "de": "Felder 20",
+              "es": "Campos 20",
+              "fr": "Champs 20",
+              "it": "Campi 20",
+              "no": "Felter 20",
+              "sv": "Fält 20",
+              "pl": "Pola 20",
+              "ru": "Поля 20",
+              "ko": "필드 20",
+              "ar": "الحقول 20"
             },
             "id": 40,
             "subid": 20
@@ -719,7 +1116,17 @@
             "title": {
               "en": "Fields 21",
               "nl": "Velden 21",
-              "de": ""
+              "da": "Felter 21",
+              "de": "Felder 21",
+              "es": "Campos 21",
+              "fr": "Champs 21",
+              "it": "Campi 21",
+              "no": "Felter 21",
+              "sv": "Fält 21",
+              "pl": "Pola 21",
+              "ru": "Поля 21",
+              "ko": "필드 21",
+              "ar": "الحقول 21"
             },
             "id": 41,
             "subid": 21
@@ -731,7 +1138,17 @@
             "title": {
               "en": "Fields 22",
               "nl": "Velden 22",
-              "de": ""
+              "da": "Felter 22",
+              "de": "Felder 22",
+              "es": "Campos 22",
+              "fr": "Champs 22",
+              "it": "Campi 22",
+              "no": "Felter 22",
+              "sv": "Fält 22",
+              "pl": "Pola 22",
+              "ru": "Поля 22",
+              "ko": "필드 22",
+              "ar": "الحقول 22"
             },
             "id": 42,
             "subid": 22
@@ -743,7 +1160,17 @@
             "title": {
               "en": "Fields 23",
               "nl": "Velden 23",
-              "de": ""
+              "da": "Felter 23",
+              "de": "Felder 23",
+              "es": "Campos 23",
+              "fr": "Champs 23",
+              "it": "Campi 23",
+              "no": "Felter 23",
+              "sv": "Fält 23",
+              "pl": "Pola 23",
+              "ru": "Поля 23",
+              "ko": "필드 23",
+              "ar": "الحقول 23"
             },
             "id": 43,
             "subid": 23
@@ -755,7 +1182,17 @@
             "title": {
               "en": "Fields 24",
               "nl": "Velden 24",
-              "de": ""
+              "da": "Felter 24",
+              "de": "Felder 24",
+              "es": "Campos 24",
+              "fr": "Champs 24",
+              "it": "Campi 24",
+              "no": "Felter 24",
+              "sv": "Fält 24",
+              "pl": "Pola 24",
+              "ru": "Поля 24",
+              "ko": "필드 24",
+              "ar": "الحقول 24"
             },
             "id": 44,
             "subid": 24
@@ -767,7 +1204,17 @@
             "title": {
               "en": "Fields 25",
               "nl": "Velden 25",
-              "de": ""
+              "da": "Felter 25",
+              "de": "Felder 25",
+              "es": "Campos 25",
+              "fr": "Champs 25",
+              "it": "Campi 25",
+              "no": "Felter 25",
+              "sv": "Fält 25",
+              "pl": "Pola 25",
+              "ru": "Поля 25",
+              "ko": "필드 25",
+              "ar": "الحقول 25"
             },
             "id": 45,
             "subid": 25
@@ -779,7 +1226,17 @@
             "title": {
               "en": "Fields 26",
               "nl": "Velden 26",
-              "de": ""
+              "da": "Felter 26",
+              "de": "Felder 26",
+              "es": "Campos 26",
+              "fr": "Champs 26",
+              "it": "Campi 26",
+              "no": "Felter 26",
+              "sv": "Fält 26",
+              "pl": "Pola 26",
+              "ru": "Поля 26",
+              "ko": "필드 26",
+              "ar": "الحقول 26"
             },
             "id": 46,
             "subid": 26
@@ -791,7 +1248,17 @@
             "title": {
               "en": "Fields 27",
               "nl": "Velden 27",
-              "de": ""
+              "da": "Felter 27",
+              "de": "Felder 27",
+              "es": "Campos 27",
+              "fr": "Champs 27",
+              "it": "Campi 27",
+              "no": "Felter 27",
+              "sv": "Fält 27",
+              "pl": "Pola 27",
+              "ru": "Поля 27",
+              "ko": "필드 27",
+              "ar": "الحقول 27"
             },
             "id": 47,
             "subid": 27
@@ -803,7 +1270,17 @@
             "title": {
               "en": "Fields 28",
               "nl": "Velden 28",
-              "de": ""
+              "da": "Felter 28",
+              "de": "Felder 28",
+              "es": "Campos 28",
+              "fr": "Champs 28",
+              "it": "Campi 28",
+              "no": "Felter 28",
+              "sv": "Fält 28",
+              "pl": "Pola 28",
+              "ru": "Поля 28",
+              "ko": "필드 28",
+              "ar": "الحقول 28"
             },
             "id": 48,
             "subid": 28
@@ -815,7 +1292,17 @@
             "title": {
               "en": "Fields 29",
               "nl": "Velden 29",
-              "de": ""
+              "da": "Felter 29",
+              "de": "Felder 29",
+              "es": "Campos 29",
+              "fr": "Champs 29",
+              "it": "Campi 29",
+              "no": "Felter 29",
+              "sv": "Fält 29",
+              "pl": "Pola 29",
+              "ru": "Поля 29",
+              "ko": "필드 29",
+              "ar": "الحقول 29"
             },
             "id": 49,
             "subid": 29
@@ -827,7 +1314,17 @@
             "title": {
               "en": "Fields 30",
               "nl": "Velden 30",
-              "de": ""
+              "da": "Felter 30",
+              "de": "Felder 30",
+              "es": "Campos 30",
+              "fr": "Champs 30",
+              "it": "Campi 30",
+              "no": "Felter 30",
+              "sv": "Fält 30",
+              "pl": "Pola 30",
+              "ru": "Поля 30",
+              "ko": "필드 30",
+              "ar": "الحقول 30"
             },
             "id": 50,
             "subid": 30
@@ -839,7 +1336,17 @@
             "title": {
               "en": "Fields 31",
               "nl": "Velden 31",
-              "de": ""
+              "da": "Felter 31",
+              "de": "Felder 31",
+              "es": "Campos 31",
+              "fr": "Champs 31",
+              "it": "Campi 31",
+              "no": "Felter 31",
+              "sv": "Fält 31",
+              "pl": "Pola 31",
+              "ru": "Поля 31",
+              "ko": "필드 31",
+              "ar": "الحقول 31"
             },
             "id": 51,
             "subid": 31
@@ -851,7 +1358,17 @@
             "title": {
               "en": "Fields 32",
               "nl": "Velden 32",
-              "de": ""
+              "da": "Felter 32",
+              "de": "Felder 32",
+              "es": "Campos 32",
+              "fr": "Champs 32",
+              "it": "Campi 32",
+              "no": "Felter 32",
+              "sv": "Fält 32",
+              "pl": "Pola 32",
+              "ru": "Поля 32",
+              "ko": "필드 32",
+              "ar": "الحقول 32"
             },
             "id": 52,
             "subid": 32
@@ -863,7 +1380,17 @@
             "title": {
               "en": "Fields 33",
               "nl": "Velden 33",
-              "de": ""
+              "da": "Felter 33",
+              "de": "Felder 33",
+              "es": "Campos 33",
+              "fr": "Champs 33",
+              "it": "Campi 33",
+              "no": "Felter 33",
+              "sv": "Fält 33",
+              "pl": "Pola 33",
+              "ru": "Поля 33",
+              "ko": "필드 33",
+              "ar": "الحقول 33"
             },
             "id": 53,
             "subid": 33
@@ -875,7 +1402,17 @@
             "title": {
               "en": "Fields 34",
               "nl": "Velden 34",
-              "de": ""
+              "da": "Felter 34",
+              "de": "Felder 34",
+              "es": "Campos 34",
+              "fr": "Champs 34",
+              "it": "Campi 34",
+              "no": "Felter 34",
+              "sv": "Fält 34",
+              "pl": "Pola 34",
+              "ru": "Поля 34",
+              "ko": "필드 34",
+              "ar": "الحقول 34"
             },
             "id": 54,
             "subid": 34
@@ -887,7 +1424,17 @@
             "title": {
               "en": "Fields 35",
               "nl": "Velden 35",
-              "de": ""
+              "da": "Felter 35",
+              "de": "Felder 35",
+              "es": "Campos 35",
+              "fr": "Champs 35",
+              "it": "Campi 35",
+              "no": "Felter 35",
+              "sv": "Fält 35",
+              "pl": "Pola 35",
+              "ru": "Поля 35",
+              "ko": "필드 35",
+              "ar": "الحقول 35"
             },
             "id": 55,
             "subid": 35
@@ -899,7 +1446,17 @@
             "title": {
               "en": "Fields 36",
               "nl": "Velden 36",
-              "de": ""
+              "da": "Felter 36",
+              "de": "Felder 36",
+              "es": "Campos 36",
+              "fr": "Champs 36",
+              "it": "Campi 36",
+              "no": "Felter 36",
+              "sv": "Fält 36",
+              "pl": "Pola 36",
+              "ru": "Поля 36",
+              "ko": "필드 36",
+              "ar": "الحقول 36"
             },
             "id": 56,
             "subid": 36
@@ -911,7 +1468,17 @@
             "title": {
               "en": "Fields 37",
               "nl": "Velden 37",
-              "de": ""
+              "da": "Felter 37",
+              "de": "Felder 37",
+              "es": "Campos 37",
+              "fr": "Champs 37",
+              "it": "Campi 37",
+              "no": "Felter 37",
+              "sv": "Fält 37",
+              "pl": "Pola 37",
+              "ru": "Поля 37",
+              "ko": "필드 37",
+              "ar": "الحقول 37"
             },
             "id": 57,
             "subid": 37
@@ -923,7 +1490,17 @@
             "title": {
               "en": "Fields 38",
               "nl": "Velden 38",
-              "de": ""
+              "da": "Felter 38",
+              "de": "Felder 38",
+              "es": "Campos 38",
+              "fr": "Champs 38",
+              "it": "Campi 38",
+              "no": "Felter 38",
+              "sv": "Fält 38",
+              "pl": "Pola 38",
+              "ru": "Поля 38",
+              "ko": "필드 38",
+              "ar": "الحقول 38"
             },
             "id": 58,
             "subid": 38
@@ -935,7 +1512,17 @@
             "title": {
               "en": "Fields 39",
               "nl": "Velden 39",
-              "de": ""
+              "da": "Felter 39",
+              "de": "Felder 39",
+              "es": "Campos 39",
+              "fr": "Champs 39",
+              "it": "Campi 39",
+              "no": "Felter 39",
+              "sv": "Fält 39",
+              "pl": "Pola 39",
+              "ru": "Поля 39",
+              "ko": "필드 39",
+              "ar": "الحقول 39"
             },
             "id": 59,
             "subid": 39
@@ -947,7 +1534,17 @@
             "title": {
               "en": "Fields 40",
               "nl": "Velden 40",
-              "de": ""
+              "da": "Felter 40",
+              "de": "Felder 40",
+              "es": "Campos 40",
+              "fr": "Champs 40",
+              "it": "Campi 40",
+              "no": "Felter 40",
+              "sv": "Fält 40",
+              "pl": "Pola 40",
+              "ru": "Поля 40",
+              "ko": "필드 40",
+              "ar": "الحقول 40"
             },
             "id": 60,
             "subid": 40
@@ -964,7 +1561,17 @@
             "title": {
               "en": "Other 1",
               "nl": "Overige 1",
-              "de": ""
+              "da": "Andet 1",
+              "de": "Andere 1",
+              "es": "Otro 1",
+              "fr": "Autre 1",
+              "it": "Altro 1",
+              "no": "Annet 1",
+              "sv": "Övrigt 1",
+              "pl": "Inne 1",
+              "ru": "Другое 1",
+              "ko": "기타 1",
+              "ar": "أخرى 1"
             },
             "id": 61,
             "subid": 1
@@ -976,7 +1583,17 @@
             "title": {
               "en": "Other 2",
               "nl": "Overige 2",
-              "de": ""
+              "da": "Andre 2",
+              "de": "Andere 2",
+              "es": "Otros 2",
+              "fr": "Autre 2",
+              "it": "Altri 2",
+              "no": "Andre 2",
+              "sv": "Andra 2",
+              "pl": "Inne 2",
+              "ru": "Другие 2",
+              "ko": "기타 2",
+              "ar": "أخرى 2"
             },
             "id": 62,
             "subid": 2
@@ -988,7 +1605,17 @@
             "title": {
               "en": "Other 3",
               "nl": "Overige 3",
-              "de": ""
+              "da": "Andre 3",
+              "de": "Andere 3",
+              "es": "Otros 3",
+              "fr": "Autre 3",
+              "it": "Altri 3",
+              "no": "Andre 3",
+              "sv": "Andra 3",
+              "pl": "Inne 3",
+              "ru": "Другие 3",
+              "ko": "다른 3개",
+              "ar": "أخرى 3"
             },
             "id": 63,
             "subid": 3
@@ -1000,7 +1627,17 @@
             "title": {
               "en": "Other 4",
               "nl": "Overige 4",
-              "de": ""
+              "da": "Andre 4",
+              "de": "Andere 4",
+              "es": "Otros 4",
+              "fr": "Autre 4",
+              "it": "Altri 4",
+              "no": "Andre 4",
+              "sv": "Andra 4",
+              "pl": "Inne 4",
+              "ru": "Другие 4",
+              "ko": "기타 4개",
+              "ar": "أخرى 4"
             },
             "id": 64,
             "subid": 4
@@ -1012,7 +1649,17 @@
             "title": {
               "en": "Other 5",
               "nl": "Overige 5",
-              "de": ""
+              "da": "Andre 5",
+              "de": "Andere 5",
+              "es": "Otros 5",
+              "fr": "Autre 5",
+              "it": "Altri 5",
+              "no": "Andre 5",
+              "sv": "Andra 5",
+              "pl": "Inne 5",
+              "ru": "Другие 5",
+              "ko": "기타 5개",
+              "ar": "أخرى 5"
             },
             "id": 65,
             "subid": 5
@@ -1024,7 +1671,17 @@
             "title": {
               "en": "Other 6",
               "nl": "Overige 6",
-              "de": ""
+              "da": "Andre 6",
+              "de": "Andere 6",
+              "es": "Otros 6",
+              "fr": "Autre 6",
+              "it": "Altri 6",
+              "no": "Andre 6",
+              "sv": "Andra 6",
+              "pl": "Inne 6",
+              "ru": "Другие 6",
+              "ko": "기타 6",
+              "ar": "أخرى 6"
             },
             "id": 66,
             "subid": 6
@@ -1036,7 +1693,17 @@
             "title": {
               "en": "Other 7",
               "nl": "Overige 7",
-              "de": ""
+              "da": "Andre 7",
+              "de": "Andere 7",
+              "es": "Otros 7",
+              "fr": "Autre 7",
+              "it": "Altri 7",
+              "no": "Andre 7",
+              "sv": "Andra 7",
+              "pl": "Inne 7",
+              "ru": "Другие 7",
+              "ko": "기타 7개",
+              "ar": "أخرى 7"
             },
             "id": 67,
             "subid": 7
@@ -1048,7 +1715,17 @@
             "title": {
               "en": "Other 8",
               "nl": "Overige 8",
-              "de": ""
+              "da": "Andre 8",
+              "de": "Andere 8",
+              "es": "Otros 8",
+              "fr": "Autre 8",
+              "it": "Altri 8",
+              "no": "Andre 8",
+              "sv": "Andra 8",
+              "pl": "Inne 8",
+              "ru": "Другие 8",
+              "ko": "기타 8",
+              "ar": "أخرى 8"
             },
             "id": 68,
             "subid": 8
@@ -1060,7 +1737,17 @@
             "title": {
               "en": "Other 9",
               "nl": "Overige 9",
-              "de": ""
+              "da": "Andre 9",
+              "de": "Andere 9",
+              "es": "Otros 9",
+              "fr": "Autre 9",
+              "it": "Altri 9",
+              "no": "Andre 9",
+              "sv": "Andra 9",
+              "pl": "Inne 9",
+              "ru": "Другие 9",
+              "ko": "기타 9",
+              "ar": "أخرى 9"
             },
             "id": 69,
             "subid": 9
@@ -1072,7 +1759,17 @@
             "title": {
               "en": "Other 10",
               "nl": "Overige 10",
-              "de": ""
+              "da": "Andre 10",
+              "de": "Andere 10",
+              "es": "Otros 10",
+              "fr": "Autre 10",
+              "it": "Altri 10",
+              "no": "Andre 10",
+              "sv": "Andra 10",
+              "pl": "Inne 10",
+              "ru": "Другие 10",
+              "ko": "기타 10",
+              "ar": "أخرى 10"
             },
             "id": 70,
             "subid": 10
@@ -1084,7 +1781,17 @@
             "title": {
               "en": "Other 11",
               "nl": "Overige 11",
-              "de": ""
+              "da": "Andre 11",
+              "de": "Andere 11",
+              "es": "Otros 11",
+              "fr": "Autre 11",
+              "it": "Altri 11",
+              "no": "Andre 11",
+              "sv": "Andra 11",
+              "pl": "Inne 11",
+              "ru": "Другие 11",
+              "ko": "기타 11",
+              "ar": "أخرى 11"
             },
             "id": 71,
             "subid": 11
@@ -1096,7 +1803,17 @@
             "title": {
               "en": "Other 12",
               "nl": "Overige 12",
-              "de": ""
+              "da": "Andre 12",
+              "de": "Andere 12",
+              "es": "Otros 12",
+              "fr": "Autre 12",
+              "it": "Altri 12",
+              "no": "Andre 12",
+              "sv": "Andra 12",
+              "pl": "Inne 12",
+              "ru": "Другие 12",
+              "ko": "기타 12",
+              "ar": "أخرى 12"
             },
             "id": 72,
             "subid": 12
@@ -1108,7 +1825,17 @@
             "title": {
               "en": "Other 13",
               "nl": "Overige 13",
-              "de": ""
+              "da": "Andre 13",
+              "de": "Andere 13",
+              "es": "Otros 13",
+              "fr": "Autre 13",
+              "it": "Altri 13",
+              "no": "Andre 13",
+              "sv": "Andra 13",
+              "pl": "Inne 13",
+              "ru": "Другие 13",
+              "ko": "기타 13",
+              "ar": "أخرى 13"
             },
             "id": 73,
             "subid": 13
@@ -1120,7 +1847,17 @@
             "title": {
               "en": "Other 14",
               "nl": "Overige 14",
-              "de": ""
+              "da": "Andre 14",
+              "de": "Andere 14",
+              "es": "Otros 14",
+              "fr": "Autre 14",
+              "it": "Altri 14",
+              "no": "Andre 14",
+              "sv": "Andra 14",
+              "pl": "Inne 14",
+              "ru": "Другие 14",
+              "ko": "기타 14",
+              "ar": "أخرى 14"
             },
             "id": 74,
             "subid": 14
@@ -1132,7 +1869,17 @@
             "title": {
               "en": "Other 15",
               "nl": "Overige 15",
-              "de": ""
+              "da": "Andre 15",
+              "de": "Andere 15",
+              "es": "Otros 15",
+              "fr": "Autres 15",
+              "it": "Altri 15",
+              "no": "Andre 15",
+              "sv": "Andra 15",
+              "pl": "Inne 15",
+              "ru": "Другие 15",
+              "ko": "기타 15",
+              "ar": "أخرى 15"
             },
             "id": 75,
             "subid": 15
@@ -1144,7 +1891,17 @@
             "title": {
               "en": "Other 16",
               "nl": "Overige 16",
-              "de": ""
+              "da": "Andre 16",
+              "de": "Andere 16",
+              "es": "Otros 16",
+              "fr": "Autre 16",
+              "it": "Altri 16",
+              "no": "Andre 16",
+              "sv": "Andra 16",
+              "pl": "Inne 16",
+              "ru": "Другие 16",
+              "ko": "기타 16개",
+              "ar": "أخرى 16"
             },
             "id": 76,
             "subid": 16
@@ -1156,7 +1913,17 @@
             "title": {
               "en": "Other 17",
               "nl": "Overige 17",
-              "de": ""
+              "da": "Andre 17",
+              "de": "Andere 17",
+              "es": "Otros 17",
+              "fr": "Autres 17",
+              "it": "Altri 17",
+              "no": "Andre 17",
+              "sv": "Andra 17",
+              "pl": "Inne 17",
+              "ru": "Другие 17",
+              "ko": "기타 17",
+              "ar": "أخرى 17"
             },
             "id": 77,
             "subid": 17
@@ -1168,7 +1935,17 @@
             "title": {
               "en": "Other 18",
               "nl": "Overige 18",
-              "de": ""
+              "da": "Andre 18",
+              "de": "Andere 18",
+              "es": "Otros 18",
+              "fr": "Autres 18",
+              "it": "Altri 18",
+              "no": "Andre 18",
+              "sv": "Andra 18",
+              "pl": "Inne 18",
+              "ru": "Другие 18",
+              "ko": "기타 18",
+              "ar": "أخرى 18"
             },
             "id": 78,
             "subid": 18
@@ -1180,7 +1957,17 @@
             "title": {
               "en": "Other 19",
               "nl": "Overige 19",
-              "de": ""
+              "da": "Andre 19",
+              "de": "Andere 19",
+              "es": "Otros 19",
+              "fr": "Autres 19",
+              "it": "Altri 19",
+              "no": "Andre 19",
+              "sv": "Andra 19",
+              "pl": "Inne 19",
+              "ru": "Другие 19",
+              "ko": "기타 19",
+              "ar": "أخرى 19"
             },
             "id": 79,
             "subid": 19
@@ -1192,7 +1979,17 @@
             "title": {
               "en": "Other 20",
               "nl": "Overige 20",
-              "de": ""
+              "da": "Andre 20",
+              "de": "Andere 20",
+              "es": "Otros 20",
+              "fr": "Autre 20",
+              "it": "Altri 20",
+              "no": "Andre 20",
+              "sv": "Andra 20",
+              "pl": "Inne 20",
+              "ru": "Другие 20",
+              "ko": "기타 20개",
+              "ar": "أخرى 20"
             },
             "id": 80,
             "subid": 20
@@ -1210,8 +2007,6 @@
     },
     "languagecode": "nl"
   },
-
-
   "exampleSettings": {
     "numberOfTextFields": 0,
     "numberOfNumberFields": 1,
@@ -1750,9 +2545,14 @@
     "numberOfButtonFields": 2,
     "numberOfCameraFields": 0
   },
-
-  "reflectApps":[
-    {"id":"net.i-dev.betterlogic", "name":"Better Logic Library"},
-    {"id":"nl.fellownet.chronograph", "name":"Chronograph"}
+  "reflectApps": [
+    {
+      "id": "net.i-dev.betterlogic",
+      "name": "Better Logic Library"
+    },
+    {
+      "id": "nl.fellownet.chronograph",
+      "name": "Chronograph"
+    }
   ]
 }

@@ -136,9 +136,10 @@
     "showAsBooleanHint": "예/아니요를 어떻게 표시할지 선택하십시오.",
     "showAsButtonHint": "버튼을 어떻게 표시할지 선택하십시오.",
     "showAsListHint": "리스트를 어떻게 표시할지 선택하십시오.",
-    "createFlowCards": "실제 필드 및 흐름 카드 생성",
+    "createFlowCards": "실제 필드 및 기본 플로우카드 생성",
     "createFlowCardsHint": "선택 시, 이 필드는 실제 ShowAs 유형과 같으며 이 필드에 대한 기본 흐름 카드가 사용 가능합니다.",
-    "createFlowCardsStatusIndication": "* 또한 상태 표시기로 선택할 수 있습니다.",
+    "createFlowCardsOnly": "기본 플로우카드 만들기",
+    "createFlowCardsOnlyHint": "선택하면 이 필드에 기본 플로우카드가 제공됩니다.",
     "units": "단위",
     "unitsHint": "숫자에 사용할 단위입니다. 화씨가 필요하면 °C를 입력하면 화씨로 번역됩니다.",
     "hintEmptyDefault": "\r\n비어 있으면 기본값으로 설정됩니다.",
@@ -217,7 +218,11 @@
     "reactHint": "이 필드가 변경될 때 디바이스 속성을 자동으로 설정합니다.",
     "customList": "맞춤 목록",
     "customListAppSettings": "맞춤 목록을 생성하려면 앱 설정으로 이동하세요.",
-    "device_class": "디바이스 클래스"
+    "device_class": "디바이스 클래스",
+    "openOrderFields":"필드 정렬",
+    "titleOrderFields":"필드 정렬",
+    "labelOrderFields":"필드를 저장한 후에는 장치에서 필드가 나타나는 순서를 변경할 수 있습니다.",
+    "savingOrderFields":"필드 순서를 저장 중입니다. 잠시만 기다려 주세요."
   },
   "pair": {
     "list_icons": {
