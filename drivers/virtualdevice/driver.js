@@ -114,8 +114,8 @@ module.exports = class AvdDriver extends Homey.Driver {
         
         //if(app.versionChanged) {
         let replaceAllIcons = false;
-        if(await this.homey.settings.get('updated_icons')!=='2.18.5') {
-            await this.homey.settings.set('updated_icons', '2.18.5');
+        if(await this.homey.settings.get('updated_icons')!=='3.0.0') {
+            await this.homey.settings.set('updated_icons', '3.0.0');
             //replaceAllIcons = true; // Dont use this ever!
         } else {
             try {             
