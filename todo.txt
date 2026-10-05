@@ -16,6 +16,7 @@ ToDo:
 * Deprecate Set Expression and Functions.
 * Update secondcap name on setFieldName
 * On importing a AVD-TEF, with custom icons: Make you can select which customicon should be replaced.
+* Reflection BLL (and chronograph?) set React.
 
 Done:
 * When changing a fieldname, don't reset all fieldsettings while typing.
