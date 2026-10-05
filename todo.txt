@@ -13,7 +13,6 @@ ToDo:
 * Sorting of camera's
 * check all "button" if they are buttons or divs.
 
-
 Done:
 * When changing a fieldname, don't reset all fieldsettings while typing.
 * ng-else _delete properties, do not set to undefined.

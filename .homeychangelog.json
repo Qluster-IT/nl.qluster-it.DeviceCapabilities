@@ -4093,5 +4093,20 @@
     "ru": "Исправление ошибки: небольшая ошибка AVD.",
     "ko": "버그 수정: 작은 AVD 버그.",
     "ar": "إصلاح خطأ: خطأ صغير في AVD."
+  },
+  "2.18.3": {
+    "en": "Improved: Translations.",
+    "nl": "Verbeterd: Vertalingen.",
+    "da": "Forbedret: Oversættelser.",
+    "de": "Verbessert: Übersetzungen.",
+    "es": "Mejorado: Traducciones.",
+    "fr": "Amélioré : Traductions.",
+    "it": "Migliorato: Traduzioni.",
+    "no": "Forbedret: Oversettelser.",
+    "sv": "Förbättrad: Översättningar.",
+    "pl": "Ulepszone: Tłumaczenia.",
+    "ru": "Улучшено: Переводы.",
+    "ko": "개선됨: 번역.",
+    "ar": "محسّن: الترجمات."
   }
 }
