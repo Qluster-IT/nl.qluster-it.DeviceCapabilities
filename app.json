@@ -3,7 +3,7 @@
   "version": "2.18.3",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "brandColor": "#E8A713",
+  "brandColor": "#FC960B",
   "name": {
     "en": "Device Capabilities",
     "nl": "Device Capabilities",
@@ -106,6 +106,7 @@
   },
   "homeyCommunityTopicId": 43287,
   "images": {
+    "xlarge": "/assets/images/xlarge.png",
     "large": "/assets/images/large.png",
     "small": "/assets/images/small.png"
   },
@@ -33354,6 +33355,7 @@
         "ar": "جهاز افتراضي متقدم"
       },
       "images": {
+        "xlarge": "drivers/virtualdevice/assets/images/xlarge.jpg",
         "large": "drivers/virtualdevice/assets/images/large.jpg",
         "small": "drivers/virtualdevice/assets/images/small.jpg"
       },

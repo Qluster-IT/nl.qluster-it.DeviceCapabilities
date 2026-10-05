@@ -14,6 +14,8 @@ ToDo:
 * check all "button" if they are buttons or divs.
 * New image.
 * Deprecate Set Expression and Functions.
+* Update secondcap name on setFieldName
+* On importing a AVD-TEF, with custom icons: Make you can select which customicon should be replaced.
 
 Done:
 * When changing a fieldname, don't reset all fieldsettings while typing.

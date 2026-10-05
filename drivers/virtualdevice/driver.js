@@ -127,7 +127,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         // let filesandfoldersApp = await app.readdir('/app');
 
         /// Get Compressed Icon File
-        if(false) {
+        if(true) {
             //Dont forget to add and remove the Icons to the App
             // and get it from: 
             let strCompressedFile = '';
@@ -164,8 +164,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         //this.log('this.defaultIcons', this.defaultIcons);
         if(!this.defaultIcons ) {
             let defaultPath = app.DEFAULT_ICONS_PATH; 
-        //let filesandfolders1 = await app.readdir(defaultPath);
-    
+        
             //save all files from compressed icon files first
             let zippedIcons;
             try {

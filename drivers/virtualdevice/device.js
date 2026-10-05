@@ -1,7 +1,6 @@
 ﻿"use strict";
 
 const Homey = require('homey');
-const Homeyman = require('../../app');
 
 const _ = require('lodash-core');
 const { BL } = require('betterlogiclibrary');
@@ -31,11 +30,14 @@ module.exports = class AvdDevice extends Homey.Device {
 		this.log('Class:', this.getClass());
 		this.homey.app._getDevices = null;
 
-		if (this.hasCapability('devicecapabilities_starttext')) await this.setCapabilityValue('devicecapabilities_starttext', this.homey.__("virtualdevicesettings.devicecapabilities_starttext") || "To start");//"Goto Device Settings");
+		if (this.hasCapability('devicecapabilities_starttext')) {
+			await this.setCapabilityValue('devicecapabilities_starttext', this.homey.__("virtualdevicesettings.devicecapabilities_starttext"));
+			await this.setSettings({ "labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend") });
+		}
 
 
 
-		if (process.env.DEBUG === '1') {
+		/*if (process.env.DEBUG === '1') {
 			if (this.getName() === 'Test AVD') {
 				if (this.hasCapability('devicecapabilities_2_dropdown')) await this.removeCapability('devicecapabilities_2_dropdown');
 				// if(!this.hasCapability('devicecapabilities_2_dropdown')) await this.addCapability('devicecapabilities_2_dropdown');
@@ -52,85 +54,30 @@ module.exports = class AvdDevice extends Homey.Device {
 				// });
 			}
 			//if(this.hasCapability('measure_Status.status.status1'))await this.removeCapability('measure_Status.status.status1');
-		}
+		}*/
 
 
-		//Homeyman.Current.VirtualDevices[this.getName()] = this;
 		let caps = this.getCapabilities();
 
 
 		this.Settings = await this.getStoreValue('Settings');
-		let useNewSettings = (this.Settings != null);
-		if (!this.Settings) {
-			if (!this.Settings) this.Settings = await this.getSettings();
-			let settings = this.Settings;
-			this.removeAllSettings(settings, 'label');
-			this.removeAllSettings(settings, 'batteries');
-			this.removeAllSettings(settings, 'dropdown');
-
-			if (settings.status1Name === '') this.removeAllSettings(settings, 'status1');
-
-			settings.numberOfTextFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (settings['text' + i + 'Name'] && settings['text' + i + 'Name'] != '') settings.numberOfTextFields = i; else this.removeAllSettings(settings, 'text' + i);
-
-			settings.numberOfNumberFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (settings['number' + i + 'Name'] && settings['number' + i + 'Name'] != '') settings.numberOfNumberFields = i; else this.removeAllSettings(settings, 'number' + i);
-			settings.numberOfBooleanFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (settings['boolean' + i + 'Name'] && settings['boolean' + i + 'Name'] != '') settings.numberOfBooleanFields = i; else this.removeAllSettings(settings, 'boolean' + i);
-			settings.numberOfButtonFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (settings['button' + i + 'Name'] && settings['button' + i + 'Name'] != '') settings.numberOfButtonFields = i; else this.removeAllSettings(settings, 'button' + i);
-
-			settings.numberOfCameraFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (settings['camera' + i + 'Name'] && settings['camera' + i + 'Name'] != '') settings.numberOfCameraFields = i; else this.removeAllSettings(settings, 'camera' + i);
-			await this.setStoreValue('Settings', settings);
-		}
-		if (this.Settings.numberOfListFields === undefined) {
-			this.Settings.numberOfListFields = 0;
-			for (let i = 1; i <= 10; i++)
-				if (this.Settings['list' + i + 'Name'] && this.Settings['list' + i + 'Name'] != '') this.Settings.numberOfListFields = i; else this.removeAllSettings(this.Settings, 'list' + i);
-			await this.setStoreValue('Settings', this.Settings);
-		}
-
-		//this.log('Settings', this.Settings);
 		if (this.Settings && !this.Settings.cls) this.Settings.cls = 'other';
 
 		//if (process.env.DEBUG === '1' || 
-		if (this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {
-			if (useNewSettings) {
-				for (let i = 1; i <= 10; i++) {
-					if (this.Settings['number' + i + 'Decimals'] === -1) this.Settings['number' + i + 'Decimals'] = undefined;
-					if (this.Settings['number' + i + 'Min'] === -1) this.Settings['number' + i + 'Min'] = undefined;
-					if (this.Settings['number' + i + 'Max'] === -1) this.Settings['number' + i + 'Max'] = undefined;
-				}
-				delete this.Settings.iconNames;
-				for (let settingName in this.Settings) {
-					if (settingName != 'energyCumulative' && settingName.endsWith('EnergyCumulative')) {
-						if (this.Settings[settingName] === true) this.Settings['energyCumulative'] = true;
-						delete this.Settings[settingName];
-					}
-				}
-			}
-
-			//let a = this.homey.__("virtualdevicesettings.devicecapabilities_starttext");
-			await this.setSettings({ "labelGotoRepair": this.homey.__("virtualdevicesettings.devicecapabilities_starttext") + ' ' + this.homey.__("virtualdevicesettings.devicecapabilities_starttextend") });
-
+		if (this.driver.getVersionChanged(this.getStoreValue('Version') || "0.0.0")) {			
 			try {
 
 				this.setStoreValue('Version', this.homey.app.manifest.version);
-				for (let i = 0; i < caps.length; i++) {
+				
+				// Use this part if capabilities are removed from the manifest.
+				/*for (let i = 0; i < caps.length; i++) {
 					let fieldId = this.getStoreValue(caps[i]);
 					let _cap = caps[i].split('.')[0];
 					if (caps[i].indexOf('devicecapabilities') > -1 && !this.homey.app.manifest.capabilities[_cap]) {
 						this.removeCapability(caps[i]);
 						continue;
-						//this.log('cap doesn\'t exists any more', caps[i]);
 					}
-				}
+				}*/
 			} catch (error) {
 				this.error(error);
 			}
@@ -149,14 +96,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 			await this.setListener({ fieldId, settings: this.Settings, cap: caps[i] });
 		}
-
-		// this.homey.settings.on('set', (async function (settingName, settingValue) {
-		// 	if (settingName == 'customIconNames') {
-		// 		this.setIconNames();
-		// 	}
-
-		// }).bind(this));
-
+		
 	}
 
 	async activateReact({ fieldId, value, source }) {
