@@ -4123,5 +4123,20 @@
     "ru": "Улучшено: новый дизайн, изображения и логотипы.",
     "ko": "개선됨: 새로운 디자인, 이미지 및 로고.",
     "ar": "محسّن: تصميم جديد، صور وشعارات."
+  },
+  "3.0.1": {
+    "en": "Improved: Added support for BLL-coding in AVD Set Text and Set Status.",
+    "nl": "Verbeterd: Ondersteuning toegevoegd voor BLL-codering in AVD Set Text en Set Status.",
+    "da": "Forbedret: Tilføjet support for BLL-kodning i AVD Sæt Tekst og Sæt Status.",
+    "de": "Verbessert: Unterstützung für BLL-Codierung in AVD Set Text und Set Status hinzugefügt.",
+    "es": "Mejorado: Se agregó soporte para codificación BLL en AVD Set Text y Set Status.",
+    "fr": "Amélioré : Ajout du support pour le codage BLL dans AVD Définir Texte et Définir Statut.",
+    "it": "Migliorato: Aggiunto supporto per la codifica BLL in AVD Imposta Testo e Imposta Stato.",
+    "no": "Forbedret: Lagt til støtte for BLL-koding i AVD Set Text og Set Status.",
+    "sv": "Förbättrad: Lade till stöd för BLL-kodning i AVD Set Text och Set Status.",
+    "pl": "Ulepszone: Dodano obsługę kodowania BLL w AVD Set Text i Set Status.",
+    "ru": "Улучшено: Добавлена поддержка BLL-кодирования в AVD Set Text и Set Status.",
+    "ko": "개선됨: AVD Set Text 및 Set Status에서 BLL 코딩 지원 추가.",
+    "ar": "محسن: تمت إضافة دعم لتشفير BLL في AVD لتعيين النص وتعيين الحالة."
   }
 }

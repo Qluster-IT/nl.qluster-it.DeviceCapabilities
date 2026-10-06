@@ -303,8 +303,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                 switch (action) {
                                     case 'virtualdevice_set_text':
                                         if(args.text!==undefined && args.text!=='undefined') value = args.text;
-                                        else value = null;
-                                        
+                                        else value = null;                                        
                                         value = await BL.decode(value);
                                         triggerCard = this.triggerFlowText;
                                         break;
@@ -330,7 +329,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                                         break;                                     
                                     case 'virtualdevice_set_list_tag':
                                         if(args.value!==undefined && args.value!=='undefined') value = args.value;
-                                        else value = null;
+                                        else value = null;                                        
+                                        value = await BL.decode(value);
                                         triggerCard = this.triggerFlowList;
                                         break;
                                     case 'virtualdevice_set_status':
@@ -342,11 +342,13 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             if(opt.units!=args.text) {
                                                 statusTextChanged = true;
                                                 //await args.device.setUnavailable('Updating');
-                                                opt.units = args.text;
+                                                
+                                                let value = await BL.decode(args.text);
+                                                opt.units = value;
                                                 await args.device.setCapabilityOptions(cap, opt);
                                                 //await args.device.setAvailable();
                                             }
-                                            await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
+                                            await this.setSecondCapability({ device:args.device , fieldId, units:value});
                                             
                                         }
                                         if(args.number!==undefined && args.number!=='undefined') value = args.number;
