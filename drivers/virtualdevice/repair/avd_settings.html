@@ -284,7 +284,7 @@
 			<div class="group header green text-center">
 				{{__('virtualdevicesettings.textFields') || 'Textfields'}}
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfTextFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfTextFields" ng-repeat="x in [].constructor(s.numberOfTextFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon green"></span> <span>{{__('virtualdevicesettings.textFieldI',
 							{i:$index+1}) || 'Textfield ' + ($index+1)}}</span></div>
@@ -484,7 +484,7 @@
 			<div class="group header blue text-center">
 				{{__('virtualdevicesettings.numberFields') || 'Numberfields'}}
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfNumberFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfNumberFields" ng-repeat="x in [].constructor(s.numberOfNumberFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon blue"></span>
 						<span>{{__('virtualdevicesettings.numberFieldI', {i:$index+1}) || 'Numberfield ' +
@@ -743,7 +743,7 @@
 			<div class="group header orange text-center">
 				{{__('virtualdevicesettings.booleanFields') || 'Yes/No fields'}}
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfBooleanFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfBooleanFields" ng-repeat="x in [].constructor(s.numberOfBooleanFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon orange"></span>
 						<span>{{__('virtualdevicesettings.booleanFieldI', {i:$index+1}) || 'Yes/No Field ' +
@@ -974,7 +974,7 @@
 			<div class="group header orange round text-center">
 				{{__('virtualdevicesettings.buttonFields') || 'Buttons'}}
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfButtonFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfButtonFields" ng-repeat="x in [].constructor(s.numberOfButtonFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon orange round"></span>
 						<span>{{__('virtualdevicesettings.buttonFieldI', {i:$index+1}) || 'Button ' + ($index+1)}}</span>
@@ -1217,7 +1217,7 @@
 			<div class="group header green round text-center">
 				{{__('virtualdevicesettings.listFields') || 'Lists'}}
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfListFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfListFields" ng-repeat="x in [].constructor(s.numberOfListFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon green round"></span>
 						<span>{{__('virtualdevicesettings.listFieldI', {i:$index+1}) || 'List ' + ($index+1)}}</span>
@@ -1431,7 +1431,7 @@
 				<div ng-if="s.numberOfCameraFields" data-i18n="virtualdevicesettings.labelCamerasRestart" class="top-labels">After removing a camera (by clearing the name or url), the Device Capabilities App
 					requires a restart to remove the camera-image from the virtual device.</div>
 			</div>
-			<div class="group" ng-class="{odd:$odd}" ng-repeat="x in [].constructor(s.numberOfCameraFields) track by $index">
+			<div class="group" ng-class="{odd:$odd}" ng-if="s.numberOfCameraFields" ng-repeat="x in [].constructor(s.numberOfCameraFields) track by $index">
 				<div class="field">
 					<div class="label"><span class="color-icon purple"></span>
 						<span>{{__('virtualdevicesettings.cameraFieldI', {i:$index+1}) || 'Camera ' + ($index+1)}}</span>
@@ -1897,7 +1897,7 @@ ${vars.textSettings}
 				if (removeNumberOf && settings['numberOf' + name + 'Fields'] === i) settings['numberOf' + name + 'Fields']--;
 				for (const settingKey in settings) {
 					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) && isNaN(settingKey.substr(startName.length, 1))) delete settings[settingKey];
-					if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) ) console.log(settingKey, startName, settingKey.substr(startName.length, 1), isNaN(settingKey.substr(startName.length, 1)));
+					//if (Object.hasOwnProperty.call(settings, settingKey) && settingKey.startsWith(startName) ) console.log(settingKey, startName, settingKey.substr(startName.length, 1), isNaN(settingKey.substr(startName.length, 1)));
 				}
 			}
 
@@ -2321,7 +2321,7 @@ ${vars.textSettings}
 						return;
 					}
 					$scope.$apply(function () {
-						$scope.s = result.settings;
+						$scope.s = result.settings;// || {};
 						
 						$scope.customicons = result.customicons;
 						$scope.customiconsById = {};

@@ -4138,5 +4138,20 @@
     "ru": "Улучшено: Добавлена поддержка BLL-кодирования в AVD Set Text и Set Status.",
     "ko": "개선됨: AVD Set Text 및 Set Status에서 BLL 코딩 지원 추가.",
     "ar": "محسن: تمت إضافة دعم لتشفير BLL في AVD لتعيين النص وتعيين الحالة."
+  },
+  "3.0.2": {
+    "en": "Resolved: A (new) bug which generated errors while editing a newly created AVD.",
+    "nl": "Opgelost: Een (nieuwe) bug die fouten veroorzaakte bij het bewerken van een nieuw aangemaakte AVD.",
+    "da": "Løst: En (ny) fejl, der genererede fejlmeddelelser, mens man redigerede en nyoprettet AVD.",
+    "de": "Behoben: Ein (neuer) Fehler, der beim Bearbeiten eines neu erstellten AVD Fehler erzeugte.",
+    "es": "Resuelto: Un (nuevo) error que generaba problemas al editar un AVD recién creado.",
+    "fr": "Résolu : Un (nouveau) bug qui générait des erreurs lors de l'édition d'un AVD nouvellement créé.",
+    "it": "Risolto: Un (nuovo) bug che generava errori durante la modifica di un AVD appena creato.",
+    "no": "Løst: En (ny) feil som genererte feil mens du redigerte en nylig opprettet AVD.",
+    "sv": "Löst: En (ny) bugg som genererade fel vid redigering av en nyss skapad AVD.",
+    "pl": "Rozwiązano: (Nowy) błąd, który generował błędy podczas edytowania nowo utworzonego AVD.",
+    "ru": "Исправлено: (новая) ошибка, которая вызывала ошибки при редактировании недавно созданного AVD.",
+    "ko": "해결됨: 새로 생성된 AVD를 편집할 때 오류를 발생시키는 (새로운) 버그.",
+    "ar": "تم حل: خطأ (جديد) كان يتسبب في حدوث أخطاء أثناء تحرير AVD تم إنشاؤه حديثًا."
   }
 }
