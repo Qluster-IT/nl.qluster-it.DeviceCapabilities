@@ -4153,5 +4153,20 @@
     "ru": "Исправлено: (новая) ошибка, которая вызывала ошибки при редактировании недавно созданного AVD.",
     "ko": "해결됨: 새로 생성된 AVD를 편집할 때 오류를 발생시키는 (새로운) 버그.",
     "ar": "تم حل: خطأ (جديد) كان يتسبب في حدوث أخطاء أثناء تحرير AVD تم إنشاؤه حديثًا."
+  },
+  "3.0.3": {
+    "en": "Resolved: A bug when changing button1 would reset other buttons names.",
+    "nl": "Opgelost: Een bug waarbij het wijzigen van knop1 de namen van andere knoppen zou resetten.",
+    "da": "Løst: En fejl, hvor ændring af knap1 ville nulstille andre knappers navne.",
+    "de": "Behoben: Ein Fehler, bei dem das Ändern von Button1 die Namen anderer Buttons zurücksetzen würde.",
+    "es": "Resuelto: Un error al cambiar el botón1 que restablecía los nombres de otros botones.",
+    "fr": "Résolu : Un bug qui réinitialisait les noms des autres boutons lors du changement de button1.",
+    "it": "Risolto: Un bug che, cambiando il pulsante1, resettava i nomi degli altri pulsanti.",
+    "no": "Løst: En feil der endring av knapp1 ville tilbakestille navnene på andre knapper.",
+    "sv": "Åtgärdat: En bugg där ändring av knapp1 skulle återställa andra knappnamn.",
+    "pl": "Rozwiązano: Błąd, który powodował, że zmiana przycisku1 resetowała nazwy innych przycisków.",
+    "ru": "Исправлено: Ошибка, при которой изменение кнопки1 сбрасывало названия других кнопок.",
+    "ko": "버튼1을 변경할 때 다른 버튼 이름이 초기화되는 버그가 해결되었습니다.",
+    "ar": "تم حل المشكلة: كان هناك خطأ عند تغيير الزر 1 يؤدي إلى إعادة تعيين أسماء الأزرار الأخرى."
   }
 }

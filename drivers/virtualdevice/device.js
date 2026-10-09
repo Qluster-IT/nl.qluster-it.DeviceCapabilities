@@ -682,6 +682,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 							let pushbutton = false;
 							let isOnOff, hide, isOnOffButtonTab = false;
+							let resetOptions = false;
 
 							let sensor = false;
 
@@ -825,6 +826,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 							if (oldCap && cap != oldCap && this.hasCapability(oldCap)) {
 								await this.removeCapability(oldCap);
+								resetOptions = true;
 								//await api.insights.deleteLog({ uri: targetInsight.uri, id: targetInsight.id }); // Do i want this automatic, or after a restart?
 							}
 							//else targetInsight = null;
@@ -836,6 +838,7 @@ module.exports = class AvdDevice extends Homey.Device {
 							fieldTypeCreated = true;
 
 							if ((type == "button" || (type == "boolean" && cap.indexOf('_button') > -1)) && button1Reset) {
+								resetOptions = true;
 								if (this.hasCapability(cap)) await this.removeCapability(cap);
 								if (this.hasCapability(secondCap)) await this.removeCapability(secondCap);
 
@@ -887,7 +890,8 @@ module.exports = class AvdDevice extends Homey.Device {
 							// let var4= (opt.preventInsights === settings[type + i + 'CreateInsights'] && settings[type + i + 'SeparateCapabilities']===false);
 							// let var5= (settings[type + i + 'Units'] != oldSettings[type + i + 'Units'] && type != 'status');
 
-							let capOptionsChanged =
+							let capOptionsChanged = 
+								resetOptions ||
 								opt.title != name ||
 								//(opt.preventTag!==true && (settings[type + i + 'SeparateCapabilities']===true || settings[type + i + 'CreateTag']===true)) ||
 								//(opt.preventTag===true && (settings[type + i + 'SeparateCapabilities']!==true && settings[type + i + 'CreateTag']===true)) ||
