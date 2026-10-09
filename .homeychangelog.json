@@ -4168,5 +4168,20 @@
     "ru": "Исправлено: Ошибка, при которой изменение кнопки1 сбрасывало названия других кнопок.",
     "ko": "버튼1을 변경할 때 다른 버튼 이름이 초기화되는 버그가 해결되었습니다.",
     "ar": "تم حل المشكلة: كان هناك خطأ عند تغيير الزر 1 يؤدي إلى إعادة تعيين أسماء الأزرار الأخرى."
+  },
+  "3.0.5": {
+    "en": "Resolved: Small bugfixes",
+    "nl": "Opgelost: Kleine bugfixes",
+    "da": "Løst: Små fejlrettelser",
+    "de": "Behoben: Kleine Fehlerbehebungen",
+    "es": "Resuelto: Pequeñas correcciones de errores",
+    "fr": "Résolu : Petites corrections de bugs",
+    "it": "Risolto: Piccole correzioni di bug",
+    "no": "Løst: Små feilrettinger",
+    "sv": "Löst: Små buggfixar",
+    "pl": "Rozwiązane: Drobne poprawki błędów",
+    "ru": "Исправлено: Небольшие ошибки устранены",
+    "ko": "해결됨: 작은 버그 수정",
+    "ar": "تم الحل: إصلاحات صغيرة للأخطاء"
   }
 }

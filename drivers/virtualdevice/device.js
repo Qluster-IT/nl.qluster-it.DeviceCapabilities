@@ -37,7 +37,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 		let caps = this.getCapabilities();
 
-		this.Settings = await this.getStoreValue('Settings') || {};
+		this.Settings = (await this.getStoreValue('Settings')) || {};
 		if (this.Settings && !this.Settings.cls) this.Settings.cls = 'other';
 
 		//if (process.env.DEBUG === '1' || 
@@ -610,7 +610,7 @@ module.exports = class AvdDevice extends Homey.Device {
 		try {
 
 			let cls = this.getClass();
-			let customLists = await this.homey.settings.get('custom_lists') || [];
+			let customLists = (await this.homey.settings.get('custom_lists')) || [];
 
 			if (cls != settings.cls) {
 				try {

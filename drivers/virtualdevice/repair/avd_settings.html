@@ -2309,7 +2309,7 @@ ${vars.textSettings}
 				Homey.setTitle(Homey.__("virtualdevicesettings.title_repair"));
 				//Homey.setTitle('______________________ '+Homey.__("virtualdevicesettings.title_repair")+' ______________________');
 				Homey.emit('virtualdevicesettings_getCustomIconsAvailable', null, function (err, result) {
-					if (err) { console.log(err); return; }
+					if (err) { console.log('virtualdevicesettings_getCustomIconsAvailable', err); return; }
 					$scope.$apply(function () {
 						$scope.customIconsAvailable = result.customIconsAvailable;
 					});
@@ -2317,7 +2317,7 @@ ${vars.textSettings}
 			
 				Homey.emit('virtualdevicesettings_load', null, function (err, result) {
 					if (err) {
-						console.log(err);
+						console.log('virtualdevicesettings_load', err);
 						return;
 					}
 					$scope.$apply(function () {
