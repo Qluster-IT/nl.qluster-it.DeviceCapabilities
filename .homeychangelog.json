@@ -4170,18 +4170,33 @@
     "ar": "تم حل المشكلة: كان هناك خطأ عند تغيير الزر 1 يؤدي إلى إعادة تعيين أسماء الأزرار الأخرى."
   },
   "3.0.5": {
-    "en": "Resolved: Small bugfixes",
-    "nl": "Opgelost: Kleine bugfixes",
-    "da": "Løst: Små fejlrettelser",
-    "de": "Behoben: Kleine Fehlerbehebungen",
-    "es": "Resuelto: Pequeñas correcciones de errores",
-    "fr": "Résolu : Petites corrections de bugs",
-    "it": "Risolto: Piccole correzioni di bug",
-    "no": "Løst: Små feilrettinger",
-    "sv": "Löst: Små buggfixar",
-    "pl": "Rozwiązane: Drobne poprawki błędów",
-    "ru": "Исправлено: Небольшие ошибки устранены",
-    "ko": "해결됨: 작은 버그 수정",
-    "ar": "تم الحل: إصلاحات صغيرة للأخطاء"
+    "en": "Resolved: Small bugfixes.",
+    "nl": "Opgelost: Kleine bugfixes.",
+    "da": "Løst: Små fejlrettelser.",
+    "de": "Behoben: Kleine Fehlerbehebungen.",
+    "es": "Resuelto: Pequeñas correcciones de errores.",
+    "fr": "Résolu : Petites corrections de bugs.",
+    "it": "Risolto: Piccole correzioni di bug.",
+    "no": "Løst: Små feilrettinger.",
+    "sv": "Löst: Små buggfixar.",
+    "pl": "Rozwiązano: Drobne poprawki błędów.",
+    "ru": "Исправлено: Небольшие исправления ошибок.",
+    "ko": "해결됨: 작은 버그 수정.",
+    "ar": "تم الحل: إصلاحات بسيطة للأخطاء."
+  },
+  "3.0.6": {
+    "en": "Resolved: Fixed startup false triggers.",
+    "nl": "Opgelost: Valse triggers bij opstarten verholpen.",
+    "da": "Løst: Rettet opstartsfejludløsninger.",
+    "de": "Behoben: Falsche Auslöser beim Start behoben.",
+    "es": "Resuelto: Se corrigieron los falsos disparos al iniciar.",
+    "fr": "Résolu : Correction des déclenchements erronés au démarrage.",
+    "it": "Risolto: Corretto l'avvio dei falsi allarmi.",
+    "no": "Løst: Fikset falske utløser ved oppstart.",
+    "sv": "Löst: Åtgärdade falska utlösningar vid start.",
+    "pl": "Rozwiązano: Naprawiono fałszywe wyzwalacze przy uruchamianiu.",
+    "ru": "Исправлено: Устранены ложные срабатывания при запуске.",
+    "ko": "해결됨: 시작 시 잘못된 트리거 수정.",
+    "ar": "تم الحل: تم إصلاح التنبيهات الخاطئة عند بدء التشغيل."
   }
 }

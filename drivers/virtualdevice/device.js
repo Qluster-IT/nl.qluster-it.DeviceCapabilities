@@ -249,7 +249,7 @@ module.exports = class AvdDevice extends Homey.Device {
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id]) this.homey.app.Reflections[reflect][reflectDevice.id] = {};
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property]) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property] = { fields: [] }
 						if (!this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property].fields.push({
-							device: this, fieldId: type + i, method: async (r, capability) => {
+							device: this, fieldId: type + i, method: async (r, capability, {startUpRun} = {startUpRun:false}) => {
 								if (this.Settings[r.fieldId + 'React'] === 'true_only_react') return;
 
 								let property = this.homey.app.Reflections[reflect][reflectDevice.id][reflectDevice.property];
@@ -337,7 +337,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 								try {
 
-									let args = { field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES };
+									let args = { field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES, startUpRun };
 									if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) args.units = valueUnit;
 									await this.driver.setValue(args);
 								} catch (error) {
@@ -410,7 +410,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					if (reflect === 'net.i-dev.betterlogic') {
 
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
-							device: this, fieldId: type + i, method: async (r, variable) => {
+							device: this, fieldId: type + i, method: async (r, variable, {startUpRun}) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
 								let value = property ? variable[property] : variable.value;
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
@@ -428,7 +428,7 @@ module.exports = class AvdDevice extends Homey.Device {
 									else if (['text'].indexOf(type) > -1) value = value.toISOString();
 								}
 								try {
-									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards' });
+									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', startUpRun });
 								} catch (error) {
 
 								}
@@ -439,7 +439,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					}
 					else if (reflect === 'nl.fellownet.chronograph') {
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
-							device: this, fieldId: type + i, method: async (r, chronograph) => {
+							device: this, fieldId: type + i, method: async (r, chronograph, { startUpRun }) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
 								if (chronograph.removed) chronograph.remaining = 0;
 								let value = chronograph[property];
@@ -455,7 +455,7 @@ module.exports = class AvdDevice extends Homey.Device {
 									if (['elapsed', 'remaining'].indexOf(property) > -1) value = value / 1_000;
 								}
 								try {
-									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value: value, mode: 'executewhencards' });
+									await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value: value, mode: 'executewhencards' , startUpRun});
 								} catch (error) {
 
 								}
@@ -975,6 +975,8 @@ module.exports = class AvdDevice extends Homey.Device {
 
 						} else {
 							this.setStoreValue(type + i, null);
+							await device.setStoreValue(type + i+"Value", null);
+
 							if(oldCap) {
 								this.setStoreValue(oldCap, null);
 								if (this.hasCapability(oldCap)) await this.removeCapability(oldCap);

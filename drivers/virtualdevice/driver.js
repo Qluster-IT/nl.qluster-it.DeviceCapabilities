@@ -536,7 +536,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         }
     }
 
-    async setValue({field, device, value, expression, mode, source, units }) {
+    async setValue({field, device, value, expression, mode, source, units, startUpRun }) {
         const _fieldId = field ? field.id : undefined;
         const fieldIds = [_fieldId];
         try {
@@ -564,6 +564,11 @@ module.exports = class AvdDriver extends Homey.Driver {
                     if(expression!==undefined && expression!=='undefined') {
                         value = app.runSandBox(expression);                
                     }
+
+                    if(startUpRun && oldValue===value) {
+                        continue;
+                    }
+
                     await this.setSecondCapability({ val:value, device , fieldId, units:units});
                     try {                        
                         await device.setCapabilityValue(cap, value);
@@ -579,6 +584,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                             await device.setCapabilityOptions(cap, opt);
                         }
                     }
+
 
                     await device.setStoreValue(fieldId+"Value", value);
 

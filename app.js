@@ -1183,11 +1183,11 @@ class DeviceCapabilities extends Homey.App {
 									const field = property.fields[i];
 									if (device && field.device !== device)
 										continue;
-									if (runnedDevices[field.device.id] && runnedDevices[field.device.id][field.fieldId])
+									if (runnedDevices[field.device.__id] && runnedDevices[field.device.__id][field.fieldId])
 										continue;
-									field.method(field, { value: property.value, id: propertyId });
-									if (!runnedDevices[field.device.id]) runnedDevices[field.device.id] = {};
-									if (!runnedDevices[field.device.id][field.fieldId]) runnedDevices[field.device.id][field.fieldId] = true;
+									field.method(field, { value: property.value, id: propertyId }, {startUpRun : true });
+									if (!runnedDevices[field.device.__id]) runnedDevices[field.device.__id] = {};
+									if (!runnedDevices[field.device.__id][field.fieldId]) runnedDevices[field.device.__id][field.fieldId] = true;
 
 								}
 							} catch (errorPropertyId) {
@@ -1211,7 +1211,7 @@ class DeviceCapabilities extends Homey.App {
 							const field = this.Reflections[APP_ID_BLL][variableName][i];
 							if (device && field.device !== device) continue;
 							try {
-								await field.method(field, _var);
+								await field.method(field, _var,  {startUpRun : true });
 							} catch (error) {
 
 							}
@@ -1234,7 +1234,7 @@ class DeviceCapabilities extends Homey.App {
 							if (device && field.device !== device) continue;
 							try {
 
-								await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true });
+								await field.method(field, chronograph || { elapsed: 0, remaining: 0, running: false, removed: true }, {startUpRun : true });
 							} catch (error) {
 
 							}
