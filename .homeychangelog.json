@@ -4198,5 +4198,20 @@
     "ru": "Исправлено: Устранены ложные срабатывания при запуске.",
     "ko": "해결됨: 시작 시 잘못된 트리거 수정.",
     "ar": "تم الحل: تم إصلاح التنبيهات الخاطئة عند بدء التشغيل."
+  },
+  "3.0.7": {
+    "en": "Resolved: Minor bugs.",
+    "nl": "Opgelost: Kleine bugs.",
+    "da": "Løst: Mindre fejl.",
+    "de": "Behoben: Kleine Fehler.",
+    "es": "Resuelto: Errores menores.",
+    "fr": "Résolu : Petits bugs.",
+    "it": "Risolto: Bug minori.",
+    "no": "Løst: Mindre feil.",
+    "sv": "Åtgärdat: Mindre buggar.",
+    "pl": "Rozwiązano: Drobne błędy.",
+    "ru": "Исправлено: Небольшие ошибки.",
+    "ko": "해결됨: 사소한 버그.",
+    "ar": "تم الحل: أخطاء بسيطة."
   }
 }

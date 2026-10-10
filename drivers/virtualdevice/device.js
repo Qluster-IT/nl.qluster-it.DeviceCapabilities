@@ -336,54 +336,12 @@ module.exports = class AvdDevice extends Homey.Device {
 								}
 
 								try {
-
 									let args = { field: { id: r.fieldId }, device: r.device, value, mode: 'executewhencards', source: DC_DEVICES, startUpRun };
 									if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) args.units = valueUnit;
 									await this.driver.setValue(args);
 								} catch (error) {
 
 								}
-
-								// if (type == 'status' && this.Settings[r.fieldId + 'ReflectFormatUnit']) {
-								// 	let valueUnit = value;
-								// 	const formatUnit = this.Settings[r.fieldId + 'ReflectFormatUnit'];
-								// 	if (formatUnit) {
-								// 		try {
-								// 			valueUnit = await BL.express(formatUnit, { value, values });
-								// 		} catch (error) {
-								// 			if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
-								// 		}
-
-								// 		try {
-								// 			await this.driver.setSecondCapability({ field: { id: r.fieldId }, device: r.device, units: valueUnit });
-								// 		} catch (error) {
-
-								// 		}
-								// 	}
-
-								// }
-
-
-								//let value = devices ? capability[devices] : capability.value;
-								// const format = this.Settings[r.fieldId + 'ReflectFormat'];
-								// let date, time;
-								// if (property == 'lastChanged' && value) date = value = new Date(value);
-								// if (format) {
-								// 	try {
-								// 		value = await BL.express(format, { value, variable: capability, date, timeMs: time });
-								// 	} catch (error) {
-								// 		if (error != 'Better Logic Library is not loaded.');//through an alert anywhere?;
-								// 	}
-								// }
-								// else if (property == 'lastChanged' && value) {
-								// 	if (['status', 'number'].indexOf(type) > -1) value = value.getTime();
-								// 	else if (['text'].indexOf(type) > -1) value = value.toISOString();
-								// }
-								// try {
-								// 	await this.driver.setValue({ field: { id: r.fieldId }, device: r.device, value });
-								// } catch (error) {
-
-								// }
 							}
 						});
 
@@ -410,7 +368,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					if (reflect === 'net.i-dev.betterlogic') {
 
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
-							device: this, fieldId: type + i, method: async (r, variable, {startUpRun}) => {
+							device: this, fieldId: type + i, method: async (r, variable, {startUpRun} = {startUpRun:false}) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
 								let value = property ? variable[property] : variable.value;
 								const format = this.Settings[r.fieldId + 'ReflectFormat'];
@@ -439,7 +397,7 @@ module.exports = class AvdDevice extends Homey.Device {
 					}
 					else if (reflect === 'nl.fellownet.chronograph') {
 						if (!this.homey.app.Reflections[reflect][reflectId].find(x => x.device == this && x.fieldId == type + i)) this.homey.app.Reflections[reflect][reflectId].push({
-							device: this, fieldId: type + i, method: async (r, chronograph, { startUpRun }) => {
+							device: this, fieldId: type + i, method: async (r, chronograph, { startUpRun } = {startUpRun:false}) => {
 								let property = this.Settings[r.fieldId + 'ReflectProperty'];
 								if (chronograph.removed) chronograph.remaining = 0;
 								let value = chronograph[property];
@@ -975,7 +933,7 @@ module.exports = class AvdDevice extends Homey.Device {
 
 						} else {
 							this.setStoreValue(type + i, null);
-							await device.setStoreValue(type + i+"Value", null);
+							await this.setStoreValue(type + i+"Value", null);
 
 							if(oldCap) {
 								this.setStoreValue(oldCap, null);

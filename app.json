@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#FC960B",
