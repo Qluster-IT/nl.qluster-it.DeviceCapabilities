@@ -1006,7 +1006,7 @@
 						<input class="value" type="checkbox" ng-model="s['button'+($index+1)+'CreateFlowCards']" />
 					</div>
 					<div ng-else execute="s['button'+($index+1)+'CreateFlowCards'] = false;"></div>
-					<div class="field" ng-if="s['button'+($index+1)+'ShowAs']!=='indicatoronly' && s['button'+($index+1)+'ShowAs']!=='onoff_hide' && s['button'+($index+1)+'ShowAs']!=='pushbutton_indicator' && s['button'+($index+1)+'CreateFlowCards']!=true ">
+					<div class="field" ng-if="(!s['button'+($index+1)+'ShowAs'] || s['button'+($index+1)+'ShowAs']==='button' || s['button'+($index+1)+'ShowAs']==='onoff_buttontab' || s['button'+($index+1)+'ShowAs']==='onoff') && s['button'+($index+1)+'CreateFlowCards']!==true ">
 						<div class="label">{{__('virtualdevicesettings.icon') || 'Icon'}}</div>
 						<div class="dropdown value">
 							<button class="btn btn-secondary dropdown-toggle hy-nostyle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -4213,5 +4213,20 @@
     "ru": "Исправлено: Небольшие ошибки.",
     "ko": "해결됨: 사소한 버그.",
     "ar": "تم الحل: أخطاء بسيطة."
+  },
+  "3.0.8": {
+    "en": "Resolved: Icon could be set for Button ShowAs types, which could not be set.",
+    "nl": "Opgelost: Pictogram kon worden ingesteld voor Button ShowAs-types, wat niet kon worden ingesteld.",
+    "da": "Løst: Ikon kunne indstilles for knap ShowAs-typer, som ikke kunne indstilles.",
+    "de": "Behoben: Das Symbol konnte für Button ShowAs-Typen festgelegt werden, was nicht möglich war.",
+    "es": "Resuelto: Se podía establecer un ícono para los tipos de Button ShowAs, lo cual no se podía hacer.",
+    "fr": "Résolu : L'icône pouvait être définie pour les types d'affichage de bouton, ce qui n'était pas possible auparavant.",
+    "it": "Risolto: L'icona poteva essere impostata per i tipi di visualizzazione del pulsante, ma non poteva essere impostata.",
+    "no": "Løst: Ikon kunne settes for Button ShowAs-typer, som ikke kunne settes.",
+    "sv": "Löst: Ikon kunde ställas in för knappar med ShowAs-typer, vilket inte kunde ställas in.",
+    "pl": "Rozwiązano: Ikona mogła być ustawiona dla typów Button ShowAs, które nie mogły być ustawione.",
+    "ru": "Исправлено: значок можно было установить для типов Button ShowAs, для которых его нельзя было установить.",
+    "ko": "해결됨: 아이콘을 Button ShowAs 유형에 설정할 수 있었으나, 설정할 수 없었습니다.",
+    "ar": "تم الحل: يمكن تعيين أيقونة لأنواع العرض كزر، والتي لم يكن من الممكن تعيينها."
   }
 }
