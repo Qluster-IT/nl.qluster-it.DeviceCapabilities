@@ -4228,5 +4228,20 @@
     "ru": "Исправлено: значок можно было установить для типов Button ShowAs, для которых его нельзя было установить.",
     "ko": "해결됨: 아이콘을 Button ShowAs 유형에 설정할 수 있었으나, 설정할 수 없었습니다.",
     "ar": "تم الحل: يمكن تعيين أيقونة لأنواع العرض كزر، والتي لم يكن من الممكن تعيينها."
+  },
+  "3.0.9": {
+    "en": "Changed sourcecode and issues from Bitbucket to GitHub.",
+    "nl": "Broncode en problemen verplaatst van Bitbucket naar GitHub.",
+    "da": "Ændrede kildekode og problemer fra Bitbucket til GitHub.",
+    "de": "Quellcode und Probleme von Bitbucket zu GitHub geändert.",
+    "es": "Cambió el código fuente y los problemas de Bitbucket a GitHub.",
+    "fr": "Sourcecode et problèmes changés de Bitbucket à GitHub.",
+    "it": "Codice sorgente e problemi cambiati da Bitbucket a GitHub.",
+    "no": "Endret kildekode og problemer fra Bitbucket til GitHub.",
+    "sv": "Ändrade källkod och problem från Bitbucket till GitHub.",
+    "pl": "Zmieniono kod źródłowy i problemy z Bitbucket na GitHub.",
+    "ru": "Изменили исходный код и задачи с Bitbucket на GitHub.",
+    "ko": "소스 코드와 문제를 Bitbucket에서 GitHub로 변경했습니다.",
+    "ar": "تم تغيير الشيفرة المصدرية والمشكلات من Bitbucket إلى GitHub."
   }
 }
