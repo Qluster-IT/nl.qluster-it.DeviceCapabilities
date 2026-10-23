@@ -1,6 +1,6 @@
 {
   "id": "nl.qluster-it.DeviceCapabilities",
-  "version": "3.0.0",
+  "version": "3.0.9",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#FC960B",
@@ -100,9 +100,9 @@
     "homey:app:net.i-dev.betterlogic",
     "homey:app:nl.fellownet.chronograph"
   ],
-  "source": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/",
+  "source": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/",
   "bugs": {
-    "url": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities/issues"
+    "url": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/issues"
   },
   "homeyCommunityTopicId": 43287,
   "images": {
@@ -5996,8 +5996,7 @@
               "pl": "Tekst (* Obsługiwane przez BLL)",
               "ru": "Текст (* поддерживается BLL)",
               "ko": "텍스트 (* BLL 지원됨)",
-              "ar": "النص (* مدعوم من BLL)",
-              "du": "Text (* BLL unterstützt)"
+              "ar": "النص (* مدعوم من BLL)"
             },
             "title": {
               "en": "Text",
@@ -6012,8 +6011,7 @@
               "pl": "Tekst",
               "ru": "Текст",
               "ko": "텍스트",
-              "ar": "نص",
-              "du": "Text"
+              "ar": "نص"
             },
             "required": false
           },
@@ -6695,19 +6693,19 @@
             "type": "text",
             "name": "value",
             "placeholder": {
-              "en": "Text",
-              "nl": "Tekst",
-              "da": "Tekst",
-              "de": "Text",
-              "es": "Texto",
-              "fr": "Texte",
-              "it": "Testo",
-              "no": "Tekst",
-              "sv": "Text",
-              "pl": "Tekst",
-              "ru": "Текст",
-              "ko": "텍스트",
-              "ar": "نص"
+              "en": "Text (* BLL supported)",
+              "nl": "Tekst (* BLL ondersteund)",
+              "da": "Tekst (* BLL understøttet)",
+              "de": "Text (* BLL unterstützt)",
+              "es": "Texto (* BLL compatible)",
+              "fr": "Texte (* BLL pris en charge)",
+              "it": "Testo (* Supportato da BLL)",
+              "no": "Tekst (* BLL støttet)",
+              "sv": "Text (* BLL stöds)",
+              "pl": "Tekst (* Obsługiwane przez BLL)",
+              "ru": "Текст (* поддерживается BLL)",
+              "ko": "텍스트 (* BLL 지원됨)",
+              "ar": "النص (* مدعوم من BLL)"
             }
           },
           {
@@ -6814,19 +6812,19 @@
             "type": "text",
             "name": "text",
             "placeholder": {
-              "en": "Text",
-              "nl": "Tekst",
-              "da": "Tekst",
-              "de": "Text",
-              "es": "Texto",
-              "fr": "Texte",
-              "it": "Testo",
-              "no": "Tekst",
-              "sv": "Text",
-              "pl": "Tekst",
-              "ru": "Текст",
-              "ko": "텍스트",
-              "ar": "نص"
+              "en": "Text (* BLL supported)",
+              "nl": "Tekst (* BLL ondersteund)",
+              "da": "Tekst (* BLL understøttet)",
+              "de": "Text (* BLL unterstützt)",
+              "es": "Texto (* BLL compatible)",
+              "fr": "Texte (* BLL pris en charge)",
+              "it": "Testo (* Supportato da BLL)",
+              "no": "Tekst (* BLL støttet)",
+              "sv": "Text (* BLL stöds)",
+              "pl": "Tekst (* Obsługiwane przez BLL)",
+              "ru": "Текст (* поддерживается BLL)",
+              "ko": "텍스트 (* BLL 지원됨)",
+              "ar": "النص (* مدعوم من BLL)"
             },
             "required": false
           },
@@ -6954,19 +6952,19 @@
             "type": "text",
             "name": "text",
             "placeholder": {
-              "en": "Text",
-              "nl": "Tekst",
-              "da": "Tekst",
-              "de": "Text",
-              "es": "Texto",
-              "fr": "Texte",
-              "it": "Testo",
-              "no": "Tekst",
-              "sv": "Text",
-              "pl": "Tekst",
-              "ru": "текст",
-              "ko": "텍스트",
-              "ar": "نص"
+              "en": "Text (* BLL supported)",
+              "nl": "Tekst (* BLL ondersteund)",
+              "da": "Tekst (* BLL understøttet)",
+              "de": "Text (* BLL unterstützt)",
+              "es": "Texto (* BLL compatible)",
+              "fr": "Texte (* BLL pris en charge)",
+              "it": "Testo (* Supportato da BLL)",
+              "no": "Tekst (* BLL støttet)",
+              "sv": "Text (* BLL stöds)",
+              "pl": "Tekst (* Obsługiwane przez BLL)",
+              "ru": "Текст (* поддерживается BLL)",
+              "ko": "텍스트 (* BLL 지원됨)",
+              "ar": "النص (* مدعوم من BLL)"
             },
             "required": false
           },

@@ -303,8 +303,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                                 switch (action) {
                                     case 'virtualdevice_set_text':
                                         if(args.text!==undefined && args.text!=='undefined') value = args.text;
-                                        else value = null;
-                                        
+                                        else value = null;                                        
                                         value = await BL.decode(value);
                                         triggerCard = this.triggerFlowText;
                                         break;
@@ -330,7 +329,8 @@ module.exports = class AvdDriver extends Homey.Driver {
                                         break;                                     
                                     case 'virtualdevice_set_list_tag':
                                         if(args.value!==undefined && args.value!=='undefined') value = args.value;
-                                        else value = null;
+                                        else value = null;                                        
+                                        value = await BL.decode(value);
                                         triggerCard = this.triggerFlowList;
                                         break;
                                     case 'virtualdevice_set_status':
@@ -342,11 +342,13 @@ module.exports = class AvdDriver extends Homey.Driver {
                                             if(opt.units!=args.text) {
                                                 statusTextChanged = true;
                                                 //await args.device.setUnavailable('Updating');
-                                                opt.units = args.text;
+                                                
+                                                let value = await BL.decode(args.text);
+                                                opt.units = value;
                                                 await args.device.setCapabilityOptions(cap, opt);
                                                 //await args.device.setAvailable();
                                             }
-                                            await this.setSecondCapability({ device:args.device , fieldId, units:args.text});
+                                            await this.setSecondCapability({ device:args.device , fieldId, units:value});
                                             
                                         }
                                         if(args.number!==undefined && args.number!=='undefined') value = args.number;
@@ -534,7 +536,7 @@ module.exports = class AvdDriver extends Homey.Driver {
         }
     }
 
-    async setValue({field, device, value, expression, mode, source, units }) {
+    async setValue({field, device, value, expression, mode, source, units, startUpRun }) {
         const _fieldId = field ? field.id : undefined;
         const fieldIds = [_fieldId];
         try {
@@ -562,6 +564,11 @@ module.exports = class AvdDriver extends Homey.Driver {
                     if(expression!==undefined && expression!=='undefined') {
                         value = app.runSandBox(expression);                
                     }
+
+                    if(startUpRun && oldValue===value) {
+                        continue;
+                    }
+
                     await this.setSecondCapability({ val:value, device , fieldId, units:units});
                     try {                        
                         await device.setCapabilityValue(cap, value);
@@ -577,6 +584,7 @@ module.exports = class AvdDriver extends Homey.Driver {
                             await device.setCapabilityOptions(cap, opt);
                         }
                     }
+
 
                     await device.setStoreValue(fieldId+"Value", value);
 
@@ -3405,16 +3413,21 @@ module.exports = class AvdDriver extends Homey.Driver {
             // defer.then(async ()=> { this.loadStuff({reload:true}); });
             // setTimeout(()=> { defer.resolve(); }, 1);
 
-            let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
-        return {
-            settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
-            favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
-            bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined, blReady:BL.isReady,
-            cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady,
-            listCustomLists : await this.homey.settings.get('custom_lists')
-            //,
-            //reflectDevices : _.map(this.homey.app.devices, d=>{return {name:d.name, id: d.id} ;})
-        };
+            try {
+                let settingName = !this.activeAvdSource || this.activeAvdSource==='English' ? '' : '_'+  this.activeAvdSource;
+                return {
+                    settings:device.Settings, customicons:await this.getCustomIcons(), tefTemplates: await this.homey.settings.get('avdTemplates' + settingName),
+                    favoriteTemplates: await this.homey.settings.get('avdFavoriteTemplates'), activeAvdSource:this.activeAvdSource ,
+                    bllVariables : BL.isReady ? _.sortBy(await BL.getVariables()||[], 'name') : undefined, blReady:BL.isReady,
+                    cgChronographs : CG.isReady ? await CG.getAllChronographs()||[] : undefined, cgReady:CG.isReady,
+                    listCustomLists : await this.homey.settings.get('custom_lists')
+                    //,
+                    //reflectDevices : _.map(this.homey.app.devices, d=>{return {name:d.name, id: d.id} ;})
+                };
+            } catch(ex) {
+                this.homey.error(ex);
+                throw ex;
+            }
 
 
         });
