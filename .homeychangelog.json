@@ -4243,5 +4243,20 @@
     "ru": "Изменили исходный код и задачи с Bitbucket на GitHub.",
     "ko": "소스 코드와 문제를 Bitbucket에서 GitHub로 변경했습니다.",
     "ar": "تم تغيير الشيفرة المصدرية والمشكلات من Bitbucket إلى GitHub."
+  },
+  "3.1.0": {
+    "en": "Update dependencies.",
+    "nl": "Werk afhankelijkheden bij.",
+    "da": "Opdater afhængigheder.",
+    "de": "Abhängigkeiten aktualisieren.",
+    "es": "Actualizar dependencias.",
+    "fr": "Mettre à jour les dépendances.",
+    "it": "Aggiorna le dipendenze.",
+    "no": "Oppdater avhengigheter.",
+    "sv": "Uppdatera beroenden.",
+    "pl": "Zaktualizuj zależności.",
+    "ru": "Обновить зависимости.",
+    "ko": "종속성 업데이트.",
+    "ar": "تحديث التبعيات."
   }
 }

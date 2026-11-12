@@ -235,8 +235,8 @@
 							<select class="value" ng-model="s['status'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['status'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
@@ -445,8 +445,8 @@
 							<select class="value" ng-model="s['text'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['text'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
@@ -657,8 +657,8 @@
 							<select class="value" ng-model="s['number'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['number'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
@@ -917,8 +917,8 @@
 							<select class="value" ng-model="s['boolean'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['boolean'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
@@ -1144,8 +1144,8 @@
 							<select class="value" ng-model="s['button'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['button'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
@@ -1379,8 +1379,8 @@
 							<select class="value" ng-model="s['list'+($index+1)+'ReflectProperty']" required>
 								<option value="elapsed">Elapsed duration</option>
 								<option ng-if="s['list'+($index+1)+'ReflectId'].type!='stopwatch'" value="remaining">Remaining duration</option>
-								<option value="running">Running</option>
-								<option value="removed">Removed</option>
+								<option value="running">Running/Paused</option>
+								<option value="removed">Stopped/Finished</option>
 							</select>
 						</div>
 						<div class="field">
