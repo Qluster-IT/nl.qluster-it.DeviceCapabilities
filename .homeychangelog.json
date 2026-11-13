@@ -4244,19 +4244,19 @@
     "ko": "소스 코드와 문제를 Bitbucket에서 GitHub로 변경했습니다.",
     "ar": "تم تغيير الشيفرة المصدرية والمشكلات من Bitbucket إلى GitHub."
   },
-  "3.1.1": {
-    "en": "Update dependencies.",
-    "nl": "Werk afhankelijkheden bij.",
-    "da": "Opdater afhængigheder.",
-    "de": "Abhängigkeiten aktualisieren.",
-    "es": "Actualizar dependencias.",
-    "fr": "Mettre à jour les dépendances.",
-    "it": "Aggiorna le dipendenze.",
-    "no": "Oppdater avhengigheter.",
-    "sv": "Uppdatera beroenden.",
-    "pl": "Zaktualizuj zależności.",
-    "ru": "Обновить зависимости.",
-    "ko": "종속성 업데이트.",
-    "ar": "تحديث التبعيات."
+  "3.1.2": {
+    "en": "Updated dependencies.",
+    "nl": "Bijgewerkte afhankelijkheden.",
+    "da": "Opdaterede afhængigheder.",
+    "de": "Abhängigkeiten aktualisiert.",
+    "es": "Dependencias actualizadas.",
+    "fr": "Dépendances mises à jour.",
+    "it": "Dipendenze aggiornate.",
+    "no": "Oppdaterte avhengigheter.",
+    "sv": "Uppdaterade beroenden.",
+    "pl": "Zaktualizowano zależności.",
+    "ru": "Обновлены зависимости.",
+    "ko": "종속성 업데이트 완료.",
+    "ar": "تم تحديث التبعيات."
   }
 }

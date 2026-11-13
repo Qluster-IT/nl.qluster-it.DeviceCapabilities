@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "betterlogiclibrary": "^0.11.1",
+    "betterlogiclibrary": "^1.0.3",
     "chronograph-npm": "^0.2.2",
     "homey-api": "^3.14.21",
     "homey-lib": "^2.52.0",
