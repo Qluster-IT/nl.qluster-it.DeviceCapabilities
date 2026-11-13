@@ -1,2 +1,0 @@
-npm install "D:\Qlustrator\Local Visual Code\NPMs\nl.qluster-it.ChronographNPM"
-npm install "D:\Qlustrator\Local Visual Code\NPMs\nl.qluster-it.BetterLogicLibraryNPM"
