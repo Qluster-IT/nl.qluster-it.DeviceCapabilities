@@ -101,6 +101,7 @@
     "homey:app:nl.fellownet.chronograph"
   ],
   "source": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/",
+  "homepage": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/wiki",
   "bugs": {
     "url": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/issues"
   },
