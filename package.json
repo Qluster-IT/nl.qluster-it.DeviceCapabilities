@@ -18,9 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://QlusterIT@bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities.git"
+    "url": "git+https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities.git"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/QlusterIT/nl.qluster-it.devicecapabilities#readme"
+  "bugs": {
+    "url": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/issues"
+  },
+  "homepage": "https://github.com/Qluster-IT/nl.qluster-it.DeviceCapabilities/wiki"
 }
