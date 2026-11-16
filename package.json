@@ -7,8 +7,8 @@
     "lib": "lib"
   },
   "dependencies": {
-    "betterlogiclibrary": "^1.0.5",
-    "chronograph-npm": "^0.2.2",
+    "betterlogiclibrary": "^1.0.6",
+    "chronograph-npm": "^0.3.0",
     "homey-api": "^3.14.21",
     "homey-lib": "^2.52.0",
     "lodash-core": "^4.17.19"
